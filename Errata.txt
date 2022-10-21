@@ -1,0 +1,1 @@
+Errata are kept here: https://slds-lmu.github.io/i2ml/appendix/02_errata/

@@ -1,0 +1,413 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{a4wide,paralist}
+\usepackage{amsmath, amssymb, xfrac, amsthm}
+\usepackage{dsfont}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{bm}
+
+
+\input{../../style/common}
+
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+	\fi
+}
+
+\DeclareRobustCommand{\myboxshow}[2][gray!20]{%
+%	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+%	\fi
+}
+
+
+%exercise numbering
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand\labelenumi{\theenumi}
+
+
+\font \sfbold=cmssbx10
+
+\setlength{\oddsidemargin}{0cm} \setlength{\textwidth}{16cm}
+
+
+\sloppy
+\parindent0em
+\parskip0.5em
+\topmargin-2.3 cm
+\textheight25cm
+\textwidth17.5cm
+\oddsidemargin-0.8cm
+\pagestyle{empty}
+
+\newcommand{\kopf}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfic}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Live Session #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfsl}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Supervised Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newenvironment{allgemein}
+	{\noindent}{\vspace{1cm}}
+
+\newcounter{aufg}
+\newenvironment{aufgabe}[1]
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}: #1}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newcounter{loes}
+\newenvironment{loesung}[1]
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}: #1}\\\noindent}
+	{\bigskip}
+	
+\newenvironment{bonusaufgabe}
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}*\footnote{This
+	is a bonus exercise.}:}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newenvironment{bonusloesung}
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}*:}\\\noindent}
+	{\bigskip}
+
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+
+\kopfsl{3}{Risk Minimization}
+
+
+\loesung{Connection between MLE and ERM}{
+
+\begin{enumerate}
+%
+	\item We can make use of the ``substitution trick'' from Exercise Sheet 1, i.e., $z^{(i)} = m(\yi).$
+%  
+	Then, it holds that $z^{(i)}~|~\xv$ is distributed as $\normal(m(\ftrue(\xi)),\sigma^2),$ since $z^{(i)} = m(\ftrue(\xi)) + \epsi$ and $\epsi \sim \normal(0,\sigma^2).$
+	%
+	Note that $(\xv^{(1)},z^{(1)}),\ldots,(\xv^{(n)},z^{(n)})$ are iid, as transforming $y^{(1)},\ldots,y^{(n)}$ via $m$ to $z^{(1)},\ldots,z^{(n)}$ preserves the stochastic independence property.
+%  
+	\item 
+	The likelihood for  $(\xv^{(1)},z^{(1)}),\ldots,(\xv^{(n)},z^{(n)})$  is  
+%	
+	\begin{eqnarray*}
+		\LL(\thetab) &=& \prod_{i=1}^n \pdf\left(z^{(i)} ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \exp\left(-\frac{1}{2\sigma^2}\sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2\right)\,.
+	\end{eqnarray*}
+%
+	So, the negative log-likelihood for  $(\xv^{(1)},z^{(1)}),\ldots,(\xv^{(n)},z^{(n)})$  is  
+%	
+	\begin{eqnarray*}
+		- \loglt &=& - \log\left(\LL(\thetab)\right) \\
+		&=& - \log\left(  \exp\left(-\frac{1}{2\sigma^2} \sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2\right)  \right) \\
+		&\propto& \sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2 \\
+		&=& \sumin \left[ m(\yi) - m\left(\fxit\right)\right]^2.
+	\end{eqnarray*}
+%
+	Thus, the negative log-likelihood for a parameter $\thetab$ is proportional to the empirical risk of a hypothesis $f(\cdot ~|~ \thetab)$ w.r.t. the generalized L2-loss function of Exercise sheet 1, i.e., $\Lxy= \big(m(y)-m(\fx)\big)^2.$ 
+%
+
+\item First, we specify the feature space: $\Xspace = \{1\} \times \R,$ i.e., any feature $\xv \in \Xspace$ is of the form $\xv=(x_1,x_2)^\top = (1,x_2)^\top$ for some $x_2\in \R.$
+%
+According to the exercise we use $m(x)=\log(x),$ whose inverse is $m^{-1}(x)=\exp(x).$ 
+%
+Let us rewrite Forbes' conjectured model $  y = \theta_1 \exp(\theta_2 x + \eps)$ into $y = m^{-1} \left( m(f(\xv~|~ \thetab)) + \eps \right),$ for some suitable hypothesis $f(\xv~|~ \thetab):$
+%
+\begin{align*}
+%	
+	y &=  \theta_1 \exp(\theta_2 x + \eps) \\
+%	
+	&=  \exp( \log(\theta_1)  \exp(\theta_2 x + \eps)) \\
+%	
+	&= \exp( \log(\theta_1) +  \theta_2 x + \eps) \tag{Functional equation of $\exp$} \\
+%	
+	&= \exp( \log(\theta_1) +  \log(\exp(\theta_2 x)) + \eps)  \\
+%	
+	&= \underbrace{\exp}_{=m^{-1}}( \underbrace{\log}_{=m}(\theta_1 \exp(\theta_2 x)) + \eps) \tag{Functional equation of $\log$} \\
+	%	
+	&= m^{-1}( m(\theta_1 \exp(\theta_2 x)) + \eps).
+%	
+\end{align*}
+%
+With this, we see that $f(\xv~|~ \thetab) = \theta_1 x_1 \exp(\theta_2 x_2) = \theta_1 \exp(\theta_2 x_2)$ is a suitable functional form for the hypotheses.
+%
+Thus, we use as our parameter space $\Theta = \R_+ \times \R$ which gives rise to the hypothesis space
+%
+\begin{equation*}
+	\begin{split}
+		\Hspace = \{f(\xv~|~ \thetab) = \theta_1 x_1 \exp(\theta_2 x_2) ~|~   \thetab \in \Theta \}.
+	\end{split}
+\end{equation*}
+%
+
+
+\textbf{Alternative:}
+Note that we could alternatively rephrase the learning problem by applying the logarithm on both sides of Forbes' model:
+%
+\begin{align*}
+	%	
+	y =  \theta_1 \exp(\theta_2 x + \eps) 	
+	\quad 	\Leftrightarrow \quad 
+	\log(y)  =   \log(\theta_1) + \theta_2 x + \eps,
+%
+\end{align*}
+%
+so that we work with the logarithm of the original labels, i.e., we consider $z^{(1)} = \log(y^{(1)}),\ldots,z^{(n)}=\log(y^{(n)})$ instead of $y^{(1)},\ldots,y^{(n)}.$
+%
+A suitable hypothesis space is then
+%
+\begin{equation*}
+	\begin{split}
+		\Hspace = \{f(\xv~|~ \thetab) = \log(\theta_1) x_1 + \theta_2 x_2 ~|~   \thetab \in \Theta \},
+	\end{split}
+\end{equation*}
+%
+which are the linear functions\footnote{Note that $\log(\theta_1)$ can be any value in $\R.$} $\xv^\top \thetab$ of features in $\Xspace.$
+%
+The empirical risk minimizer in this case is specified by the parameter 
+%
+$$(\log(\hat{\theta}_1),\hat{\theta}_2)^\top = \thetabh=\left(\Xmat^T \Xmat\right)^{-1}\Xmat^T \bm{z}, \qquad  \bm{z} = (\log y^{(1)},\ldots,\log y^{(n)})^\top,$$
+%
+(see \href{https://slds-lmu.github.io/i2ml/chapters/02_supervised_regression/02-02-linearmodel/}{Chapter 02.02 of I2ML}) which for this simple case is:
+%		
+		\begin{align*}
+%			
+			\hat{\theta}_2 &= \frac{\sum_{i=1}^n  (\xi_2  - \bar{\xv}_2 ) ( \log(\yi) - \overline{ \log(y)}    )  }{\sum_{i=1}^n  (\xi_2  - \bar{\xv}_2 )^2}, \\
+%			
+			\hat{\theta}_1 &= \exp\left(\overline{ \log(y)} -  \hat{\theta}_2 \bar{\xv}_2 \right),
+%			 
+%			
+		\end{align*}
+%	
+	where $\bar{\xv}_2 = \frac1n \sum_{i=1}^n  \xi_2$ and $\overline{ \log(y)} =  \frac1n \sum_{i=1}^n  \log(\yi).$
+%	
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#' @param X the feature input matrix X}
+\hlcom{#' @param y the outcome vector y}
+\hlcom{#' @param theta coefficient vector for the model (2-dimensional)}
+
+\hlcom{# Load MASS and data set forbes}
+\hlkwd{library}\hlstd{(MASS)}
+\hlkwd{data}\hlstd{(forbes)}
+\hlkwd{attach}\hlstd{(forbes)}
+
+\hlcom{# initialize the data set}
+\hlstd{X} \hlkwb{=} \hlkwd{cbind}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{17}\hlstd{),bp)}
+\hlstd{y} \hlkwb{=} \hlstd{pres}
+
+\hlcom{#' function to represent your models via the parameter vector theta = c(theta_1, theta_2)}
+\hlcom{#' @return a predicted label y_hat for x}
+\hlstd{f} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{theta}\hlstd{)\{}
+
+  \hlkwd{return}\hlstd{((}\hlkwd{exp}\hlstd{(theta[}\hlnum{2}\hlstd{]}\hlopt{*}\hlstd{x[}\hlnum{2}\hlstd{])}\hlopt{*}\hlstd{theta[}\hlnum{1}\hlstd{]}\hlopt{*}\hlstd{x[}\hlnum{1}\hlstd{]))}
+
+\hlstd{\}}
+
+\hlcom{#' @return a vector consisting of the optimal parameter vector }
+\hlstd{optim_coeff} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{X}\hlstd{,}\hlkwc{y}\hlstd{)\{}
+
+  \hlcom{#' @return the empirical risk of a parameter vector theta}
+  \hlstd{emp_risk} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{theta}\hlstd{)\{}
+    \hlkwd{sum}\hlstd{( (}\hlkwd{log}\hlstd{(y)} \hlopt{-} \hlkwd{log}\hlstd{(}\hlkwd{apply}\hlstd{(X,}\hlnum{1}\hlstd{,f,theta)))}\hlopt{^}\hlnum{2}   \hlstd{)}
+  \hlstd{\}}
+
+
+  \hlkwd{return}\hlstd{(}
+    \hlkwd{optim}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0.4}\hlstd{,}\hlnum{0.5}\hlstd{),}
+          \hlstd{emp_risk,}
+          \hlkwc{method} \hlstd{=} \hlstr{"L-BFGS-B"}\hlstd{,}
+          \hlkwc{lower}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlopt{-}\hlnum{Inf}\hlstd{),}
+          \hlkwc{upper}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{Inf}\hlstd{,}\hlnum{Inf}\hlstd{))}\hlopt{$}\hlstd{par)}
+  \hlcom{# note that c(0.4,0.5) can be replaced by any other theta vector }
+  \hlcom{# satisfying the constraint theta[1]>0}
+\hlstd{\}}
+
+\hlcom{# optimal coefficients}
+\hlstd{hat_theta} \hlkwb{=} \hlkwd{optim_coeff}\hlstd{(X,y)}
+\hlkwd{print}\hlstd{(hat_theta)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.38050968 0.02059961
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Checking Forbes' model visually}
+
+\hlstd{f_x} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,} \hlkwc{theta}\hlstd{)\{}
+
+  \hlkwd{return}\hlstd{((}\hlkwd{exp}\hlstd{(theta[}\hlnum{2}\hlstd{]}\hlopt{*}\hlstd{x)}\hlopt{*}\hlstd{theta[}\hlnum{1}\hlstd{]))}
+
+\hlstd{\}}
+
+\hlkwd{curve}\hlstd{(}\hlkwd{f_x}\hlstd{(x,}\hlkwc{theta} \hlstd{= hat_theta),}\hlkwd{min}\hlstd{(bp),}\hlkwd{max}\hlstd{(bp),}\hlkwc{xlab}\hlstd{=}\hlstr{"x (bp)"}\hlstd{,}\hlkwc{ylab}\hlstd{=}\hlstr{"y (pres)"}\hlstd{)}
+\hlkwd{points}\hlstd{(pres}\hlopt{~}\hlstd{bp,}\hlkwc{col}\hlstd{=}\hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
+\begin{kframe}\begin{alltt}
+\hlcom{# Alternative solution}
+
+\hlstd{hat_theta_2} \hlkwb{=} \hlkwd{cov}\hlstd{(bp,}\hlkwd{log}\hlstd{(pres))}\hlopt{/}\hlstd{(}\hlkwd{var}\hlstd{(bp))}
+\hlstd{hat_theta_1} \hlkwb{=} \hlkwd{exp}\hlstd{(}\hlkwd{mean}\hlstd{(}\hlkwd{log}\hlstd{(pres))}\hlopt{-}\hlstd{hat_theta_2}\hlopt{*}\hlkwd{mean}\hlstd{(bp))}
+
+\hlkwd{curve}\hlstd{(}\hlkwd{f_x}\hlstd{(x,}\hlkwc{theta} \hlstd{= hat_theta),}\hlkwd{min}\hlstd{(bp),}\hlkwd{max}\hlstd{(bp),}\hlkwc{xlab}\hlstd{=}\hlstr{"x (bp)"}\hlstd{,}\hlkwc{ylab}\hlstd{=}\hlstr{"y (pres)"}\hlstd{)}
+\hlkwd{curve}\hlstd{(}\hlkwd{f_x}\hlstd{(x,}\hlkwc{theta} \hlstd{=} \hlkwd{c}\hlstd{(hat_theta_1,hat_theta_2)),}\hlkwd{min}\hlstd{(bp),}\hlkwd{max}\hlstd{(bp),}\hlkwc{add}\hlstd{=T,}\hlkwc{col}\hlstd{=}\hlnum{2}\hlstd{)}
+\hlkwd{points}\hlstd{(pres}\hlopt{~}\hlstd{bp)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-2} 
+\end{knitrout}
+
+\end{enumerate}
+}
+\end{document}

@@ -1,0 +1,347 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{a4wide,paralist}
+\usepackage{amsmath, amssymb, xfrac, amsthm}
+\usepackage{dsfont}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{bm}
+
+
+\input{../../style/common}
+
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+	\fi
+}
+
+\DeclareRobustCommand{\myboxshow}[2][gray!20]{%
+%	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+%	\fi
+}
+
+
+%exercise numbering
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand\labelenumi{\theenumi}
+
+
+\font \sfbold=cmssbx10
+
+\setlength{\oddsidemargin}{0cm} \setlength{\textwidth}{16cm}
+
+
+\sloppy
+\parindent0em
+\parskip0.5em
+\topmargin-2.3 cm
+\textheight25cm
+\textwidth17.5cm
+\oddsidemargin-0.8cm
+\pagestyle{empty}
+
+\newcommand{\kopf}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfic}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Live Session #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfsl}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Supervised Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newenvironment{allgemein}
+	{\noindent}{\vspace{1cm}}
+
+\newcounter{aufg}
+\newenvironment{aufgabe}[1]
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}: #1}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newcounter{loes}
+\newenvironment{loesung}[1]
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}: #1}\\\noindent}
+	{\bigskip}
+	
+\newenvironment{bonusaufgabe}
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}*\footnote{This
+	is a bonus exercise.}:}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newenvironment{bonusloesung}
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}*:}\\\noindent}
+	{\bigskip}
+
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+
+\kopfsl{2}{Risk Minimization}
+
+\loesung{Risk Minimization and Gradient Descent}{
+
+
+\begin{enumerate}
+  \item Write a function in R implementing a gradient descent routine for the optimization of the linear model defined in the previous exercise sheet. Start with:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#' @param step_size the step_size in each iteration}
+\hlcom{#' @param X the feature input matrix X}
+\hlcom{#' @param y the outcome vector y}
+\hlcom{#' @param beta a starting value for the coefficients}
+\hlcom{#' @param eps a small constant measuring the changes in each update step. }
+\hlcom{#' Stop the algorithm if the estimated model parameters do not change}
+\hlcom{#' more than \textbackslash{}code\{eps\}.}
+
+\hlcom{#' @return a set of optimal coefficients beta}
+\hlstd{gradient_descent} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{step_size}\hlstd{,} \hlkwc{X}\hlstd{,} \hlkwc{y}\hlstd{,} \hlkwc{beta} \hlstd{=} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{ncol}\hlstd{(X)),}
+                             \hlkwc{eps} \hlstd{=} \hlnum{1e-8}\hlstd{)\{}
+
+  \hlstd{change} \hlkwb{<-} \hlnum{1} \hlcom{# something larger eps}
+
+  \hlstd{XtX} \hlkwb{<-} \hlkwd{crossprod}\hlstd{(X)}
+  \hlstd{Xty} \hlkwb{<-} \hlkwd{crossprod}\hlstd{(X,y)}
+
+  \hlkwa{while}\hlstd{(}\hlkwd{sum}\hlstd{(}\hlkwd{abs}\hlstd{(change))} \hlopt{>} \hlstd{eps)\{}
+
+    \hlcom{# Use standard gradient descent:}
+    \hlstd{change} \hlkwb{<-} \hlopt{+} \hlstd{step_size} \hlopt{*} \hlstd{(Xty} \hlopt{-} \hlstd{XtX}\hlopt{%*%}\hlstd{beta)}
+
+    \hlcom{# update beta in the end}
+    \hlstd{beta} \hlkwb{<-} \hlstd{beta} \hlopt{+} \hlstd{change}
+
+
+  \hlstd{\}}
+
+  \hlkwd{return}\hlstd{(beta)}
+
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+  \item Run a small simulation study by creating 20 data sets as indicated below and test different step sizes $\alpha$ (fixed across iterations) against each other and against the state-of-the-art routine for linear models (in R, using the function \texttt{lm}, in Python, e.g., \texttt{sklearn.linear\_model.LinearRegression}).
+  \begin{itemize}
+    \item Compare the difference in estimated coefficients $\beta_j, j=1,\ldots,p$ using the mean squared error, i.e. $$p^{-1} \sum_{j=1}^p (\beta^{truth}_j-\hat{\beta}_j)^2$$ and summarize the difference over all 20 simulation repetitions.
+    \item Compare the run times of your implementation and the one given by the state-of-the-art method by wrapping the function calls into a timer (e.g., \texttt{system.time()} in R).
+    \end{itemize}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{n} \hlkwb{<-} \hlnum{10000}
+\hlstd{p} \hlkwb{<-} \hlnum{100}
+\hlstd{nr_sims} \hlkwb{<-} \hlnum{20}
+
+\hlcom{# define mse}
+\hlstd{mse} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,}\hlkwc{y}\hlstd{)} \hlkwd{mean}\hlstd{((x}\hlopt{-}\hlstd{y)}\hlopt{^}\hlnum{2}\hlstd{)}
+
+\hlcom{# create data (only once)}
+\hlstd{X} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlkwd{rnorm}\hlstd{(n}\hlopt{*}\hlstd{p),} \hlkwc{ncol}\hlstd{=p)}
+\hlstd{beta_truth} \hlkwb{<-} \hlkwd{runif}\hlstd{(p,} \hlopt{-}\hlnum{2}\hlstd{,} \hlnum{2}\hlstd{)}
+\hlstd{f_truth} \hlkwb{<-} \hlstd{X}\hlopt{%*%}\hlstd{beta_truth}
+
+\hlcom{# create result object}
+\hlstd{result_list} \hlkwb{<-} \hlkwd{vector}\hlstd{(}\hlstr{"list"}\hlstd{, nr_sims)}
+
+\hlcom{# make it all reproducible}
+\hlkwd{set.seed}\hlstd{(}\hlnum{2020}\hlopt{-}\hlnum{4}\hlopt{-}\hlnum{6}\hlstd{)}
+
+\hlkwa{for}\hlstd{(sim_nr} \hlkwa{in} \hlkwd{seq_len}\hlstd{(nr_sims))}
+\hlstd{\{}
+
+  \hlcom{# create response}
+  \hlstd{y} \hlkwb{<-} \hlstd{f_truth} \hlopt{+} \hlkwd{rnorm}\hlstd{(n,} \hlkwc{sd} \hlstd{=} \hlnum{2}\hlstd{)}
+
+  \hlstd{time_lm} \hlkwb{<-} \hlkwd{system.time}\hlstd{(}
+    \hlstd{coef_lm} \hlkwb{<-} \hlkwd{coef}\hlstd{(}\hlkwd{lm}\hlstd{(y}\hlopt{~-}\hlnum{1}\hlopt{+}\hlstd{X))}
+  \hlstd{)[}\hlstr{"elapsed"}\hlstd{]}
+
+  \hlstd{time_gd_1} \hlkwb{<-} \hlkwd{system.time}\hlstd{(}
+    \hlstd{coef_gd_1} \hlkwb{<-} \hlkwd{gradient_descent}\hlstd{(}\hlkwc{step_size} \hlstd{=} \hlnum{0.0001}\hlstd{,} \hlkwc{X} \hlstd{= X,} \hlkwc{y} \hlstd{= y)}
+  \hlstd{)[}\hlstr{"elapsed"}\hlstd{]}
+
+  \hlstd{time_gd_2} \hlkwb{<-} \hlkwd{system.time}\hlstd{(}
+    \hlstd{coef_gd_2} \hlkwb{<-} \hlkwd{gradient_descent}\hlstd{(}\hlkwc{step_size} \hlstd{=} \hlnum{0.00001}\hlstd{,} \hlkwc{X} \hlstd{= X,} \hlkwc{y} \hlstd{= y)}
+  \hlstd{)[}\hlstr{"elapsed"}\hlstd{]}
+
+
+  \hlstd{mse_lm} \hlkwb{<-} \hlkwd{mse}\hlstd{(coef_lm, beta_truth)}
+  \hlstd{mse_gd_1} \hlkwb{<-} \hlkwd{mse}\hlstd{(coef_gd_1, beta_truth)}
+  \hlstd{mse_gd_2} \hlkwb{<-} \hlkwd{mse}\hlstd{(coef_gd_2, beta_truth)}
+
+  \hlcom{# save results in list (performance, time)}
+  \hlstd{result_list[[sim_nr]]} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwc{mse_lm} \hlstd{= mse_lm,}
+                                      \hlkwc{mse_gd_1} \hlstd{= mse_gd_1,}
+                                      \hlkwc{mse_gd_2} \hlstd{= mse_gd_2,}
+                                      \hlkwc{time_lm} \hlstd{= time_lm,}
+                                      \hlkwc{time_gd_1} \hlstd{= time_gd_1,}
+                                      \hlkwc{time_gd_2} \hlstd{= time_gd_2)}
+
+\hlstd{\}}
+
+\hlkwd{library}\hlstd{(ggplot2)}
+\hlkwd{library}\hlstd{(dplyr)}
+\hlkwd{library}\hlstd{(tidyr)}
+
+\hlkwd{do.call}\hlstd{(}\hlstr{"rbind"}\hlstd{, result_list)} \hlopt{%>%}
+  \hlkwd{gather}\hlstd{()} \hlopt{%>%}
+  \hlkwd{mutate}\hlstd{(}\hlkwc{what} \hlstd{=} \hlkwd{ifelse}\hlstd{(}\hlkwd{grepl}\hlstd{(}\hlstr{"mse"}\hlstd{, key),} \hlstr{"MSE"}\hlstd{,} \hlstr{"Time"}\hlstd{),}
+         \hlkwc{algorithm} \hlstd{=} \hlkwd{gsub}\hlstd{(}\hlstr{"(mse|time)\textbackslash{}\textbackslash{}_(.*)"}\hlstd{,}\hlstr{"\textbackslash{}\textbackslash{}2"}\hlstd{, key))} \hlopt{%>%}
+  \hlkwd{ggplot}\hlstd{(}\hlkwd{aes}\hlstd{(}\hlkwc{x} \hlstd{= algorithm,} \hlkwc{y} \hlstd{= value))} \hlopt{+}
+  \hlkwd{geom_boxplot}\hlstd{()} \hlopt{+} \hlkwd{theme_bw}\hlstd{()} \hlopt{+}
+  \hlkwd{facet_wrap}\hlstd{(}\hlopt{~} \hlstd{what,} \hlkwc{scales} \hlstd{=} \hlstr{"free"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
+\end{knitrout}
+    
+\item There exists an analytic solution to this problem, namely $\hat{\bm{\beta}} = (\bm{X}^\top \bm{X})^{-1} \bm{X}^\top \bm{y}$. Gradient descent might sometimes be slower and less exact. However, for very large data sets, a numerical optimization might be the preferred solution (in this case, you would rather apply \textbf{stochastic} gradient descent). Analytically solving the problem involves inverting the matrix $\bm{X}^\top \bm{X}$, which should never be done explicitly, but rather by solving the linear equation $\bm{X}^\top \bm{y} = \bm{X}^\top \bm{X} \bm{\beta}$ or by decomposing $\bm{X}^\top \bm{X}$ first, e.g., using Cholesky or QR decomposition.  
+\item Our learning algorithm $\mathcal{I}$ will always have an approximation error if $f^\ast \notin \Hspace$, and is thus not consistent.
+\end{enumerate}
+}
+\end{document}

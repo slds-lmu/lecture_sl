@@ -1,0 +1,627 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{a4wide,paralist}
+\usepackage{amsmath, amssymb, xfrac, amsthm}
+\usepackage{dsfont}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{bm}
+
+
+\input{../../style/common}
+
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+	\fi
+}
+
+\DeclareRobustCommand{\myboxshow}[2][gray!20]{%
+%	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+%	\fi
+}
+
+
+%exercise numbering
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand\labelenumi{\theenumi}
+
+
+\font \sfbold=cmssbx10
+
+\setlength{\oddsidemargin}{0cm} \setlength{\textwidth}{16cm}
+
+
+\sloppy
+\parindent0em
+\parskip0.5em
+\topmargin-2.3 cm
+\textheight25cm
+\textwidth17.5cm
+\oddsidemargin-0.8cm
+\pagestyle{empty}
+
+\newcommand{\kopf}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfic}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Live Session #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfsl}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Supervised Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newenvironment{allgemein}
+	{\noindent}{\vspace{1cm}}
+
+\newcounter{aufg}
+\newenvironment{aufgabe}[1]
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}: #1}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newcounter{loes}
+\newenvironment{loesung}[1]
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}: #1}\\\noindent}
+	{\bigskip}
+	
+\newenvironment{bonusaufgabe}
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}*\footnote{This
+	is a bonus exercise.}:}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newenvironment{bonusloesung}
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}*:}\\\noindent}
+	{\bigskip}
+
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+\input{../../latex-math/ml-svm.tex}
+\input{../../latex-math/ml-gp.tex}
+
+\kopfsl{5}
+
+\loesung{}{
+
+
+\begin{enumerate}
+
+  \item
+   
+    The hyperplane is given by $$\theta_1 x_1^{(i)} + \theta_2 x_2^{(i)} + \theta_0 = 0.$$
+    
+    Plugging in the values for the $\theta$s and solving for $x_2$, we get the decision boundary as function of $x_1$: $$x_2 = -x_1 + 2.$$ 
+
+  \item
+    
+
+    $(0.5, 0.5), (0, 1), (0, 3), (3, 0)$ are support vectors with slack value of $\sli = 0$ as they lie on the margin hyperplanes.
+
+    $(0, 0)$ is also a support vector with slack value of $\sli = 3$.
+
+    Derivation: We use the equation from the constraint
+    $y_i (\mathbf{\theta}^\top \mathbf{x}_i + \theta_0) \geq 1 - \sli$ and plug in the values for the margin-violating point $y_i = 1, x_1 = 0, x_2 = 0$:
+
+    $$
+    y_i (x_1 + x_2 - 2) = 1 (0 + 0 - 2) \geq 1 - \sli \Rightarrow \sli \geq 3
+    $$
+
+
+
+  \item
+
+    Using $\xi = \left(\begin{array}{c} 0.5 \\ 0.5 \end{array}\right)$:
+
+    $$
+    d(f, \xi) = \frac{\yi f(\xi)}{\| \theta \|_2} = \frac{-1(0.5 + 0.5 - 2)}{\sqrt{2}} = \frac{1}{\sqrt{2}}
+    $$
+
+    The distance is the same for all non-margin-violating support vectors.
+
+  \item
+
+    Change point $(0,0)$ from $+$ to $-$ or remove $(0,0)$.
+
+\end{enumerate}
+
+}
+\dlz
+
+\loesung{}{
+
+% Paper: https://home.ttic.edu/~nati/Publications/PegasosMPB.pdf
+% => Contains, among others, 4 possibilities of how to 
+%   estimate theta_0
+\begin{itemize}
+\item Implementation of the PEGASOS algorithm: 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#' @param y outcome vector}
+\hlcom{#' @param X design matrix (including a column of 1s for the intercept)}
+\hlcom{#' @param nr_iter number of iterations for the algorithm}
+\hlcom{#' @param theta starting values for thetas}
+\hlcom{#' @param lambda penalty parameter}
+\hlcom{#' @param alpha step size for weight decay}
+\hlstd{pegasos_linear} \hlkwb{<-} \hlkwa{function}\hlstd{(}
+  \hlkwc{y}\hlstd{,}
+  \hlkwc{X}\hlstd{,}
+  \hlkwc{nr_iter} \hlstd{=} \hlnum{50000}\hlstd{,}
+  \hlkwc{theta} \hlstd{=} \hlkwd{rnorm}\hlstd{(}\hlkwd{ncol}\hlstd{(X)),}
+  \hlkwc{lambda} \hlstd{=} \hlnum{1}\hlstd{,}
+  \hlkwc{alpha} \hlstd{=} \hlnum{0.01}\hlstd{)}
+\hlstd{\{}
+
+  \hlstd{t} \hlkwb{<-} \hlnum{1}
+  \hlstd{n} \hlkwb{<-} \hlkwd{NROW}\hlstd{(y)}
+
+  \hlkwa{while}\hlstd{(t} \hlopt{<=} \hlstd{nr_iter)\{}
+
+    \hlstd{f_current} \hlkwb{=} \hlstd{X}\hlopt{%*%}\hlstd{theta}
+    \hlstd{i} \hlkwb{<-} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlstd{n,} \hlnum{1}\hlstd{)}
+
+    \hlcom{# update}
+    \hlstd{theta} \hlkwb{<-} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{lambda} \hlopt{*} \hlstd{alpha)} \hlopt{*} \hlstd{theta}
+    \hlcom{# add second term if within margin}
+    \hlkwa{if}\hlstd{(y[i]}\hlopt{*}\hlstd{f_current[i]} \hlopt{<} \hlnum{1}\hlstd{) theta} \hlkwb{<-} \hlstd{theta} \hlopt{+} \hlstd{alpha} \hlopt{*} \hlstd{y[i]}\hlopt{*}\hlstd{X[i,]}
+
+    \hlstd{t} \hlkwb{<-} \hlstd{t} \hlopt{+} \hlnum{1}
+
+  \hlstd{\}}
+
+  \hlkwd{return}\hlstd{(theta)}
+
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\item Check on a simple example
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Check on a simple example}
+\hlcom{## --------------------------------------------}
+
+\hlkwd{set.seed}\hlstd{(}\hlnum{2L}\hlstd{)}
+
+\hlstd{C} \hlkwb{=} \hlnum{1}
+
+\hlkwd{library}\hlstd{(mlbench)}
+\hlkwd{library}\hlstd{(kernlab)}
+\hlstd{data} \hlkwb{=} \hlkwd{mlbench.twonorm}\hlstd{(}\hlkwc{n} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{d} \hlstd{=} \hlnum{2}\hlstd{)}
+
+
+\hlstd{data} \hlkwb{=} \hlkwd{as.data.frame}\hlstd{(data)}
+\hlstd{X} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(data[,} \hlnum{1}\hlopt{:}\hlnum{2}\hlstd{])}
+\hlstd{y} \hlkwb{=} \hlstd{data}\hlopt{$}\hlstd{classes}
+\hlkwd{par}\hlstd{(}\hlkwc{mar} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{5}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{6}\hlstd{))}
+\hlkwd{plot}\hlstd{(}\hlkwc{x} \hlstd{= data}\hlopt{$}\hlstd{x.1,} \hlkwc{y} \hlstd{= data}\hlopt{$}\hlstd{x.2,} \hlkwc{pch} \hlstd{=} \hlkwd{ifelse}\hlstd{(data}\hlopt{$}\hlstd{classes} \hlopt{==} \hlnum{1}\hlstd{,} \hlstr{"-"}\hlstd{,} \hlstr{"+"}\hlstd{),} \hlkwc{col} \hlstd{=} \hlstr{"black"}\hlstd{,}
+     \hlkwc{xlab} \hlstd{=} \hlstr{"x1"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"x2"}\hlstd{)}
+
+\hlcom{# recode y}
+\hlstd{y} \hlkwb{=} \hlkwd{ifelse}\hlstd{(y} \hlopt{==} \hlstr{"2"}\hlstd{,} \hlnum{1}\hlstd{,} \hlopt{-}\hlnum{1}\hlstd{)}
+\hlstd{mod_pegasos} \hlkwb{=} \hlkwd{pegasos_linear}\hlstd{(y,} \hlkwd{cbind}\hlstd{(}\hlnum{1}\hlstd{,X),} \hlkwc{lambda} \hlstd{= C}\hlopt{/}\hlstd{(}\hlkwd{NROW}\hlstd{(y)))}
+
+\hlcom{# Add estimated decision boundary:}
+\hlkwd{abline}\hlstd{(}\hlkwc{a} \hlstd{=} \hlopt{-} \hlstd{mod_pegasos[}\hlnum{1}\hlstd{]} \hlopt{/} \hlstd{mod_pegasos[}\hlnum{2}\hlstd{],}
+       \hlkwc{b} \hlstd{=} \hlopt{-} \hlstd{mod_pegasos[}\hlnum{2}\hlstd{]} \hlopt{/} \hlstd{mod_pegasos[}\hlnum{3}\hlstd{],} \hlkwc{col} \hlstd{=} \hlstr{"#D55E00"}\hlstd{)}
+
+\hlcom{# Compare to logistic regression:}
+\hlstd{mod_logreg} \hlkwb{=} \hlkwd{glm}\hlstd{(classes} \hlopt{~} \hlstd{.,} \hlkwc{data} \hlstd{= data,} \hlkwc{family} \hlstd{=} \hlkwd{binomial}\hlstd{())}
+\hlkwd{abline}\hlstd{(}\hlkwc{a} \hlstd{=} \hlopt{-} \hlkwd{coef}\hlstd{(mod_logreg)[}\hlnum{1}\hlstd{]} \hlopt{/} \hlkwd{coef}\hlstd{(mod_logreg)[}\hlnum{2}\hlstd{],}
+       \hlkwc{b} \hlstd{=} \hlopt{-} \hlkwd{coef}\hlstd{(mod_logreg)[}\hlnum{2}\hlstd{]} \hlopt{/} \hlkwd{coef}\hlstd{(mod_logreg)[}\hlnum{3}\hlstd{],} \hlkwc{col} \hlstd{=}  \hlstr{"#56B4E9"}\hlstd{,}
+       \hlkwc{lty} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlnum{2}\hlstd{)}
+
+\hlcom{# decision values}
+\hlstd{f_pegasos} \hlkwb{=} \hlkwd{cbind}\hlstd{(}\hlnum{1}\hlstd{,X)} \hlopt{%*%} \hlstd{mod_pegasos}
+
+\hlcom{# How many wrong classified examples?}
+\hlkwd{table}\hlstd{(}\hlkwd{sign}\hlstd{(f_pegasos} \hlopt{*} \hlstd{y))}
+\end{alltt}
+\begin{verbatim}
+## 
+## -1  1 
+##  5 95
+\end{verbatim}
+\begin{alltt}
+\hlcom{## compare to kernlab. we CANNOT expect a PERFECT match}
+\hlcom{## -------------------------------------------------------------}
+
+\hlstd{mod_kernlab} \hlkwb{=} \hlkwd{ksvm}\hlstd{(classes}\hlopt{~}\hlstd{.,}
+                   \hlkwc{data} \hlstd{= data,}
+                   \hlkwc{kernel} \hlstd{=} \hlstr{"vanilladot"}\hlstd{,}
+                   \hlkwc{C} \hlstd{= C,}
+                   \hlkwc{kpar} \hlstd{=} \hlkwd{list}\hlstd{(),}
+                   \hlkwc{scaled} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{f_kernlab} \hlkwb{=} \hlkwd{predict}\hlstd{(mod_kernlab,} \hlkwc{newdata} \hlstd{= data,} \hlkwc{type} \hlstd{=} \hlstr{"decision"}\hlstd{)}
+\hlcom{# How many wrong classified examples?}
+\hlkwd{table}\hlstd{(}\hlkwd{sign}\hlstd{(f_kernlab} \hlopt{*} \hlstd{y))}
+\end{alltt}
+\begin{verbatim}
+## 
+## -1  1 
+##  5 95
+\end{verbatim}
+\begin{alltt}
+\hlcom{# compare outputs}
+\hlkwd{print}\hlstd{(}\hlkwd{range}\hlstd{(}\hlkwd{abs}\hlstd{(f_kernlab} \hlopt{-} \hlstd{f_pegasos)))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.00014996 0.38049736
+\end{verbatim}
+\begin{alltt}
+\hlcom{# compare coeffs}
+\hlkwd{rbind}\hlstd{(}
+  \hlstd{mod_pegasos,}
+  \hlkwc{mod_kernlab} \hlstd{=} \hlkwd{c}\hlstd{(mod_kernlab}\hlopt{@}\hlkwc{b}\hlstd{,}
+  \hlstd{(params} \hlkwb{<-} \hlkwd{colSums}\hlstd{(X[mod_kernlab}\hlopt{@}\hlkwc{SVindex}\hlstd{, ]} \hlopt{*}
+                       \hlstd{mod_kernlab}\hlopt{@}\hlkwc{alpha}\hlstd{[[}\hlnum{1}\hlstd{]]} \hlopt{*}
+                       \hlstd{y[mod_kernlab}\hlopt{@}\hlkwc{SVindex}\hlstd{])))}
+\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+##                               x.1        x.2
+## mod_pegasos -0.05743352 -1.347267 -0.7917586
+## mod_kernlab  0.09763532 -1.263707 -0.7747026
+\end{verbatim}
+\begin{alltt}
+\hlcom{# seems we were reasonably close}
+
+\hlcom{# recompute margin}
+\hlstd{margin} \hlkwb{=} \hlnum{1} \hlopt{/} \hlkwd{sqrt}\hlstd{(}\hlkwd{sum}\hlstd{(params}\hlopt{^}\hlnum{2}\hlstd{))}
+
+\hlcom{# compute value of intercept shift (the margin shift is in orthogonal direction}
+\hlcom{#   to the decision boundary, so this has to be transformed first)}
+\hlstd{m} \hlkwb{=} \hlopt{-} \hlstd{params[}\hlnum{1}\hlstd{]} \hlopt{/} \hlstd{params[}\hlnum{2}\hlstd{]}
+\hlstd{t_0} \hlkwb{=} \hlstd{margin} \hlopt{*} \hlstd{m} \hlopt{/} \hlstd{(}\hlkwd{cos}\hlstd{(}\hlkwd{atan}\hlstd{(}\hlnum{1}\hlopt{/}\hlstd{m)))}
+
+\hlcom{# add margins to visualization:}
+\hlkwd{abline}\hlstd{(}\hlkwc{a} \hlstd{=} \hlopt{-} \hlstd{mod_kernlab}\hlopt{@}\hlkwc{b} \hlopt{/} \hlstd{params[}\hlnum{1}\hlstd{],}
+       \hlkwc{b} \hlstd{= m,} \hlkwc{col} \hlstd{=} \hlstr{"#0072B2"}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{a} \hlstd{=} \hlopt{-} \hlstd{mod_kernlab}\hlopt{@}\hlkwc{b} \hlopt{/} \hlstd{params[}\hlnum{1}\hlstd{]} \hlopt{+} \hlstd{t_0,}
+       \hlkwc{b} \hlstd{= m,} \hlkwc{col} \hlstd{=} \hlstr{"#0072B2"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{a} \hlstd{=} \hlopt{-} \hlstd{mod_kernlab}\hlopt{@}\hlkwc{b} \hlopt{/} \hlstd{params[}\hlnum{1}\hlstd{]} \hlopt{-} \hlstd{t_0,}
+       \hlkwc{b} \hlstd{= m,} \hlkwc{col} \hlstd{=} \hlstr{"#0072B2"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+
+
+\hlcom{# add legends}
+\hlkwd{legend}\hlstd{(}\hlkwd{par}\hlstd{(}\hlstr{'usr'}\hlstd{)[}\hlnum{2}\hlstd{],} \hlkwd{par}\hlstd{(}\hlstr{'usr'}\hlstd{)[}\hlnum{4}\hlstd{], ,} \hlkwc{bty}\hlstd{=}\hlstr{'n'}\hlstd{,} \hlkwc{xpd}\hlstd{=}\hlnum{NA}\hlstd{,} \hlkwc{legend}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"1"}\hlstd{,}\hlstr{"2"}\hlstd{),}
+       \hlkwc{pch}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"-"}\hlstd{,}\hlstr{"+"}\hlstd{),} \hlkwc{title}\hlstd{=}\hlstr{"Classes"}\hlstd{,} \hlkwc{cex} \hlstd{=} \hlnum{0.8}\hlstd{)}
+\hlkwd{legend}\hlstd{(}\hlkwd{par}\hlstd{(}\hlstr{'usr'}\hlstd{)[}\hlnum{2}\hlstd{],} \hlnum{1.8}\hlstd{, ,} \hlkwc{bty}\hlstd{=}\hlstr{'n'}\hlstd{,} \hlkwc{xpd}\hlstd{=}\hlnum{NA}\hlstd{,}
+       \hlkwc{legend}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"Pegasos"}\hlstd{,}\hlstr{"Logistic"}\hlstd{,}\hlstr{"Kernlab"}\hlstd{,}\hlstr{"Margin"}\hlstd{),}
+       \hlkwc{lty}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{),}
+       \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"#D55E00"}\hlstd{,}\hlstr{"#56B4E9"}\hlstd{,}\hlstr{"#0072B2"}\hlstd{,}\hlstr{"#0072B2"}\hlstd{),}
+       \hlkwc{title}\hlstd{=}\hlstr{""}\hlstd{,} \hlkwc{cex} \hlstd{=} \hlnum{0.8}\hlstd{,} \hlkwc{lwd} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-7-1} 
+\end{knitrout}
+
+\end{itemize}
+}
+\dlz
+
+\loesung{}{
+
+The polynomial kernel is defined as
+$$
+k(x, \tilde{x}) = (x^T\tilde{x} + b)^d.
+$$
+Furthermore, assume $x \in \mathbb{R}^2$ and $d = 2$.
+
+\begin{enumerate}
+
+  \item
+    Derive the explicit feature map $\phi$ taking into account that the following equation holds:
+    $$
+    k(x, \tilde{x}) = \langle \phi(x), \phi(\tilde{x}) \rangle
+    $$
+
+    \textbf{Solution:} \\
+
+    \begin{align*}
+    k(x, \tilde{x}) &= \left( \left(\begin{array}{c} x_1 \\ x_2 \end{array}\right)^T\left(\begin{array}{c} \tilde{x}_1 \\ \tilde{x}_2 \end{array}\right) + b \right)^2 \\
+                    &= \left( x_1\tilde{x}_1 + x_2\tilde{x}_2 + b \right)^2 \\
+                    &= (x_1\tilde{x}_1 + x_2\tilde{x}_2)^2 + 2 (x_1\tilde{x}_1 + x_2\tilde{x}_2) b + b^2 \\
+                    &= x_1^2 \tilde{x}_1^2 + 2 x_1 \tilde{x}_1 x_2 \tilde{x}_2 + x_2^2 \tilde{x}_2^2 + 2 b x_1 \tilde{x}_1 + 2 b x_2 \tilde{x}_2 + b^2 \\
+                    &= \left\langle
+                      \left(\begin{array}{c}
+                      x_1^2 \\ \sqrt{2}x_1x_2 \\ x_2^2 \\ \sqrt{2b}x_1 \\ \sqrt{2b}x_2 \\ b
+                      \end{array}\right),
+                      \left(\begin{array}{c}
+                      \tilde{x}_1^2 \\ \sqrt{2}\tilde{x}_1\tilde{x}_2 \\ \tilde{x}_2^2 \\ \sqrt{2b}\tilde{x}_1 \\ \sqrt{2b}\tilde{x}_2 \\ b
+                      \end{array}\right)
+                    \right\rangle \\
+                    &= \langle \phi(x), \phi(\tilde{x}) \rangle
+    \end{align*}
+
+  \item
+    Describe the main differences between the kernel method and the explicit feature map. \\
+
+    \textbf{Solution:} \\
+
+    Using the kernel method reduces the computational costs of computing the scalar product in the higher-dimensional features space after calculating the feature map.
+
+\end{enumerate}
+}
+\dlz
+
+\loesung{}{
+
+
+\begin{enumerate}
+\item Prior distribution (assuming the same notation as in the lecture): $$\bm{f} \sim \mathcal{N}(\bm{m}, \bm{K})$$ with $\bm{m} = m(\bm{x})$ and $\bm{K}$ defined by the entries $\bm{K}_{ij} = k(x_i,x_j)$. NB: Note the (in-)finite Gaussian property of a GP. 
+\item Note that the posterior distribution $\bm{f}|\bm{y},\bm{x}$ in this case is different from the one of $\bm{f}_* | \bm{x}_*, \bm{x}, \bm{y}$ and also from the marginal distribution of $\bm{y} \sim \mathcal{N}(\bm{m},\bm{K} + \sigma^2 \bm{I})$! We have: 
+\begin{equation}
+\begin{split}
+p(\bm{f}|\bm{y}) &\propto p(\bm{y}|\bm{f}) \cdot p(\bm{f}) \\
+&\propto \exp(-\frac{1}{2} (\bm{y}-\bm{f})^\top (\sigma^{2} \bm{I})^{-1}(\bm{y}-\bm{f})) \cdot \exp(-\frac{1}{2}(\bm{f}-\bm{m})^\top \bm{K}^{-1} (\bm{f}-\bm{m}))\\
+&\propto \exp(-\frac{1}{2} \{ \bm{f}^\top \underbrace{((\sigma^{2} \bm{I})^{-1} + \bm{K}^{-1})}_{=: \bm{K}^{-1}_{post}} \bm{f} -2 \bm{f}^\top \underbrace{((\sigma^{2} \bm{I})^{-1} \bm{y} + \bm{K}^{-1} \bm{m})}_{=: \tilde{\bm{f}}} \})\\
+&\propto \exp(-\frac{1}{2} \{ \bm{f}^\top \bm{K}^{-1}_{post} \bm{f} - 2 \bm{f}^\top\tilde{\bm{f}}  \})
+\end{split}
+\end{equation}
+by removing all constant factors that do not depend on $\bm{f}$ as we only need to know the density up to a constant of proportionality. By extending the proportionality, we can get a quadratic form in $\bm{f}$:
+\begin{equation}
+\begin{split}
+p(\bm{f}|\bm{y}) &\propto \exp(-\frac{1}{2} \{ \bm{f}^\top \bm{K}^{-1}_{post} \bm{f} - 2 \bm{f}^\top\tilde{\bm{f}}  \})\\
+&\propto \exp(-\frac{1}{2} \{ \bm{f}^\top \bm{K}^{-1}_{post} \bm{f} - 2 \bm{f}^\top \bm{K}^{-1}_{post} \underbrace{\bm{K}_{post} \tilde{\bm{f}}}_{:=\bm{f}_{post}}  \}) \\
+&\propto \exp(-\frac{1}{2}  (\bm{f}-\bm{f}_{post})^\top \bm{K}^{-1}_{post} (\bm{f}-\bm{f}_{post}))
+\end{split}
+\end{equation}
+which is the so-called \emph{kernel} of a multivariate normal distribution $\mathcal{N}(\bm{f}_{post},\bm{K}_{post} )$, i.e., $\bm{f}|\bm{y} \sim \mathcal{N}(\bm{f}_{post},\bm{K}_{post} )$. 
+\item In order to get the posterior predictive distribution for a new sample $x_*$ from the same data-generating process, we could derive $$p(y_* | x_*, \bm{y}, \bm{x}) = \int p(y_*|x_*, \bm{x}, \bm{y}, \bm{f}) \cdot p(\bm{f}|\bm{y},\bm{x}) \,d\bm{f}.$$ This is feasible but cumbersome. Alternatively, we can make use of the fact that the joint distribution of $\bm{y}$ and $y_*$ is known (cf. slides on noisy GP): 
+$$\begin{pmatrix} \bm{y} \\ y_* \end{pmatrix} \sim \mathcal{N}\left( \begin{pmatrix} \bm{m} \\ m_* \end{pmatrix}, 
+\begin{pmatrix} 
+\bm{K} + \sigma^2 \bm{I} & \bm{K}_*\\
+\bm{K}^\top_* & K_{**}\\
+\end{pmatrix}
+\right),$$
+with $m_* = m(x_*)$, $\bm{K}_* = k(x_*, \bm{x})$ and $K_{**} = k(x_*,x_*)$.
+The conditional distribution can then be derived using the rule of conditioning for Gaussian distributions: $$y_* | x_*, \bm{x}, \bm{y} \sim \mathcal{N}(m_* + \bm{K}^\top_* (\bm{K} + \sigma^2 \bm{I})^{-1}(\bm{y}-\bm{m}), K_{**} - \bm{K}^\top_* (\bm{K} + \sigma^2 \bm{I})^{-1} \bm{K}_*).$$
+\item To implement a GP with squared exponential kernel and $\ls = 1$, we need the inverse of $\bm{K}$. $\bm{x}$ being a vector implies that we have only one feature and thus the entries of our matrix $\bm{K}$ are 
+$$
+\bm{K} = \begin{pmatrix} 1 & \exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ \exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1 \end{pmatrix}.
+$$
+The inverse of $\bm{K}$ is then given by $$
+\frac{1}{1-\exp(-(x^{(1)} - x^{(2)})^2)} \begin{pmatrix} 1 & -\exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ -\exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1 \end{pmatrix}.
+$$
+If we have a noisy GP, we would have to add $\sigma^2 \bm{I}_2$ to $\bm{K}$ with resulting inverse 
+
+$$
+\bm{K}_y^{-1} = \frac{1}{(1+\sigma^2)^2-\exp(-(x^{(1)} - x^{(2)})^2)} \begin{pmatrix} 1+\sigma^2 & -\exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ -\exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1+\sigma^2 \end{pmatrix}.
+$$
+Assuming a zero mean GP, we can derive $\frac{\partial \bm{K}_y}{\partial \theta}$ with $\theta = \sigma^2$, which gives us the identity matrix. We can thus maximize the marginal likelihood (slide on \emph{Gaussian Process Training}), by finding $\sigma^2$ that yields 
+$$\text{tr}\left( \bm{K}_y^{-1} \bm{y} \bm{y}^\top \bm{K}_y^{-1} - \bm{K}_y^{-1} \right) = 0.$$
+This can be solved analytically (though quite tedious). We will use a root-finding function for this. For the posterior predictive distribution we can make use of the results from the previous exercise.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(kernlab)}
+
+\hlcom{# set seed, define n, true (unknown) sigma}
+\hlkwd{set.seed}\hlstd{(}\hlnum{4212}\hlstd{)}
+\hlstd{n} \hlkwb{<-} \hlnum{2}
+\hlstd{sigma} \hlkwb{<-} \hlnum{1}
+
+\hlcom{# define kernel with l = 1}
+\hlstd{kernel_fun} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)}
+  \hlkwd{kernelMatrix}\hlstd{(}\hlkwc{kernel} \hlstd{=} \hlkwd{rbfdot}\hlstd{(}\hlkwc{sigma} \hlstd{=} \hlnum{1}\hlopt{/}\hlnum{2}\hlstd{),}
+               \hlkwc{x} \hlstd{= x)}
+\hlstd{kernel_fun_pred} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,}\hlkwc{y}\hlstd{)}
+  \hlkwd{kernelMatrix}\hlstd{(}\hlkwc{kernel} \hlstd{=} \hlkwd{rbfdot}\hlstd{(}\hlkwc{sigma} \hlstd{=} \hlnum{1}\hlopt{/}\hlnum{2}\hlstd{),}
+               \hlkwc{x} \hlstd{= x,} \hlkwc{y} \hlstd{= y)}
+
+\hlcom{# draw data according to the generating process:}
+\hlstd{x} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(n)}
+\hlstd{K} \hlkwb{<-} \hlkwd{kernel_fun}\hlstd{(x)}
+\hlstd{K_y} \hlkwb{<-} \hlstd{K} \hlopt{+} \hlkwd{diag}\hlstd{(}\hlkwd{rep}\hlstd{(sigma}\hlopt{^}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlstd{(y} \hlkwb{<-} \hlkwd{t}\hlstd{(mvtnorm}\hlopt{::}\hlkwd{rmvnorm}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwc{sigma} \hlstd{= K_y)))}
+\end{alltt}
+\begin{verbatim}
+##          [,1]
+## [1,] 2.012317
+## [2,] 1.866819
+\end{verbatim}
+\begin{alltt}
+\hlcom{# function to find the best sigma^2}
+\hlstd{root_fun} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{sigmaSq}\hlstd{)\{}
+  \hlstd{K_y_inv} \hlkwb{<-} \hlkwd{solve}\hlstd{(K} \hlopt{+} \hlkwd{diag}\hlstd{(}\hlkwd{rep}\hlstd{(sigmaSq,}\hlnum{2}\hlstd{)))}
+  \hlnum{0.5}\hlopt{*}\hlkwd{sum}\hlstd{(}\hlkwd{diag}\hlstd{(K_y_inv}\hlopt{%*%}\hlstd{y}\hlopt{%*%}\hlkwd{t}\hlstd{(y)}\hlopt{%*%}\hlstd{K_y_inv} \hlopt{-} \hlstd{K_y_inv))}
+\hlstd{\}}
+
+\hlcom{# get the best sigma}
+\hlstd{(bestSigmaSq} \hlkwb{<-} \hlkwd{uniroot}\hlstd{(}\hlkwc{f} \hlstd{= root_fun,} \hlkwc{interval} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{20}\hlstd{)))}\hlopt{$}\hlstd{root}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.943684
+\end{verbatim}
+\begin{alltt}
+\hlcom{# plot the optimization problem and best sigma}
+\hlstd{possible_sigvals} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{0.001}\hlstd{,}\hlnum{20}\hlstd{,}\hlkwc{l}\hlstd{=}\hlnum{1000}\hlstd{)}
+\hlkwd{plot}\hlstd{(possible_sigvals,} \hlkwd{sapply}\hlstd{(possible_sigvals, root_fun),}
+     \hlkwc{xlab} \hlstd{=} \hlkwd{expression}\hlstd{(sigma}\hlopt{^}\hlnum{2}\hlstd{),} \hlkwc{ylab} \hlstd{=} \hlstr{"marginal likelihood derivative"}\hlstd{,}
+     \hlkwc{pch} \hlstd{=} \hlnum{20}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h}\hlstd{=}\hlnum{0}\hlstd{,} \hlkwc{lty}\hlstd{=}\hlnum{2}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwc{v}\hlstd{=bestSigmaSq}\hlopt{$}\hlstd{root,} \hlkwc{lty}\hlstd{=}\hlnum{2}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-1} 
+\begin{kframe}\begin{alltt}
+\hlcom{# function to draw samples from the predictive posterior}
+\hlstd{draw_from_pred_posterior} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{number_samples}\hlstd{,} \hlkwc{y}\hlstd{,} \hlkwc{x}\hlstd{,} \hlkwc{xstar}\hlstd{,} \hlkwc{sigmaSq} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{\{}
+
+  \hlcom{# invert noisy K}
+  \hlstd{K_y_inv} \hlkwb{<-} \hlkwd{solve}\hlstd{(}\hlkwd{kernel_fun}\hlstd{(x)} \hlopt{+} \hlkwd{diag}\hlstd{(}\hlkwd{rep}\hlstd{(sigmaSq,}\hlnum{2}\hlstd{)))}
+  \hlcom{# get the other K's for new data}
+  \hlstd{Kstar} \hlkwb{<-} \hlkwd{kernel_fun_pred}\hlstd{(x,xstar)}
+  \hlstd{Kstarstar} \hlkwb{<-} \hlkwd{kernel_fun}\hlstd{(xstar)}
+  \hlcom{# draw samples according to Ex. (d)}
+  \hlkwd{rnorm}\hlstd{(number_samples,}
+        \hlkwc{mean} \hlstd{=} \hlkwd{as.numeric}\hlstd{(}\hlkwd{t}\hlstd{(Kstar)} \hlopt{%*%} \hlstd{K_y_inv} \hlopt{%*%} \hlstd{y),}
+        \hlkwc{sd} \hlstd{=} \hlkwd{sqrt}\hlstd{(}\hlkwd{as.numeric}\hlstd{(Kstarstar} \hlopt{-} \hlkwd{t}\hlstd{(Kstar)} \hlopt{%*%} \hlstd{K_y_inv} \hlopt{%*%} \hlstd{Kstar))}
+  \hlstd{)}
+
+\hlstd{\}}
+
+\hlcom{# draw enough samples to get a feeling for the distribution}
+\hlstd{samples_posterior} \hlkwb{<-}
+       \hlkwd{draw_from_pred_posterior}\hlstd{(}\hlkwc{number_samples} \hlstd{=} \hlnum{1000}\hlstd{,} \hlkwc{sigmaSq} \hlstd{= bestSigmaSq}\hlopt{$}\hlstd{root,}
+                                \hlkwc{y} \hlstd{= y,} \hlkwc{x} \hlstd{= x,} \hlkwc{xstar} \hlstd{=} \hlnum{0}\hlstd{)}
+\hlcom{# plot the distribution}
+\hlkwd{hist}\hlstd{(samples_posterior,} \hlkwc{breaks}\hlstd{=}\hlnum{50}\hlstd{,} \hlkwc{xlab}\hlstd{=}\hlkwd{expression}\hlstd{(y[}\hlstr{"*"}\hlstd{]}\hlopt{^}\hlstd{b))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-2} 
+\end{knitrout}
+
+\end{enumerate}
+}
+\end{document}

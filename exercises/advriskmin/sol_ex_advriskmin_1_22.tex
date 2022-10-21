@@ -1,0 +1,439 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{a4wide,paralist}
+\usepackage{amsmath, amssymb, xfrac, amsthm}
+\usepackage{dsfont}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{bm}
+
+
+\input{../../style/common}
+
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+	\fi
+}
+
+\DeclareRobustCommand{\myboxshow}[2][gray!20]{%
+%	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+%	\fi
+}
+
+
+%exercise numbering
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand\labelenumi{\theenumi}
+
+
+\font \sfbold=cmssbx10
+
+\setlength{\oddsidemargin}{0cm} \setlength{\textwidth}{16cm}
+
+
+\sloppy
+\parindent0em
+\parskip0.5em
+\topmargin-2.3 cm
+\textheight25cm
+\textwidth17.5cm
+\oddsidemargin-0.8cm
+\pagestyle{empty}
+
+\newcommand{\kopf}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfic}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Live Session #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfsl}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Supervised Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newenvironment{allgemein}
+	{\noindent}{\vspace{1cm}}
+
+\newcounter{aufg}
+\newenvironment{aufgabe}[1]
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}: #1}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newcounter{loes}
+\newenvironment{loesung}[1]
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}: #1}\\\noindent}
+	{\bigskip}
+	
+\newenvironment{bonusaufgabe}
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}*\footnote{This
+	is a bonus exercise.}:}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newenvironment{bonusloesung}
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}*:}\\\noindent}
+	{\bigskip}
+
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+
+
+\kopfsl{1}{Risk Minimization Regression}
+
+
+\loesung{Risk Minimizers for Generalized L2-Loss}{
+
+
+\begin{enumerate}
+
+  \item 
+  
+  For the optimal constant model $\fx = \bm{\theta}$ for the loss  $\Lxy=  \big(m(y)-m(\fx)\big)^2,$ we first apply the following substitution $z^{(i)} = m(\yi)$ for each $i=1,\ldots,n,$ and introduce $\bm{\theta}_m = m(\bm{\theta}) \in m(\R).$ 
+%  
+ Note that the inverse of $m$ is continuous and strictly monotone as well, so that the minimizer of the initial optimization problem, i.e.,
+%
+$$
+\min_{f \in \Hspace} \riskef =  \min_{\bm{\theta} \in \R} \sumin ( m(\yi) - m(\bm{\theta}))^2. 
+$$
+%
+is the same as for the ``substituted'' optimization problem, i.e.,
+%
+%
+$$
+m^{-1} \left( \min_{\bm{\theta}_m \in  m(\R)} \sumin (z^{(i)} - \bm{\theta}_m )^2\right) .
+$$
+%
+For the term in the brackets we have seen in the lecture (optimizer of the empirical L2 risk) that
+%
+$$  \argmin_{\bm{\theta}_m \in  m(\R)} \sumin (z^{(i)} - \bm{\theta}_m )^2 =   \frac1n  \sumin  z^{(i)} =   \frac1n  \sumin m(\yi)  . $$
+%
+Consequently, 
+%
+$$\fxh = m^{-1}\left(  \frac1n \sum_{i=1}^n m(\yi)  \right)$$
+%
+is the optimal constant model for $L$.
+ %
+ 
+\item First, note that
+%
+\begin{align*}
+%
+  \risk_L\left(\fh \right) 
+  %
+  &=  \E_{xy} [\Lxy]      \\
+  %
+  &=   \E_{xy} [ \big(m(y)-m(\fxh)\big)^2 ]      \\
+%  
+  &=   \E_{xy} \left[ \left(   m(y) -  \frac1n \sum_{i=1}^n m(\yi)    \right)^2 \right]  \\
+  %  
+  &=   \E_{xy} \left[    m(y)^2  \right]  - 2 \E_{xy} \left[    m(y)   \frac1n \sum_{i=1}^n m(\yi)  \right]  +    \E_{xy} \left[ \left(\frac1n \sum_{i=1}^n m(\yi)\right) \left(\frac1n \sum_{i=1}^n m(\yi)\right)   \right] . \\
+  % 
+%
+\end{align*}
+%
+Now, because $y^{(1)},\ldots,y^{(n)}$ are i.i.d.\ with $\E_{xy} \left[ m(\yi) \right] = \E_{xy} \left[  m(y) \right],$ we get
+%
+\begin{align*}
+%	
+	\E_{xy} \left[    m(y)   \frac1n \sum_{i=1}^n m(\yi)  \right] 
+%	
+	&= \frac1n \E_{xy} \left[    m(y)    \sum_{i=1}^n m(\yi)  \right] \\
+%	
+	&= \frac1n \E_{xy} \left[    m(y)   \right]  \E_{xy} \left[   \sum_{i=1}^n m(\yi)  \right] \\
+	%	
+	&= \frac1n \E_{xy} \left[    m(y)   \right]  n \E_{xy} \left[  m(y) \right] = \E_{xy} \left[  m(y) \right]^2.
+%	
+\end{align*}
+%
+Similarly,
+%
+\begin{align*}
+%	
+	\E_{xy} \left[ \left(\frac1n \sum_{i=1}^n m(\yi)\right) \left(\frac1n \sum_{i=1}^n m(\yi)\right)   \right]
+%	
+	&= \frac{1}{n^2} \left(	\sum_{i=1}^n	\E_{xy} \left[   m(\yi)  \left( \sum_{i=1}^n m(\yi)\right)   \right]		\right) \\
+%	
+	&=  \frac{1}{n^2} \left(	\sum_{i=1}^n	\E_{xy} \left[   m(\yi)^2 + \sum_{j \neq i}  m(\yi) m(y^{(j)})   \right]		\right) \\
+	%	
+	&=  \frac{1}{n^2} \left(\sum_{i=1}^n	\E_{xy} \left[   m(\yi)^2  \right] +  	\sum_{i=1}^n \sum_{j \neq i} \E_{xy} \left[ m(\yi) m(y^{(j)})   \right]		\right) \\
+%	
+	&=  \frac{1}{n^2} \left( n	\E_{xy} \left[   m(y)^2  \right] +  	\sum_{i=1}^n \sum_{j \neq i} \E_{xy} \left[ m(\yi)  \right]	 \E_{xy} \left[ m(y^{(j)})   \right]		\right) \\
+%	
+	&=  \frac{1}{n^2} \left( n	\E_{xy} \left[   m(y)^2  \right] +  n(n-1) \E_{xy} \left[  m(y)   \right]^2		\right) \\
+	%	
+	&=  \frac1n	\E_{xy} \left[   m(y)^2  \right] +   (1-\frac1n) \E_{xy} \left[  m(y)   \right]^2	. \\
+%	
+\end{align*}
+
+%
+So, combining the three later math displays, we obtain
+%
+\begin{align*}
+	%
+	\risk_L\left(\fh \right) 
+	% 
+	&=   \E_{xy} \left[    m(y)^2  \right]  - 2 \E_{xy} \left[    m(y)   \frac1n \sum_{i=1}^n m(\yi)  \right]  +    \E_{xy} \left[ \frac1n \sum_{i=1}^n m(\yi)    \right]  \\
+	%
+	&=  \E_{xy} \left[    m(y)^2  \right]  - 2 \E_{xy} \left[  m(y) \right]^2 + \frac1n	\E_{xy} \left[   m(y)^2  \right] +   (1-\frac1n) \E_{xy} \left[  m(y)   \right]^2 \\
+%	
+	&= \left( 1 + \frac1n \right) \left(   \E_{xy} \left[    m(y)^2  \right]  -  \E_{xy} \left[    m(y)  \right] ^2			\right) \\
+%	
+	&= \left( 1 + \frac1n \right) \var(m(y)).
+	%
+\end{align*}
+% 
+\item In order to derive the risk minimizer, we consider the unrestricted hypothesis space $\Hspace = \{f: \Xspace \to \R\}$. 
+%
+	By the law of total expectation
+		\begin{eqnarray*}
+			\risk_L\left(f \right)  &=& \E_{xy} \left[\Lxy\right] 
+			\\ &=& \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right] \\
+			&=& \E_x
+			\left[\E_{y|x}\left[(m(y)- m(\fx))^2~|\xv\right]\right]. 
+		\end{eqnarray*} 
+	%	
+	Since $\Hspace$ is unrestricted we can choose $f$ as we wish: At any point $\xv = \xv$ we can predict any value $c$ we want. The best point-wise prediction is 
+	$$
+	\fxbayes = \mbox{argmin}_c \E_{y|x}\left[( m(y) - m(c) )^2 ~|~ \xv  \right]\overset{(*)}{=} m^{-1} \left(  \E_{y|x}\left[ m(y) ~|~ \xv \right] \right),
+	$$
+%	
+	where $(*)$ is due to 
+%	
+	\begin{align*}
+%		
+		\mbox{argmin}_c \E\left[(m(y) - m(c))^2\right] 
+%		
+		&= \mbox{argmin}_c \underbrace{\E\left[( m(y) - m(c) )^2\right] - \left(\E[ m(y)] - m(c) \right)^2}_{= \var[ m(y) - m(c)] = \var[m(y)]} + \left(\E[m(y)] - m(c)\right)^2 \\
+%		
+		&=   \mbox{argmin}_c \var[m(y)] + \left(\E[m(y)] - m(c)\right)^2 
+%		
+		= m^{-1} \left( \E[m(y)]\right) , 
+%		
+	\end{align*}
+	%
+	because $\var[m(y)] $ does not depend on $c.$
+% 
+Note that we could have used a similar substitution as in (a) here to derive $\fbayes.$
+%
+Furthermore, if we use $m(x)=x$ such that the considered loss coincides with the L2 loss, we get (quite naturally) the same best point-wise prediction as for the L2 loss. 
+%
+Using an $m$ corresponding to another notion of mean (e.g., harmonic or geometric mean), the best point-wise prediction for that other mean is obtained in each case.
+%
+\item The optimal constant model in terms of the (theoretical) risk can be obtained from the previous by forgetting the conditioning on point $\xv = \xv,$ which leads to 
+%
+	$$
+	\bar{f}(\xv) =   m^{-1} \left(  \E_{y }\left[ m(y)  \right] \right).
+	$$
+% 
+	The risk of the latter is $\var(m(y)):$
+%	
+	\begin{align*}
+%		
+		\risk_L\left(\bar{f} \right) 
+		%
+		=  \E_{xy} [ \big(m(y)-m( \bar{f}(\xv) )\big)^2 ]  
+		%
+		= \E_{y} [ \big(m(y)-  \E_{y }\left[ m(y)  \right] \big)^2 ] = \var(m(y)).  
+%		
+	\end{align*}
+%	
+%
+\item The Bayes regret can be decomposed as follows: 
+%
+\begin{align*}
+%	
+	\risk_L\left(\hat f\right) - \riskbayes_{L} 
+%	
+	&= \underbrace{\left[\risk_L\left(\hat f\right) - \inf_{f \in \Hspace} \risk_L(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk_L(f) - \riskbayes_{L}\right]}_{\text{approximation error}}.
+%	
+\end{align*}
+%
+If we consider as the hypothesis space
+%
+$\Hspace = \{ f:\Xspace \to \R \, | \,  \fx = \bm{\theta}  \ \forall \xv \in \Xspace  \},$ i.e.,  the set of constant models, then the estimation error is
+%
+\begin{align*}
+	%	 
+	\risk_L\left(\hat f\right) - \inf_{f \in \Hspace} \risk_L(f)
+	%	 
+	&= \underbrace{\risk_L\left(\hat f\right)}_{ \overset{(b)}{=} \left( 1 + \frac1n \right) \var(m(y))} -  \underbrace{\risk_L(\bar{f})}_{\overset{(d)}{=} \var(m(y))}
+%	
+	&= \left( 1 + \frac1n \right) \var(m(y)) - \var(m(y)) = \frac1n  \var(m(y)),
+	%	
+\end{align*}
+%
+while the approximation error is
+%
+%
+\begin{align*}
+	%	 
+	\inf_{f \in \Hspace} \risk_L(f) - \riskbayes_{L}
+	%	 
+	&=  \underbrace{\risk_L(\bar{f})}_{\overset{(d)}{=} \var(m(y))} - \risk_L(\fbayes) \\
+	%	
+	&=   \var(m(y))  -  \E_x
+	\left[\E_{y|x}\left[(m(y)- m(  \fxbayes ))^2~|~ \xv ~ \right]\right]  \\
+%	
+	&= \var(m(y))  -  \E_x
+	\left[\E_{y|x}\left[ \left(m(y)- m( m^{-1} (  \E_{y|x}\left[ m(y) ~|~ \xv \right] ) )\right)^2~|~ \xv~ \right]\right]  \\
+%	
+	&= \var(m(y))  -  \E_x \Big[
+	\underbrace{\E_{y|x} \left[(m(y)-  \E_{y|x}\left[ m(y) ~|~ \xv \right]  )^2~|~ \xv ~ \right]}_{ = \var\left[ m(y) ~|~ \xv ~ \right]  } \Big]  \\
+	%	
+	&= \var(m(y))  -  \E_x
+	\left[  \var\left[ m(y) ~|~ \xv ~ \right] \right]    \\
+%	
+	&= \var\Big(  \E_{y|x}\left[ m(y) ~|~ \xv ~ \right] \Big).
+	%	
+\end{align*}
+%
+Note that the larger the sample size $n$ the lower the estimation error, while the approximation error remains constant.
+%
+
+\end{enumerate}
+}
+\end{document}

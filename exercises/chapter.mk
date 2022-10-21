@@ -1,34 +1,18 @@
-EX = $(shell find . -maxdepth 1 -type f \( -iname "ex_*.Rnw" -o -iname "sol_*.Rnw" -o -iname "collection_*.Rnw" \))
+EX = $(shell find . -maxdepth 1 -type f \( -iname "ex_*.Rnw" -o -iname "sol_*.Rnw" -o -iname "ic_*.Rnw" -o -iname "collection_*.Rnw" \))
 EXS = $(EX:%.Rnw=%.pdf)
 
-.PHONY: exercises-pdf $(EXS)
-
-all:
-	@if [ -d "../../latex-math" ]; then\
-		make texclean;\
-		make $(EXS);\
-		make texclean;\
-	else\
-		echo "Cannot find 'latex-math' in root directory";\
-	fi
-
-exercises-pdf:
-	@if [ -d "../../latex-math" ]; then\
-		make texclean;\
-		make $(EXS);\
-		make copy;\
-		make texclean;\
-	else\
-		echo "Cannot find 'latex-math' in root directory";\
-	fi
+all: rmpdf texclean $(EXS) texclean copy
 
 $(EXS): %.pdf: %.Rnw
 	Rscript -e 'setwd("$(dir $<)"); knitr::knit2pdf("$(notdir $<)")'
-
-copy:
-	find . -maxdepth 1 -type f \( -iname "ex_*.pdf" -o -iname "sol_*.pdf" \) -exec cp {}  ../../exercises-pdf \;
-
-texclean:
+	
+copy: 
+	find . -maxdepth 1 -type f \( -iname "ex_*.pdf" -o -iname "sol_*.pdf" -o -iname "ic_*.pdf" \) -exec cp {}  ../../exercises-pdf \;
+	
+rmpdf: 
+	find . -maxdepth 1 -type f \( -iname "ex_*.pdf" -o -iname "sol_*.pdf" -o -iname "ic_*.pdf" -o -iname "collection_*.pdf" \) -exec rm {} \; 
+	
+texclean: 
 	rm -rf *.out
 	rm -rf *.dvi
 	rm -rf *.log

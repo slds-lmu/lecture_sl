@@ -1,0 +1,448 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{a4wide,paralist}
+\usepackage{amsmath, amssymb, xfrac, amsthm}
+\usepackage{dsfont}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{bm}
+
+
+\input{../../style/common}
+
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+	\fi
+}
+
+\DeclareRobustCommand{\myboxshow}[2][gray!20]{%
+%	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+%	\fi
+}
+
+
+%exercise numbering
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand\labelenumi{\theenumi}
+
+
+\font \sfbold=cmssbx10
+
+\setlength{\oddsidemargin}{0cm} \setlength{\textwidth}{16cm}
+
+
+\sloppy
+\parindent0em
+\parskip0.5em
+\topmargin-2.3 cm
+\textheight25cm
+\textwidth17.5cm
+\oddsidemargin-0.8cm
+\pagestyle{empty}
+
+\newcommand{\kopf}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfic}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Live Session #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfsl}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Supervised Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newenvironment{allgemein}
+	{\noindent}{\vspace{1cm}}
+
+\newcounter{aufg}
+\newenvironment{aufgabe}[1]
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}: #1}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newcounter{loes}
+\newenvironment{loesung}[1]
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}: #1}\\\noindent}
+	{\bigskip}
+	
+\newenvironment{bonusaufgabe}
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}*\footnote{This
+	is a bonus exercise.}:}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newenvironment{bonusloesung}
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}*:}\\\noindent}
+	{\bigskip}
+
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+
+\kopfsl{2}{Risk Minimization Classification} 
+
+
+\loesung{Risk Minimizers for 0-1-Loss}{
+
+
+\begin{enumerate}
+
+  \item 
+  The empirical risk of any $h \in 
+  \Hspace = \{ h:\Xspace \to \Yspace \, | \,  \hx = \bm{\theta}  \ \forall \xv \in \Xspace  \}$ 
+  for the 0-1-loss, i.e.,
+  %
+  $$
+  \Lhxy = \mathds{1}_{\{y \ne \hx\}} =
+  \footnotesize \begin{cases} 1, \quad \text{ if } y \ne \hx, \\ 0, \quad    \text{ if } y = \hx,  \end{cases}
+  $$
+  is 
+  %
+  \begin{align*}
+%  	
+  	\bar\risk_\text{emp}(h) 
+%  	
+  	&= \sum_{i=1}^n \mathds{1}_{\{\yi \ne \hxi\}} \\
+%  	
+	&= \sum_{i:  \yi = 1 } \mathds{1}_{\{1 \ne \hxi\}} + \sum_{i:  \yi = 2 } \mathds{1}_{\{2 \ne \hxi\}} + \ldots + \sum_{i:  \yi = g } \mathds{1}_{\{g \ne \hxi\}} \\
+%	
+	&= \sum_{j=1}^g \sum_{i:  \yi = j } \mathds{1}_{\{j \ne \hxi\}} \\
+	%	
+	&= \sum_{j=1}^g \sum_{i:  \yi = j } \mathds{1}_{\{j \ne  \bm{\theta} \}}. \tag{constant model}
+%  	
+  \end{align*}
+%  
+For any $\bm{\theta}\in \Yspace$ and $j\in \Yspace$ we write 
+%
+$$m_j(\bm{\theta}) = \sum_{i:  \yi = j } \mathds{1}_{\{j \ne  \bm{\theta} \}},$$ 
+%
+i.e., the number of mistakes over the data set for class $j$ by predicting $\bm{\theta}.$
+%
+Further let 
+%
+$$n_j = \sum_{i=1  }^n \mathds{1}_{\{\yi = j\}}$$
+%
+be the number of occurrences of the class $j$ in the data set.
+%
+If $k = \bm{\theta},$ then $m_k(\bm{\theta}) = 0$ and for any $j\neq k$ it holds that $m_j(\bm{\theta}) = n_j.$
+%
+In words, if $\bm{\theta}$ coincides with $k,$ then we make no mistake for this class $k,$ while \emph{for all} other classes $j$ we make each time a mistake.
+
+Let $j^*$ be the mode of $y^{(1)},\ldots,y^{(n)},$ i.e., the class which appears the most\footnote{Break ties arbitrarily.}.
+%
+Note that by definition $n_{j^*} \geq n_j$ for any $j \neq j^*.$
+%
+With this, we obtain that
+%
+\begin{align*}
+%	
+	\bar\risk_\text{emp}(h) 
+%	
+	&= \sum_{j=1}^g \sum_{i:  \yi = j } \mathds{1}_{\{j \ne  \bm{\theta} \}} 
+%	
+	= \sum_{ j \neq  \bm{\theta}} n_j 
+%	
+	\geq \sum_{ j \neq  j^*} n_j 
+%	
+	= \bar\risk_\text{emp}(\hat{h}),
+%	
+\end{align*}
+%
+since  $\hxh =  \text{mode} \left\{\yi\right\} = j^*.$ 
+ 
+\item Recall that the point-wise optimizer for the 0-1-loss over all possible discrete classifiers $\hx$  is
+%
+\begin{eqnarray*}  
+	\hxbayes &=& \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xv).
+\end{eqnarray*}
+%
+Hence, we obtain the optimal constant model from the previous by forgetting the conditioning on $\xv,$ which leads to 
+%
+$$
+\bar{h}(\xv) =   \argmax_{l \in \Yspace} \P(y = l ).
+$$
+%
+Recall that we can write the 0-1-loss as follows:
+%
+\begin{align} \label{eq_alt_01_loss_repr}
+%	
+	\Lhxy 
+%	
+	= \mathds{1}_{\{y \ne \hx\}} 
+%	
+	= \sum_{k\in \Yspace} \mathds{1}_{\{y = k\}} \mathds{1}_{\{y \ne \hx\}}
+%	
+	= \sum_{k\in \Yspace} \mathds{1}_{\{y = k\}} \mathds{1}_{\{k \ne \hx\}}
+%	
+	= \sum_{k\in \Yspace} \mathds{1}_{\{y = k\}} L(k, h(\xv) ).
+%	
+\end{align}
+%
+With this, the risk of $\bar{h}$ is
+%
+\begin{align*}
+%	
+	\risk_L(\bar{h})  
+%	
+	&=  \Exy\left[  L(y,\bar{h}(\xv)) \right] \\
+%	
+	&=  \E_x \left[ \E_{y|x} [ L(y, \bar{h}(\xv)) ~|~ \xv = \xv ] \right] \tag{Law of total expectation} \\
+%	
+	&=  \E_x \left[ \E_{y|x} \left[ \sum_{k \in \Yspace} \mathds{1}_{\{y  = k \}} L(k, \bar{h}(\xv)) ~|~ \xv = \xv \right] \right] \tag{By \eqref{eq_alt_01_loss_repr}} \\
+%	
+	&=  \E_x \left[ \sum_{k \in \Yspace} L(k, \bar{h}(\xv)) \E_{y|x}  \left[  \mathds{1}_{\{y  = k \}} ~|~ \xv = \xv  \right] \right] \tag{Linearity of cond. expectation} \\
+%	
+	&= \E_x \left[\sum_{k \in \Yspace} L(k, \bar{h}(\xv)) \P(y = k~|~ \xv = \xv)\right] \tag{Expectation of an indicator random variable} \\ 
+%	
+	&= \sum_{k \in \Yspace} \E_x \left[ L(k, \bar{h}(\xv)) \P(y = k~|~ \xv = \xv)\right] \tag{Linearity of  expectation} \\
+	%	
+	&= \sum_{k \in \Yspace} L(k, \bar{h}(\xv))  \E_x \left[ \P(y = k~|~ \xv = \xv)\right] \tag{$\bar{h}$ is constant in $\xv$} \\
+	%	
+	&= \sum_{k \in \Yspace} L(k, \bar{h}(\xv))  \P(y = k) \tag{Law of total probability} \\
+%	
+	&= \sum_{k \in \Yspace} \mathds{1}_{\{k \ne \hx \}}  \P(y = k)   \\
+%	
+	&= \sum_{k \in \Yspace} \mathds{1}_{\{k \ne   \argmax_{l \in \Yspace} \P(y = l ) \}}  \P(y = k)   \\
+%	
+	&= 1 - \max_{l \in \Yspace} \P(y = l).
+%	
+\end{align*}
+
+\item By recalling the definition of the approximation error:
+%
+\begin{align*}
+%	
+	\inf_{h \in \Hspace} \risk_L(h) - \riskbayes_{L} 
+%	
+	&= \underbrace{\risk_L(\bar{h})}_{\overset{(b)}{=} 1 - \max_{l \in \Yspace} \P(y = l)}  - \underbrace{\riskbayes_{L}}_{\overset{Lec.}{=} 1 - \E_x \left[\max_{l \in \Yspace} \P(y = l~|~ \xv = \xv)\right] } \\
+%	
+	&= \E_x \left[\max_{l \in \Yspace} \P(y = l~|~ \xv = \xv)\right] - \max_{l \in \Yspace} \P(y = l). 
+%	
+\end{align*}
+
+
+\item For any probabilistic classifier $\pi$ in the hypothesis space of probabilistic classifiers
+%
+$\Hspace = \{ \pi:\Xspace \to [0,1]    \},$
+%
+we can write the probabilistic 0-1-loss as 
+%
+$$\Lpixy = \mathds{1}_{\{ \pix\geq 1/2  \}}  \mathds{1}_{\{ y=0 \}} + \mathds{1}_{\{ \pix< 1/2  \}} \mathds{1}_{\{ y=1 \}}  \left( { \footnotesize  = \begin{cases}
+	1, & \mbox{if ($\pix\geq 1/2$ \& $y=0$) or ($\pix< 1/2$ \& $y=1$), } \\
+	0, & \mbox{else. }
+\end{cases}  } \right) .$$
+%
+We use our usual ``unraveling trick'' by means of the law of total expectation:
+%
+\begin{align*}
+%	
+	\Exy\left[  L(y,\pi(\xv)) \right] 
+	%	
+	&=  \E_x \left[ \E_{y|x} [ L(y, \pi(\xv)) ~|~ \xv = \xv ] \right]  
+%	
+\end{align*}
+%
+and consider then minimization of $ \E_{y|x} [ L(y, \pi(\xv)) ~|~ \xv = \xv ]$ by choosing $ \pi$ point-wise, i.e., for any point $\xv$.
+%
+With the alternative form of $L$, we obtain
+%
+\begin{align*}
+%	
+	\E_{y|x} &[ L(y, \pi(\xv)) ~|~ \xv = \xv ]  \\
+%	
+	&= \E_{y|x} [ \mathds{1}_{\{ \pix\geq 1/2  \}}  \mathds{1}_{\{ y=0 \}} + \mathds{1}_{\{ \pix< 1/2  \}} \mathds{1}_{\{ y=1 \}} ~|~ \xv = \xv ] \\
+	%	
+	&= \E_{y|x} [ \mathds{1}_{\{ \pix\geq 1/2  \}}  \mathds{1}_{\{ y=0 \}}  ~|~ \xv = \xv ] \quad +  \E_{y|x} [ \mathds{1}_{\{ \pix< 1/2  \}} \mathds{1}_{\{ y=1 \}} ~|~ \xv = \xv ] \tag{Linearity of expectation} \\
+%	
+	&=  \mathds{1}_{\{ \pix\geq 1/2  \}}  \cdot \E_{y|x} [ \mathds{1}_{\{ y=0 \}}  ~|~ \xv = \xv ] ~ + \mathds{1}_{\{ \pix< 1/2  \}} \cdot \E_{y|x} [ \mathds{1}_{\{ y=1 \}} ~|~ \xv = \xv ] \tag{$\mathds{1}_{\{ \pix\geq 1/2  \}}$ and $\mathds{1}_{\{ \pix < 1/2  \}}$ are non-random given $\xv$ }\\
+%
+	&=  \mathds{1}_{\{ \pix\geq 1/2 \}}  \P(y = 0~|~ \xv = \xv) \qquad ~ ~ + \mathds{1}_{\{ \pix < 1/2 \}} \P(y = 1~|~ \xv = \xv). \tag{Expectation of an indicator random variable} 
+%	
+\end{align*}
+%
+We can distinguish between two cases:
+%
+\begin{itemize}
+%	
+	\item If $ \P(y = 0~|~ \xv = \xv) \geq  \P(y = 1~|~ \xv = \xv) $ (or  $\P(y = 0~|~ \xv = \xv)\geq 1/2$), then any $\pix$ such that $\pix < 1/2$ minimizes $\E_{y|x} [ L(y, \pi(\xv)) ~|~ \xv = \xv ] .$
+	
+%	
+	\item If $ \P(y = 0~|~ \xv = \xv) \leq  \P(y = 1~|~ \xv = \xv) $ (or  $\P(y = 0~|~ \xv = \xv)\leq 1/2$), then any $\pix$ such that $\pix \geq 1/2$ minimizes $\E_{y|x} [ L(y, \pi(\xv)) ~|~ \xv = \xv ] .$
+%	
+\end{itemize}
+%
+Thus, any $\pi$ of the form
+%
+\begin{align} \label{def_minim_prob_class}
+%	
+	\pix 
+%	
+	= \begin{cases}
+			< 1/2 , & \mbox{if $\P(y = 0~|~ \xv = \xv)\geq 1/2,$} \\
+			\geq 1/2 ,    & \mbox{if $\P(y = 0~|~ \xv = \xv)< 1/2,$} 
+	\end{cases}
+%	
+\end{align}
+%
+minimizes $	\Exy\left[  L(y,\pi(\xv)) \right]$ over $\Hspace = \{ \pi:\Xspace \to [0,1]    \}.$
+%
+The posterior distribution $p_{y|x}(1 ~|~ \xv)$ is quite naturally of this form, but it is in general not the only $\pi$ of this kind.
+%
+As a consequence, the minimizer is not unique.
+
+\emph{(Dis-)advantages.}  The posterior distribution $p_{y|x}$ is the \emph{ground-truth} we seek to find with our (empirical) loss minimization approach. 
+%
+Thus, the corresponding loss function should give an incentive for any learning algorithm to find this ground-truth by minimizing the loss function.
+%
+This is the case for strictly proper scoring rules like the cross-entropy or log-loss (Bernoulli-loss), but as we have just seen not the case for the probabilistic 0-1-loss.
+%
+In light of this, it is not a good idea to use the probabilistic 0-1-loss for learning probabilistic classifiers, as the probabilistic classifiers learned might be different from our actual ground-truth posterior distribution.
+%
+However, one could defend the 0-1 probabilistic loss here as well, since the minimizing probabilistic classifiers in \eqref{def_minim_prob_class} at least have the ``correct form'' in the sense that the class probabilities are on the right side of $1/2.$
+
+
+\end{enumerate}
+}
+\end{document}

@@ -1,0 +1,364 @@
+\documentclass[a4paper]{article}
+\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}}}
+\makeatother
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\makeatletter
+\@ifundefined{AddToHook}{}{\AddToHook{package/xcolor/after}{
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+}}
+\makeatother
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{a4wide,paralist}
+\usepackage{amsmath, amssymb, xfrac, amsthm}
+\usepackage{dsfont}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{bytefield}
+\usepackage{csquotes}
+\usepackage[breakable, theorems, skins]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{bm}
+
+
+\input{../../style/common}
+
+\tcbset{enhanced}
+
+\DeclareRobustCommand{\mybox}[2][gray!20]{%
+	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+	\fi
+}
+
+\DeclareRobustCommand{\myboxshow}[2][gray!20]{%
+%	\iffalse
+	\begin{tcolorbox}[   %% Adjust the following parameters at will.
+		breakable,
+		left=0pt,
+		right=0pt,
+		top=0pt,
+		bottom=0pt,
+		colback=#1,
+		colframe=#1,
+		width=\dimexpr\linewidth\relax,
+		enlarge left by=0mm,
+		boxsep=5pt,
+		arc=0pt,outer arc=0pt,
+		]
+		#2
+	\end{tcolorbox}
+%	\fi
+}
+
+
+%exercise numbering
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand\labelenumi{\theenumi}
+
+
+\font \sfbold=cmssbx10
+
+\setlength{\oddsidemargin}{0cm} \setlength{\textwidth}{16cm}
+
+
+\sloppy
+\parindent0em
+\parskip0.5em
+\topmargin-2.3 cm
+\textheight25cm
+\textwidth17.5cm
+\oddsidemargin-0.8cm
+\pagestyle{empty}
+
+\newcommand{\kopf}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfic}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Introduction to Machine Learning \hfill Live Session #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newcommand{\kopfsl}[2]{
+\hrule
+\vspace{.15cm}
+\begin{minipage}{\textwidth}
+%akwardly i had to put \" here to make it compile correctly
+	{\sf\bf Supervised Learning \hfill Exercise sheet #1\\
+	 \url{https://slds-lmu.github.io/i2ml/} \hfill #2}
+\end{minipage}
+\vspace{.05cm}
+\hrule
+\vspace{1cm}}
+
+\newenvironment{allgemein}
+	{\noindent}{\vspace{1cm}}
+
+\newcounter{aufg}
+\newenvironment{aufgabe}[1]
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}: #1}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newcounter{loes}
+\newenvironment{loesung}[1]
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}: #1}\\\noindent}
+	{\bigskip}
+	
+\newenvironment{bonusaufgabe}
+	{\refstepcounter{aufg}\textbf{Exercise \arabic{aufg}*\footnote{This
+	is a bonus exercise.}:}\\ \noindent}
+	{\vspace{0.5cm}}
+
+\newenvironment{bonusloesung}
+	{\refstepcounter{loes}\textbf{Solution \arabic{loes}*:}\\\noindent}
+	{\bigskip}
+
+
+
+\begin{document}
+% !Rnw weave = knitr
+
+
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+
+\kopfsl{7}{Information Theory}
+
+
+
+\loesung{Kullback-Leibler Divergence}{
+
+\begin{enumerate}
+\item Let $f$ be the pmf of the $Bin(n,p)$ distribution and $q$ the density of the $\mathcal{N}(\mu, \sigma^2)$.
+\begin{enumerate}
+\item $$D_{KL}(f||q) = \mathbb{E}_{f}[\log \frac{f(X)}{q(X,\theta)}] = \mathbb{E}_{f}[\log f(X)] - \mathbb{E}_{f}[\log q(X|\theta)]$$
+\item For the gradients, we must derive the partial derivatives of the second part of the KLD. The involved log-density is $$\log q(X|\theta) = const. - 0.5 \log \sigma^2 - \frac{1}{2\sigma^2} (X-\mu)^2 .$$
+\begin{itemize}
+\item[] 
+\begin{equation}
+\partial D_{KL}(f||q) / \partial \mu = \partial - \mathbb{E}_f \log [q(X|\theta)] = \mathbb{E}_f \frac{1}{\sigma^2} (X-\mu) 
+\label{eq:I}
+\end{equation}
+\item[] 
+\begin{equation}
+\partial D_{KL}(f||q) / \partial \sigma^2 = \partial - \mathbb{E}_f \log [q(X|\theta)] = \mathbb{E}_f [\frac{1}{2\sigma^2} + \frac{-1}{2\sigma^4} (X-\mu)^2] 
+\label{eq:II}
+\end{equation}
+\end{itemize}
+\item Yes, there is. We can first set (\ref{eq:I}) to zero and get: $\mu = \mathbb{E}_f(X) \Leftrightarrow \mu = np$. We then use this solution for the second equation (\ref{eq:II}), which we also set to zero first:
+$$
+(\ref{eq:II}) = 0 \Leftrightarrow \sigma^2 = \mathbb{E}_f[(X-\mu)^2] = \text{Var}_f(X) + (\mathbb{E}_f[X-\mu])^2 = np(1-p) + (\mathbb{E}_f[X-\mu])^2.
+$$ 
+Using $\mu = np$, the second term vanishes and we get the optimal $\sigma^2  = np(1-p) = \text{Var}_f(X)$. Note that we would have to prove that the second derivative is $<0$ to be sure that we found a minimum!
+\item We could, alternatively, use the gradients and do gradient descent to find the optimal $\thetab$.
+\end{enumerate}
+\item 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{nr_points} \hlkwb{=} \hlnum{1000}
+\hlstd{p} \hlkwb{=} \hlnum{0.5}
+\hlstd{n} \hlkwb{=} \hlnum{100}
+\hlcom{# create data}
+\hlstd{X} \hlkwb{<-} \hlkwd{rbinom}\hlstd{(nr_points,} \hlkwc{prob} \hlstd{= p,} \hlkwc{size} \hlstd{= n)}
+
+\hlcom{# define different Normal density functions}
+\hlstd{normal_optimal} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{dnorm}\hlstd{(x,} \hlkwc{mean} \hlstd{= n}\hlopt{*}\hlstd{p,} \hlkwc{sd} \hlstd{=} \hlkwd{sqrt}\hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)))}
+\hlstd{normal_shift} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{dnorm}\hlstd{(x,} \hlkwc{mean} \hlstd{= n}\hlopt{*}\hlstd{p} \hlopt{-} \hlnum{10}\hlstd{,} \hlkwc{sd} \hlstd{=} \hlkwd{sqrt}\hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)))}
+\hlstd{normal_scale_increase} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{dnorm}\hlstd{(x,} \hlkwc{mean} \hlstd{= n}\hlopt{*}\hlstd{p,} \hlkwc{sd} \hlstd{=} \hlkwd{sqrt}\hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p))}\hlopt{*}\hlnum{2}\hlstd{)}
+\hlstd{normal_right_scale_decrease} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{)} \hlkwd{dnorm}\hlstd{(x,} \hlkwc{mean} \hlstd{= n}\hlopt{*}\hlstd{p} \hlopt{+} \hlnum{20}\hlstd{,} \hlkwc{sd} \hlstd{= p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p))}
+
+\hlkwd{hist}\hlstd{(X,} \hlkwc{breaks} \hlstd{=} \hlnum{25}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{10}\hlstd{,} \hlnum{100}\hlstd{),} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlkwd{curve}\hlstd{(normal_optimal,} \hlkwc{from} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{to} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{add} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"green"}\hlstd{)}
+\hlkwd{curve}\hlstd{(normal_shift,} \hlkwc{from} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{to} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{add} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"blue"}\hlstd{)}
+\hlkwd{curve}\hlstd{(normal_scale_increase,} \hlkwc{from} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{to} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{add} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"orange"}\hlstd{)}
+\hlkwd{curve}\hlstd{(normal_right_scale_decrease,} \hlkwc{from} \hlstd{=} \hlnum{10}\hlstd{,} \hlkwc{to} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{add} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-2-1} 
+\end{knitrout}
+
+For these distributions, we get the following KL divergence values (up to an additive constant):
+
+$$
+D_{KL}(f||q) = const. + 0.5 \log \sigma^2 + \frac{1}{2\sigma^2} (\text{Var}_f(X) + (np-\mu)^2))
+$$
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{kld_value} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{mu}\hlstd{,}\hlkwc{sigma2}\hlstd{)}
+\hlstd{\{}
+  \hlnum{0.5}\hlopt{*}\hlkwd{log}\hlstd{(sigma2)} \hlopt{+}
+    \hlnum{0.5} \hlopt{*} \hlstd{(sigma2)}\hlopt{^}\hlstd{(}\hlopt{-}\hlnum{1}\hlstd{)} \hlopt{*} \hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)} \hlopt{+} \hlstd{(n}\hlopt{*}\hlstd{p} \hlopt{-} \hlstd{mu)}\hlopt{^}\hlnum{2}\hlstd{)}
+\hlstd{\}}
+\hlstd{(optimal_green} \hlkwb{<-} \hlkwd{kld_value}\hlstd{(n}\hlopt{*}\hlstd{p,n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)))}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.109438
+\end{verbatim}
+\begin{alltt}
+\hlstd{(shift_blue} \hlkwb{<-} \hlkwd{kld_value}\hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{-}\hlnum{10}\hlstd{,n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)))}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.109438
+\end{verbatim}
+\begin{alltt}
+\hlstd{(scale_increase_orange} \hlkwb{<-} \hlkwd{kld_value}\hlstd{(n}\hlopt{*}\hlstd{p,n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)}\hlopt{*}\hlnum{4}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.427585
+\end{verbatim}
+\begin{alltt}
+\hlstd{(right_scale_decrease_red} \hlkwb{<-} \hlkwd{kld_value}\hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{+}\hlnum{20}\hlstd{, (p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p))}\hlopt{^}\hlnum{2}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## [1] 3398.614
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\item Since we are now required to calculate the exact KLD values, we would also have to calculate $\mathbb{E}_f(\log f(X))$, which is somewhat more difficult. If you search the internet for a solution ($\rightarrow$ ``entropy of a binomial distribution''), you will find an approximate solution using the de-Moivre-Laplace theorem. Alternatively, we could make use of the central limit theorem, but then we would just approximate $f$ with a normal distribution with $\mu = np$ and $\sigma^2 = np(1-p)$, which would give us a constant KLD of zero (the very same happens if you use the first approximation using the de-Moivre-Laplace-theorem). We here instead will approximate the expectation using a large sample from the true underlying distribution:
+$$
+D_{KL}(f||q) \approx \frac{1}{B} \sum_{b=1}^B [\log f(X) - \log q(X|\mu = np, \sigma^2 = np(1-p))]
+$$
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{p_seq} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{0.01}\hlstd{,} \hlnum{0.99}\hlstd{,} \hlkwc{l} \hlstd{=} \hlnum{100}\hlstd{)}
+\hlstd{n_seq} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{10}\hlstd{,} \hlnum{500}\hlstd{,} \hlkwc{by} \hlstd{=} \hlnum{100}\hlstd{)}
+\hlstd{B} \hlkwb{<-} \hlnum{10000}
+
+\hlstd{kld_value_approx} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{n}\hlstd{,}\hlkwc{p}\hlstd{)\{}
+
+  \hlcom{# sample a large number of data points from true distribution}
+  \hlstd{x} \hlkwb{<-} \hlkwd{rbinom}\hlstd{(B,} \hlkwc{prob} \hlstd{= p,} \hlkwc{size} \hlstd{= n)}
+
+  \hlcom{# approximate the mean; threshold values to 0 if < 0 due}
+  \hlcom{# to the approximation}
+  \hlkwd{pmax}\hlstd{(}
+    \hlkwd{mean}\hlstd{(}
+      \hlkwd{dbinom}\hlstd{(x,} \hlkwc{prob} \hlstd{= p,} \hlkwc{size} \hlstd{= n,} \hlkwc{log} \hlstd{=} \hlnum{TRUE}\hlstd{)} \hlopt{-}
+        \hlkwd{dnorm}\hlstd{(x,} \hlkwc{mean} \hlstd{= n}\hlopt{*}\hlstd{p,} \hlkwc{sd} \hlstd{=} \hlkwd{sqrt}\hlstd{(n}\hlopt{*}\hlstd{p}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p)),} \hlkwc{log} \hlstd{=} \hlnum{TRUE}\hlstd{),}
+      \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}
+    \hlstd{),}
+    \hlnum{0}\hlstd{)}
+
+\hlstd{\}}
+
+\hlstd{kld_val} \hlkwb{<-} \hlkwd{sapply}\hlstd{(n_seq,} \hlkwa{function}\hlstd{(}\hlkwc{this_n}\hlstd{)}
+  \hlkwd{sapply}\hlstd{(p_seq,} \hlkwa{function}\hlstd{(}\hlkwc{this_p}\hlstd{)} \hlkwd{kld_value_approx}\hlstd{(this_n, this_p)))}
+
+\hlstd{cols} \hlkwb{=} \hlkwd{rev}\hlstd{(}\hlkwd{colorRampPalette}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{'darkred'}\hlstd{,}\hlstr{'red'}\hlstd{,}\hlstr{'blue'}\hlstd{,}\hlstr{'lightblue'}\hlstd{))(}\hlnum{50}\hlstd{))}
+
+\hlkwd{filled.contour}\hlstd{(}\hlkwc{x} \hlstd{= p_seq,} \hlkwc{y} \hlstd{= n_seq,} \hlkwc{z} \hlstd{= kld_val,}
+               \hlkwc{xlab} \hlstd{=} \hlstr{"p"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"n"}\hlstd{,}
+               \hlkwc{col} \hlstd{= cols}
+               \hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
+\end{knitrout}
+\item Based on the previous result, one can see that the KLD is very close to zero but has larger values for very small or very large values of $p$ and / in combination with a small number of experiments $n$. These are exactly the cases where the normal approximation of a binomial distribution does not work so well. 
+\end{enumerate}
+}
+\end{document}
