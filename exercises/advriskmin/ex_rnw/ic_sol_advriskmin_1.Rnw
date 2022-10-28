@@ -37,7 +37,7 @@
     The risk minimizer for the L2 loss is the conditional mean. Considering that the hypothesis space is now restricted to constant models, $f(x)$ is a constant for any $x$. The optimal constant model in terms of the theoretical risk for the L2 loss is the expected value over $y$.
     \lz
     $$
-    \bar{f}(x) = \E_{y_{|x}} \left[ y_{|x} \right] = \E_y[y]
+    \hat{f}(x) = \E_{y_{|x}} \left[ y_{|x} \right] = \E_y[y]
     $$
     
     The \href{https://github.com/slds-lmu/lecture_i2ml/blob/master/slides/mathrefresher/slides-probability-theory.pdf}{Law of total expectation} can be used in this case:
@@ -57,7 +57,7 @@
     To obtain the risk of the optimal constant model, the definition can be used: 
     \lz
     \begin{align*}
-      \risk_L(\bar{f}) &= \E_{xy} \left[ (y - \bar{f}(x) )^2 \right]\\
+      \risk_L(\hat{f}) &= \E_{xy} \left[ (y - \hat{f}(x) )^2 \right]\\
       &= \E_{xy} \left[ (y - a)^2 \right]\\
       &= \E_y [ y^2 ] - 2a \underbrace{\E_y[y]}_{a} + a^2 \\
       &= \E_y [ y^2 ] - a^2 
@@ -77,7 +77,7 @@
     Using this result, the risk can be calculated:
     
     $$
-    \risk_L(\bar{f})= 1 + b^2 \frac{100}{3}
+    \risk_L(\hat{f})= 1 + b^2 \frac{100}{3}
     $$
   	  
 
