@@ -8,14 +8,14 @@
  Note that the inverse of $m$ is continuous and strictly monotone as well, so that the minimizer of the initial optimization problem, i.e.,
 %
 $$
-\min_{f \in \Hspace} \riskef =  \min_{\bm{\theta} \in \R} \sumin ( m(\yi) - m(\bm{\theta}))^2. 
+\argmin_{f \in \Hspace} \riskef =  \argmin_{\bm{\theta} \in \R} \sumin ( m(\yi) - m(\bm{\theta}))^2. 
 $$
 %
 is the same as for the ``substituted'' optimization problem, i.e.,
 %
 %
 $$
-m^{-1} \left( \min_{\bm{\theta}_m \in  m(\R)} \sumin (z^{(i)} - \bm{\theta}_m )^2\right) .
+m^{-1} \left( \argmin_{\bm{\theta}_m \in  m(\R)} \sumin (z^{(i)} - \bm{\theta}_m )^2\right) .
 $$
 %
 For the term in the brackets we have seen in the lecture (optimizer of the empirical L2 risk) that
@@ -87,7 +87,7 @@ So, combining the three later math displays, we obtain
 	%
 	\risk_L\left(\fh \right) 
 	% 
-	&=   \E_{xy} \left[    m(y)^2  \right]  - 2 \E_{xy} \left[    m(y)   \frac1n \sum_{i=1}^n m(\yi)  \right]  +    \E_{xy} \left[ \frac1n \sum_{i=1}^n m(\yi)    \right]  \\
+	&=   \E_{xy} \left[    m(y)^2  \right]  - 2 \E_{xy} \left[    m(y)   \frac1n \sum_{i=1}^n m(\yi)  \right]  +     \E_{xy} \left[ \left(\frac1n \sum_{i=1}^n m(\yi)\right) \left(\frac1n \sum_{i=1}^n m(\yi)\right)   \right]  \\
 	%
 	&=  \E_{xy} \left[    m(y)^2  \right]  - 2 \E_{xy} \left[  m(y) \right]^2 + \frac1n	\E_{xy} \left[   m(y)^2  \right] +   (1-\frac1n) \E_{xy} \left[  m(y)   \right]^2 \\
 %	
