@@ -34,7 +34,7 @@ and assume that your loss function of interest is $\Lxy= \big(m(y)-m(\fx)\big)^2
 	%
 	Show that the former is $\frac1n \var(m(y)),$ while the latter is $\var\Big(  \E_{y|x}\left[ m(y) ~|~ \xv \right] \Big)$ for the optimal constant model $\fxh$ if the hypothesis space $\Hspace$ consists of the constant models. 
 	
-	\emph{Hint:} Use the law of total variance, which states that $ \var(Y) = \E_X\left[\var(Y~|~X)\right] + \var(  \E_{Y|X} \left[ Y ~|~ X \right] ),$ where the conditional variance is defined as $\var(Y~|~X) = \E_X \left[  \big(Y - \E_{Y|X}(Y ~|~X)\Big)^2 ~|~X \right].$
+	\emph{Hint:} Use the law of total variance, which states that $ \var(Y) = \E_X\left[\var(Y~|~X)\right] + \var(  \E_{Y|X} \left[ Y ~|~ X \right] ),$ where the conditional variance is defined as $\var_{Y|X}(Y~|~X) = \E_{Y|X} \left[  \big(Y - \E_{Y|X}(Y ~|~X)\Big)^2 ~|~X \right].$
   
 \end{enumerate}
   
