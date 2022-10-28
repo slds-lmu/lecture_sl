@@ -11,6 +11,7 @@
 *.DS_Store
 *.Rproj
 *.Rhistory
+*.Rbuildignore
 .Rproj.user
 .Rproj.user/
 cache/
