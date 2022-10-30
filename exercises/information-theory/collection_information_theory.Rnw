@@ -33,6 +33,23 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 	@
 }
 
+
+
+\aufgabe{The Convexity of KL Divergence}{
+	<<child="ex_rnw/ex_kld_convexity.Rnw">>=
+	@
+}
+
+\aufgabe{Mutual Information of Three Variables}{
+	<<child="ex_rnw/ex_mutualinfo_three_var.Rnw">>=
+	@
+}
+
+\aufgabe{Smoothed Cross-Entropy Loss}{
+	<<child="ex_rnw/ex_smoothed_crossentropy.Rnw">>=
+	@
+}
+
 % 
 % % ------------------------------------------------------------------------------
 % % PAST EXAMS
