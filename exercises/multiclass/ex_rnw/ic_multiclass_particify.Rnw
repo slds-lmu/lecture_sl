@@ -1,0 +1,4 @@
+\begin{enumerate} 
+  \item
+    Log in to \href{https://partici.fi/63221686}{Particify}  and try to answer the questions for Week 5.
+\end{enumerate}
