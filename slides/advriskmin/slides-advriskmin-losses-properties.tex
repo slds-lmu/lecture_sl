@@ -174,7 +174,7 @@ strongly affected by large residuals than others.
   the number of continuous derivatives. 
   \item A function is said to be $\mathcal{C}^k$ if it is $k$ times 
   continuously differentiable. A function is $\mathcal{C}^\infty$ if it is 
-  continuously differently for all orders $k$. 
+  continuously differentiable for all orders $k$. 
   \item Derivative-based methods require a certain level of smoothness of the 
   risk function $\risket$. 
   \begin{itemize}
@@ -258,9 +258,9 @@ towards (0, 0) and compromises the original objective's smoothness.
   \riske\left(\thetab\right) + (1 - t) \cdot \riske\left(\tilde \thetab \right)
   $$
   $\forall$ $t \in [0, 1], ~\thetab, \tilde \thetab \in \Theta$
-  (strictly convex if the above holds with equality).
+  (strictly convex if the above holds without equality).
   \item In optimization, convex optimization problems are desirable because 
-  they have a number of conventient properties. 
+  they have a number of convenient properties. 
   \item In particular, it holds for convex problems that local optima are 
   global optima \\$\rightarrow$ a strictly convex function has at most 
   \textbf{one} global minimum (uniqueness). 
@@ -302,7 +302,7 @@ The choice of the loss function may also impact convergence behavior.
 
 \vspace{0.2cm}
 
-In the extreme case of \textbf{complete separation} optimization might even 
+In the extreme case of \textbf{complete separation}, optimization might even 
 fail entirely. Consider the following scenario:
 
 \vspace{0.5cm}
