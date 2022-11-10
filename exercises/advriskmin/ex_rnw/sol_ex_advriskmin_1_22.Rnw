@@ -46,7 +46,7 @@ is the optimal constant model for $L$.
 %
 \end{align*}
 %
-Now, because $y^{(1)},\ldots,y^{(n)}$ are i.i.d.\ with $\E_{xy} \left[ m(\yi) \right] = \E_{xy} \left[  m(y) \right],$ we get
+Now, because $y,y^{(1)},\ldots,y^{(n)}$ are i.i.d.\ with $\E_{xy} \left[ m(\yi) \right] = \E_{xy} \left[  m(y) \right],$ we get
 %
 \begin{align*}
 %	
