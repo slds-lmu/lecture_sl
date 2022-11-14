@@ -14,7 +14,7 @@
 	
 	\begin{enumerate}
     \item
-      What is $\hbayes?$ 
+      What is $\hxbayes?$ 
   	  \lz
   	  \lz 
   	  \lz 

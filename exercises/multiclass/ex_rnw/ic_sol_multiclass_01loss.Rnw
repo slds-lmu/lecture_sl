@@ -1,10 +1,10 @@
 \begin{enumerate}
   \item 
-  	As seen in the \href{https://github.com/slds-lmu/lecture_sl/blob/main/slides-pdf/slides-advriskmin-classification-01.pdf}{0-1-Loss presentation, slide 2}, the discrete classifier that minimizes the risk $\hbayes$ (The Bayes optimal classifier) is:
+  	As seen in the \href{https://github.com/slds-lmu/lecture_sl/blob/main/slides-pdf/slides-advriskmin-classification-01.pdf}{0-1-Loss presentation, slide 2}, the discrete classifier that minimizes the risk $\hxbayes$ (the Bayes optimal classifier) is:
   	
   	\begin{align*}
   	  \hxbayes &=  \argmax_{l \in \Yspace } \ \ \underbrace{\P(y = l~|~ _{\xv = \xv})}_{\sim \mathrm{Unif} \{1,\ldots,x\} } \\
-  	  &=  \argmax \frac{1}{x} \cdot \I_{[1\leq l\leq x]}
+  	  &=  \argmax \frac{1}{x} \cdot \mathds{1}_{[1\leq l\leq x]}
   	\end{align*}
 
     As the distribution of $y$ given $x$ is uniform , any value between 1 and $x$ is optimal.
@@ -34,13 +34,13 @@
     The optimal constant model can be obtained by forgetting the conditioning on x, leading to:
     
     \begin{align*}
-      \hxh = \argmax_{l \in \Yspace } \ \ \P(y = l)
+      \bar{h} (x) = \argmax_{l \in \Yspace } \ \ \P(y = l)
     \end{align*}
     
     Using the law of total probability:
     \begin{align*}
-      \hxh &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \P(y = l~|~ _{\xv = \xv}) \cdot \P(\xv = \xv) \\
-      &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \frac{1}{x} \cdot  \I_{[1\leq l \leq x]} \cdot \frac{1}{10} \\
+      \bar{h} (x) &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \P(y = l~|~ _{\xv = \xv}) \cdot \P(\xv = \xv) \\
+      &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \frac{1}{x} \cdot  \mathds{1}_{[1\leq l \leq x]} \cdot \frac{1}{10} \\
       &= \argmax_{l \in \Yspace } \begin{cases}
             \frac{7381}{25200}, & l=1 \\
             \frac{7381}{25200} - \frac{1}{10}, & l=2 \\ 
@@ -53,7 +53,7 @@
     As the probability is monotonically decreasing with $l$, we can conclude that the optimal constant model is :
     
     \begin{align*}
-      \hxh = 1
+      \bar{h} (x) = 1
     \end{align*}
     \lz
   \item
@@ -61,7 +61,7 @@
     The Risk is calculated by:
     
     \begin{align*}
-      \R_L(\hh) &= 1 - \max \P ( y =l) \\
+      \R_L(\bar{h}) &= 1 - \max \P ( y =l) \\
       &= 1 -  \P (y=1) \\
       &= 1 - \frac{7381}{25200} 
     \end{align*}
