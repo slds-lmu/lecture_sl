@@ -10,7 +10,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{4}{Multiclass Classification}
 
-\aufgabe{Multiclass Classification with 0-1-Loss}{
-	<<child="ex_rnw/ic_multiclass_01loss.Rnw">>=
+\loesung{Multiclass Classification with 0-1-Loss}{
+	<<child="ex_rnw/ic_sol_multiclass_01loss.Rnw">>=
 	@
 }
