@@ -8,5 +8,25 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{6}{Information Theory - Exercises TBD}
+\kopfsl{6}{Information Theory}
 
+
+
+\aufgabe{The Convexity of KL Divergence}{
+	<<child="ex_rnw/ex_kld_convexity.Rnw">>=
+	@
+}
+
+\aufgabe{Mutual Information of Three Variables}{
+	<<child="ex_rnw/ex_mutualinfo_three_var.Rnw">>=
+	@
+}
+
+\aufgabe{Smoothed Cross-Entropy Loss}{
+	<<child="ex_rnw/ex_smoothed_crossentropy.Rnw">>=
+	@
+}
+
+\begin{thebibliography}{}
+\bibitem{szegedy16rethinking} Szegedy, Christian, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, and Zbigniew Wojna. "Rethinking the inception architecture for computer vision." In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 2818-2826. 2016.
+\end{thebibliography}
