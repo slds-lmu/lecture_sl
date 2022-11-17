@@ -1,0 +1,32 @@
+Label smoothing (a.k.a. smoothed cross-entropy loss) \cite{szegedy16rethinking} is a widely used trick in deep learning classification tasks. It can help to alleviate the "over-confidence" issue of the model and increase robustness. In the conventional cross-entropy loss, we aim to minimize the KL-divergence between $d$ and $\pi(\mathbf{x} | \theta)$, where the ground truth distribution $d$ is a delta-distribution (i.e., only $d_k = 1$ for the ground truth class), and $\pi(\mathbf{x} |\mathbf{\theta})$ is the predicted distribution by the model $\pi$ parametrized by $\mathbf{\theta}$. The key step in label smoothing is to smooth the ground truth distribution. Specifically, given a hyper-parameter $\beta$ (e.g., $\beta = 0.1$), we uniformly distribute the ``energy" with the amount of $\beta$ to all the $g$ classes and reduce the ``energy" of the ground truth class. Consequently, the smoothed ground truth distribution $\tilde{d}$ is
+
+\begin{equation}
+    \tilde{d}_k = 
+    \begin{cases}
+        \frac{\beta}{g} & \text{for} \ d_k = 0; \\
+        1 - \beta + \frac{\beta}{g} & \text{for} \ d_k = 1. \\
+    \end{cases}
+\end{equation}
+The smoothed cross-entropy is then $D_{KL}(\tilde{d} || \pi(\mathbf{x}| \theta))$. \\
+
+\begin{enumerate}
+
+  \item What is the empirical risk when using the smoothed cross entropy? (Hint: some terms can be merged into a constant and ignored during implementation).
+  \item How to implement the smoothed cross-entropy? We provide the signature of the function here as a reference: 
+  
+  <<>>=
+  #' @param label ground truth vector of the form (n_samples,).
+  #'  Labels should be "1","2","3" and so on.
+  #' @param pred Predicted probabilities of the form (n_samples,n_labels)
+  #' @param smoothing Hyperparameter for label-smoothing
+
+  smoothed_ce_loss <- function(
+  label,
+  pred,
+  smoothing){
+    return (loss)
+  }
+  @
+  
+  
+\end{enumerate}
