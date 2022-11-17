@@ -1,0 +1,12 @@
+ Let $X$, $Y$, and $Z$ be three discrete random variables. The mutual information of $X$, $Y$, and $Z$ is defined as:
+\begin{equation}
+    I(X; Y; Z) = \sum_x\sum_y\sum_z p(x, y, z) \log \left(\frac{p(x,y) p(x, z) p(y, z)}{p(x) p(y) p(z) p(x, y, z)} \right).
+\end{equation}
+
+\begin{enumerate}
+  \item Prove the lemma: $I(X; Y; Z) = I(X; Y) - H(X; Y | Z)$.\\
+  \item Prove the following relation with the above lemma:
+  \begin{equation}
+      I(X;Y) = I(X;Y|Z) + I(Y;Z) - I(Y;Z|X).
+  \end{equation}\
+\end{enumerate}
