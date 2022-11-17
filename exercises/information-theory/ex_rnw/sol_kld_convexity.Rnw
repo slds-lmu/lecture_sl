@@ -1,0 +1,15 @@
+
+\begin{enumerate}
+  \item 
+    We expand the left side of the inequality and obtain:
+    \begin{equation}
+        \begin{aligned}
+            & D_{KL}(\lambda p_1 + (1 - \lambda) p_2 || \lambda q_1 + (1 - \lambda) q_2 ) \\
+            &= \int_{\mathcal{X}} \left( \left( \lambda p_1(x) + (1 - \lambda) p_2(x)\right) \log \frac{\lambda p_1(x) + (1 - \lambda) p_2(x)}{\lambda q_1(x) + (1 - \lambda) q_2(x)} \right) \mathrm{d}x \\
+            &\leq \int_{\mathcal{X}} \left( \lambda p_1(x) \log \frac{p_1(x)}{q_1(x)} + (1 - \lambda) p_2(x) \log \frac{(1 - \lambda) p_2(x)}{(1 - \lambda) q_2(x)} \right) \mathrm{d}x \\
+            &= \lambda \int_\mathcal{X} \left(p_1(x) \log \frac{p_1(x)}{q_1(x)} \right) \mathrm{d}x + (1 - \lambda) \int_\mathcal{X} \left(p_2(x) \log \frac{p_2(x)}{q_2(x)} \right) \mathrm{d}x \\
+            &= \lambda D_{KL}(p_1 || q_1) + (1 - \lambda) D_{KL} (p_2 || q_2). \\
+        \end{aligned}
+    \end{equation}
+
+\end{enumerate}
