@@ -14,7 +14,7 @@
   %
   \begin{align*}
 %  	
-  	\risk_\text{emp}(h) 
+  	\riske(h) 
 %  	
   	&= \sum_{i=1}^n \mathds{1}_{\{\yi \ne \hxi\}} \\
 %  	
@@ -50,7 +50,7 @@ With this, we obtain that
 %
 \begin{align*}
 %	
-	\risk_\text{emp}(h) 
+	\riske(h) 
 %	
 	&= \sum_{j=1}^g \sum_{i:  \yi = j } \mathds{1}_{\{j \ne  \bm{\theta} \}} 
 %	
@@ -58,7 +58,7 @@ With this, we obtain that
 %	
 	\geq \sum_{ j \neq  j^*} n_j 
 %	
-	= \risk_\text{emp}(\hat{h}),
+	= \riske(\hat{h}),
 %	
 \end{align*}
 %
