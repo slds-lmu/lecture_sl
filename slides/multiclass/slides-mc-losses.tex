@@ -44,10 +44,10 @@ $$
 $$
 The optimal model for a loss function $\Lxy$ is
 $$
-  \fxh = \argmin_{f \in \Hspace} \sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xv)\,. $$
+  \fxbayes = \argmin_{f \in \Hspace} \sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xv)\,. $$
 Because we usually do not know $\Pxy$, we minimize the \textbf{empirical risk} as an approximation to the \textbf{theoretical} risk
 $$
-\fh = \argmin_{f \in \Hspace} \riske(f) = \argmin_{f \in \Hspace} \sumin \Lxyi.
+\fxh = \argmin_{f \in \Hspace} \riske(f) = \argmin_{f \in \Hspace} \sumin \Lxyi.
 $$
 \end{vbframe}
 
@@ -90,21 +90,21 @@ Example: Iris
 
 \begin{vbframe}{0-1-Loss}
 
-We have already seen that optimizer $\hxh$ of the theoretical risk using the 0-1-loss 
+We have already seen that the optimizer $\hxbayes$ of the theoretical risk using the 0-1-loss 
 $$ 
 L(y, \hx) = \mathds{1}_{\{y \neq \hx\}} 
 $$
 is the Bayes optimal classifier, with
 $$ 
-\hxh = \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xv)
+\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xv)
 $$
 and the optimal constant model (featureless predictor) 
 $$
-\hx = k, k \in \{1, 2, ..., g\} 
+\hxh = k, k \in \{1, 2, ..., g\} 
 $$
 is the classifier that predicts the most frequent class $k \in \{1, 2, ..., g\}$ in the data
 $$
-\hx = \text{mode} \left\{\yi\right\}.
+\hxh = \text{mode} \left\{\yi\right\}.
 $$
 \framebreak
 
@@ -126,12 +126,12 @@ $$
 $$
 \end{footnotesize}
 
-The optimal constant model $\pix = \left(\theta_1, ..., \theta_g\right)$ (outputting a vector of constant class probabilities) is  
+The optimal constant model $\pixh = \left(\theta_1, ..., \theta_g\right)$ (outputting a vector of constant class probabilities) is  
 
 \vspace*{-0.5cm}
 \begin{footnotesize}
   \begin{eqnarray*}
-    \pikx =\text{arg min}_{\theta_k} \riske(\theta) = \text{arg min}_{\theta_k} \left(\sumin \sum_{k = 1}^g \left(\mathds{1}_{\{\yi = k\}} - \theta_k\right)^2\right) 
+    \hat{\pi}_k(\xv) =\text{arg min}_{\theta_k} \riske(\theta) = \text{arg min}_{\theta_k} \left(\sumin \sum_{k = 1}^g \left(\mathds{1}_{\{\yi = k\}} - \theta_k\right)^2\right) 
       \end{eqnarray*}
       \end{footnotesize}
         We solve this by setting the derivative w.r.t. $\theta_k$ to 0
@@ -187,10 +187,10 @@ with $\pi_k(\xv)$ denoting the predicted probability for class $k$.
 
 \vspace*{0.2cm}
  
-The optimal constant model $\pix = \left(\theta_1, ..., \theta_g\right)$ (outputting a vector of constant class probabilities) is
+The optimal constant model $\pixh = \left(\theta_1, ..., \theta_g\right)$ (outputting a vector of constant class probabilities) is
 \begin{footnotesize}
 $$
-    \pikx = \theta_k = \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}},   
+    \hat{\pi}_k(\xv) = \theta_k = \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}},   
 $$
 \end{footnotesize}
  being the fraction of class-$k$ observations. \\
