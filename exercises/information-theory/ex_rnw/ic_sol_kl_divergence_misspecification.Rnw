@@ -1,0 +1,91 @@
+\begin{enumerate}
+    \item 
+        The Kullback-Leibler Divergence is defined as:
+        \begin{equation}
+            \begin{aligned}
+                D(g,f_\theta) &= \int_\infty^\infty log \left( \frac{g(x)}{f_\theta(x)} \right) g(x) dx \\ 
+                &= \underbrace{\int_\infty^\infty log(g(x)) g(x)}_{(a)} - \underbrace{\int_\infty^\infty log(f_\theta(x)) g(x)}_{(b)}
+            \end{aligned}
+        \end{equation}
+
+        As we are looking for the set of parameters $\theta$ that minimizes $D(g,f_\theta)$,  we know the following: 
+
+        \begin{itemize}
+            \item (a) does not depend on $\theta$, and can be considered as a constant.
+            \item To minimize $D(g,f_\theta)$ is equivalent to maximize (b)
+        \end{itemize}
+
+        Using the definition of the normal distribution:
+        
+        \begin{equation}\label{eq:solve_b}
+            \begin{aligned}
+                (b) &=  \int_\infty^\infty log(f_\theta(x)) g(x) \\
+                &= \int_\infty^\infty \left( log \left( \frac{1}{\sqrt{\sigma^2 2 \pi }} \right) - \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}\right) g(x) \\
+                &=   log \left( \frac{1}{\sqrt{\sigma^2 2 \pi }} \right)  \underbrace{\int_\infty^\infty g(x)}_{1} -   \int_\infty^\infty \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}  g(x) \\
+                &=   -log  \sqrt{\sigma^2 2 \pi }   \underbrace{ - \int_\infty^\infty \frac{1}{2} \frac{x^2 - 2 x \mu + \mu^2}{\sigma^2}  g(x)}_{(c)}
+            \end{aligned}
+        \end{equation}
+        
+        Solving the component (c) in the equation \ref{eq:solve_b} we get:
+
+        \begin{equation} \label{eq:solve_c}
+            \begin{aligned}
+                (c) &= - \frac{1}{2 \sigma^2} \underbrace{\int_\infty^\infty x^2 g(x)}_{\E_g(x^2) = \var_g(x) + \E_g[x]^2} 
+                + \frac{2\mu}{2\sigma^2} \underbrace{\int_\infty^\infty x g(x)}_{\E_g[x]}
+                - \frac{\mu^2}{2\sigma^2} \underbrace{\int_\infty^\infty g(x)}_{=1} \\
+                & = - \frac{\sigma_0^2 + \mu_0^2}{2\sigma^2} + \frac{\mu \mu_0}{\sigma^2} - \frac{\mu^2}{2\sigma^2}
+            \end{aligned}
+        \end{equation}
+        
+        Now, using the results obtained in \ref{eq:solve_b} and \ref{eq:solve_c}, we get the expression that we want to maximize:
+
+        \begin{equation} \label{eq:final_b}
+            \begin{aligned}
+                (b) = -log  \sqrt{\sigma^2 2 \pi } - \frac{\sigma_0^2 + \mu_0^2}{2\sigma^2} + \frac{\mu \mu_0}{\sigma^2} - \frac{\mu^2}{2\sigma^2}
+            \end{aligned}
+        \end{equation}
+
+
+        To maximize \ref{eq:final_b}, we derive the expression with respect to each parameter. We also need to do a second derivative to be sure that the point is a maximum.
+
+        First, we derive with respect to the mean parameter $\mu$:
+
+        \begin{equation}
+            \begin{aligned}
+                \frac{\partial (b)}{\partial \mu} &=  0 - 0 + \frac{\mu_0}{\sigma^2} - \frac{\mu}{\sigma^2} \overset{!}{=} 0 \longrightarrow \mu_{opt} = \mu_0 
+            \end{aligned}
+        \end{equation}
+
+        This value of $\mu$ is a possible maximum, we check the second derivative:
+        \begin{equation}
+            \begin{aligned}
+                \frac{\partial^2 (b)}{\partial^2 \mu} &= - \frac{1}{\sigma^2} < 0
+            \end{aligned}
+        \end{equation}
+
+        As the second derivative is less than 0 at any point, $\mu_{opt}$ minimizes the Kullback-Leibler divergence. We now derive with respect to the variance parameter $\sigma^2$:
+
+        \begin{equation}
+            \begin{aligned}
+                \frac{\partial (b)}{\partial \sigma^2} &= - \frac{1}{2\sigma^2}
+                    + \frac{\sigma_0^2 + \mu_0^2}{2\sigma^4}
+                    - \frac{\mu \mu_0}{\sigma^4}
+                    + \frac{\mu^2}{2\sigma^4} \\
+                &= - \frac{1}{2\sigma^2} + \frac{\sigma_0^2 + \mu_0^2 - 2 \mu \mu_0 + \mu^2}{2\sigma^4} \\
+                &= - \frac{1}{2\sigma^2} + \frac{\sigma_0^2 + (\mu - \mu_0)^2}{2\sigma^4} \overset{!}{=} 0 \longrightarrow \sigma_{opt}^2 = \sigma_0^2 + (\mu - \mu_0)^2 \\
+            \end{aligned}
+        \end{equation}
+
+    
+        This value of $\sigma^2$ is a possible maximum, we check the second derivative:
+
+        \begin{equation}
+            \begin{aligned}
+                \frac{\partial^2 (b)}{\partial^2 \sigma^2} &= \frac{1}{2\sigma^4}- \frac{ (\sigma_0^2 + (\mu - \mu_0)^2)}{\sigma^6} \\
+                \frac{\partial^2 (b)}{\partial^2 \sigma^2}\Big|_{\sigma^2 = \sigma_{opt}^2} &= \frac{1}{ 2 (\sigma_0^2 + (\mu - \mu_0)^2))^2} - \frac{1}{(\sigma_0^2 + (\mu - \mu_0)^2))^2} < 0
+            \end{aligned}
+        \end{equation}
+
+        As the second derivative is less than 0 at the point we are looking, $\sigma_{opt}^2$ minimizes the Kullback-Leibler Divergence. 
+            
+\end{enumerate}
