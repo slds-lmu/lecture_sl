@@ -9,11 +9,10 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopfsl{6}{Information Theory}
 
-
-\loesung{The Convexity of KL Divergence}
-	<<child="ex_rnw/sol_kld_convexity.Rnw">>=
+\loesung{Entropy}{
+	<<child="ex_rnw/sol_some_information.Rnw">>=
 	@
-
+}
 \loesung{The Mutual Information of Three Variables}
 	<<child="ex_rnw/sol_mutualinfo_three_var.Rnw">>=
 	@

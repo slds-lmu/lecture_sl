@@ -12,10 +12,11 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 
-\aufgabe{The Convexity of KL Divergence}{
-	<<child="ex_rnw/ex_kld_convexity.Rnw">>=
+\aufgabe{Entropy}{
+	<<child="ex_rnw/ex_some_information.Rnw">>=
 	@
 }
+
 
 \aufgabe{Mutual Information of Three Variables}{
 	<<child="ex_rnw/ex_mutualinfo_three_var.Rnw">>=
