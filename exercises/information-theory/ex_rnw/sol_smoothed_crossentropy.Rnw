@@ -1,17 +1,14 @@
 \begin{enumerate}
-\item 
-  The empirical risk is 
-  \begin{equation}
-      \begin{aligned}
-          R_{\text{emp}} 
-          &= \frac{1}{n} \sum_{i=1}^n \left(\sum_{k=1}^g \tilde{d}_k^{(i)} \log \left(\frac{\tilde{d}_k^{(i)}}{\pi_k(\mathbf{x}^{(i)} | \mathbf{\theta})} \right) \right) \\
-          &= \frac{1}{n} \sum_{i=1}^n \left(\sum_{k=1}^g \tilde{d}_k^{(i)} \log \tilde{d}_k^{(i)} - \tilde{d}_k^{(i)} \log \pi_k(\mathbf{x}^{(i)} | \mathbf{\theta}) \right) \\
-          &= - \frac{1}{n}\sum_{i=1}^n \sum_{k=1}^g  \tilde{d}_k^{(i)} \log \pi_k(\mathbf{x}^{(i)} | \mathbf{\theta})  + Const.\\
-      \end{aligned}
-  \end{equation}
-  
-\item 
-  The smoothed cross-entropy is implemented as follows: 
+    \item The empirical risk is 
+    \begin{equation}
+        \begin{aligned}
+            R_{\text{emp}} 
+            &= \frac{1}{n} \sum_{i=1}^n \left(\sum_{k=1}^g \tilde{d}_k^{(i)} \log \left(\frac{\tilde{d}_k^{(i)}}{\pi_k(\mathbf{x}^{(i)} | \mathbf{\theta})} \right) \right) \\
+            &= \frac{1}{n} \sum_{i=1}^n \left(\sum_{k=1}^g \tilde{d}_k^{(i)} \log \tilde{d}_k^{(i)} - \tilde{d}_k^{(i)} \log \pi_k(\mathbf{x}^{(i)} | \mathbf{\theta}) \right) \\
+            &= - \frac{1}{n}\sum_{i=1}^n \sum_{k=1}^g  \tilde{d}_k^{(i)} \log \pi_k(\mathbf{x}^{(i)} | \mathbf{\theta})  + Const.\\
+        \end{aligned}
+    \end{equation}
+    \item The smoothed cross-entropy is implemented as follows:
   <<>>=
   #' @param label ground truth vector of the form (n_samples,).
   #'  Labels should be "1","2","3" and so on.

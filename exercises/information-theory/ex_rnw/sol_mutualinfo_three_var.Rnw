@@ -1,28 +1,23 @@
-
 \begin{enumerate}
-  \item
-    According to the definition of mutual information, we have
-    \begin{equation}
-        \begin{aligned}
-            & I(X; Y) - H(X; Y | Z) \\
-            &= \sum_x \sum_y p(x,y) \log \frac{p(x, y)}{p(x) p(y)} - \sum_z \sum_x\sum_y p(z) p(x, y |z) \log \frac{p(x, y |z)}{p(x| z) p(y|z) }\\
-            &= \sum_x \sum_y \sum_z p(x,y,z) \log \frac{p(x, y)}{p(x) p(y)} - \sum_x \sum_y\sum_z p(x, y, z) \log \frac{p(x, y |z) p(z)^2}{p(x| z) p(y|z) p(z)^2 } \\
-            &= \sum_x \sum_y \sum_z p(x,y,z) \log \frac{p(x, y)}{p(x) p(y)} - \sum_x \sum_y\sum_z p(x, y, z) \log \frac{p(x, y, z) p(z)}{p(x, z) p(y, z)} \\
-            &= \sum_x\sum_y\sum_z p(x, y, z) \log \left(\frac{p(x,y) p(x, z) p(y, z)}{p(x) p(y) p(z) p(x, y, z)} \right) \\
-            &= I(X; Y; Z). \\
-        \end{aligned}
-    \end{equation}
+  \item According to the definition of mutual information, we have
+  \begin{equation}
+      \begin{aligned}
+          & I(X; Y) - I(X; Y | Z) \\
+          &= \sum_x \sum_y p(x,y) \log \frac{p(x, y)}{p(x) p(y)} - \underbrace{\sum_z \sum_x\sum_y p(z) p(x, y |z) \log \frac{p(x, y |z)}{p(x| z) p(y|z) }}_{\text{The definition of conditional mutual information}}\\
+          &= \sum_x \sum_y \sum_z p(x,y,z) \log \frac{p(x, y)}{p(x) p(y)} - \sum_x \sum_y\sum_z p(x, y, z) \log \frac{p(x, y |z) p(z)^2}{p(x| z) p(y|z) p(z)^2 } \\
+          &= \sum_x \sum_y \sum_z p(x,y,z) \log \frac{p(x, y)}{p(x) p(y)} - \sum_x \sum_y\sum_z p(x, y, z) \log \frac{p(x, y, z) p(z)}{p(x, z) p(y, z)} \\
+          &= \sum_x\sum_y\sum_z p(x, y, z) \log \left(\frac{p(x,y) p(x, z) p(y, z)}{p(x) p(y) p(z) p(x, y, z)} \right) \\
+          &= I(X; Y; Z). \\
+      \end{aligned}
+  \end{equation}
   
-  \item
-    Using the lemma we just proved, we obtain:
-    \begin{equation}
-        \begin{aligned}
-            & I(X;Y|Z) + I(Y;Z) - I(Y;Z|X) \\
-            &= I(X;Y) - I(X; Y; Z) + I(Y;Z) - I(Y;Z) + I(X; Y; Z) \\
-            &= I(X;Y). \\
-        \end{aligned}
-    \end{equation}
-  A recent paper~\cite{rong2022a} provides a good example of how this relation is used in the research of explainability.
-
+  \item  Using the lemma we just proved, we obtain:
+  \begin{equation}
+      \begin{aligned}
+          & I(X;Y|Z) + I(Y;Z) - I(Y;Z|X) \\
+          &= I(X;Y) - I(X; Y; Z) + I(Y;Z) - I(Y;Z) + I(X; Y; Z) \\
+          &= I(X;Y). \\
+      \end{aligned}
+  \end{equation}
+  (P.S., a recent paper~\cite{rong2022a} provides a good example of how this relation is used in the research of explainability.)
 \end{enumerate}
-
