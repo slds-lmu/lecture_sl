@@ -53,9 +53,9 @@ What is the difference between
 %
 \begin{itemize}
 	%	
-	\item a model which is obtained by (empirical) loss minimization of the alternative multiclass hinge loss in (b), and
+	\item a model which is obtained by (empirical) risk minimization of the alternative multiclass hinge loss in (b), and
 	%	
-	\item a one-vs-rest model obtained by (empirical) loss minimization of the binary hinge loss for the binary classifiers?
+	\item a one-vs-rest model obtained by (empirical) risk minimization of the binary hinge loss for the binary classifiers?
 	%	
 \end{itemize}
 %
