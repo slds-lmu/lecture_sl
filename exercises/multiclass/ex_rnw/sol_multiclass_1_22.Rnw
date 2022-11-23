@@ -6,7 +6,7 @@ $$ L_{0-1}(y,\hx) = \mathds{1}_{\{ y \ne \hx \}} \leq L(y,\fx) = \max_{k} \left(
 %
 where 
 %
-$$ \Hspace = \{  f=(f_1,\ldots,f_g)^\top: \Xspace \to \R^g ~|~ f_i:\Xspace \to \R, \ \forall i \in \Yspace  \}. $$
+$$ \Hspace = \{  f=(f_1,\ldots,f_g)^\top: \Xspace \to \R^g ~|~ f_k:\Xspace \to \R, \ \forall k \in \Yspace  \}. $$
 %
 and
 %

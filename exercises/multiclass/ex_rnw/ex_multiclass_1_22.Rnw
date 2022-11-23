@@ -47,7 +47,7 @@ Show that the upper bound in (b) coincides with the binary hinge loss $L(y,\fx)=
 Can we say something similar for the alternative multiclass hinge loss in (b)?
 %
 %
-\item Now consider the case in which the score functions are linear, i.e., $f_i(\xv)=\thetab_i^\top \xv$ for each $i \in \Yspace.$
+\item Now consider the case in which the score functions are linear, i.e., $f_k(\xv)=\thetab_k^\top \xv$ for each $k \in \Yspace.$
 %
 What is the difference between
 %
