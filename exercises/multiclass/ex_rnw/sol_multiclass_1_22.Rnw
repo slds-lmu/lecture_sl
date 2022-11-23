@@ -134,7 +134,7 @@ Then,
 \end{align*}
 %
 %
-\item Yes, we can state say something similar for the alternative multiclass hinge loss, namely that it is only zero if all the $g-1$ margin\textbf{s} are greater or equal $1,$ where the margins are $m_{y,k}(\xv) = f_y(\xv) - f_k(\xv)$ ($y$ is the true class and $k \in \Yspace\backslash\{y\}$).
+\item Yes, we can say something similar for the alternative multiclass hinge loss, namely that it is only zero if all the $g-1$ margin\textbf{s} are greater or equal $1,$ where the margins are $m_{y,k}(\xv) = f_y(\xv) - f_k(\xv)$ ($y$ is the true class and $k \in \Yspace\backslash\{y\}$).
 %
 Indeed, it holds that
 %
