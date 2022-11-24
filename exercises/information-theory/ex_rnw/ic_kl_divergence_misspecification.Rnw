@@ -1,17 +1,17 @@
-Consider a double-exponential distributed random variable $X$ with unknown parameters $\mu_0 \in \R$ and $\sigma_0 > 0$. In other words: $X\sim\text{DE}(\mu_0,\sigma_0)$ with the following distribution function:
+Consider a double-exponential distributed random variable $X$ with unknown parameters $\mu_0 \in \R$ and $\sigma_0 > 0$. In other words: $X\sim\text{DE}(\mu_0,\sigma_0)$ with the following density function:
 
 $$ g(x) = \frac{1}{2\sigma_0}\,\exp\left(-\frac{|x-\mu_0|}{\sigma_0}\right) $$
 
-Unfortunately, the model is misspecified at the moment of estimating the parameters. $X$ is normally distributed with a set of parameters $\theta = ( \mu, \sigma^2)$, meaning that $X \sim \normal (\mu,\sigma^2) $
+Unfortunately, the model is misspecified and $X$ is assumed to be normally distributed with a set of parameters $\theta = ( \mu, \sigma^2)$, meaning that $X \sim \normal (\mu,\sigma^2) $
 
 $$ f_\theta(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp \left(- \left( \frac{x-\mu}{\sigma} \right)^2 \right) $$
 
 \begin{enumerate}
   \item
-    Calculate the set of parameters $\theta$ that minimizes the Kullback-Leibler Divergence $D(g,f_\theta)$
+    Calculate the set of parameters $\theta$ that minimizes the Kullback-Leibler Divergence $D_{KL}(g \| f_\theta)$
     
     
-    \emph{Hint}: use the fact that for  $X \sim \text{DE}(\mu_0,\sigma_0)$, the following properties apply: $\E(X  )=\mu_0$ and $\var(X)=2 \sigma_0^2$.
+    \emph{Hint}: Use the fact that for  $X \sim \text{DE}(\mu_0,\sigma_0)$, the following properties apply: $\E(X  )=\mu_0$ and $\var(X)=2 \sigma_0^2$.
 
 \end{enumerate}
 
