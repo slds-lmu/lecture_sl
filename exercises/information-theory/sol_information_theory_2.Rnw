@@ -7,4 +7,23 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{6}{Information Theory - Solutions TBD}
+\kopfsl{6}{Information Theory}
+
+\loesung{Entropy}{
+	<<child="ex_rnw/sol_some_information.Rnw">>=
+	@
+}
+\loesung{The Mutual Information of Three Variables}
+	<<child="ex_rnw/sol_mutualinfo_three_var.Rnw">>=
+	@
+
+\loesung{Smoothed Cross-Entropy Loss}
+	<<child="ex_rnw/sol_smoothed_crossentropy.Rnw">>=
+	@
+
+\begin{thebibliography}{}
+\bibitem{rong2022a} Rong, Yao, Tobias Leemann, Vadim Borisov, Gjergji Kasneci, and Enkelejda Kasneci. "A consistent and efficient evaluation strategy for attribution methods." In International Conference on Machine Learning, pp. 18770-18795. PMLR, 2022.
+\end{thebibliography}
+
+
+

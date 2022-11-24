@@ -1,0 +1,80 @@
+\begin{enumerate}
+    \item The empirical risk is 
+    \begin{equation}
+        \begin{aligned}
+            R_{\text{emp}} 
+            &= \frac{1}{n} \sum_{i=1}^n \left(\sum_{k=1}^g \tilde{d}_k^{(i)} \log \left(\frac{\tilde{d}_k^{(i)}}{\pi_k(\mathbf{x}^{(i)} | \mathbf{\theta})} \right) \right) \\
+            &= \frac{1}{n} \sum_{i=1}^n \left(\sum_{k=1}^g \tilde{d}_k^{(i)} \log \tilde{d}_k^{(i)} - \tilde{d}_k^{(i)} \log \pi_k(\mathbf{x}^{(i)} | \mathbf{\theta}) \right) \\
+            &= - \frac{1}{n}\sum_{i=1}^n \sum_{k=1}^g  \tilde{d}_k^{(i)} \log \pi_k(\mathbf{x}^{(i)} | \mathbf{\theta})  + Const.\\
+        \end{aligned}
+    \end{equation}
+    \item The smoothed cross-entropy is implemented as follows:
+  <<>>=
+  #' @param label ground truth vector of the form (n_samples,).
+  #'  Labels should be "1","2","3" and so on.
+  #' @param pred Predicted probabilities of the form (n_samples,n_labels)
+  #' @param smoothing Hyperparameter for label-smoothing
+
+  smoothed_ce_loss <- function(
+  label,
+  pred,
+  smoothing){
+  
+    num_samples <- NROW(pred)
+    num_classes<- NCOL(pred)
+    
+    # Let's make some assertions:
+    #  label should be a 1-D array.one-hot encoded label is not necessary 
+    stopifnot(NCOL(label)==1)  
+    # smoothing hyperparameter in allowed range
+    stopifnot((smoothing>=0 & smoothing <= 1)) 
+    # Same amount of rows in labels and predictions
+    stopifnot((NROW(label)== num_samples))
+    # Predicted probabilities must have as many columns as labels  
+    stopifnot(length(unique(label)) == num_classes)
+      
+    #Calculate the base level
+    smoothing_per_class <- smoothing / num_classes
+    
+    # build the label matrix. Shape = [ num_samples, num_classes]
+    # Start with the base level
+    smoothed_labels_matrix = matrix(smoothing_per_class,
+                                    nrow=num_samples,ncol=num_classes) 
+    # Add the smoothed correct labels
+    true_labels_loc=cbind(1:num_samples, label)
+    smoothed_labels_matrix[true_labels_loc]= 1 - smoothing + smoothing_per_class
+    cat("Labels matrix:\n")
+    print(smoothed_labels_matrix)
+    
+    # Calculate the loss
+    cat("Loss for each sample:\n ",
+        rowSums(- smoothed_labels_matrix * log(pred)))
+    
+    loss <- mean(rowSums(- smoothed_labels_matrix * log(pred)))
+    cat("\n Loss:\n",loss)
+    
+    return (loss)
+  }
+  @
+
+
+<<>>=
+  # Let's build a "confident model", the model has very high predicted
+  #probabilities for one of the labels
+  label= c(1,2,2,3,1)
+  pred= rbind(
+          c(0.85,0.10,0.05),
+          c(0.05,0.9,0.05),
+          c(0.02,0.95,0.03),
+          c(0.13,0.02,0.85),
+          c(0.86,0.04,0.1))
+  
+  # cross entropy means smoothing=0
+  smoothing=0
+  loss<-smoothed_ce_loss(label,pred,smoothing)
+  
+  # Smoothed cross entropy
+  smoothing=0.2
+  loss_smooth<-smoothed_ce_loss(label,pred,smoothing)
+  @
+\end{enumerate}

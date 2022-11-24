@@ -1,0 +1,15 @@
+
+Let $p$ and $q$ be the PDFs of a pair of absolutely continuous distributions.
+
+\begin{enumerate}
+  \item 
+    Prove that the KL divergence is convex in the pair $(p, q)$, i.e.,
+    
+    \begin{equation}
+      D_{KL}(\lambda p_1 + (1 - \lambda) p_2 || \lambda q_1 + (1 - \lambda) q_2 ) \leq \lambda D_{KL}(p_1 || q_1) + (1 - \lambda) D_{KL} (p_2 || q_2),
+    \end{equation}
+    
+    where $(p_1, q_1)$ and $(p_2, q_2)$ are two pairs of distributions and $0 \leq \lambda \leq 1$. 
+    
+    \textit{Hint}: you can use the log sum inequality, namely that $(a_1 + a_2) \log \left(\frac{a_1 + a_2}{b_1 + b_2} \right) \leq a_1 \log \frac{a_1}{b_1} + a_2\log\frac{a_2}{b_2}$ holds for $a_1, a_2, b_1, b_2 \geq 0$.
+\end{enumerate}

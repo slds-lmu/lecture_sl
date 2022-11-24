@@ -10,12 +10,16 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopfsl{5}{Information Theory}
 
-\aufgabe{Entropy}{
-	<<child="ex_rnw/ex_some_information.Rnw">>=
-	@
-}
 
 \aufgabe{Kullback-Leibler Divergence}{
 	<<child="ex_rnw/ex_kld_binom_normal.Rnw">>=
 	@
 }
+
+\aufgabe{The Convexity of KL Divergence}{
+	<<child="ex_rnw/ex_kld_convexity.Rnw">>=
+	@
+}
+
+
+
