@@ -36,7 +36,7 @@ sd1 <- sqrt(1)
 # Plot Dichte DE und NV mit den beiden Standardabweichungen
 par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0), type="l", lwd=2, 
-	  ylab="Dichte", xlab="x", main="Dichten")
+	  ylab="", xlab="x", main="Distributions")
 lines(x.grid, dnorm(x.grid, mean=0, sd=sd1), lty=2, col="blue", lwd=2)
 lines(x.grid, dnorm(x.grid, mean=0, sd=sd2), lty=4, col="orange", lwd=2)
 legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""), 
@@ -47,7 +47,7 @@ legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""),
 # Plot Log-Dichten
 par(mfrow=c(1,1))
 plot(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)), type="l", lwd=2, 
-	  ylab="Dichte", xlab="x", main="Log-Dichten")
+	  ylab=" ", xlab="x", main="Log-distributions")
 lines(x.grid, log(dnorm(x.grid, mean=0, sd=sd1)), lty=2, col="blue", lwd=2)
 lines(x.grid, log(dnorm(x.grid, mean=0, sd=sd2)), lty=4, col="orange", lwd=2)
 legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""), 
@@ -59,7 +59,7 @@ legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""),
 par(mfrow=c(1,1))
 plot(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)) 
 	  - log(dnorm(x.grid, mean=0, sd=sd1)), type="l", lty=2, col="blue", lwd=2, 
-	  ylab="Dichte", xlab="x", ylim=c(-2,5), main="Differenz der Log-Dichten")
+	  ylab="", xlab="x", ylim=c(-2,5), main="Substraction of the Log-distributions")
 lines(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)) 
 		- log(dnorm(x.grid, mean=0, sd=sd2)), lty=4, col="orange", lwd=2)
 abline(h=0)
@@ -72,8 +72,8 @@ legend("topright", c(paste("N(0,",round(sd1^2,2),")", sep=""),
 par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0)*(log(ddopexp(x.grid, mu_0, sigma_0)) 
 	  - log(dnorm(x.grid, mean=0, sd=sd1))), type="l", lty=2, col="blue", lwd=2, 
-	  ylab="Dichte", xlab="x", ylim=c(-0.5,1), 
-	  main="(Differenz der Log-Dichten) * DE-Dichte")
+	  ylab="", xlab="x", ylim=c(-0.5,1), 
+	  main="(Substraction of the Log-distributions) * DE-distribution")
 lines(x.grid, ddopexp(x.grid, mu_0, sigma_0)*(log(ddopexp(x.grid, mu_0, sigma_0)) 
 		- log(dnorm(x.grid, mean=0, sd=sd2))), lty=4, col="orange", lwd=2)
 abline(h=0)
@@ -82,12 +82,12 @@ legend("topright", c(paste("N(0,",round(sd1^2,2),")", sep=""),
 		 lty=c(2,4), 
 		 col=c( "blue", "orange"), lwd=2)
 
+dev.off()
 
 
 
 
-
-# Plot E(log(f)) im 3D-Plot
+pdf("exercises/information-theory/figure/kld_maxim_example.pdf", width=12, height=8)
 
 Elogf <- function(sigma2, mu, sigma_02, mu_0){
 	
@@ -131,15 +131,15 @@ points(trans3d(2, 0, Elogf(2, 0,1,0), pmat=res),
 perspPlot(theta=-90, phi=15) -> res
 points(trans3d(2, 0, Elogf(2, 0,1,0), pmat=res),
 		 col="blue", pch="x", cex=3)
-
+dev.off()
 # => Funktion in sigma^2 und mu!
 
-
+pdf("exercises/information-theory/figure/kld_configurations_example.pdf", width=12, height=8)
 # Plots der Dichten der DE- und N-Vtlg für verschiedene 
 #	Parameterkombinationen
 par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0), type="l", lwd=2, 
-	  ylab="Dichte", xlab="x", main="Varianz gleich")
+	  ylab="", xlab="x", main="Same Variance")
 lines(x.grid, dnorm(x.grid, mean=-3, sd=sqrt(2)), lty=4, col="red", lwd=2)
 lines(x.grid, dnorm(x.grid, mean=0, sd=sqrt(2)), lty=2, col="blue", lwd=2)
 lines(x.grid, dnorm(x.grid, mean=2, sd=sqrt(2)), lty=3, col="orange", lwd=2)
@@ -149,11 +149,11 @@ legend("topright", c("DE(0,1)", "N(-3,2)", "N(0,2)", "N(2,2)"),
 
 par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0), type="l", lwd=2, 
-	  ylab="Dichte", xlab="x", main="EW gleich")
-lines(x.grid, dnorm(x.grid, mean=0, sd=sqrt(1)), lty=4, col="red", lwd=2)
+	  ylab="", xlab="x", main="Original and misspecified distribution, with optimal parameters. ")
 lines(x.grid, dnorm(x.grid, mean=0, sd=sqrt(2)), lty=2, col="blue", lwd=2)
-legend("topright", c("DE(0,1)", "N(0,1)", "N(0,2)"), 
+legend("topright", c("DE(0,1)","N(0,2)"), 
 		 lty=c(1,4,2), 
-		 col=c("black", "red", "blue"), lwd=2)
+		 col=c("black", "blue"), lwd=2)
 
 dev.off()
+

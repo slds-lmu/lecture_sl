@@ -3,8 +3,8 @@
         The Kullback-Leibler Divergence is defined as:
         \begin{equation}
             \begin{aligned}
-                D(g,f_\theta) &= \int_{-\infty}^\infty log \left( \frac{g(x)}{f_\theta(x)} \right) g(x) dx \\ 
-                &= \underbrace{\int_{-\infty}^\infty log(g(x)) g(x)}_{(a)} - \underbrace{\int_{-\infty}^\infty log(f_\theta(x)) g(x)}_{(b)}
+                D(g,f_\theta) &= \E_g\left[ log \left( \frac{g(x)}{f_\theta(x)} \right)  \right]\\\ 
+                &= \underbrace{\E_g \left[ log(g(x)) \right]}_{(a)} - \underbrace{\E_g \left[ log(f_\theta(x)) \right] }_{(b)}
             \end{aligned}
         \end{equation}
 
@@ -19,10 +19,10 @@
         
         \begin{equation}\label{eq:solve_b}
             \begin{aligned}
-                (b) &=  \int_{-\infty}^\infty log(f_\theta(x)) g(x) \\
-                &= \int_{-\infty}^\infty \left( log \left( \frac{1}{\sqrt{\sigma^2 2 \pi }} \right) - \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}\right) g(x) \\
-                &=   log \left( \frac{1}{\sqrt{\sigma^2 2 \pi }} \right)  \underbrace{\int_{-\infty}^\infty g(x)}_{1} -   \int_{-\infty}^\infty \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}  g(x) \\
-                &=   -log  \sqrt{\sigma^2 2 \pi }   \underbrace{ - \int_{-\infty}^\infty \frac{1}{2} \frac{x^2 - 2 x \mu + \mu^2}{\sigma^2}  g(x)}_{(c)}
+                (b) &=  \E_g \left[ log(f_\theta(x)) \right] \\
+                &= \E_g \left[log \left( \frac{1}{\sqrt{\sigma^2 2 \pi }} \right) - \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}\right]  \\
+                &=   log \left( \frac{1}{\sqrt{\sigma^2 2 \pi }} \right)  -   \E_g \left[ \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} \right]\\
+                &=   -log  \sqrt{\sigma^2 2 \pi }  -   \underbrace{ \E_g \left[ \frac{1}{2} \frac{x^2 - 2 x \mu + \mu^2}{\sigma^2}  \right]  }_{(c)}
             \end{aligned}
         \end{equation}
         
@@ -30,14 +30,14 @@
 
         \begin{equation} \label{eq:solve_c}
             \begin{aligned}
-                (c) &= - \frac{1}{2 \sigma^2} \underbrace{\int_{-\infty}^\infty x^2 g(x)}_{\E_g(x^2) = \var_g(x) + \E_g[x]^2} 
-                + \frac{2\mu}{2\sigma^2} \underbrace{\int_{-\infty}^\infty x g(x)}_{\E_g[x]}
-                - \frac{\mu^2}{2\sigma^2} \underbrace{\int_{-\infty}^\infty g(x)}_{=1} \\
+                (c) &= - \frac{1}{2 \sigma^2}  \underbrace{\E_g \left[ x^2\right]}_{\var_g(x) + \E_g[x]^2} 
+                + \frac{2\mu}{2\sigma^2} \E_g [x] 
+                - \frac{\mu^2}{2\sigma^2}  \\
                 & = - \frac{2 \sigma_0^2 + \mu_0^2}{2\sigma^2} + \frac{\mu \mu_0}{\sigma^2} - \frac{\mu^2}{2\sigma^2}
             \end{aligned}
         \end{equation}
         
-        Now, using the results obtained in \ref{eq:solve_b} and \ref{eq:solve_c}, we get the expression that we want to maximize:
+        Using the results obtained in \ref{eq:solve_b} and \ref{eq:solve_c}, we get the expression that we want to maximize:
 
         \begin{equation} \label{eq:final_b}
             \begin{aligned}
@@ -88,5 +88,35 @@
         \end{equation}
 
         As the second derivative is less than 0 at the point we are looking, $\sigma_{opt}^2$ maximizes (b) and thus minimizes the Kullback-Leibler Divergence. 
+
+        The following graphs may be helpful to understand the problem:
+
+        \begin{itemize}
+            \item  The KL-Divergence, step by step:
+                \begin{center}
+                    \includegraphics[ page=1,width = 0.8\textwidth]{figure/plots_kld_example.pdf} \\
+                    \includegraphics[ page=2,width = 0.8\textwidth]{figure/plots_kld_example.pdf} \\
+                    \includegraphics[ page=3,width = 0.8\textwidth]{figure/plots_kld_example.pdf} \\
+                    \includegraphics[ page=4,width = 0.8\textwidth]{figure/plots_kld_example.pdf} \\
+                \end{center}
+            
+            \item 3D-Plot of the expression that we want to maximize ( for paramters $\mu_0 = 0$ and $\sigma_0 = 1$):
+                \begin{center}
+                    \includegraphics[ page=1,width = 0.8\textwidth]{figure/kld_maxim_example.pdf} \\
+                    \includegraphics[ page=2,width = 0.8\textwidth]{figure/kld_maxim_example.pdf} \\
+                    \includegraphics[ page=3,width = 0.8\textwidth]{figure/kld_maxim_example.pdf} \\                
+                \end{center}
+
+            \item Different configurations for the parameter $\mu$ and the optimal configuration:
+                \begin{center}
+                    \includegraphics[ page=1,width = 0.8\textwidth]{figure/kld_configurations_example.pdf} \\
+                    \includegraphics[ page=2,width = 0.8\textwidth]{figure/kld_configurations_example.pdf} \\                
+                \end{center}
+        \end{itemize}
+        
+    
+
+
+
             
 \end{enumerate}
