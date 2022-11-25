@@ -59,7 +59,7 @@ legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""),
 par(mfrow=c(1,1))
 plot(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)) 
 	  - log(dnorm(x.grid, mean=0, sd=sd1)), type="l", lty=2, col="blue", lwd=2, 
-	  ylab="", xlab="x", ylim=c(-2,5), main="Substraction of the Log-distributions")
+	  ylab="", xlab="x", ylim=c(-2,5), main="Difference of the Log-distributions")
 lines(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)) 
 		- log(dnorm(x.grid, mean=0, sd=sd2)), lty=4, col="orange", lwd=2)
 abline(h=0)
@@ -73,7 +73,7 @@ par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0)*(log(ddopexp(x.grid, mu_0, sigma_0)) 
 	  - log(dnorm(x.grid, mean=0, sd=sd1))), type="l", lty=2, col="blue", lwd=2, 
 	  ylab="", xlab="x", ylim=c(-0.5,1), 
-	  main="(Substraction of the Log-distributions) * DE-distribution")
+	  main="(Difference of the Log-distributions) * DE-distribution")
 lines(x.grid, ddopexp(x.grid, mu_0, sigma_0)*(log(ddopexp(x.grid, mu_0, sigma_0)) 
 		- log(dnorm(x.grid, mean=0, sd=sd2))), lty=4, col="orange", lwd=2)
 abline(h=0)

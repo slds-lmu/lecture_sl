@@ -99,8 +99,10 @@
                     \includegraphics[ page=3,width = 0.8\textwidth]{figure/plots_kld_example.pdf} \\
                     \includegraphics[ page=4,width = 0.8\textwidth]{figure/plots_kld_example.pdf} \\
                 \end{center}
+                
+                $\Rightarrow$ Now, the KLD is the integral of the function(s) in the last plot.
             
-            \item 3D-Plot of the expression that we want to maximize ( for paramters $\mu_0 = 0$ and $\sigma_0 = 1$):
+            \item 3D-Plot of the expression that we want to maximize ( for parameters $\mu_0 = 0$ and $\sigma_0 = 1$):
                 \begin{center}
                     \includegraphics[ page=1,width = 0.8\textwidth]{figure/kld_maxim_example.pdf} \\
                     \includegraphics[ page=2,width = 0.8\textwidth]{figure/kld_maxim_example.pdf} \\

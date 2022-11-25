@@ -4,7 +4,7 @@ $$ g(x) = \frac{1}{2\sigma_0}\,\exp\left(-\frac{|x-\mu_0|}{\sigma_0}\right) $$
 
 Unfortunately, the model is misspecified and $X$ is assumed to be normally distributed with a set of parameters $\theta = ( \mu, \sigma^2)$, meaning that $X \sim \normal (\mu,\sigma^2) $
 
-$$ f_\theta(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp \left(- \left( \frac{x-\mu}{\sigma} \right)^2 \right) $$
+$$ f_\theta(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp \left(-\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^2 \right) $$
 
 \begin{enumerate}
   \item
