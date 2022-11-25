@@ -8,9 +8,9 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopficsl{5}{Information Theory}
+\kopficsl{6}{Information Theory}
 
-\aufgabe{Kullback-Leibler Divergence and model misspecification}{
-	<<child="ex_rnw/ic_kl_divergence_misspecification.Rnw">>=
+\loesung{Entropy in Binary Classification}{
+	<<child="ex_rnw/ic_sol_entropy_binary_classification.Rnw">>=
 	@
 }
