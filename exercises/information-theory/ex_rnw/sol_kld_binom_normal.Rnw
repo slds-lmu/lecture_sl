@@ -6,12 +6,12 @@
 \begin{itemize}
 \item[] 
 \begin{equation}
-\partial D_{KL}(f||q) / \partial \mu = \partial - \mathbb{E}_f \log [q(X|\theta)] = \mathbb{E}_f \frac{1}{\sigma^2} (X-\mu) 
+\partial D_{KL}(f||q) / \partial \mu = \partial / \partial \mu (- \mathbb{E}_f \log [q(X|\theta)]) = \mathbb{E}_f \frac{1}{\sigma^2} (X-\mu) 
 \label{eq:I}
 \end{equation}
 \item[] 
 \begin{equation}
-\partial D_{KL}(f||q) / \partial \sigma^2 = \partial - \mathbb{E}_f \log [q(X|\theta)] = \mathbb{E}_f [\frac{1}{2\sigma^2} + \frac{-1}{2\sigma^4} (X-\mu)^2] 
+\partial D_{KL}(f||q) / \partial \sigma^2 = \partial / \partial \sigma^2(- \mathbb{E}_f \log [q(X|\theta)]) = \mathbb{E}_f [\frac{1}{2\sigma^2} + \frac{-1}{2\sigma^4} (X-\mu)^2] 
 \label{eq:II}
 \end{equation}
 \end{itemize}
@@ -19,7 +19,7 @@
 $$
 (\ref{eq:II}) = 0 \Leftrightarrow \sigma^2 = \mathbb{E}_f[(X-\mu)^2] = \text{Var}_f(X) + (\mathbb{E}_f[X-\mu])^2 = np(1-p) + (\mathbb{E}_f[X-\mu])^2.
 $$ 
-Using $\mu = np$, the second term vanishes and we get the optimal $\sigma^2  = np(1-p) = \text{Var}_f(X)$. Note that we would have to prove that the second derivative is $<0$ to be sure that we found a minimum!
+Using $\mu = np$, the second term vanishes and we get the optimal $\sigma^2  = np(1-p) = \text{Var}_f(X)$. Note that we would have to prove that the second derivative is $>0$ to be sure that we found a minimum!
 \item We could, alternatively, use the gradients and do gradient descent to find the optimal $\thetab$.
 \end{enumerate}
 \item 
