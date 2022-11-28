@@ -11,6 +11,12 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopficsl{7}{Curse of Dimensionality}
 
 \aufgabe{High-dimensional Gaussian Distributions}{
-	<<child="ex_rnw/ic_cod.Rnw">>=
+	<<child="ex_rnw/ic_high_dimensional_gaussian.Rnw">>=
 	@
 }
+
+\aufgabe{Quiz Time}{
+	<<child="ex_rnw/ic_particify.Rnw">>=
+	@
+}
+
