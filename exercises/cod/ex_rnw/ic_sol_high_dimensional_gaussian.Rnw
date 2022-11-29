@@ -22,7 +22,7 @@
         \end{equation}
 
     \item
-        A random variable which is the substraction of two normally distributed random variable is also normal, with the following parameters:
+        A random variable which is the substraction of two normally distributed random variables is also normal, with the following parameters:
         
         \begin{equation} \label{eq:normal_substraction}
             \begin{aligned}
@@ -73,7 +73,7 @@
             \begin{aligned}
                 \E \left[ \scp{X}{\xv} \right] &= \E \left[ \sumjp X_j x_j \right] \\
                 &= \sumjp \E \left[ X_j x_j\right] \\
-                &= \sumjp x_i \E \left[ X_i \right] \\
+                &= \sumjp x_j \E \left[ X_j \right] \\
                 &= 0
             \end{aligned}
         \end{equation}
