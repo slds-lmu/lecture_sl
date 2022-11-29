@@ -1,0 +1,92 @@
+\begin{enumerate}
+    \item 
+        In this case, we will use the linearity of the expectation.
+        \begin{equation}
+            \begin{aligned}
+                \E\left[\|X\|_1\right] &= \E \left[ \sumjp \| x_j \|\right] \\
+                &= \sumjp  \underbrace{\E \| x_j \|}_{= \sqrt{\frac{2}{\pi}}} \\
+                &= \sqrt{\frac{2}{\pi}} \sumjp 1\\
+                &= \sqrt{\frac{2}{\pi}} \ p
+            \end{aligned}
+        \end{equation}
+    \item 
+
+    Considering that the coordinates $X_1,\dots,X_p$ are independent and identically distributed, the variance of the sum equals the sum of the variance.
+        \begin{equation}
+            \begin{aligned}
+                \var \left(\|X\|_1\right) &= \var \left( \sumjp \| x_j \| \right) \\
+                &= \sumjp \underbrace{ \left(  \var \left( \| x_j \| \right)\right)}_{= 1 - \frac{2}{\pi}} \\
+                &= \left( 1 - \frac{2}{\pi} \right) \sumjp 1 \\
+                &= \left( 1 - \frac{2}{\pi} \right) p
+            \end{aligned}
+        \end{equation}
+
+    \item
+        A random variable which is the substraction of two normally distributed random variable is also normal, with the following parameters:
+        
+        \begin{equation} \label{eq:normal_substraction}
+            \begin{aligned}
+                X-Y = Z & \sim \normal(\mu_x-\mu_y, \sigma_x^2 + \sigma_y^2) \\
+                & \sim \normal(0,2)
+            \end{aligned}
+        \end{equation}
+
+        We also know that the variance of a random variable multiplied by a constant is equal to the variance of the random variable scaled by the square of the constant, consequently:
+        
+        \begin{equation} \label{variance_scale}
+            \begin{aligned}
+                X-Y & \sim \normal(0,2) \\
+                \frac{X-Y}{\sqrt{2}} & \sim \normal(0,1)
+            \end{aligned}
+        \end{equation}
+
+        We will use the equations \ref{eq:normal_substraction} and \ref{variance_scale} to solve the exercise:
+        
+        \begin{equation}
+            \begin{aligned}
+                \E \left[ \|X - X'\|_1 \right] &= \E \left[\sumjp \|x_j  - x'_j\| \right] \\
+                &= \sum \E \left[ \|x_j - x'_j\| \right] \\
+                &=\sum \E \left[ \frac{\sqrt{2}}{\sqrt{2}}\|x_j - x'_j\| \right] \\
+                &= \sqrt{2}   \sumjp  \E \left[ \| \underbrace{ \frac{x_j - x'_j}{\sqrt{2}}}_{\sim \normal(0,1)} \| \right]  \\
+                &= \sqrt{2}  \sqrt{\frac{2}{\pi}} \sumjp 1 \\
+                &=  \frac{2 p}{\sqrt{\pi}}
+            \end{aligned}
+        \end{equation}
+
+
+    \item 
+        
+        Using equations \ref{eq:normal_substraction} and \ref{variance_scale} again, we get:
+        \begin{equation}
+            \begin{aligned}
+                \var \left(  \|X - X'\|_1  \right) &= \sumjp \var \left( \|x_j  - x'_j\| \right) \\
+                &= \sumjp \left( \frac{\sqrt{2}}{\sqrt{2}} \|x_j  - x'_j\| \right) \\
+                &= 2 \sumjp  \var \left( \| \underbrace{ \frac{x_j - x'_j}{\sqrt{2}}}_{\sim \normal(0,1)} \| \right) \\
+                &= 2 \left( 1 - \frac{\pi}{2} \right) \sumjp 1 \\
+                &= 2 p \left( 1 - \frac{\pi}{2} \right)
+            \end{aligned}
+        \end{equation}
+
+    \item 
+        Using the linearity of the expectation and the fact that $\xv$ is deterministic:
+        \begin{equation}
+            \begin{aligned}
+                \E \left[ \scp{X}{\xv} \right] &= \E \left[ \sumjp X_j x_j \right] \\
+                &= \sumjp \E \left[ X_j x_j\right] \\
+                &= \sumjp x_i \E \left[ X_i \right] \\
+                &= 0
+            \end{aligned}
+        \end{equation}
+
+
+        We will again use the independency of the coordinates $X_1,\dots,X_p$ and the fact that $\xv$ is deterministic:
+        \begin{equation}
+            \begin{aligned}
+                \var \left( \scp{X}{\xv} \right) &= \var \left( \sumjp X_j x_j \right) \\
+                &= \sumjp \var \left( X_j x_j\right) \\
+                &= \sumjp x_j^2 \underbrace{\var \left( X_j \right)}_{=1} \\
+                &= \sumjp x_j^2 \\
+                &= {\| x \|_2}^2
+            \end{aligned}
+        \end{equation}
+\end{enumerate}
