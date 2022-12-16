@@ -36,7 +36,7 @@ sd1 <- sqrt(1)
 # Plot Dichte DE und NV mit den beiden Standardabweichungen
 par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0), type="l", lwd=2, 
-	  ylab="", xlab="x", main="Distributions")
+	  ylab="", xlab="x", main="Densities")
 lines(x.grid, dnorm(x.grid, mean=0, sd=sd1), lty=2, col="blue", lwd=2)
 lines(x.grid, dnorm(x.grid, mean=0, sd=sd2), lty=4, col="orange", lwd=2)
 legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""), 
@@ -47,7 +47,7 @@ legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""),
 # Plot Log-Dichten
 par(mfrow=c(1,1))
 plot(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)), type="l", lwd=2, 
-	  ylab=" ", xlab="x", main="Log-distributions")
+	  ylab=" ", xlab="x", main="Log-densities")
 lines(x.grid, log(dnorm(x.grid, mean=0, sd=sd1)), lty=2, col="blue", lwd=2)
 lines(x.grid, log(dnorm(x.grid, mean=0, sd=sd2)), lty=4, col="orange", lwd=2)
 legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""), 
@@ -59,7 +59,7 @@ legend("topright", c("DE(0,1)",paste("N(0,",round(sd1^2,2),")", sep=""),
 par(mfrow=c(1,1))
 plot(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)) 
 	  - log(dnorm(x.grid, mean=0, sd=sd1)), type="l", lty=2, col="blue", lwd=2, 
-	  ylab="", xlab="x", ylim=c(-2,5), main="Difference of the Log-distributions")
+	  ylab="", xlab="x", ylim=c(-2,5), main="Difference of the Log-densities")
 lines(x.grid, log(ddopexp(x.grid, mu_0, sigma_0)) 
 		- log(dnorm(x.grid, mean=0, sd=sd2)), lty=4, col="orange", lwd=2)
 abline(h=0)
@@ -73,7 +73,7 @@ par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0)*(log(ddopexp(x.grid, mu_0, sigma_0)) 
 	  - log(dnorm(x.grid, mean=0, sd=sd1))), type="l", lty=2, col="blue", lwd=2, 
 	  ylab="", xlab="x", ylim=c(-0.5,1), 
-	  main="(Difference of the Log-distributions) * DE-distribution")
+	  main="(Difference of the Log-densities) * DE-density")
 lines(x.grid, ddopexp(x.grid, mu_0, sigma_0)*(log(ddopexp(x.grid, mu_0, sigma_0)) 
 		- log(dnorm(x.grid, mean=0, sd=sd2))), lty=4, col="orange", lwd=2)
 abline(h=0)
@@ -149,7 +149,7 @@ legend("topright", c("DE(0,1)", "N(-3,2)", "N(0,2)", "N(2,2)"),
 
 par(mfrow=c(1,1))
 plot(x.grid, ddopexp(x.grid, mu_0, sigma_0), type="l", lwd=2, 
-	  ylab="", xlab="x", main="Original and misspecified distribution, with optimal parameters. ")
+	  ylab="", xlab="x", main="Original and misspecified density, with optimal parameters. ")
 lines(x.grid, dnorm(x.grid, mean=0, sd=sqrt(2)), lty=2, col="blue", lwd=2)
 legend("topright", c("DE(0,1)","N(0,2)"), 
 		 lty=c(1,4,2), 
