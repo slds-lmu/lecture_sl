@@ -10,8 +10,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{9}{Regularization}
 
-\aufgabe{Lasso Regularization}{
-	<<child="ex_rnw/ex_lasso_regularization.Rnw">>=
+\loesung{Lasso Regularization}{
+	<<child="ex_rnw/sol_lasso_regularization.Rnw">>=
 	@
 }
 
