@@ -2,7 +2,7 @@
         
     \item 
 
-        First of all, we will use the  fact that $\Xmat$ has orthonormal column to show that:
+        First of all, we will use the  fact that $\Xmat$ has orthonormal columns to show that:
 
         \begin{equation}\label{eq:solve_b}
             \begin{aligned}
@@ -33,7 +33,7 @@
 
         \begin{equation} \label{eq:compare_gi}
             \begin{aligned}
-                g_i(\theta) &= \underbrace{- \thetah_{i}\theta} + \frac{\theta^2}{2} + \lambda|\theta_i| \\
+                g_i(\theta) &= - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda|\theta_i| \\
                 g_i(-\theta) &= + \thetah_{i}\theta + \frac{(-\theta)^2}{2} + \lambda|\theta_i| \\
             \end{aligned}
         \end{equation}
@@ -46,11 +46,11 @@
         \end{equation}
 
         The second and third term of both equations in eq. \ref{eq:compare_gi} are equivalent, so we can ignore them. 
-        Accordingly, to comply with the condition from  eq \ref{eq:compare_gi_2}, the minimizer $\theta_i^*$   must be non-negative.
+        Accordingly, to comply with the condition from  eq. \ref{eq:compare_gi_2}, the minimizer $\theta_i^*$   must be non-negative.
 
         \begin{equation}
             \begin{aligned}
-                - \thetah_{i}\theta < \thetah_{i}\theta \longrightarrow \theta_i^* \geq 0
+                - \thetah_{i}\theta \leq \thetah_{i}\theta \longrightarrow \theta_i^* \geq 0
             \end{aligned}
         \end{equation}
     
@@ -71,18 +71,24 @@
 
         Let's use the hint again and compare $g_i(\theta)$ with $g_i(-\theta)$, for the case where $\theta < 0$ :
 
-        \begin{equation}
+        \begin{equation} \label{eq:compare_gi_negative}
             \begin{aligned}
                 g_i(\theta) &= - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda|\theta_i| \\
                 g_i(-\theta) &= + \thetah_{i}\theta + \frac{(-\theta)^2}{2} + \lambda|\theta_i| \\
             \end{aligned}
         \end{equation}
 
-        The second and third term in both equations are equivalent. Using the condition from eq. \ref{eq:compare_gi_2} again, we can conclude that the minimizer $\theta_i^*$ must be non-positive.
+        \begin{equation} \label{eq:compare_gi_negative_2}
+            \begin{aligned}
+                g_i(\theta) \geq g_i(-\theta)
+            \end{aligned}
+        \end{equation}
+
+        The second and third term in both equations of \ref{eq:compare_gi_negative} are equivalent. Using the condition from eq. \ref{eq:compare_gi_negative_2}, we can conclude that the minimizer $\theta_i^*$ must be non-positive.
 
         \begin{equation}
             \begin{aligned}
-                - \thetah_{i}\theta < \thetah_{i}\theta \longrightarrow \theta_i^* \leq 0
+                - \thetah_{i}\theta \geq \thetah_{i}\theta \longrightarrow \theta_i^* \leq 0
             \end{aligned}
         \end{equation}
 
@@ -93,7 +99,7 @@
         \begin{equation} \label{eq:minimizer_theta_less_0}
             \begin{aligned}
                 \frac{\partial g_i(\theta)}{\partial \theta} &= - \thetah_{i} + \theta \underbrace{- \lambda}_{\theta_i < 0}  \stackrel{!}{=} 0  \longrightarrow \theta = \underbrace{\theta_i +\lambda}_{ \leq 0} \\
-                \theta_i^* &= 0, \underbrace{\thetah_i + \lambda}_{\leq0} \\
+                \theta_i^* &=  \underbrace{\thetah_i + \lambda}_{\leq0} \\
                 &= min(0, \thetah_i  + \lambda) \\
             \end{aligned}
         \end{equation}
