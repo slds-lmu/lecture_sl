@@ -1,5 +1,7 @@
 \begin{enumerate}
+        
     \item 
+
         First of all, we will use the  fact that $\Xmat$ has orthonormal column to show that:
 
         \begin{equation}\label{eq:solve_b}
@@ -24,7 +26,6 @@
     \item
 
         The advantage of this representation is that we can optimize each $g_i(\theta)$ separately to get optimal entries for $\theta$.
-
 
     \item 
 
@@ -53,7 +54,6 @@
             \end{aligned}
         \end{equation}
     
-
     \item 
 
         To calculate the minimizer $\theta_i^*$, we will derive with respect to the parameter and set the derivative to zero:
@@ -88,37 +88,35 @@
 
     \item 
 
-    Calculating the derivative again and setting it to zero, we get:
+        Calculating the derivative again and setting it to zero, we get:
 
-    \begin{equation} \label{eq:minimizer_theta_less_0}
-        \begin{aligned}
-            \frac{\partial g_i(\theta)}{\partial \theta} &= - \thetah_{i} + \theta \underbrace{- \lambda}_{\theta_i < 0}  \stackrel{!}{=} 0  \longrightarrow \theta = \underbrace{\theta_i +\lambda}_{ \leq 0} \\
-            \theta_i^* &= 0, \underbrace{\thetah_i + \lambda}_{\leq0} \\
-            &= min(0, \thetah_i  + \lambda) \\
-        \end{aligned}
-    \end{equation}
-        
+        \begin{equation} \label{eq:minimizer_theta_less_0}
+            \begin{aligned}
+                \frac{\partial g_i(\theta)}{\partial \theta} &= - \thetah_{i} + \theta \underbrace{- \lambda}_{\theta_i < 0}  \stackrel{!}{=} 0  \longrightarrow \theta = \underbrace{\theta_i +\lambda}_{ \leq 0} \\
+                \theta_i^* &= 0, \underbrace{\thetah_i + \lambda}_{\leq0} \\
+                &= min(0, \thetah_i  + \lambda) \\
+            \end{aligned}
+        \end{equation}
 
     \item 
 
-    \begin{equation}
+        \begin{equation}
+            \begin{aligned}
+                \begin{cases}
+                    \theta_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
+                    \theta_i \leq 0 \longrightarrow \theta_i^* = min(0, \thetah_i + \lambda) 
+                        = \underbrace{-1}_{\sign (\thetah_i)} \cdot max(0, \overbrace{-\thetah_i}^{ = |\thetah_i|}-\lambda)
+                \end{cases}
+            \end{aligned}
+        \end{equation}
+
+        By transforming the min function from \ref{eq:minimizer_theta_less_0} to a max function, combine the two cases in only one equation:
+
+        \begin{equation}
         \begin{aligned}
-            \begin{cases}
-                \theta_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
-                \theta_i \leq 0 \longrightarrow \theta_i^* = min(0, \thetah_i + \lambda) 
-                    = \underbrace{-1}_{\sign (\thetah_i)} \cdot max(0, \overbrace{-\thetah_i}^{ = |\thetah_i|}-\lambda)
-            \end{cases}
+            \theta_i^* = \sign(\thetah_i) max (|\thetah_i| - \lambda, 0)
         \end{aligned}
-    \end{equation}
-
-    By transforming the min function from \ref{eq:minimizer_theta_less_0} to a max function, combine the two cases in only one equation:
-
-    \begin{equation}
-       \begin{aligned}
-           \theta_i^* = \sign(\thetah_i) max (|\thetah_i| - \lambda, 0)
-       \end{aligned}
-    \end{equation}
-
+        \end{equation}
 
 \end{enumerate}
 

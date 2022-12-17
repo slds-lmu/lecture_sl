@@ -67,7 +67,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 		\lz
 	
 	\item 
-		Derive that $\theta^*_i = \max\{|\thetah_{i}| - \lambda,0 \},$   by using (iii) (and also still considering the case $\thetah_i > 0.$)
+		Derive that $\theta^*_i = \max\{\thetah_{i} - \lambda,0 \},$   by using (iii) (and also still considering the case $\thetah_i > 0.$)
 		
 		\lz
 		\lz
@@ -97,7 +97,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 	\item 
 	
-		Derive that $\theta^*_i = \min\{ \thetah_{i} + \lambda,0 \},$   by using (v) (and also still considering the case $\thetah_i \leq 0.$)
+		Derive that $\theta^*_i = \min\{ 1\thetah_{i} + \lambda,0 \},$   by using (v) (and also still considering the case $\thetah_i \leq 0.$)
 	
 		
 		\lz
