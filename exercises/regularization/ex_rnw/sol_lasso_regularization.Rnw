@@ -41,7 +41,7 @@
         We also know that non-positive $\theta$ have always a greater or equal value for $g_i(\theta)$ than than their positive counterpart:
         \begin{equation} \label{eq:compare_gi_2}
             \begin{aligned}
-                g_i(\theta) \leq g_i(-\theta)
+                \theta > 0 \longrightarrow g_i(\theta) \leq g_i(-\theta)
             \end{aligned}
         \end{equation}
 
@@ -62,8 +62,8 @@
             \begin{aligned}
                 \frac{\partial g_i(\theta)}{\partial \theta} &= - \thetah_{i} + \theta + \underbrace{\lambda}_{\theta_i > 0} \\
                 &= - \thetah_{i} + \theta + \lambda  \stackrel{!}{=} 0  \longrightarrow \theta = \underbrace{\theta_i -\lambda}_{ \geq 0} \\
-                \theta_i^* &= max (0, \underbrace{\thetah_i - \lambda}_{>0}) \\
-                &= max(0, | \thetah_i | - \lambda) \\
+                \theta_i^* &=  \underbrace{\thetah_i - \lambda}_{ \geq 0} \\
+                &= max(0,  \thetah_i  - \lambda) \\
             \end{aligned}
         \end{equation}
     
@@ -80,7 +80,7 @@
 
         \begin{equation} \label{eq:compare_gi_negative_2}
             \begin{aligned}
-                g_i(\theta) \geq g_i(-\theta)
+                \theta < 0 \longrightarrow g_i(\theta) \geq g_i(-\theta)
             \end{aligned}
         \end{equation}
 
@@ -109,14 +109,14 @@
         \begin{equation}
             \begin{aligned}
                 \begin{cases}
-                    \theta_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
+                    \theta_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot \  max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
                     \theta_i \leq 0 \longrightarrow \theta_i^* = min(0, \thetah_i + \lambda) 
-                        = \underbrace{-1}_{\sign (\thetah_i)} \cdot max(0, \overbrace{-\thetah_i}^{ = |\thetah_i|}-\lambda)
+                        = \underbrace{-1}_{\sign (\thetah_i)} \cdot \  max(0, \overbrace{-\thetah_i}^{ = |\thetah_i|}-\lambda)
                 \end{cases}
             \end{aligned}
         \end{equation}
 
-        By transforming the min function from \ref{eq:minimizer_theta_less_0} to a max function, combine the two cases in only one equation:
+        By transforming the min function from \ref{eq:minimizer_theta_less_0} to a max function, we can combine the two cases in only one expression:
 
         \begin{equation}
         \begin{aligned}
