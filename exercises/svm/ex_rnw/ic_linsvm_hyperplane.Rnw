@@ -1,5 +1,4 @@
-\newcommand{\sli}{\zeta^{(i)}}
-  
+
 \begin{minipage}{\textwidth}
 \begin{minipage}[c]{0.49\textwidth}
 The primal optimization problem for the two-class soft margin SVM classification is given by
