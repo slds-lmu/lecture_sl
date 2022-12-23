@@ -17,8 +17,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 	@
 }
 
-\aufgabe{Quiz Time}{
-	<<child="ex_rnw/ex_particify_1.Rnw">>=
-	@
-}
+%\aufgabe{Quiz Time}{
+%	<<child="ex_rnw/ex_particify_1.Rnw">>=
+%	@
+%}
 
