@@ -12,13 +12,9 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{10}{Support Vector Machines}
 
-\aufgabe{SVM - Support Vectors and Separating Hyperplane}{
-	<<child="ex_rnw/ic_linsvm_hyperplane.Rnw">>=
+\loesung{SVM - Support Vectors and Separating Hyperplane}{
+	<<child="ex_rnw/sol_linsvm_hyperplane.Rnw">>=
 	@
 }
 
-%\aufgabe{Quiz Time}{
-%	<<child="ex_rnw/ex_particify_1.Rnw">>=
-%	@
-%}
 
