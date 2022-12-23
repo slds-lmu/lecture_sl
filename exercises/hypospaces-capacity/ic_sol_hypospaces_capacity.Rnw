@@ -10,12 +10,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{8}{Hypothesis Space}
 
-\aufgabe{VC Dimension}{
-	<<child="ex_rnw/ic_vc_dimension.Rnw">>=
+\loesung{VC Dimension}{
+	<<child="ex_rnw/ic_sol_vc_dimension.Rnw">>=
 	@
 }
 
-%\aufgabe{Quiz time}{
-%	<<child="ex_rnw/ic_particify.Rnw">>=
-%	@
-%}
