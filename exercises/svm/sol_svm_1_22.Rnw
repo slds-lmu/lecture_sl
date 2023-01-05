@@ -12,8 +12,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopfsl{10}{Support Vector Machines}
 
-\loesung{SVM -- Regression}{
-	<<child="ex_rnw/sol_svm_1_22.Rnw">>=
+\loesung{SVM -- Hard Margin Classifier}{
+	<<child="ex_rnw/sol_linsvm_hyperplane.Rnw">>=
 	@
 }
 \dlz
