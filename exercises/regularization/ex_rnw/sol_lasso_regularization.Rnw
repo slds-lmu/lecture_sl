@@ -14,10 +14,10 @@
         We will now use the result of eq. \ref{eq:solve_b} to show that:
         \begin{equation}
             \begin{aligned}
-                \argmin_{\thetab}  \riskrt &= \argmin_{\thetab} \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \xi \right)^2 + \lambda \sum_{i=1}^p  |\theta_i| \\
-                &= \argmin_{\thetab}  \frac12  \| \yv - \xv \thetab  \|_2^2 + \lambda \|\thetab\|_1 \\
-                &= \argmin_{\thetab} \frac12 ( \yv - \xv \thetab)^T ( \yv - \xv \thetab) + \lambda \|\thetab\|_1 \\ 
-                &= \argmin_{\thetab}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetab} - 2 \underbrace{\yv^T \xv}_{\thetab^T} \theta + \theta^T \underbrace{\xv^T \xv}_{\id} \thetab \right) + \lambda \|\thetab\|_1 \\
+                \argmin_{\thetab}  \riskrt &= \argmin_{\thetab} \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i| \\
+                &= \argmin_{\thetab}  \frac12  \| \yv - \Xmat \thetab  \|_2^2 + \lambda \|\thetab\|_1 \\
+                &= \argmin_{\thetab} \frac12 ( \yv - \Xmat \thetab)^T ( \yv - \Xmat \thetab) + \lambda \|\thetab\|_1 \\ 
+                &= \argmin_{\thetab}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetab} - 2 \underbrace{\yv^T \Xmat}_{\thetab^T} \thetab + \thetab^T \underbrace{\Xmat^T \Xmat}_{\id} \thetab \right) + \lambda \|\thetab\|_1 \\
                 &= \argmin_{\thetab} - \thetabh^T \thetab  + \frac{\thetab^T \thetab}{2} + \lambda \|\thetab\|_1 \\
                 &= \argmin_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
             \end{aligned}
@@ -25,7 +25,7 @@
 
     \item
 
-        The advantage of this representation is that we can optimize each $g_i(\theta)$ separately to get optimal entries for $\theta$.
+        The advantage of this representation if we are interested in finding $\thetab$ is that we can optimize each $g_i(\theta)$ separately to get optimal entries for $\theta_1,\dots,\theta_p$.
 
     \item 
 

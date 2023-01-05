@@ -3,11 +3,11 @@ Consider the regression learning setting, i.e., $\mathcal{Y} = \R,$ and feature 
 Let the hypothesis space be the linear models:
 
 $$
-  \Hspace = \{ \fx = \thetab^\top \xv ~|~  \thetab \in \R^p  \}. 
+  \Hspace = \{ \fx = \thetab^\top \Xmat ~|~  \thetab \in \R^p  \}. 
 $$
 Suppose your loss function of interest is the L2 loss $\Lxy= \frac12 \big(y-\fx\big)^2.$ Consider the $L_1$-regularized empirical risk of a model $\fxt$ (i.e., Lasso regression):
 $$
-	\riskrt = \risket + \lambda \|\thetab\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \xi \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
+	\riskrt = \risket + \lambda \|\thetab\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
 $$
 Assume that ${\Xmat}^T \Xmat = \id,$ which holds if $\Xmat$ has orthonormal columns. Show that the minimizer $\thetah_{\text{Lasso}} = (\thetah_{\text{Lasso},1},\ldots,\thetah_{\text{Lasso},p})^\top$ is given by
 
@@ -16,7 +16,7 @@ $$
 $$
 
 where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1} \Xmat^T\yv$ is the minimizer of the unregularized empirical risk (w.r.t.\ the L2 loss). For this purpose, use the following steps:
-\begin{itemize}	
+\begin{enumerate}	
 	\item
 		Derive that 
 	
@@ -38,7 +38,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 	\item 
 	
-		Note that the minimization problem on the right-hand side of (i) can be written as $\sum_{i=1}^p g_i(\theta_i),$ where 
+		Note that the minimization problem on the right-hand side of (a) can be written as $\sum_{i=1}^p g_i(\theta_i),$ where 
 		$$ 
 			g_i(\theta) =  - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda |\theta|. 
 		$$ 
@@ -67,7 +67,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 		\lz
 	
 	\item 
-		Derive that $\theta^*_i = \max\{\thetah_{i} - \lambda,0 \},$   by using (iii) (and also still considering the case $\thetah_i > 0.$)
+		Derive that $\theta^*_i = \max\{\thetah_{i} - \lambda,0 \},$   by using (c) (and also still considering the case $\thetah_i > 0.$)
 		
 		\lz
 		\lz
@@ -81,7 +81,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 	\item 
 	
-		Consider the complementary case of (iii) and (iv), i.e., $\thetah_i \leq 0,$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i \leq 0.$
+		Consider the complementary case of (c) and (d), i.e., $\thetah_i \leq 0,$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i \leq 0.$
 		
 		\lz
 		\lz
@@ -97,7 +97,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 	\item 
 	
-		Derive that $\theta^*_i = \min\{ \thetah_{i} + \lambda,0 \},$   by using (v) (and also still considering the case $\thetah_i \leq 0.$)
+		Derive that $\theta^*_i = \min\{ \thetah_{i} + \lambda,0 \},$   by using (e) (and also still considering the case $\thetah_i \leq 0.$)
 	
 		
 		\lz
@@ -125,4 +125,4 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 		\lz
 		\lz
 		\lz
-\end{itemize}
+\end{enumerate}
