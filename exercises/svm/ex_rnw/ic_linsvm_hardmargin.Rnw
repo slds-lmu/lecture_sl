@@ -4,7 +4,7 @@
     \begin{equation*}
     \label{eq:softmargin}
     \begin{aligned}
-    & \min_{\mathbf{\theta}, \theta_0, \sli}
+    & \min_{\mathbf{\theta}, \theta_0}
     & &\frac{1}{2} ||\mathbf{\theta}||^2 \\
     & \text{s.t. :}
     & & \svmhplane \geq 1 
