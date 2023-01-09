@@ -12,13 +12,13 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopfsl{10}{Support Vector Machines}
 
-\aufgabe{SVM -- Soft Margin Classifier}{
+\aufgabe{Soft Margin Classifier}{
 	<<child="ex_rnw/ex_linsvm_softmargin.Rnw">>=
 	@
 }
 \dlz
 
-\aufgabe{SVM -- Optimization}{
+\aufgabe{Optimization}{
 	<<child="ex_rnw/ex_linsvm_subgradient.Rnw">>=
 	@
 }

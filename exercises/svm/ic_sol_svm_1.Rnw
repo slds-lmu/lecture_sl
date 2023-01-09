@@ -12,7 +12,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{10}{Support Vector Machines}
 
-\loesung{SVM - Support Vectors and Separating Hyperplane}{
+\loesung{Hard Margin Classifier}{
 	<<child="ex_rnw/sol_linsvm_hardmargin.Rnw">>=
 	@
 }
