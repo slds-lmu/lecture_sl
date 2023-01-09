@@ -55,6 +55,12 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 	@
 }
 
+\aufgabe{Kernels}{
+	<<child="ex_rnw/ic_svm_kernel_definition.Rnw">>=
+	@
+}
+\dlz
+
 \aufgabe{Kernelized Multiclass SVM}{
 	<<child="ex_rnw/ex_svm_kernelized_multiclass.Rnw">>=
 	@

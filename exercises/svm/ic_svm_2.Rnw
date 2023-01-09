@@ -11,7 +11,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopficsl{11}{Nonlinear Support Vector Machines}
 
 \aufgabe{Kernels}{
-	<<child="ex_rnw/ic_svm_2.Rnw">>=
+	<<child="ex_rnw/ic_svm_kernel_definition.Rnw">>=
 	@
 }
 
