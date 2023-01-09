@@ -1,0 +1,64 @@
+\begin{minipage}{\textwidth}
+    \begin{minipage}[c]{0.49\textwidth}
+    The primal optimization problem for the two-class hard margin SVM classification is given by
+    \begin{equation*}
+    \label{eq:softmargin}
+    \begin{aligned}
+    & \min_{\mathbf{\theta}, \theta_0}
+    & &\frac{1}{2} ||\mathbf{\theta}||^2 \\
+    & \text{s.t. :}
+    & & \svmhplane \geq 1 
+    \end{aligned}
+    \end{equation*}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[c]{0.51\textwidth}
+    \centering
+    <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
+    mpoints = list(c(4, 1),c(6, 1),c(2, 0.5), c(7,2), c(3,2), c(6.5,1))
+    x1 = sapply(mpoints,function(x) x[1])
+    x2 = sapply(mpoints,function(x) x[2])
+    y = c(-1, 1, -1, 1, -1, 1)
+    
+    par(mar = c(4,4,1,1), pin = c(3,3))
+    plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
+    xlim = c(1.5,7.5), ylim = c(0,4),
+    ylab = "x2", xlab = "x1")
+    # abline(coef = c(2, -1), lty = 1)
+    grid(lwd = 2,)
+    points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
+    @
+    \end{minipage}
+\end{minipage}
+
+\begin{enumerate}
+    \item 
+    
+        Calculate the following quantities:
+        
+        \begin{itemize}
+            \item $\gamma$ 
+            \item $ \| \thetab \|$
+            \item $  \thetab  $
+            \item $ \theta_0  $
+            \item Determine which points are support vectors. 
+        \end{itemize}
+    
+    \item
+        What may change in (a) if the following things happen:
+
+        \begin{itemize}
+            \item All points are rotated by 45 degrees counterclockwise.
+            \item All points are shifted by 2 to the right (in the x-axis).
+            \item One SV moves closer to the separating hyperplane.
+            \item One SV is removed from the dataset.
+        \end{itemize}
+    
+
+    
+\end{enumerate}
+
+
+
+
+
