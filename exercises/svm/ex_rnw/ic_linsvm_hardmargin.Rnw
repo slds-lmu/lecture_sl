@@ -4,8 +4,8 @@
     \begin{equation*}
     \label{eq:softmargin}
     \begin{aligned}
-    & \min_{\mathbf{\theta}, \theta_0}
-    & &\frac{1}{2} ||\mathbf{\theta}||^2 \\
+    & \min_{\mathbf{\thetab}, \theta_0}
+    & &\frac{1}{2} ||\mathbf{\thetab}||^2 \\
     & \text{s.t. :}
     & & \svmhplane \geq 1 
     \end{aligned}
@@ -65,7 +65,7 @@
         \end{itemize}
     
     \item
-        What may change in (a) if the following things happen:
+        Calculate the quantities in (a) after applying the following changes:
 
         \begin{itemize}
             \item All points are rotated by 45 degrees counterclockwise.
@@ -80,7 +80,7 @@
                 \lz
                 \lz
                 \lz
-            \item One SV moves closer to the separating hyperplane.
+            \item One SV moves closer to the separating hyperplane $(6,1) \rightarrow (5.5,1)$.
                 \lz
                 \lz
                 \lz

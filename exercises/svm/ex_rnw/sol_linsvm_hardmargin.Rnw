@@ -26,7 +26,7 @@
                 x_1 = 5
             $$
 
-            Using the formula $ \thetab^T x + \theta_0  = 0 $, we obtain that $\theta_1$ = 1, $\theta_2 = 0$ and $\theta_0=-5$
+            Using the formula $ \thetab^T \xv + \theta_0  = 0 $, we obtain that $\theta_1$ = 1, $\theta_2 = 0$ and $\theta_0=-5$
             \item 
               The support vectors are the ones that determine the margins, in this case:  $(4,1)^T$ and $(6,1)^T$
             
@@ -129,7 +129,7 @@
           
           \item
           
-            If one SV moves closer to the bound $(6,1) \rightarrow (5.5,1)$ :
+            If one SV moves closer to the boundary $(6,1) \rightarrow (5.5,1)$ :
             
             <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
             mpoints = list(c(4, 1),c(5.5, 1),c(2, 0.5), c(7,2), c(3,2), c(6.5,1))
@@ -198,7 +198,7 @@
 $\gamma$ & $ \| \thetab \| $ & $ \thetab $                  & $\theta_0$ & SV                   \\ \hline
 1        & 1                 & $\frac{1}{\sqrt{2}} (1,1)^T$ & -5         & Rotation ($(4,1)^T, (6,1)^T$)                 \\
 1        & 1                 & $(1,0)^T$                    & -7         & $(6,1)^T, (8,1)^T  $               \\
-0.75     & 1.25              & $ (1.25,0)^T$                & -4.75      & $(4,1)^T, (6,1)^T   $             \\
+0.75     & 1.25              & $ (1.25,0)^T$                & -4.75      & $(4,1)^T, (5.5,1)^T   $             \\
 1.25     & 0.75              & $ (0.75,0)^T$                & -5.25      & $(4,1)^T, (6.5,1)^T$
 \end{tabular}
 \end{table}
