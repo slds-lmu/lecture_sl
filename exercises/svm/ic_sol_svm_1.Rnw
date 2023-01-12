@@ -12,8 +12,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{10}{Support Vector Machines}
 
-\loesung{SVM - Support Vectors and Separating Hyperplane}{
-	<<child="ex_rnw/sol_linsvm_hyperplane.Rnw">>=
+\loesung{Hard Margin Classifier}{
+	<<child="ex_rnw/sol_linsvm_hardmargin.Rnw">>=
 	@
 }
 

@@ -8,17 +8,10 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 \input{../../latex-math/ml-svm.tex}
-\input{../../latex-math/ml-gp.tex}
 
 \kopficsl{10}{Support Vector Machines}
 
-\aufgabe{SVM - Support Vectors and Separating Hyperplane}{
-	<<child="ex_rnw/ic_linsvm_hyperplane.Rnw">>=
+\aufgabe{Hard Margin Classifier}{
+	<<child="ex_rnw/ic_linsvm_hardmargin.Rnw">>=
 	@
 }
-
-%\aufgabe{Quiz Time}{
-%	<<child="ex_rnw/ex_particify_1.Rnw">>=
-%	@
-%}
-

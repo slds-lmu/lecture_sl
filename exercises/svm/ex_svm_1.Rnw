@@ -10,15 +10,15 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-svm.tex}
 \input{../../latex-math/ml-gp.tex}
 
-\kopfsl{10}{SVM}
+\kopfsl{10}{Support Vector Machines}
 
-\aufgabe{SVM -- Support Vectors and Separating Hyperplane}{
-	<<child="ex_rnw/ex_linsvm_hyperplane.Rnw">>=
+\aufgabe{Soft Margin Classifier}{
+	<<child="ex_rnw/ex_linsvm_softmargin.Rnw">>=
 	@
 }
 \dlz
 
-\aufgabe{SVM -- Optimization}{
+\aufgabe{Optimization}{
 	<<child="ex_rnw/ex_linsvm_subgradient.Rnw">>=
 	@
 }
