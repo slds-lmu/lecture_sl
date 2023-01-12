@@ -2,59 +2,99 @@
   \item 
   	As seen in the \href{https://github.com/slds-lmu/lecture_sl/blob/main/slides-pdf/slides-advriskmin-classification-01.pdf}{0-1-Loss presentation, slide 2}, the discrete classifier that minimizes the risk $\hxbayes$ (the Bayes optimal classifier) is:
   	
-  	\begin{align*}
-  	  \hxbayes &=  \argmax_{l \in \Yspace } \ \ \underbrace{\P(y = l~|~ _{\xv = \xv})}_{\sim \mathrm{Unif} \{1,\ldots,x\} } \\
-  	  &=  \argmax \frac{1}{x} \cdot \mathds{1}_{[1\leq l\leq x]}
-  	\end{align*}
+    \begin{equation}
+  	  \begin{aligned}
+  	    \hxbayes &=  \argmax_{l \in \Yspace } \ \ \underbrace{\P(y = l~|~ _{\xv = \xv})}_{\sim \mathrm{Unif} \{1,\ldots,x\} } \\
+  	    &=  \argmax \frac{1}{x} \cdot \mathds{1}_{[1\leq l\leq x]}
+  	  \end{aligned}
+    \end{equation}
 
     As the distribution of $y$ given $x$ is uniform , any value between 1 and $x$ is optimal.
 
-  	\begin{align*}
-  	  \hxbayes = \{1,\dots,x\}
-  	\end{align*}
+  	\begin{equation}   
+      \begin{aligned}
+  	    \hxbayes = \{1,\dots,x\}
+  	  \end{aligned}
+    \end{equation}
     \lz
   \item
     The Bayes risk for the 0-1-loss, also known as the Bayes error rate, is defined as :
     
-      \begin{align*}
-        \riskbayes &= 1 - \E_x \left[\max_{l \in \Yspace} \P(y = l~|~ _{\xv = \xv})\right] \\
-        &= 1 - \underbrace{\E_x \left[ \frac{1}{x} \right]}_{p_x \sim \mathrm{Unif} \{1,\ldots,10\}} \\
-        &= 1 - \sum_{x=1}^{10} \frac{1}{x} \frac{1}{10} \\
-        &= 1- \frac{7381}{25200}
-  	  \end{align*}
+      \begin{equation}
+        \begin{aligned}
+          \riskbayes &= 1 - \E_x \left[\max_{l \in \Yspace} \P(y = l~|~ _{\xv = \xv})\right] \\
+          &= 1 - \underbrace{\E_x \left[ \frac{1}{x} \right]}_{p_x \sim \mathrm{Unif} \{1,\ldots,10\}} \\
+          &= 1 - \sum_{x=1}^{10} \frac{1}{x} \frac{1}{10} \\
+          &\overset{hint}{=} 1- \frac{7381}{25200}
+  	    \end{aligned}
+      \end{equation}
+
+    An alternative solution to the problem can be derived from the risk definition: 
+
+    \begin{equation}
+      \begin{aligned}
+        \riskbayes &= \sum_X \sum_Y L(l, \hbayes(x))  \ \P(y = l~|~ _{\xv = \xv}) \  \P(x)\\ 
+        &= \sum_{i=1}^{10} \frac{1}{10} \sum_{j=1}^i \I_{ \{j \neq \hbayes(i) \} } \frac{1}{i} \\
+      \end{aligned}
+    \end{equation}
+
+    As exactly only on value of $\{ 1, \dots, x \}$ will be chosen for $\hbayes(x)$, the indicator function will be 1 for all values except for the chosen one. Therefore:  
+
+    \begin{equation}
+      \begin{aligned}
+        \riskbayes &= \sum_{i=1}^{10} \frac{1}{10} \underbrace{\sum_{j=1}^i \I_{ \{j \neq \hbayes(i) \} } \frac{1}{i} }_{\frac{i-1}{i}} \\
+        &= \sum_{i=1}^{10} \frac{1}{10} \left( 1 -  \frac{1}{i} \right)\\\
+        &= \sum_{i=1}^{10} \frac{1}{10} - \frac{1}{10} \sum_{i=1}^{10}   \frac{1}{i} \\
+        &\overset{hint}{=} 1 - \frac{7381}{25200}\\
+      \end{aligned}
+    \end{equation}
+
+
     \lz
   \item
   
     The point-wise optimizer for the 0-1 loss over all discrete classifiers $\hxbayes$ is:
   
-    \begin{align*}
-      \hxbayes = \argmax_{l \in \Yspace } \ \ \P(y = l~|~ _{\xv = \xv})
-    \end{align*}
+    \begin{equation}
+      \begin{aligned}
+        \hxbayes = \argmax_{l \in \Yspace } \ \ \P(y = l~|~ _{\xv = \xv})
+    \end{aligned}
+  \end{equation}
     
     The optimal constant model can be obtained by forgetting the conditioning on x, leading to:
     
-    \begin{align*}
-      \bar{h} (x) = \argmax_{l \in \Yspace } \ \ \P(y = l)
-    \end{align*}
+    \begin{equation}
+      \begin{aligned}
+        \bar{h} (x) = \argmax_{l \in \Yspace } \ \ \P(y = l)
+    \end{aligned}
+  \end{equation}
     
     Using the law of total probability:
-    \begin{align*}
-      \bar{h} (x) &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \P(y = l~|~ _{\xv = \xv}) \cdot \P(\xv = \xv) \\
-      &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \frac{1}{x} \cdot  \mathds{1}_{[1\leq l \leq x]} \cdot \frac{1}{10} \\
-      &= \argmax_{l \in \Yspace } \begin{cases}
+    \begin{equation}
+      \begin{aligned}
+        \bar{h} (x) &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \P(y = l~|~ _{\xv = \xv}) \cdot \P(\xv = \xv) \\
+        &= \argmax_{l \in \Yspace }  \sum_{x=1}^{10}  \frac{1}{x} \cdot  \mathds{1}_{[1\leq l \leq x]} \cdot \frac{1}{10} \\
+        &= \argmax_{l \in \Yspace } 
+          \begin{cases}
             \frac{7381}{25200}, & l=1 \\
             \frac{7381}{25200} - \frac{1}{10}, & l=2 \\ 
             \frac{7381}{25200} - \frac{1}{10} - \frac{1}{20}, & l=3 \\ 
             \hfil \vdots & \hfil \vdots \\
             \frac{7381}{25200} - \sum_{z=1}^{l-1} \frac{1}{10\cdot z},& l=10
-        \end{cases}
-    \end{align*}
+          \end{cases}
+      \end{aligned}
+    \end{equation}
     
     As the probability is monotonically decreasing with $l$, we can conclude that the optimal constant model is :
     
-    \begin{align*}
-      \bar{h} (x) = 1
-    \end{align*}
+    \begin{equation}
+      \begin{aligned}
+        \bar{h} (x) = 1
+      \end{aligned}
+    \end{equation}
+
+
+
     \lz
   \item
     
@@ -65,6 +105,6 @@
       &= 1 -  \P (y=1) \\
       &= 1 - \frac{7381}{25200} 
     \end{align*}
-    
+   
     
 \end{enumerate}
