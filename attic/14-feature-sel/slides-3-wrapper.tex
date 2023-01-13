@@ -1,0 +1,196 @@
+
+
+\input{../../2021/style/preamble4tex}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\begin{document}
+
+\lecturechapter{14}{Wrappers}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+
+\begin{vbframe}{Wrappers}
+
+\begin{itemize}
+  \item Wrapper methods emerged from the idea that different sets of features can be optimal for different classification learners.
+  \item Given a set of features, we can use the classifier itself to assess their quality.
+  \item We could just evaluate on the test set or use resampling techniques to achieve this.
+  \item A wrapper is nothing else than a discrete search strategy for $S$, where the cross-validated test error of a learner as a function of $S$ is now the objective criterion.
+
+\end{itemize}
+
+
+\framebreak
+
+There are a lot of varieties of wrappers. To begin with we have to determine the following components:
+
+\lz
+
+\begin{itemize}
+  \item A set of starting values
+  \item Operators to create new points out of the given ones
+  \item A termination criterion
+\end{itemize}
+
+\framebreak
+
+\begin{figure}
+  \includegraphics[width=8cm]{figure_man/varsel_space.png}
+  \caption{Space of all feature sets for 4 features.
+  The indicated relationships between the sets insinuate a greedy search strategy which either adds or removes a feature.}
+  % Übersetzung von:
+  % Raum aller Feature-Mengen bei 4 Features. Die eingezeichnete Nachbarschaftsbeziehung unterstellt eine Art ,,gierige'' Suchstrategie, bei der wir entweder ein Feature hinzufügen oder entfernen.}
+\end{figure}
+
+\framebreak
+
+\begin{blocki}{Greedy forward search:}
+  \item Let $S \subset \{1, \dots, p \}$, where $\{1, \dots p \}$ is an index set of all features.
+  \item Start with the empty feature set $S = \emptyset$.
+  \item For a given set $S$, generate all $S_j = S \cup \{j\}$ with $j \notin S$.
+  \item Evaluate the classifier on all $S_j$ and use the best $S_j$.
+  \item Iterate over this procedure.
+  \item Terminate if:
+    \begin{itemize}
+      \item the performance measure no longer shows relevant improvement,
+      \item a maximum number of features is used, or
+      \item a given performance value is reached.
+    \end{itemize}
+\end{blocki}
+
+\framebreak
+
+\textbf{Example for greedy forward search on iris data:}
+\begin{center}
+\includegraphics[width = 0.6\textwidth]{figure_man/wrapperanim1.png}
+\end{center}
+
+\framebreak
+
+\begin{center}
+\includegraphics[width = 0.65\textwidth]{figure_man/wrapperanim2.png}
+\end{center}
+
+\framebreak
+
+\begin{center}
+\includegraphics[width = 0.65\textwidth]{figure_man/wrapperanim3.png}
+\end{center}
+
+\framebreak
+
+\begin{center}
+\includegraphics[width = 0.65\textwidth]{figure_man/wrapperanim4.png}
+\end{center}
+
+\framebreak
+
+\begin{center}
+\includegraphics[width = 0.65\textwidth]{figure_man/wrapperanim5.png}
+\end{center}
+
+\framebreak
+
+\begin{center}
+\includegraphics[width = 0.65\textwidth]{figure_man/wrapperanim6.png}
+\end{center}
+
+\framebreak
+
+\begin{blocki}{Greedy backward search:}
+  \item Start with the full index set of features $S = \{1, \ldots, p\}$.
+  \item For a given set $S$ generate all
+
+  $S_j = S \setminus\{j\}$ with $j \in S$.
+  \item Evaluate the classifier on all $S_j$\
+    and use the best $S_j$.
+  \item Iterate over this procedure.
+  \item Terminate if:
+    \begin{itemize}
+      \item the performance drops drastically, or
+      \item a given performance value is undershot.
+    \end{itemize}
+  \end{blocki}
+
+\framebreak
+
+\begin{blocki}{Extensions:}
+  \item Eliminate or add several features at once to increase speed.
+  \item Allow alternating forward and backward search.
+  \item Randomly create candidate feature sets in each iteration.
+  \item Continue search based on the set of features where an improvement is present.
+  \item Use improvements of earlier iterations.
+\end{blocki}
+
+\framebreak
+
+\begin{algorithm}[H]
+\begin{algorithmic}[1]
+  \State Start with a random set of features $S$ (bit vector $b$).
+  \Repeat
+  \State Flip a couple of bits in $b$ with probability $p$.
+  \State Generate set $S^\prime$ and bit vector $b^\prime$.
+  \State Measure the classifier's performance on $S^\prime$.
+  \State If $S^\prime$ performs better than $S$, update $S \leftarrow S^\prime$, otherwise $S \leftarrow S$.
+  \Until One of the following conditions is met:
+    \begin{itemize}
+      \item A given performance value is reached.
+      \item Budget is exhausted.
+    \end{itemize}
+    \caption{A simple 1+1 genetic algorithm}
+\end{algorithmic}
+\end{algorithm}
+
+\framebreak
+
+\begin{blocki}{Advantages:}
+  \item Can be combined with every learner.
+  \item Can be combined with every performance measure.
+  \item Optimizes the desired criterion directly.
+\end{blocki}
+
+\lz
+
+\begin{blocki}{Disadvantages:}
+  \item Evaluating the target function is expensive.
+  \item Does not scale well if number of features becomes large.
+  \item Does not use much structure or available information from our model.
+\end{blocki}
+
+% \framebreak
+%
+% <<size="tiny", echo=TRUE>>=
+% # specify the search strategy.
+% # We want to use forward search:
+% ctrl = makeFeatSelControlSequential(method = "sfs")
+% ctrl
+%
+% # Selected features
+% sfeats = selectFeatures(learner = "regr.lm", task = bh.task,
+%   resampling = rdesc, control = ctrl, show.info = FALSE)
+% sfeats
+% @
+%
+% \framebreak
+%
+% <<size="tiny", echo=TRUE>>=
+% # Visualize optimization path
+% analyzeFeatSelResult(sfeats)
+% @
+%
+% \framebreak
+%
+% <<size="tiny", echo=TRUE>>=
+% # Fuse a base-learner with a search strategy (here: sfs)
+% lrn = makeFeatSelWrapper("classif.rpart", resampling = rdesc,
+%   control = ctrl, show.info = FALSE)
+% res = resample(lrn, iris.task, resampling = rdesc,
+%   show.info = FALSE, models = TRUE, extract = getFeatSelResult)
+% res$extract[1:5]
+% @
+\end{vbframe}
+
+\endlecture
+\end{document}
+
