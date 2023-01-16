@@ -11,6 +11,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopficsl{3}{Risk Minimization}
 
 \aufgabe{Recapping Advanced Risk Minimization}{
-	<<child="ex_rnw/ic_advriskmin_3.Rnw">>=
+	<<child="ex_rnw/ic_particify_advriskmin.Rnw">>=
 	@
 }
