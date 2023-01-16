@@ -7,7 +7,7 @@
 			\kxxt  =  \xv^T \xtil  = \xtil^T \xv  =  k(\tilde \xv, \xv)
 		\end{equation}
 
-		To check if the function is positive definite, we will remember the definition of $\xv$
+		To check if the kernel gram matrix is positive definite, we will remember the definition of $\xv$
 
 		\begin{equation}
 			\xv = \xdat \in \R^{p \times n}
@@ -17,7 +17,7 @@
 
 		\begin{equation}
 			\begin{aligned}
-				K  &= \left( 
+				\mathbf{K}  &= \left( 
 						\begin{matrix}
 							\scp{\xi[1]}{\xi[1]} & \scp{\xi[1]}{\xi[2]} & \cdots & \scp{\xi[1]}{\xi[n]} \\
 							\scp{\xi[2]}{\xi[1]} & \scp{\xi[2]}{\xi[2]} & \cdots & \scp{\xi[2]}{\xi[n]} \\
@@ -32,7 +32,7 @@
 
 		\begin{equation}
 			\begin{aligned}
-				\mathbf{a}^T K \mathbf{a} & = \mathbf{a}^T \xv^T \xv \mathbf{a} \\
+				\mathbf{a}^T \mathbf{K} \mathbf{a} & = \mathbf{a}^T \xv^T \xv \mathbf{a} \\
 				&= (\underbrace{\mathbf{a} \xv}_\mathbf{z})^T (\mathbf{a} \xv) \\
 				&= \mathbf{z}^T \mathbf{z} \\
 				&= \| \mathbf{z} \|_2^2 > 0
@@ -48,8 +48,8 @@
 
 		\begin{equation}
 			\begin{aligned}
-				K = K(\xi[1], \xi[1]) &= \cos\left(\frac{\pi}{2} + \frac{\pi}{2}\right)  =-1 \\
-				\mathbf{a}^T K \mathbf{a} & = 1 \cdot -1 \cdot 1 = -1 < 0
+				\mathbf{K} = k(\xi[1], \xi[1]) &= \cos\left(\frac{\pi}{2} + \frac{\pi}{2}\right)  =-1 \\
+				\mathbf{a}^T \mathbf{K} \mathbf{a} & = 1 \cdot -1 \cdot 1 = -1 < 0
 			\end{aligned}
 		\end{equation}
 
@@ -59,7 +59,7 @@
 
 		\begin{equation}
 			\begin{aligned}
-				K & = \left( 
+				\mathbf{K} & = \left( 
 					\begin{matrix}
 						max(\xi[1], \xi[1]) & max(\xi[1], \xi[2]) \\
 						max(\xi[2], \xi[1]) & max(\xi[2], \xi[2])
@@ -74,7 +74,7 @@
 
 		\begin{equation}
 			\begin{aligned}
-				\mathbf{a}^T K \mathbf{a} &=  (1,-1) \cdot \left( 
+				\mathbf{a}^T \mathbf{K} \mathbf{a} &=  (1,-1) \cdot \left( 
 					\begin{matrix}
 						1 & 2 \\
 						2 & 2
