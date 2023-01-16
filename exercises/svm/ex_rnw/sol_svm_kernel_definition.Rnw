@@ -1,0 +1,99 @@
+\begin{enumerate}
+	\item 
+
+		The function is symmetric, as we can prove in the following way:
+
+		\begin{equation}
+			\kxxt  =  \xv^T \xtil  = \xtil^T \xv  =  k(\tilde \xv, \xv)
+		\end{equation}
+
+		To check if the function is positive definite, we will remember the definition of $\xv$
+
+		\begin{equation}
+			\xv = \xdat \in \R^{p \times n}
+		\end{equation}
+
+		Taking that into account, the kernel gramn matrix is defined as :
+
+		\begin{equation}
+			\begin{aligned}
+				K  &= \left( 
+						\begin{matrix}
+							\scp{\xi[1]}{\xi[1]} & \scp{\xi[1]}{\xi[2]} & \cdots & \scp{\xi[1]}{\xi[n]} \\
+							\scp{\xi[2]}{\xi[1]} & \scp{\xi[2]}{\xi[2]} & \cdots & \scp{\xi[2]}{\xi[n]} \\
+							\vdots & \vdots & \ddots & \vdots \\
+							\scp{\xi[n]}{\xi[1]} & \scp{\xi[n]}{\xi[2]} & \cdots & \scp{\xi[n]}{\xi[n]}
+						\end{matrix}
+					\right) \\
+				&= \xdat^T \xdat \\
+				&= \xv^T \xv \in \R^{n \times n}
+			\end{aligned}
+		\end{equation}
+
+		\begin{equation}
+			\begin{aligned}
+				\mathbf{a}^T K \mathbf{a} & = \mathbf{a}^T \xv^T \xv \mathbf{a} \\
+				&= (\underbrace{\mathbf{a} \xv}_\mathbf{z})^T (\mathbf{a} \xv) \\
+				&= \mathbf{z}^T \mathbf{z} \\
+				&= \| \mathbf{z} \|_2^2 > 0
+			\end{aligned}
+		\end{equation}
+
+		We can conclude that this function is a kernel.
+
+	\item
+		
+		The function is not a kernel,
+		as we can prove that the kernel gram matrix is not positive definite. We will use $\xi[1]  = \frac{\pi}{2}$ and $a = 1$ :
+
+		\begin{equation}
+			\begin{aligned}
+				K = K(\xi[1], \xi[1]) &= \cos\left(\frac{\pi}{2} + \frac{\pi}{2}\right)  =-1 \\
+				\mathbf{a}^T K \mathbf{a} & = 1 \cdot -1 \cdot 1 = -1 < 0
+			\end{aligned}
+		\end{equation}
+
+	\item 
+		The function is not a Kernel, we can prove that the kernel gram matrix is not positive definite by using an example,
+		let us take $\xi[1] = 1$ and  $\xi[2] = 2$, and $a = (1,-1)^T$ :
+
+		\begin{equation}
+			\begin{aligned}
+				K & = \left( 
+					\begin{matrix}
+						max(\xi[1], \xi[1]) & max(\xi[1], \xi[2]) \\
+						max(\xi[2], \xi[1]) & max(\xi[2], \xi[2])
+					\end{matrix} \right)  
+					= \left( 
+					\begin{matrix}
+						1 & 2 \\
+						2 & 2
+					\end{matrix}\right)
+			\end{aligned}
+		\end{equation}
+
+		\begin{equation}
+			\begin{aligned}
+				\mathbf{a}^T K \mathbf{a} &=  (1,-1) \cdot \left( 
+					\begin{matrix}
+						1 & 2 \\
+						2 & 2
+					\end{matrix}\right) \cdot (1,-1)^T \\
+					&= (-1,0) \cdot (1,-1)^T \\
+					&= -1
+			\end{aligned}
+		\end{equation}
+
+	\item 
+
+		In this case, we can use properties of the kernels to prove that the function is indeed a kernel.
+
+		\begin{itemize}
+			\item Multiplying a kernel by a non-negative scalar always results in a kernel.
+			 Accordingly, we can say that $\alpha k_1(\xv, \xtil)$ and $\beta k_2(\xv, \xtil)$ are kernels.
+
+			\item The sum of two kernels always results in a kernel.
+			 Accordingly, we can say that $ \alpha k_1(\xv, \xtil) + \beta k_2(\xv, \xtil)$ is a kernel.
+		\end{itemize}
+
+\end{enumerate}
