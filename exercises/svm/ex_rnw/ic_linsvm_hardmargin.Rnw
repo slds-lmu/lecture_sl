@@ -86,7 +86,7 @@
                 \lz
                 \lz
                 \lz
-            \item One SV is removed from the dataset.
+            \item One SV $(6,1)$ is removed from the dataset.
                 \lz
                 \lz
                 \lz
