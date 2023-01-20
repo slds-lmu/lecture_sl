@@ -1,0 +1,174 @@
+\chapter{Linear trennbare Daten}
+\label{chap:trennbar}
+
+Im Falle linear trennbarer Daten gibt es unendlich viele Hyperebenen, welche die zwei Klassen der Trainingsdaten vollständig voneinander trennen. Intuitiv betrachtet sind Hyperebenen zu bevorzugen,
+%Es ist jedoch wünschenswert eine Hyperebene zu finden, 
+deren Abstand zu den Beobachtungen beider Klassen möglichst groß ist.
+
+%Intuitiv ist klar: Je größer der Abstand der Hyperebene zu Beobachtungen beider Klassen, desto eher kann man davon ausgehen, dass neue Beobachtungen in die richtige Klasse zugeordnet werden.
+
+Die drei Hyperebenen in Abbildung \ref{possibleHP} sollen diese Intuition veranschaulichen. Hier scheint die letzte Hyperebene ``besser'' als die ersten zwei zu sein, da der Abstand der Hyperebene zu beiden Klassen möglichst groß ist und man somit eher davon ausgehen kann, dass neu hinzukommende Beobachtungen richtig klassifiziert werden. %in die richtige Klasse zugeordnet werden. 
+Die Idee der Support Vector Machines ist, eine solche Hyperebene 
+%-- die den Abstand von Beobachtungen nahe der Hyperebene maximiert -- 
+mit maximalen Abstand zwischen Beobachtungen beider Klassen zu finden. In den folgenden Kapiteln wird erklärt, wie diese Idee mathematisch umgesetzt werden kann.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{trennlinie.png}
+\caption{Mögliche Hyperebenen zur Trennung der Trainingsdaten}
+\label{possibleHP}
+\end{figure}
+
+\section{Entscheidungsfunktion}
+%\subsection*{Entscheidungsfunktion}
+Zunächst wird begründet, wie sich die Entscheidungsfunktion $f(\mathbf{x}) $ aus den Beobachtungen $\mathbf{x}$ zusammensetzt.
+Dazu betrachtet man in Abbildung \ref{decisionfunction} die zwei Halbräume 
+\begin{itemize}
+\item $\mathbf{w}^\top \mathbf{x}+ b > 0$ (blau) und 
+\item $\mathbf{w}^\top \mathbf{x}+ b < 0$ (rot),
+\end{itemize}
+die beim Trennen eines zweidimensionalen Variablenraums durch eine Hyperebene wie in Gleichung (\ref{hyperebene}) entstehen.
+%Abbildung \ref{decisionfunction} visualisiert die zwei Halbräume $\mathbf{w}^\top \mathbf{x}+ b > 0$ (blau) und $\mathbf{w}^\top \mathbf{x}+ b < 0$ (rot), die beim trennen des 
+%(in diesem Fall zweidimensionalen) 
+%Variablenraums durch eine Hyperebene wie in Gleichung (\ref{hyperebene}) entstehen.
+Mit Hilfe einer Entscheidungsfunktion $f(\mathbf{x})$ sollen
+\begin{itemize}
+\item Beobachtungen der positiven Klasse $y_i=+1$ in den Halbraum $\mathbf{w}^\top \mathbf{x}+ b > 0$ und
+\item Beobachtungen der negativen Klasse $y_i=-1$ in den Halbraum $\mathbf{w}^\top \mathbf{x}+ b < 0$ 
+\end{itemize} 
+zugeordnet werden. Die Wahl von $f(\mathbf{x}) = \text{sgn}(\mathbf{w}^\top \mathbf{x}+ b)$ ermöglicht eine solche Zuordnung (vgl. \citealp[Kap. 2]{ben2010user}; \citealp[Kap. 7.1]{scholkopf2001learning}).
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.8\textwidth]{hyperplane3.png}
+\caption{Bereiche ``oberhalb'' und ``unterhalb'' der Hyperebene}
+\label{decisionfunction}
+\end{figure}
+
+\section{Kanonische Hyperebene}
+
+Die Hyperebene aus Gleichung (\ref{hyperebene}) ist invariant gegenüber der Multiplikation mit einer beliebigen positiven Zahl $\lambda$. Die Lage und Position der Hyperebene bleibt wegen
+%kann mit jeder beliebigen positiven Zahl $\lambda \in \mathbb{R}^+$ multiplizieren werden, wobei gleichzeitig die Form der Hyperebene unverändert bleibt. Es gilt
+\begin{align*}
+\mathbf{w}^\top \mathbf{x}+ b = 0 \;
+\Leftrightarrow \; \lambda \mathbf{w}^\top \mathbf{x}+ \lambda b = 0,
+\end{align*}
+für alle $\lambda \in \mathbb{R}^+$ unverändert. Daraus resultiert das Problem, dass es unendlich viele Gleichungen gibt, welche dieselbe Hyperebene beschreiben. Um dies zu umgehen, führt man eine sogenannte kanonische Hyperebene ein, die zusätzlich die Einschränkung
+\begin{equation*}
+\label{kanonicalHP}
+\min_{i=1, \hdots, N} | \mathbf{w}^\top \mathbf{x}_i + b | = 1
+\end{equation*}
+hat. Dadurch wird der Abstand der nächstgelegenen Beobachtungen zur Hyperebene so skaliert, dass er betragsmäßig gleich $1$ ist. Dieser Abstand ist  
+%nicht etwa als euklidischer Abstand interpretiert werden sondern 
+als funktionaler Abstand zu interpretieren, der lediglich die Abstände einer Beobachtung relativ zu den nächstgelegenen Beobachtungen zur Hyperebene wiedergibt. Alle anderen Beobachtungen haben demnach einen betragsmäßigen funktionalen Abstand von der Hyperebene, der größer als $1$ ist. 
+Es gilt
+%\begin{align*}
+%&\mathbf{w}^\top \mathbf{x}_i + b \geq +1 \; \text{ für } \; y_i = +1 \\
+%&\mathbf{w}^\top \mathbf{x}_i + b \leq -1 \; \text{ für } \; y_i = -1,
+%\end{align*}
+$$
+\left\{
+  \begin{array}{ll}
+	\mathbf{w}^\top \mathbf{x}_i + b \geq +1 &\text{für} \; y_i = +1 \\
+	\mathbf{w}^\top \mathbf{x}_i + b \leq -1  &\text{für} \; y_i = -1,
+  \end{array}
+\right.
+$$
+beziehungsweise in kompakter Form $y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1$.
+Diese Ungleichung gibt den betragsmäßigen funktionalen Abstand einer Beobachtung $\mathbf{x}_i$ orthogonal zur Hyperebene an (\citealp[vgl.][Kap. 7.1]{scholkopf2001learning}).
+
+Abbildung \ref{margin} veranschaulicht diesen Sachverhalt am Beispiel eines zweidimensionalen Variablenraums:
+Die ausgefüllten Punkte auf den gestrichelten Geraden entsprechen den zur Hyperebene nächstgelegenen Beobachtungen. Ihr funktionaler Abstand orthogonal zur Hyperebene beträgt $1$. Sie werden Stützvektoren (engl. \textit{support vectors}) genannt, da sie den Richtungsvektor $\mathbf{w}$ der Hyperebene festlegen. Eine Verschiebung dieser Punkte bewirkt, dass sich der Richtungsvektor $\mathbf{w}$ und somit die Lage und Position der Hyperebene ändert (vgl. auch letzter Absatz in Kapitel \ref{Optimierungsproblem}). 
+Die gestrichelten %zur Hyperebene parallelen 
+Geraden, auf denen die Stützvektoren liegen, definieren den sogenannten Rand (engl.  \textit{margin}). Durch Maximierung des Randes ermöglicht man, dass der Abstand der Hyperebene zu beiden Klassen möglichst groß wird.
+Im nächsten Kapitel ist das Ziel einen mathematischen Ansatz herzuleiten, der diesen Rand maximiert.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.6\textwidth]{margin3.png}
+\caption{funktionale Abstand der Stützvektoren zur Hyperebene beträgt 1}
+\label{margin}
+\end{figure}
+
+\section{Optimierungsproblem}
+\label{Optimierungsproblem}
+Die Hyperebene wird durch die bisher unbekannten Parameter $(\mathbf{w}, b)$ festgelegt. Um den euklidischen Abstand einer Beobachtung $\mathbf{x}_i$ orthogonal zur Hyperebene zu bestimmen, muss zusätzlich mit der euklidischen Norm $||\mathbf{w}|| := \sqrt{\mathbf{w}^\top \mathbf{w}}$ normiert werden. Der euklidische Abstand berechnet sich durch
+\begin{equation*}
+d((\mathbf{w},b), \mathbf{x}_i) = \frac{y_i (\mathbf{w}^\top \mathbf{x}_i + b)}{||\mathbf{w}||} \geq \frac{1}{||\mathbf{w}||}.
+\end{equation*}
+%Die Support Vektoren haben also einen euklidischen Abstand von $\frac{1}{||\mathbf{w}||}$ von der Hyperebene (bzw. einen funktionalen Abstand von $1$). 
+Um diesen euklidischen Abstand und somit den Rand zu maximieren, genügt es $||\mathbf{w}||$ bzw. $ \frac{1}{2} ||\mathbf{w}||^2$ zu minimieren (\citealp[vgl.][Kap. 3]{boswell2002introduction}).
+
+Das daraus resultierende primäre Optimierungsproblem lautet %kann wie folgt aufgestellt werden:
+\begin{gather}
+\begin{split}
+\label{eq:nb}
+& \min_{\mathbf{w},b} \hspace{8pt} \frac{1}{2} ||\mathbf{w}||^2\\
+\text{NB:}          \hspace{8pt} & y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1,
+\hspace{8pt} \forall i = 1, \hdots, N.
+\end{split}
+\end{gather}
+Die dazugehörige Lagrange-Funktion mit Lagrange-Multiplikatoren $\alpha_i \geq 0$ hat die Form
+\begin{align}
+\label{primal}
+L(\mathbf{w},b,\pmb{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_{i=1}^{N} \alpha_i  (y_i (\mathbf{w}^\top \mathbf{x}_i + b) - 1).
+\end{align}
+In der Literatur wird aus praktischen Gründen das duale Optimierungsproblem bevorzugt. Um dieses herzuleiten, wird  die Lagrange-Funktion $L(\mathbf{w},b,\pmb{\alpha})$ bezüglich der Primärvariablen $\mathbf{w},b$ minimiert und bezüglich $\pmb{\alpha}$ maximiert (\citealp[vgl.][Kap. 7.3]{scholkopf2001learning}; \citealp[Kap. 5]{boyd2004convex}). 
+
+Für das Minimieren bezüglich der Primärvariablen ergeben sich folgende Lösungen (vgl. \citealp[S. 8]{gunn1998support}):
+\begin{align}
+\label{primal1}
+\frac{\partial L(\mathbf{w},b,\pmb{\alpha})}{\partial b} = 0          & \Rightarrow \sum_{i=1}^N \alpha_i y_i = 0 \\
+\label{primal2}
+\frac{\partial L(\mathbf{w},b,\pmb{\alpha})}{\partial \mathbf{w}} = 0 & \Rightarrow \mathbf{w} = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i
+\end{align}
+Setzt man Gleichung (\ref{primal1}) und (\ref{primal2}) in die Lagrange-Funktion (\ref{primal}) ein, erhält man die sogenannte Lagrange-duale Funktion 
+%$W(\pmb{\alpha}) = \min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha})$
+\begin{align*}
+W(\pmb{\alpha}) &=\min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha}) = \min_{\mathbf{w}, b} \left (\frac{1}{2} \mathbf{w}^\top \mathbf{w} - \sum_{i=1}^N \alpha_i (y_i ( \mathbf{w}^\top \mathbf{x}_i  +b) - 1) \right ) \\
+&\stackrel{ (\ref{primal2})}= \min_{b} \left ( \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j - \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i - \sum_{i=1}^N b \alpha_i y_i + \sum_{i=1}^N \alpha_i \right ) \\
+&\stackrel{(\ref{primal1})}= \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j - \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i + \sum_{i=1}^N \alpha_i \\
+&=\frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j - \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j + \sum_{i=1}^N \alpha_i \\
+&= -\frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j + \sum_{i=1}^N \alpha_i.
+\end{align*}
+%Diese ist nicht mehr von den Primärvariablen $\mathbf{w},b$ abhängig. 
+Das duale Optimierungsproblem ist nicht mehr von den Primärvariablen $\mathbf{w},b$ abhängig und lässt sich wie folgt aufstellen (vgl. \citealp[S. 8]{gunn1998support}): 
+\begin{gather}
+\begin{split}
+\label{dual}
+\max_{\pmb{\alpha}} W(\pmb{\alpha}) = \max_{\pmb{\alpha}} 
+\left ( \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j \right )\\
+\text{NB:} \hspace{15pt} \alpha_i \geq 0, \hspace{20pt} \sum_{i=1}^N \alpha_i y_i = 0,  \hspace{20pt} \forall i= 1, \hdots, N
+\end{split}
+\end{gather}
+Nach den Karush-Kuhn-Tucker (KKT) Bedingungen müssen alle Beobachtungen zusätzlich die Bedingung $$\alpha_i [ y_i (\mathbf{w}^\top \mathbf{x}_i + b) -1 ] = 0 \hspace{8pt}$$
+%\begin{align}
+%\label{kkt}
+%\alpha_i [ y_i (\mathbf{w}^\top \mathbf{x}_i + b) -1 ] = 0 \hspace{8pt} \forall i= 1, \hdots, N
+%\end{align}
+erfüllen (\citealp[vgl.][S. 197ff]{scholkopf2001learning}; \citealp[S. 4]{boswell2002introduction}). Dies impliziert, dass für alle Beobachtungen entweder $\alpha_i=0$ oder $y_i (\mathbf{w}^\top \mathbf{x}_i + b) = 1$ gelten muss.
+
+\begin{itemize}
+\item[$\pmb{\Rightarrow}$] $\alpha_i=0$, wenn $y_i (\mathbf{w}^\top \mathbf{x}_i + b) > 1$, d.h. wenn der funktionale Abstand einer Beobachtung $\mathbf{x}_i$ zur Hyperebene größer als $1$ ist. %In Abbildung \ref{margin} sind das diejenigen Beobachtungen, die nicht auf den gestrichelten Geraden liegen.
+
+\item[$\pmb{\Rightarrow}$] Es interessieren nur die Stützvektoren, da für diese $ y_i (\mathbf{w}^\top \mathbf{x}_i + b) = 1$ gilt, d.h. der funktionale Abstand eines Stützvektors zur Hyperebene beträgt $1$.
+\end{itemize}
+
+Für die Berechnung der Hyperebenenparameter $(\mathbf{w}, b)$ sind deshalb nur die Stützvektoren nötig. Für alle anderen Beobachtungen $\mathbf{x}_i$ sind die dazugehörigen $\alpha_i = 0$ und bleiben deshalb bei der Berechnung von $\mathbf{w} = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i$ unberücksichtigt. Somit ist der Parameter $\mathbf{w}$ lediglich eine Linearkombination der Stützvektoren.
+Der Parameter $b$ kann aus der Gleichung 
+\begin{align*}
+y_j = \mathbf{w}^\top \mathbf{x}_j + b = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top  \mathbf{x}_j + b \;
+\Leftrightarrow \; b = y_j - \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top  \mathbf{x}_j
+\end{align*}
+ermittelt werden. Die Entscheidungsfunktion zur Klassifizierung einer Beobachtung $\mathbf{x}_j$ lautet $$f(\mathbf{x}_j) = \text{sgn} \left (\mathbf{w}^\top \mathbf{x}_j + b \right ) =  \text{sgn} \left (\sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \mathbf{x}_j  + b \right ).$$
+
+%Der Parameter $b$ für die Verschiebung der Hyperebene kann aus ein Support Vektor der positiven Klasse $\mathbf{x}^{+}$ und ein Support Vektor der negativen Klasse $\mathbf{x}^{-}$ mit den Gleichungen
+%\begin{align*}
+%\mathbf{w}^{\top} \mathbf{x}^{+} + b = +1\\
+%\mathbf{w}^{\top} \mathbf{x}^{-} + b = -1
+%\end{align*}
+%berechnet werden. Aufsummieren beider Gleichungen ergibt $b= - \tfrac{1}{2} ( \mathbf{w}^{\top} \mathbf{x}^{+} +  \mathbf{w}^{\top} \mathbf{x}^{-})$.
+
+
+%\section{Zusammenfassung}
+

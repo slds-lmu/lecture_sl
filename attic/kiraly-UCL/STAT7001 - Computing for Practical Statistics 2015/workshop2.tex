@@ -1,0 +1,122 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.2}
+{\em To be worked on in the workshops on January 20 or 23. The content is ICA-relevant but your solution does formally not contribute to the grade. The script contains a number of exercises that likely exceeds the amount you can solve in 3 hours in order to be suitable for different speeds and levels of prior knowledge. Please proceed as far as you are able to get, and feel free to pick the exercises you would like to solve, though it is highly recommended that you solve them in sequence and understand all exercises up to and including number 8.}
+
+\begin{enumerate}
+
+\item Type \texttt{summary(mtcars)} to obtain a summary of the \texttt{mtcars} data set. Note that all variables are classified as numeric. Open the lecture slides on page 11. Write a script that contains the followings lines that modify \texttt{mtcars} to have the correct classes:
+\begin{enumerate}
+\item type \texttt{mtcars\$cyl} and \texttt{factor(mtcars\$cyl)}, and note the difference. Type \texttt{summary(mtcars\$cyl)} and \texttt{summary(factor(mtcars\$am))}. Again, note the difference.
+\item make a copy of mtcars called \texttt{mtcars\_v2}, via the command \\\texttt{mtcars\_v2 <- mtcars}
+\item add the line \texttt{mtcars\_v2\$am <- factor(mtcars\_v2\$am, levels = c(0,1),\\
+        labels = c("automatic","manual"))}.\\
+      type \texttt{summary(mtcars)} and \texttt{summary(mtcars\_v2)}, compare the difference.
+\item type \texttt{mtcars\$vs == 1} and \texttt{mtcars\$vs == 0} and \texttt{mtcars\$vs != 0}, and understand the results.
+\item type \texttt{mtcars\_v2\$vs <- mtcars\_v2\$vs == 1}.\\ Compare the outputs of \texttt{summary(mtcars)} and \texttt{summary(mtcars\_v2)}.
+\item type \texttt{mtcars\$cyl == 4} and understand the result.
+\item output the lines containing only the cars with eight cylinders.
+\item type \texttt{factor(mtcars\$cyl)} and \texttt{ordered(mtcars\$cyl)}. Compare.
+\item in \texttt{mtcars\_v2}, change the variables  \texttt{cyl, gear, carb} to \texttt{ordered}, in analogy to part (a) and (c).
+\item type \texttt{summary(mtcars)} and \texttt{summary(mtcars\_v2)} and compare.
+\end{enumerate}
+
+
+\item If you have not done this so far, download the data files for the workshop from moodle and extract them into a suitable location on your personal disk space, for example:\\
+\texttt{N:/STAT7001/workshop/data}\\
+if you followed the naming scheme in week 1.
+
+\item Read and understand the documentation on the pulse data set on page 5 and 6 of the lecture slides. Without actually looking at the data set or doing any kind of analyses, only from understanding the documentation: discuss which of the following questions can be - in principle - answered from your data (always considered as statements about the data set described in the documentation):
+\begin{enumerate}
+\item Does smoking have a detrimental effect on health?
+\item Does running lead to a higher pulse afterwards?
+\item Does not running cause the pulse to go down?
+\item Are the women in the sample taller on average than the males?
+\item Does higher weight cause a higher increase in pulse?
+\item Is there a strong relationship between smoking and weight?
+\item Does the activity level influence the change in pulse?
+\end{enumerate}
+
+\item Open \texttt{pulse.dat} in your data directory with an editor and check whether this agrees with the documentation and page 8 of the lecture slides. If not, note down the differences.
+
+\item Make a new script file \texttt{read\_pulse.R} which will contain your code that loads the pulse data set into R.
+\begin{enumerate}
+\item As first line, add\\ 
+    \texttt{pulsedata <- read.table(file = "filelocation",sep = '')},\\ 
+    where \texttt{"filelocation"} is a string describing the full path to the pulse data file \texttt{pulse.dat}. If you followed the naming convention last week, \texttt{"filelocation"} will be equal to
+    \texttt{"N:/STAT7001/workshop/data/pulse.dat"}. If not, you will have to enter the path you chose.    
+\item Open the lecture slides on page 11. Add the first line with the \texttt{col.names} so every variable has a descriptive identifier. You should name your variables \texttt{pulsebefore}, \texttt{pulseafter}, \texttt{ran}, \texttt{smokes}, \texttt{sex}, \texttt{height}, \texttt{weight}, and \texttt{activity} to be consistent with the exercises below.
+\item Type \texttt{summary(pulsedata)} into the console (not adding it to your script) and observe the output. Compare to the output on page 12.
+\item Use \texttt{factor}, as in exercise 1, to see how many different values there are for each numeric variable. Specifically note how many there are for activity level and compare to the documentation.
+\item Add a line to your import script, similar to exercise 1 and page 11, to change the type of variable \texttt{sex} to \texttt{factor}.
+\item Add the line
+  \texttt{pulsedata\$activity<-ordered(pulsedata\$activity,\\
+   labels=c("?","low","mid","high"))}, and run \texttt{summary(pulsedata)}. Discuss how \texttt{"?"} should be treated.
+\item Comment out the above line by adding a \texttt{\#} before it. Then, re-run your complete import script so \texttt{activity} is \texttt{numeric} again.
+\item To the script, add the line on \texttt{pulsedata\$activity <-...} from page 11. Run \texttt{summary(pulsedata)}, and compare the two summaries.
+\item Add the remaining line on page 11 and understand what it does, e.g. by looking at exercise 1.
+\item Run \texttt{summary(pulsedata)} twice, once before changing the types, and once after. For this, execute selected lines of your script, and type \texttt{summary(pulsedata)} in the console once after running the whole script, and once only running it up to (b).
+\item Run \texttt{levels(pulsedata\$sex)}, once before changing the types, and once after. Understand what \texttt{levels} does.
+\item Comment out the line \texttt{pulsedata\$sex <- ...} and replace it by\\
+  \texttt{levels(pulsedata\$sex) <- c("male","female")}. Observe whether this changes anything.
+\end{enumerate}
+
+\item Reproduce the plots and outputs on pages 12 to 16 of the lecture slides. Save the plot on page 16 to your figures directory (e.g. with a right click on it). Quantify your findings as follows:
+\begin{enumerate}
+\item if you do not know how to employ a test, use the \texttt{help} function of R.
+\item use the binomial test \texttt{binom.test} to check whether the randomisation result is likely under the null hypothesis of a fair coin.
+\item test all numerical variables for normality via \texttt{shapiro.test}.
+\item note down both outcomes in your comments.
+\end{enumerate}
+
+\item Reproduce the plots and outputs on pages 17 to 21 of the lecture slides. For the stratified density plot on page 20, the package \texttt{lattice} needs to be installed before you can load it with \texttt{library(lattice)}. This is done by once typing \texttt{install.packages("lattice")} (does not need to be repeated if you restart R).
+Further, quantify your findings as follows:
+\begin{enumerate}
+\item use Pearson's chi-squared test \texttt{chisq.test} to check whether the fraction of male smokers is significantly bigger than the fraction of female smokers in the data set.
+\item use Wilcoxon's signed rank test (two-sided = Mann-Whitney test) \texttt{wilcox.test} to check whether the changes in the box-plots on page 18 and 19 are significant.
+\end{enumerate}
+
+\item Reproduce the plots on page 22 of the lecture slides. Quantify your findings by using the Kolmogorov-Smirnov test \texttt{ks.test} to check whether the distributional deviations in the plots are significant.
+
+\item Add two variables to the \texttt{pulsedata} data frame: one which contains the absolute pulse increase in beats per minute, that is, pulse after minus pulse before, and one which contains the fraction of increase/decrease, that is, pulse after divided by pulse before.\\
+    Hint: the line\\
+    \texttt{pulsedata\$pulsesum <- pulsedata\$pulsebefore + pulsedata\$pulseafter}\\
+    adds a variable \texttt{pulsesum} which contains the sum.
+
+\item Do a complete analysis of all single variables now in the data set, including quantification when necessary.
+
+\item Investigate the data set further and try to explain the phenomena seen on pages 16 and 20. Further investigate the following potential inter-variable relations:
+\begin{enumerate}
+\item in-between smoking, sex, activity level, height and weight
+\item between running and pulse related variables
+\item between running and pulse related variables, taking into account the other variables
+\item all potential causal relationships
+\end{enumerate}
+You are of course free to investigate other descriptive questions that come to your mind, which, if they are interesting, and this would be the ICA, could potentially get you a higher grade - be creative.
+
+\item If you have some time left: learn about the advanced plotting functions in the \texttt{lattice} package which allow you to do stratified and simultaneous univariate and multivariate plots:
+    \begin{enumerate}
+    \item if you have not done so before: load the \texttt{lattice} package with \texttt{library(lattice)}. If necessary, install with \texttt{install.packages("lattice")}.
+    \item type \texttt{example(histogram)}. Use the \texttt{histogram} function to obtain combined histogram/density plots for all continuous variables, stratified by smoking, sex, and activity level; and pulse after, stratified by whether the student ran.
+    \item type \texttt{example(splom)}. Use the \texttt{splom} function to obtain a scatterplot matrix for all continuous variables. Obtain such a scatterplot matrix with three colorings, given by smoking, sex, and activity level (specified by the \texttt{col} parameter). In each of those, add in a distinction based on whether the student ran, by plotting different symbols for each of the two corresponding groups (specified by the \texttt{pch} parameter).
+    \item type \texttt{example(parallelplot)}. Use the \texttt{parallelplot} function to obtain parallel plots stratified by whether the student ran, smoking, sex, and activity level.
+    \item type \texttt{example(stripplot)}. Use the \texttt{stripplot} function to obtain a strip plot with: color group = before/after, symbol group = whether the student ran, y-axis = students, x-axis = pulse, stratum = activity level.
+    \end{enumerate}
+    
+\item If you have even more time left: do an analysis of \texttt{mtcars}, \texttt{infert}, \texttt{rock} or \texttt{USArrests}. Type \texttt{library(help = "datasets")} to see a list of data sets that come with R in the \texttt{datasets} package.
+
+\item If you like: write a mock-ICA report on your analysis and your findings in the pulse data set, with the main question ``Does running cause an increase in pulse? If yes, in which sense? Are there specific subgroups in which the behaviour is qualitatively or quantitatively different?''. Similar to the sample report on the UC Berkeley admissions data set, the report should not be longer than 10 pages and should contain:\\
+{\bf at the top} of your report, a \emph{summary} of no more than 200 words. The summary should describe your main findings and their relevance. Finally, in the main corpus, a reproducible and well-described description your \emph{analyses}, followed by an optional discussion.\\
+You can hand in your report via the moodle TurnitIn at any time. Please send an e-mail to the lecturer (F. Kir\'aly) once you hand in, and you will have it mock-graded in a couple of days. Note that some analyses you learn in lectures 3 or 4 may be useful as well.
+    
+
+\end{enumerate}
+
+\end{document}
+
+

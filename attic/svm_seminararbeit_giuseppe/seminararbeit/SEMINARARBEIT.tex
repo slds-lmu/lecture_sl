@@ -1,0 +1,132 @@
+% Dokumentenkopf ---------------------------------------------------------------
+%   Diese Vorlage basiert auf "scrreprt" aus dem koma-script.
+% ------------------------------------------------------------------------------
+
+\documentclass[
+    11pt, % Schriftgr��e
+    DIV10,
+    ngerman, % f�r Umlaute, Silbentrennung etc.
+    a4paper, % Papierformat
+    open=right,
+    oneside, % einseitiges Dokument
+    titlepage, % es wird eine Titelseite verwendet
+    parskip=half*, % Abstand zwischen Abs�tzen (halbe Zeile)
+    headings=normal, % Gr��e der �berschriften verkleinern
+    listof=totoc, % Verzeichnisse im Inhaltsverzeichnis auff�hren
+    bibliography=totoc, % Literaturverzeichnis im Inhaltsverzeichnis auff�hren
+    index=totoc, % Index im Inhaltsverzeichnis auff�hren
+    captions=tableheading, % Beschriftung von Tabellen unterhalb ausgeben
+    final % Status des Dokuments (final/draft)
+]{scrreprt}
+%\setlength{\parskip}{0pt}
+\newtheorem{bsp}{Beispiel}[chapter]
+% Meta-Informationen -----------------------------------------------------------
+%   Informationen �ber das Dokument, wie z.B. Titel, Autor, Matrikelnr. etc
+%   werden in der Datei Meta.tex definiert und k�nnen danach global
+%   verwendet werden.
+% ------------------------------------------------------------------------------
+\input{Includes/Meta}
+
+% ben�tigte Packages -----------------------------------------------------------
+%   LaTeX-Packages, die ben�tigt werden, sind in die Datei Packages.tex
+%   "ausgelagert", um diese Vorlage m�glichst �bersichtlich zu halten.
+% ------------------------------------------------------------------------------
+\input{Includes/Packages}
+
+% Erstellung eines Index und Abk�rzungsverzeichnisses aktivieren ---------------
+%\makeindex
+%\makenomenclature
+
+% Kopf- und Fu�zeilen, Seitenr�nder etc. ---------------------------------------
+\input{Includes/Seitenstil}
+
+\newcommand{\sgn}{\operatorname{sgn}}
+% Das eigentliche Dokument -----------------------------------------------------
+%   Der eigentliche Inhalt des Dokuments beginnt hier. Die einzelnen Seiten
+%   und Kapitel werden in eigene Dateien ausgelagert und hier nur inkludiert.
+% ------------------------------------------------------------------------------
+
+\allowdisplaybreaks[1]
+\begin{document}
+
+% auch subsubsection nummerieren
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Deckblatt und Abstract ohne Seitenzahl
+%\ofoot{}
+\thispagestyle{empty}
+\cleardoublepage
+\include{Includes/Deckblatt}
+
+%\thispagestyle{empty}
+%\cleardoublepage
+%\include{Includes/Abstract}
+
+\thispagestyle{empty}
+\cleardoublepage
+
+%\ofoot{\pagemark}
+
+% Seitennummerierung -----------------------------------------------------------
+%   Vor dem Hauptteil werden die Seiten in gro�en r�mischen Ziffern 
+%   nummeriert.
+% ------------------------------------------------------------------------------
+\pagenumbering{roman}
+\tableofcontents % Inhaltsverzeichnis
+%\listoffigures % Abbildungsverzeichnis
+
+% Abk�rzungsverzeichnis --------------------------------------------------------
+%\input{Inhalt/Glossar}
+% f�r korrekte �berschrift in der Kopfzeile
+%\clearpage\markboth{\nomname}{\nomname} 
+%\printnomenclature
+%\label{sec:Glossar}
+
+%\listoftables % Tabellenverzeichnis ---------------------------------------------
+%\renewcommand{\lstlistlistingname}{Verzeichnis der Listings}
+%\lstlistoflistings % Listings-Verzeichnis
+
+% arabische Seitenzahlen im Hauptteil ------------------------------------------
+\clearpage
+\pagenumbering{arabic}
+
+% die Inhaltskapitel -------------------------
+
+\include{Chapters/mathematische_grundlagen}
+
+\include{Chapters/linear_trennbar}
+
+\include{Chapters/nicht_linear_trennbar}
+
+\include{Chapters/anwendungsbeispiel}
+
+\include{Chapters/zusammenfassung}
+
+% Literaturverzeichnis ---------------------------------------------------------
+%   Das Literaturverzeichnis wird aus der BibTeX-Datenbank "Bibliographie.bib"
+%   erstellt.
+% ------------------------------------------------------------------------------
+\bibliography{Bibliographie} % Aufruf: bibtex Masterarbeit
+\bibliographystyle{apalike-url-bf} % apalike, jbact, natdin DIN-Stil des Literaturverzeichnisses
+%\bibliographystyle{plainnat}
+
+% Anhang -----------------------------------------------------------------------
+%   Die Inhalte des Anhangs werden analog zu den Kapiteln inkludiert.
+%   Dies geschieht in der Datei "Anhang.tex".
+% ------------------------------------------------------------------------------
+
+%\begin{appendix}
+%    \clearpage
+%    \pagenumbering{roman}
+%    \include{Inhalt/Anhang}
+%\end{appendix}
+
+% Index ------------------------------------------------------------------------
+%   Zum Erstellen eines Index, die folgende Zeile auskommentieren.
+% ------------------------------------------------------------------------------
+%\printindex
+
+%\include{Inhalt/Erklaerung} % Selbst�ndigkeitserkl�rung
+
+\end{document}

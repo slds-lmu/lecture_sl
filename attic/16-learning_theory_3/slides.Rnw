@@ -1,0 +1,19 @@
+%This file is a child of preamble.Rnw in the style folder
+%if you want to add stuff to the preamble go there to make
+%your changes available to all childs
+
+<<setup-child, include = FALSE>>=
+library(knitr)
+library(mlr)
+library(ggplot2)
+set_parent("../style/preamble.Rnw")
+@
+
+\lecturechapter{99}{Learning theory III}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+\begin{vbframe}{Introduction}
+
+\end{vbframe}
+
+\endlecture

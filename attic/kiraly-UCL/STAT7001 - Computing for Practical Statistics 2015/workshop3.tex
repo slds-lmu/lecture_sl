@@ -1,0 +1,85 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.3}
+{\em To be worked on in the workshops on January 27 or 30. The content is ICA-relevant but your solution does formally not contribute to the grade. If you were not able to complete workshop script no.2, please make sure you have followed it up to exercise number 8 first.}
+
+
+The file {\tt Electric.dat} in your STAT7001 data directory describes peak household electricity consumption for 60 houses. Each data point corresponds to a house, the target/outcome variable (dependent variable) is peak hour electrical load in kW, and the independent variables are house size, family income in 1000 dollars per year, capacity of air conditioning unit in kW, appliance index, and number of family members in the household.
+(data source: learning SAS in the computer lab, Elliott R., Morrell C.; the reference does not comment on the original source of the data nor on the units of the variables; which unit house size is measured in cannot be inferred)
+
+
+\begin{enumerate}
+
+\item  Load the data {\tt Electric.dat} (from your STAT7001 data directory) into R, naming the variables {\tt house, income, aircapac, applindx, family} and {\tt peak}, in that order. Ensure that the variables have the correct format.
+\item Perform an exploratory data analysis on the data, including the usual uni- and multivariate analysis. Amongst others:
+\begin{enumerate}
+\item Investigate the discrete variables {\tt aircapac} and {\tt family}. What do you notice about the family size table?
+\item Produce a histogram of peak electricity consumption, also add a proper title and axis labels to the histogram.
+\item Plot {\tt income} vs. {\tt applindx}, {\tt income} vs. {\tt house}, and {\tt applindx} vs. {\tt house}.
+    Note: The amount of {\em collinearity} in income, appliance index and house size is cause for concern. It may mean that one cannot properly separate the effect of each one on peak hour electrical load.
+\end{enumerate}
+
+\item Perform a principal component analysis of the three variables income, appliance index, and house size:
+\begin{enumerate}
+\item Compute the principal components of the three variables {\tt income}, {\tt applindx}, and {\tt house}. Output the PCA summary and the loadings in the console, similarly to page 20 of the lecture slides.
+\item Add the three principal scores as columns to the data frame. Recall that you can add a new column named \texttt{newcolname} of the correct size by a line similar to\\ \texttt{dataframename\$newcolname <- thecolumnvectortobeadded}.
+\item Investigate univariate distribution and scatterplots of the three principal scores.
+\item Decide which and how many of the principal scores you want to include in further analyses to potentially replace the three variables above and to prevent problems with collinearity.
+\end{enumerate}
+\newpage
+\item The rest of the script is concerned with investigating how household peak hour electrical load, {\tt peak}, {\bf depends} on the other variables. A sensible starting point is to see how the family income affects the household electricity usage. While it is impossible to perform an intervention experiment on this kind of data (e.g., changing income and family size is not ethically possible), a regression model makes sense from the context - peak load is plausible to depend on the other variables - and it can be validated by splitting the data into training and test sample, which counts as an experiment.
+    \begin{enumerate}
+     \item Split your data into 80/20 training/test samples, following the lines at the bottom of page 16 which to obtain a uniform training subsample. For the below, you should have a vector \texttt{trainsample} ready which selects the rows in the 80\% of the data that constitute the training set.
+         
+     \item Make sure fit the models the below \emph{only} on the training data, unless said otherwise - see page 16 for this as well. You can specify the data to which to fit the model by setting the parameter \texttt{data = electricdataframe[trainsample,]} or similar, depending on how you named your data frame.
+    \end{enumerate}
+\item
+
+\begin{enumerate}
+\item Fit a univariate regression model of {\tt peak}, depending on the single variable {\tt income}. Store the model in a variable \texttt{lmunivariate}. When you have the results,
+look at the mean square values, the $F$-value and the $p$-value. Now look at the parameter values and their standard errors. What do you infer from these results?
+
+\item Run a full multivariate regression for {\tt peak} depending on all other original variables, including {\tt income}, but excluding PCA scores. Store the model in a variable \texttt{lmfull}.
+Look at the results from the full model. Which variables are significant, at the 5\% level, and which are not?
+
+\item Choose one of the independent variables to remove from the multivariate model.
+Note that although the intercept is not significant in the model,
+you should not remove it. In linear regression,
+the intercept should always be kept in the model unless you have good reason to believe that the intercept is genuinely zero.
+Does your choice of which variable to drop contradict your findings in the univariate regression above?
+If yes, can you explain why this is so?
+
+\item Now re-fit a multivariate regression model, but with the variable you have chosen
+dropped from the model. Store the model in a variable \texttt{lmfullminusone}.
+Look at the results again, particularly the parameter estimate,
+standard error and $p$-value for each variable. What is your conclusion about the variable
+{\tt family}?  Do you think that {\tt family} should be removed from the
+model?
+
+\item Fit a multivariate regression model, on the full set of variables but where the first two principal scores replace {\tt income}, {\tt applindx}, and {\tt house}. Store this model in a variable \texttt{lmpca}.
+
+\item For \texttt{lmfullminusone} and \texttt{lmpca}, inspect the four standard diagnostic plots. Is there any clear evidence of outliers, non-linearity, or heteroscedasticity? (Heteroscedasticity is a technical term for non-constant variance).
+\end{enumerate}
+
+\newpage
+\item Evaluate your regression model on the test data. Manually compute the residuals on the test data batch, as in the last line of page 16. Use the residuals on the test data to obtain the root mean squared error (RMSE) and the mean absolute error (MAE) for the models \texttt{lmunivariate}, \texttt{lmfull}, \texttt{lmfullminusone} and \texttt{lmpca}.\\
+    Recall that for test data points $x_1,\dots, x_M$, true test values $y_1,\dots, y_M$, a prediction model $f(.)$, the out-of-sample residuals are $\rho_i = f(x_i) - y_i$, and RMSE/MAE is defined as
+    $$\mbox{RMSE}=\sqrt{\frac{1}{M}\sum_{i=1}^M \left(f(x_i)-y_i\right)^2}\quad\mbox{and}\quad \mbox{MAE}=\frac{1}{M}\sum_{i=1}^M \| f(x_i)-y_i\|.$$
+    
+%\item Install and load the \texttt{caret} package into R, type \texttt{help(caret)}. Learn how to use the methods provided by \texttt{caret} to obtain out-of-sample RMSE and MAE without computing them manually.
+
+Hint: type \texttt{help(abs)} to learn how to compute absolute values.
+
+
+\end{enumerate}
+
+
+
+
+
+\end{document}

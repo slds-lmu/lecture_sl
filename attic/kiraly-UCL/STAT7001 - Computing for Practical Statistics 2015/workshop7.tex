@@ -1,0 +1,120 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.7}
+{\em To be worked on in the workshops on March 3 or 6. The content is ICA-relevant but your solution does formally not contribute to the grade.}
+
+This script is divided in two parts - one for R and one for SAS. While they cover roughly the same topics, but it is recommended to work on the R part first as it is more detailed, and the R code will be slightly more intuitive.\\
+
+
+{\Large \bf Part 1: custom routines and optimization in R}
+\begin{enumerate}
+\item Open the lecture script on page 4. 
+\begin{enumerate}
+\item Reproduce the two outputs for the \texttt{if ... else} statement; make two copies in your script, one with \texttt{x <- 41} and one with \texttt{x <- 42}. Understand the outputs, including what happens in the workspace.
+\item Make two copies of the whole code in (a), and remove the line with \texttt{else} in the two copies. Run the whole code (it should include four \texttt{if} statements) again. Understand the outputs.
+\item Make a new \texttt{if ... else} statement that stores the square root of \texttt{x} in a variable \texttt{sqrtx} if \texttt{x} is non-negative, and assigns \texttt{NaN} to a variable \texttt{minussqrtx}. Otherwise it assigns \texttt{NaN} to the variable \texttt{sqrtx} and stores the square root of minus \texttt{x} in a variable \texttt{minussqrtx}. Test your code on at least three different inputs.
+\end{enumerate}
+
+\item Open the lecture script on page 4. 
+\begin{enumerate}
+\item Reproduce the outputs for the \texttt{for ... in} statement.
+\item Add a line which prints the value of the variable \texttt{total} every time it is updated; you can use the function \texttt{print} for this.
+\item Write code which, for a vector of strings \texttt{stringvec} in workspace, such as for example \texttt{c("Hello","World","Here","I","Come")}, outputs each element, in sequence, in a new line, with exclamation mark \texttt{"!"} appended. Recall that you can append strings by using the function \texttt{cat} with an optional \texttt{sep} argument. The character for line break is \texttt{"\textbackslash n"}. Test your code on at least three different inputs.
+\item Write code which, for a non-negative integer variable \texttt{n} tests whether its value $n$ is a prime number. Use the "classical" (in-efficient) algorithm which checks for every integer $m$ between $2$ and $\sqrt{n}$ whether $m$ divides $n$ without remainder. Recall that the remainder of a division can be computed by \texttt{\%\%}, and the function \texttt{floor} returns the integer in front of the decimal comma. Test your code on at least three different inputs.
+\end{enumerate}
+
+
+\item Open the lecture script on page 7.
+\begin{enumerate}
+\item Reproduce the outputs for the \texttt{subtract} function (leave \texttt{mymeans} be for the moment).
+\item Use your code from exercise 1(a) to write a custom function with name \texttt{is42} which takes one argument called \texttt{x} and returns \texttt{"yes"} if the value of \texttt{x} is 42, otherwise \texttt{"no"}. Test your function by typing \texttt{is42(42)}, \texttt{is42(41)}, and \texttt{is42(NA)}.
+\item Ensure the variable \texttt{x} in workspace exists and has the value 41. Type \texttt{is42(x)}, \texttt{is42(42)} and \texttt{is42(x = 42)}. Compare and understand the outputs.
+\item Encapsulate your code from exercise 2 as functions: a function \texttt{mysum} which takes as input a vector and returns as output the sum of its elements (without the printing in 2(b)), a function \texttt{print\_exclamation} which takes as input a vector of strings and prints the to the console as in 2(c), and a function \texttt{isprime} which takes as input a non-negative integer and returns a logical variable describing whether that integer is a prime number. Test each of these functions on at least three different inputs.
+\item Note that the code in brackets of your functions can be executed line by line if variables of the same name as the inputs exist in workspace. Do this for some of your functions.
+\item Compare the run times of \texttt{mysum(longvector)} and \texttt{sum(longvector)}, where \texttt{longvector = as.numeric(1:7777777)}. Compare a second time, omitting the conversion \texttt{as.numeric}.
+\end{enumerate}
+
+\item Open the lecture script on page 7.
+\begin{enumerate}
+\item Write the function \texttt{mymean}, as on the page, and reproduce its outputs.
+\item For the vector \texttt{testvec = c(1:83,NA)}, compare the outputs for:\\
+ \texttt{mymean(testvec)}, \texttt{mymean(testvec, excludeNA = F)},\\
+ \texttt{mymean(testvec, excludeNA = T)}, \texttt{mymean(testvec, F)},\\ 
+ \texttt{mymean(testvec, T)}, \texttt{mymean(excludeNA = T, x=testvec)} and\\
+ \texttt{mean(testvec)}, \texttt{mean(testvec,T)}, \texttt{mean(testvec,na.rm=T)},\\
+ \texttt{mean(testvec,na.rm=F)}, \texttt{mean(na.rm=T, x=testvec)}
+ Understand the outputs, possibly consulting \texttt{help(mean)}.
+\end{enumerate}
+
+\item Open the lecture script on page 20.
+\begin{enumerate}
+\item Use the R optimization function \texttt{nlm} to find the minimum of the function presented on page 20.
+\item Type \texttt{example(nlm)} and understand how to provide a gradient function and add return attributes to function outputs.
+\item Modify the function presented on page 20 to include the gradient. Use the R optimization function \texttt{nlm} to find the minimum of the function presented on page 20. Compare the result with (a).
+\item Write a function that returns the minimum of the function $f(x_1,x_2|a) = x_1^4+x_2^4-ax_1x_2 + 1$; the function should take as input only $a$ and internally use \texttt{nlm}.
+\end{enumerate}
+
+\item Functions of functions.
+\begin{enumerate}
+\item Write a function \texttt{run42times} which takes as input a different function and runs it 42 times, with the same arguments. For this, use the ... argument, by literally writing in the definition line:\\
+    \texttt{run42times <- function(theotherfunction,...)}\\
+    and then calling \texttt{theotherfunction} in the function by\\
+    \texttt{theotherfunction(...)}, again literally typing \texttt{...}.
+\item Run the function \texttt{print\_exclamation} from exercise 3(d) 42 times with an appropriate input argument. You do not need to use \texttt{run42times} to this end if you prefer not to.
+\item Bonus exercise: find a way to run \texttt{run42times} 42 times.
+\end{enumerate}
+
+\end{enumerate}
+
+
+{\Large \bf Part 2: custom routines and optimization in SAS}
+
+\begin{enumerate}
+\item Open the lecture script on page 5.
+\begin{enumerate}
+\item Write a \texttt{DATA} step with an appropriate \texttt{input} and \texttt{datalines} statement reading in two rows with a single variable \texttt{x} taking the values 41 and 42 (compare page 7 of the lecture 6 script if you are not sure how). 
+\item Add the example \texttt{if ... else} statement from page 5 to the \texttt{DATA} step. Run a \texttt{PROC} \texttt{print} step and understand the result.
+\item Make a copy of the \texttt{DATA} and \texttt{PROC} \texttt{print} steps, and remove the line with \texttt{else} in the copy. Run the whole code and understand the outputs.
+\item Make a new \texttt{DATA} step with an \texttt{if ... else} statement that stores the square root of \texttt{x} in a new variable \texttt{sqrtx} if \texttt{x} is non-negative, and assigns \texttt{.} to a variable \texttt{minussqrtx}. Otherwise it assigns \texttt{.} to the variable \texttt{sqrtx} and stores the square root of minus \texttt{x} in a variable \texttt{minussqrtx}. Test your code on at least three different inputs, coming as \texttt{datalines} of the \texttt{DATA} step.
+\end{enumerate}
+
+\item Open the lecture script on page 5.
+\begin{enumerate}
+\item Write a new \texttt{DATA} step that has \texttt{input} and \texttt{datalines} statements, with at least one row read in. Add the example \texttt{do ... to} statement from page 5 to the \texttt{DATA} step. Run a \texttt{PROC} \texttt{print} step and understand the result.
+\item Add an \texttt{output} command which is executed every time the value of the variable \texttt{total} is updated. Run the code, including a \texttt{PROC} \texttt{print} step and understand the result.
+\end{enumerate}
+
+
+\item Open the lecture script on page 11.
+\begin{enumerate}
+\item Type in the code on that page. Add a a \texttt{PROC} \texttt{print} step and run the whole code. Do not forget to set the compiler library variable via the \texttt{options} statement. Understand the result.
+\item Use your code from exercises 1(a) and (b), and \texttt{PROC} \texttt{fcmp} to write a custom function with name \texttt{isfortytwo} which takes one argument called \texttt{x} and returns \texttt{'yes'} if the value of \texttt{x} is 42, otherwise \texttt{'no'}. Store the function \texttt{isfortytwo} in the user library \texttt{sasuser.funcs.isfortytwo}.
+\item Test your function by calling it from a \texttt{DATA} step similar to the one in exercise 1(a). Test it for arguments 42, 41, and the missing value \texttt{.}.
+\item Encapsulate your code from exercise 2 a a functions \texttt{mysum} which takes as input a variable length array and returns as output the sum of its elements (without the \texttt{output} statement in 2(b)). To deal with the variable array length, use the \texttt{varargs} syntax from page 12.
+\end{enumerate}
+
+\item Open the lecture script on page 12.
+\begin{enumerate}
+\item Use \texttt{PROC} \texttt{fcmp} to compile the function \texttt{mymean}; store \texttt{mymean} in the user library \texttt{sasuser.funcs.mymean}.
+\item Test the function \texttt{mymean} by calling it from a \texttt{DATA} step similar to the page, where instead of an \texttt{infile} statement you use \texttt{input} and \texttt{datalines} statements.
+\end{enumerate}
+
+\item Open the lecture script on page 21.
+\begin{enumerate}
+\item Use the SAS optimization \texttt{PROC} \texttt{nlp} to find the minimum of the function presented on page 21.
+\item Type \texttt{help nlm} or open the linked documentation to learn how to provide a gradient function to \texttt{nlp}.
+\item Modify the \texttt{PROC} step on page 21 to include the gradient. Compare the result with (a).
+\item Write a function that returns the minimum of the function $f(x_1,x_2|a) = x_1^4+x_2^4-ax_1x_2 + 1$; the function should take as input only $a$ and internally use \texttt{nlp}.
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+\end{document}

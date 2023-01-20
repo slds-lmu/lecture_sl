@@ -1,0 +1,80 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.8}
+{\em To be worked on in the workshops on March 10 or 13. The content is ICA-relevant but your solution does formally not contribute to the grade. If you were not able to complete workshop script no.3, please make sure to complete it first.}
+
+This workshop will again feature the {\tt Electric.dat} data set from workshop 3. Read again through the description on the workshop 3 sheet and remember your analyses. Make new copies of your R scripts for this workshop which you may find useful to modify or as a source to re-use code. The workshop script starts with exercises in R.\\
+
+\begin{enumerate}
+\item  Open R (or Rstudio), and the lecture 8 script on page 29. The task you will be studying will be prediction of peak electricity consumption on the data set, assessing the goodness of different predictors for this choice of target variable.
+    \begin{enumerate}
+    \item Decide and discuss which error measure(s) you would like to use (suggestion: RMSE and MAE).
+    \item Select at least two of the predictors from workshop 3 you will study in a cross-validation setting.
+    \item Think about baseline methods above which the predictors in (b) need to improve (suggestion: predicting the training mean, predicting a random training value).
+    \end{enumerate}
+
+\item Encapsulate the baseline and non-baseline predictors as functions with signature\\
+\texttt{function(traindata,testdata)}\\
+The inputs are a training data set \texttt{traindata}, and a test data set \texttt{testdata}, which will be the same for all predictors.\\
+\texttt{traindata} should, as columns, contain both covariates and target variable, while \texttt{testdata}, when passed to the function, should not contain the target variable, only the covariates.\\
+The output of each predictor will be a vector (or data frame with one column, obtained by subsetting with \texttt{drop =F}), with the same amount of rows as \texttt{testdata}, containing the predictions for the target.\\
+An example function of this type that predicts peak consumption based on a linear model in the single covariate income, could be defined as follows:\\
+
+\texttt{predict\_lm\_income <- function(traindata,testdata)\{}\\
+\texttt{lm.inc <- lm(peak {\raise.17ex\hbox{$\scriptstyle\sim$}} income, data = traindata)}\\
+\texttt{prediction <- predict(lm.inc, newdata = testdata)}\\
+\texttt{return(prediction)}\\
+\texttt{\}}\\
+
+Load the functions in the workspace and ensure that they have different names (if you know how to use lists, you may want to store the functions as elements of a named list).\\
+Test the prediction functions, e.g. by replacing the unencapsulated code in a copy of the workshop 3 code you made.\newpage
+
+\item Write a script that does the following, in this sequence:\\ 
+\begin{enumerate}
+    \item uses \texttt{sample} to obtain a vector \texttt{train\_inds} that contains approximately 80\% of the row indices of the \texttt{Electric} data frame, uniformly subsampled. If you are unsure how to do this, familiarize yourself with the \texttt{sample} function by typing \texttt{example(sample)} and looking at the examples.\\
+    \item obtains predictions from every predictor with \texttt{traindata} being the row-subsample selected by \texttt{train\_inds}, and \texttt{testdata} being the row-subsample of all other rows, with the \texttt{peak} variable removed. The predictions are stored in a data frame, columns corresponding to predictors. For example, such a data frame can be constructed by a line similar to\\
+    \texttt{prediction\_frame <-\\ 
+     data.frame(predictor1 = predictions1, predictor2 = predictions2,} etc \texttt{)}\\
+    \item computes your chosen error measures (e.g.~RMSE and MAE), using the test labels and the model predictions. Also compute the respective standard errors. You can do this efficiently by making use of \texttt{prediction\_frame}.\\
+    Recall that MSE and MAE are obtained as sample mean of the samples of squared/absolute residuals - therefore their respective standard errors can be obtained as the standard errors of these sample means. The standard error for the RMSE, in first order approximation, is obtained as the standard error for the MSE divided by two times the RMSE.
+    \end{enumerate}
+
+\item Open the lecture slides on page 15. Implement five-fold cross-validation for the prediction methods above. 
+\begin{enumerate}
+\item Set a random seed.
+\item Use the \texttt{sample} function to obtain a vector containing a uniformly random re-ordering of the row indices of your data frame. Ensure that you have a re-ordering of row indices, and not of rows. If you are unsure how to do this, familiarize yourself with the \texttt{sample} function by typing \texttt{example(sample)} and looking at the examples, especially the first three example code lines.
+\item Write code to sub-divide the index vector into five consecutive blocks - either by producing these blocks as five separate vectors/data frames, or - more elegantly - by producing a single vector which contains for each row index the number of the block that row index belongs to.
+\item Write a loop that executes your code from exercise 3 for each of the five train/test splits. Modify your code to ensure that the predictions and the error measures computed in the loop are not overwritten every time the loop is executed.
+\item Obtain aggregate error measures for every method, and error bars for those, e.g., using \texttt{aggregate} or \texttt{by}.
+\end{enumerate}
+
+\item Use the error bars, or distributions of residuals to investigate which predictors are best (in terms of the given measures of goodness) to predict peak electricity consumption.
+
+\item If you would like to learn more about advanced cross-validation and model validation in R: load the \texttt{cvTools} package (you may need to install it) and read the help on the \texttt{cvFolds}, \texttt{cvFit} \texttt{cvTool} functions. Or, load the \texttt{caret} package and read the help on the \texttt{createFolds}, \texttt{createDataPartition}, \texttt{createResample} functions, the \texttt{train} function, and \texttt{train\_model\_list}.
+
+\item 5-fold cross-validation with SAS.
+\begin{enumerate}
+\item Read {\tt Electric.dat} into SAS.
+\item Use the \texttt{PROC} \texttt{surveyselect}, as on page 15 of the lecture slides, to obtain a random row permutation of your data.
+\item Add a column to your data, ranging from 1 to 5, describing which consecutive part/fold, as described on page 14, the row is in.
+\item Make five copies of your target column, which will correspond to the training sets. In each of the new columns, replace the values in rows corresponding to the test set with a missing value. You can efficiently make the new columns by an array variable statement, such as on page 29 of the lecture 6 slides.
+\item Use the prediction \texttt{PROC} (e.g.~\texttt{reg}) or a custom function to obtain out-of-sample predictions of the five new columns, for example as on page 16 of the lecture 8 slides. In \texttt{PROC}~\texttt{reg}, you can obtain predictions for all five columns in just one call of the \texttt{PROC} by having multiple outcome variables in the \texttt{model} command, and multiple prediction variables in the \texttt{p} parameter of the \texttt{output} command.
+\item Obtain error measures by row operations, and aggregate them by column operations.
+\item Error bars for the error measures can be obtained similarly; comparisons of the residual distributions can be obtained from the respective \texttt{PROC}s, as described on pages 45f of the lecture 6 slides.
+\end{enumerate}
+
+
+
+
+\end{enumerate}
+
+
+
+
+
+\end{document}

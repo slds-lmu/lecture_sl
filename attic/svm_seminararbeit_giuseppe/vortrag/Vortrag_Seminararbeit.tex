@@ -1,0 +1,1114 @@
+\documentclass{beamer}\usepackage{graphicx, color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
+\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
+\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
+\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
+\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
+\newcommand{\hlslot}[1]{\textit{#1}}%
+\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{caption}
+\usepackage[german]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage[utf8]{inputenc}
+%\usepackage{ngerman}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{picins}
+\usepackage{floatflt}
+\usepackage{lastpage}
+\usepackage{url}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+%\pagestyle{fancy}
+%\cfoot{\thepage\ of \pageref{LastPage}}
+
+%\linespread{1.5}
+%\graphicspath{{Y:/Graphiken/Endpraesentation/}}
+\usetheme{Montpellier}
+\useinnertheme{rounded}
+\useoutertheme{tree}
+\usepackage{setspace}
+\usepackage{cancel}
+\definecolor{hell}{rgb}{0.8,0.8,0.8}
+%\definecolor{Red}{rgb}{1,0,0}
+%\newcommand{\colorcancel}[2]{\renewcommand{\CancelColor}{\color{#2}}\cancel{#1}}
+
+\setstretch{1,0}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\mini}{\operatornamewithlimits{minimiere}}
+\newcommand{\maxi}{\operatornamewithlimits{maximiere}}
+\setbeamercovered{transparent}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{footline}
+{
+\hfill \insertframenumber \,/\,\pageref{Last} \hspace{5pt}%
+\vspace{5pt}
+} 
+\title[Support Vector Machines]{Support Vector Machines \\ \small{- Seminar: Regularisierungstechniken und strukturierte Regression -}}
+%\author{Berger Moritz, Casalicchio Giuseppe}
+\author{Giuseppe Casalicchio\\
+Betreuer: Wolfgang Pößnecker
+}
+\institute{Institut für Statistik, LMU München}
+\date{15. Januar 2013}
+\begin{document}
+
+%\SweaveOpts{concordance=TRUE}
+%\setlength{\evensidemargin}{0.4cm}
+%\setlength{\oddsidemargin}{1.9cm}
+
+
+
+\begin{frame}
+\titlepage
+\end{frame}
+\frame
+{
+  \frametitle{Gliederung}
+	\tableofcontents
+}
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Gliederung}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+\section{Grundidee}
+\frame{
+\frametitle{Grundidee}
+%\framesubtitle{Grundidee}
+%\centering
+\begin{minipage}{\textwidth}
+\hspace{-10px}\textbf{Ausgangslage}:
+
+$N$ Trainingsdaten $(\mathbf{x}_1^{\top}, y_1), \hdots, (\mathbf{x}_N^{\top}, y_N)$ mit
+
+\begin{tabular}{lll}
+&$\mathbf{x}_i^{\top} \in \mathbb{R}^p$: & Merkmalsvektor mit $p$ Variablen\\
+&$y_i \in \{-1,1\}$: &Klassenzugehörigkeit der $i$-ten Beobachtung
+\end{tabular}
+
+\vspace{1.5em}
+
+\hspace{-10px}\textbf{Ziel}:
+
+optimale Zuordnung neuer Daten $\mathbf{x}_{neu}$ in die Klasse $y_{neu} \in \{-1,1\}$. \newline
+
+\hspace{-10px}\textbf{Grundidee}:
+
+%Suche Entscheidungsfunktion $f: \mathbb{R}^p \rightarrow \{-1,1\}$, sodass $f(\mathbf{x_i})= y_i$.
+Finde eine Hyperebene, die die Daten möglichst gut in zwei Klassen trennt.
+
+\end{minipage}
+}
+
+\section{Linear trennbare Daten}
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Hyperebene}
+
+%\begin{table}
+\begin{tabular}{ll}
+\textbf{Gesucht:} &Entscheidungsfunktion $f: \mathbb{R}^p \rightarrow \{-1,1\}$, sodass\\
+                  &$f(\mathbf{x}_i)=y_i \hspace{20pt} \forall i = 1, \hdots, N$ \\
+\textbf{Frage:}   &Wie wählt man die Hyperebene aus?
+\end{tabular}
+%\end{table}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/trennlinie} 
+
+\end{knitrout}
+
+
+
+}
+
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Hyperebene}
+Eine Hyperebene trennt einen $p$-dimensionalen Variablenraum in zwei Unterräume und 
+hat selbst die Dimension $(p-1)$: %ist gegeben durch: %, hat selbst die Dimension 
+
+\begin{equation*} % bedeutet, dass der Abstand der Hyperebene zu x = 0 ist (also durch den Punkt verläuft)
+\{\mathbf{x} \in \mathbb{R}^p \; | \; \mathbf{w}^\top \mathbf{x} + b = 0\} %, \; \forall \mathbf{x} \in \mathbb{R}^p
+\end{equation*}
+
+
+mit
+\begin{tabular}{lll}
+&$\mathbf{w} \in \mathbb{R}^p$: & Vektor orthogonal zur Hyperebene\\
+&$b \in \mathbb{R}$: & Verschiebung (vom Ursprung)
+\end{tabular}
+
+\vspace{15px}
+
+\begin{equation*} 
+\text{Notation zum Skalarprodukt: } \mathbf{w}^\top \mathbf{x} = \langle \mathbf{w},\mathbf{x} \rangle = \sum_{i=1}^{p} w_i x_i 
+\end{equation*}
+
+}
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Hyperebene}
+%TODO: Beispiel Hyperebene
+%Beispiel Hyperebene im $\mathbb{R}^1$ (eindimensionalen Variablenraum):
+%Beispiel Hyperebene im $\mathbb{R}^2$:
+%Hyperebenen werden von genau einem Basisvektor weniger als der Gesamtraum aufgespannt.
+%Die Hyperebene \fbox{$x_2 = -x_1 + 1 \; \Leftrightarrow x_1 + x_2 - 1 = 0$} mit $ \mathbf{w}^\top = (1,1)$ ist eine Gerade in einem zweidimensionalen Gesamtraum (links).
+%Beispiel: Sei $\mathbf{x} = (x_1 , x_2)$ eine Beobachtung im zweidimensionalen Variablenraum.
+%\begin{table}
+\begin{tabular}{ll}
+\textbf{Beispiel:} & $x_2 = -x_1 + 1 \; \Leftrightarrow x_1 + x_2 - 1 = 0$ \\
+                   & mit $ \mathbf{w}^\top = (1,1)$ und $b=-1$
+\end{tabular}
+%\end{table}
+
+$\rightarrow$ Gerade im 2-dimensionalen Variablenraum (links).
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/hyper} 
+
+}
+
+
+
+\end{knitrout}
+
+%\vspace{-20pt}
+
+
+}
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Hyperebene}
+
+%\hfill
+%\begin{floatingfigure}[l]{5cm}
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figure/hyperplane2}
+\end{figure}
+%\end{floatingfigure}
+\end{column}
+\begin{column}[T]{0.5\textwidth}
+
+\begin{itemize}
+\item Punkte ``unterhalb'' der Hyperebene $\rightarrow -1$
+\item Punkte ``überhalb'' der Hyperebene $\rightarrow +1$
+\end{itemize}
+
+\end{column}
+\end{columns}
+
+
+
+%\vspace{-5px}
+
+%\begin{minipage}[t]{0.4\textwidth}
+\begin{table}
+\begin{center}
+\begin{tabular}{ccc}
+Klassifiziere in Klasse ${\color{red}-1}$ & falls & ${\color{red}\mathbf{w}^\top \mathbf{x} + b< 0}$\\
+Klassifiziere in Klasse ${\color{blue}+1}$ & falls & ${\color{blue}\mathbf{w}^\top \mathbf{x} + b> 0}$\\
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{center}
+$\Rightarrow$ Verwende Entscheidungsfunktion $ f(\mathbf{x}) = \sgn(\mathbf{w}^\top \mathbf{x} + b)$
+\end{center}
+% \begin{align*}
+% f(\mathbf{x}) &= \sgn(\mathbf{w}^\top \mathbf{x} + b) = 
+% \begin{cases}
+%   {\color{red}-1} & \text{falls } \; {\color{red}\mathbf{w}^\top \mathbf{x} + b< 0}, \\
+% ~~\, 0 & \text{falls } \; \mathbf{w}^\top \mathbf{x} + b = 0, \\
+%   {\color{blue}+1} & \text{falls } \; {\color{blue}\mathbf{w}^\top \mathbf{x} + b> 0}. 
+% \end{cases}
+% \end{align*}
+%\end{minipage}
+}
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Hyperebene}
+%\begin{itemize}
+
+%\item[1.] 
+Die Hyperebene, kann gleichermaßen durch alle Paare $\{\lambda \mathbf{w},\lambda b\}, \; \lambda \in \mathbb{R}^+$ dargestellt werden:
+
+\begin{align*}
+%\{\mathbf{x} \in \mathbb{R}^p \; | \; 
+&\mathbf{w}^\top \mathbf{x} + b = 0  \\
+%\{\mathbf{x} \in \mathbb{R}^p \; | \; 
+\Leftrightarrow &\lambda \mathbf{w}^\top \mathbf{x} + \lambda b = 0, \; \text{für} \; \lambda \in \mathbb{R}^+
+\end{align*}
+
+%\item[2.] $f(\mathbf{x}) = \sgn(\mathbf{w}^\top \mathbf{x} + b)$ invariant gegenüber Skalierung:
+
+%\begin{equation*}
+%\mathbf{w} \rightarrow \lambda \mathbf{w}, b \rightarrow \lambda b, \; \text{für} \; \lambda \in \mathbb{R}^+
+%\end{equation*}
+
+%\end{itemize}
+
+\textbf{Problem:} Keine eindeutige Beschreibung der Hyperebene
+}
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Hyperebene}
+
+\textbf{Lösung:} Einführung einer kanonischen Hyperebene, für die gilt:
+
+\begin{equation*}
+\min_{i=1, \hdots, N} | \mathbf{w}^\top \mathbf{x}_i + b | = 1,
+\end{equation*}
+
+d.h. nähester Punkt zur Hyperebene hat funktionalen Abstand 1. %http://scienceray.com/physics/how-to-measure-a-functional-distance/
+
+%Für eine trennende Hyperebene in kanonischer Form gilt:
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}
+Es gilt:
+\begin{align*}
+{\color{blue}\mathbf{w}^\top \mathbf{x}_i + b \geq +1 \; \text{ für } \; y_i = +1} \\
+{\color{red}\mathbf{w}^\top \mathbf{x}_i + b \leq -1 \; \text{ für } \; y_i = -1}
+\end{align*}
+
+beziehungsweise
+\begin{equation*}
+y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 \;\;  \forall i= 1, \hdots, N
+\end{equation*}
+\end{column}
+\begin{column}[T]{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=0.8\textwidth]{figure/kanonische} 
+
+}
+
+
+
+\end{knitrout}
+
+\end{column}
+
+
+\end{columns}
+}
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Margin}
+
+Euklidischer Abstand eines Punktes $\mathbf{x}_i$ zur Hyperebene $(\mathbf{w},b)$ durch normieren mit der Vektorlänge $||\mathbf{w}||$ bestimmbar:%. Der Abstand von $\mathbf{x}_i$ zur Hyperebene $(\mathbf{w},b)$ beträgt dann:
+
+\begin{equation*}
+d((\mathbf{w},b), \mathbf{x}_i) = \frac{y_i (\mathbf{w}^\top \mathbf{x}_i + b)}{||\mathbf{w}||} \geq \frac{1}{||\mathbf{w}||}
+\end{equation*}
+
+\textbf{Gesucht:} Hyperebene mit größtmöglichen euklidischen Abstand zu den nähesten Punkten.\\
+
+\begin{itemize}
+\item[$\pmb{\rightarrow}$] Je kleiner $||\mathbf{w}||$, desto größer der euklidische Abstand.
+\item[$\pmb{\rightarrow}$] Je größer der euklidische Abstand, desto breiter der Rand (margin).
+\end{itemize}
+% 
+% \begin{equation*}
+% \max_{w,b} d((\mathbf{w},b), \mathbf{x}_i) \Leftrightarrow \min_{w,b} ||w||
+% \end{equation*}
+% 
+% mit Nebenbedingung: 
+% \begin{equation*}
+% y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 \;\;  \forall i
+% \end{equation*}
+}
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Margin}
+
+\begin{columns}
+\begin{column}[T]{0.5\textwidth}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\textwidth]{figure/margin} 
+
+}
+
+
+
+\end{knitrout}
+
+  \end{column}
+  \begin{column}[T]{0.5\textwidth}
+  \begin{itemize}
+  \item Punkte am nähesten zur Hyperebene haben betragsmäßig einen euklidischen Abstand von $\tfrac{1}{||\mathbf{w}||}$
+  \item Margin (Rand) ist $\tfrac{2}{||\mathbf{w}||}$ breit
+  \item Alle anderen Punkte liegen jenseits des Randes
+  \end{itemize}
+  \end{column}
+  \end{columns}
+}
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Primäres Optimierungsproblem}
+
+maximiere Rand (margin) $\Leftrightarrow$ minimiere $ ||\mathbf{w}||$ $\Leftrightarrow$ minimiere $\tfrac{1}{2} ||\mathbf{w}||^2$
+
+\begin{gather*}
+\min_{\mathbf{w},b} \hspace{8pt} {\color{red}\tfrac{1}{2} ||\mathbf{w}||^2}\\
+\text{NB:} \hspace{8pt} {\color{blue}y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1} 
+\hspace{8pt} \forall i = 1, \hdots, N
+\end{gather*}
+
+
+%mit Nebenbedingung: 
+%\begin{center}
+%${\color{blue}y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1} \;\;  \forall i = 1, \hdots, N$
+%\end{center}
+
+\textbf{Lösung:} Lagrange Methode mit Lagrange Multiplikatoren $\alpha_i \geq 0, \; \forall i = 1, \hdots, N$
+
+\begin{align*}
+L(\mathbf{w},b,\pmb{\alpha}) &= {\color{red}\tfrac{1}{2} ||\mathbf{w}||^2} + \sum_{i=1}^{N} \alpha_i  ({\color{blue}1 - y_i (\mathbf{w}^\top \mathbf{x}_i + b)})\\
+&=  {\color{red}\tfrac{1}{2} ||\mathbf{w}||^2} - \sum_{i=1}^{N} \alpha_i  ({\color{blue}y_i (\mathbf{w}^\top \mathbf{x}_i + b) - 1})
+\end{align*}
+
+}
+
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+%\framesubtitle{Vorgehen}
+$L(\mathbf{w},b,\pmb{\alpha})$ wird bezüglich 
+%\max_{\pmb{\alpha}} \left ( \min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha}) \right )
+
+\begin{enumerate}
+\label{ableitung}
+\item[{\color{blue}1.}] $b$ und $\mathbf{w}$ (Primärvariablen) minimiert $\rightarrow \min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha}) $
+\item[{\color{blue}2.}] $\pmb{\alpha}$ (duale Variable) maximiert $\rightarrow \max_{\pmb{\alpha}} \left ( \min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha}) \right )$
+%weil quadratisches Problem (nach unten geöffnete Parabel -> hat maximum)
+\end{enumerate}
+
+Zu {\color{blue}1.}:
+\begin{align}
+\frac{\partial L(\mathbf{w},b,\pmb{\alpha})}{\partial b} = 0          & \Rightarrow \sum_{i=1}^N \alpha_i y_i = 0 \\
+\frac{\partial L(\mathbf{w},b,\pmb{\alpha})}{\partial \mathbf{w}} = 0 & \Rightarrow \mathbf{w} = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i
+\end{align}
+
+$\rightarrow \mathbf{w}$ ist Linearkombination der Trainingsdaten $\mathbf{x}_i$.
+}
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Duales Optimierungsproblem}
+
+Zu {\color{blue}2.}:
+
+Durch Einsetzen der Lösungen (1) und (2) in $L(\mathbf{w},b,\pmb{\alpha}) $ verschwinden die Primärvariablen $\Rightarrow$ duales Optimierungsproblem:
+
+% \begin{align*}
+% \max_{\pmb{\alpha}} W(\pmb{\alpha})
+% &= \max_{\pmb{\alpha}} \left ( \min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha}) \right ) \\
+% &= \max_{\pmb{\alpha}} \left ( \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^T \mathbf{x}_j \right )
+% \end{align*}
+
+% NB: \hfill
+% %\begin{align*}
+% $\alpha_i \geq 0 \hspace{20pt} \sum_{i=1}^N \alpha_i y_i = 0$
+% %\end{align*}
+
+\begin{gather*}
+\label{primal}
+% \begin{aligned}
+\max_{\pmb{\alpha}} \left ( \min_{\mathbf{w}, b} L(\mathbf{w},b,\pmb{\alpha}) \right ) = \max_{\pmb{\alpha}} \left ( \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j \right )\\
+\text{NB:} \hspace{15pt} \alpha_i \geq 0, \hspace{20pt} \sum_{i=1}^N \alpha_i y_i = 0  \hspace{20pt} \forall i= 1, \hdots, N
+%\end{aligned}
+\end{gather*}
+\vfill
+\hfill {\color{hell}{\tiny\ref{primal2}}}
+}
+
+\frame{
+\frametitle{Einschub: Lagrange Methode}
+%\framesubtitle{Einschub: Lagrange Methode - equality constraint}
+\vspace{-10pt}
+\begin{columns}
+  \begin{column}[T]{0.05\textwidth}
+  \end{column}
+  
+  \begin{column}[T]{0.45\textwidth}
+    \begin{gather*}
+    \min_{x_1,x_2} x_1^2 + x_2^2
+    \end{gather*}
+  \end{column}
+
+  \begin{column}[T]{0.45\textwidth}
+    \begin{gather*}
+                \min_{x_1,x_2} x_1^2 + x_2^2 \\
+    \text{NB: }  x_1+x_2=1
+    \end{gather*}
+	\end{column}
+  
+  \begin{column}[T]{0.05\textwidth}
+  \end{column}
+\end{columns}
+%TODO: ein Beispiel zu equality constraint optimization und inequality constraint optimitation
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/lagrange} 
+
+}
+
+
+
+\end{knitrout}
+
+
+
+}
+
+
+
+\frame{
+\frametitle{Einschub: Lagrange Methode}
+%\framesubtitle{Einschub: Lagrange Methode - inequality constraint}
+\vspace{-10pt}
+\begin{columns}
+  \begin{column}[T]{0.05\textwidth}
+  \end{column}
+  
+  \begin{column}[T]{0.45\textwidth}
+    \begin{gather*}
+    \min_{x_1,x_2} x_1^2 + x_2^2 \\
+    \text{NB: }  {\color{blue}x_1 \geq -0.5}, \; {\color{blue}x_1 \leq 0.5}
+    \end{gather*}
+  \end{column}
+
+	\begin{column}[T]{0.45\textwidth}
+    \begin{gather*}
+                \min_{x_1,x_2} x_1^2 + x_2^2 \\
+    \text{NB: }  x_1 \geq 0.2, \; {\color{blue}x_1 \leq 0.5}
+    \end{gather*}
+	\end{column}
+  
+  \begin{column}[T]{0.05\textwidth}
+  \end{column}
+\end{columns}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/lagrangetwo} 
+
+}
+
+
+
+\end{knitrout}
+
+}
+
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Lagrange Methode}
+%$\mathbf{w} = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i$ ist Linearkombination der Trainingsdaten $x_i$ mit  Lagrange Multiplikator $\alpha_i > 0$ ist.
+
+Nach Karush-Kuhn-Tucker (KKT) ist eine weitere Bedingung nötig: %komplementär Bedingung
+
+\begin{align*}
+\alpha_i [ y_i (\mathbf{w}^\top \mathbf{x}_i + b) -1 ] = 0 \hspace{8pt} \forall i= 1, \hdots, N
+\end{align*}
+
+\begin{columns}
+\begin{column}[T]{0.6\textwidth}
+\begin{itemize}
+%\item[$\pmb{\Rightarrow}$] Für $y_i (\mathbf{w}^\top \mathbf{x}_i + b) > 1$ (funktionale Abstand einer Beobachtung $\mathbf{x}_i$ größer 1) ist $\alpha_i=0$.
+
+\item[$\pmb{\Rightarrow}$] $\alpha_i=0$ für $y_i (\mathbf{w}^\top \mathbf{x}_i + b) > 1$ (funktionale Abstand einer Beobachtung $\mathbf{x}_i$ ist größer 1). \\
+$\rightarrow$ inaktive NB
+
+\item[$\pmb{\Rightarrow}$] Es interessieren nur die support Vektoren $\rightarrow y_i (\mathbf{w}^\top \mathbf{x}_i + b) = 1$
+%Es interessieren nur die Beobachtungen, für die $y_i (\mathbf{w}^\top \mathbf{x}_i + b) = 1$ gilt (support Vektoren).
+\end{itemize}
+\end{column}
+\begin{column}[T]{0.4\textwidth}
+\includegraphics[width=\textwidth]{figure/kanonische} 
+\end{column}
+\end{columns}
+}
+
+
+
+\frame{
+\frametitle{Linear trennbare Daten}
+\framesubtitle{Zusammenfassung}
+
+\begin{enumerate}
+\item Lagrangefunktion aufstellen und duale Funktion herleiten
+\item Bestimme $\alpha_i$ der support Vektoren durch duales Optimierungsproblem
+\item Bestimme ${\color{blue}\mathbf{w} = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i}$ der kanonischen Hyperebene
+\item Bestimme Verschiebung $b = - \tfrac{1}{2} ( \mathbf{w}^{\top} \mathbf{x}^{+} +  \mathbf{w}^{\top} \mathbf{x}^{-}) $ der Hyperebene aus support Vektoren $\mathbf{x}^{+}$ und $\mathbf{x}^{-}$:
+\begin{align*}
+b + \mathbf{w}^{\top} \mathbf{x}^{+}= +1\\
+b + \mathbf{w}^{\top} \mathbf{x}^{-}= -1
+\end{align*}
+% aus Gleichung $\mathbf{w}^T \mathbf{x}_j + b = y_j, \; y_j \in \{-1,1\}$
+\item Entscheidungsfunktion $f(\mathbf{x}) = \sgn \left ( {\color{blue}\mathbf{w}^{\top}} \mathbf{x} + b \right ) =  \sgn \left ( {\color{blue}\sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top} \mathbf{x}  + b \right )$
+\end{enumerate}
+
+}
+
+\section{Nicht linear trennbare Daten}
+\subsection{Kern Trick}
+\frame{
+\frametitle{Kern Trick}
+\framesubtitle{Idee}
+Daten in höher dimensionalen Raum überführen, in dem sie linear Trennbar sind. \newline
+
+\textbf{Beispiel:}
+\begin{table}
+\centering
+\begin{tabular}{rcccc}
+$\Phi:$  & $\mathbb{R}^2$   & $\rightarrow$ & $\mathbb{R}^3$ & \\
+         & $(x_1,x_2)$      & $\rightarrow$ & $(z_1,z_2,z_3)$ & $= (x_1^2,\sqrt{2}x_1 x_2, x_2^2)$\\
+\end{tabular}
+\end{table}
+
+%\begin{tabular}{lrlll}
+%\Phi: & $\mathbb{R}^2$  & $\rightarrow$ &$\mathbb{R}^3$ &\\
+%      &$(x_1,x_2)$      & $\rightarrow$ &$(z_1,z_2,z_3) = (x_1^2,\sqrt{2}x_1 x_2, x_2^2)$&\\
+%\end{tabular}
+%\end{table}
+\vfill
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{figure/bild3}
+\end{figure}
+
+}
+
+\frame{
+\frametitle{Kern Trick}
+\framesubtitle{Beispiel}
+Die trennende Hyperebene im $\mathbb{R}^3$ hat die Form
+\hspace{-10pt}
+\begin{align*}
+                & \; \mathbf{w}^\top \mathbf{z} + b =  0 \\
+\Leftrightarrow & \; w_1 z_1 + w_2 z_2 + w_3 z_3 + b= 0  \\
+\Leftrightarrow & \; w_1 x_1^2 + w_2 \sqrt{2}x_1 x_2 + w_3 x_2^2 + b= 0
+\end{align*}
+
+$\Rightarrow$ Gleichung einer Ellipse im $\mathbb{R}^2$, da $(z_1,z_2,z_3) = (x_1^2,\sqrt{2}x_1 x_2, x_2^2)$.
+
+\vfill
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{figure/bild3}
+\end{figure}
+}
+
+\frame{
+\frametitle{Kern Trick}
+\framesubtitle{Kernfunktion}
+\begin{align*}
+\text{Bisher:} \hspace{20pt} &f(\mathbf{x}) = \sgn \left ( \sum_{i=1}^N y_i \alpha_i {\color{red} \langle \mathbf{x}_i, \mathbf{x} \rangle} + b \right )\\
+\text{Jetzt:} \hspace{20pt}  &f(\mathbf{x}) = \sgn \left ( \sum_{i=1}^N y_i \alpha_i {\color{red}\langle \Phi(\mathbf{x}_i), \Phi(\mathbf{x}) \rangle} + b \right )
+\end{align*}
+%Für jede Beobachtung errechnet man mittels $\Phi$ aus den alten Variablen neue Variablen. In diesem neuen Variablenraum sind die Beobachtungen linear trennbar.
+%$\Phi$ wird dabei durch eine Kernfunktion festgelegt. Die Kernfunktion verhält sich im überführten höherdimensionalen Raum wie ein Skalarprodukt, d.h.
+ \begin{itemize}
+ \item $\Phi$ überführt den Variablenraum in einen höherdimensionalen Variablenraum $\mathcal{M}$
+ \item Trainingsdaten sind in $\mathcal{M}$ linear trennbar
+ \item $\Phi$ wird durch eine Kernfunktion $K(\mathbf{x}_i, \mathbf{x})$ festgelegt
+ \item $K$ verhält sich wie ein Skalarprodukt in $\mathcal{M}$:
+  
+ \begin{equation*}
+ K(\mathbf{x}_i, \mathbf{x}) = \langle \Phi(\mathbf{x}_i), \Phi(\mathbf{x}) \rangle
+ \end{equation*}
+ 
+ \end{itemize}
+
+}
+
+
+\frame{
+\frametitle{Kern Trick}
+\framesubtitle{Wichtige Kernfunktionen}
+
+\begin{itemize}
+\item Polynomial: $K(\mathbf{x}_i,\mathbf{x}_j) = (c + \langle \mathbf{x}_i, \mathbf{x}_j \rangle)^d $, für $c$ konstant
+\item Radial Basis: $K(\mathbf{x}_i,\mathbf{x}_j) = \exp{ \left ( -\tfrac{||\mathbf{x}_i - \mathbf{x}_j ||}{c} \right ) }$ für $c > 0$
+\end{itemize}
+
+Beispiel: $\mathbf{x}_i = (x_{i_1}, x_{i_2})$, $c= 0$, $d=2$
+
+\begin{align*}
+K({\color{red}\mathbf{x}_1},\mathbf{x}_2) 
+           &= ( \langle {\color{red}\mathbf{x}_1}, \mathbf{x}_2 \rangle )^2 = ( \langle {\color{red}(x_{1_1},x_{1_2})}, (x_{2_1},x_{2_2}) \rangle )^2\\
+           &= ({\color{red}x_{1_1}}x_{2_1} + {\color{red}x_{1_2}}x_{2_2})^2 \\
+           &= ({\color{red}x_{1_1}^2} x_{2_1}^2  + {\color{red}x_{1_2}^2} x_{2_2}^2 + 2{\color{red}x_{1_1} x_{1_2}}x_{2_1}x_{2_2})\\
+           &= \langle ({\color{red}x_{1_1}^2}, {\color{red}x_{1_2}^2}, {\color{red} \sqrt{2} x_{1_1} x_{1_2}}),
+              (x_{2_1}^2, x_{2_2}^2, \sqrt{2} x_{2_1} x_{2_2}) \rangle \\
+           &= \langle \Phi({\color{red}\mathbf{x}_1}), \Phi(\mathbf{x}_2) \rangle
+\end{align*}
+
+}
+
+\subsection{Soft Margin}
+
+\frame{
+\frametitle{Soft Margin}
+\framesubtitle{Idee}
+
+\begin{tabular}{ll}
+Bisher: & Einzelne Außreiser beeinflussen Hyperebene (Overfitting)\\
+Jetzt:  & Erlaube Fehlklassifizierung, aber bestrafe diese!
+\end{tabular}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/softmargin} 
+
+}
+
+
+
+\end{knitrout}
+
+
+}
+
+\frame{
+\frametitle{Soft Margin}
+\framesubtitle{Erlaube Fehlklassifizierung}
+Nebenbedingung durch Schlupfvariablen $\xi_i \geq 0$ lockern, sodass:
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error: Indizierung außerhalb der Grenzen}}\end{kframe}
+
+{\centering \includegraphics[width=0.5\textwidth]{figure/softmargin2} 
+
+}
+
+
+
+\end{knitrout}
+
+\end{wrapfigure}
+
+$$y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i$$ %, \; i=1,\hdots, N$$
+
+\vfill
+
+Die Trainingsdaten sind für:
+\begin{itemize}
+\item $\xi_i = 0$ richtig klassifiziert %e Trainingsdaten
+\item $0<\xi_i \leq 1$ richtig klassifiziert (innerhalb des Randes)
+\item $\xi_i > 1$ fehlklassifiziert %e Trainingsdaten
+\end{itemize}
+
+$$\xi_i = \max \{0, 1 - y_i ( \mathbf{w}^\top \mathbf{x}_i + b )\}$$
+
+}
+
+\frame{
+\frametitle{Soft Margin}
+\framesubtitle{Primäres Optimierungsproblem}
+$$\min_{\mathbf{w},b, \pmb{\xi}} \hspace{8pt} {\color{red} \tfrac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i}$$
+%\begin{align*}
+%\min_{\mathbf{w},b, \pmb{\xi}} \hspace{8pt} \tfrac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i
+%\end{align*}
+\begin{table}
+\centering
+\begin{tabular}{crll}
+NB: & ${\color{blue}y_i (\mathbf{w}^\top \mathbf{x}_i + b)}$ & ${\color{blue}\geq 1 - \xi_i}$ &\\
+    & ${\color{blue}\xi_i}$                                  & ${\color{blue}\geq 0}$          & $\forall i = 1, \hdots, N$
+\end{tabular}
+\end{table}
+\hspace{-10pt}\textbf{Kompromiss:}
+%\begin{center}
+
+maximiere Rand ($\min \tfrac{1}{2} ||\mathbf{w}||^2$) %\\
+$\leftrightarrow$ minimiere Trainingsfehler $\sum_{i=1}^N \xi_i$
+%\end{center}
+
+{\small  $$\hspace{-10pt}L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu}) =  {\color{red}\tfrac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i} - \sum_{i=1}^{N} \alpha_i  ({\color{blue}y_i (\mathbf{w}^\top \mathbf{x}_i + b) - (1- \xi_i)}) - \sum_{i=1}^N \mu_i {\color{blue}\xi_i} $$}
+}
+
+
+\frame{
+\frametitle{Soft Margin}
+%\framesubtitle{Optimierungsproblem}
+Parameter $C$ kann durch Kreuzvalidierung bestimmt werden und steuert wie stark Trainingsfehler bestraft werden:
+
+\begin{itemize}
+\item $C$ groß: korrekte Klassifizierung der Trainingsdaten wichtiger $\rightarrow$ kleiner Rand
+\item $C$ klein: breiter Rand wichtiger $\rightarrow$ $\sum_{i=1}^N \xi_i$ größer
+%\item $C \rightarrow \infty$:
+%\item $C \rightarrow 0$:
+\end{itemize}
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/costparam} 
+
+}
+
+
+
+\end{knitrout}
+
+}
+
+
+\frame{
+\frametitle{Soft Margin}
+\framesubtitle{Duales Optimierungsproblem}
+Minimierung der Lagrangefunktion bezüglich $\mathbf{w},b \text{ und } \pmb{\xi}$ und Einsetzen der Lösungen in das primäre Optimierungsproblem führt zum dualen Optimierungsproblem (vgl. Folie \ref{primal}):
+
+%{\small
+\begin{gather*}
+\label{primal2}
+%\begin{aligned}
+\max_{\pmb{\alpha}}  \left ( \min_{\mathbf{w}, b, \pmb{\xi}} L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu}) \right )
+= \max_{\pmb{\alpha}} \left ( \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j \right )\\
+\text{NB:} \hspace{20pt} 0 \leq \alpha_i \leq C, \hspace{20pt} \sum_{i=1}^N \alpha_i y_i = 0 \hspace{20pt} \forall i= 1, \hdots, N
+%\end{aligned}
+\end{gather*}
+%}
+
+Weiteres Vorgehen analog zum linear trennbaren Fall.
+}
+
+%TODO: zwei arten von SV -> auf den Rand und jenseits ihres Randes
+
+\section{Zusammenfassung und Ausblick}
+
+\frame{
+\frametitle{Zusammenfassung und Ausblick}
+\framesubtitle{Zusammenfassung}
+
+\textbf{Linear trennbare Daten:} 
+
+%{\footnotesize 
+\begin{itemize}
+\item Aufstellen der Hyperebenengleichung
+\item Bestimmung der Hyperebenenparameter durch maximierung des Randes ($\rightarrow$ Lagrange-Methode)
+\end{itemize}
+%}
+
+\textbf{Nicht linear trennbare Daten:}
+
+\begin{enumerate}
+  \item \textbf{Kern Trick:} 
+  \begin{itemize} 
+    \item In höherdimensionalen Variablenraum überführen, in dem Trainingsdaten linear trennbar sind.
+    \item Bestimmung der Hyperebenenparameter analog.
+  \end{itemize}
+  \item \textbf{Soft Margin:} 
+  \begin{itemize} 
+    \item Erlaube Fehlklassifikation, aber bestrafe diese.
+    \item Gleiches duales Optimierungsproblem mit zusätzlicher NB.\\
+    $\rightarrow$ Vorgehensweise wie bei linear trennbaren Daten.
+  \end{itemize}
+  \item \textbf{Kern Trick und Soft Margin}
+\end{enumerate}
+}
+
+\frame{
+\frametitle{Zusammenfassung und Ausblick}
+\framesubtitle{Ausblick}
+
+\begin{itemize}
+\item Erweiterung für Regressionsprobleme
+\item Erweiterung für mehrkategorialen Response, z.B. durch \textbf{Paarweise Klassifikation:}
+\begin{itemize}
+\item Bilde Klassifikatoren für jedes mögliche Paar der $K$ Klassen
+\item Zuordung neuer Beobachtungen durch Mehrheitsentscheid in die Klasse $k \in \{1, \hdots, K \}$ 
+\end{itemize}
+\end{itemize}
+
+\textbf{Beispiel:}
+
+Für $K=3$ gibt es $\tfrac{K(K-1)}{2}= 3$ mögliche Paare / Klassifikatoren:
+
+\begin{table}
+\centering
+\begin{tabular}{c|ccc}
+  & Beob. 1 & Beob. 2 \\ \hline
+$k \in \{ 1,2 \}$      & 1       & 1   \\
+$k \in \{ 1,3 \}$      & 1       & 3   \\
+$k \in \{ 2,3 \}$      & 2       & 3   \\ \hline
+Mehrheitsentscheid & $\rightarrow$ 1 & $\rightarrow$ 3
+\end{tabular}
+\end{table}
+}
+
+% \frame{
+% \frametitle{Diskussion}
+% \framesubtitle{Vor- und Nachteile}
+% 
+% \textbf{Vorteile:}
+% \begin{itemize}
+% \item Nicht nur für Klassifikation geeignet
+% \item Kernfunktion ermöglicht flexiblere Klassifizierung
+% \item Teilmenge der Trainingsdaten für Parameterschätzungen nötig (support vectors)
+% \end{itemize}
+% 
+% \textbf{Nachteile:}
+% \begin{itemize} 
+% \item Wahl geeigneter Kernfunktion
+% \item Überlappende
+% \end{itemize}
+% 
+% }
+
+\section{Literaturverzeichnis}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{References}    
+  \begin{thebibliography}{10}   
+  
+  \beamertemplatebookbibitems
+  \bibitem{kernels}
+    B. Schölkopf and A. J. Smola
+    \newblock {\em Learning with Kernels: Support vector machines, regularization, optimization, and beyond}
+    \newblock Massachussetts Institute of Technology, 2002
+
+  \bibitem{elements}
+    J. Friedman, T. Hastie and R. Tibshirani
+    \newblock The elements of statistical learning
+    \newblock {\em Springer Series in Statistics, 2011}
+    
+    \beamertemplatearticlebibitems
+    \bibitem{svmclassreg}
+    S.R. Gunn and others
+    \newblock Support vector machines for classification and regression
+    \newblock {\em ISIS technical report vol. 14, 1998}
+    
+%  \beamertemplateonlinebibitems
+% \setbeamertemplate{bibliography item}{\includegraphics[width=1em]{vid}}
+%     \bibitem{coursera}
+%     P. Domingos
+%     \newblock Machine Learning Course
+%     \newblock {\em University of Washington}
+%     \url{https://www.coursera.org/course/machlearning}
+  
+%  \beamertemplatearticlebibitems
+%  \beamertemplatearrowbibitems
+  \end{thebibliography}
+  Rpackage: \texttt{e1071} Funktion \texttt{svm}
+\end{frame}
+
+\frame{
+\label{Last}
+
+\begin{center}
+\Huge Vielen Dank für die Aufmerksamkeit!
+\end{center}
+}
+
+%\thispagestyle{empty}
+
+\frame{
+\frametitle{Anhang}
+\framesubtitle{Erweiterung auf Regressionsprobleme}
+
+\begin{columns}
+\begin{column}[T]{0.52\textwidth}
+%Bestrafung erfolgt linear und ist nur nötig, wenn $\pmb{\xi}_i > 0$
+
+$$\min \hspace{3pt} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N {\color{blue}\xi_i}$$
+\vspace{-10pt}
+\begin{align*}
+\xi_i &= \max \{0, 1 - y_i ( \mathbf{w}^\top \mathbf{x}_i + b )\} \\
+&= [1 - y_i \underbrace{( \mathbf{w}^\top \mathbf{x}_i + b )}_{f(\mathbf{x}_i)}]_{+} %= [1 - y_i f(\mathbf{x}_i)]_{+}
+\end{align*}
+
+Alternative \textbf{Loss + Penalty} Form:
+
+\end{column}
+\begin{column}[T]{0.48\textwidth}
+\vspace{-40pt}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figure/softmargin2}
+\end{figure}
+\end{column}
+\end{columns}
+
+$$\min \hspace{3pt}  \sum_{i=1}^N {\color{blue}[1-y_i (\mathbf{w}^\top \mathbf{x}_i + b)]_{+}} + \frac{\lambda}{2} ||\mathbf{w}||^2 \text{ mit } \lambda = 1/C$$
+
+Verlustfunktion: $L(y_i, f(\mathbf{x}_i)) = [1 - y_i f(\mathbf{x}_i)]_{+}$ (hinge loss) \\
+$\Rightarrow$ Verwende andere Verlustfunktion für Regressionsprobleme
+}
+
+\frame{
+\frametitle{Anhang}
+\framesubtitle{Vor- und Nachteile}
+\textbf{Vorteile:}
+\begin{itemize}
+\item Nicht nur für Klassifikation geeignet $\rightarrow$ viele Erweiterungen
+\item flexiblere Klassifizierung durch Arbeiten in höheren Dimensionen
+\item Parameterschätzungen basieren auf Teilmenge der Trainingsdaten (support vectors) $\rightarrow$ schnelle Klassifizierung
+%\item Kommt gut mit unbalanzierten Klassen klar
+\end{itemize}
+
+\textbf{Nachteile:}
+\begin{itemize} 
+\item Geeignete Kernfunktion muss empirisch gesucht werden
+\item Geeignete wahl für C $\rightarrow$ muss empirisch gesucht werden
+\item Erweiterungen teilweise aufwendig oder ineffizient (z.B. Paarweise Klassifikation)
+%\item Überführung in höherer Dimension $\rightarrow$ höhe der Dimension?
+\end{itemize}
+}
+
+\frame{
+\frametitle{Anhang}
+\framesubtitle{Herleitung duale Funktion bei linear trennbare Daten}
+Mit (1) und (2) von Folie \ref{ableitung} lässt sich zeigen:
+
+{\small
+\begin{align*}
+&L(\mathbf{w},b,\pmb{\alpha}) = \frac{1}{2} \mathbf{w}^\top \mathbf{w} - \sum_{i=1}^N \alpha_i (y_i (\mathbf{w}^\top \mathbf{x}_i +b) - 1) \\
+&\stackrel{(2)}= \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j - \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i - \sum_{i=1}^N b \alpha_i y_i + \sum_{i=1}^N \alpha_i \\
+&\stackrel{(1)}= \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j - \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i + \sum_{i=1}^N \alpha_i \\
+&= - \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j + \sum_{i=1}^N \alpha_i 
+\end{align*}
+}
+}
+
+\frame{
+\frametitle{Anhang}
+\framesubtitle{Herleitung duale Funktion bei nicht linear trennbare Daten}
+{\small
+\begin{align}
+\frac{\partial L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu})}{\partial \pmb{\xi}} = 0 
+\Rightarrow C = \alpha_i + \mu_i \hspace{20pt} \forall i=1,\hdots, N
+\end{align}
+}
+\vspace{-10pt}
+{\small
+\begin{align*}
+&L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu}) = \frac{1}{2} \mathbf{w}^\top \mathbf{w} \; {\color{red} + C \sum_{i=1}^N \xi_i} \\
+&- \sum_{i=1}^N \alpha_i (y_i (\mathbf{w}^\top \mathbf{x}_i +b) - (1 - \xi_i)) - \sum_{i=1}^N \mu_i \xi_i\\
+&\stackrel{(2)}= \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j \; {\color{red} \cancel{ + \sum_{i=1}^N \overbrace{(\alpha_i + \mu_i )}^{(3) \Rightarrow C} \xi_i}} \\
+&- \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i - \cancel{\sum_{i=1}^N b \alpha_i y_i} + \sum_{i=1}^N \alpha_i \; {\color{red}\cancel{ - \sum_{i=1}^N \alpha_i \xi_i - \sum_{i=1}^N \mu_i \xi_i}} \\
+%&= \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j - \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i + \sum_{i=1}^N \alpha_i \\
+%&= - \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j + \sum_{i=1}^N \alpha_i 
+\end{align*}
+}
+}
+
+% \frame{
+% \frametitle{Anhang}
+% \framesubtitle{Kanonische Hyperebene}
+% 
+% $$\min_{\mathbf{w},b, \pmb{\xi}} \hspace{8pt} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i$$
+% \begin{table}
+% \centering
+% \begin{tabular}{crll}
+% NB: & $y_i (\mathbf{w}^\top \mathbf{x}_i + b)$ & $\geq 1 - \xi_i$ &\\
+%     & $\xi_i$                                  & $\geq 0$          & $\forall i = 1, \hdots, N$
+% \end{tabular}
+% \end{table}
+% 
+% }
+
+%TODO: - Regression, Vor- und Nachteile
+
+% \frame{
+% \frametitle{Anhang}
+% \framesubtitle{Erweiterung für Regression}
+% 
+% Generalisierung ersetze xi durch NB
+% 
+% }
+
+\end{document} 

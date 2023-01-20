@@ -1,0 +1,67 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.4}
+{\em To be worked on in the workshops on February 3 or 6. The content is ICA-relevant but your solution does formally not contribute to the grade.}
+
+
+
+\begin{enumerate}
+
+
+\item Open the lecture script on pages 14 and 15. Before starting with reproducing the outputs, make a copy called \texttt{chickens} of the data frame \texttt{chickwts} that comes with R, and run \texttt{example(merge)} which creates the data frames \texttt{authors} and \texttt{books}.
+\begin{enumerate}
+\item Reproduce the outputs on page 14. Look at the \texttt{authors} and \texttt{books} frames that \texttt{example(merge)} creates and note that some variable names are different; in particular, note that you will have to slightly modify the commands on page 14.
+\item Reproduce the outputs on page 15 to obtain the data frame \texttt{ch\_food}.
+\item Type \texttt{names(ch\_food)}. Then make the assignment\\
+\texttt{names(ch\_food)[2]<-"weight.mean"}, and output \texttt{ch\_food}.
+\item Add a variable \texttt{heavychicken} to \texttt{chickens} which is \texttt{logical} and true whenever a chicken exceeds the mean weight of all chickens in \texttt{chickens}.
+\item Aggregate the chicken weights by computing the standard deviation \texttt{sd} and the number of all heavy chickens for each kind of chicken feed. This should yield two more aggregate frames.
+\item Aggregate the chicken weights by computing the five number summary \texttt{fivenum} for each kind of chicken feed. This should yield one more aggregate frame.
+\item As in part (b), change the variable names in the aggregate data frames to something appropriate. Notice that in the five number summary the five number columns will be considered part of a single variable \texttt{weight} which is matrix valued. If you want to change the names of the columns in the matrix say to \texttt{min},\texttt{Q1}, etc, you have to type something similar to\\
+    \texttt{ch\_food\_fivenum\$weight <- as.data.frame(ch\_food\_fivenum\$weight)}\\
+    \texttt{names(ch\_food\_fivenum\$weight) <- c("min","Q1",}etc\texttt{)}\\
+    After that, you can access the rows by \texttt{ch\_food\_fivenum\$weight\$Q1} etc.
+\item Use \texttt{merge} to obtain a single data frame which lists for all six kinds of chicken feed all aggregate statistics you obtained above.
+\end{enumerate}
+
+\item Type \texttt{paste("Hello",toupper("world"))} into the console.
+
+\item Load the pulse data \texttt{pulse.dat}, as you did in workshop 2, and open the lecture script on page 20. Open a new R script.
+\begin{enumerate}
+\item Make a scatter plot matrix of all variables in the pulse data set that are at least ordinal.
+\item Modify your scatter plot matrix by coloring the points by activity level and using different symbols for males and females. For this, use the \texttt{col} and \texttt{pch} parameters. \texttt{col} can be any factor variable of same length as the plotted columns, while \texttt{pch} must be a vector of positive integers.
+\item Load the lattice package by the command \texttt{library(lattice)}. If you have never used the package before, you may need to install the \texttt{lattice} package by \texttt{install.packages("lattice")} first.
+\item Make a 3D scatter plot of the variables height, weight, and pulse before. Use different colors for males vs females.
+\end{enumerate}
+
+
+\item Open the lecture script on page 8. Perform statistical analyses on the pulse data set which provide a qualitative and quantitative answer to the questions on the page. Further decide whether the following questions have the status of "observation" or "experiment"; identify and perform qualitative and quantitative statistical analyses to answer them.
+\begin{enumerate}
+\item Do the students who ran have a higher pulse afterwards, as compared to those who did not?
+\item Do the students who ran have a higher pulse before, as compared to those who did not?
+\item Do the students who ran have a higher (relative or absolute) increase in pulse after vs before, as compared to those who did not?
+\item Are the women in the sample taller on average than the males?
+\item Is there a relationship between smoking and weight?
+\item Does the activity level influence the (relative or absolute) change in pulse?
+\item Is higher weight associated with a higher increase in pulse?
+\item Can the variables activity level, sex, smokes, weight be used to predict the pulse before (e.g. by a linear model)?
+\item Can the variables be used to predict the pulse after (e.g. by a linear model)?
+\end{enumerate}
+
+\item Open the lecture script on page 21. Perform group-wise analyses on the pulse data set, and check the answer to questions (a), (b), (c), (e), (f), (g) in the subgroups given by activity level, sex, or smokes.
+
+\item If you have some time left, you could use it to work on some of the the exercises from workshop script no.2 that you have not done yet.
+
+
+\end{enumerate}
+
+
+
+
+
+\end{document}

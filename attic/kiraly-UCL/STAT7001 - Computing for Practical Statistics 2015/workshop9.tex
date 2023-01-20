@@ -1,0 +1,82 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.9}
+{\em A suggestion for what to work on in the workshops on March 17 or 20. The content is ICA-relevant but your solution does formally not contribute to the grade. You may also choose to work on the script from week no.8 instead.}
+
+Below is a sample exercise that you can work on with SAS or with R. In view of the ICA, is advised that you work on it with SAS first. Instructions for implementing the cross-validation in SAS, as asked for in part (d), are presented {\emph after} the sample exercise.
+
+{\bf Sample exercise}
+
+The following table contains the official US census, as published by the US census bureau, in inhabitants, for the years 1790 to 2000.
+\begin{center}
+\begin{tabular}{|c|c||c|c|}
+  \hline
+  year & population & year & population\\\hline
+  1790 & 3929214 & 1900 & 76212168\\
+  1800 & 5308483 & 1910 & 92228496\\
+  1810 & 7239881 & 1920 & 106021537\\
+  1820 & 9638453 & 1930 & 123202624\\
+  1830 & 12860702 & 1940 & 132164569\\
+  1840 & 17063353 & 1950 & 151325798\\
+  1850 & 23191876 & 1960 & 179323175\\
+  1860 & 31443321 & 1970 & 203302031\\
+  1870 & 38558371 & 1980 & 226532199\\
+  1880 & 50189209 & 1990 & 248709873\\
+  1890 & 62979766 & 2000 & 281421906\\  \hline
+\end{tabular}\newline
+\end{center}
+
+This task is about explaining population $P$ in terms of the year $Y$, via a potentially non-linear model of the type $P\approx f(Y)$ and/or variable transformations of $P$ and $Y$.
+
+\begin{enumerate}
+  \item[(a)] Perform a brief explorative analysis to find potential candidates for the relation and variable transformations of $P$ and $Y$.
+  \item[(b)] Fit least-squares-models to explain the data. Include your candidate models, and at least the following two models:\\
+    (i) population being a polynomial of degree 10 in the year \\ (ii) the logistic growth law: $P = \frac{\beta_1}{1+\exp(\beta_2+\beta_3 Y)},$
+  where the $\beta_i$ are growth constants.\\
+
+  {\bf Note:} instantiating standard exponential or logistic models directly with the values in the table may be numerically problematic - this can be avoided by normalizing your model, your data, or both - i.e., putting the covariates or the model on a scale where evaluation of the predictor does not involve very small or very large numbers.
+  \item[(c)] Perform standard diagnostics for the models you fitted. If necessary, refine your models to account for the previous results and potential non-linearity in the residuals.
+  \item[(d)] Estimate out-of-sample RMSE and MAE of your models, and respective standard errors, via leave-one-out cross-validation. Discuss how the models relate, and whether there are models preferable over others, and if yes, why. Discuss the residuals of the logistic growth law in a historical context.
+\end{enumerate}
+\newpage
+
+{\bf Leave-one-out cross-validation in SAS}
+
+There are two main ways to do leave-one-out cross-validation with SAS.
+
+Number one is to have one copy of the target variable for each of the [number of data points] many train/test splits, which necessitates the use of arrays as on page 30 of the lecture 6 slides. The $i$-th row of the $i$-th target variable is set to missing, then one proceeds as on page 16 of the lecture 8 slides.
+
+Number two creates additional rows instead of columns, and indexes the train/test splits by an additional variable. Here, the whole data set is copied [number of data points] many times, and in the $i$-th copy of the data set, the $i$-th row of the target variable is set to missing. Then one proceeds as on page 16 of the lecture slides.
+
+Number one is more elegant and efficient than number two, but requires some knowledge on arrays to implement. Number two is easier to implement, but less efficient, since the whole data set, including all covariates, is replicated.
+
+(of course, both strategies are unnecessarily complicated when compared to R, where it is not necessary to make copies of the target variables either or to trick in-sample methods into an out-of-sample setting)
+
+Variant one was described in workshop script number 8.
+
+Code preparing the data set for variant two is provided below.
+\begin{verbatim}
+data data_set_cv;
+ do fold_ind = 1 to datasize;
+  do row_ind = 1 to datasize;
+   set data_set nobs=datasize point=row_ind;
+   if row_ind ^= fold_ind then oos_y=y;
+    else oos_y=.;
+   output;
+  end;
+ end;
+ stop;
+run;
+\end{verbatim}
+This \texttt{data} step takes the original data set, \texttt{data\_set}, and makes a data set \texttt{data\_set\_cv} following strategy number two as detailed above, with new variables \texttt{oos\_y}, containing the training set, and \texttt{fold\_ind}, containing the number of the fold the row is in. The \texttt{nobs=datasize} option of the \texttt{set} command creates a temporary variable \texttt{datasize} containing the number of rows in \texttt{data\_set}. The option \texttt{point=row\_ind} reads in only the \texttt{row\_ind}-th row. The \texttt{if}/\texttt{else} statement ensures that the $i$-th row of \texttt{oos\_y} in the $i$-th copy of \texttt{data\_set} contains a missing value. The \texttt{stop} line at the end must be included for technical reasons, as always when the \texttt{point} option of \texttt{set} is used; without it, the step would not terminate. The \texttt{output} statement writes the line the data set \texttt{data\_set\_cv} instead.
+
+The strategy on page 16 of the lecture 8 slides can now be applied; fold-wise predictions are obtained by adding the line\\
+\texttt{by fold\_ind;}\\
+to the fitting/prediction \texttt{proc}.
+
+\end{document}

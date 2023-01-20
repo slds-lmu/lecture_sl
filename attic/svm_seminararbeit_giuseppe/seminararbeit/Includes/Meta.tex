@@ -1,0 +1,66 @@
+% Meta-Informationen -----------------------------------------------------------
+%   Definition von globalen Parametern, die im gesamten Dokument verwendet
+%   werden können (z.B auf dem Deckblatt etc.).
+%
+%   ACHTUNG: Wenn die Texte Umlaute oder ein Esszet enthalten, muss der folgende
+%            Befehl bereits an dieser Stelle aktiviert werden:
+            \usepackage[latin1]{inputenc}
+% ------------------------------------------------------------------------------
+\newcommand{\titel}{Support Vector Machines}
+\newcommand{\untertitel}{}
+\newcommand{\art}{Seminar}
+\newcommand{\arttitel}{--Regularisierungstechniken und strukturierte Regression--}
+%\newcommand{\fachgebiet}{Software-Engineering}
+\newcommand{\autor}{Giuseppe Casalicchio}
+%\newcommand{\studienbereich}{Software-Engineering}
+\newcommand{\matrikelnr}{8049501}
+\newcommand{\erstgutachter}{Prof. Dr. Gerhard Tutz}
+\newcommand{\zweitgutachter}{Wolfgang Pößnecker}
+\newcommand{\jahr}{8. März 2013}
+\newcommand{\efp}{\text{\textit{efp}}}
+%\newcommand{\ort}{Berlin}
+%\newcommand{\logo}{lmu_siegel.pdf}
+
+
+
+
+%%\usepackage[utf8]{inputenc}
+%\usepackage{german}
+
+%%% Zaehler fuer Aufgaben
+\newcounter{ex}
+\setcounter{ex}{0}
+\newcommand{\ex}{\item{\stepcounter{ex} \textbf{Aufgabe
+                       \arabic{ex} }}\newline}
+
+
+%%% Theoremumgebungen
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+   \newtheoremstyle{ththm}% name
+     {\topsep}%      Space above
+     {\topsep}%      Space below
+     {\normalfont}%         Body font
+     {}%         Indent amount (empty = no indent, \parindent = para indent)
+     {\normalfont\bfseries}% Thm head font
+     {}%        Punctuation after thm head
+     {\newline}%     Space after thm head: " " = normal interword space;
+           %       \newline = linebreak
+     {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}%         Thm head spec (can be left empty, meaning `normal')
+
+
+
+%% Definition
+\theoremstyle{ththm}
+\newtheorem{defi}{Definition}[chapter]
+\newtheorem{satz}[defi]{Satz}
+\newtheorem{lemma}[defi]{Lemma}
+\newtheorem{korollar}[defi]{Korollar}
+\newtheorem{beispiel}{Beispiel}[chapter]
+
+\theoremstyle{remark}
+\newtheorem*{beme}{Bemerkung}
+
+\newenvironment{beweis}{\begin{proof}[Beweis] \textcolor{white}{weiss} \newline}{\end{proof}}

@@ -1,0 +1,7 @@
+What is a classifier?
+- Basics
+- Hard Classifiers
+- Scoring Classifiers
+- Probabilistic Classifiers
+Scoring Modelle
+Sigmoids

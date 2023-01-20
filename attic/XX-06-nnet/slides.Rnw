@@ -1,0 +1,780 @@
+%This file is a child of preamble.Rnw in the style folder
+%if you want to add stuff to the preamble go there to make
+%your changes available to all childs
+
+<<setup-child, include = FALSE>>=
+library(knitr)
+set_parent("../style/preamble.Rnw")
+@
+
+
+\lecturechapter{8}{Neural Networks}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+\begin{vbframe}{What are neural networks?}
+  \begin{itemize}
+    \item Neural networks are learning algorithms for classification
+    and regression.
+    \item As their name suggests, they are inspired by biological
+    neural networks, in particular by the brain.
+  \end{itemize}
+
+  \begin{blocki}{Artificial neurons}
+    \item A neuron receives input from a number of other neurons.
+    \item The neuron processes its inputs and then computes and passes on its output
+    \item Neurons are connected to each other by synapses (links). Thus,
+    they form a network.
+  \end{blocki}
+
+  % \begin{itemize}
+  % \item Target variable: $y \in \Yspace$ (for now numerical)
+  % \item features $x \in \Xspace$
+  % \item Goal: Fit prediction functions $f_1(x),\ldots,f_K(x)$ to predict $y$
+  % \end{itemize}
+
+  % \lz
+
+  % Idea:
+  % \begin{itemize}
+  % \item Build linear combinations of the input vector and transform them
+  % using {\bf activation functions} to get derived features
+  % \item Model $Y$ as a (possibly non-linear) function of these features
+  % \end{itemize}
+
+  % \framebreak
+
+  % \begin{figure}
+  % \includegraphics[width=.9\textwidth]{figure_man/nnet-einf.pdf}
+  % \caption{Example: Biological neural networks}
+  % \end{figure}
+
+\end{vbframe}
+
+\begin{vbframe}{The perceptron: The \enquote{first} neural network}
+  The simplest neural network consists of a single neuron with $p$ input units $x_i, i=1,\ldots,p$
+  (and a constant bias term):
+
+  \lz
+
+<<echo=FALSE, fig.width=4, fig.height=2.2>>=
+library("grid")
+grid.newpage()
+grid.lines(c(0.6, 0.9), rep(0.5, 2), arrow = arrow(type = "closed", length = unit(0.1, "inches")))
+for (j in 1:4) {
+  i <- 0.5 + c(0, 2:4)[j]
+  l <- sqrt(0.5^2 + (0.5 - i/5)^2) / 0.1
+  grid.lines(c(0.1, 0.6 - 0.5/l), c(i/5, 0.5 - (0.5 - i/5)/l), arrow = arrow(type = "closed", length = unit(0.1, "inches")))
+  grid.circle(0.1, i/5, r = 0.05, gp = gpar(fill = "white"))
+  n <- c("p", 2:0)[j]
+  grid.text(substitute(x[n], list(n = n)), 0.1, i/5)
+  grid.text(substitute(w[n], list(n = n)), 0.3, unit(0.5 - (0.55 - i/5) / 0.5 * 0.3, "npc") + unit(1, "lines"))
+}
+grid.circle(0.6, 0.5, r = 0.1, gp = gpar(fill = "white"))
+grid.text(expression(sigma), 0.6, 0.5)
+grid.points(unit(rep(0.1, 3), "npc"),
+            unit(seq(1.2, 1.8, length.out = 3)/5, "npc"), size = unit(0.1, "char"),
+            pch = 1, gp = gpar(fill = 1))
+grid.text("y", 0.95, 0.5)
+grid.text(expression(paste("z = ", sigma, "(", w^T, "x) = y", sep = "")),
+  0.6, 0.2)
+@
+
+  \framebreak
+
+  \begin{itemize}
+    \item The features $\inputs$ are connected with the neuron $z$ via links.
+    \item Usually one adds a 1-column $x_0$ to the feature matrix, such that
+    $x = (x_0,\ldots, x_p)$, so we can drop the bias term in notation.
+    \item The weights $w = (w_0,\ldots,w_p)$ control the impact of each input unit on the prediction.
+    \item $\sigma$ is called activation function. It can be used for a non-linear transformation of the inout.
+    \item So the neuron can be expressed as: $z = \sigma(w^Tx) = y$
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+    \item 1943 McCulloch and Pitts introduced the neuron as a logical-treshold model, with multiple inputs and one output.
+    \item In this model the neuron fires a 1 if the input exceeds a certain treshhold $\theta$.
+    \item However, this model didn't have adjustable weights, so learning could only be achieved by changing the treshhold $\theta$.
+    \item 1958 Rosenblatt presented his model of the perceptron, which is the foundation for artificial neural networks until now:
+    $$
+    \sigma(w^Tx) =
+    \begin{cases}
+     1 & w^Tx \geq \theta \\
+     0 & otherwise \\
+    \end{cases}
+    $$
+  \end{itemize}
+
+  \framebreak
+
+  \begin{minipage}{0.5\textwidth}
+
+    Linear classifier:
+
+    \lz
+
+    2 weights: linear boundary:
+    $$w_{1} x_1 + w_{2} x_2 = \theta$$
+
+    Weights are learned by a delta-update rule.
+
+    Only linearly separable problems can be learned with a perceptron.
+
+
+  \end{minipage}\hfill
+  \begin{minipage}{0.45\textwidth}
+<<echo=FALSE, fig.width=3, fig.height=5>>=
+set.seed(2204)
+par(mar = c(5, 0.1, 5, 0))
+x <- mvtnorm::rmvnorm(20, c(2, 2))
+y <- mvtnorm::rmvnorm(20, c(5, 5))
+X <- rbind(x, y)
+class <- rep(1:2, c(nrow(x), nrow(y)))
+plot(X, pch = c(1, 19)[class], axes = FALSE, xlab = "", ylab = "")
+box()
+scaling <- scale(X)
+LDA <- MASS::lda(X, class)
+scale <- attr(scaling, "scaled:scale")
+d <- scale[2]/scale[1] * coef(LDA)[2]/coef(LDA)[1]
+a <- sum(c(d, 1) * attr(scaling, "scaled:center"))
+b <- -d
+abline(a, b)
+@
+  \end{minipage}
+
+  \framebreak
+
+  \begin{blocki}{Other choices for $\sigma$:}
+    \item If we choose the identity our model collapses to a simple linear regression:
+    $$
+    y = \sigma(w^Tx) = w^Tx
+    $$
+    \item Using the logistic function gives us:
+    $$
+    y = \sigma(w^Tx) = \frac{1}{1 + \exp(-w^Tx)}
+    $$
+    This is just logistic regression!
+  \end{blocki}
+
+\end{vbframe}
+
+\begin{vbframe}{Components of a neural network}
+
+  We will now extend the approach introduced before:\\
+  \begin{itemize}
+    \item Our neural network from before only had one neuron $z$
+    \item Extension: $M$ neurons $\neurons$
+    \item The neurons are arranged in layers:\\
+    \begin{itemize}
+      \item The first layer is the input layer
+      \item All intermediate layers are called \enquote{hidden layers},
+      because their output is not observed directly.
+      \item The last layer is made of output unit for predictions.
+    \end{itemize}
+    \item Neurons are connected with each other over direct links. Direct means that information can only be passed in one direction. We'll call such graphs
+    \enquote{feed-forward neural networks}.
+  \end{itemize}
+
+  \framebreak
+
+  \begin{figure}
+    \includegraphics[height=6.2cm]{figure_man/nnet-graph.pdf}
+    \caption{Structure of a single hidden layer, feed-forward neural network
+    for K-class classification or multi-output regression.}
+  \end{figure}
+
+  \framebreak
+
+  \begin{blocki}{Notation:}
+    \item We will focus on neural networks with one hidden layer.
+    \item For K-class classification: K output units $\targets$
+    \item $M$ hidden neurons $\neurons$, with:
+    $$ z_m = \sigma(w_m^T x), \quad m = 1,\ldots,M $$
+    \item Compute linear combinations of derived features $z$:
+    $$ t_k = \beta_k^T z, \quad z=(\neurons)^T $$
+    \item Final transformation:
+    $$ f_k(x) \equiv g_k(t), \quad t = (t_1,\ldots,t_K) $$
+    % (they correspond to the activation functions of the output unit, similar to the link functions in GLM)
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Activation function $\sigma$:}
+    \item $\sigma$ is in general non-linear, monotonically increasing and bounded.
+    \item Commonly one uses the sigmoidal logistic function:
+    $$ \sigma (v) = 1 / (1+\exp (-v)) $$
+  \end{blocki}
+
+<<echo=FALSE, fig.height=3>>=
+library(ggplot2)
+logfun = function(v, s) {
+  1 / (1 + exp(- s * v))
+}
+x = seq(-10, 10, 0.1)
+stretch = c(0.25, 1, 10)
+y = sapply(stretch, function(s) {
+  sapply(x, logfun, s = s)
+})
+df = data.frame(y = as.vector(y), x = rep(x, length(stretch)),
+  s = as.factor(rep(stretch, each = length(x))))
+
+logfun.q = ggplot(df, aes(x = x, y = y, color = s)) + geom_line()
+logfun.q = logfun.q + scale_y_continuous(name = expression(frac(1,
+  1 + plain(exp)(- s %.% v))))
+logfun.q = logfun.q + scale_x_continuous(name = NULL)
+logfun.q = logfun.q + theme(axis.title = element_text(size = 14L, face = "bold"),
+  plot.margin = unit(c(0, 0, 0, 0), "cm"))
+logfun.q
+@
+
+  \framebreak
+
+  \begin{blocki}{Output function $g_k(t)$:}
+    \item For regression one simply uses the identity function:
+    $$ g_k(t) = t_k $$
+    \item For classification a usual choice is the softmax-function:
+    $$ g_k(t) = \frac{\exp(t_k)}{\sum_{k=1}^K\exp(t_k)}$$
+    This is the same transformation used in the multilogit-model!
+  \end{blocki}
+
+\end{vbframe}
+
+% \begin{vbframe}{Example: Neural networks trained on iris task}
+% <<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+% library(mlr)
+% set.seed(1234L)
+% task = convertMLBenchObjToTask("mlbench.friedman1")
+% plotLearnerPrediction("regr.nnet", task, size = 1L,
+%   features = getTaskFeatureNames(task)[1L])
+% @
+
+%   \framebreak
+
+% <<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+% set.seed(1234L)
+% plotLearnerPrediction("regr.nnet", task, size = 3L,
+%   features = getTaskFeatureNames(task)[1L])
+% @
+
+%   \framebreak
+
+% <<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+% set.seed(1234L)
+% plotLearnerPrediction("regr.nnet", task, size = 10L,
+%   features = getTaskFeatureNames(task)[1L])
+% @
+% \end{vbframe}
+
+
+\begin{vbframe}{Example}
+<<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+library(mlr)
+set.seed(1234L)
+n = 50L
+x = sort(10 * runif(n))
+y = sin(x) + 0.2 * rnorm(x)
+df = data.frame(x = x, y = y)
+tsk = makeRegrTask("sine function example", data = df, target = "y")
+plotLearnerPrediction("regr.nnet", tsk, size = 1L)
+@
+
+  \framebreak
+
+<<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+plotLearnerPrediction("regr.nnet", tsk, size = 2L)
+@
+
+  \framebreak
+
+<<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+plotLearnerPrediction("regr.nnet", tsk, size = 10L)
+@
+
+  \framebreak
+
+<<echo=FALSE, warning=FALSE, message=FALSE, results="hide">>=
+plotLearnerPrediction("regr.nnet", tsk, size = 100L)
+@
+
+\end{vbframe}
+
+\begin{vbframe}{Universal approximation property}
+
+  \textbf{Theorem.}
+  Let $h : \R \to \R$ be a continuous, non-constant, bounded, and
+  monotonically increasing function. Let $C \subset \R^p$ be compact,
+  and let $\continuous(C)$ denote the space of continuous functions $C \to \R$.
+  Then, given a function $g \in \continuous(C)$ and an accuracy $\varepsilon > 0$,
+  there exists a hidden layer size $N \in \N$ and a set of coefficients
+  $w^{(1)}_i \in \R^p$, $w^{(2)}_i, b_i \in \R$
+  (for $i \in \{1, \dots, N\}$), such that
+  $$
+    f : K \to \R \,;\quad f(x) = \sum_{i=1}^N w^{(2)}_i \cdot h \Big( (w^{(1)}_i)^T x + b_i \Big)
+  $$
+  is an $\varepsilon$-approximation of $g$, that is,
+  $$
+    \|f - g\|_{\infty} := \max_{x \in K} |f(x) - g(x)| < \varepsilon
+    \enspace.
+  $$
+
+  The theorem extends trivially to multiple outputs.
+
+  \framebreak
+
+  \textbf{Corollary.}
+  Neural networks with a single sigmoidal hidden layer and linear
+  output layer are universal approximators.
+
+
+
+  \begin{itemize}
+    \item This means that for a given target function $g$ there exists a
+    sequence of networks $\big( f_k \big)_{k \in \N}$ that converges
+    (pointwise) to the target function.
+    \item Usually, as the networks come closer and closer to $g$, they
+    will need more and more hidden neurons.
+    \item A network with fixed layer sizes can only model a subspace of all
+    continuous functions. Its dimensionality is limited by the number
+    of weights.
+    \item The continuous functions form an infinite dimensional vector space.
+    Therefore arbitrarily large hidden layer sizes are needed.
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+  \item Why is universal approximation a desirable property?
+  \item Recall the definition of a Bayes optimal hypothesis $h^* : X \to Y$.
+    It is the best possible hypothesis (model) for the given problem:
+    it has minimal loss averaged over the data generating distribution.
+  \item So ideally we would like the neural network (or any other
+    learner) to approximate the Bayes optimal hypothesis.
+  \item Usually we do not manage to learn $h^*$.
+  \item This is because we do not have enough (infinite) data. We have
+    no control over this, so we have to live with this limitation.
+  \item But we do have control over which model class we use.
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+    \item Universal approximation $\Rightarrow$ approximation error tends
+    to zero as hidden layer size tends to infinity.
+    \item Positive approximation error implies that no matter how good
+    the data, we cannot find the optimal model.
+    \item This bears the risk of systematic under-fitting, which can be avoided with a universal model class.
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+    \item As we know, there are also good reasons for restricting the model class.
+    \item This is because a flexible model class with universal approximation
+    ability often results in over-fitting, which is no better than
+    under-fitting.
+    \item Thus, \enquote{universal approximation $\Rightarrow$ low approximation error}, but at the risk of a substantial learning error.
+    \item In general, models of intermediate flexibilty give the best predictions.
+    For neural networks this amounts to a reasonably sized hidden layer.
+  \end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Fitting neural networks}
+
+  \begin{blocki}{From models to learners:}
+    \item With a large enough hidden layer the class of functions is rich enough to represent any kind of learning problem. However, this is not helpful in practice. It does not tell us how to actually set the network size, let alone the weights.
+    \item Until now we have defined neural networks as a class of models.
+    We do not have a learning rule yet.
+    \item We will derive gradient-based training of neural networks
+    in the following. This is a two-step procedure:
+    \begin{enumerate}
+      \item Compute the derivative of the empirical risk w.r.t.\
+      the weights.
+      \item Change the weights so that the empirical error is
+      reduced.
+    \end{enumerate}
+    This process can be iterated (e.g., until a local optimum is reached).
+
+  \end{blocki}
+
+  \framebreak
+
+  Given:
+  \begin{itemize}
+    \item Values of the targets and the inputs
+    \item Number of neurons $M$
+    \item Activation function $\sigma$
+    \item Functions $g_k$
+  \end{itemize}
+  To estimate:
+  \begin{itemize}
+    \item parameter vectors $w_m$, $m=0,\dots,M$
+    \item parameter vectors $\beta_k$, $k=0,\dots,K$
+  \end{itemize}
+  Let:
+  \begin{itemize}
+    \item $y_{ik}$ be the $k\text{\scriptsize th}$ component of $y$ in observation $i$, $i=\nset$
+    \item $x_i$ be the input vector of observation $i$ with $x_i = (x_{i1},\ldots,x_{ip})$
+    \item $z_i$ be the feature vector of observation $i$ with $z_i = (z_{1i}, \ldots, z_{Mi})$
+  \end{itemize}
+
+  \framebreak
+
+  \begin{blocki}{Measure of fits:}
+    \item $ \risk(\theta) = \sum_{i = 1}^n \risk_i$, where
+    $\theta := (w_1^T, \ldots, w_M^T, \beta_1^T, \ldots, \beta_K^T)^T$
+    \item MSE for regression:
+    $$ \risk(\theta) = \sum_{k=1}^K \sum_{i=1}^n \left( y_{ik} - f_k (x_i)\right)^2$$
+    \item Cross entropy (deviance) for classification:
+    $$ \risk(\theta) = - \sum_{i=1}^n \sum_{k=1}^K y_{ik} \log(f_k(x_i)) $$
+    \item Estimation of $\theta$ is conducted with gradient descent
+  \end{blocki}
+
+\end{vbframe}
+
+\begin{vbframe}{Back propagation in detail}
+  Here is gradient descent (or back propagation) for regression in detail:\\
+
+  \lz
+
+  For quadratic loss the gradient of $\risk(\theta)$ is given by:
+  \begin{eqnarray*}
+    \fp{\risk_i}{\beta_{km}} &=&
+    -2 {\color{red}(y_{ik} - f_k(x_i))} g_k' (\beta_k^T z_i) z_{mi}
+   \\
+    \fp{\risk_i}{w_{ml}} &=&
+    - \sum_{k=1}^K 2 {\color{red}(y_{ik} - f_k(x_i))} g_k'(\beta_k^T z_i) \beta_{km}
+    \sigma' (w_m^T x_i) x_{il} \ ,
+  \end{eqnarray*}
+  with $\beta_k = (\beta_{k1},\dots,\beta_{kM})^T$,
+  $w_m = (w_{m1},\dots,w_{mp})^T$
+
+  \lz
+
+  $\color{red}{(y_{ik} - f_k(x_i))}$ are the residuals of observation $i$
+
+  \framebreak
+
+  Update in iteration $r+1$:
+
+  \begin{eqnarray*}
+  \beta_{km}^{(r+1)} &=& \beta_{km}^{(r)} - \alpha_r \sum_i \fp{\risk_i}
+  {\beta_{km}^{(r)}} \\
+  w_{ml}^{(r+1)} &=& w_{ml}^{(r)} - \alpha_r \sum_i \fp{\risk_i}
+  {w_{ml}^{(r)}}
+  \end{eqnarray*}
+  with learning rate $\alpha_r$ (see below).
+
+  \framebreak
+
+  We can rewrite the gradient as follows:
+  \begin{eqnarray*}
+  \fp{\risk_i}{\beta_{km}} &=& \delta_{ki} z_{mi} \\
+  \fp{\risk_i}{w_{ml}} &=& s_{mi} x_{il} \\
+  \end{eqnarray*}
+  $\delta_{ki}$ and $s_{mi}$ are the errors from the current model at the output unit and the hidden layer, respectively.
+  These errors satisfy:
+  \begin{eqnarray}
+  s_{mi} = \sigma'(w_m^Tx_i) \sum_{k=1}^K \beta_{km} \delta_{ki} \label{backprop}
+  \end{eqnarray}
+  Known as \enquote{back-propagation equations}.
+
+  \framebreak
+
+  With the \enquote{back-propagation equations} the parameter updates for iteration $(r+1)$ can be implemented with a two pass algorithm:\\
+
+  \lz
+
+  \begin{itemize}
+    \item {\bf Forward pass}\hfill \\
+    The current weights are kept fixed and the predicted
+    values $f(x_i)$ are computed from (\ref{backprop}).
+    \item {\bf Backward pass}\hfill \\
+    Errors $\delta_{ki}$ are computed and then back
+    propagated to (\ref{backprop}) to give errors $s_{mi}$.
+  \end{itemize}
+
+  \lz
+
+  Both sets of errors are then used to update the estimation of the parameters
+  for iteration $(r+1)$.
+
+  \framebreak
+
+  \begin{blocki}{Training possibilities:}
+    \item {\bf Batch mode:}\hfill \\
+    Modyfing weights according to the mean gradient of all the data points (this is what we carried out before)
+    \item {\bf Stochastic gradient descent:}
+    \begin{itemize}
+      \item Randomly shuffle training observations
+      \item Processing training points one at a time to update gradient ieratively.
+      \item Cycling through all training cases, until convergence.
+    \end{itemize}
+    \item{\bf Mini batches:}\hfill \\
+    Similar to stochastic gradient descent, but gradient is computed with more than one randomly drawn observation.
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Some thoughts on the algorithm:}
+    \item {\bf Advantages}\hfill \\
+    \begin{itemize}
+      \item Simple
+      \item Easy to parallelize
+    \end{itemize}
+    \item {\bf Disadvantages}\hfill \\
+    \begin{itemize}
+      \item Possibly converges to local minima
+      \item Converges slowly, in general
+    \end{itemize}
+    \item Error function nonconvex with many local minima\\
+    $\Rightarrow$ Solution extremely depends on inital values for the weights.
+    \item Inputs should be standardized, to treat them equally during training.
+  \end{blocki}
+
+\end{vbframe}
+
+\begin{vbframe}{Training issues:}
+
+  \begin{blocki}{Starting values:}
+    \item {\bf Note:} If the weights are near zero, the sigmoid function is roughly linear and the
+    network collapses into an approximate linear model.
+  \item Usually one uses small random numbers near zero as weight initialization values.
+  \item So model starts out linear, with few / weak connections and becomes
+      non-linear and more complex with increasing weights.
+    \item Since solution heavily depends on starting values one should try several random number starting configurations.
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Overfitting and weight decay:}
+    \item Networks  with too many weights will overfit the data on the global minimum.
+    \item {\bf Simple approach:}\hfill \\
+    Stop the algorithm after r-iterations before global minimum is reached.
+    \item {\bf Weight decay:}\hfill \\
+    Similarly to ridge regression one can add a penalty term to the risk function:
+    $$ \risk_{wd} (\theta) = \risk (\theta) + \eta \|w\|^2_2 $$
+
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Overfitting and weight decay:}
+    \item Larger values of $\eta$ will tend to shrink the weights towards zero.
+    \item Another form of penalty is the \enquote{weight elimination penalty},
+    which shrinks smaller weights more than other ones.
+    \item r and $\eta$ are tuning parameters so they can be optimized with cross-validation.
+    \item Strategy: Choose a large $S$ and determine the parameters
+    with cross-validation.
+    \item The simple approach as well as weight decay have the effect of
+    shrinking towards a linear model.
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Number of hidden units and layers:}
+    \item Too few hidden units might not be enough to capture nonlinearity in data.
+    \item With too many weights one can use the above mentioned regularization methods to shrink weights towards zero.
+    \item Number of hidden units should grow with the dimension of the data.
+    \item Can also be estimated with cross-validation. However, this seems unnecessary if weights are regularized.
+  \end{blocki}
+
+\end{vbframe}
+
+\begin{vbframe}{Examples}
+
+  \begin{itemize}
+    \item We'll illustrate the above mentioned problems with the same data
+    example carried out before.
+    \item Neural networks were fit to the data with varying numbers of iterations
+    and numbers of hidden units.
+    \item In each case we'll compare the results with such where the weight decay parameter was set to 0.1.
+    \item For the number-of-hidden-units comparison we have set the number of optimization iteration (maxit) to a high value.
+  \end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{Example: Number of iterations}
+
+<<echo=FALSE,message=FALSE,warning=FALSE,results="hide">>=
+set.seed(123L)
+iters = seq(5L, 500, 50L)
+lrns = sapply(iters, function(x) {
+  makeLearner("regr.nnet", par.vals = list(size = 10L, maxit = x),
+    id = paste("iters = ", x, sep = " "))
+    }, simplify = FALSE)
+rin = makeResampleDesc("Subsample", iter = 10L)
+bmr = benchmark(lrns, tsk, resampling = rin)
+q = plotBMRBoxplots(bmr, pretty.names = FALSE)
+q = q + scale_y_continuous(limits = c(0, 3))
+q
+@
+
+
+  \framebreak
+
+<<echo=FALSE,message=FALSE,warning=FALSE,results="hide">>=
+alpha = 0.01
+set.seed(123L)
+lrns = sapply(iters, function(x) {
+  makeLearner("regr.nnet", par.vals = list(size = 6L, maxit = x, decay = alpha),
+    id = paste("iters = ", x, sep = " "))
+    }, simplify = FALSE)
+bmr = benchmark(lrns, tsk, resampling = rin)
+q = plotBMRBoxplots(bmr, pretty.names = FALSE)
+q = q + scale_y_continuous(limits = c(0, 3))
+q
+@
+\end{vbframe}
+
+\begin{vbframe}{Example: Number of hidden units}
+
+<<echo=FALSE,message=FALSE,warning=FALSE,results="hide">>=
+set.seed(123L)
+sizes = seq(1, 10, by = 2)
+lrns = sapply(sizes, function(x) {
+  makeLearner("regr.nnet", par.vals = list(size = x, maxit = 500L),
+    id = paste("size = ", x, sep = " "))
+    }, simplify = FALSE)
+bmr = benchmark(lrns, tsk, resampling = rin)
+q = plotBMRBoxplots(bmr, pretty.names = FALSE)
+q = q + scale_y_continuous(limits = c(0, 3))
+q
+@
+
+  \framebreak
+
+<<echo=FALSE,message=FALSE,warning=FALSE,results="hide">>=
+set.seed(123L)
+lrns = sapply(sizes, function(x) {
+  makeLearner("regr.nnet", par.vals = list(size = x, maxit = 500L, decay = alpha),
+    id = paste("size = ", x, sep = " "))
+    }, simplify = FALSE)
+bmr = benchmark(lrns, tsk, resampling = rin)
+q = plotBMRBoxplots(bmr, pretty.names = FALSE)
+q = q + scale_y_continuous(limits = c(0, 3))
+q
+@
+
+\end{vbframe}
+
+% \begin{vbframe}{Packages in \pkg{R}}
+%   \begin{itemize}
+%   \item {\sf nnet}: \glqq recommended\grqq{} package
+%   \item Other packages amongst others are:
+%     \begin{itemize}
+%     \item {\sf AMORE}
+%     \item {\sf neuralnet}
+%     \end{itemize}
+%     These packages allow:
+%     \begin{itemize}
+%     \item multiple layers
+%     \item different activation functions for the hidden layers
+%     \item different training methods
+%     \end{itemize}
+%   \end{itemize}
+
+%   \framebreak
+
+%   \begin{blocki}{Package \pkg{nnet}:}
+%   \item Allows estimating a Neural Network with only one Hidden Layer
+%   \item Can also be used for multinomial-logit-regression
+%   \item The activation function for the hidden layer is the logistic function
+%   \item The activation function of the output layer can be chosen by the user
+%   \item The target function for optimizing can either be Minimal-Squared-Error
+%   or the Entropy
+%   \end{blocki}
+
+% \end{vbframe}
+
+% \begin{vbframe}{Example:\pkg{nnet}}
+% <<echo=FALSE, results="markup", size="footnotesize">>=
+% usage <- prompt(nnet:::nnet.default, filename = NA)$usage[[2]]
+% usage <- gsub("nnet.default", "nnet", usage)
+% usage <- gsub("x, y", "formula, data", usage)
+% cat(prettyPrint(usage, 45))
+% @
+% \begin{itemize}
+% \item \code{size}: Number of neurons in the hidden layer
+% \item \code{Wts}: optional initialization of weights
+% %\item \code{mask}: logical vector, which weights are to be optimized
+% \item \code{linout}: logical value, is output function linear; Default:
+% logistic
+% \item \code{entropy}: logical value, switch for Entropy insted of least-squares
+% \item \code{softmax}: logical value, should log-linear models be maximized
+%  with conditional likelihood
+% %\item \code{censored}: logical value, does multi class output mean that class is unknown
+% \item \code{skip}: logical value, direct link between input and output (e.g: Can layers be skipped?)
+% \item \code{rang}: If \code{Wts} is missing, make a random initialization with: $\code{runif(n, -rang, rang)}$
+% \item \code{decay}: Weight Decay parameter
+% \item \code{maxit}: maximum number of iterations
+% \item \code{Hess}: logical value, should the  Hessian be returned
+% \item \code{trace}: logical value, should output of the optimizer be returned
+% \item \code{MaxNWts}: maximum number of weights
+% \item \code{abstol}: Stop, if criteria of \code{abstol} is reached
+% \item \code{reltol}: Stop, if optimizer doesn't reach the enhancement goal of $1 - \code{reltol}$
+% \end{itemize}
+
+% \end{vbframe}
+
+\begin{vbframe}{Capabilities and limitations}
+
+  \begin{itemize}
+  \item Neural networks are far more flexible than linear models.
+  The model class of all neural networks can approximate
+  any continuous function.
+  \item Backpropagation learning is flexible. It can learn
+    complex relations between inputs~$x$ and labels~$y$ from data.
+  \item But there is no way to make full use of the universal
+    approximation property. The learning algorithm will
+    usually not find the best possible model. At best it
+    finds a locally optimal model.
+  \item Neural networks can perfectly fit noisy data.
+    Their learning rule actively minimizes the empirical risk.
+  \item Thus, neural networks are endangered to over-fit. This is
+    particularly true for big networks (huge hidden layers).
+  \end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Other neural networks}
+
+  In this lecture we only covered feed-forward neural networks,
+  because this is the most basic and most relevant class for
+  supervised (and unsupervised) learning. A broad range of
+  other network types has been developed.
+
+  \begin{itemize}
+  \item The linear+sigmoid processing model can be replaced by
+    other functions. For example, this leads to radial basis
+    function models.
+  \item Synapses can form loops. This requires the introduction of
+    time delays. Then we speak of recurrent neural networks.
+    These are even more powerful models: they are not simple
+    mappings, but stateful computers. Recurrent networks have
+    been shown to be Turing complete.
+  \item Auto-encoders, (restricted) Boltzmann machines, and
+    self-organizing maps are used for unsupervised learning.
+  \item Spiking models are common in the neurosciences.
+  \end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{Summary}
+
+  \begin{itemize}
+  \item We have developed the concept of neurons on the basis of the
+  perceptron model.
+  \item We have introduced a sigmoid transfer function. This turns
+    the perceptron into a slightly different neuron model.
+  \item Neural networks are universal function approximators.
+  \item Networks can be trained by online or batch gradient descent.
+  \item The error gradient can be computed efficiently with the
+    backpropagation algorithm.
+  \item The weights usually end up in a local optimum, not in the
+    global optimum.
+  \item We introduced regularization methods to avoid overfitting.
+  \end{itemize}
+
+\end{vbframe}
+
+\endlecture

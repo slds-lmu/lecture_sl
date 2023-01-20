@@ -1,0 +1,183 @@
+\chapter{Nicht linear trennbare Daten}
+\label{chap:nichttrennbar}
+
+\section{Kern Trick}
+\label{sec:kerneltrick}
+Bisher wurde angenommen, dass die Daten linear trennbar sind. Dies ist in der Praxis nicht immer der Fall. Eine Möglichkeit mit nicht linear trennbaren Daten umzugehen ist der sogenannte Kern Trick. Hierbei ist die Idee, die Daten mit Hilfe einer Funktion $\Phi$ in einen höherdimensionalen Variablenraum zu überführen, in dem sie linear trennbar sind.
+
+Auf der linken Seite von Abbildung \ref{kerntrick} ist ein solcher nicht linear trennbarer Fall in einem zweidimensionalen Variablenraum $\mathbf{x} = (x_1,x_2)$ dargestellt.
+%Die Daten sind hier nicht durch eine Gerade, sondern durch eine Ellipse trennbar. 
+%Man kann im vorliegenden zweidimensionalen Variablenraum keine Hyperebene (Gerade) legen,
+Hierbei kann keine Hyperebene (hier Gerade) gefunden werden, 
+so dass die roten Punkte von den blauen Kreuzen vollständig getrennt werden. 
+%Allerdings lassen sich die Daten 
+Durch geschickte Wahl von $\Phi$ lassen sich die Daten in einen dreidimensionalen Variablenraum überführen, indem sie sich durch eine Hyperebene (hier Ebene) linear trennen lassen.
+%Um genauer auf die Situation aus Abbildung \ref{kerntrick} einzugehen, wird die Funktion
+Dies geschieht beispielsweise mit der Wahl von
+\begin{equation}
+\label{phi}
+\Phi(\mathbf{x}) = \Phi((x_1,x_2)) = (x_1^2, x_2^2, \sqrt{2}x_1 x_2),
+%\begin{array}{ccccc}
+%\Phi: & \mathbb{R}^2   & \rightarrow & \mathbb{R}^3 & \\
+%      & (x_1,x_2)      & \rightarrow & (x_1^2,\sqrt{2}x_1 x_2, x_2^2)  & =: (z_1,z_2,z_3) = \mathbf{z}^{\top}
+%\end{array}
+\end{equation}
+womit der zweidimensionale Variablenraum in einen dreidimensionalen Variablenraum überführt wird, d.h. $\Phi: \mathbb{R}^2 \rightarrow \mathbb{R}^3$.
+%Durch diese Wahl von $\Phi$ wird im folgenden gezeigt, dass im höherdimensionalen Variablenraum 
+%(hier dreidimensionaler Variablenraum, da $(x_1^2, x_2^2, \sqrt{2}x_1 x_2) \in \mathbb{R}^3$)
+% die Daten linear trennbar sind, während sie im zweidimensionalen Variablenraum durch eine Ellipse getrennt werden. 
+Die linear trennende Hyperebene im $\mathbb{R}^3$ hat die Form
+\begin{align}
+\label{rhochdrei} 
+                & \; \mathbf{w}^\top \Phi(\mathbf{x}) + b =  0 \\
+\Leftrightarrow & \; \mathbf{w}^\top (x_1^2, x_2^2, \sqrt{2}x_1 x_2) + b =  0 \notag \\
+\label{ellipsengleichung} 
+\Leftrightarrow & \; w_1 x_1^2 + w_2 x_2^2 + w_3 \sqrt{2}x_1 x_2 + b= 0.
+\end{align}
+Durch Einsetzen von Gleichung (\ref{phi}) in die Hyperebenengleichung (\ref{rhochdrei}) resultiert die Gleichung (\ref{ellipsengleichung}). Diese entspricht genau der Gleichung eines Kegelschnitts, was z.B. eine Hyperbel oder Ellipse im $\mathbb{R}^2$ sein kann (\citealp[vgl.][Kap. 3]{ben2010user}). Durch die obige Wahl von $\Phi$, können Daten, die im zweidimensionalen Variablenraum durch eine Ellipse trennbar sind, in einen dreidimensionalen Variablenraum durch eine Ebene linear getrennt werden.
+%Deshalb können durch obige Wahl von $\Phi$ die im zweidimensionalen Variablenraum durch eine Ellipse trennbare Daten, in einem dreidimensionalen Variablenraum durch eine Ebene linear getrennt werden.
+%TODO: Mengen die aus einem Punkt bestehen im 1 dim, Gerade im 2 dim, Ebene im 3 dim
+%TODO: Zitat von Gleichungen in Klammern
+%TODO: $w^\top x_i$ mit eckiger Schreibwesie ersetzen
+%Zugegeben ist die Wahl von $\Phi$ nicht immer einfach. 
+%Man kann allgemein zeigen, dass durch Wahl einer geeigneten Kernfunktion $K$ die Funktion $\Phi$ festgelegt wird. QUELLE
+Die Wahl von $\Phi$ kann in der Praxis wegen Skalarproduktberechnungen im höherdimensionalen Raum der Form $\Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j) $ sehr rechenintensiv sein. Deshalb verwendet man häufig eine sogenannte Kernfunktion $K(\mathbf{x}_i, \mathbf{x}_j)$, welche die Funktion $\Phi$ implizit festlegt und meist auf Skalarproduktberechnungen im niedrigdimensionalen Raum beruht. Beispielsweise beruht die polynomiale Kernfunktion auf Skalarproduktberechnungen der Form $\mathbf{x}_i^\top \mathbf{x}_j$. In der Literatur werden im Allgemeinen die folgenden Kernfunktionen genannt (\citealp[vgl.][Kap. 3.1]{gunn1998support}; \citealp[Kap. 7.4]{scholkopf2001learning}):
+
+\begin{figure}[t]
+\label{kerntrick}
+\centering
+\includegraphics[width=\textwidth]{bild3}
+\caption{Überführung eines zweidimensionalen Variablenraums in einen höherdimensionalen (hier dreidimensionalen) Variablenraum, in dem die Daten linear trennbar sind. Dabei gilt $(z_1,z_2,z_3) := (x_1^2, x_2^2, \sqrt{2}x_1 x_2)$. }
+\end{figure}
+
+\begin{itemize}
+\item polynomiale Kernfunktion vom Grad $d$: $K(\mathbf{x}_i,\mathbf{x}_j) = (\mathbf{x}_i^\top \mathbf{x}_j + c) ^d $ mit $c \in \{0,1\}$
+\item gaußsche radiale Basisfunktion: $K(\mathbf{x}_i,\mathbf{x}_j) = \exp{ \left ( -\frac{||\mathbf{x}_i - \mathbf{x}_j ||}{c} \right ) }$, für $c > 0$.
+\end{itemize}
+
+%Für jede Beobachtung errechnet man mittels $\Phi$ aus den alten Variablen neue Variablen. In diesem neuen Variablenraum sind die Beobachtungen linear trennbar.
+%$\Phi$ wird dabei durch eine Kernfunktion festgelegt. Die Kernfunktion verhält sich im überführten höherdimensionalen Raum wie ein Skalarprodukt, d.h.
+
+Dabei sind $c$ und $d$ Kern-Parameter, die durch Kreuzvalidierung bestimmt werden können. Für eine Kernfunktion gilt stets 
+\begin{equation}
+\label{eq:kernel}
+K(\mathbf{x}_i, \mathbf{x}_j) = \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j) .
+\end{equation}
+Das folgende Beispiel zeigt, dass eine polynomiale Kernfunktion vom Grad $d=2$ 
+mit $c=0$
+die Gleichung (\ref{eq:kernel}) erfüllt und zugleich die implizit festgelegte Funktion $\Phi$ identisch zu Gleichung (\ref{phi}) ist. Dabei werden Beobachtungen mit zwei Variablen, d.h. $\mathbf{x}_i = (x_{i_1}, x_{i_2}), \; i=1,2$ betrachtet:
+\begin{align*}
+K({\color{red}\mathbf{x}_1},\mathbf{x}_2) 
+           &= ({\color{red}\mathbf{x}_1}^\top \mathbf{x}_2 )^2 = ( {\color{red}(x_{1_1},x_{1_2})}^\top (x_{2_1},x_{2_2}) )^2\\
+           &= ({\color{red}x_{1_1}}x_{2_1} + {\color{red}x_{1_2}}x_{2_2})^2 \\
+           &= ({\color{red}x_{1_1}^2} x_{2_1}^2  + {\color{red}x_{1_2}^2} x_{2_2}^2 + 2{\color{red}x_{1_1} x_{1_2}}x_{2_1}x_{2_2})\\
+           &= ({\color{red}x_{1_1}^2}, {\color{red}x_{1_2}^2}, {\color{red} \sqrt{2} x_{1_1} x_{1_2}})^\top
+              (x_{2_1}^2, x_{2_2}^2, \sqrt{2} x_{2_1} x_{2_2}) \\
+           &= \Phi({\color{red}\mathbf{x}_1})^\top \Phi(\mathbf{x}_2)  
+           & \Rightarrow \Phi(\mathbf{x}) = (x_1^2, x_2^2, \sqrt{2}x_1 x_2)
+\end{align*}
+%Die Wahl einer polynomialen Kernfunktion vom Grad $d=2$ mit $c=0$ entspricht also der gleichen Situation aus Gleichung \ref{phi}.
+%Abbildung \ref{kerntrick}, wobei die Funktion $\Phi$ die gleiche Form aus Gleichung \ref{phi} hat.
+%Der einzige Unterschied zum vorherigen Kapitel ist hier, dass man den Merkmalsvektor $\mathbf{x}_i$ mit dem höherdimensionalen Merkmalsvektor $\Phi(\mathbf{x}_i)$ ersetzt. Die Entscheidungsfunktion lautet dann
+Ein Beweis, dass die Gleichung (\ref{eq:kernel}) auch für allgemeine polynomiale Kernfunktionen vom Grad $d$ mit den Konstanten $c=0$ bzw. $c=1$ und für die gaußsche radiale Basisfunktion gilt, kann in \citet[Kap. 2]{scholkopf2001learning} bzw. \citet[Kap. 5.8]{hastie2011elements} nachgeschlagen werden.
+
+Das weitere Vorgehen zur Bestimmung der Hyperebenenparameter $\mathbf{w},b$) ist analog zum Kapitel \ref{Optimierungsproblem}. Der einzige Unterschied ist, dass man den Merkmalsvektor $\mathbf{x}_i$ mit den höherdimensionalen Merkmalsvektor $\Phi(\mathbf{x}_i)$ ersetzt und bei Skalarproduktberechnungen der Form $ \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)$ eine Kernfunktion $K(\mathbf{x}_i,\mathbf{x}_j)$ verwendet. Als Entscheidungsfunktion für eine Beobachtung $\mathbf{x}_j$ ergibt sich somit
+%$$f(\mathbf{x}) = \sgn \left ( \sum_{i=1}^N y_i \alpha_i {\color{red} \langle \mathbf{x}_i, \mathbf{x} \rangle} + b \right )$$
+%verwendet wird, sondern  
+$$f(\mathbf{x}_j) = \sgn \left ( \sum_{i=1}^N y_i \alpha_i {\color{red} \Phi(\mathbf{x}_i)^\top \Phi(\mathbf{x}_j)} + b \right ) = \sgn \left ( \sum_{i=1}^N y_i \alpha_i {\color{red}K(\mathbf{x}_i,\mathbf{x}_j)} + b \right ).$$
+
+\section{Soft Margin}
+\label{sec:softmargin}
+%Beim Kern-Trick können bereits einzelne Ausreiser in den Daten die Form der Hyperebene stark beeinflussen, so dass es sinnvoll ist
+Bisher wird durch die Nebenbedingung $y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1$ aus Gleichung (\ref{eq:nb}), beziehungsweise beim Kern-Trick die Nebenbedingung $y_i (\mathbf{w}^\top \Phi(\mathbf{x}_i) + b) \geq 1$, gewährleistet, dass die Daten durch eine Hyperebene vollständig getrennt werden und man somit Fehlklassifizierungen vermeidet. Bei Ausreißern in den Daten kann dies zu Overfitting führen. Daher ist es wünschenswert Fehlklassifizierung zu erlauben, diese aber entsprechend zu bestrafen.
+%Dies ist auch beim Kern-Trick der Fall, da hier durch die Überführung des Merkmalsvektors in einen höherdimensionalen Merkmalsvektor eine flexible Trennung der beiden Klassen ermöglicht. 
+%Zur Veranschaulichung ist in Abbildung \ref{fig:kerntrick} und Abbildung \ref{fig:softmargin} zwei mal die gleiche Datensitation dargestellt. 
+In Abbildung \ref{fig:kerntrick} werden die Daten mit dem Kern Trick vollständig voneinander getrennt. 
+Neue Beobachtungen auf der oberen linken Ecke würden hier in die negative (rote) Klasse klassifiziert werden, obwohl eine Klassifizierung in die positive (blaue) Klasse sinnvoller erscheint. Betrachtet man die grün eingekreisten Beobachtungen als Ausreißer, kann man deshalb hier von einem Overfittig ausgehen.
+%Die Soft Margin Hyperebene in Abbildung \ref{fig:softmargin} kann bei der gleichen Datensitation hier sinnvoller sein. 
+Die Soft Margin Hyperebene in Abbildung \ref{fig:softmargin} entschärft die oben erwähnte Nebenbedingung, so dass für einzelne Ausreißer eine Fehlklassifizierung erlaubt wird. Dies geschieht mit sogenannten Schlupfvariablen (engl. \textit{slack variables}) $\xi_i \geq 0$. Die entschärfte Nebenbedingung lautet 
+$$y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i, \; i=1,\hdots, N$$
+und ermöglicht, dass sich einige Beobachtungen innerhalb des Randes oder auf der falschen Seite der Hyperebene befinden dürfen. In Abbildung \ref{fig:softmargin} sind das die mit $\xi_1, \hdots, \xi_5$ gekennzeichneten Beobachtungen. Dabei gibt $\xi_i$ die Entfernung zwischen Beobachtung und der entsprechenden gestrichelten Linie an. Die Beobachtungen sind für
+
+\begin{itemize}
+\item $\xi_i = 0$ richtig klassifiziert, %e Trainingsdaten
+\item $0<\xi_i \leq 1$ innerhalb des Randes richtig klassifiziert und
+\item $\xi_i > 1$ fehlklassifiziert \cite[Kap. 4.2]{ben2010user}. %e Trainingsdaten
+\end{itemize}
+
+\begin{figure}[ht]
+\begin{minipage}[b]{0.5\linewidth}
+\centering
+\includegraphics[width=\textwidth]{kerntrick}
+\caption{Overfitting beim Kern Trick}
+\label{fig:kerntrick}
+\end{minipage}
+\hspace{0.1cm}
+\begin{minipage}[b]{0.5\linewidth}
+\centering
+\includegraphics[width=\textwidth]{softmargin}
+\caption{Zulassung von Ausreißern}
+\label{fig:softmargin}
+\end{minipage}
+\end{figure}
+
+%Je mehr Fehlklassifizierte Datenpunkte, desto größer die Summe $\sum_{i=1}^N \xi_i$. Auch nimmt diese Summe mit der Breite des Randes zu, da 
+Je breiter der Rand, desto mehr Beobachtungen liegen innerhalb des Randes oder auf der falschen Seite der Hyperebene. Die Summe der Schlupfvariablen $\sum_{i=1}^N \xi_i$ nimmt damit zu. Man möchte verhindern, dass diese Summe zu groß wird. Daher benötigt man einen Kompromiss zwischen
+dem Maximieren des Randes (bzw. $\min \frac{1}{2} ||\mathbf{w}||^2$) und dem Minimieren von $\sum_{i=1}^N \xi_i$. Das Optimierungsproblem aus Kapitel \ref{Optimierungsproblem} wird umformuliert zu
+\begin{equation*}
+\label{eq:softmargin}
+\begin{aligned}
+& \min_{\mathbf{w},b, \pmb{\xi}}
+& &\frac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i \\
+& \text{NB:}
+& & y_i (\mathbf{w}^\top \mathbf{x}_i + b) \geq 1 - \xi_i, \\
+&&& \xi_i \geq 0, \hspace{8pt} \forall i = 1, \hdots, N.
+%&&& \forall i = 1, \hdots, N.
+\end{aligned}
+\end{equation*}
+Der Parameter $C$ kann durch Kreuzvalidierung bestimmt werden und steuert wie stark die Summe $\sum_{i=1}^N \xi_i$ bestraft wird:
+
+\begin{itemize}
+\item bei großem $C$: \\ Minimierung von $\sum_{i=1}^N \xi_i$ ist wichtiger $\rightarrow$ weniger Schlupfvariablen $\rightarrow$ kleiner Rand
+\item bei kleinem $C$: \\ Maximierung des Randes ist wichtiger $\rightarrow$ mehr Schlupfvariablen $\rightarrow$  $\sum_{i=1}^N \xi_i$ größer
+%\item $C \rightarrow \infty$:
+%\item $C \rightarrow 0$:
+\end{itemize}
+
+%\newpage
+
+Die dazugehörige Lagrange-Funktion 
+
+$$\hspace{-10pt}L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu}) =  \frac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i - \sum_{i=1}^{N} \alpha_i  (y_i (\mathbf{w}^\top \mathbf{x}_i + b) - (1- \xi_i)) - \sum_{i=1}^N \mu_i \xi_i $$
+
+mit Lagrange-Multiplikatoren $\alpha_i \geq 0$ und $\mu_i \geq 0$ wird bezüglich der Primärvariablen $\mathbf{w},b \text{ und } \pmb{\xi}$ minimiert und bezüglich $\pmb{\alpha}$ maximiert. Es ergeben sich dieselben Lösungen wie in Gleichung (\ref{primal1}) - (\ref{primal2}) und die zur Minimierung bezüglich $\pmb{\xi}$ hinzukommende Lösung
+\begin{align}
+\label{primal3}
+\frac{\partial L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu})}{\partial \pmb{\xi}} = 0          & \Rightarrow C = \alpha_i + \mu_i \hspace{8pt} \forall i=1,\hdots, N.
+\end{align}
+Als Lagrange-duale Funktion folgt
+\begin{align*}
+W(\pmb{\alpha}) &=\min_{\mathbf{w}, b, \pmb{\xi}} L(\mathbf{w},b,\pmb{\xi},\pmb{\alpha},\pmb{\mu})\\
+&=\min_{\mathbf{w}, b, \pmb{\xi}} \left ( \frac{1}{2} \mathbf{w}^\top \mathbf{w} \; + C \sum_{i=1}^N \xi_i - \sum_{i=1}^N \alpha_i (y_i (\mathbf{w}^\top \mathbf{x}_i +b) - (1 - \xi_i)) - \sum_{i=1}^N \mu_i \xi_i \right )\\
+&=\min_{\mathbf{w}, b, \pmb{\xi}} \left ( \frac{1}{2} \mathbf{w}^\top \mathbf{w} \; + \sum_{i=1}^N C \xi_i - \sum_{i=1}^N  \alpha_i y_i \mathbf{w}^\top \mathbf{x}_i 
+- \sum_{i=1}^N \alpha_i y_i b + \sum_{i=1}^N \alpha_i - \sum_{i=1}^N \alpha_i \xi_i  - \sum_{i=1}^N \mu_i \xi_i \right )\\
+&\stackrel{(\ref{primal3})}= \min_{\mathbf{w}, b} \left ( \frac{1}{2} \mathbf{w}^\top \mathbf{w} \; \cancel{+ \sum_{i=1}^N (\alpha_i + \mu_i ) \xi_i} 
+- \sum_{i=1}^N  \alpha_i y_i \mathbf{w}^\top \mathbf{x}_i 
+- b \sum_{i=1}^N \alpha_i y_i  + \sum_{i=1}^N \alpha_i \cancel{- \sum_{i=1}^N (\alpha_i + \mu_i) \xi_i} \right )\\
+&\stackrel{(\ref{primal1})}= \min_{\mathbf{w}} \left ( \frac{1}{2} \mathbf{w}^\top \mathbf{w} \; - \sum_{i=1}^N  \alpha_i y_i \mathbf{w}^\top \mathbf{x}_i + \sum_{i=1}^N \alpha_i \right )\\
+&\stackrel{(\ref{primal2})}= \frac{1}{2} \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j - \sum_{i=1}^N \alpha_i y_i \left ( \sum_{j=1}^N \alpha_j y_j \mathbf{x}_j^\top \right ) \mathbf{x}_i + \sum_{i=1}^N \alpha_i \\
+&=\frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j - \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j + \sum_{i=1}^N \alpha_i \\
+&= -\frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j + \sum_{i=1}^N \alpha_i.
+\end{align*}
+Hier ist die Lagrange-duale Funktion identisch zum Fall linear trennbarer Daten (vgl. Kapitel \ref{Optimierungsproblem}). Das duale Optimierungsproblem 
+\begin{gather*}
+\label{primalsoft}
+%\begin{aligned}
+\max_{\pmb{\alpha}}  W(\pmb{\alpha})
+= \max_{\pmb{\alpha}} \left ( \sum_{i=1}^N \alpha_i - \frac{1}{2} \sum_{i,j=1}^N \alpha_i \alpha_j y_i y_j \mathbf{x}_i^{\top} \mathbf{x}_j \right )\\
+\text{NB:} \hspace{20pt} 0 \leq \alpha_i \leq C, \hspace{20pt} \sum_{i=1}^N \alpha_i y_i = 0 \hspace{20pt} \forall i= 1, \hdots, N
+%\end{aligned}
+\end{gather*}
+hat im Vergleich zu Gleichung (\ref{dual}) die zusätzliche Nebenbedingung $\alpha_i \leq C$, die sich aus Gleichung (\ref{primal3}) herleiten lässt: $C = \alpha_i + \mu_i \; \Leftrightarrow \; \alpha_i = C - \mu_i \;  \stackrel{\mu_i \geq 0} \Longrightarrow \;  \alpha_i \leq C$ (\citealp[vgl.][Kap. 4.2]{ben2010user}; \citealp[Kap. 2.2]{gunn1998support}). 
+
+Das weitere Vorgehen zur Bestimmung der Hyperebenenparameter $(\mathbf{w},b)$ ist analog zum linear trennbaren Fall.
