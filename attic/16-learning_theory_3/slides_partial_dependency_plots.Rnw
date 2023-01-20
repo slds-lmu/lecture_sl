@@ -1,0 +1,214 @@
+%This file is a child of preamble.Rnw in the style folder
+%if you want to add stuff to the preamble go there to make
+%your changes available to all childs
+
+<<setup-child, include = FALSE>>=
+library(knitr)
+library(mlr)
+library(ggplot2)
+library(gridExtra)
+set_parent("../style/preamble.Rnw")
+@
+
+
+
+\lecturechapter{99}{Lightning talks}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+\begin{vbframe}{Partial dependency plots - Motivation}
+\begin{itemize}
+\item So far, we have seen a great number of machine learning algorithms that minimize predictive error.
+\item Unfortunately, these \enquote{black box} estimation methods offer little in the way of interpretability, unless the data is of very low dimension.
+\item But an interpretation of the effect or contribution of a feature to the final prediction, like we know from generalized linear models, would be desirable.
+\item Visualizations help to understand the nature of the dependence of the prediction function on the joint values of input variables.
+\item For visualizations of functions of higher dimensions the concept of partial dependence plots (PDP) was introduced by Breiman (2001).
+\end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Definition}
+\begin{itemize}
+\item PDP demonstrate the dependence between the target function and a set of \enquote{target} features, accounting for the effects of the other features (the complement features).
+In other words: Partial dependence plots reduce the potentially high dimensional function estimated by the learner, and displays a marginalized version of this function in a lower dimensional space.
+\item Due to limits of representation the size of the target feature set is usually limited to one or two features.
+\item If there is only one target feature, plotting the predictions against unique values of $\xjb$, displays how $y$ is related to $\xjb$ according to the model.
+\end{itemize}
+
+\framebreak
+
+Consider the subvector $x_s$ of $l < p$ of the input features $x^T = (x_1, x_2, \dots, x_p)$ indexed by $S \subset \{ 1, \dots, p \}$.
+Let $C = S^{\mathrm{C}}$ be the complement set, such that $S \cup C = \{ 1, \dots, p \}$.
+A general $f(x)$ will depend on all input features: $f(x) = f(x_S, x_C)$.
+
+The partial dependence function of $f$ on $x_S$ is
+
+$$f_{x_S} (x_S) = \E_{x_S} f(x_S, x_C)$$
+
+Hence, $x_S$ is integrated out.
+
+Partial dependency plots can be estimated by
+
+$$\hat{f}_{x_S} = \frac{1}{n} \sum_{i = 1}^n \hat{f} (x_S, x^{(i)}_C)$$
+
+Example: We want to demonstrate how we can calculate the partial dependence of $f$ on $x_S = x_1$, while accounting for the effects of $x_C = \{ x_2, x_3 \}$.
+\end{vbframe}
+
+\begin{vbframe}{Example}
+\begin{equation*}
+\scalebox{.80}{
+\begin{tabular}{|l|ll|}
+\hline
+$\mathbf x_1$ & $\mathbf x_2$ & $\mathbf x_3$ \\
+\hline
+1 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3\\
+2 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5\\
+3 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7\\
+\hline
+\end{tabular}
+}
+\Rightarrow
+\scalebox{.80}{
+\begin{tabular}{|l|ll|}
+\hline
+$\mathbf x_1$ & $\mathbf x_2$ & $\mathbf x_3$ \\
+\hline
+1 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3\\
+1 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5\\
+1 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7\\
+\hline
+2 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3\\
+2 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5\\
+2 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7\\
+\hline
+3 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3\\
+3 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5\\
+3 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7\\
+\hline
+\end{tabular}
+}
+\xRightarrow[\text{using } \hat{f}]{\text{Predict}}
+\scalebox{.75}{
+{\def\arraystretch{1.3}
+\begin{tabular}{|l|ll|c|}
+\hline
+$\mathbf x_1$ & $\mathbf x_2$ & $\mathbf x_3$ & $\hat{f}^{(i)}_{x_1}$ \\
+\hline
+1 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(1)} , \mathbf{x_c}^{(1)})$  \\
+1 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(1)} , \mathbf{x_c}^{(2)})$  \\
+1 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(1)} , \mathbf{x_c}^{(3)})$  \\
+\hline
+2 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(2)} , \mathbf{x_c}^{(1)})$  \\
+2 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(2)} , \mathbf{x_c}^{(2)})$  \\
+2 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(2)} , \mathbf{x_c}^{(3)})$  \\
+\hline
+3 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(3)} , \mathbf{x_c}^{(1)})$  \\
+3 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(3)} , \mathbf{x_c}^{(2)})$  \\
+3 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7 & \cellcolor{black!10} $\hat{f}(\mathbf x_1^{(3)} , \mathbf{x_c}^{(3)})$  \\
+\hline
+\end{tabular}
+}}
+\end{equation*}
+
+\lz
+
+\begin{equation*}
+\xRightarrow[\text{by averaging}]{\text{Aggregate}}
+\scalebox{.80}{
+{\def\arraystretch{1.3}
+\begin{tabular}{|l|ll|c|}
+\hline
+$\mathbf x_1$ & $\mathbf x_2$ & $\mathbf x_3$ & $\hat{f}_{x_1}$ \\
+\hline
+1 & \cellcolor[gray]{.8} 2 & \cellcolor[gray]{.8} 3 & \cellcolor{black!10}  $\frac{1}{n} \sum_{i=1}^n\hat{f}(\mathbf{x_1^{(1)}} , \mathbf{x_c^{(i)}})$ \\
+2 & \cellcolor[gray]{.8} 4 & \cellcolor[gray]{.8} 5 & \cellcolor{black!10}  $\frac{1}{n} \sum_{i=1}^n\hat{f}(\mathbf{x_1^{(2)}} , \mathbf{x_c^{(i)}})$ \\
+3 & \cellcolor[gray]{.8} 6 & \cellcolor[gray]{.8} 7 & \cellcolor{black!10}  $\frac{1}{n} \sum_{i=1}^n\hat{f}(\mathbf{x_1^{(3)}} , \mathbf{x_c^{(i)}})$ \\
+\hline
+\end{tabular}}}
+\end{equation*}
+\end{vbframe}
+
+\begin{vbframe}{Practical Example}
+<<echo = TRUE, size='scriptsize'>>=
+# Create learner model
+lrn = makeLearner("regr.ksvm")
+mod = train(lrn, bh.task)
+
+# Estimate how the learned prediction function is affected by feature "lstat"
+pd.regr = generatePartialDependenceData(mod, bh.task, "lstat")
+# Since it is computationally intensive to pass over the data for each set
+# of joint values of x_S for which we then calculate f_hat, we rather
+# generate a feature grid for the target features.
+# The feature grid can be either a uniformly grid of length "gridsize" from
+# the empirical minimum to the empirical maximum or other specified
+# boundaries, or a feature grid may be produced by resampling, bootstrapping
+# or subsampling.
+# By default, a uniformly spaced grid of length 10 from the empirical
+# minimum to the empirical maximum is designed.
+@
+
+\framebreak
+
+<<echo = TRUE, size='scriptsize'>>=
+# Output: a named list, which among others contains a data frame with the
+# partial dependence of f and the respecive value of the target feature(s)
+pd.regr
+@
+
+\framebreak
+
+<<echo = TRUE, size='scriptsize'>>=
+# It is also possible to compute the individual conditional expectation of
+# an obeservation.
+# Then the function returns n partial dependence estimates made at each point
+# in the prediction grid constructed from the features.
+pd.regr.ind = generatePartialDependenceData(mod, bh.task, "lstat",
+  individual = TRUE)
+head(pd.regr.ind$data, 4)
+tail(pd.regr.ind$data, 4)
+@
+
+\end{vbframe}
+
+\begin{vbframe}{Practical Example}
+<<>>=
+# Plot of the individual conditional expectation and the average of those which
+# is the partial dependence plot
+plot1 = plotPartialDependence(pd.regr.ind) +
+ ggtitle("Individual estimates of partial dependence")
+plot2 = plotPartialDependence(pd.regr) +
+  coord_cartesian(ylim = c(min(pd.regr.ind$data$medv), max(pd.regr.ind$data$medv))) +
+  ggtitle("Estimated partial dependence of f on 'lstat'")
+grid.arrange(plot1, plot2, ncol = 2)
+@
+
+\framebreak
+
+<<echo=FALSE>>=
+lrn.classif = makeLearner("classif.ksvm", predict.type = "prob")
+fit.classif = train(lrn.classif, iris.task)
+
+# Estimate the prediction function is affected by feature 'Petal.Length'
+# The estimation of f_hat for classification where 'predict.type = "prob"' are
+# the mean class probabilities
+pd = generatePartialDependenceData(fit.classif, iris.task, "Petal.Length")
+
+# Individual conditional expectation
+# Individual estimates of partial dependence can also be centered by
+# predictions made at all nn observations for a particular point in the
+# prediction grid created by the feature
+pd.ind.classif = generatePartialDependenceData(fit.classif, iris.task,
+  "Petal.Length", individual = TRUE)
+
+plot1 = plotPartialDependence(pd.ind.classif) +
+  ggtitle("Individual estimates of partial dependence")+ theme(legend.position="bottom")
+plot2 = plotPartialDependence(pd) +
+  coord_cartesian(ylim = c(min(pd.ind.classif$data$Probability),
+    max(pd.ind.classif$data$Probability))) +
+  ggtitle("Estimated partial probability") +  theme(legend.position="bottom")
+grid.arrange(plot1, plot2, ncol = 2)
+
+@
+
+
+\end{vbframe}
+
+\endlecture

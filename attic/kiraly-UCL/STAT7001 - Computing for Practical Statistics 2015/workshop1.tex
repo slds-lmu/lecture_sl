@@ -1,0 +1,78 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.1}
+{\em To be worked on in the workshops on January 13 or 16. The content is ICA-relevant but your solution does formally not contribute to the grade.}
+
+\begin{enumerate}
+
+\item Follow the instructors on starting R and setting up directories where you will store your workshop files. Suggested structure:\\
+\texttt{N:/STAT7001/workshop/data} for the data files\\
+\texttt{N:/STAT7001/workshop/week1} for this week\\
+\texttt{N:/STAT7001/workshop/week1/scripts} for the scripts you write today\\
+\texttt{N:/STAT7001/workshop/week2/scripts} for next week's scripts etc\\
+\texttt{N:/STAT7001/workshop/week2/figures} for the figures you make next week\\
+\texttt{N:/STAT7001/ICA1} for your first ICA\\
+\texttt{N:/STAT7001/ICA1/data} for the data\\
+\texttt{N:/STAT7001/ICA1/figures} for your figures\\
+\texttt{N:/STAT7001/ICA1/scripts} for your analyses\\
+\texttt{N:/STAT7001/ICA1/report} for the report you will hand in\\
+{\bf Keeping a clear project structure prevents data loss and errors.}
+
+\item Follow the instructors in opening a script window in R where you store your {\bf well-commented} code. In particular, in your script, have every piece of code precede by the comment \texttt{\# exercise} plus a appropriate number or something similar. Furthermore, for every solution you need more than 10 seconds to find, add a comment which explains it.
+
+\item Open the lecture slides on page 13 (``Using the R console''). Reproduce and understand the four outputs in the top half. Further use R to compute:
+\begin{enumerate}
+\item the side length of a cube with volume 42.
+\item the volume of earth, approximating by a sphere whose diameter is 12.742 kilometers, and the built-in R constant \texttt{pi}.
+\item the two real zeros of the polynomial $f(z) = z^2 + 3 z - 42$, i.e., distinct $z_1,z_2\in\mathbb{R}$ such that $f(z_1)=f(z_2)=0$.
+\item whether the following logical expression is true: $A$ and $B$ or $C$ and not $D$ - assuming that $A$ and $C$ are true, but not $B$ and $D$. Recall that by convention, ``and'' takes precedence over ``or'' which takes precendence over ``not''`.
+\end{enumerate}
+
+\item Open the lecture slides on page 14 (``Variables and the workspace''). 
+\begin{enumerate}
+\item Reproduce and understand the outputs.
+\item When not present, add lines that output the assigned variables after each assignment.
+\item Make a change to the first line \texttt{twotimestwo <- 2*2} but to no other line such that after execution of the code at the end the variable \texttt{answer} takes the value 31.
+\end{enumerate}
+
+\item Open the lecture slides on page 15 (``Primitive classes in R''). Make a second copy of your code from exercise 4 in the script window. and add the line \texttt{eight <- NA} after \texttt{eight <- 2*twotimestwo}. Execute the whole code (for exercise 5) and observe what happens.
+
+\item Open the lecture slides on page 16 (``Composite objects in R''). Reproduce and understand all outputs on the page. Further:
+\begin{enumerate}
+\item type \texttt{42:1} and observe what this does. 
+\item create a $400$-dimensional vector called \texttt{reversecols} which contains the 400 numbers from 1 to 400, in reverse order.
+\item create a $(300 \times 400)$ matrix called \texttt{bigmat} which contains the 120000 numbers from 42 to 120041, where columns are filled first, from top to bottom, then rows are filled, from left to right, smaller numbers first.
+\item create a $(300 \times 400)$ matrix called \texttt{Chinesemat} which contains the 120000 numbers from 42 to 120041, where columns are filled first, from top to bottom, then rows are filled, from right to left, smaller numbers first. If you have no idea how to do this,
+\item run the help system on \texttt{matrix} and learn how you can first fill rows, then columns - or on \texttt{t} and learn how you can transpose a matrix. If you do not know how to run the help, look on page 21.
+\item create a $(400 \times 300)$ matrix called \texttt{Latinmat} which contains the 120000 numbers from 42 to 120041, where rows are filled first, from left to right, then columns are filled, from top to bottom, smaller numbers first.
+\item multiply \texttt{Latinmat} and \texttt{Chinesemat} to obtain a $(300 \times 300)$ and a $(400\times 400)$ matrix.
+\end{enumerate}
+
+\item Open the lecture slides on page 17 and read through to page 18 (``Data frames'' and ``functions''). Reproduce and understand all outputs on the two pages. Also read page 19 (``summary functions in R'').
+\begin{enumerate}
+\item Read the help on the \texttt{mtcars} data set. From the description, decide which covariates are logical, nominal, ordinal, interval, or absolute. Make a note of this in the form of comments in your script.
+\item Create a general summary for the \texttt{mtcars} data set by using the \texttt{summary} function. Note that the nominal and ordinal variables are considered numerical by R. You will see in lecture and workshop 2 how to fix this.
+\item Compute Pearson, Kendall and Spearman correlation matrix for all covariates in the \texttt{mtcars} data set. If you do not know how to do this, read the help page on \texttt{cor}.
+\item Obtain the Pearson correlation matrix for all covariates which are interval or absolute. Obtain Kendall and Spearman rank correlation matrices for all covariates which are ordinal but not interval.
+\item Read the help on the functions \texttt{fivenum}, \texttt{mean} and \texttt{var}.
+\item Compute five number summary, mean and variance for the covariates ``Miles per US gallon'', ``Rear axle ratio'', and ``weight''.
+\item Read the help on the function \texttt{sapply}. Use this to obtain the mean and variance of all covariates (but ``transmission'') and a $(5\times 10)$ data frame whose columns are the five number summaries.
+\end{enumerate}
+
+\item In case you have some time left: read the help pages on the other functions listed on page 19 (except the \texttt{moments} and \texttt{psych} packages). Run example code by typing \texttt{example(functionname)} and understand what it does.
+    
+\item In case you have even more time left: open the book\\
+\emph{J. Maindonald, W.J. Brown - Data Analysis and Graphics Using R}\\
+linked on the on-line course under literature. Go through the examples in sections 1.2 and 1.3 if you want to learn some more useful tricks, or proceed to section 1.4 to learn more about functions and control statements (part of it will be a topic of lecture 7).
+
+\end{enumerate}
+
+
+\end{document}
+
+

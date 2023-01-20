@@ -1,0 +1,174 @@
+%This file is a child of preamble.Rnw in the style folder
+%if you want to add stuff to the preamble go there to make
+%your changes available to all childs
+
+<<setup-child, include = FALSE>>=
+library(knitr)
+library(mlr)
+library(ggplot2)
+set_parent("../style/preamble.Rnw")
+@
+
+\lecturechapter{99}{Lightning talks}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+\begin{vbframe}{Cost-Sensitive Classification}
+
+Consider again the fraud detection example. Which error is more severe? 
+
+\begin{itemize}
+  \item Falsely predicting a credit card fraud 
+  \item Not predicting an actual credit card fraud
+\end{itemize}
+
+\textbf{Cost-sensitive classification} refers to settings where the costs of errors are not assumed to be equal and the objective is to minimize the expected costs. 
+
+\lz 
+
+For now, consider the 2-class case with 0-1-encoding.
+
+Cost matrix:
+\begin{table}[]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+                   & Actual positive & Actual negative \\ \hline
+Predicted positive & $c_{11}$              & $c_{10}$              \\
+Predicted negative & $c_{01}$              & $c_{00}$              \\ \hline
+\end{tabular}
+\end{table}
+
+with $c_{01} > c_{11}$ and  $c_{10} > c_{00}$ (Reasonableness conditions).
+
+\framebreak
+
+How can these classification costs be taken into account? 
+
+\begin{itemize}
+\item \enquote{Manipulating} the predictions by \textbf{thresholding}: Posterior probabilities are turned into class labels by using a cost minimizing threshold
+
+\vspace*{-0.3cm}
+
+$$
+\pi ^* = \cfrac{c_{10} - c_{00}}{c_{10}- c_{00} + c_{01} - c_{11}}
+$$
+
+or, if the dataset is poorly calibrated, by optimizing w. r. t. the expected costs. 
+
+\item \enquote{Manipulating} the training data set by \textbf{rebalancing}:
+  \begin{itemize}
+    \item weighting observations 
+    \item resampling
+  \end{itemize}
+
+\end{itemize}
+
+Note: Thresholding requires the learner to predict posterior probabilities, rebalancing by weighting requires the learner to handle weights. Resampling can turn arbitrary classification learners into cost-sensitive ones. 
+
+\end{vbframe}
+
+\begin{vbframe}{Rebalancing by resampling}
+
+How to do cost-minimizing resampling? 
+
+\begin{itemize}
+  \item Remember the case where a learner predicts posterior probabilities. The threshold is changed accordingly to the costs
+  $$
+  \pi ^* = \cfrac{c_{10} - c_{00}}{c_{10}- c_{00} + c_{01} - c_{11}}
+  $$
+  \item However, even if that's not the case, a classifier \enquote{implicitly} makes decisions based on the probability threshold $\pi_0$ (usually $\pi_0=0.5$).  
+  \item To make the probability threshold $\pi^*$ correspond to a given probability threshold $\pi_0$, the number of negative examples in the training set should be \enquote{multiplied} by
+  
+  $$
+  \frac{\pi^*}{1-\pi^*}\frac{1-\pi_0}{\pi_0}
+  $$
+
+\end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{Example-dependent misclassification costs}
+
+\begin{itemize}
+  \item Coming back to the example of credit card fraud detection, not detecting a fraud might cause high costs for the bank and for the customer
+  \item However, these costs could depend on each customer, due to different credit card limits for example
+\end{itemize}
+
+This yields the following cost matrix: 
+
+\small
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+Obs. & costs for predicting 0 & costs for predicting 1 \\ \hline
+1 & $c_{0}^{(1)}$ & $c_{1}^{(1)}$ \\
+2 & $c_{0}^{(2)}$ & $c_{1}^{(2)}$ \\
+3 & $c_{0}^{(3)}$ & $c_{1}^{(3)}$ \\ \hline
+\end{tabular}
+\end{table}
+
+\normalsize
+The misclassification error of observation $i$ is defined by $w^{(i)} = \yi c_{0}^{(i)} + (1 - \yi )c_{1}^{(i)}$.
+
+\framebreak 
+
+How can known methods be turned into learners that can deal with example dependent costs? 
+
+\begin{itemize}
+  \item Thresholding: as for class-dependent costs, but for each example a different threshold
+  \item Rebalancing: 
+  \vspace*{-0.1cm}
+  \begin{itemize}
+    \item weighting the observations by $w^{(i)}$
+    \item resampling, e. g. \textbf{cost-proportionate rejection-sampling} 
+  \end{itemize}
+  \vspace*{-0.3cm}
+      \small
+        \begin{algorithm}[H]
+      \textbf{Input}: $\D$, $w^{(i)}_{i \in \nset}$ misclassification errors, number of iterations $M$\\
+      \textbf{Output}: $\tilde\D$ resampled data set 
+      \begin{algorithmic}[1]
+        \For{$m = 1 \to M$}
+          \State Draw one observation $(\xi, \yi) \in \D$  
+          \State Add to $\tilde\D$ with probability $\frac{w^{(i)}}{\max_j w^{(j)}}$
+        \EndFor
+      \end{algorithmic}
+    \end{algorithm}
+\end{itemize}
+
+
+\end{vbframe}
+
+\begin{vbframe}{Multiclass cost-sensitive classification}
+
+In the multiclass case (including the case $g=2$) we have a vector of costs for each observation 
+
+\vspace*{-0.3cm}
+
+$$
+c^{(i)} = (c^{(i)}_1, c^{(i)}_2, ..., c^{(i)}_g).
+$$
+
+$c^{(i)}_g$ is the cost to be paid when observation $i$ is predicted as class $g$. 
+
+The \textbf{cost-sensitive one-vs-one (CS-OVO)} algorithm can perform cost-sensitive multiclass classification with any base binary classifier: 
+
+\small
+  \begin{algorithm}[H]
+    \textbf{Input}: $\D$, $\{c^{(i)}\}_{i \in \nset}$ cost vectors
+      \begin{algorithmic}[1]
+        \For {$k, \tilde k \in \{1, ..., g\}$}
+          \State Transform $\D$ to
+          $
+          \tilde\D = \biggl(\xi, \argmin\limits_{l = k \text{ or } \tilde k} c^{(i)}_l, |c^{(i)}_k - c^{(i)}_{\tilde k} |\biggr)_{i \in \nset}
+          $
+          \State Use a weighted binary classification algorithm on $\tilde D$ to get $\hat h_{k, \tilde k}$
+        \EndFor
+        \State $\hat h(x)$ is obtained by majority vote.
+      \end{algorithmic}
+    \end{algorithm}
+\end{vbframe}
+
+\endlecture

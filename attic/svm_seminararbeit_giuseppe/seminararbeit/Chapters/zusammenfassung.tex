@@ -1,0 +1,47 @@
+\chapter{Zusammenfassung und Ausblick}
+
+Wenn das primäre Optimierungsproblem bekannt ist, lassen sich bei linear trennbaren Daten die Schritte zur Bestimmung der Hyperebenenenparameter $(\mathbf{w}, b)$ wie folgt zusammenfassen:
+
+\begin{enumerate}
+\item Lagrangefunktion aufstellen
+\item Lagrange-duale Funktion und duales Optimierungsproblem herleiten
+\item Lagrange-Multiplikator $\alpha_i$ durch duales Optimierungsproblem bestimmen
+\item Richtungsvektor $\mathbf{w} = \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i$ der kanonischen Hyperebene berechnen
+\item Verschiebung $b = y_j - \sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \mathbf{x}_j  $ der Hyperebene ermitteln
+\item Entscheidungsfunktion 
+$f(\mathbf{x}_j) = \text{sgn} \left (\mathbf{w}^\top \mathbf{x}_j + b \right ) =  \text{sgn} \left (\sum_{i=1}^N \alpha_i y_i \mathbf{x}_i^\top \mathbf{x}_j  + b \right )$ aufstellen
+\end{enumerate}
+
+Bei nicht linear trennbaren Daten ist eine Möglichkeit die Verwendung des Kern Tricks, der
+% mit Hilfe einer Kernfunktion $K$ den Merkmalsvektor $\mathbf{x}$
+ die Daten in einem höherdimensionalen Variablenraum überführt, in dem sie linear trennbar sind. Die Schritte zur Bestimmung der Hyperebenenenparameter ändern sich darin, dass der Merkmalsvektor $\mathbf{x}_i$ für alle $i=1, \hdots, N$ durch einen höherdimensionalen Merkmalsvektor $\Phi(\mathbf{x}_i)$ ersetzt wird.
+
+Die andere Möglichkeit ist die Verwendung der Soft Margin Hyperebene. Hierbei werden durch Einführung von Schlupfvariablen Fehlklassifizierungen ermöglicht, die
+%$\xi_i$ die Nebenbedingung aus Gleichung \ref{eq:nb} so abgeschwächt wird, dass Fehlklassifizierungen erlaubt 
+zum Ausgleich im primären Optimierungsproblem entsprechend bestraft werden. 
+%In Kapitel \ref{sec:softmargin} wurde gezeigt, dass 
+Obwohl das primäre Optimierungsproblem anders als im linear trennbaren Fall ist, bleibt die Lagrange-duale Funktion dennoch dieselbe (vgl. Kapitel \ref{sec:softmargin}). Das duale Optimierungsproblem ändert sich darin, dass die zusätzliche Nebenbedingung $\alpha_i \leq C$ vorkommt. Die oben genannten Schritte können hier analog angewendet werden.
+
+Zudem kann der Kern Trick auch bei der Soft Margin Hyperebene angewendet werden. Hierbei ersetzt man bei der Herleitung der Soft Margin Hyperebene den Merkmalsvektor $\mathbf{x}$ durch $\Phi(\mathbf{x})$.
+%\begin{itemize}
+%\item Erweiterung für Regressionsprobleme
+%\item Erweiterung für mehrkategorialen Response, z.B. durch \textbf{Paarweise Klassifikation:}
+%\begin{itemize}
+%\item Bilde Klassifikatoren für jedes mögliche Paar der $K$ Klassen
+%\item Zuordung neuer Beobachtungen durch Mehrheitsentscheid in die Klasse $k \in \{1, \hdots, K \}$ 
+%\end{itemize}
+%\end{itemize}
+
+In dieser Seminararbeit wurde nur die binäre Klassifikation betrachtet. In der Literatur findet man Erweiterungen, die die Verwendung von Support Vector Machines auf mehrkategoriale Klassifikationsprobleme und Regressionprobleme ermöglichen. 
+
+Ein Beispiel für den Umgang mit $K>2$ Klassen ist die paarweise Klassifikation. Hierbei werden Klassifikatoren für jedes mögliche Paar der $K$ Klassen gebildet und die Beobachtungen anschließend durch Mehrheitsentscheid in die Klasse $k \in \{1, \hdots, K \}$ zugeordnet (\citealp[vgl.][Kap. 7.6]{hastie2011elements}).
+
+Für die Erweiterung auf Regressionsprobleme muss das Optimierungsproblem zunächst in die \textbf{loss + penalty} Form gebracht werden.
+Dies geschieht indem man die Definition der Schlupfvariablen
+$$\xi_i = \max \{0, 1 - y_i ( \mathbf{w}^\top \mathbf{x}_i + b )\} = [1 - y_i \underbrace{( \mathbf{w}^\top \mathbf{x}_i + b )}_{=:f(\mathbf{x}_i)}]_{+}$$ %= [1 - y_i f(\mathbf{x}_i)]_{+}
+in ein leicht abgeändertes Optimierungsproblem aus Gleichung (\ref{eq:softmargin}) 
+$$\min \hspace{3pt} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^N \xi_i \; \Leftrightarrow \; \min \hspace{3pt} \frac{\lambda}{2} ||\mathbf{w}||^2 + \sum_{i=1}^N \xi_i  \text{ mit } \lambda = 1/C$$
+einsetzt. Daraus ergibt sich folgende \textbf{loss + penalty} Form:
+$$\min \hspace{3pt}  \sum_{i=1}^N[1-y_i f(\mathbf{x}_i)]_{+} + \frac{\lambda}{2} ||\mathbf{w}||^2$$
+Durch Verwendung der Schlupfvariablen impliziert man als Verlustfunktion %$L(y_i, f(\mathbf{x}_i))$
+den sogenannten \textbf{hinge loss}, der die Form $L(y_i, f(\mathbf{x}_i)) = [1 - y_i f(\mathbf{x}_i)]_{+}$ hat. Verwendet man eine andere Verlustfunktion $L(y_i, f(\mathbf{x}_i))$, können Support Vector Machines auch auf Regressionsprobleme angewendet werden (\citealp[vgl.][Kap. 5.1]{gunn1998support}; \citealp[Kap. 12.3.2]{hastie2011elements}).

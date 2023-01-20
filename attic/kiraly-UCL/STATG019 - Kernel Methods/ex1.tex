@@ -1,0 +1,127 @@
+\documentclass[a4paper,10pt,oneside]{article}
+\usepackage{a4wide,amsmath,amsfonts,german}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+%\usepackage{algorithm,algorithmic-local}
+\addtolength{\topmargin}{-2cm} \addtolength{\textheight}{3cm}
+
+
+
+\begin{document}
+\section*{STATG019 2015: Exercise Sheet 1}
+{\em Regarding the content of the first lecture. The content is ICA-relevant but your solution does formally not contribute to the grade.}
+
+\begin{enumerate}
+
+\item {\bf Principal Components and the Singular Value Decomposition: Practice}
+\begin{enumerate}
+\item In case you are uncomfortable with either of PCA and SVD: read the Wikipedia articles and try to understand both concepts.
+\item For the \texttt{mtcars} and \texttt{iris} data sets in R (both are available in vanilla R as variables in the workspace): use \texttt{prcomp} or \texttt{princomp} to obtain the principal components. Compute the principal score for each car/flower. Make a scatter plot of first versus second component and display the third component as color. For \texttt{iris}, display the class as a different choice of point marker.
+\item Use \texttt{svd} to obtain left and right singular vectors of \texttt{mtcars} and \texttt{iris}: once without centering (=subtracting the row mean) and once with centering. Investigate the singular vectors and compare them to the principal vectors above.
+\end{enumerate}
+
+\item {\bf Principal Components and the Singular Value Decomposition: Theory}
+\begin{enumerate}
+\item In case you are uncomfortable with either of PCA and SVD: read the Wikipedia articles and try to understand both concepts.
+\item Prove the assertions in the corollary on page 15 of the lecture slides, starting from uniqueness of eigenvalue decomposition and SVD. Use this to make a precise mathematical statement that relates the principal components and values of a matrix $X$ to its singular value decomposition.
+\item Prove the statement which is used later on page 16: Let $u_i,\sigma_i,v_i$ left singular vector, singular value, right singular vector with the same index of a matrix $M$. Then $M \cdot v_i = \sigma_i \cdot u_i.$
+\end{enumerate}
+
+\item {\bf Kernel PCA}
+\begin{enumerate}
+\item Carry out potentially missing steps in the derivation of kPCA on page 16 of the lecture slides (i.e., until you are comfortable with the level of detail in the proof).
+\item Load the \texttt{kernlab} package in R. Look on page 26 of the slides if you do not know how. Use \texttt{kpca} to obtain kernel principal scores for the \texttt{mtcars} and \texttt{iris} data sets. Make the same plots as in 1(b). Do this for the Gaussian kernel with varying widths $\sigma$, polynomial kernels of varying degrees, and any other kernel you would like to try out.
+\end{enumerate}
+
+\item {\bf Kernel Ridge Regression: Theory}
+\begin{enumerate}
+\item Check that $\widehat{\beta}$ in (linear) ridge regression is indeed the minimizer of the regularized quadratic loss functional $L(\beta)= \|y - X\beta\|_2^2+\gamma\|\beta\|_2^2$.
+\item Carry out potentially missing steps in the derivation of kernel ridge regression on page 16 of the lecture slides (i.e., until you are comfortable with the level of detail in the proof).
+\item Check that $\widehat{\alpha}:= \left(\gamma I + K\right)^{-1}$ is indeed the minimizer of the regularized quadratic loss functional $L(\beta)= \|y - K\alpha\|_2^2+\gamma\cdot \alpha^\top K \alpha$.
+\item Check, for feature maps with $m > N$ and ``general'' data, that the kernel ridge regressor approaches exact interpolation for $\gamma\rightarrow 0$.
+\end{enumerate}
+
+\item {\bf Kernel Ridge Regression: Practice}
+\begin{enumerate}
+\item Write an R function \texttt{kridge} which takes $X, y$ and $\gamma$ an outputs $\widehat{\alpha}$, as on page 17 of the lecture slides, and a function \texttt{kridge.predict} which takes $x$ and $\widehat{\alpha}$ and outputs $f(x)$. (If you are comfortable with object oriented programming in R, feel free to program a \texttt{kridge} object and a prediction routine in analogy to \texttt{lm}. You may also skip this part of the exercise if you do not want to spend too much time on implementing yourself.)
+\item Learn how to use \texttt{gausspr} for prediction. When the \texttt{var} parameter is chosen to be $\gamma$, the (Gaussian process) prediction is mathematically equivalent to the kernel ridge regession prediction.
+\item Use either \texttt{kridge} from (a) or \texttt{gausspr} from (b) to predict: $y$ from $x$ in
+ \texttt{
+ x <- seq(-20,20,0.1)
+ y <- sin(x)/x + rnorm(401,sd=0.03) },
+  volume in the \texttt{trees} data set, permeability in the \texttt{rocks} data set, and/or tooth growth in the \texttt{ToothGrowth} data set. Investigate the Gaussian kernel with varying widths $\sigma$, polynomial kernels of varying degrees, and other kernels, and study the effect of varying $\gamma$.
+\end{enumerate}
+
+
+\item {\bf Kernology}\\
+(in this exercise, please do not worry about the convergence part of the kernel definition)
+\begin{enumerate}
+\item Let $k_1,k_2$ be positive definite kernels (with the same range). Prove that the following are positive definite kernels:
+  \begin{enumerate}
+  \item[(i)] $k(x,y) = c \cdot k_1(x,y)$ for $c\in\mathbb{R}_{\ge 0}$,
+  \item[(ii)] $k(x,y) = k_1(x,y) + k_2(x,y)$,
+  \item[(iii)] $k(x,y) = k_1(x,y) \cdot k_2(x,y)$
+  \end{enumerate}
+
+\item Use (a) to {\it prove} that the polynomial kernel of degree $d$
+       $$ k: (x,y) \mapsto (\langle x, y\rangle + \vartheta )^d,$$
+where $\vartheta\in\mathbb{R}_{\ge 0},$ is a positive definite kernel.
+
+\item Show that the Gaussian kernel of width $\sigma> 0$
+         $$ k: (x,y)\mapsto \exp\left( -\frac{\|x-y\|^2}{2\sigma}\right)$$
+is positive definite.
+\end{enumerate}
+
+
+\item {\bf The feature map: polynomial}\\
+ Consider the homogenous polynomial kernel $k$ of degree $2$ which is
+  $$k :(x,y) \mapsto  \langle x,y \rangle^2 = \left(\sum_{i=1}^n x_iy_i\right)^2$$
+(a) Show that $\mathcal{F}=\mathbb{R}^3$ and
+\begin{align*}
+  \phi :\quad  &\mathbb{R}^2\longrightarrow \mathbb{R}^3\\
+   &(x_1,x_2) \mapsto  (x_1^2,\sqrt{2}x_1x_2,x_2^2)
+\end{align*}
+is a possible choice for feature space and feature map.
+
+(b) Determine (i.e., give an explicit description of) the images of
+\begin{enumerate}
+  \item[(i)] $\mathbb{R}^2$
+  \item[(ii)] The unit circle $C=\{x\in\mathbb{R}^2\;;\;\|x\|=1\}$
+  \item[(iii)] The line $L=\{x\in\mathbb{R}^2\;;\;x_1=0\}$
+  \item[(iv)] An ellipse with center of mass at the origin.
+\end{enumerate}
+under the feature map $\phi$ in the feature space $\mathcal{F}.$
+The image $\phi (C)$ lies on a unique plane $H$ in $\mathbb{R}^3$. {\it Characterize} that plane.
+{\it Find} a point $P$ in $\mathcal{F}$ which is not contained in $\phi(\mathbb{R}^2).$
+{\it Sketch} the situation in a drawing which matches your explanations (which includes at least $\phi (\mathbb{R}^2), \phi (C), \phi(L), H$ and $P$).
+
+(c) Use the results of (b) to understand the two pictures on page 21 of the lecture slides.
+
+
+\item {\bf The feature map: Gaussian}\\
+Consider the homogenous polynomial kernel $k$ of width $\sigma$ defined as
+  $$k :(x,y) \mapsto  \exp \left(-\frac{1}{2\sigma^2}\|x-y\|^2_2\right).$$
+(a) Show that the Hilbert space $\mathcal{F}= L_2(\mathbb{R}^n)$ and
+\begin{align*}
+  \phi :\quad  &\mathbb{R}^n\longrightarrow \mathcal{F}\\
+   &x \mapsto  c(\sigma)\cdot k(x,.),
+\end{align*}
+with an appropriate normalizing factor $c(\sigma)$ depending only on the bandwidth $\sigma$,
+is a possible choice for feature space and feature map.
+
+Recall that the scalar product on $L_2(\mathbb{R}^n)$ is
+$$\langle f(.),g(.)\rangle = \int_{\mathbb{R}^n} f(z) g(z)\; dz$$
+and $L_2(\mathbb{R}^n)$ is the space of functions $f$ where $\langle f,f\rangle$ is finite.
+(if you do not know about $L_2(\mathbb{R}^n)$, take this as a definition)
+
+(b) Show that for $x_1,\dots, x_N$ all distinct, $\phi (x_1),\dots, \phi(x_n)$ are linearly independent. Use this to conclude that there can be no feature map $\phi: \mathbb{R}^n\longrightarrow \mathbb{R}^m$ for the Gaussian kernel.
+
+(c) Derive analogue statements for the Laplace kernel
+$$k :(x,y) \mapsto  \exp \left(-\sigma^{-1}\|x-y\|_2\right).$$
+\end{enumerate}
+
+\end{document}
+
+

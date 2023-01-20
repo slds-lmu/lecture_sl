@@ -1,0 +1,120 @@
+%This file is a child of preamble.Rnw in the style folder
+%if you want to add stuff to the preamble go there to make
+%your changes available to all childs
+
+<<setup-child, include = FALSE>>=
+library(knitr)
+library(mlr)
+library(ggplot2)
+set_parent("../style/preamble.Rnw")
+@
+
+\lecturechapter{99}{Lightning talks}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+\begin{vbframe}{Imbalanced Classification problems}
+
+\textbf{Imbalanced data} refers to a (binary or multiclass) classification problem where classes are not respresented equally. However, the minority class usually represents the most important concept to be learned. 
+
+\lz 
+
+%Most classification data do not have exactly equal number of instances in each class, but a small difference often doesn't matter.
+
+\textbf{Example:}
+
+\begin{itemize}
+  \item Fraud prediction
+  \item Given dataset contains credit card transactions: $200000$ observations containing $500$ frauds 
+  \item Always predicting \enquote{no fraud} yields an \enquote{excellent} accuracy of $99.8\%$
+  \item Model performance is bad as you did not even detect one fraud
+  \item The accuracy is only reflecting the underlying class distribution (\textbf{accuracy paradoxon})
+\end{itemize}
+
+
+%Example for datasets where classes might be extremely unbalanced:
+
+%\begin{itemize}
+%\item Disease prediction
+%\item Spam detection
+%\end{itemize}
+
+
+\framebreak
+
+\textbf{Tactics to combat imbalanced training data:}
+
+\begin{itemize}
+\item Collect more data 
+
+\item Change the performance measure: 
+
+  confusion matrix, precision, recall, F1 Score, ROC curves might be better performance measures than accuracy
+  
+\item Try different algorithms:  
+
+  e. g. trees often perform well on imbalanced datasets 
+  
+\item Try cost-sensitive methods: 
+  
+  additional costs for making classification mistakes during training
+
+\item Try a different perspective: 
+
+anomaly detection or change detection techniques
+
+\framebreak
+
+\item Try resampling: 
+  \begin{itemize}
+    \item add copies of instances from the under-represented class (\textbf{oversampling})
+    \item delete instances from the over-represented class (\textbf{undersampling})
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=7cm]{figure_man/imbalanced_resampling.pdf}
+  \end{center}
+
+\framebreak  
+  
+\item Generate synthetic samples 
+
+  \begin{itemize}
+    \item duplicating minority class observations can be problematic
+    \item Idea: oversample the minority class by creating \enquote{synthetic} examples 
+    \item \textbf{SMOTE} (Synthetic Minority Oversampling Technique): each minority class observation $x \in \D_{\text{min}}$ and one of its randomly chosen $k$ next neighbours are interpolated 
+      \end{itemize}
+\end{itemize}
+    
+    \end{vbframe}
+    
+    \begin{vbframe}{SMOTE}
+    
+    \small
+        \begin{algorithm}[H]
+      \textbf{Input}: $\D_{\text{min}}$, amount of SMOTE $N$, number of neighbors $k$ \\
+      \textbf{Output}: $N \cdot |\D_{\text{min}}|$ minority class samples 
+      \begin{algorithmic}[1]
+        \For {$x \in \D_{\text{min}}$}
+          \State Calculate $k$ nearest neighbors for $x$
+          \Repeat
+            \State Randomly pick one of the $k$ nearest neighbors $\tilde x$
+            \For {$j \in \pset$}
+              \State $x^{\text{new}}_j =  x_j + \lambda (\tilde x_j - x_j)$ with $\lambda \in [0, 1]$ random
+            \EndFor
+          \Until{$N$ new observations have been generated}
+          \EndFor
+      \end{algorithmic}
+    \end{algorithm}
+    
+    \vspace*{-0.2cm}
+    
+    Note: the original SMOTE algorithm cannot handle factor features. The \texttt{smote} function in  \texttt{mlr} therefore uses the \textbf{Gower distance} for nearest neighbour calculation and instead of interpolation one the two factor levels $x_j$, $\tilde x_j$ is chosen randomly.
+
+\framebreak
+
+  \begin{center}
+    \includegraphics[width=8cm]{figure_man/smote.pdf}
+  \end{center}
+
+\end{vbframe}
+
+\endlecture

@@ -1,0 +1,54 @@
+\input{template}
+\topmargin   -3cm
+\textwidth   6.2in
+\textheight  10.5 in
+
+
+\begin{document}
+\section*{STAT7001 2015: Workshop Script No.5}
+{\em For the fifth workshops on February 10 or 13, the tutors will offer to answer general questions regarding data analysis with R; you are also strongly recommended to work on parts of workshops 1-4 that you were not able to finish, as these will be strongly relevant for the ICA.\\ Alternatively, you can also work on the following exercises if you are interested in generalized linear models. The content is not fully relevant for the first ICA, i.e., you can achieve full score without using or discussing generalized linear models. However, the use of generalized linear models may make sense for certain sub-questions of the ICA and may therefore contribute to your score when applied sensibly.\\
+You should therefore make the decision on what to work on depending on how comfortable you are with the content of workshops 1-4. }
+
+The data you will analyze describes insurance claims made by car
+insurance policy-holders in the last quarter of 1973 (from Baxter, Coutts \& Ross, 1980). There are 3 independent categorical variables (covariates): {\tt district} (four categories), {\tt age} (four ordered categories) and {\tt group} of car (four categories). The other two variables are {\tt holders} and {\tt claims}.  For each row in the dataset, {\tt holders} gives the aggregate number of policy-holders with the given covariates and {\tt claims} gives the number of claims that were made by those policy-holders. The sequence of variables in each row is {\tt district, age, group, holders, claims}.
+
+\begin{enumerate}
+\item  Load the data {\tt insurance.dat} (from your STAT7001 data directory) into R, naming the variables {\tt district, age, group, holders} and {\tt claims}, in that order. Ensure that the variables have the correct format.
+
+\item Compute the total number of claims and the total number of
+policy holders. What is the average number of claims made per policy?
+
+\item For the purposes of this workshops we suppose for simplicity that each policy holder has made at most one claim
+during the 3 month period in question. Add a column to the data frame {\tt p}, describing the relative frequency of holders which have made one claim.
+
+\item Normally, you would fit the model only to 80\% and then test its predictive strength on the remaining 20\%; however, since this is aggregate data, this is difficult to do with the methods you know. On the other hand, since the response variable is binary, the problem of overfitting is less severe than in continuous regression. If you know how to randomly sample from aggregate data, you are invited to do it at this step; if you have no idea, skip this exercise, proceed to the next step, wait for the sampling lecture and be aware that the model you fit is only exploratory since it has not been validated on unseen data.
+
+\item Fit a logistic model on to the data set to explain whether a claim was made via the explanatory variables {\tt district, age, group}, without interaction terms. Use the output to answer the following questions:
+    \begin{enumerate}
+        \item Which of the variables are significant at the 1\% level?
+        \item What is the baseline policy holder?
+        \item Use the estimated intercept and the logistic regression formula
+\[
+\log \left(\frac{p_i}{1-p_i} \right) = \alpha +\beta _1 x_{i,1}, \dots +
+\beta _k x_{i,k}
+\]
+to find the probability that a baseline policy holder makes a claim.
+Why is this very different from the average number of claims made per
+policy-holder? Also compute the standard error.
+        \item What is the odds ratio for age group 3/age group 1? What is the odds ratio for district 1/district 2? Give standard errors.
+        \item What can you say about the estimated parameters for the ordered age groups?
+        \item Investigate the effect of interaction terms and/or dropping variables on your model. Choose the model which explains best whether a claim was made.
+    \end{enumerate}
+
+\item Perform prediction for an unseen data point: what is the fitted probability of making a claim
+for a policy-holder in district 1, age 3 and group 2? If you did the 80\% subsampling earlier: use your fitted model to predict the remaining 20\% test data. Hint: type \texttt{predict.glm}.
+
+\item Now suppose that the response data consist of the number (0,1,2,\ldots) of claims made by each policy holder during the 3 month period.
+How does this affect the response variable? What type of generalised linear model would be appropriate now? How would you proceed with the present aggregate data if you knew the true number or claims per holder followed a Poisson distribution with known parameter?
+
+\end{enumerate}
+
+
+
+
+\end{document}

@@ -1,0 +1,38 @@
+\chapter{Grundlagen}
+\label{grundlagen}
+
+%\section{Lagrange-Methode}
+%\section{Datensituation
+%\textbf{Ausgangslage}:
+
+Bei der Klassifizierung durch Support Vector Machines geht man von $N$ Trainingsdaten $(\mathbf{x}_1^{\top}, y_1), \hdots, (\mathbf{x}_N^{\top}, y_N)$ aus, wobei
+
+\begin{tabular}{lll}
+&$\mathbf{x}_i^{\top} \in \mathbb{R}^p$ & ein Merkmalsvektor mit $p$ Variablen und\\
+&$y_i \in \{-1,+1\}$ & die Klassenzugehörigkeit der $i$-ten Beobachtung
+\end{tabular}
+
+ist. Die vorliegende Seminararbeit beschränkt sich auf die binäre Klassifizierung durch Support Vector Machines. Die grundlegende Idee besteht darin, die Daten durch eine Hyperebene in zwei Klassen aufzuteilen. Eine Hyperebene trennt dabei einen $p$-dimensionalen Variablenraum in zwei Halbräume und hat selbst die Dimension $(p-1)$. Die Gleichung einer Hyperebene hat die Form
+\begin{equation} 
+\label{hyperebene}
+%\mathcal{H} = 
+\{\mathbf{x} \in \mathbb{R}^p \; | \; \mathbf{w}^\top \mathbf{x}+ b = 0\}, 
+\end{equation}
+wobei $\mathbf{w} \in \mathbb{R}^p$ ein Vektor orthogonal zur Hyperebene und $b \in \mathbb{R}$ die Verschiebung (vom Ursprung) ist.
+Beispielsweise sind Hyperebenen
+\begin{itemize}
+\item in einem eindimensionalen Variablenraum alle Mengen, die aus einem Punkt bestehen,
+\item in einem zweidimensionalen Variablenraum alle Geraden und
+\item in einem dreidimensionalen Variablenraum alle Ebenen.
+\end{itemize}
+
+% Im eindimensionalen Variablenraum ($p=1$) ist jede Mengen, die aus einem Punkt besteht eine Hyperebene.
+
+Das Ziel ist hierbei mit Hilfe einer Entscheidungsfunktion $f: \mathbb{R}^p \rightarrow \{-1,+1\}$ neu hinzukommende Beobachtungen $\mathbf{x}_{neu}$ möglichst fehlerfrei in die negative Klasse $y_{neu}=-1$ oder in die positive Klasse $y_{neu}=+1$ zuzuordnen. Die Entscheidungsfunktion wird auf Basis der Trainingsdaten so bestimmt, dass der Ausdruck $f(\mathbf{x}_i) = y_i$ 
+
+\begin{itemize}
+\item im Falle linear trennbarer Daten für alle Beobachtungen $i= 1, \hdots, N$ und %(vgl. Kapitel \ref{chap:trennbar}) und
+\item im Falle nicht linear trennbarer Daten für möglichst viele Beobachtungen $i$ %(vgl. Kapitel \ref{chap:nichttrennbar}) 
+\end{itemize}
+
+gilt (\citealp[vgl.][Kap. 7.1]{scholkopf2001learning}).

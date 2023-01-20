@@ -1,0 +1,106 @@
+
+%Blank Lecture
+%This file is a child of preamble.Rnw in the style folder
+%if you want to add stuff to the preamble go there to make
+%your changes available to all childs
+
+<<setup-child, include = FALSE>>=
+library(knitr)
+library(mlr)
+library(ggplot2)
+library(gridExtra)
+set_parent("../style/preamble.Rnw")
+@
+
+\lecturechapter{99}{Conversion to Posterior Probabilities}
+\lecture{Fortgeschrittene Computerintensive Methoden}
+
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+
+\begin{vbframe}{Estimating Posterior probabilities by Platt's method}
+
+  \begin{itemize}
+
+    \item Method to transform raw score predictors $\fx$ into something similar to posterior probabilities
+
+    \item Heuristic due to John Platt, developed for SVMs,
+      seems to work well in practice, implemented in many SVM software packages
+
+    \item Advantage: We do not have to change the optimization / implementation for fitting $f$
+      (which could technically be hard), but instead can put Platt's method simply \enquote{on top}
+      of the already fitted model.
+
+    \item An alternative is \textbf{isotonic regression} (which we will not cover here).
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+  \item Fit the regular binary score model $\fxh$
+  \item Create new data set $\tilde{\D}  = \{ (\fxih, \yi) \}_{i=1}^n$
+  \item The above assumes $\Yspace = \{0,1\}$. If -1/+1-encoding was used
+    (more realistic, if we fit a scoring model $f$),
+    use  $y \leftarrow \frac{y + 1}{2}$ in $\tilde{\D}$.
+  \item Now fit a logistic / sigmoidal model to $\tilde{\D}$ with
+    $$\pix = \frac{1}{1 + \exp(A f_i + B)} \quad ,$$
+    in the usual way.
+  \item Better estimates can often be obtained when the above method is slightly changed.
+    We create $\tilde{\D}$ by using the predictions obtained from a k-fold cross-validation.
+    On this joined data we then estimate A and B. This is what is usually implemented, often with $k = 3$.
+  \end{itemize}
+
+\end{vbframe}
+
+
+  \begin{vbframe}{One-vs-one: Posterior probabilities }
+
+  \begin{itemize}
+    \item Many binary classifiers give us posterior probabilities $\pix$ (or can easily be transformed into probabiities).  
+    \item So assume for each \enquote{pairwise comparison}, a classifier outputs posterior probabilities 
+    $$
+      \pi_{k, \tilde k}(\xb) = \P(y = k ~|~\xb, y = k \text{ or } y = \tilde k). 
+    $$
+    \item Is there a way to transform these probabilities into \enquote{global} class probabilities
+    $$
+      \pi_k(\xb) = \P(y = k ~|~\xb)~? 
+    $$
+    \item In an exact sense, the answer is no:  For each $\xb$ we get a system of linear equations
+    \begin{footnotesize}
+    \begin{eqnarray*}
+      \pi_{k, \tilde k}(\xb) &=& \P(y = k ~|~\xb, y = k \text{ or } y = \tilde k) \\ 
+      &=& \frac{\P(y = k~|~\xb)}{\P(y = k \text{ or } y = \tilde k ~|~ \xb)} = \frac{\P(y = k~|~\xb)}{\P(y = k~|~\xb) +  \P(y = \tilde k~|~\xb)} \\ \Leftrightarrow \pi_{k, \tilde k}(\xb) &=& \frac{\pi_k(\xb)}{\pi_k(\xb) + \pi_{\tilde k}(\xb)}.
+    \end{eqnarray*}
+    \end{footnotesize}
+    \item For a given $\xb$, the system of linear equations has $g - 1$ free parameters and $\frac{g(g - 1)}{2}$ equations. This has not a solution in general. 
+    \item \textbf{Idea:} Find $\pi_k(\xb)$ that \enquote{approximately} fulfills the above equations by \textbf{pairwise coupling}. 
+    \item For simplification, we omit the $\xb$ from now on and just write $\pi = \left(\pi_1, ..., \pi_g\right)$. 
+  \end{itemize}
+
+  \end{vbframe}
+
+  \begin{vbframe}{Pairwise coupling}
+
+  According to \emph{Hastie, T. and Tibshirani, R. (1998). Classification by Pairwise Coupling}. 
+
+  \begin{itemize}
+    % \item Assume that for each $k \ne \tilde k$, there are $n_{k, \tilde k}$ observations in the training set and we fitted models 
+    % $$
+    %   \pi_{k, \tilde k} = \P(y = k ~|~y = k \text{ or } y = \tilde k).
+    % $$
+    \item  \textbf{Goal: } Transform scoring classifiers $\pi_{k, \tilde k}$ to $\pi = \left(\pi_1, ..., \pi_g\right)$ such that 
+      $$
+        \pi_{k, \tilde k} \approx \frac{\pi_k}{\pi_k + \pi_{\tilde k}} =: \mu_{k, \tilde k}.
+        $$
+    \item We measure this distance by the \textbf{weighted Kullback-Leibler distance}
+      $$
+        \sum_{k < \tilde k} n_{k,\tilde k} \left(\pi_{ij} \log \frac{\pi_{ij}}{\mu_{ij}} + (1 - \pi_{ij}) \log \frac{1 - \pi_{k, \tilde k}}{1 - \mu_{k, \tilde k}}\right).
+      $$
+    \item We can optimize this for $\pi_i$ with standard numerical optimization methods. 
+  \end{itemize} 
+
+  \end{vbframe}
+
+
+\endlecture
