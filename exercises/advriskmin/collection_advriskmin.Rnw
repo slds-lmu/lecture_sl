@@ -56,7 +56,7 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 
 \dlz
 
-\aufgabe{GLM Optimization excercise - MLE and ERM}{
+\aufgabe{GLM Optimization exercise - MLE and ERM}{
 <<child="ex_rnw/ex_glm_optim.Rnw">>=
 @
 }
