@@ -21,8 +21,17 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \exlect
 \lz
 
-\aufgabe{Gradient Boosting}{
-	<<child="ex_rnw/ex_boosting_exam_2020.Rnw">>=
+\aufgabe{Boosting - Empirical Risk}{
+	<<child="ex_rnw/ex_boosting_empirical_risk.Rnw">>=
+	@
+}
+\aufgabe{Boosting - Stumps}{
+	<<child="ex_rnw/ex_boosting_stumps.Rnw">>=
+	@
+}
+
+\aufgabe{Boosting - Updates}{
+	<<child="ex_rnw/ex_boosting_updates.Rnw">>=
 	@
 }
 
@@ -30,13 +39,14 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 % % PAST EXAMS
 % % ------------------------------------------------------------------------------
 % 
-% \dlz
-% \exexams
-% \lz
+\dlz
+\exexams
+\lz
 % 
-% \aufgabeexam{WS2020/21}{first}{1}{
-% foo
-% }
+\aufgabeexam{Exam 2020}{}{1}{
+	<<child="ex_rnw/ex_boosting_exam_2020.Rnw">>=
+	@
+}
 % 
 % \dlz
 % \loesung{

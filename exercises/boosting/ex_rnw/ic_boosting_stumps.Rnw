@@ -1,0 +1,35 @@
+
+Suppose you apply AdaBoost with a decision stump on the data set as in the following figure:
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.6\linewidth]{figure/boosting_simple}
+
+\end{figure}
+
+\begin{enumerate}
+	\item 
+		What would be a decision boundary for the first decision stump? 
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+	\item
+		 How do the weights of the points change after the first iteration?
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+	\item 
+		How many iterations are at least needed such that AdaBoost's training error is zero?
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+\end{enumerate}

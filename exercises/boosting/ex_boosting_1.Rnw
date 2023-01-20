@@ -16,6 +16,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 \aufgabe{AdaBoost - Empirical Risk}{
-	<<child="ex_rnw/ex_boosting_1_22.Rnw">>=
+	<<child="ex_rnw/ex_boosting_empirical_risk.Rnw">>=
 	@
 }
