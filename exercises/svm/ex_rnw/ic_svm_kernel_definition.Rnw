@@ -9,7 +9,8 @@ of two arguments with the properties
 	$\xv, \tilde \xv \in \Xspace$.
 	\item Positive definiteness: For each finite subset $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$
 	the \textbf{kernel Gram matrix} $\bm{K} \in \R^{n \times n}$ with entries
-	$K_{ij} = k(\xi, \xv^{(j)})$ is positive semi-definite.
+	$K_{ij} = k(\xi, \xv^{(j)})$ is positive semi-definite. 
+	More precisely, for any $\mathbf{a} \in \R^n$,  $\mathbf{a}^T \bm{K} \mathbf{a} \geq 0$. 
 \end{itemize}
 %
 
