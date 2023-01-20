@@ -11,6 +11,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopfsl{2}{Risk Minimization Classification}
 
 \aufgabe{Risk Minimizers for 0-1-Loss}{
-	<<child="ex_rnw/ex_advriskmin_2_22.Rnw">>=
+	<<child="ex_rnw/ex_risk_minimizers_01_loss.Rnw">>=
 	@
 }

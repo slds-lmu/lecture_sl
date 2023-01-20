@@ -22,7 +22,7 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \lz
 
 \aufgabe{Risk Minimization and Gradient Descent (Part 1)}{
-<<child="ex_rnw/ex_linear_model_optim.Rnw">>=
+<<child="ex_rnw/ex_lm_optim_part_1.Rnw">>=
 @
 }
 
@@ -36,28 +36,35 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \dlz
 
 \aufgabe{Risk Minimizers for 0-1-Loss}{
-	<<child="ex_rnw/ex_advriskmin_2_22.Rnw">>=
+	<<child="ex_rnw/ex_risk_minimizers_01_loss.Rnw">>=
 	@
 }
 
 \dlz
 
 \aufgabe{Risk Minimizers for Generalized L2-Loss}{
-<<child="ex_rnw/ex_advriskmin_1_22.Rnw">>=
+<<child="ex_rnw/ex_generalized_l2_loss.Rnw">>=
 @
 }
 
 \dlz
 
-\aufgabe{Connection between MLE and ERM 1}{
+\aufgabe{Risk Minimizers for L2-Loss}{
+<<child="ex_rnw/ex_risk_minimizers_l2_loss.Rnw">>=
+@
+}
+
+\dlz
+
+\aufgabe{GLM Optimization exercise - MLE and ERM}{
 <<child="ex_rnw/ex_glm_optim.Rnw">>=
 @
 }
 
 \dlz
 
-\aufgabe{Connection between MLE and ERM 2}{
-	<<child="ex_rnw/ex_advriskmin_3_22.Rnw">>=
+\aufgabe{Connection between MLE and ERM}{
+	<<child="ex_rnw/ex_connection_mle_erm.Rnw">>=
 	@
 }
 

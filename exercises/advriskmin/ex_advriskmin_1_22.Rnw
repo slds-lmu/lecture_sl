@@ -11,6 +11,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopfsl{1}{Risk Minimization}
 
 \aufgabe{Risk Minimizers for Generalized L2-Loss}{
-	<<child="ex_rnw/ex_advriskmin_1_22.Rnw">>=
+	<<child="ex_rnw/ex_generalized_l2_loss.Rnw">>=
 	@
 }
