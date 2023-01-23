@@ -85,7 +85,7 @@
 
         We can see that for the left-most point and the right-most point, there is a disagreement between our two stumps. 
         In the case of the right-most point, the second stump has a bigger weight than the first one, so we will classify it correctly as $y=-1$. 
-        Unfortunately, in the case of the left-most point, we will classify it incorrectly as $y=-1$. We will need a third iteration that will correct this mistake.
+        Unfortunately, in the case of the left-most point, we will classify it incorrectly as $y=1$. We will need a third iteration that will correct this mistake.
 
         <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
             mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
