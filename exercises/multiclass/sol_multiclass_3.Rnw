@@ -7,16 +7,10 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{2}
-
-\loesung{Multiclass and Softmax Regression}{
-<<child="ex_rnw/sol_softmax_mnist.Rnw">>=
-@
-}
-
-\newpage
+\kopfsl{5}{Multiclass}
 
 \loesung{Logistic Regression, Softmax, Cross-Entropy}{
 <<child="ex_rnw/sol_lt_softmax_theory_wo_mlr.Rnw">>=
 @
 }
+
