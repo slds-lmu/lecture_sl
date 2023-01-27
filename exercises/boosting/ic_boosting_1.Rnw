@@ -15,18 +15,13 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 \aufgabe{AdaBoost - Updates}{
-	<<child="ex_rnw/ic_boosting_1.Rnw">>=
+	<<child="ex_rnw/ex_boosting_updates.Rnw">>=
 	@
 }
 \lz
 
 \aufgabe{AdaBoost - Decision Stump}{
-	<<child="ex_rnw/ic_boosting_2.Rnw">>=
+	<<child="ex_rnw/ic_boosting_stumps.Rnw">>=
 	@
 }
 \lz
-
-\aufgabe{Quiztime}{
-	<<child="ex_rnw/ic_boosting_3.Rnw">>=
-	@
-}

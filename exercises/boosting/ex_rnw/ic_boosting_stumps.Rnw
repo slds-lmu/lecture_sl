@@ -1,0 +1,45 @@
+
+Suppose you apply AdaBoost with a decision stump on the data set as in the following figure:
+
+<<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
+mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
+x1 = sapply(mpoints,function(x) x[1])
+x2 = sapply(mpoints,function(x) x[2])
+y = c(-1, 1, -1)
+
+par(mar = c(4,4,1,1), pin = c(3,3))
+plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
+xlim = c(-1,6), ylim = c(0,1),
+ylab = "x2", xlab = "x1")
+	  grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
+points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
+	  text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
+@
+
+
+\begin{enumerate}
+	\item 
+		What would be a decision boundary for the first decision stump? 
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+	\item
+		 How do the weights of the points change after the first iteration?
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+	\item 
+		How many iterations are at least needed such that AdaBoost's training error is zero?
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+\end{enumerate}

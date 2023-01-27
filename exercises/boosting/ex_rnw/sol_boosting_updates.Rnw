@@ -1,0 +1,102 @@
+\begin{enumerate}
+    \item
+        For the first case, only one sample is incorrect.
+        The weighted in-sample misclassification rate can be calculated as:
+        \begin{equation}
+            \errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}} = 0.01
+        \end{equation}
+
+        We can now calculate the weight of the base learner:
+
+        \begin{equation}
+            \betamh = \frac{1}{2} \log \left( \frac{1 - \errm}{\errm}\right) = 0.5 \cdot log \left(\frac{0.99}{0.01} \right) = log (\sqrt{99})
+        \end{equation}
+
+        The updated weights are then calculated as:
+
+        \begin{equation}
+            \begin{aligned}
+                w^{[m+1](i)} & = \wmi \cdot \exp\left(- \betamh \cdot \underbrace{\yi \cdot \hat{h}(\xi)}_{\{-1,1\}}\right) \\ 
+                & = \begin{cases}
+                    0.01 \cdot \exp\left(- log (\sqrt{99})\cdot 1 \cdot 1 \right) & \text{if } i = 1,\dots,4,6,\dots,10 \\
+                    0.01 \cdot \exp\left(- log (\sqrt{99}) \cdot 1 \cdot -1 \right) & \text{if } i = 5 \\
+                    0.1 \cdot \exp\left(- log (\sqrt{99}) \cdot 1 \cdot 1 \right) & \text{if } i = 11,\dots,19 
+                \end{cases} \\
+                &= \begin{cases}
+                    0.001 & \text{if } i = 1,\dots,4,6,\dots,10 \\
+                    0.0995 & \text{if } i = 5 \\
+                    0.01  & \text{if } i = 11,\dots,19
+                \end{cases}
+            \end{aligned}
+        \end{equation}
+
+    \item 
+        In the second case, five out of the 9 samples with weight 0.1 are misclassified.
+        The weighted in-sample misclassification rate can be calculated as:
+        \begin{equation}
+            \errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}} = 0.5
+        \end{equation}
+
+        We can now calculate the weight of the base learner:
+
+        \begin{equation}
+            \betamh = \frac{1}{2} \log \left( \frac{1 - \errm}{\errm}\right) = 0.5 \cdot log \left(\frac{0.5}{0.5} \right) = 0
+        \end{equation}
+
+        The updated weights are then calculated as:
+
+        \begin{equation}
+            \begin{aligned}
+                w^{[m+1](i)} & = \wmi \cdot \exp\left(- \betamh \cdot \underbrace{\yi \cdot \hat{h}(\xi)}_{\{-1,1\}}\right) \\ 
+                & = \begin{cases}
+                    0.01 \cdot \exp\left(-  0 \cdot 1 \cdot 1 \right) & \text{if } i = 1,\dots,10 \\
+                    0.1 \cdot \exp\left(- 0 \cdot 1 \cdot -1 \right) & \text{if } i = 15,16,17,18 \\
+                    0.1 \cdot \exp\left(- 0 \cdot 1 \cdot 1 \right) & \text{if } i = 11,\dots,14,19
+                \end{cases} \\
+                &= \begin{cases}
+                    0.01 & \text{if } i = 1,\dots,4,6,\dots,10 \\
+                    0.1 & \text{if } i = 5 \\
+                    0.1 & \text{if } i = 11,\dots,19
+                \end{cases}
+            \end{aligned}
+        \end{equation}
+
+        When the weighted in-sample misclassification rate is 0.5, the weight of the base learner is 0 and we don't do any updates to the weights.
+
+    \item
+
+        In the third case, all samples with the exception of one with a weight of 0.01 are misclassified.
+        The weighted in-sample misclassification rate can be calculated as:
+        \begin{equation}
+            \errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}} = 0.99
+        \end{equation}
+
+        We can now calculate the weight of the base learner:
+
+        \begin{equation}
+            \betamh = \frac{1}{2} \log \left( \frac{1 - \errm}{\errm}\right) = 0.5 \cdot log \left(\frac{0.01}{0.99} \right) = log \left(\sqrt{\frac{1}{99}}\right)
+        \end{equation}
+
+        The updated weights are then calculated as:
+
+        \begin{equation}
+            \begin{aligned}
+                w^{[m+1](i)} & = \wmi \cdot \exp\left(- \betamh \cdot \underbrace{\yi \cdot \hat{h}(\xi)}_{\{-1,1\}}\right) \\ 
+                & = \begin{cases}
+                    0.01 \cdot \exp\left(-  log \left(\sqrt{\frac{1}{99}}\right) \cdot 1 \cdot -1 \right) & \text{if } i = 1,\dots,9 \\
+                    0.01 \cdot \exp\left(- log \left(\sqrt{\frac{1}{99}}\right) \cdot 1 \cdot 1 \right) & \text{if } i = 10 \\
+                    0.1 \cdot \exp\left(- log \left(\sqrt{\frac{1}{99}}\right)\cdot 1 \cdot -1 \right) & \text{if } i = 11,\dots,19
+                \end{cases} \\
+                &= \begin{cases}
+                    0.001 & \text{if } i = 1,\dots,9 \\
+                    0.0995 & \text{if } i = 10 \\
+                    0.01 & \text{if } i = 11,\dots,19
+                \end{cases}
+            \end{aligned}
+        \end{equation}
+
+
+\end{enumerate}
+
+
+

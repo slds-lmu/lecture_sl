@@ -8,10 +8,21 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 \input{../../latex-math/ml-ensembles.tex}
+\input{../../latex-math/ml-trees.tex}
 
-\kopfsl{13}{Gradient Boosting}
+\kopficsl{12}{Boosting}
 
-\aufgabe{Gradient Boosting}{
-	<<child="ex_rnw/ex_boosting_exam_2020.Rnw">>=
+
+
+\loesung{AdaBoost - Updates}{
+	<<child="ex_rnw/sol_boosting_updates.Rnw">>=
 	@
 }
+\lz
+
+\loesung{AdaBoost - Decision Stump}{
+	<<child="ex_rnw/sol_boosting_stumps.Rnw">>=
+	@
+}
+\lz
+

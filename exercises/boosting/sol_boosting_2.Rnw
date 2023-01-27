@@ -11,11 +11,11 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-trees.tex}
 
 
-\kopfsl{12}{Boosting}
+\kopfsl{13}{Boosting}
 
 
 
-\aufgabe{AdaBoost - Empirical Risk}{
-	<<child="ex_rnw/ex_boosting_1_22.Rnw">>=
+\loesung{Gradient Boosting}{
+	<<child="ex_rnw/sol_boosting_exam_2020.Rnw">>=
 	@
 }

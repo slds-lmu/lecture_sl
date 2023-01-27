@@ -10,12 +10,12 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-ensembles.tex}
 \input{../../latex-math/ml-trees.tex}
 
-\kopficsl{13}{Boosting}
+
+\kopfsl{12}{Boosting}
 
 
 
-\aufgabe{TBD}{
-	<<child="ex_rnw/ic_boosting_4.Rnw">>=
+\loesung{AdaBoost - Empirical Risk}{
+	<<child="ex_rnw/sol_boosting_empirical_risk.Rnw">>=
 	@
 }
-\lz

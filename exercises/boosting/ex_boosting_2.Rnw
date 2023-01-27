@@ -1,6 +1,7 @@
 % !Rnw weave = knitr
 
 <<setup-child, include = FALSE>>=
+library('knitr')
 knitr::set_parent("../../style/preamble_ueb.Rnw")
 @
 
@@ -8,9 +9,9 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-ml.tex}
 \input{../../latex-math/ml-ensembles.tex}
 
-\kopfsl{13}{Gradient Boosting}
+\kopfsl{13}{Boosting}
 
-\loesung{Gradient Boosting}{
-<<child="ex_rnw/sol_boosting_exam_2020.Rnw">>=
-@
+\aufgabe{Gradient Boosting}{
+	<<child="ex_rnw/ex_boosting_exam_2020.Rnw">>=
+	@
 }
