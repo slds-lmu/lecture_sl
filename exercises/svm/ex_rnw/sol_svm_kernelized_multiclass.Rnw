@@ -25,26 +25,26 @@
 %
 	\item 
 %	
-	Let $\psi(\xv,y) = \frac12y\phi(x),$ where $\phi$ is the feature map of the regularized binary ERM problem in (a).
+	Let $\psi(\xv,y) = \frac12y\tilde{\phi}(x),$ with $\tilde{\phi}(x):=(1,\phi(x))^{\top}$, where $\phi$ is the feature map of the regularized binary ERM problem in (a). Further, define $\tilde{\thetab}:=(\theta_0,\thetab)^{\top}$, i.e. we absorb the intercept into the feature map and parameter vector for convenience.
 %	
 	Now, if $y \neq \yi$ it holds that $y = - \yi,$ so that
 %	
 	\begin{align*}
 %		
-		1 + \thetab^\top\psi(\xi,y) &- \thetab^\top\psi(\xi,\yi)   \\
+		1 + \tilde{\thetab}^\top \psi(\xi,y) &- \tilde{\thetab}^\top \psi (\xi,\yi)   \\
 %		
-		&= 1 +  \frac12 y  \thetab^\top\phi(\xi) -  \frac12 \yi \thetab^\top\phi(\xi) \tag{Definition of $\psi$}\\
+		&= 1 +  \frac12 y  \tilde{\thetab}^\top\tilde{\phi}(\xi) -  \frac12 \yi \tilde{\thetab}^\top\tilde{\phi}(\xi) \tag{Definition of $\psi$}\\
 %		
-		&= 1 +  \frac12 \left(   y   -   \yi    \right)  \thetab^\top \phi(\xi) \tag{Distributivity}\\
+		&= 1 +  \frac12 \left(   y   -   \yi    \right)  \tilde{\thetab}^\top \tilde{\phi}(\xi) \tag{Distributivity}\\
 %		
 		&= \begin{cases}
 %			
-			1 +   \thetab^\top \phi(\xi), & \mbox{if } \yi=-1  \\
-			1 -   \thetab^\top \phi(\xi), & \mbox{if } \yi=+1 \\
+			1 +   \tilde{\thetab}^\top \tilde{\phi}(\xi), & \mbox{if } \yi=-1  \\
+			1 -   \tilde{\thetab}^\top \tilde{\phi}(\xi), & \mbox{if } \yi=+1 \\
 %			
 		\end{cases} \tag{Since $y = - \yi$}\\
 %	
-		&= 	1 -   \yi \thetab^\top \phi(\xi).
+		&= 	1 -   \yi \tilde{\thetab}^\top \tilde{\phi}(\xi).
 %		
 	\end{align*}
 %
@@ -54,12 +54,14 @@
 %		
 		 \risket 
 %		 
-		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \thetab^\top\psi(\xi,y) - \thetab^\top\psi(\xi,\yi)    , 0) \\
+		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \tilde{\thetab}^\top\psi(\xi,y) - \tilde{\thetab}^\top\psi(\xi,\yi)    , 0) \\
 %		 
- 		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin  \max(1 + \thetab^\top\psi(\xi,-\yi) - \thetab^\top\psi(\xi,\yi)    , 0) \tag{$y \neq \yi$ implies $y = - \yi$} \\
+ 		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin  \max(1 + \tilde{\thetab}^\top\psi(\xi,-\yi) - \tilde{\thetab}^\top\psi(\xi,\yi)    , 0) \tag{$y \neq \yi$ implies $y = - \yi$} \\
 %		 
-		  &= \frac{1}{2} \|\thetab\|^2 + C \sumin \max(1 -   \yi \thetab^\top \phi(\xi)  , 0).
+		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \max(1 -   \yi \tilde{\thetab}^\top \tilde{\phi}(\xi)  , 0) \\
 %		
+		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \max(1 -   \yi (\thetab^\top \phi(\xi)+\theta_0)  , 0) .
+%	
 	\end{align*}
 	%	
 	\item  The representer theorem tells us that for the solution $\thetab^*$ (if it exists) of $\risket$ it holds that  $\thetab^* \in \spn\{ (\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g} \}.$
