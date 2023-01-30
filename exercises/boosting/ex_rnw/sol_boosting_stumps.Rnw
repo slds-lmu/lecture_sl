@@ -138,7 +138,7 @@
           \begin{equation}
             \begin{aligned}
                 \errm[1] &= \sumin \wmi[1] \cdot \mathds{1}_{\{\yi[1] \,\neq\, \blh[1](\xi)\}} = 0.34 \\
-                \betamh[1] &= \frac{1}{2} \log \left( \frac{1 - \errm[1]}{\errm[1]}\right) = 0.5 \cdot log \left(\frac{0.66}{0.34} \right)  \approx 0.54 \\
+                \betamh[1] &= \frac{1}{2} \log \left( \frac{1 - \errm[1]}{\errm[1]}\right) = 0.5 \cdot log \left(\frac{0.66}{0.34} \right)  \approx 0.35 \\
             \end{aligned}
         \end{equation}
         
