@@ -54,9 +54,9 @@
                     0.1 \cdot \exp\left(- 0 \cdot 1 \cdot 1 \right) & \text{if } i = 11,\dots,14,19
                 \end{cases} \\
                 &= \begin{cases}
-                    0.01 & \text{if } i = 1,\dots,4,6,\dots,10 \\
-                    0.1 & \text{if } i = 5 \\
-                    0.1 & \text{if } i = 11,\dots,19
+                    0.01 & \text{if } i = 1,\dots,10 \\
+                    0.1 & \text{if } i = 15,16,17,18 \\
+                    0.1 & \text{if } i = 11,\dots,14,19
                 \end{cases}
             \end{aligned}
         \end{equation}
