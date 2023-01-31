@@ -30,7 +30,7 @@
         
         \begin{equation}
             \begin{aligned}
-                \errm[0] &= \sumin \wmi[0] \cdot \mathds{1}_{\{\yi[0] \,\neq\, \blh[0](\xi)\}} = 0.33 \\
+                \errm[0] &= \sumin \wmi[0] \cdot \mathds{1}_{\{\yi[i] \,\neq\, \blh[0](\xi)\}} = 0.33 \\
                 \betamh[0] &= \frac{1}{2} \log \left( \frac{1 - \errm[0]}{\errm[0]}\right) = 0.5 \cdot log \left(\frac{0.67}{0.33} \right)  \approx 0.35 \\
                 w^{[1](1)} &= w^{[0](1)} \cdot \exp \left( -\betamh[0] \cdot \yi[1] \cdot \blh[0](\xi[1]) \right) = 0.33 \cdot \exp \left( -0.35 \cdot -1 \cdot -1 \right) \approx 0.23 \\
                 w^{[1](2)} &= w^{[0](2)} \cdot \exp \left( -\betamh[0] \cdot \yi[2] \cdot \blh[0](\xi[2]) \right) = 0.33 \cdot \exp \left( -0.35 \cdot 1 \cdot 1 \right) \approx 0.23 \\
@@ -78,20 +78,20 @@
 
         \begin{equation}
             \begin{aligned}
-                \errm[1] &= \sumin \wmi[1] \cdot \mathds{1}_{\{\yi[1] \,\neq\, \blh[1](\xi)\}} = 0.25 \\
+                \errm[1] &= \sumin \wmi[1] \cdot \mathds{1}_{\{\yi[i] \,\neq\, \blh[1](\xi)\}} = 0.25 \\
                 \betamh[1] &= \frac{1}{2} \log \left( \frac{1 - \errm[1]}{\errm[1]}\right) = 0.5 \cdot log \left(\frac{0.75}{0.25} \right)  \approx 0.54 \\
             \end{aligned}
         \end{equation}
 
         We can see that for the left-most point and the right-most point, there is a disagreement between our two stumps. 
         In the case of the right-most point, the second stump has a bigger weight than the first one, so we will classify it correctly as $y=-1$. 
-        Unfortunately, in the case of the left-most point, we will classify it incorrectly as $y=1$. We will now calculate the new weights:
+        Unfortunately, in the case of the left-most point, we will classify it incorrectly as $y=1$. Let's calculate the new weights:
 
         \begin{equation}
             \begin{aligned}
-                w^{[2](1)} &= w^{[1](1)} \cdot \exp \left( -\betamh[0] \cdot \yi[1] \cdot \blh[0](\xi[1]) \right) = 0.25 \cdot \exp \left( -0.54 \cdot 1 \cdot -1 \right) \approx 0.42 \\
-                w^{[2](2)} &= w^{[1](2)} \cdot \exp \left( -\betamh[0] \cdot \yi[2] \cdot \blh[0](\xi[2]) \right) = 0.25 \cdot \exp \left( -0.54 \cdot 1 \cdot 1 \right) \approx 0.15 \\
-                w^{[2](3)} &= w^{[1](3)} \cdot \exp \left( -\betamh[0] \cdot \yi[3] \cdot \blh[0](\xi[3]) \right) = 0.5 \cdot \exp \left( -0.54 \cdot -1 \cdot -1 \right) \approx 0.29 \\ 
+                w^{[2](1)} &= w^{[1](1)} \cdot \exp \left( -\betamh[0] \cdot \yi[1] \cdot \blh[1](\xi[1]) \right) = 0.25 \cdot \exp \left( -0.54 \cdot 1 \cdot -1 \right) \approx 0.42 \\
+                w^{[2](2)} &= w^{[1](2)} \cdot \exp \left( -\betamh[0] \cdot \yi[2] \cdot \blh[1](\xi[2]) \right) = 0.25 \cdot \exp \left( -0.54 \cdot 1 \cdot 1 \right) \approx 0.15 \\
+                w^{[2](3)} &= w^{[1](3)} \cdot \exp \left( -\betamh[0] \cdot \yi[3] \cdot \blh[1](\xi[3]) \right) = 0.5 \cdot \exp \left( -0.54 \cdot -1 \cdot -1 \right) \approx 0.29 \\ 
             \end{aligned}
         \end{equation}
 
@@ -107,7 +107,8 @@
         
         
         
-         We will start with a third iteration that will correct this mistake. Unfortunately, we can't have open end notes in a stump during training. The best we can do add a new stump in the same place as the first one: 
+         We will start now with the third iteration. Unfortunately, we can't have open end nodes in a stump because doing such a split does not improve the splitting criterion.
+        The best we can do is to add a new stump in the same place as the first one: 
 
         <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
             mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
@@ -137,8 +138,8 @@
 
           \begin{equation}
             \begin{aligned}
-                \errm[1] &= \sumin \wmi[1] \cdot \mathds{1}_{\{\yi[1] \,\neq\, \blh[1](\xi)\}} = 0.34 \\
-                \betamh[1] &= \frac{1}{2} \log \left( \frac{1 - \errm[1]}{\errm[1]}\right) = 0.5 \cdot log \left(\frac{0.66}{0.34} \right)  \approx 0.35 \\
+                \errm[2] &= \sumin \wmi[2] \cdot \mathds{1}_{\{\yi[i] \,\neq\, \blh[2](\xi)\}} = 0.34 \\
+                \betamh[2] &= \frac{1}{2} \log \left( \frac{1 - \errm[2]}{\errm[2]}\right) = 0.5 \cdot log \left(\frac{0.66}{0.34} \right)  \approx 0.35 \\
             \end{aligned}
         \end{equation}
         
@@ -162,5 +163,56 @@
   
   cat("Where each stump is located: ", model$classifier$split )
 @
+
+Considering the restrictions in the stump training, this model will never reach a training error of zero. 
+But what would happen if we allow empty end nodes? We could add a stump at $x_1 = 0$ in the third iteration:
+
+        <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
+            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
+            x1 = sapply(mpoints,function(x) x[1])
+            x2 = sapply(mpoints,function(x) x[2])
+            y = c(-1, 1, -1)
+            
+            par(mar = c(4,4,1,1), pin = c(3,3))
+            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
+            xlim = c(-1,6), ylim = c(0,1),
+            ylab = "x2", xlab = "x1")
+			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
+            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
+			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
+			      abline(v=2,lty=2,lwd=2,col='red')
+			      arrows(2,0.3,3,0.3,col='red')
+			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
+			      abline(v=4,lty=2,lwd=2,col='blue')
+			      arrows(4,0.4,3,0.4,col='blue')
+			      text(x=3.6, y=0.45, label="+",cex=2,col='blue')
+			      abline(v=0,lty=2,lwd=2,col='darkgreen')
+			      arrows(0,0.5,-1,0.5,col='darkgreen')
+			      text(x=-0.3, y=0.55, label="+",cex=2,col='darkgreen')
+          @
+
+        We calculate the  weighted in-sample misclassification rate and the weight for the stump.
+        
+        \begin{equation}
+            \begin{aligned}
+                \errm[2] &= \sumin \wmi[2] \cdot \mathds{1}_{\{\yi[i] \,\neq\, \blh[2](\xi)\}} = 0.17 \\
+                \betamh[2] &= \frac{1}{2} \log \left( \frac{1 - \errm[2]}{\errm[2]}\right) = 0.5 \cdot log \left(\frac{0.83}{0.17} \right)  \approx 0.79 \\
+            \end{aligned}
+        \end{equation}
+        
+        Let's check how the points are classified
+        
+        
+        \begin{equation}
+            \begin{aligned}
+              \hat{y_1}  &= \sign \left( \sumim \betamh[i]  \blh[i] ( \xi[1]) \right) = \sign( -0.35 + 0.54 - 0.79) = -1\\
+              \hat{y_2}  &= \sign \left( \sumim \betamh[i]  \blh[i] ( \xi[2]) \right) = \sign( +0.35 + 0.54 - 0.79) = 1 \\
+              \hat{y_3}  &= \sign \left( \sumim \betamh[i]  \blh[i] ( \xi[3]) \right) = \sign( +0.35 - 0.54 - 0.79) = -1 \\
+            \end{aligned}
+        \end{equation}
+        
+        In this case, we reached zero error in training in the third iteration.
+        
+      
 
 \end{enumerate}
