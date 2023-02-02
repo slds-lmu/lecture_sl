@@ -13,7 +13,7 @@ where $\gamma^{[m]} = \frac12 - \errm.$ For this purpose, proceed as follows:
 %	
   \item Give an interpretation of $\gamma^{[m]}.$
 %  
-  \item For any $m=1,\ldots,M$ let $W^{[m]} = \sum_{i=1}^n w^{[m](i)}$ be the total weigh in iteration \textbf{before} normalizing the weights. Show that $W^{[m]} = \sqrt{1- 4 (\gamma^{[m]})^2}.$
+  \item For any $m=1,\ldots,M$ let $W^{[m]} = \sum_{i=1}^n w^{[m](i)}$ be the total weight in iteration $m$ \textbf{before} normalizing the weights. Show that $W^{[m]} = \sqrt{1- 4 (\gamma^{[m]})^2}.$
 %  
   \item Show that 
 %  
