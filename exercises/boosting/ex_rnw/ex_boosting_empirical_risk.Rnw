@@ -39,4 +39,4 @@ where $\gamma^{[m]} = \frac12 - \errm.$ For this purpose, proceed as follows:
 	%		
 \end{align*}
 %
-i.e., the average empirical risk is decreasing exponentially in the number of used iterations (provided $\errm >1/2$).
+i.e., the average empirical risk is decreasing exponentially in the number of used iterations (provided $\errm <1/2$).
