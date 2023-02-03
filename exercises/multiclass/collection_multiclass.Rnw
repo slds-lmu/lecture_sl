@@ -33,6 +33,23 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 @
 }
 
+\dlz
+
+\aufgabe{Multiclass Hinge Loss}{
+<<child="ex_rnw/ex_multiclass_hinge_loss.Rnw">>=
+@
+}
+
+\dlz
+
+\aufgabe{Multiclass Classification with 0-1-Loss}{
+<<child="ex_rnw/ex_multiclass_01loss.Rnw">>=
+@
+}
+
+
+
+
 % 
 % % ------------------------------------------------------------------------------
 % % PAST EXAMS
