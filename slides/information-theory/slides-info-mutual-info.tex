@@ -171,7 +171,7 @@ Proof is not hard, but also not completely trivial.
 
 \begin{vbframe} {Mutual information}
 
-%The \textbf{relative entropy} $D(p||q)$ (or Kullback-Leibler distance) is a measure of the inefficiency of assuming that the distribution is $q$ when the true distribution is $p$: 
+%The \textbf{relative entropy} $D(p||q)$ (or Kullback-Leibler Divergence) is a measure of the inefficiency of assuming that the distribution is $q$ when the true distribution is $p$: 
 % 
 % \footnotesize
 % \begin{equation*}\begin{aligned}
@@ -182,7 +182,7 @@ Proof is not hard, but also not completely trivial.
 
 \begin{itemize}
 \item The MI describes the amount of information about one random variable obtained through the other one or how different the joint distribution is from pure independence.
-\item Consider two random variables $X$ and $Y$ with a joint probability mass function $p(x, y)$ and marginal probability mass functions $p(x)$ and $p(y)$. The MI $I (X;Y)$ is the Kullback-Leibler distance between the joint distribution and the product distribution $p(x)p(y)$:
+\item Consider two random variables $X$ and $Y$ with a joint probability mass function $p(x, y)$ and marginal probability mass functions $p(x)$ and $p(y)$. The MI $I (X;Y)$ is the Kullback-Leibler Divergence between the joint distribution and the product distribution $p(x)p(y)$:
 \footnotesize
 \begin{equation*}\begin{aligned}
 I(X ; Y) &=\sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
