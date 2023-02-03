@@ -1,0 +1,50 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE, echo=FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
+@
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+\input{../../latex-math/ml-trees.tex}
+
+\kopf{Curse of Dimensionality}
+
+\tableofcontents
+
+% ------------------------------------------------------------------------------
+% LECTURE EXERCISES
+% ------------------------------------------------------------------------------
+
+\dlz
+\exlect
+\lz
+
+\aufgabe{High-dimensional Gaussian Distributions 1}{
+	<<child="ex_rnw/ex_high_dimensional_gaussian_1.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{High-dimensional Gaussian Distributions 2}{
+	<<child="ex_rnw/ex_high_dimensional_gaussian_2.Rnw">>=
+	@
+}
+
+
+% % ------------------------------------------------------------------------------
+% % PAST EXAMS
+% % ------------------------------------------------------------------------------
+% 
+% \dlz
+% \exexams
+% \lz
+% 
+% % ------------------------------------------------------------------------------
+% % INSPO
+% % ------------------------------------------------------------------------------
+% 
+% \dlz
+% \exinspo
