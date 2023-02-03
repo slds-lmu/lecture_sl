@@ -138,14 +138,12 @@ Leo Breiman (referring to the success of AdaBoost):
   \begin{algorithmic}[1]
     \State Initialize observation weights: $w^{[1](i)} = \frac{1}{n} \quad \forall i \in \nset$
     \For {$m = 1 \to M$}
-      \State Fit classifier to training data with weights $\wm$ and get $\blh$
-      \State Calculate weighted in-sample misclassification rate
-      $$
-        \errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}}
-      $$
+      \State Fit classifier to training data with weights $\wm$ and get hard label classifier $\blh$
+      \State Calculate weighted in-sample misclassification rate \vspace*{-1ex}
+      $$\errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}}$$\vspace*{-1ex}
       \State Compute: $ \betamh = \frac{1}{2} \log \left( \frac{1 - \errm}{\errm}\right)$
       \State Set: $w^{[m+1](i)} = \wmi \cdot \exp\left(- \betamh \cdot
-        \yi \cdot \hat{h}(\xi)\right) $
+        \yi \cdot \blh(\xi)\right) $
       \State Normalize $w^{[m+1](i)}$ such that $\sumin w^{[m+1](i)} = 1$
     \EndFor
     \State Output: $\fxh = \sum_{m=1}^{M} \betamh \blh(\xv)$
