@@ -1,0 +1,25 @@
+
+Suppose we are facing a binary classification learning problem with the feature space $\Xspace = \{0,1\}$ and label space $\Yspace=\{-1,1\}.$
+%	
+Let us assume that the relationship between the features and labels is specified by
+%
+$$    y = 2\,\max\{x,\epsilon \} -1 $$
+%	
+where $\P_x = \mathrm{Ber}(\theta_x),$ $\P_\eps = \mathrm{Ber}(\theta_\epsilon),$ and $x$ and $\epsilon$ are independent.
+% 
+%	
+\begin{enumerate}	  
+  \item 
+
+    What is $H(\epsilon)?$ 
+
+  \item
+    What is $H(y|x)?$ 
+
+  \item 
+    What is $H(y,x)?$ 
+
+  \item
+    Now if $\epsilon = \psi(x)$ for some deterministic function $\psi:\{0,1\} \to \{0,1\}.$ What are the answers to the previous questions in this case? 
+
+\end{enumerate}
