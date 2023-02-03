@@ -21,6 +21,35 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \exlect
 \lz
 
+
+\aufgabe{Kullback-Leibler Divergence}{
+	<<child="ex_rnw/ex_kld_binom_normal.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{The Convexity of KL Divergence}{
+	<<child="ex_rnw/ex_kld_convexity.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Kullback-Leibler Divergence and model misspecification}{
+	<<child="ex_rnw/ex_kl_divergence_misspecification.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Entropy in Binary Classification}{
+	<<child="ex_rnw/ex_entropy_binary_classification.Rnw">>=
+	@
+}
+
+\dlz
+
 \aufgabe{Entropy}{
 	<<child="ex_rnw/ex_some_information.Rnw">>=
 	@
@@ -28,10 +57,19 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 
 \dlz
 
-\aufgabe{Kullback-Leibler Divergence}{
-	<<child="ex_rnw/ex_kld_binom_normal.Rnw">>=
+\aufgabe{Mutual Information of Three Variables}{
+	<<child="ex_rnw/ex_mutualinfo_three_var.Rnw">>=
 	@
 }
+
+\dlz
+
+\aufgabe{Smoothed Cross-Entropy Loss}{
+	<<child="ex_rnw/ex_smoothed_crossentropy.Rnw">>=
+	@
+}
+
+
 
 % 
 % % ------------------------------------------------------------------------------
