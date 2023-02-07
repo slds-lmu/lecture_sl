@@ -15,6 +15,7 @@
 .Rproj.user
 .Rproj.user/
 cache/
+cheatsheets/*.pdf
 docs/
 exercises/*/*.pdf
 !exercises/svm/figure/eps_tubes.pdf
