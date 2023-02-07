@@ -1,25 +1,30 @@
 \begin{enumerate}
     \item 
-        The initial weights all three points in the dataset is $\frac{1}{3}$. A decision boundary for the first decision stump could be the line $x=2$.
+        The initial weights all three points in the dataset is $\frac{1}{3}$. A decision boundary for the first decision stump could at $x=2$.
         
         
         <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
-            x1 = sapply(mpoints,function(x) x[1])
-            x2 = sapply(mpoints,function(x) x[2])
-            y = c(-1, 1, -1)
-            
-            par(mar = c(4,4,1,1), pin = c(3,3))
-            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
-            xlim = c(-1,6), ylim = c(0,1),
-            ylab = "x2", xlab = "x1")
-			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
-            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
-			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
-			      abline(v=2,lty=2,lwd=2,col='red')
-			      arrows(2,0.3,3,0.3,col='red')
-			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
-          @
+          # Define x 
+          x<-c(1,3,5)
+          # Define y
+          y = c(-1, 1, -1)
+          ## Make y-value=0
+          x<-cbind(x,0)
+          ## Plotting without box or axis with dot, representing data points                  
+          plot(x, col=ifelse(y==1,'red','blue')
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',pch=16,cex=2)
+          # add axis with label to the right
+          axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
+          # add axis labels
+          mtext("x", side=1, line=-2, cex=1.5)
+          # add a legend
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"), pch=16, cex=0.7)
+          
+          # write a segment in x = 2
+          segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
+          arrows(2,0.1,2.5,0.1,col='darkgreen',lwd=2,length = 0.1)
+          text(x=2.3, y=0.25, label="+",cex=1.5,col='darkgreen')
+        @
 
     \item 
 
@@ -54,24 +59,30 @@
          The stump makes two correct predictions and one incorrect prediction:
 
       <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
-            x1 = sapply(mpoints,function(x) x[1])
-            x2 = sapply(mpoints,function(x) x[2])
-            y = c(-1, 1, -1)
-            
-            par(mar = c(4,4,1,1), pin = c(3,3))
-            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
-            xlim = c(-1,6), ylim = c(0,1),
-            ylab = "x2", xlab = "x1")
-			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
-            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
-			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
-			      abline(v=2,lty=2,lwd=2,col='red')
-			      arrows(2,0.3,3,0.3,col='red')
-			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
-			      abline(v=4,lty=2,lwd=2,col='blue')
-			      arrows(4,0.4,3,0.4,col='blue')
-			      text(x=3.6, y=0.45, label="+",cex=2,col='blue')
+          # Define x 
+          x<-c(1,3,5)
+          # Define y
+          y = c(-1, 1, -1)
+          ## Make y-value=0
+          x<-cbind(x,0)
+          ## Plotting without box or axis with dot, representing data points                  
+          plot(x, col=ifelse(y==1,'red','blue')
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',pch=16,cex=2)
+          # add axis with label to the right
+          axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
+          # add axis labels
+          mtext("x", side=1, line=-2, cex=1.5)
+          # add a legend
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"), pch=16, cex=0.7)
+          
+          # write a segment in x = 2
+          segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
+          arrows(2,0.1,2.5,0.1,col='darkgreen',lwd=2,length = 0.1)
+          text(x=2.3, y=0.25, label="+",cex=1.5,col='darkgreen')
+          # write a segment in x =4 
+          segments(4,-0.1,4,0.3,lty=2,lwd=2,col='darkviolet')
+          arrows(4,0.1,3.5,0.1,col='darkviolet',lwd=2,length = 0.1)
+          text(x=3.7, y=0.25, label="+",cex=1.5,col='darkviolet')
           @
 
         We calculate the  weighted in-sample misclassification rate and the weight for the stump.
@@ -144,18 +155,31 @@
         \end{equation}
         
         We can see that we are going back to a similar case as the first iteration and now the rounding errors could play a role in our calculations. Let's build a model to see what happens:
-<<echo=FALSE,message=FALSE, warning=FALSE, include=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-  devtools::install_github("jadonwagstaff/sboost")
-  library(sboost)
-@
 			      
 <<echo=TRUE, fig.align='center', fig.height=4, fig.width=4>>=
-  df = data.frame(x1,x2,y)
+	 library(RWeka)
+	 library(rpart)
+   library(rpart.plot)
+   # Define x 
+   x<-c(1,3,5)
+   # Define y
+   y = as.factor(c('negative','positive','negative'))
+   df = data.frame(x,y)
+   # train and plot tree
+   tree =rpart(y~x,data=df,control = rpart.control(minsplit=0,maxdepth = 1))
+   prp(tree)
+   # Define x 
+   x<-c(3,5)
+   # Define y
+   y = as.factor(c('positive','negative'))
+   df = data.frame(x,y)
+   tree =rpart(y~x,data=df,control = rpart.control(minsplit=0,maxdepth = 1))
+   prp(tree)
+   
   for (i in 1:6){
     # Train the model with the amount of iterations
-    model= sboost::sboost(df[1:2],df$y,iterations = i)
     # Assess the performance 
-    model_assessment=sboost::assess(model,features = df[1:2],outcomes = df$y)
+    model_assessment=sboost::assess(model,features = df[1],outcomes = df$y)
     cat("Iteration number :" , i,
         ". model accuracy: ", model_assessment$performance[[6]],"\n"  )
     }
