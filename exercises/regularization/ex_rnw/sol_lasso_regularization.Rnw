@@ -25,23 +25,23 @@
 
     \item
 
-        The advantage of this representation if we are interested in finding $\thetab$ is that we can optimize each $g_i(\theta)$ separately to get optimal entries for $\theta_1,\dots,\theta_p$.
+        The advantage of this representation if we are interested in finding $\thetab$ is that we can optimize each $g_i(\theta_i)$ separately to get optimal entries for $\theta_1,\dots,\theta_p$.
 
     \item 
 
-        Let's use the hint and compare $g_i(\theta)$ with $g_i(-\theta)$, for the case where $\theta > 0$ :
+        Let's use the hint and compare $g_i(\theta_i)$ with $g_i(-\theta_i)$, for the case where $\theta_i > 0$ :
 
         \begin{equation} \label{eq:compare_gi}
             \begin{aligned}
-                g_i(\theta) &= - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda|\theta_i| \\
-                g_i(-\theta) &= + \thetah_{i}\theta + \frac{(-\theta)^2}{2} + \lambda|\theta_i| \\
+                g_i(\theta_i) &= - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i| \\
+                g_i(-\theta_i) &= + \thetah_{i}\theta_i + \frac{(-\theta_i)^2}{2} + \lambda|\theta_i| \\
             \end{aligned}
         \end{equation}
 
         We also know that non-positive $\theta$ have always a greater or equal value for $g_i(\theta)$ than than their positive counterpart:
         \begin{equation} \label{eq:compare_gi_2}
             \begin{aligned}
-                \theta > 0 \longrightarrow g_i(\theta) \leq g_i(-\theta)
+                \theta_i > 0 \longrightarrow g_i(\theta_i) \leq g_i(-\theta_i)
             \end{aligned}
         \end{equation}
 
@@ -50,7 +50,7 @@
 
         \begin{equation}
             \begin{aligned}
-                - \thetah_{i}\theta \leq \thetah_{i}\theta \longrightarrow \theta_i^* \geq 0
+                - \thetah_{i}\theta_i \leq \thetah_{i}\theta_i \longrightarrow \theta_i^* \geq 0
             \end{aligned}
         \end{equation}
     
@@ -60,8 +60,8 @@
 
         \begin{equation}
             \begin{aligned}
-                \frac{\partial g_i(\theta)}{\partial \theta} &= - \thetah_{i} + \theta + \underbrace{\lambda}_{\theta_i > 0} \\
-                &= - \thetah_{i} + \theta + \lambda  \stackrel{!}{=} 0  \longrightarrow \theta = \underbrace{\theta_i -\lambda}_{ \geq 0} \\
+                \frac{\partial g_i(\theta_i)}{\partial \theta_i} &= - \thetah_{i} + \theta_i + \underbrace{\lambda}_{\theta_i > 0} \\
+                &= - \thetah_{i} + \theta_i + \lambda  \stackrel{!}{=} 0  \longrightarrow \theta_i = \underbrace{\thetah_{i} -\lambda}_{ \geq 0} \\
                 \theta_i^* &=  \underbrace{\thetah_i - \lambda}_{ \geq 0} \\
                 &= max(0,  \thetah_i  - \lambda) \\
             \end{aligned}
@@ -69,18 +69,18 @@
     
     \item 
 
-        Let's use the hint again and compare $g_i(\theta)$ with $g_i(-\theta)$, for the case where $\theta < 0$ :
+        Let's use the hint again and compare $g_i(\theta_i)$ with $g_i(-\theta_i)$, for the case where $\theta_i < 0$ :
 
         \begin{equation} \label{eq:compare_gi_negative}
             \begin{aligned}
-                g_i(\theta) &= - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda|\theta_i| \\
-                g_i(-\theta) &= + \thetah_{i}\theta + \frac{(-\theta)^2}{2} + \lambda|\theta_i| \\
+                g_i(\theta_i) &= - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i| \\
+                g_i(-\theta_i) &= + \thetah_{i}\theta_i + \frac{(-\theta_i)^2}{2} + \lambda|\theta_i| \\
             \end{aligned}
         \end{equation}
 
         \begin{equation} \label{eq:compare_gi_negative_2}
             \begin{aligned}
-                \theta < 0 \longrightarrow g_i(\theta) \geq g_i(-\theta)
+                \theta_i < 0 \longrightarrow g_i(\theta_i) \geq g_i(-\theta_i)
             \end{aligned}
         \end{equation}
 
@@ -88,7 +88,7 @@
 
         \begin{equation}
             \begin{aligned}
-                - \thetah_{i}\theta \geq \thetah_{i}\theta \longrightarrow \theta_i^* \leq 0
+                - \thetah_{i}\theta_i \geq \thetah_{i}\theta_i \longrightarrow \theta_i^* \leq 0
             \end{aligned}
         \end{equation}
 
@@ -98,7 +98,7 @@
 
         \begin{equation} \label{eq:minimizer_theta_less_0}
             \begin{aligned}
-                \frac{\partial g_i(\theta)}{\partial \theta} &= - \thetah_{i} + \theta \underbrace{- \lambda}_{\theta_i < 0}  \stackrel{!}{=} 0  \longrightarrow \theta = \underbrace{\theta_i +\lambda}_{ \leq 0} \\
+                \frac{\partial g_i(\theta_i)}{\partial \theta_i } &= - \thetah_{i} + \theta_i \underbrace{- \lambda}_{\theta_i < 0}  \stackrel{!}{=} 0  \longrightarrow \theta_i = \underbrace{\thetah_{i} +\lambda}_{ \leq 0} \\
                 \theta_i^* &=  \underbrace{\thetah_i + \lambda}_{\leq0} \\
                 &= min(0, \thetah_i  + \lambda) \\
             \end{aligned}

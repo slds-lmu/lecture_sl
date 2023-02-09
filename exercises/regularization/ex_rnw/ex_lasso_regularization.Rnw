@@ -40,7 +40,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 		Note that the minimization problem on the right-hand side of (a) can be written as $\sum_{i=1}^p g_i(\theta_i),$ where 
 		$$ 
-			g_i(\theta) =  - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda |\theta|. 
+			g_i(\theta_i) =  - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda |\theta_i|. 
 		$$ 
 
 		What is the advantage of this representation if we seek to find the $\thetab$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt?$
