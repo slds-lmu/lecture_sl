@@ -8,11 +8,9 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{5}{Multiclass}
+\kopficsl{4}{Multiclass Classification}
 
-
-
-\aufgabe{Logistic Regression, Softmax, Cross-Entropy}{
-	<<child="ex_rnw/ex_lt_softmax_theory_wo_mlr.Rnw">>=
+\loesung{Multiclass Classification with 0-1-Loss}{
+	<<child="ex_rnw/sol_multiclass_01loss.Rnw">>=
 	@
 }

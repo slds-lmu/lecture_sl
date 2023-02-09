@@ -9,7 +9,7 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \input{../../latex-math/basic-ml.tex}
 \input{../../latex-math/ml-trees.tex}
 
-\kopf{Information Theory}
+\kopf{Curse of Dimensionality}
 
 \tableofcontents
 
@@ -21,57 +21,19 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \exlect
 \lz
 
-
-\aufgabe{Kullback-Leibler Divergence}{
-	<<child="ex_rnw/ex_kld_binom_normal.Rnw">>=
+\aufgabe{High-dimensional Gaussian Distributions 1}{
+	<<child="ex_rnw/ex_high_dimensional_gaussian_1.Rnw">>=
 	@
 }
 
 \dlz
 
-\aufgabe{The Convexity of KL Divergence}{
-	<<child="ex_rnw/ex_kld_convexity.Rnw">>=
-	@
-}
-
-\dlz
-
-\aufgabe{Kullback-Leibler Divergence and model misspecification}{
-	<<child="ex_rnw/ex_kl_divergence_misspecification.Rnw">>=
-	@
-}
-
-\dlz
-
-\aufgabe{Entropy in Binary Classification}{
-	<<child="ex_rnw/ex_entropy_binary_classification.Rnw">>=
-	@
-}
-
-\dlz
-
-\aufgabe{Entropy}{
-	<<child="ex_rnw/ex_some_information.Rnw">>=
-	@
-}
-
-\dlz
-
-\aufgabe{Mutual Information of Three Variables}{
-	<<child="ex_rnw/ex_mutualinfo_three_var.Rnw">>=
-	@
-}
-
-\dlz
-
-\aufgabe{Smoothed Cross-Entropy Loss}{
-	<<child="ex_rnw/ex_smoothed_crossentropy.Rnw">>=
+\aufgabe{High-dimensional Gaussian Distributions 2}{
+	<<child="ex_rnw/ex_high_dimensional_gaussian_2.Rnw">>=
 	@
 }
 
 
-
-% 
 % % ------------------------------------------------------------------------------
 % % PAST EXAMS
 % % ------------------------------------------------------------------------------
@@ -79,15 +41,6 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 % \dlz
 % \exexams
 % \lz
-% 
-% \aufgabeexam{WS2020/21}{first}{1}{
-% foo
-% }
-% 
-% \dlz
-% \loesung{
-% bar
-% }
 % 
 % % ------------------------------------------------------------------------------
 % % INSPO

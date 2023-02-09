@@ -11,6 +11,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopficsl{6}{Information Theory}
 
 \loesung{Entropy in Binary Classification}{
-	<<child="ex_rnw/ic_sol_entropy_binary_classification.Rnw">>=
+	<<child="ex_rnw/sol_entropy_binary_classification.Rnw">>=
 	@
 }
