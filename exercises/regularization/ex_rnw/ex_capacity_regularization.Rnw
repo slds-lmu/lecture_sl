@@ -6,6 +6,6 @@
 \item $L1$, $L2$ and elastic net regularization;
 \item the underdetermined problem;
 \item the bias-variance trade-off;
-\item early stopping using a simple neural network. %(use a simple neural network as in Exercise 2).
+\item early stopping (use a simple neural network as in Exercise 2).
 \end{itemize}
 \end{enumerate}

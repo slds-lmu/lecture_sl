@@ -6,7 +6,7 @@ $$ L_{0-1}(y,\hx) = \mathds{1}_{\{ y \ne \hx \}} \leq L(y,\fx) = \max_{k} \left(
 %
 where 
 %
-$$ \Hspace = \{  f=(f_1,\ldots,f_g)^\top: \Xspace \to \R^g ~|~ f_k:\Xspace \to \R, \ \forall k \in \Yspace  \}. $$
+$$ \Hspace = \{  f=(f_1,\ldots,f_g)^\top: \Xspace \to \R^g ~|~ f_i:\Xspace \to \R, \ \forall i \in \Yspace  \}. $$
 %
 and
 %
@@ -134,7 +134,7 @@ Then,
 \end{align*}
 %
 %
-\item Yes, we can say something similar for the alternative multiclass hinge loss, namely that it is only zero if all the $g-1$ margin\textbf{s} are greater or equal $1,$ where the margins are $m_{y,k}(\xv) = f_y(\xv) - f_k(\xv)$ ($y$ is the true class and $k \in \Yspace\backslash\{y\}$).
+\item Yes, we can state say something similar for the alternative multiclass hinge loss, namely that it is only zero if all the $g-1$ margin\textbf{s} are greater or equal $1,$ where the margins are $m_{y,k}(\xv) = f_y(\xv) - f_k(\xv)$ ($y$ is the true class and $k \in \Yspace\backslash\{y\}$).
 %
 Indeed, it holds that
 %
@@ -153,7 +153,7 @@ Indeed, it holds that
 \end{align*}
 
 
-\item An empirical risk minimization approach for the (alternative) multiclass hinge loss will try to minimize the $g-1$ margins \emph{simultaneously}, while the empirical risk minimization approach with the one-vs-rest technique will try to minimize the (binary) margins of the individual binary hinge losses \emph{separately}.
+\item An empirical loss minimization approach for the (alternative) multiclass hinge loss will try to minimize the $g-1$ margins \emph{simultaneously}, while the empirical loss minimization approach with the one-vs-rest technique will try to minimize the (binary) margins of the individual binary hinge losses \emph{separately}.
 %
 In particular, a model obtained by the former will in general not coincide with a model obtained by the latter approach.
 %
