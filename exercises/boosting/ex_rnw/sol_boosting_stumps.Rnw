@@ -161,10 +161,8 @@
             \end{aligned}
         \end{equation}
         
-        We can see that we are going back to a similar case as the first iteration, it seems like we will keep creating new stumps on $x=2$ and $x=4$ and the model will never reach a training error of zero. Let's build an \textit{adaboost} function in R
+        We can see that we are going back to a similar case as the first iteration, it seems like we will keep creating new stumps on $x=2$ and $x=4$ and the model will never reach a training error of zero. Let's implement Adaboost with stumps in R to find out:
 
-        We calculate the  weighted in-sample misclassification rate and the weight for the stump.
-        
         
 <<echo=TRUE, fig.align='center', fig.height=4, fig.width=4>>=
 library(rpart)
