@@ -38,7 +38,7 @@
             \end{aligned}
         \end{equation}
 
-        We also know that non-positive $\theta$ have always a greater or equal value for $g_i(\theta)$ than than their positive counterpart:
+        We also know that non-positive $\theta_i$ have always a greater or equal value for $g_i(\theta_i)$ than than their positive counterpart:
         \begin{equation} \label{eq:compare_gi_2}
             \begin{aligned}
                 \theta_i > 0 \longrightarrow g_i(\theta_i) \leq g_i(-\theta_i)
