@@ -54,7 +54,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 		Consider first the case that $\thetah_i>0$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i\geq 0.$ 
 	
-		\emph{Hint:} Compare $g_i(\theta)$ and $g_i(-\theta)$ for $\theta\geq0.$
+		\emph{Hint:} Compare $g_i(\theta_i)$ and $g_i(-\theta_i)$ for $\theta_i\geq0.$
 	
 		\lz
 		\lz
