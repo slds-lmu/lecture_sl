@@ -22,24 +22,51 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \exlect
 \lz
 
-\aufgabe{SVM -- Support Vectors and Separating Hyperplane}{
-	<<child="ex_rnw/ex_linsvm_hyperplane.Rnw">>=
+\aufgabe{Hard Margin Classifier}{
+	<<child="ex_rnw/ex_linsvm_hardmargin.Rnw">>=
 	@
 }
 
 \dlz
 
-\aufgabe{SVM -- Optimization}{
+\aufgabe{Soft Margin Classifier}{
+	<<child="ex_rnw/ex_linsvm_softmargin.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Optimization}{
 	<<child="ex_rnw/ex_linsvm_subgradient.Rnw">>=
 	@
 }
 
 \dlz
 
-\aufgabe{SVM -- Kernel Trick}{
+\aufgabe{Regression}{
+	<<child="ex_rnw/ex_linsvm_regression.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Kernel Trick}{
 	<<child="ex_rnw/ex_kernel_trick.Rnw">>=
 	@
 }
+
+\aufgabe{Kernels}{
+	<<child="ex_rnw/ic_svm_kernel_definition.Rnw">>=
+	@
+}
+\dlz
+
+\aufgabe{Kernelized Multiclass SVM}{
+	<<child="ex_rnw/ex_svm_kernelized_multiclass.Rnw">>=
+	@
+}
+
+
 
 % 
 % % ------------------------------------------------------------------------------

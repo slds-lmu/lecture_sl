@@ -1,0 +1,112 @@
+
+
+
+\begin{enumerate}
+
+  \item
+   
+    The hyperplane is given by:
+    
+    \begin{equation}
+      \theta_1 x_1^{(i)} + \theta_2 x_2^{(i)} + \theta_0 = 0  
+    \end{equation}
+    
+    
+    Plugging in the values for the $\theta$s and solving for $x_2$, we get the decision boundary as function of $x_1$:
+    
+    \begin{equation}
+      x_2 = -x_1 + 2
+    \end{equation}
+    
+    
+    <<echo=FALSE, fig.align='center', fig.height=3, fig.width=3>>=
+    mpoints = list(c(0, 0),c(0.5, 0.5),c(0, 1), c(0,3), c(3,0), c(3,3))
+    x1 = sapply(mpoints,function(x) x[1])
+    x2 = sapply(mpoints,function(x) x[2])
+    y = c(1, -1, -1, 1, 1, 1)
+    
+    par(mar = c(4,4,1,1), pin = c(3,3))
+    plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 1.5,
+    xlim = c(0,3), ylim = c(0,3),
+    ylab = "x2", xlab = "x1")
+    grid(lwd = 2)
+    points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 1.5)
+    abline(coef = c(2,-1),lty=1,lwd=2)
+    @
+
+  \item
+    
+    To determine which points are support vectors, we will use the constraint:
+
+    \begin{equation}
+      y^{(i)} \left( x^{(i)} \thetah + \thetah_0 \right) \geq   1 - \sli
+    \end{equation}
+
+
+    \begin{equation}
+      \begin{cases}
+        (0,0) : \  1 \left( 0 + 0 - 2 \right) = -2 \geq 1 - \zeta^{(1)} \longrightarrow \zeta^{(1)}  \geq 3  \\
+        (0.5, 0.5) : \  -1 \left( 0.5 + 0.5 - 2 \right) = 1 \geq 1 - \zeta^{(2)} \longrightarrow \zeta^{(2)} \geq 0 \\
+        (0, 1) : \  -1 \left( 0 + 1 - 2 \right) = 1 \geq 1 - \zeta^{(3)}  \longrightarrow \zeta^{(3)}  \geq 0\\
+        (0, 3) :  \ 1 \left( 0 + 3 - 2 \right) = 1 \geq 1 - \zeta^{(4)} \longrightarrow \zeta^{(4)} \geq 0 \\
+        (3, 0) : \  1 \left( 3 + 0 - 2 \right) = 1 \geq 1 - \zeta^{(5)} \longrightarrow \zeta^{(5)} \geq  0 \\
+        (3, 3) : \  1 \left( 3 + 3 - 2 \right) = 4 \geq 1 - \zeta^{(6)} \longrightarrow \zeta^{(6)} \geq -3 \\
+      \end{cases}
+    \end{equation}
+
+    $(0.5, 0.5), (0, 1), (0, 3), (3, 0)$ are support vectors with slack value of $\sli = 0$ as they lie on the margin hyperplanes.  $(0, 0)$ is also a support vector with slack value of $\sli = 3$.
+
+    <<echo=FALSE, fig.align='center', fig.height=3, fig.width=3>>=
+    mpoints = list(c(0, 0),c(0.5, 0.5),c(0, 1), c(0,3), c(3,0), c(3,3))
+    x1 = sapply(mpoints,function(x) x[1])
+    x2 = sapply(mpoints,function(x) x[2])
+    y = c(1, -1, -1, 1, 1, 1)
+    
+    par(mar = c(4,4,1,1), pin = c(3,3))
+    plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 1.5,
+    xlim = c(0,3), ylim = c(0,3),
+    ylab = "x2", xlab = "x1")
+    grid(lwd = 2)
+    points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 1.5)
+    abline(coef = c(2,-1),lty=1,lwd=2)
+    abline(coef = c(1,-1),lty=2,lwd=2,col='red')
+    abline(coef = c(3,-1),lty=2,lwd=2,col='red')
+    @
+
+    <<echo = FALSE, eval = FALSE>>=
+    library(e1071)
+    mpoints = list(c(0, 0),c(0.5, 0.5),c(0, 1), c(0,3), c(3,0), c(3,3))
+    x1 = sapply(mpoints,function(x) x[1])
+    x2 = sapply(mpoints,function(x) x[2])
+    y = c(1, -1, -1, 1, 1, 1)
+
+    dat = data.frame(x1 = x1, x2 = x2, y = as.factor(y))
+    mod = svm(y ~ ., data = dat, scale = FALSE, kernel = "linear", cost = 100)
+    x = dat[,1:2]
+    beta = drop(t(mod$coefs) %*% as.matrix(x)[mod$index, ])
+    beta0 = mod$rho
+    c(beta0/beta[2], -beta[1]/beta[2])
+    @
+
+  \item
+
+    Using $\xi = \left(\begin{array}{c} 0.5 \\ 0.5 \end{array}\right)$:
+
+    $$
+    d(f, \xi) = \frac{\yi f(\xi)}{\| \theta \|_2} = \frac{-1(0.5 + 0.5 - 2)}{\sqrt{2}} = \frac{1}{\sqrt{2}}
+    $$
+
+    The distance is the same for all non-margin-violating support vectors.
+
+  \item
+
+    Some alternatives are:
+
+    \begin{itemize}
+      \item Convert the $(0,0)$ into a negative class.
+      \item Move the $(0,0)$ to $(2,2)$.
+      \item Delete $(0,0)$.
+    \end{itemize}
+
+\end{enumerate}
+

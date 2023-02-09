@@ -12,8 +12,12 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopfsl{11}{SVM}
 
 
+\loesung{Kernelized Muliclass SVM}{
+	<<child="ex_rnw/sol_svm_kernelized_multiclass.Rnw">>=
+	@
+}
 
-\loesung{SVM -- Kernel Trick}{
+\loesung{Kernel Trick}{
 	<<child="ex_rnw/sol_kernel_trick.Rnw">>=
 	@
 }
