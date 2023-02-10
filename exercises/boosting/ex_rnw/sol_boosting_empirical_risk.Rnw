@@ -27,7 +27,7 @@ and
 %  
 	is the weighted error of $\blh.$ Random guessing has an error of approximately\footnote{If the data set is balanced.} $\frac12,$ so that  $\gamma^{[m]}= \frac12 - \errm$ tells us how much better $\blh$ (in terms of the error) is compared to random guessing.
 %  
-  \item By means of \eqref{unnorm_weights} it holds that $W^{[m]} = \sum_{i=1}^m \tilde w^{[m](i)}$ is the total weigh in iteration $m$ \textbf{before} normalizing the weights for any $m=1,\ldots,M$.
+  \item By means of \eqref{unnorm_weights} it holds that $W^{[m]} = \sum_{i=1}^n \tilde w^{[m](i)}$ is the total weight in iteration $m$ \textbf{before} normalizing the weights for any $m=1,\ldots,M$.
 %  
 	With this,
 %	
@@ -35,9 +35,9 @@ and
 %		
 		W^{[m]} 
 %		
-		&= \sum_{i=1}^m \tilde w^{[m](i)} \\
+		&= \sum_{i=1}^n \tilde w^{[m](i)} \\
 %		
-		&= \sum_{i=1}^m   w^{[m](i)} \cdot \exp\left(  - \betam \yi \blh(\xi) \right) \tag{Using \eqref{unnorm_weights}} \\
+		&= \sum_{i=1}^n   w^{[m](i)} \cdot \exp\left(  - \betam \yi \blh(\xi) \right) \tag{Using \eqref{unnorm_weights}} \\
 %		
 		&= \sum_{i : \yi \neq \blh(\xi) }  w^{[m](i)} \cdot \exp\left(  - \betam \underbrace{\yi \blh(\xi)}_{=-1} \right)  + \sum_{i : \yi = \blh(\xi) }  w^{[m](i)} \cdot \exp\left(  - \betam \underbrace{\yi \blh(\xi)}_{=1} \right) \\
 %		

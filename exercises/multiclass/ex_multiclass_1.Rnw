@@ -8,9 +8,10 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{4}{Multiclass}
+\kopfsl{4}{Multiclass Classification}
 
-\aufgabe{Multiclass and Softmax Regression}{
-	<<child="ex_rnw/ex_softmax_mnist.Rnw">>=
+
+\aufgabe{Multiclass Hinge Loss}{
+	<<child="ex_rnw/ex_multiclass_hinge_loss.Rnw">>=
 	@
 }

@@ -11,6 +11,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopficsl{4}{Multiclass Classification}
 
 \loesung{Multiclass Classification with 0-1-Loss}{
-	<<child="ex_rnw/ic_sol_multiclass_01loss.Rnw">>=
+	<<child="ex_rnw/sol_multiclass_01loss.Rnw">>=
 	@
 }
