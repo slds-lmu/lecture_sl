@@ -10,7 +10,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopfsl{3}{Risk Minimization}
 
+
 \loesung{Connection between MLE and ERM}{
-<<child="ex_rnw/sol_glm_optim.Rnw">>=
+<<child="ex_rnw/sol_connection_mle_erm.Rnw">>=
 @
 }
