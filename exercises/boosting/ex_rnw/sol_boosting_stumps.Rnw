@@ -191,7 +191,7 @@ while (m < M) {
                  maxdepth = 1,
                  cp = -1
                ))
-  rpart.plot(tree,main = paste("Stump for iteration: ",m))
+  prp(tree,main = paste("Stump for iteration: ",m))
   cat("split point:", tree$splits[,"index"], "\n")
   # 4: Calculate error
   b <- predict(tree, df, type="class")
