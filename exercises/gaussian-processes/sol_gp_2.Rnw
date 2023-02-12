@@ -15,6 +15,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 \loesung{Gaussian Posterior Process}{
-	<<child="ex_rnw/sol_gp.Rnw">>=
+	<<child="ex_rnw/sol_gaussian_posterior_process.Rnw">>=
 	@
 }
