@@ -22,10 +22,33 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 \exlect
 \lz
 
-\aufgabe{Gaussian Processes}{
-	<<child="ex_rnw/ex_gp.Rnw">>=
+\aufgabe{Bayesian Linear Model}{
+	<<child="ex_rnw/ex_bayesian_linear_model.Rnw">>=
 	@
 }
+
+\dlz
+
+\aufgabe{Covariance Functions}{
+	<<child="ex_rnw/ex_covariance_functions.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Gaussian Posterior Process}{
+	<<child="ex_rnw/ex_gaussian_posterior_process.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Gaussian Processes Prediction}{
+	<<child="ex_rnw/ex_gp_prediction.Rnw">>=
+	@
+}
+
+\dlz
 
 
 % % ------------------------------------------------------------------------------
