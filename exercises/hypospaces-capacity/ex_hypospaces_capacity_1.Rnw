@@ -8,10 +8,9 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopficsl{8}{Hypothesis Space}
+\kopfsl{8}{Hypothesis Space}
 
-\loesung{VC Dimension}{
-	<<child="ex_rnw/ic_sol_vc_dimension.Rnw">>=
+\aufgabe{VC Dimension}{
+	<<child="ex_rnw/ex_vc_dimension_1.Rnw">>=
 	@
 }
-
