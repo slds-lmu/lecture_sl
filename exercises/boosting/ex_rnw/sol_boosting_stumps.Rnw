@@ -11,14 +11,15 @@
           ## Make y-value=0
           x<-cbind(x,0)
           ## Plotting without box or axis with dot, representing data points                  
-          plot(x, col=ifelse(y==1,'red','blue')
-                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',pch=16,cex=2)
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
           # add axis with label to the right
           axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
           # add axis labels
           mtext("x", side=1, line=-2, cex=1.5)
           # add a legend
-          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"), pch=16, cex=0.7)
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
           
           # write a segment in x = 2
           segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
@@ -66,14 +67,15 @@
           ## Make y-value=0
           x<-cbind(x,0)
           ## Plotting without box or axis with dot, representing data points                  
-          plot(x, col=ifelse(y==1,'red','blue')
-                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',pch=16,cex=2)
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
           # add axis with label to the right
           axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
           # add axis labels
           mtext("x", side=1, line=-2, cex=1.5)
           # add a legend
-          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"), pch=16, cex=0.7)
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
           
           # write a segment in x = 2
           segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
@@ -128,14 +130,15 @@
           ## Make y-value=0
           x<-cbind(x,0)
           ## Plotting without box or axis with dot, representing data points                  
-          plot(x, col=ifelse(y==1,'red','blue')
-                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',pch=16,cex=2)
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
           # add axis with label to the right
           axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
           # add axis labels
           mtext("x", side=1, line=-2, cex=1.5)
           # add a legend
-          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"), pch=16, cex=0.7)
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
           
           # write a segment in x = 2
           segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
@@ -236,14 +239,15 @@ while (m < M) {
           ## Make y-value=0
           x<-cbind(x,0)
           ## Plotting without box or axis with dot, representing data points                  
-          plot(x, col=ifelse(y==1,'red','blue')
-                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',pch=16,cex=2)
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
           # add axis with label to the right
           axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
           # add axis labels
           mtext("x", side=1, line=-2, cex=1.5)
           # add a legend
-          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"), pch=16, cex=0.7)
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
           
           # write a segment in x = 2
           segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
