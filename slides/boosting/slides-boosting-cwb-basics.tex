@@ -5,6 +5,8 @@
 \input{../../latex-math/ml-ensembles.tex}
 \input{../../latex-math/ml-trees.tex}
 
+\usepackage{dsfont}
+
 \newcommand{\titlefigure}{figure/compboost-illustration-2.png}
 \newcommand{\learninggoals}{
   \item Concept of of CWB and relation to GLM
@@ -118,14 +120,9 @@ Common examples of base learners are
 More advanced base learners could also be  Markov random fields, random effects, or trees.
 
 \end{vbframe}
+
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Componentwise boosting algorithm}
-
-\input{algorithms/componentwise_gradient_boosting.tex}
-
-\end{vbframe}
-% ------------------------------------------------------------------------------
 \begin{vbframe}{Additive model structure}
 \begin{footnotesize}
 We restrict these base learners to additive models, i.e., having a base learner $ b_j(\xv, \thetab^{[1]})$ and another base learner $b_j$ of the same type but with a different parameter vector $\thetab^{[2]}$, then it is possible to combine them to a new base learner of the same type:
@@ -154,6 +151,80 @@ splines).
 \end{footnotesize}
 \end{vbframe}
 
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{algorithms/componentwise_gradient_boosting.tex}
+
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{handling of categorical features}
+
+Suppose a feature $x \in \{1, \dots, G\}$.
+\begin{itemize}
+  \item Two common options for encoding categorical features for CWB in a base learner $b$ are:
+  \begin{itemize}
+    \item 
+        One base learner to simultaneously estimate all classes: 
+        $$b(x) = \sum_{g=1}^G \theta_g\mathds{1}_{\{g = x\}} = \thetab^T (\mathds{1}_{\{x = 1\}}, ..., \mathds{1}_{\{x = G\}})^T$$
+        Hence, $b$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimates. 
+    
+    \item 
+        One binary base learner per class:
+        $$b_g(x) = \theta_g\mathds{1}_{\{g = x\}}$$  
+        Including all classes of the feature means adding $G$ base learners $b_1, \dots, b_G$ with each accounting for one specific class.
+  \end{itemize}
+  \item The \texttt{compboost} package currently implements the first variant.
+\end{itemize}
+
+% ------------------------------------------------------------------------------
+\framebreak
+
+Advantages within CWB of simultaneously handling all classes: 
+\begin{itemize}
+    \item 
+        Much faster estimation process compared to adding the classes as individual binary base learners.
+
+    \item 
+        Explicit solution of optimizing $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b(\xi))^2$ with:
+        $$\thetabh = (\thetah_1, \dots, \thetah_G)^T,\ \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{\xi = g\}}$$
+
+    \item 
+        Adding regularization is easy to add by reframing the base learner as a linear model and using, e.g., Ridge regression for estimating $\thetabh$.  
+\end{itemize}
+
+Disadvantage within CWB of simultaneously handling all classes: 
+\begin{itemize}
+    \item 
+        If class $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost sure) not $0$.
+\end{itemize}
+
+% ------------------------------------------------------------------------------
+\framebreak
+
+Advantages within CWB of including classes individually: 
+\begin{itemize}
+    \item 
+        A finer selection within the feature is possible since non-informative classes are simply not included in the model and hence have an effect of $0$.
+
+    \item 
+        Explicit solution of $\thetah_g = \argmin_{\thetab\in\R^G}\sumin (\yi - b_g(\xi))^2$ with:
+        $$\thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{\xi = g\}}$$
+\end{itemize}
+
+Disadvantage within CWB of simultaneously handling all classes:
+\begin{itemize}
+    \item 
+        Fitting CWB is much slower due to the overhead in each iteration (updating the model, pseudo residuals, and doing the base learner selection) after conducting one tiny step into the direction of the 1-dim parameter $\thetah_g$.
+
+    \item 
+        The base learner has exactly one degree of freedom which makes penalization and a fair selection very hard if not impossible.
+\end{itemize}
+
+\end{vbframe}
 
 % ------------------------------------------------------------------------------
 
@@ -163,7 +234,7 @@ splines).
   \item CWB is initialized with a loss-optimal constant $\fm[0](\xv)$ as initial model intercept.
   \item An intercept is often referred to as part of a model which contains information independent of the features.
   \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with data independent intercept $\theta_{j1}$ and slope $\theta_{j2}$.
-  \item Adding base learner $\hat{b}_j$ in iteration $m$ with parameter estimates $\thetamh = (\hat{\theta}_{j1}^{[m]}, \hat{\theta}_{j1}^{[m]})$ consequently updates the intercept to $\fm[0](\xv) + \hat{\theta}_{j1}^{[m]}$.
+  \item Adding base learner $\hat{b}_j$ in the first iteration with parameter estimates $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ consequently updates the intercept to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
   \item Throughout the fitting process, the intercept is adjusted $M$ times to its final form:
     $$
     \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
@@ -171,7 +242,6 @@ splines).
 \end{itemize}
 
 % ------------------------------------------------------------------------------
-
 \framebreak
 
 Two possible options to handle the intercept in CWB are:
@@ -192,35 +262,49 @@ Two possible options to handle the intercept in CWB are:
 
 \framebreak
 
-The following figures shows a comparison of the parameter updates with a different intercept handling:
+The following figure shows a comparison of the parameter updates with different intercept handlings:
 \begin{center}
+% Recreate figure: rsrc/fig-cwb-intercept-handling.R
 \includegraphics[width = \textwidth]{figure/compboost-intercept-handling.png}
 \end{center}
+The parameter estimates converge to the same value. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
 
-The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
-
-
-\end{vbframe}
-
-% ------------------------------------------------------------------------------
-
-\begin{vbframe}{handling of categorical features}
-
-\textcolor{red}{@BB}
-
-\begin{itemize}
-  \item Basically, there are two options for encoding categorical features:
-  \begin{itemize}
-    \item Specifying a single base learner for the entire variable
-    \item One-hot encoding, i.e., creating a binary feature with associated
-    base learner for each category
-  \end{itemize}
-  \item The \texttt{compboost} package currently implements the latter variant.
-\end{itemize}
 
 \end{vbframe}
 
 % ------------------------------------------------------------------------------
+
+\input{tex/cwb-bl-sel}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Example: Life expectancy}
+
+Consider the \texttt{life expectancy} (data set is provided by the WHO and is available on Kaggle: \url{https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who}) regression task, for which we fit a
+CWB model with linear base learners (with intercept) to predict the life expectancy:
+
+\begin{table}
+\scriptsize
+\begin{tabular}{l|l}
+    \textbf{variable} & \textbf{description} \\
+    \hline
+    \texttt{Life.expectancy} & Life expectancy in years \\	
+    \hline
+    \texttt{Country}         & The country (just a selection GER, USE, SWE, ZAF, and ETH\\
+    \texttt{Year}            & The recorded year\\
+    \texttt{BMI}             & Average $\text{BMI} = \frac{\text{body weight in kg}}{(\text{Height in m})^2}$ in a year and country\\
+    \texttt{Adult.Mortality} & Adult Mortality Rates of both sexes (probability of dying between 15 \\
+                             & and 60 years per 1000 population)
+\end{tabular}
+\end{table}
+Using \texttt{compboost} with $M = 150$ iterations, we can visualize which base learner was selected when and how the estimated feature effects evolve over time.
+\end{vbframe}
+
+% tex file and figures are created automatically by: rsrc/fig-cwb-anim.R
+\input{tex/fig-cwb-anim}
+
+%%%%% BLIND OUT, include with removing `\if1` and  \fi
+\if1
 
 \begin{vbframe}{example: boston housing}
 
@@ -281,6 +365,9 @@ $\rightarrow$ A sparse linear regression is fitted.
 \includegraphics[width = \textwidth]{figure/compboost-illustration-2.png}
 
 \end{vbframe}
+
+
+\fi
 
 \endlecture
 \end{document}

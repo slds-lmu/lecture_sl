@@ -43,62 +43,31 @@ their additive structure, which is the case for splines).
 % \includegraphics[width=1\textwidth]{figure_man/NBL02.png}
 % \end{center}
 
-\framebreak
-
-% ------------------------------------------------------------------------------
-
-Even when allowing for more complexity we typically want to keep solutions as
-simple as possible.
-
-\lz
-
-Kneib~et~al. (2009) proposed a decomposition of each base learner into a
-constant, a linear and a nonlinear part.
-The boosting algorithm will automatically decide which feature to include --
-linear, nonlinear, or none at all:
-
-\vspace{-0.5cm}
-
-\begin{align*}
-b_j(x_j, \thetam) & = b_{j, \text{const}}(x_j, \thetam) + b_{j, \text{lin}}
-(x_j, \thetam) + b_{j, \text{nonlin}}(x_j, \thetam)\\
- & = \theta^{[m]}_\text{const} + x_j \cdot \theta^{[m]}_{j, \text{lin}} +
- s_j(x_j, \thetam_{j,\text{nonlin}}),
-\end{align*}
-
-\small
-where
-\begin{itemize}
-  \small
-  \item $\theta_\text{const}$ is a constant term over all base learners,
-  \item $x_j \cdot \theta^{[m]}_{j, \text{lin}}$ is a feature-specific linear
-  base learner, and
-  \item $s_j(x_j, \thetam_{j,\text{nonlin}})$ is a (centered) nonlinear base
-  learner capturing deviation from the linear effect.
-\end{itemize}
-
 \end{vbframe}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{boston housing: continued}
+% tex file and figures are created automatically by: rsrc/fig-cwb-anim-nl.R
+\input{tex/fig-cwb-anim-nl}
 
-\begin{itemize}
-  \small
-  \item This time we offer our model both
-  linear and nonlinear ($P$-spline) base learners (again, with intercept) for
-  the 13 features.
-  \item By iteration 100, the model has selected 8 out of the resulting 26 base
-  learners and consistently picked the nonlinear option.
-  We can trace how these spline predictors evolve over the iterations:
-\end{itemize}
-
-\vfill
-
-\begin{center}
-% \includegraphics[width=0.6\textwidth]{figure_man/spam-example.png}
-\includegraphics[width = \textwidth]{figure/compboost-illustration-3.png}
-\end{center}
+%\begin{vbframe}{boston housing: continued}
+%
+%\begin{itemize}
+%  \small
+%  \item This time we offer our model both
+%  linear and nonlinear ($P$-spline) base learners (again, with intercept) for
+%  the 13 features.
+%  \item By iteration 100, the model has selected 8 out of the resulting 26 base
+%  learners and consistently picked the nonlinear option.
+%  We can trace how these spline predictors evolve over the iterations:
+%\end{itemize}
+%
+%\vfill
+%
+%\begin{center}
+%% \includegraphics[width=0.6\textwidth]{figure_man/spam-example.png}
+%\includegraphics[width = \textwidth]{figure/compboost-illustration-3.png}
+%\end{center}
 
 % Unfortunately it's rather ugly to write down the decomposition
 
@@ -110,8 +79,92 @@ where
 % #  ...
 % mboost(formula, data = spam, family = Binomial(), control = boost_control(mstop = 100))
 % @
+%
+%\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Nonlinear effect decomposition}
+
+Even when allowing for more complexity we typically want to keep solutions as
+simple as possible.
+
+\lz
+
+Kneib~et~al. (2009) proposed a decomposition of each base learner into a
+constant, a linear and a nonlinear part.
+The boosting algorithm will automatically decide which feature to include --
+linear, nonlinear, or none at all:
+
+\vspace{-0.7cm}
+
+\begin{align*}
+b_j(x_j, \thetam) & = b_{j, \text{const}}(x_j, \thetam) + b_{j, \text{lin}}
+(x_j, \thetam) + b_{j, \text{nonlin}}(x_j, \thetam)\\
+ & = \theta^{[m]}_\text{j,const} + x_j \cdot \theta^{[m]}_{j, \text{lin}} +
+ s_j(x_j, \thetam_{j,\text{nonlin}}),
+\end{align*}
+
+\small
+where
+\begin{itemize}
+  \small
+  \item $\theta_\text{j,const}$ is the intercept of feature $j$,
+  \item $x_j \cdot \theta^{[m]}_{j, \text{lin}}$ is a feature-specific linear
+  base learner, and
+  \item $s_j(x_j, \thetam_{j,\text{nonlin}})$ is a (centered) nonlinear base
+  learner capturing deviation from the linear effect (see next slide).
+\end{itemize}
+
+\framebreak
+
+\begin{itemize}
+    \item 
+        Suppose two base learner $b_{j,\text{nnonlin}}$ (a spline base learner) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ by a linear base learner $b_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{nonlin}}}$.
+
+     \item
+        Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnonlin}}$ to obtain a centered nonlinear base learner $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$. 
+
+    \item 
+        Practically, this means that $b_{j,\text{nnonlin}^c}$ is not able to estimate the effect of $b_{j,\text{lin}}$ for any parameter estimate while $b_{j,\text{nonlin}}$ can.
+
+    \item
+        The centering is done by computing the QR decomposition of $\bm{A} = \bm{Z}_{j,nonlin}^T \bm{Z}_{j,lin}$.
+
+    \item 
+        The first $k$ columns of $\bm{Q}$ form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
+
+    \item Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times d_{j,nonlin} - d_{j,lin}}$ which defines $b_{j,\text{nnonlin}^c}$ which is not able to capture the effect of $b_{j,\text{lin}}$
+\end{itemize}
 
 \end{vbframe}
+
+\begin{vbframe}{Example: Nonlinear effect decomposition}
+
+\begin{itemize}
+    \item 
+        Suppose $n = 100$ uniformly distributed $x$ values between $0$ and $10$.
+
+    \item 
+        The response $y = 2\sin(x) + 2x$ has a nonlinear and linear component.
+
+    \item
+        We apply CWB with $M = 500$ to $\{(\xi, \yi) | i = 1, \dots, n\}$ with:
+        \begin{itemize}
+            \item One model with $\mathcal{B} = \{b_{j,\text{lin}}, b_{j,\text{nonlin}}\}$
+            \item One model with $\mathcal{B} = \{b_{j,\text{lin}}, b_{j,\text{nonlin}^c}\}$
+        \end{itemize}
+\end{itemize}
+
+% Create figures with: rsrc/fig-centered-bl.R
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{figure/fig-decomp1.png}
+    \hfill\includegraphics[width=0.45\textwidth]{figure/fig-decomp2.png}
+\end{figure}
+
+\end{vbframe}
+
 
 % ------------------------------------------------------------------------------
 
