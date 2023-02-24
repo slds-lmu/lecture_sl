@@ -15,6 +15,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 \aufgabe{Bayesian Linear Model}{
-	<<child="ex_rnw/ex_gp_1_22.Rnw">>=
+	<<child="ex_rnw/ex_bayesian_linear_model.Rnw">>=
 	@
 }

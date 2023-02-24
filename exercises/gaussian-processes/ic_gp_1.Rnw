@@ -15,6 +15,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 \aufgabe{Gaussian Processes - Covariance Function}{
-	<<child="ex_rnw/ic_gp_1.Rnw">>=
+	<<child="ex_rnw/ex_covariance_functions.Rnw">>=
 	@
 }

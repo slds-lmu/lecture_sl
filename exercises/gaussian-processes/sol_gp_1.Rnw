@@ -10,11 +10,11 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-svm.tex}
 \input{../../latex-math/ml-gp.tex}
 
-\kopfsl{12}{Gaussian Processes}
+\kopfsl{11}{Gaussian Processes}
 
 
 
-\aufgabe{Gaussian Processes}{
-	<<child="ex_rnw/ex_gp.Rnw">>=
+\loesung{Bayesian Linear Model}{
+	<<child="ex_rnw/sol_bayesian_linear_model.Rnw">>=
 	@
 }
