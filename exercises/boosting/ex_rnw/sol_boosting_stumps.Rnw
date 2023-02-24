@@ -1,31 +1,37 @@
 \begin{enumerate}
     \item 
-        The initial weights all three points in the dataset is $\frac{1}{3}$. A decision boundary for the first decision stump could be the line $x=2$.
+        The initial weights for all three points in the dataset is $\frac{1}{3}$. A decision boundary for the first decision stump could be $x=2$.
         
         
         <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
-            x1 = sapply(mpoints,function(x) x[1])
-            x2 = sapply(mpoints,function(x) x[2])
-            y = c(-1, 1, -1)
-            
-            par(mar = c(4,4,1,1), pin = c(3,3))
-            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
-            xlim = c(-1,6), ylim = c(0,1),
-            ylab = "x2", xlab = "x1")
-			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
-            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
-			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
-			      abline(v=2,lty=2,lwd=2,col='red')
-			      arrows(2,0.3,3,0.3,col='red')
-			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
-          @
+          # Define x 
+          x<-c(1,3,5)
+          # Define y
+          y = c(-1, 1, -1)
+          ## Make y-value=0
+          x<-cbind(x,0)
+          ## Plotting without box or axis with dot, representing data points                  
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
+          # add axis with label to the right
+          axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
+          # add axis labels
+          mtext("x", side=1, line=-2, cex=1.5)
+          # add a legend
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
+          
+          # write a segment in x = 2
+          segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
+          arrows(2,0.1,2.5,0.1,col='darkgreen',lwd=2,length = 0.1)
+          text(x=2.3, y=0.25, label="+",cex=1.5,col='darkgreen')
+        @
 
     \item 
 
         The first stump makes two correct predictions and one incorrect prediction,
          we can then calculate the  weighted in-sample misclassification rate,
-          the weight for the stump and the new data points weights
+          the weight for the stump and the new data points weights.
 
         
         \begin{equation}
@@ -50,28 +56,35 @@
 
     \item 
 
-         As the training error is not yet 0, we do a second stump using the new weights, The decision boundary is x=4. 
+         As the training error is not yet 0, we do a second stump using the new weights, The decision boundary is $x=4$. 
          The stump makes two correct predictions and one incorrect prediction:
 
       <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
-            x1 = sapply(mpoints,function(x) x[1])
-            x2 = sapply(mpoints,function(x) x[2])
-            y = c(-1, 1, -1)
-            
-            par(mar = c(4,4,1,1), pin = c(3,3))
-            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
-            xlim = c(-1,6), ylim = c(0,1),
-            ylab = "x2", xlab = "x1")
-			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
-            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
-			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
-			      abline(v=2,lty=2,lwd=2,col='red')
-			      arrows(2,0.3,3,0.3,col='red')
-			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
-			      abline(v=4,lty=2,lwd=2,col='blue')
-			      arrows(4,0.4,3,0.4,col='blue')
-			      text(x=3.6, y=0.45, label="+",cex=2,col='blue')
+          # Define x 
+          x<-c(1,3,5)
+          # Define y
+          y = c(-1, 1, -1)
+          ## Make y-value=0
+          x<-cbind(x,0)
+          ## Plotting without box or axis with dot, representing data points                  
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
+          # add axis with label to the right
+          axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
+          # add axis labels
+          mtext("x", side=1, line=-2, cex=1.5)
+          # add a legend
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
+          
+          # write a segment in x = 2
+          segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
+          arrows(2,0.1,2.5,0.1,col='darkgreen',lwd=2,length = 0.1)
+          text(x=2.3, y=0.25, label="+",cex=1.5,col='darkgreen')
+          # write a segment in x =4 
+          segments(4,-0.1,4,0.3,lty=2,lwd=2,col='darkviolet')
+          arrows(4,0.1,3.5,0.1,col='darkviolet',lwd=2,length = 0.1)
+          text(x=3.7, y=0.25, label="+",cex=1.5,col='darkviolet')
           @
 
         We calculate the  weighted in-sample misclassification rate and the weight for the stump.
@@ -99,99 +112,161 @@
 
         \begin{equation}
             \begin{aligned}
-                w^{[2](1)} &= \frac{w^{[2](1)}}{\sumin w^{[2](i)}} = \frac{0.42}{0.42 + 0.15 + 0.29} \approx 0.49 \\
+                w^{[2](1)} &= \frac{w^{[2](1)}}{\sumin w^{[2](i)}} = \frac{0.42}{0.42 + 0.15 + 0.29} \approx 0.5 \\
                 w^{[2](2)} &= \frac{w^{[2](2)}}{\sumin w^{[2](i)}} = \frac{0.23}{0.42 + 0.15 + 0.29} \approx 0.17 \\
-                w^{[2](3)} &= \frac{w^{[2](3)}}{\sumin w^{[2](i)}} = \frac{0.47}{0.42 + 0.15 + 0.29} \approx 0.34 \\
+                w^{[2](3)} &= \frac{w^{[2](3)}}{\sumin w^{[2](i)}} = \frac{0.47}{0.42 + 0.15 + 0.29} \approx 0.33 \\
             \end{aligned}
         \end{equation}
         
         
         
-         We will start now with the third iteration. Unfortunately, we can't have open end nodes in a stump because doing such a split does not improve the splitting criterion.
-        The best we can do is to add a new stump in the same place as the first one: 
+         We will start now with the third iteration. We will add a new stump on $x=2$.
 
         <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
-            x1 = sapply(mpoints,function(x) x[1])
-            x2 = sapply(mpoints,function(x) x[2])
-            y = c(-1, 1, -1)
-            
-            par(mar = c(4,4,1,1), pin = c(3,3))
-            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
-            xlim = c(-1,6), ylim = c(0,1),
-            ylab = "x2", xlab = "x1")
-			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
-            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
-			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
-			      abline(v=2,lty=2,lwd=2,col='red')
-			      arrows(2,0.3,3,0.3,col='red')
-			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
-			      abline(v=4,lty=2,lwd=2,col='blue')
-			      arrows(4,0.4,3,0.4,col='blue')
-			      text(x=3.6, y=0.45, label="+",cex=2,col='blue')
-			      abline(v=2,lty=2,lwd=1,col='darkgreen')
-			      arrows(2,0.5,3,0.5,col='darkgreen')
-			      text(x=2.3, y=0.55, label="+",cex=2,col='darkgreen')
+          # Define x 
+          x<-c(1,3,5)
+          # Define y
+          y = c(-1, 1, -1)
+          ## Make y-value=0
+          x<-cbind(x,0)
+          ## Plotting without box or axis with dot, representing data points                  
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
+          # add axis with label to the right
+          axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
+          # add axis labels
+          mtext("x", side=1, line=-2, cex=1.5)
+          # add a legend
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
+
+          
+          # write a segment in x = 2
+          segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
+          arrows(2,0.1,2.5,0.1,col='darkgreen',lwd=2,length = 0.1)
+          text(x=2.3, y=0.25, label="+",cex=1.5,col='darkgreen')
+          # write a segment in x =4 
+          segments(4,-0.1,4,0.3,lty=2,lwd=2,col='darkviolet')
+          arrows(4,0.1,3.5,0.1,col='darkviolet',lwd=2,length = 0.1)
+          text(x=3.7, y=0.25, label="+",cex=1.5,col='darkviolet')
+          # write a segment in x =2 
+          segments(2,-0.1,2,0.6,lty=3,lwd=2,col='brown')
+          arrows(2,0.4,2.5,0.4,col='brown',lwd=2,length = 0.1)
+          text(x=2.3, y=0.55, label="+",cex=1.5,col='brown')
           @
+          
 
           We calculate the weighted in-sample misclassification error for this stump:
 
           \begin{equation}
             \begin{aligned}
-                \errm[2] &= \sumin \wmi[2] \cdot \mathds{1}_{\{\yi[i] \,\neq\, \blh[2](\xi)\}} = 0.34 \\
-                \betamh[2] &= \frac{1}{2} \log \left( \frac{1 - \errm[2]}{\errm[2]}\right) = 0.5 \cdot log \left(\frac{0.66}{0.34} \right)  \approx 0.35 \\
+                \errm[2] &= \sumin \wmi[2] \cdot \mathds{1}_{\{\yi[i] \,\neq\, \blh[2](\xi)\}} = 0.33 \\
+                \betamh[2] &= \frac{1}{2} \log \left( \frac{1 - \errm[2]}{\errm[2]}\right) = 0.5 \cdot log \left(\frac{0.67}{0.33} \right)  \approx 0.35 \\
             \end{aligned}
         \end{equation}
         
-        We can see that we are going back to a similar case as the first iteration and now the rounding errors could play a role in our calculations. Let's build a model to see what happens:
-<<echo=FALSE,message=FALSE, warning=FALSE, include=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-  devtools::install_github("jadonwagstaff/sboost")
-  library(sboost)
-@
-			      
+        We can see that we are going back to a similar case as the first iteration, it seems like we will keep creating new stumps on $x=2$ and $x=4$ and the model will never reach a training error of zero. Let's implement Adaboost with stumps in R to find out:
+
+        
 <<echo=TRUE, fig.align='center', fig.height=4, fig.width=4>>=
-  df = data.frame(x1,x2,y)
-  for (i in 1:6){
-    # Train the model with the amount of iterations
-    model= sboost::sboost(df[1:2],df$y,iterations = i)
-    # Assess the performance 
-    model_assessment=sboost::assess(model,features = df[1:2],outcomes = df$y)
-    cat("Iteration number :" , i,
-        ". model accuracy: ", model_assessment$performance[[6]],"\n"  )
-    }
-  cat("Voting power of each stump: \n", model$classifier$vote)
+library(rpart)
+library(rpart.plot)
+# Define x
+x <- c(1, 3, 5)
+# Define y
+y = as.factor(c('negative', 'positive', 'negative'))
+df = data.frame(x, y)
+
+w <- rep(1 / 3, 3)
+M <- 100
+err <- rep(0,M)
+beta <- rep(1, M)
+b_list <- list()
+f <- rep(0,3)
+m <- 1
+while (m < M) {
+  cat("m =", m, ":\n")
+  # 3: Fit classifier with weights
+  tree = rpart(y ~ x,
+               data = df,
+               weights = w,
+               control = rpart.control(
+                 minsplit = 0,
+                 maxdepth = 1,
+                 cp = -1
+               ))
+  prp(tree,main = paste("Stump for iteration: ",m))
+  cat("split point:", tree$splits[,"index"], "\n")
+  # 4: Calculate error
+  b <- predict(tree, df, type="class")
+  indicator <- b!=y
+  err[m] <- sum(w*indicator)
+  cat("error unweighted:", sum(indicator)/3, "\n")
+  cat("error weighted:", err[m], "\n")
   
-  cat("Where each stump is located: ", model$classifier$split )
+  # 5: Calculate beta
+  beta[m] <- 0.5 * log((1-err[m])/err[m])
+  
+  # Update weigths
+  y_mal_b <- -(indicator*2-1)
+  w_unnormalized <- w * exp (-beta[m]*y_mal_b)
+  w_normalized <- w_unnormalized/sum(w_unnormalized)
+  w <- w_normalized
+  cat("new weights after this iteration:", w, "\n")
+  b_list[[m]] <- b
+  f <- f + beta[m]*(as.numeric(b)*2-3)
+  cat("f:", f, "\n")
+  h <- f>0
+  err_ens <- sum(h!=(y=="positive"))/3
+  cat("error of ensemble:", err_ens, "\n \n")
+  if(err_ens==0){
+    cat( "We reached 0% error rate on the training dataset!")
+    m=M
+  }else{
+    m <- m+1
+  }
+}
 @
+          
+          
+        The code shows that we reached convergence in only 3 steps. Why our results are not the same? The reason behind the difference is that rpart allows stumps where all the leaves lead to the same group, as in the 1st iteration. If we take this into account, we could build again our third stump:
+      
+        
+         <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
+          # Define x 
+          x<-c(1,3,5)
+          # Define y
+          y = c(-1, 1, -1)
+          ## Make y-value=0
+          x<-cbind(x,0)
+          ## Plotting without box or axis with dot, representing data points                  
+          plot(x, col=ifelse(y==1,'red','blue'),pch=(ifelse(y==1,16,17)),
+                  ,bty='n',xaxt='n',yaxt='n',ylab='',xlab='',cex=2)
+          # add axis with label to the right
+          axis(1, at=1:5, labels=1:5, las=1,pos=-0.12)
+          # add axis labels
+          mtext("x", side=1, line=-2, cex=1.5)
+          # add a legend
+          legend("topright", legend=c("y=1","y=-1"), col=c("red","blue"),pch=(ifelse(y==1,17,16)), cex=0.7)
 
-Considering the restrictions in the stump training, this model will never reach a training error of zero. 
-But what would happen if we allow empty end nodes? We could add a stump at $x_1 = 0$ in the third iteration:
-
-        <<echo=FALSE, fig.align='center', fig.height=4, fig.width=4>>=
-            mpoints = list(c(1, 0.1),c(3, 0.1),c(5, 0.1))
-            x1 = sapply(mpoints,function(x) x[1])
-            x2 = sapply(mpoints,function(x) x[2])
-            y = c(-1, 1, -1)
-            
-            par(mar = c(4,4,1,1), pin = c(3,3))
-            plot(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2,
-            xlim = c(-1,6), ylim = c(0,1),
-            ylab = "x2", xlab = "x1")
-			      grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted", lwd = 1)
-            points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 2)
-			      text(x1, x2, labels = c(expression(y[1]), expression(y[2]), expression(y[3])), pos = 3, cex = 1)
-			      abline(v=2,lty=2,lwd=2,col='red')
-			      arrows(2,0.3,3,0.3,col='red')
-			      text(x=2.3, y=0.35, label="+",cex=2,col='red')
-			      abline(v=4,lty=2,lwd=2,col='blue')
-			      arrows(4,0.4,3,0.4,col='blue')
-			      text(x=3.6, y=0.45, label="+",cex=2,col='blue')
-			      abline(v=0,lty=2,lwd=2,col='darkgreen')
-			      arrows(0,0.5,-1,0.5,col='darkgreen')
-			      text(x=-0.3, y=0.55, label="+",cex=2,col='darkgreen')
+          
+          # write a segment in x = 2
+          segments(2,-0.1,2,0.3,lty=2,lwd=2,col='darkgreen')
+          arrows(2,0.1,2.5,0.1,col='darkgreen',lwd=2,length = 0.1)
+          text(x=2.3, y=0.25, label="+",cex=1.5,col='darkgreen')
+          # write a segment in x =4 
+          segments(4,-0.1,4,0.3,lty=2,lwd=2,col='darkviolet')
+          arrows(4,0.1,3.5,0.1,col='darkviolet',lwd=2,length = 0.1)
+          text(x=3.7, y=0.25, label="+",cex=1.5,col='darkviolet')
+          # write a segment in x =2 
+          segments(2,-0.1,2,0.6,lty=3,lwd=2,col='brown')
+          arrows(2,0.4,2.5,0.4,col='brown',lwd=2,length = 0.1)
+          arrows(2,0.4,1.5,0.4,col='brown',lwd=2,length = 0.1)
+          text(x=2.3, y=0.55, label="-",cex=1.5,col='brown')
+          text(x=1.7, y=0.55, label="-",cex=1.5,col='brown')
           @
 
-        We calculate the  weighted in-sample misclassification rate and the weight for the stump.
+
+       The weighted in-sample misclassification error and voting power of the stump are calculated:
         
         \begin{equation}
             \begin{aligned}
@@ -200,7 +275,7 @@ But what would happen if we allow empty end nodes? We could add a stump at $x_1 
             \end{aligned}
         \end{equation}
         
-        Let's check how the points are classified
+        Let's check how the points are classified:
         
         
         \begin{equation}
@@ -212,7 +287,5 @@ But what would happen if we allow empty end nodes? We could add a stump at $x_1 
         \end{equation}
         
         In this case, we reached zero error in training in the third iteration.
-        
-      
 
 \end{enumerate}
