@@ -10,7 +10,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopfsl{2}{Risk Minimization}
 
-\aufgabe{Risk Minimization and Gradient Descent}{
-	<<child="ex_rnw/ex_lm_optim_part_2.Rnw">>=
+\aufgabe{Risk Minimizers for 0-1-Loss}{
+	<<child="ex_rnw/ex_risk_minimizers_01_loss.Rnw">>=
 	@
 }
