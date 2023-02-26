@@ -24,6 +24,18 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 			\argmin_{\thetab} \riskrt  = 	\argmin_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
 		$$
 	
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+	
+	
+	
 	\item 
 	
 		Note that the minimization problem on the right-hand side of (a) can be written as $\sum_{i=1}^p g_i(\theta_i),$ where 
@@ -33,24 +45,53 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 
 		What is the advantage of this representation if we seek to find the $\thetab$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt?$
 		
-
+		\lz
+		\lz
+		\lz
+	
 	
 	\item 
 	
 		Consider first the case that $\thetah_i>0$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i\geq 0.$ 
 	
 		\emph{Hint:} Compare $g_i(\theta_i)$ and $g_i(-\theta_i)$ for $\theta_i\geq0.$
-
+	
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
 	
 	\item 
 		Derive that $\theta^*_i = \max\{\thetah_{i} - \lambda,0 \},$   by using (c) (and also still considering the case $\thetah_i > 0.$)
-
+		
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
 	
 	\item 
 	
 		Consider the complementary case of (c) and (d), i.e., $\thetah_i \leq 0,$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i \leq 0.$
 		
-
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
 	
 	
 	
@@ -58,12 +99,30 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 		Derive that $\theta^*_i = \min\{ \thetah_{i} + \lambda,0 \},$   by using (e) (and also still considering the case $\thetah_i \leq 0.$)
 	
-
+		
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
 	
 	\item 
 	
 		Make sure that both minimizers in the two case can indeed be written as $sgn(\thetah_{i}) \max\{|\thetah_{i}| - \lambda,0 \}.$
 	
 	
-
+		
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
+		\lz
 \end{enumerate}
