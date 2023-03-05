@@ -48,7 +48,7 @@ $$\phix = (x_1^2, x_2^2, \sqrt{2} x_1 x_2, \sqrt{2b} x_1, \sqrt{2b} x_2, b)$$
   
   \begin{equation*}
     \begin{aligned}
-        \left ( \xv^T \xtil + b  \right)^2 &=       \left ( \mat{ x_1 \\ x_2} \cdot (\xt_1 \ \xt_2) + b  \right) \cdot      \left ( \mat{ x_1 \\ x_2} \cdot (\xt_1 \ \xt_2) + b  \right) \\[10pt]
+        \left ( \xv^T \xtil + b  \right)^2 &=       \left (   (x_1 \ x_2) \cdot \mat{\xt_1 \\ \xt_2} + b  \right) \cdot      \left ( (x_1 \ x_2)  \cdot \mat{\xt_1 \\ \xt_2}  + b  \right) \\[10pt]
         &= (x_1 \xt_1 + x_1 \xt_2 + x_2 \xt_1 + x_2 \xt_2 + b) \cdot \\
          & \ \ \ \ \ \ (x_1 \xt_1 + x_1 \xt_2 + x_2 \xt_1 + x_2 \xt_2 + b) \\[10pt]
         &= x_1^2 \xt_1^2 + x_2^2 \xt_2^2  +  2  x_1 \xt_1 x_2 \xt_2  + 2 b x_1 \xt_1 + 2 b x_2 \xt_2  + b^2 \\[10pt]
