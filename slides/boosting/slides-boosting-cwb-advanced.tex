@@ -120,7 +120,7 @@ where
 
 \begin{itemize}
     \item 
-        Suppose two base learner $b_{j,\text{nnonlin}}$ (a spline base learner) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ by a linear base learner $b_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{nonlin}}}$.
+        Suppose a base learner $b_{j,\text{nnonlin}}$ (a spline base learner) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear base learner $b_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{nonlin}}}$.
 
      \item
         Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnonlin}}$ to obtain a centered nonlinear base learner $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$. 
