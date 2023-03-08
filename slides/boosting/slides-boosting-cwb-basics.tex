@@ -6,6 +6,7 @@
 \input{../../latex-math/ml-trees.tex}
 
 \usepackage{dsfont}
+\usepackage{transparent}
 
 \newcommand{\titlefigure}{figure/compboost-illustration-2.png}
 \newcommand{\learninggoals}{
@@ -63,8 +64,7 @@ Because of this, CWB is also often referred to as \textbf{model-based boosting}.
 
 \begin{vbframe}{Base learners}
 
-In classical gradient boosting only one kind of base learner $\mathcal{B}$ is used, e.g.,
-regression trees.
+In GB only one kind of base learner $\mathcal{B}$ is used, e.g., regression trees.
 
 \lz
 
@@ -76,13 +76,27 @@ $\{ \bm{\Theta}_1, ... \bm{\Theta}_J \}$,
 % $$
 %
  where $j \in \{ 1, 2, \dots, J \}$ indexes the type of base learner.
-%
-\lz
 
-Again, in each iteration, only the best base learner
+\vspace*{0.2cm}
+
+\[
+\left\{
+\begin{array}{c}
+\includegraphics[width=2cm]{figure/boosting-cwb-bl1.png},
+\includegraphics[width=2cm]{figure/boosting-cwb-bl2.png},
+\cdots, 
+\includegraphics[width=2cm]{figure/boosting-cwb-bl3.png},
+\includegraphics[width=2cm]{figure/boosting-cwb-bl4.png}
+\end{array}
+\right\}
+\]
+\vspace*{0.2cm}
+
+Different from GB, in each iteration multiple base learners 
+$b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fit to the 
+pseudo residuals $\rmm$ and only the best-fitting one
 % $\bmm_{\hat{j}}(\xv, \thetam)$
 is selected and updated.
-
 \framebreak
 
 Common examples of base learners are
@@ -119,63 +133,171 @@ Common examples of base learners are
 
 More advanced base learners could also be  Markov random fields, random effects, or trees.
 
-\end{vbframe}
+\framebreak
 
-% ------------------------------------------------------------------------------
-
-\begin{vbframe}{Additive model structure}
-\begin{footnotesize}
 We restrict these base learners to additive models, i.e., having a base learner $ b_j(\xv, \thetab^{[1]})$ and another base learner $b_j$ of the same type but with a different parameter vector $\thetab^{[2]}$, then it is possible to combine them to a new base learner of the same type:
 
 $$
  b_j(\xv, \thetab^{[1]}) + b_j(\xv, \thetab^{[2]}) =
  b_j(\xv, \thetab^{[1]} + \thetab^{[2]}).
 $$
+\begin{center}
+\begin{minipage}{.25\linewidth}
+\includegraphics{figure/boosting-cwb-bl-add1.pdf}
+\end{minipage}
+\begin{minipage}{.05\linewidth}
+\vspace*{-0.3cm}
+$\bm{+}$
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+\includegraphics{figure/boosting-cwb-bl-add2.pdf} 
+\end{minipage}
+\begin{minipage}{.05\linewidth}
+\vspace*{-0.3cm}
+$\bm{=}$
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+\includegraphics{figure/boosting-cwb-bl-add3.pdf}
+\end{minipage}
+\end{center}
 \vspace*{0.1cm}
 
 Thus, if $\{ b_j(\xv, \thetab^{[1]}), b_j(\xv, \thetab^{[2]}) \} \in \mathcal{B}_j$, then $b_j(\xv, \thetab^{[1]} + \thetab^{[2]}) \in \mathcal{B}_j$.
-\lz
 
-Often base learners are not defined on the entire feature vector $\xv$ but on
-a single feature $x_j$:
+%\lz
+%
+%Often base learners are not defined on the entire feature vector $\xv$ but on
+%a single feature $x_j$:
+%
+%$$
+%  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
+%$$
+%
+%This directly incorporates a variable selection mechanism into the fitting
+%process, since in each iteration only the best base learner is selected in
+%combination with the associated feature, and each base learner can be
+%(substantially) more complex than a stump (e.g., univariate linear effects or
+%splines).
 
-$$
-  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
-$$
+\end{vbframe}
 
-This directly incorporates a variable selection mechanism into the fitting
-process, since in each iteration only the best base learner is selected in
-combination with the associated feature, and each base learner can be
-(substantially) more complex than a stump (e.g., univariate linear effects or
-splines).
-\end{footnotesize}
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+\definecolor{algocol}{rgb}{0, 0.125, 0.376}
+\input{algorithms/componentwise_gradient_boosting.tex}
+
+({\color{lightgray} Same as for GB, \color{algocol} New inner loop for CWB})
+
 \end{vbframe}
 
 % ------------------------------------------------------------------------------
 
 \begin{vbframe}{Componentwise boosting algorithm}
 
-\input{algorithms/componentwise_gradient_boosting.tex}
+\input{tex/cwb-algo-short.tex}
 
+
+{\footnotesize Iteration $m$, $j = 1$, $\sum  \limits_{i=1}^n (\rmi - \hat{b}_1(x^{(i)}_1, \thetamh_1))^2 = 24.4$: \phantom{$\Rightarrow$ $j^{[m]} = 1$}}
+\begin{center}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png}}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}}
+\end{center}
 \end{vbframe}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{handling of categorical features}
+\begin{vbframe}{Componentwise boosting algorithm}
 
-Suppose a feature $x \in \{1, \dots, G\}$.
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$, $j = 2$, $\sum  \limits_{i=1}^n (\rmi - \hat{b}_2(x^{(i)}_2, \thetamh_2))^2 = 43.2$: \phantom{$\Rightarrow$ $j^{[m]} = 1$}}
+\begin{center}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1.png}}
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}}
+\end{center}
+\addtocounter{framenumber}{-1}
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$, $j = 3$, $\sum  \limits_{i=1}^n (\rmi - \hat{b}_3(x^{(i)}_3, \thetamh_3))^2 = 35.2$: \phantom{$\Rightarrow$ $j^{[m]} = 1$}}
+\begin{center}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png}} 
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}
+\end{center}
+\addtocounter{framenumber}{-1}
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$: $\Rightarrow$ $j^{[m]} = 1$}
+\begin{center}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png} 
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}
+\end{center}
+\addtocounter{framenumber}{-1}
+\end{vbframe}
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Feature selection in CWB}
+Often base learners are not defined on the entire feature vector $\xv$ but on
+a single feature $x_j$:
+
+$$
+  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
+$$
+Hence, CWB naturally incorporates variable selection:
 \begin{itemize}
-  \item Two common options for encoding categorical features for CWB in a base learner $b$ are:
+    \item Only the best base learner with the associated feature is selected
+    \item Due to the iterative nature of CWB, this is repeated $M$ times to obtain a selection of $M$ base learners by $j^{[1]}, \dots, j^{[m]}$ with $j^{[M]}\in\{1, \dots, p\}$
+    \item The number $\sum_{m=1}^M \mathds{1}_{[j = j^{[m]}]}$ tells us how often the feature $x_j$ in $b_j$ were selected
+\end{itemize}
+%The iterative nature of CWB and the additivity of the base learners 
+%directly incorporates a variable selection mechanism into the fitting
+%process, since in each iteration only the best base learner is selected in
+%combination with the associated feature, and each base learner can be
+%(substantially) more complex than a stump (e.g., univariate linear effects or 
+%splines).
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Handling of categorical features}
+
+Suppose a feature $x_j \in \{1, \dots, G\}$.
+\begin{itemize}
+  \item Two common options for encoding the categorical feature $x_j$ in a base learner $b_j$ are:
   \begin{itemize}
     \item 
         One base learner to simultaneously estimate all classes: 
-        $$b(x) = \sum_{g=1}^G \theta_g\mathds{1}_{\{g = x\}} = \thetab^T (\mathds{1}_{\{x = 1\}}, ..., \mathds{1}_{\{x = G\}})^T$$
-        Hence, $b$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimates. 
+        $$b_j(x_j | \thetab_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetab_j$$
+        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimates. 
     
     \item 
         One binary base learner per class:
-        $$b_g(x) = \theta_g\mathds{1}_{\{g = x\}}$$  
-        Including all classes of the feature means adding $G$ base learners $b_1, \dots, b_G$ with each accounting for one specific class.
+        $$b_{j,g}(x_j | \theta_{j,g}) = \theta_{j,g}\mathds{1}_{\{g = x_j\}}$$  
+        Including all classes of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ with each accounting for one specific class.
   \end{itemize}
   \item The \texttt{compboost} package currently implements the first variant.
 \end{itemize}
@@ -189,8 +311,8 @@ Advantages within CWB of simultaneously handling all classes:
         Much faster estimation process compared to adding the classes as individual binary base learners.
 
     \item 
-        Explicit solution of optimizing $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b(\xi))^2$ with:
-        $$\thetabh = (\thetah_1, \dots, \thetah_G)^T,\ \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{\xi = g\}}$$
+        Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$ with:
+        $$\thetabh = (\thetah_1, \dots, \thetah_G)^T,\ \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
 
     \item 
         Adding regularization is easy to add by reframing the base learner as a linear model and using, e.g., Ridge regression for estimating $\thetabh$.  
@@ -211,14 +333,14 @@ Advantages within CWB of including classes individually:
         A finer selection within the feature is possible since non-informative classes are simply not included in the model and hence have an effect of $0$.
 
     \item 
-        Explicit solution of $\thetah_g = \argmin_{\thetab\in\R^G}\sumin (\yi - b_g(\xi))^2$ with:
-        $$\thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{\xi = g\}}$$
+        Explicit solution of $\thetah_{j,g} = \argmin_{\theta\in\R}\sumin (\yi - b_g(x^{(i)}_j|\theta))^2$ with:
+        $$\thetah_{j,g} = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
 \end{itemize}
 
 Disadvantage within CWB of simultaneously handling all classes:
 \begin{itemize}
     \item 
-        Fitting CWB is much slower due to the overhead in each iteration (updating the model, pseudo residuals, and doing the base learner selection) after conducting one tiny step into the direction of the 1-dim parameter $\thetah_g$.
+        Fitting CWB is much slower due to the overhead in each iteration (updating the model, pseudo residuals, and doing the base learner selection) after conducting one tiny step into the direction of the 1-dim parameter $\thetah_{j,g}$.
 
     \item 
         The base learner has exactly one degree of freedom which makes penalization and a fair selection very hard if not impossible.
@@ -231,10 +353,10 @@ Disadvantage within CWB of simultaneously handling all classes:
 \begin{vbframe}{intercept handling}
 
 \begin{itemize}
-  \item CWB is initialized with a loss-optimal constant $\fm[0](\xv)$ as initial model intercept.
+  \item The loss-optimal constant $\fm[0](\xv)$ is a initial model intercept.
   \item An intercept is often referred to as part of a model which contains information independent of the features.
-  \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with data independent intercept $\theta_{j1}$ and slope $\theta_{j2}$.
-  \item Adding base learner $\hat{b}_j$ in the first iteration with parameter estimates $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ consequently updates the intercept to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
+  \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ per base learner and slope $\theta_{j2}$.
+  \item If base learner $\hat{b}_j$ with parameter estimates $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in the first iteration consequently updates the model intercept to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
   \item Throughout the fitting process, the intercept is adjusted $M$ times to its final form:
     $$
     \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
@@ -272,9 +394,7 @@ The parameter estimates converge to the same value. The used data set is \href{h
 
 \end{vbframe}
 
-% ------------------------------------------------------------------------------
-
-\input{tex/cwb-bl-sel}
+%\input{tex/cwb-bl-sel}
 
 % ------------------------------------------------------------------------------
 

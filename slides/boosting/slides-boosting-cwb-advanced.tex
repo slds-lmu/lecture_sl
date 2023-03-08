@@ -120,21 +120,25 @@ where
 
 \begin{itemize}
     \item 
-        Suppose a base learner $b_{j,\text{nnonlin}}$ (a spline base learner) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear base learner $b_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{nonlin}}}$.
+        Suppose a base learner $b_{j,\text{nonlin}}\in\mathcal{B}_{j,\text{nonlin}}$ (a spline base learner) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear base learner $b_{j,\text{lin}}\in\mathcal{B}_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{nonlin}}}$.
+
+    \item
+        Often, $\mathcal{B}_{j,\text{lin}} \subseteq \mathcal{B}_{j,\text{nonlin}}$ and hence $b_{j,\text{lin}}$ is overlayed by $b_{j,\text{nonlin}}$ and not selected during the fitting.
 
      \item
-        Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnonlin}}$ to obtain a centered nonlinear base learner $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$. 
+        Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnnlin}}$ to obtain a centered nonlinear base learner $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$. 
 
     \item 
-        Practically, this means that $b_{j,\text{nnonlin}^c}$ is not able to estimate the effect of $b_{j,\text{lin}}$ for any parameter estimate while $b_{j,\text{nonlin}}$ can.
+        Practically, this means that $b_{j,\text{nonlin}^c}\notin \mathcal{B}_{j,\text{lin}}$ and hence cannot model any linear effect.
 
     \item
         The centering is done by computing the QR decomposition of $\bm{A} = \bm{Z}_{j,nonlin}^T \bm{Z}_{j,lin}$.
 
     \item 
-        The first $k$ columns of $\bm{Q}$ form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
+        The first $k$ columns of the $\bm{Q}$ matrix from the QR decomposition form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
 
-    \item Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times d_{j,nonlin} - d_{j,lin}}$ which defines $b_{j,\text{nnonlin}^c}$ which is not able to capture the effect of $b_{j,\text{lin}}$
+    \item 
+        Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times d_{j,nonlin} - d_{j,lin}}$ which defines $b_{j,\text{nnonlin}^c}$
 \end{itemize}
 
 \end{vbframe}

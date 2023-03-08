@@ -78,11 +78,12 @@ cboost_c$train(500)
 table(cboost_c$getSelectedBaselearner())
 dc = plotPEUni(cboost_c, "x")$data
 
+cpal = ggsci::pal_aaas()(3)
 ggtl_c = plotBaselearnerTraces(cboost_c) +
   ggtitle("With centered nonlinear base learner") +
   labs(fill = "Selected base learner", y = "#Sel / M") +
-  ggsci::scale_color_aaas() +
-  ggsci::scale_fill_aaas(labels = c("Linear", "Centered spline"))
+  scale_color_manual(values = cpal[c(2,1)]) +
+  scale_fill_manual(labels = c("Linear", "Centered spline"), values = cpal[c(2,1)])
 
 dlc = plotPEUni(cboost_c, "x")$layers[[1]]$data
 dlc$bl = vapply(dlc$bl, function(bn) tail(strsplit(bn, "_")[[1]], 1), character(1), USE.NAMES = FALSE)
@@ -90,13 +91,12 @@ dlc$bl = vapply(dlc$bl, function(bn) tail(strsplit(bn, "_")[[1]], 1), character(
 lidx = dlc$bl == "linear"
 dlc$y[lidx] = dlc$y[lidx] + cboost_c$getCoef()$offset
 dlc = rbind(dlc, data.frame(x = dlc$x[lidx], y = dlc$y[lidx] + dlc$y[! lidx], bl = "aggregated"))
-dlc$bl = factor(dlc$bl, labels = c("linear", "centered", "aggregated"))
+dlc$bl = as.factor(dlc$bl)
 ggl_c = ggplot() +
   geom_point(data = dat, aes(x = x, y = y), alpha = 0.5) +
   geom_line(data = dlc, aes(x = x, y = y, color = bl), linewidth = 1.2) +
   labs(color = "Base learner") +
-  ggsci::scale_color_aaas() +
-  ggsci::scale_fill_aaas() +
+  scale_color_manual(values = cpal[c(3,1,2)]) +
   ylim(-2.5, 12.5)
 
 gg2 = (ggtl_c / ggl_c) + plot_layout(heights = c(1, 4)) & theme_minimal()

@@ -1,23 +1,17 @@
-
 \begin{algorithm}[H]
   \begin{footnotesize}
   \begin{center}
-  \caption{Componentwise Gradient Boosting.}\color{gray}
+  \caption{Componentwise Gradient Boosting (inner loop).}
     \begin{algorithmic}[1]
-      \State Initialize $\fm[0](\xv) = \argmin_{\theta_0\in\R} \sum  \limits_{i=1}^n L(\yi, \theta_0)$
-      \For{$m = 1 \to M$}
-        \State For all $i$: $\rmi = -\left[\pd{L(y, f)}{f}\right]_{f=\fmd(\xi),y=\yi}$
-        \color{algocol}
+        \setcounter{ALG@line}{3}
+
         \For {$j= 1\to J$}
           \State Fit regression base learner $b_j \in \mathcal{B}_j$ to the vector of pseudo-residuals $\rmm$:
           \State $\thetamh_j = \argmin_{\thetab \in \bm{\Theta_j}} \sum  \limits_{i=1}^n
           (\rmi - b_j(\xi, \thetab))^2$
         \EndFor
         \State $j^{[m]} = \argmin_{j} \sum  \limits_{i=1}^n (\rmi - \hat{b}_j(\xi, \thetamh_j))^2$
-        \color{lightgray}
-        \State Update $\fm(\xv) = \fmd(\xv) + \alpha \hat{b}_{\hat{j}}(\xv, \thetamh_{j^{[m]}})$
-      \EndFor
-      \State Output $\fh(\xv) = \fm[M](\xv)$
+
     \end{algorithmic}
     \end{center}
     \end{footnotesize}
