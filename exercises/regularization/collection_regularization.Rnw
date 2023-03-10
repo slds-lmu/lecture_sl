@@ -32,6 +32,20 @@ knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 	@
 }
 
+\dlz
+
+\aufgabe{L0 Regularization}{
+	<<child="ex_rnw/ex_l0_regularization.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Lasso Regularization}{
+	<<child="ex_rnw/ex_lasso_regularization.Rnw">>=
+	@
+}
+
 % 
 % 
 % % ------------------------------------------------------------------------------

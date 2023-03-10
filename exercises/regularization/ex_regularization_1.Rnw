@@ -8,9 +8,18 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{8}{Hypothesis Space, Capacity, Regularization}
+\kopfsl{9}{Regularization}
 
-\aufgabe{Hypothesis Space, Capacity, Regularization}{
+
+
+\aufgabe{L0 Regularization}{
+	<<child="ex_rnw/ex_l0_regularization.Rnw">>=
+	@
+}
+\dlz
+
+
+\aufgabe{Regularization}{
 	<<child="ex_rnw/ex_capacity_regularization.Rnw">>=
 	@
 }

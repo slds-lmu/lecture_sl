@@ -8,15 +8,10 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{4}
+\kopficsl{9}{Regularization}
 
-\aufgabe{Hypothesis Space, Capacity, Regularization}{
-	<<child="ex_rnw/ex_capacity_regularization.Rnw">>=
+\aufgabe{Lasso Regularization}{
+	<<child="ex_rnw/ic_lasso_regularization.Rnw">>=
 	@
 }
-\dlz
 
-\aufgabe{Lasso, Subdifferentials}{
-	<<child="ex_rnw/ex_lasso_subdifferential.Rnw">>=
-	@
-}

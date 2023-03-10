@@ -1,16 +1,23 @@
 % !Rnw weave = knitr
 
 <<setup-child, include = FALSE>>=
+library('knitr')
 knitr::set_parent("../../style/preamble_ueb.Rnw")
 @
 
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{8}{Hypothesis Space, Capacity, Regularization}
+\kopfsl{9}{Regularization}
 
-\loesung{Hypothesis Space, Capacity, Regularization}{
-<<child="ex_rnw/sol_capacity_regularization.Rnw">>=
+
+\loesung{L0 Regularization}{
+<<child="ex_rnw/ex_l0_regularization.Rnw">>=
 @
 }
+\dlz
 
+\loesung{Regularization}{
+	<<child="ex_rnw/sol_capacity_regularization.Rnw">>=
+	@
+}
