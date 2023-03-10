@@ -1,0 +1,78 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure_man/varsel_space.png}
+\newcommand{\learninggoals}{
+  \item Add learning goals
+}
+
+
+
+\begin{document}
+
+  \lecturechapter{Practical Tips for Feature Selection}
+  \lecture{Supervised Learning}
+
+
+  \begin{vbframe}{Solving a feature selection problem (taken from Guyon (2003))}
+
+    \begin{enumerate}
+      \item {\bf Do you have domain knowledge?}
+
+        If yes, construct a better set of \enquote{ad hoc} features.
+      \item {\bf Are your features commensurate?}
+
+        If no, consider normalizing them.
+      \item {\bf Do you suspect interdependence of features?}
+
+      If yes, expand your feature set by constructing conjunctive features or products of features, as many as your computer resources allow you to.
+      \item {\bf Do you need to prune the input features (e.g. for cost, speed or data-understanding reasons)}?
+
+      If no, construct disjunctive features or weighted sums of features (e.g. by clustering or matrix factorization).
+      \item {\bf Do you need to assess features individually (e.g. to understand their influence on the system, or because their number is so large that you need to do a first filtering)}?
+
+      If yes, use a variable-ranking method.
+      Otherwise, do it anyway to get baseline results.
+      \item {\bf Do you need a predictor?}
+
+      If no, stop.
+      \item {\bf Do you suspect your data is \enquote{dirty} (has a few meaningless input patterns and/or noisy outputs or wrong class labels)?}
+
+      If yes, detect the outlier examples using the top-ranking features obtained in step 5 as representation; check and/or discard them.
+      \item {\bf Do you know what to try first?}
+
+      If no, use a linear predictor.
+      Use a forward selection method with the \enquote{probe} method as a stopping criterion or use the $L0$ norm embedded method.
+      For comparison, following the ranking of step 5, construct a sequence of predictors from the same family, using increasing subsets of features.
+      Can you match or improve performance with a smaller subset?
+      If yes, try a nonlinear predictor with that subset.
+      \item {\bf Do you have new ideas, time, computational resources, and enough examples?}
+
+      If yes, compare several feature selection methods, including your new idea, correlation coefficients, backward selection and embedded methods.
+      Use linear and nonlinear predictors.
+      Select the best approach via model selection.
+      \item {\bf Do you want a stable solution (to improve performance and/or understanding)?}
+
+      If yes, sub-sample your data and redo your analysis for several bootstraps.
+    \end{enumerate}
+
+  \end{vbframe}
+
+  \begin{vbframe}{Open points / problems}
+
+    \begin{itemize}
+      \item In general, it is difficult to give suggestions on when to use which feature selection method.
+      \item Most of the time, it is reasonable to start with a simple, fast method.
+      If this yields unsatisfactory results, one can gradually move to more expensive methods.
+      \item Not every introduced method can be generalized to multi-class problems in an easy fashion.
+      \item Combining the choice of an appropriate classifier and parameter tuning with feature selection is not simple.
+    \end{itemize}
+
+  \end{vbframe}
+
+
+  \endlecture
+\end{document}
+
