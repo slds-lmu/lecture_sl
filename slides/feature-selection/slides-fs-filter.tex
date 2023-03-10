@@ -1,0 +1,404 @@
+
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+\input{../../latex-math/ml-feature-sel}
+
+\newcommand{\titlefigure}{figure_man/varsel_ex0.png}
+\newcommand{\learninggoals}{
+  \item Add Learning Goals
+}
+
+\begin{document}
+
+  \lecturechapter{Filter}
+  \lecture{Supervised Learning}
+
+  \begin{vbframe}{Filter}
+
+  \begin{itemize}
+    \item Mostly, \textbf{filter methods} construct a measure that describes the strength of the (univariate) dependency between a feature and the target variable.
+    \item Typically, this yields a numeric score for each feature $j$.
+    That is what is known as \textbf{variable-ranking}.
+    \item Filters are in general independent of a specific classification learner and can be applied generically.
+      \item Filter methods are strongly related to methods for determining variable importance.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{Examples, taken from Guyon (2003)}
+
+  \begin{figure}
+    \includegraphics[width=9cm]{figure_man/varsel_ex0.png}
+  \end{figure}
+
+  \begin{center}
+  \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+  \end{center}
+
+  \framebreak
+
+  \begin{figure}
+    \includegraphics[width=9cm]{figure_man/varsel_ex1.png}
+  \end{figure}
+
+  \begin{center}
+  \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+  \end{center}
+
+  \framebreak
+
+  \begin{figure}
+    \includegraphics[width=9cm]{figure_man/varsel_ex2.png}
+  \end{figure}
+
+  \begin{center}
+  \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+  \end{center}
+
+  \end{vbframe}
+
+
+
+  \begin{vbframe}{Filter: $\chi^2$-statistic}
+  \begin{itemize}
+    \item Test for independence between the $j$-th feature and the target $y$.
+    \item Numeric features or targets need to be discretized.
+    \item Hypotheses:
+
+    $H_0: p(x_j = l, y = k) = p(x_j = l)\, p(y = k)$, $\forall j = 1, \dots, k_1$
+
+    \noindent\hspace*{6.55cm} $\forall k = 1, \dots, k_2$
+
+    $H_1: \exists \; j, k: p(x_j = l, y = k) \neq p(x_j = l)\, p(y = k)$
+    \item Calculate the $\chi^2$-statistic for each feature-target combination:
+      $$ \chi^2 = \sum_{j = 1}^{k_1} \sum_{k=1}^{k_2} (\frac{e_{jk} - \tilde{e}_{jk}}{\tilde{e}_{jk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((k_1-1)(k_2-1))$$
+    where $e_{jk}$ is the observed relative frequency of pair $(j,k)$ and $\tilde{e}_{jk} = \frac{e_{j \cdot} e_{\cdot k}}{n}$ is the expected relative frequency.
+    \item The greater $\chi^2$, the more dependent is the feature-target combination, the more relevant is the feature.
+  \end{itemize}
+  \end{vbframe}
+
+
+  \begin{vbframe}{Filter: Pearson \& Spearman correlation}
+  \textbf{Pearson correlation $r(\xj, y)$: }
+  \begin{itemize}
+    \item For numeric features and targets only.
+    \item Most sensitive for linear or monotonic relationships.
+    \item $ r(\xj, y) = \frac{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j) (\yi - \bar{y})}{\sqrt{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j)} \sqrt{(\sum_{i=1}^n \yi - \bar{y})}},\qquad -1 \le r \le 1$
+  \end{itemize}
+  \textbf{Spearman correlation $r_{SP}(\xj, y)$:}
+  \begin{itemize}
+    \item For features and targets at least on an ordinal scale.
+    \item Equivalent to Pearson correlation computed on the ranks.
+    \item Assesses monotonicity of the dependency relationship.
+    % \item Calculate the Spearman correlation coefficient between each feature-target combination:
+    % $$ r_{SP} = \frac{\sum (rg(\xi) - \bar{rg}_x) (rg(\yi) - \bar{rg}_y)}{\sqrt{\sum (rg(\xi) - \bar{rg}_x)^2 \sum (rg(\yi) - \bar{rg}_y)^2}}$$
+    % $-1 \le r_{SP} \le 1$
+    % 
+    % $r_{SP} > 0$: positive correlation.
+    % 
+    % $r_{SP} < 0$: negative correlation.
+    % 
+    % $r_{SP} = 0$: no correlation.
+    % \item A higher score indicates a higher relevance of the feature.
+  \end{itemize}
+  \lz
+  Use absolute values $|r(\xj, y)|$ for feature ranking: higher score indicates a higher relevance.
+
+  \framebreak
+
+  Only \textbf{linear} dependency structure, non-linear (non-monotonic) aspects are not captured by $r$:
+
+  \lz
+
+  % in rsrc/chunk2_filter_correlation.R created
+  \begin{figure}
+    \includegraphics {figure_man/chunk2_filter_correlation.png}
+  \end{figure}
+
+  % \begin{center}
+  %   \includegraphics[width=0.9\textwidth]{figure_man/correlation_example.png}
+  % 
+  %   \scriptsize{\url{https://en.wikipedia.org/wiki/Pearson\_correlation\_coefficient\#/media/File:Correlation\_examples2.svg}}
+  % \end{center}
+  % 
+  % \begin{vbframe}{Filter: Rank correlation}
+  % \begin{itemize}
+  %   \item For features and targets at least on ordinal scale.
+  %   \item Equivalent to Pearson correlation computed on the ranks.
+  %   \item Assesses monotonicity of the dependency relationship.
+    % \item Calculate the Spearman correlation coefficient between each feature-target combination:
+    % $$ r_{SP} = \frac{\sum (rg(\xi) - \bar{rg}_x) (rg(\yi) - \bar{rg}_y)}{\sqrt{\sum (rg(\xi) - \bar{rg}_x)^2 \sum (rg(\yi) - \bar{rg}_y)^2}}$$
+    % $-1 \le r_{SP} \le 1$
+    % 
+    % $r_{SP} > 0$: positive correlation.
+    % 
+    % $r_{SP} < 0$: negative correlation.
+    % 
+    % $r_{SP} = 0$: no correlation.
+    % \item A higher score indicates higher relevance of the feature.
+  %   \end{itemize}
+  % \end{vbframe}
+  \end{vbframe}
+
+  \begin{vbframe}{Filter: Distance correlation}
+  % sources: 
+  %Szekely, G.J., Rizzo, M.L., and Bakirov, N.K. (2007), Measuring and Testing Dependence by Correlation of Distances, Annals of Statistics, Vol. 35 No. 6, pp. 2769-2794. 
+  % http://dx.doi.org/10.1214/009053607000000505
+  %Szekely, G.J. and Rizzo, M.L. (2009), Brownian Distance Covariance, Annals of Applied Statistics, Vol. 3, No. 4, 1236-1265. 
+  % http://dx.doi.org/10.1214/09-AOAS312 
+
+  $$r_D(\xj, y) = \sqrt{\frac{c_{D}^2(\xj, y)}{\sqrt{c_{D}^2(\xj, \xj) c_{D}^2(y, y)}}}:$$
+  Normed version of \textbf{distance covariance} $c_{D}(\xj, y) = \frac{1}{n^2}\sum^n_{i=1}\sum^n_{k=1} D^{(ik)}_{\xj} D^{(ik)}_{y}$ for
+  \begin{itemize}
+  \item distances of observations: $d\left(x^{(i)}_j, x^{(k)}_j\right)$,
+  \item mean distances $\bar{d}^{(i\cdot)}_{xj} = \tfrac{1}{n} \sum^n_{k=1} d\left(x^{(i)}_j, x^{(k)}_j\right)$,
+  \item and centered pairwise distances
+  $D^{(ik)}_{x} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{xj} + \bar{d}^{(\cdot k)}_{xj} - \bar{d}^{(\cdot \cdot)}_{xj})$
+  \end{itemize}
+
+  \framebreak
+
+  Properties:
+  \begin{itemize}
+  \item $0 \leq r_D(\xj, y) \leq 1 \quad \forall  j \in \{1, …, p\}$
+  \item $r_D(\xj, y) = 0$ only if $\xv$ and $y$ are empirically independent (!)
+  \item $r_D(\xj, y) = 1$ for exact linear dependencies
+  \item also assesses strength of \textbf{non-monotonic}, \textbf{non-linear}  dependencies
+  \item very generally applicable since it only requires distance measures on $\Xspace$ and $\Yspace$: can also be used for ranking multivariate features, feature combinations or non-tabular inputs (text, images, audio, etc.)
+  \item expensive to compute for large data (i.e., use a subsample)
+  \end{itemize}
+
+  \begin{figure}
+  \includegraphics[width = 0.9\textwidth]{figure_man/distance-corre.png}
+  \end{figure}
+
+
+  \end{vbframe}
+
+
+
+
+  \begin{vbframe}{Filter: Welch's \MakeLowercase{t}-test}
+  \begin{itemize}
+    \item For binary classification with numeric features.
+    \item Test for unequal means of the $j$-th feature.
+    \item For notational purposes let $\Yspace \in \{ 0, 1\}$. Then the subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
+    \item Hypotheses:
+
+    $H_0$: $\;\;\mu_{j_0} = \mu_{j_1} $ \qquad vs. \qquad $H_1$: $\;\;\mu_{j_0} \neq \mu_{j_1}$
+    \item Calculate Welch's t-statistic for every feature $\xj$
+    $$ t_j = \frac{\bar{x}_{j_0} - \bar{x}_{j_1}}{\sqrt{(\frac{S^2_{\xjNull}}{n_0} + \frac{S^2_{\xjEins}}{n_1})}}$$
+    where $\bar{x}_{j_0}$, $S^2_{\xjNull}$ and $n_0$ are the sample mean, the population variance and the sample size for y = 0, respectively.
+    \item A higher t-score indicates higher relevance of the feature.
+  \end{itemize}
+  \end{vbframe}
+
+
+  \begin{vbframe}{Filter: F-Test}
+  \begin{itemize}
+    \item For multiclass classification ($g \ge 2$) and numeric features.
+    \item Assesses whether the expected values of a feature $\xj$ within the classes of the target differ from each other.
+    \item Hypotheses:
+
+    $H_0: \mu_{j_0} = \mu_{j_1} = \dots = \mu_{j_g} \;\;\;\;$ vs. $\;\;\;\;H_1 : \exists \; k,l: \mu_{j_k} \neq \mu_{j_l}$
+    \item Calculate the F-statistic for each feature-target combination:
+    \begin{align*}
+    F &= \frac{\text{between-group variability}}{\text{within-group variability}}\\
+    F &= \frac{\sum_{k = 1}^g n_k (\bar{x}_{j_k} - \bar{x_j})^2/(g-1)}{\sum_{k = 1}^g \sum_{i = 1}^{n_k} (x_{j_k}^{(i)} - \bar{x}_{j_k})^2/(n-g)}
+    \end{align*}
+    where $\bar{x}_{j_k}$ is the sample mean of feature $\xj$ where $y = k$ and $\bar{x_{j}}$ is the overall sample mean of feature $\xj$.
+  \item A higher F-score indicates higher relevance of the feature.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{Filter: Mutual Information}
+  $$I(X ; Y) = \E_{p(x, y)} \left[ \log \frac{p(X, Y)}{p(X) p(Y)} \right]$$
+
+  \begin{itemize}
+    \item Each variable $\xj$ is rated according to $I(\xj;y)$, this is sometimes called information gain.
+    \item MI is a measure of the amount of "dependence" between variables. It is zero if and only if the variables are independent.
+    \item On the other hand, if one of the variables is a deterministic function of the other, the mutual information is maximal.
+  \item Unlike (Pearson) correlation, mutual information is not limited to real-valued random variables.
+    \item Mutual information can be seen as a more general measure of dependence between variables than correlation.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{Filter}
+  \begin{blocki}{How to combine a filter with a model:}
+    \item Calculate filter-values.
+    \item Sort features by value.
+  %  \item Choose $\tilde{p}$ best features.
+    \item Train model on $\tilde{p}$ best features.
+  \end{blocki}
+
+  \lz
+
+  \begin{blocki}{How to choose $\tilde{p}$:}
+    \item It can be prescribed by the application.
+    \item Eyeball estimation: Read from filter plots (i.e., Scree plots).
+    \item Use resampling.
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Advantages:}
+    \item Easy to calculate.
+    \item Typically scales well with the number of features $p$.
+    \item Mostly interpretable intuitively.
+    \item Combination with every model possible.
+  \end{blocki}
+
+  \begin{blocki}{Disadvantages:}
+    \item Often univariate (not always) ignores multivariate dependencies.
+    \item Redundant features will have similar weights.
+    \item Ignores the learning algorithm.
+  \end{blocki}
+  \end{vbframe}
+
+  \begin{vbframe}{Minimum Redundancy Maximum Relevancy}
+  \begin{itemize}
+    \item Most filter type methods select top-ranked features based on a certain filter method ($\chi^2$, rank-correlation, t-test,...) without considering relationships among the features.
+    \item Problems:
+    \begin{itemize}
+    \item Features may be correlated and hence, may cause redundancy.
+    \item Selected features cover narrow regions in space.
+    \end{itemize}
+    \item Goal: In addition to maximum relevancy of the features we want the features to be maximally dissimilar to each other (minimum redundancy).
+    \item Features can be either continuous or categorical.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{\MakeLowercase{M}RMR: Criterion functions}
+  \begin{itemize}
+  \item Let $S \subset \{1, \dots, p \}$ be a subset of features we want to find.
+  \item Minimize redundancy
+
+  $$\min \text{Red}(S), \;\;\;\; \text{Red}(S) = \frac{1}{|S|^2} \sum_{j, l \in S} I_{xx}(\xj, \xl)$$
+
+  \item Maximize relevancy
+
+  $$\max \text{Rel}(S), \;\;\;\; \text{Rel}(S) = \frac{1}{|S|} \sum_{j \in S} I_{xy}(\xj, \ydat)$$
+
+  \item $I_{xx}$ measures the strength of the dependency between two features.
+  \item $I_{xy}$ measures the strength of the dependency between a feature and the target.
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+
+  \lz
+
+  \item Examples for $I_{xx}$:
+    \begin{itemize}
+    \item Two discrete features: mutual information $I(\xj, \xl)$
+    \item Two numeric features: correlation $|r(\xj, \xl)|$
+    \end{itemize}
+
+  \lz
+
+  \item Examples for $I_{xy}$:
+    \begin{itemize}
+    \item Discrete feature, discrete target: mutual information $I(\xj, \ydat)$
+    \item Continuous feature, discrete target: F-statistic $F(\xj, \ydat)$
+    \end{itemize}
+  \end{itemize}
+
+
+  \framebreak
+
+  \begin{itemize}
+  \item The mRMR feature set is obtained by optimizing the relevancy and the redundancy criterion simultaneously.
+  \item This requires combining the criteria into a single objective function:
+  $$\Psi(S) = (\text{Rel}(S) - \text{Red}(S)) \;\;\;\; \text{ or } \;\;\;\; \Psi(S) = (\text{Rel}(S)/\text{Red}(S))$$
+
+  \item Exact solution requires $ \order (|\Xspace|^{|S|})$ searches, where $|\Xspace|$ is the number of features in the whole feature set and $|S|$ is the number of features selected.
+  \end{itemize}
+  In practice, incremental search methods are used to find near-optimal feature sets defined by $\Psi$:
+  \begin{itemize}
+  \item Suppose we already have a feature set with $m-1$ features $S_{m-1}$.
+  \item Next, we select the $m$-th feature from the set $\bar{S}_{m-1}$ by selecting the feature that maximizes:
+  $$\max_{j \, \in \, \bar{S}_{m-1}} [ I_{xy} (\xj, \ydat) - \frac{1}{|S_{m-1}|} \sum_{l \, \in \, S_{m-1}} I_{xx}(\xj, \xl)  ]$$
+  \item The complexity of this incremental algorithm is $\mathcal{O}(|p| \cdot| S|)$.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{\MakeLowercase{m}RMR: Algorithm}
+
+  \begin{algorithm}[H]
+  \footnotesize
+    \begin{algorithmic}[1]
+      \State Set $S = \emptyset$, $R = \{ 1, \dots, p \}$
+      \State Find the feature with maximum relevancy:
+      $$j^* := \argmax_{j} I_{xy} (\xj, \ydat)$$
+      \State Set $S = \{ j^* \}$ and update $R \leftarrow R \setminus \{j^* \}$
+      \Repeat
+        \State Find feature $\xj$ that maximizes:
+        $$missing formula$$%$$\max_{j \, \in \, R} \Biggl[ I_{xy} (\xj, \ydat) - \frac{1}{|S|} \sum_{l \, \in \, S} I_{xx}(\xj, \xl)  \Biggr]$$
+        \State Update $S \leftarrow S \cup \{j^* \}$ and $R \leftarrow R \setminus \{ j^* \}$
+      \Until{Expected number of features have been obtained or some other constraints are satisfied.}
+      \caption{mRMR algorithm}
+    \end{algorithmic}
+  \end{algorithm}
+  \end{vbframe}
+
+
+  % \begin{vbframe}{Filter: Practical example}
+  % <<echo=TRUE>>=
+  % # Calculate the information gain as filter value
+  % fv = generateFilterValuesData(iris.task, method = "information.gain")
+  %
+  % # We can also pass multiple filter methods at once:
+  % fv2 = generateFilterValuesData(iris.task,
+  %   method = c("information.gain", "chi.squared"))
+  %
+  % # fv2 is a FilterValues object and fv2$data holds a data frame
+  % # with the importance values for all features
+  % fv2$data
+  % @
+  %
+  % <<>>=
+  % plotFilterValues(fv2) + ggtitle("Filters for the 4 features of iris dataset")
+  % @
+  %
+  %
+  % \framebreak
+  %
+  % <<size="tiny", echo=TRUE>>=
+  % ## Keep the 2 most important features
+  % filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2L)
+  %
+  % ## Keep the 25% most important features
+  % filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
+  %
+  % ## Keep all features with importance greater than 0.5
+  % filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
+  % filtered.task
+  % @
+  %
+  % \framebreak
+
+  % \begin{itemize}
+  %   \item Filter methods are often part of the data preprocessing process, wherein a subsequent step, a learning method is applied.
+  %   \item In practice we want to automate this, so the feature selection can be part of the validation method of our choice:
+  % \end{itemize}
+  % 
+  % <<size="tiny", echo=TRUE>>=
+  % lrn = makeFilterWrapper(learner = "classif.kknn",
+  %   fw.method = "anova.test", fw.abs = 2L)
+  % ps = makeParamSet(
+  %   makeDiscreteParam("fw.abs", values = 1:4)
+  % )
+  % ctrl = makeTuneControlGrid()
+  % rdesc = makeResampleDesc("CV", iters = 10L)
+  % 
+  % res = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
+  %   control = ctrl)
+  % res$opt.path
+  % @
+  % \end{vbframe}
+
+  \endlecture
+\end{document}
+

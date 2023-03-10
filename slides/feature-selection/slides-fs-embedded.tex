@@ -1,0 +1,78 @@
+
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure_man/varsel_space.png}
+\newcommand{\learninggoals}{
+  \item Add Learning goals
+}
+
+\begin{document}
+
+
+
+  \lecturechapter{Embedded Feature Selection}
+  \lecture{Supervised Learning}
+
+  \begin{vbframe}{Embedded Feature Selection}
+
+    \begin{itemize}
+      \item Embedded techniques are methods that integrate feature selection directly into the learning process.
+      \item They use an internal criterion of the applied learner to have better control over the search for useful features.
+      \item Embedded techniques usually need to be tailored to each learner.
+      \item In the following, we will look at some examples.
+      Some of them were already discussed in the previous lectures.
+    \end{itemize}
+      
+  \end{vbframe}
+
+  \begin{vbframe}{SVM: Recursive Feature Elimination (RFE)}
+    \begin{itemize}
+      \item RFE is a popular backward search technique for the linear SVM and the 2-class problem.
+      \item Here we will always assume standardized features. (This should be the case for an SVM anyway!)
+      \item Coefficient size $|\theta_j|$ tells us how much impact feature $j$ has on our classification,
+      since $f(\xv) = \thetab^\top \xv + \theta_0$ is the decision function.
+    \end{itemize}
+
+    Idea: Sequentially drop the feature with the smallest $|\theta_j|$.
+
+    \framebreak
+
+    \begin{blocki}{Recursive feature elimination}
+      \item Standardize the data.
+      \item Start with full set of features $S$.
+      \item Fit a linear SVM, using the features in $S$, and estimate coefficients $\thetab$.
+      \item Remove feature(s) $j$ with minimal $|\theta_j|$ from $S$.
+      \item Iterate  using the reduced $S$ for the SVM.
+    \end{blocki}
+
+    \framebreak
+
+    \begin{blocki}{Some notes:}
+      \item Strictly speaking, this procedure does not perform selection, but rather constructs a ranking of the features.
+      \item As for filters, we need an extra criterion for termination / selection.
+      \item To improve speed one can drop $k$ features in each iteration.
+      \item Extensions to other kernels or multi-class tasks are not trivial.
+    \end{blocki}
+
+  \end{vbframe}
+
+  \begin{vbframe}{L1 Penalization / LASSO}
+
+    LASSO: least absolute shrinkage and selection operator
+    \begin{itemize}
+      \item As introduced before, linear methods that regularize the coefficients of the model with an $L1$ penalty in the empirical risk
+      $$ \riskrt = \risket + \lambda \|\thetab\|_1 = \sumin \left(\yi - \thetab^\top \xi \right)^2 +\lambda \sum_{j=1}^p |\theta_j| $$
+      are very popular for high-dimensional data.
+      \item The penalty summand shrinks the coefficients towards 0 in the final model.
+      \item Many (improved) variants: group LASSO, adaptive LASSO, ElasticNet, ...
+      \item Has some very nice optimality results: e.g., compressed sensing.
+    \end{itemize}
+  \end{vbframe}
+
+
+  \endlecture
+\end{document}
+

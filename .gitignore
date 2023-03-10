@@ -51,6 +51,14 @@ slides/supervised-regression/slides-*.pdf
 slides/trees/slides-*.pdf
 slides/tuning/slides-*.pdf
 slides/boosting/slides-*.pdf
+slides/*/slides-*.latexmk
+slides/*/slides-*.fls
+slides/*/slides-*.log
+slides/*/slides-*.nav
+slides/*/slides-*.pdf
+slides/*/slides-*.synctex.gz
+slides/*/slides-*.toc
+
 # vim swap files
 *.swp
 # used for atom editor
