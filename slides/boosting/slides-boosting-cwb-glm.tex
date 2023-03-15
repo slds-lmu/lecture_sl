@@ -85,7 +85,7 @@ $$
   L(y, \fx) = -y \cdot \fx + \log (1 + \exp(\fx))
 $$
 
-Note that CWB (as gradient boosting in general) predicts a score $\fx \in \R$. Squashing the score $\fx$ to $\pi(\xv) = s(\fx) = \in [0,1]$ corresponds to transforming the linear predictor of a GLM to the response domain with a link function $s$:
+Note that CWB (as gradient boosting in general) predicts a score $\fx \in \R$. Squashing the score $\fx$ to $\pi(\xv) = s(\fx) \in [0,1]$ corresponds to transforming the linear predictor of a GLM to the response domain with a link function $s$:
 
 \begin{itemize}
   \item $s(\fx) = (1 + \exp(-\fx))^{-1}$ for logistic regression.
@@ -102,12 +102,10 @@ Note that CWB (as gradient boosting in general) predicts a score $\fx \in \R$. S
 The following figure shows the parameter values for $m \leq 10000$ iterations as well as the estimates from a linear model as crosses (GLM with normally distributed errors):
 
 \begin{center}
-\includegraphics[width=\textwidth]{figure/compboost-to-glm-iter10000.png}
+\includegraphics[width=0.9\textwidth]{figure/compboost-to-glm-iter10000.png}
 \end{center}
 
-Throughout the fitting of CWB, the parameter estimated converges to the GLM solution.
-
-The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
+Throughout the fitting of CWB, the parameter estimated converges to the GLM solution. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
 
 \end{vbframe}
 
