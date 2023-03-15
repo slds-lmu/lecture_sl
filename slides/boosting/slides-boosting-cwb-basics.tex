@@ -97,6 +97,8 @@ $b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fit to the
 pseudo residuals $\rmm$ and only the best-fitting one
 % $\bmm_{\hat{j}}(\xv, \thetam)$
 is selected and updated.
+
+
 \framebreak
 
 Common examples of base learners are
@@ -181,6 +183,30 @@ Thus, if $\{ b_j(\xv, \thetab^{[1]}), b_j(\xv, \thetab^{[2]}) \} \in \mathcal{B}
 
 \end{vbframe}
 
+
+\begin{vbframe}{Feature selection in CWB}
+Often base learners are not defined on the entire feature vector $\xv$ but on
+a single feature $x_j$:
+
+$$
+  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
+$$
+Hence, CWB naturally incorporates variable selection:
+\begin{itemize}
+    \item Only the best base learner with the associated feature is selected
+    \item Due to the iterative nature of CWB, this is repeated $M$ times to obtain a selection of $M$ base learners by $j^{[1]}, \dots, j^{[m]}$ with $j^{[M]}\in\{1, \dots, p\}$
+    \item The number $\sum_{m=1}^M \mathds{1}_{[j = j^{[m]}]}$ tells us how often the feature $x_j$ in $b_j$ was selected
+\end{itemize}
+%The iterative nature of CWB and the additivity of the base learners 
+%directly incorporates a variable selection mechanism into the fitting
+%process, since in each iteration only the best base learner is selected in
+%combination with the associated feature, and each base learner can be
+%(substantially) more complex than a stump (e.g., univariate linear effects or 
+%splines).
+\end{vbframe}
+
+
+
 % ------------------------------------------------------------------------------
 
 \begin{vbframe}{Componentwise boosting algorithm}
@@ -260,26 +286,6 @@ Thus, if $\{ b_j(\xv, \thetab^{[1]}), b_j(\xv, \thetab^{[2]}) \} \in \mathcal{B}
 \end{vbframe}
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Feature selection in CWB}
-Often base learners are not defined on the entire feature vector $\xv$ but on
-a single feature $x_j$:
-
-$$
-  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
-$$
-Hence, CWB naturally incorporates variable selection:
-\begin{itemize}
-    \item Only the best base learner with the associated feature is selected
-    \item Due to the iterative nature of CWB, this is repeated $M$ times to obtain a selection of $M$ base learners by $j^{[1]}, \dots, j^{[m]}$ with $j^{[M]}\in\{1, \dots, p\}$
-    \item The number $\sum_{m=1}^M \mathds{1}_{[j = j^{[m]}]}$ tells us how often the feature $x_j$ in $b_j$ were selected
-\end{itemize}
-%The iterative nature of CWB and the additivity of the base learners 
-%directly incorporates a variable selection mechanism into the fitting
-%process, since in each iteration only the best base learner is selected in
-%combination with the associated feature, and each base learner can be
-%(substantially) more complex than a stump (e.g., univariate linear effects or 
-%splines).
-\end{vbframe}
 
 % ------------------------------------------------------------------------------
 
@@ -295,11 +301,11 @@ Suppose a feature $x_j \in \{1, \dots, G\}$.
         Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimates. 
     
     \item 
-        One binary base learner per class:
+        One binary base learner per category:
         $$b_{j,g}(x_j | \theta_{j,g}) = \theta_{j,g}\mathds{1}_{\{g = x_j\}}$$  
-        Including all classes of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ with each accounting for one specific class.
+        Including all categories of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ with each accounting for one specific class.
   \end{itemize}
-  \item The \texttt{compboost} package currently implements the first variant.
+  %\item The \texttt{compboost} package currently implements the first variant.
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -315,7 +321,7 @@ Advantages within CWB of simultaneously handling all classes:
         $$\thetabh = (\thetah_1, \dots, \thetah_G)^T,\ \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
 
     \item 
-        Adding regularization is easy to add by reframing the base learner as a linear model and using, e.g., Ridge regression for estimating $\thetabh$.  
+        Adding regularization is easy by reframing the base learner as a linear model and using, e.g., Ridge regression for estimating $\thetabh$.  
 \end{itemize}
 
 Disadvantage within CWB of simultaneously handling all classes: 
@@ -353,8 +359,8 @@ Disadvantage within CWB of simultaneously handling all classes:
 \begin{vbframe}{intercept handling}
 
 \begin{itemize}
-  \item The loss-optimal constant $\fm[0](\xv)$ is a initial model intercept.
-  \item An intercept is often referred to as part of a model which contains information independent of the features.
+  \item The loss-optimal constant $\fm[0](\xv)$ is an initial model intercept.
+  %\item An intercept is often referred to as part of a model which contains information independent of the features.
   \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ per base learner and slope $\theta_{j2}$.
   \item If base learner $\hat{b}_j$ with parameter estimates $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in the first iteration consequently updates the model intercept to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
   \item Throughout the fitting process, the intercept is adjusted $M$ times to its final form:
