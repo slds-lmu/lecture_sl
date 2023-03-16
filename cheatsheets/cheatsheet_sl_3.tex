@@ -1,0 +1,432 @@
+\documentclass{beamer}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+\usepackage{nicefrac}
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-svm}
+\input{../latex-math/ml-gp}
+\input{../latex-math/ml-ensembles.tex}
+\input{../latex-math/ml-trees.tex}	
+
+
+\title{SL :\,: BASICS} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ \invisible{x} % Package description in header
+	% The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+	
+
+	
+\begin{document}
+	\begin{frame}[fragile]{}
+		\vspace{-8ex}
+		\begin{columns}
+			\begin{column}{.31\textwidth}
+				\begin{beamercolorbox}[center]{postercolumn}
+					\begin{minipage}{.98\textwidth}
+						\parbox[t][\columnheight]{\textwidth}{
+							%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+							% First Column begin
+							%-------------------------------------------------------------------------------
+							% Data
+							%-------------------------------------------------------------------------------
+							\begin{myblock}{Nonlinear Support Vector Machines}
+							%	
+							%	
+								
+								\textbf{Dual kernelized soft-margin SVM:}
+							%	
+									\begin{eqnarray*}
+										& \max_{\alpha} & \sum_{i=1}^n \alpha_i - \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha_i\alpha_j\yi y^{(j)} k(\xi, \xv^{(j)})  \\
+										& \text{s.t. } & 0 \le \alpha_i \le C, \forall\, i \in \nset \quad \text{and} \quad  \sum_{i=1}^n \alpha_i \yi = 0
+									\end{eqnarray*}	
+							%	
+								Kernel representation of separating hyperplane:
+							%
+									$$ \fx = \sumin \alpha_i \yi k(\xi, \xv)  + \theta_0$$
+							%
+							\end{myblock}
+							%
+							%-------------------------------------------------------------------------------
+							%   
+							%-------------------------------------------------------------------------------
+							\begin{myblock}{Gaussian Processes}
+							%
+								Bayesian Linear Model:
+							%
+								\begin{eqnarray*}
+									\yi &=& \fxi + \epsi = \thetab^T \xi + \epsi, \quad \text{for } i \in \{1, \ldots, n\}
+								\end{eqnarray*}
+								%
+								where $\epsi \sim \mathcal{N}(0, \sigma^2).$
+							%
+								Parameter vector $\thetab$ is stochastic and follows a distribution.\\
+							%	
+								
+								Gaussian variant: 
+							%	
+								\begin{itemize}
+									\setlength{\itemindent}{+.3in}
+									\item Prior distribution: $\thetab \sim \mathcal{N}(\zero, \tau^2 \id_p)$ 
+									\item Posterior distribution:	$
+									\thetab ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^\top\yv, \bm{A}^{-1})
+									$ with $\bm{A}:= \sigma^{-2}\Xmat^\top\Xmat + \frac{1}{\tau^2} \id_p$
+									\item Predictive distribution of $y_* = 	\thetab^\top \xv_*$ for a new observations $\xv_*$: 
+									$$
+									y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^\top \Xmat \Amat^{-1}\xv_*, \xv_*^\top\Amat^{-1}\xv_*)
+									$$
+								\end{itemize}
+
+							%	
+							
+								
+							%
+								\fbox{
+									\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{
+										\begin{table}
+											\begin{tabular}{cc}
+												\textbf{Weight-Space View} & \textbf{Function-Space View} \vspace{4mm}\\ 
+												Parameterize functions & \vspace{1mm}\\
+												\footnotesize Example: $\fxt = \thetab^\top \xv$ & \vspace{3mm}\\
+												Define distributions on $\thetab$ & Define distributions on $f$ \vspace{4mm}\\
+												Inference in parameter space $\Theta$ & Inference in function space $\Hspace$
+											\end{tabular}
+										\end{table}  
+									}
+								}\\
+							%
+
+
+								$\hphantom{text}$\\
+
+								\textbf{Gaussian Processes:} A function $\fx$ is generated by a GP $\gp$ if for \textbf{any finite} set of inputs $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$, the associated vector of function values $\bm{f} = \left(f(\xv^{(1)}), \dots, f(\xv^{(n)})\right)$ has a Gaussian distribution
+								%
+								$$
+								\bm{f} = \left[f\left(\xi[1]\right),\dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
+								$$
+								%
+								with 
+								%
+								\begin{eqnarray*}
+									\textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
+									\textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}, 
+								\end{eqnarray*}
+								%
+								where $m(\xv)$ is the mean function and $k(\xv, \xv^\prime)$ is the covariance function. 
+							
+							\end{myblock}\vfill
+		% End First Column
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+						}
+					\end{minipage}
+				\end{beamercolorbox}
+			\end{column}
+			\begin{column}{.31\textwidth}
+				\begin{beamercolorbox}[center]{postercolumn}
+					\begin{minipage}{.98\textwidth}
+						\parbox[t][\columnheight]{\textwidth}{
+							%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+							% Begin Second Column
+							\begin{myblock}{}  
+							%
+								Types of covariance functions:
+								%		
+								\begin{itemize}
+									\setlength{\itemindent}{+.3in}
+									%			
+									\item $k(.,.)$ is stationary if it is as a function of $\bm{d} = \bm{x} - \bm{x}^\prime$, $ \leadsto k(\bm{d})$
+									\item $k(.,.)$ is isotropic if it is a function of $r = \|\bm{x} - \bm{x}^\prime\|$,  $ \leadsto k(r)$
+									\item $k(., .)$ is a dot product covariance function if $k$ is a function of $\bm{x}^T \bm{x}^\prime$
+								\end{itemize}
+							%
+								Commonly used covariance functions
+								
+								\begin{center}
+										\fbox{  
+										\begin{tabular}{|c|c|}
+											\hline
+											Name & $k(\bm{x}, \bm{x}^\prime)$\\
+											\hline
+											constant & $\sigma_0^2$ \\ [1em]
+											linear & $\sigma_0^2 + \bm{x}^T\bm{x}^\prime$ \\ [1em]
+											polynomial & $(\sigma_0^2 + \bm{x}^T\bm{x}^\prime)^p$ \\ [1em]
+											squared exponential & $\exp(- \frac{\|\bm{x} - \bm{x}^\prime\|^2}{2\ls^2})$ \\ [1em]
+											Matérn & \begin{footnotesize} $\frac{1}{2^\nu \Gamma(\nu)}\biggl(\frac{\sqrt{2 \nu}}{\ls}\|\bm{x} - \bm{x}^\prime\|\biggr)^{\nu} K_\nu\biggl(\frac{\sqrt{2 \nu}}{\ls}\|\bm{x} - \bm{x}^\prime\|\biggr)$\end{footnotesize}  \\ [1em]
+											exponential & $\exp\left(- \frac{\|\bm{x} - \bm{x}^\prime\|}{\ls}\right)$ \\ [1em]
+											\hline
+									\end{tabular} }\\
+								\end{center}
+									
+
+
+								%
+								\textbf{Posterior process} 
+								
+								Assuming a zero-mean GP prior $\mathcal{GP}\left(\bm{0}, k(\xv, \xv^\prime)\right).$ 
+							%	
+								For $ f_* = f\left(\xv_*\right)$ on single unobserved test point $\xv_*$ 
+							%	
+								\begin{eqnarray*}
+									f_* ~|~ \xv_*, \Xmat, \bm{f} \sim \mathcal{N}(\bm{k}_{*}^{T}\Kmat^{-1}\bm{f}, \bm{k}_{**} - \bm{k}_*^T \Kmat ^{-1}\bm{k}_*),
+								\end{eqnarray*}
+							%
+								where, $\Kmat = \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}$, $\bm{k}_* = \left[k\left(\xv_*, \xi[1]\right), ..., k\left(\xv_*, \xi[n]\right)\right]$ and $ \bm{k}_{**}\ = k(\xv_*, \xv_*)$. \\
+								
+								%
+								For multiple unobserved test points
+								$
+								\bm{f}_* = \left[f\left(\xi[1]_*\right), ..., f\left(\xi[m]_*\right)\right]:
+								$
+								\begin{eqnarray*}
+									\bm{f}_* ~|~ \Xmat_*, \Xmat, \bm{f} \sim \mathcal{N}(\Kmat_{*}^{T}\Kmat^{-1}\bm{f}, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
+								\end{eqnarray*} 
+								with $\Kmat_* = \left(k\left(\xi, \xv_*^{(j)}\right)\right)_{i,j}$, $\Kmat_{**} = \left(k\left(\xi[i]_*, \xi[j]_*\right)\right)_{i,j}$.\\
+								
+								Predictive mean when assuming a non-zero mean GP prior $\gp$ with mean $m(\xv):$ 
+								$$
+								m(\Xmat_*) + \Kmat_*\Kmat^{-1}\left(\bm{y} - m(\Xmat)\right)
+								$$
+								Predictive variance remains unchanged. \\
+								
+								\textbf{Noisy posterior process:}
+							%	
+								Assuming a zero-mean GP prior $\mathcal{GP}\left(\bm{0}, k(\xv, \xv^\prime)\right):$ 
+							%	
+								\begin{eqnarray*}
+									\bm{f}_* ~|~ \Xmat_*, \Xmat, \bm{y} \sim \mathcal{N}(\bm{m}_{\text{post}}, \bm{K}_\text{post}).
+								\end{eqnarray*}
+								with nugget $\sigma^2 $ and
+							%	 
+								\begin{eqnarray*}
+									\bm{m}_{\text{post}} &=& \Kmat_{*}^{T} \left(\Kmat+ \sigma^2 \cdot \id\right)^{-1}\bm{y} \\
+									\bm{K}_\text{post} &=& \Kmat_{**} - \Kmat_*^T \left(\Kmat  + \sigma^2 \cdot \id\right)^{-1}	\Kmat_*,	
+								\end{eqnarray*} 
+							%	
+								
+								Predictive mean when assuming a non-zero mean GP prior $\gp$ with mean $m(\xv):$ 
+								$$
+								m(\Xmat_*) + \Kmat_*(\Kmat +\sigma^2 \id)^{-1}\left(\bm{y} - m(\Xmat)\right)
+								$$
+								Predictive variance remains unchanged.
+							%
+							%
+							\end{myblock}
+		% End Second Column					
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+						}
+					\end{minipage}
+				\end{beamercolorbox}
+			\end{column}
+			\begin{column}{.31\textwidth}
+				\begin{beamercolorbox}[center]{postercolumn}
+					\begin{minipage}{.98\textwidth}
+						\parbox[t][\columnheight]{\textwidth}{
+						%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+						% Begin Third Column#
+
+
+						%-------------------------------------------------------------------------------
+						% Regression Losses 
+						%------------------------------------------------------------------------------- 
+						\begin{myblock}{Boosting}
+						%	
+
+							\begin{algorithm}[H]
+								\begin{algorithmic}[1]
+									\State Initialize observation weights: $w^{[1](i)} = \frac{1}{n} \quad \forall i \in \nset$
+									\For {$m = 1 \to M$}
+									\State Fit classifier to training data with weights $\wm$ and get $\blh$
+									\State Calculate weighted in-sample misclassification rate
+									$$
+									\errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}}
+									$$
+									\State Compute: $ \betamh = \frac{1}{2} \log \left( \frac{1 - \errm}{\errm}\right)$
+									\State Set: $w^{[m+1](i)} = \wmi \cdot \exp\left(- \betamh \cdot
+									\yi \cdot \blh(\xi)\right) $
+									\State Normalize $w^{[m+1](i)}$ such that $\sumin w^{[m+1](i)} = 1$
+									\EndFor
+									\State Output: $\fxh = \sum_{m=1}^{M} \betamh \blh(\xv)$
+								\end{algorithmic}
+								\caption{AdaBoost}
+							\end{algorithm}
+							%
+
+							$\hphantom{text}$\\
+
+							\begin{algorithm}[H]
+							%	\begin{footnotesize}
+									\begin{center}
+										\caption{Gradient Boosting Algorithm}
+										\begin{algorithmic}[1]
+											\State Initialize $\hat{f}^{[0]}(\xv) = \argmin_{\bm{\theta}} \sumin L(\yi, b(\xi, \bm{\theta}))$
+											%\State Set the learning rate $\beta$ to a small constant value
+											\For{$m = 1 \to M$}
+											\State For all $i$: $\rmi = -\left[\pd{\Lxyi}{\fxi}\right]_{f=\fmdh}$
+											\State Fit a regression base learner to the pseudo-residuals $\rmi$:
+											\State $\thetamh = \argmin \limits_{\bm{\theta}} \sumin (\rmi - b(\xi, \bm{\theta}))^2$
+											%\State Line search: $\betamh = \argmin_{\beta} \sumin L(\yi, \fmd(\xv) + \beta b(\xv, \thetamh))$
+											\State Set $\betam$ to $\beta$ being a small constant value or via line search
+											\State Update $\fmh(\xv) = \fmdh(\xv) + \betam b(\xv, \thetamh)$
+											\EndFor
+											\State Output $\fh(\xv) = \hat{f}^{[M]}(\xv)$
+										\end{algorithmic}
+									\end{center}
+							%	\end{footnotesize}
+							\end{algorithm} 
+
+							$\hphantom{text}$\\
+
+							\begin{algorithm}[H]
+							%	\begin{footnotesize}
+									\begin{center}
+										\caption{Gradient Boosting for Multiclass}
+										\begin{algorithmic}[1]
+											\State Initialize $f_{k}^{[0]}(\xv) = 0,\ k = 1,\ldots,g$
+											\For{$m = 1 \to M$}
+											\State Set $\pik^{[m]}(\xv) = \frac{\exp(f_k^{[m]}(\xv))}{\sum_j \exp(f_j^{[m]}(\xv))}, k = 1,\ldots,g$
+											\For{$k = 1 \to g$}
+											\State For all $i$: Compute $\rmi_k = \mathds{1}_{\{\yi = k\}} - \pik^{[m]}(\xi)$
+											\State Fit a regression base learner $\hat{b}^{[m]}_k$ to the pseudo-residuals $\rmi_k$
+											\State Obtain $\betamh_k$ by constant learning rate or line-search
+											\State Update $\hat{f}_k^{[m]} = \hat{f}_k^{[m-1]} + \betamh_k \hat{b}^{[m]}_k$
+											\EndFor
+											\EndFor
+											\State Output $\hat{f}_1^{[M]}, \ldots, \hat{f}_g^{[M]}$
+										\end{algorithmic}
+									\end{center}
+							%	\end{footnotesize}
+							\end{algorithm}
+							
+						\end{myblock} 
+		%
+		%
+		%-------------------------------------------------------------------------------
+		% Classification 
+		%------------------------------------------------------------------------------- 
+
+		%\begin{myblock}{Classification}
+		% 				    We want to assign new observations to known categories according to criteria learned from a training set.  
+		%             \vspace*{1ex}
+		%             
+
+		%$y \in \Yspace = \gset : $ categorical output variable (label)\\ 
+
+		%\textbf{Classification} usually means to construct $g$ \textbf{discriminant functions}:
+		
+		%$f_1(\xv), \ldots, \fgx$, so that we choose our class as \\ $h(\xv) = \argmax_{k \in \gset} \fkx$ \\
+
+		%\textbf{Linear Classifier:} functions $\fkx$ can be specified as linear functions\\
+
+		% \hspace*{1ex}\textbf{Note: }All linear classifiers can represent non-linear decision boundaries \hspace*{1ex}in our original input space if we include derived features. For example: \hspace*{1ex}higher order interactions, polynomials or other transformations of x in \hspace*{1ex}the model.
+
+		%\textbf{Binary classification: }If only 2 classes ($\Yspace = \setzo$ or  $\Yspace = \setmp$) exist, we can use a single discriminant function $\fx = f_{1}(\xv) - f_{2}(\xv)$.  \\
+
+
+		% \textbf{Generative approach }models $\pdfxyk$, usually by making some assumptions about the structure of these distributions and employs the Bayes theorem: 
+		% $\pikx = \postk \propto \pdfxyk \pik$. \\ %It allows the computation of \hspace*{1ex}$\pikx$. \\
+		% \textbf{Examples}: Linear discriminant analysis (LDA), Quadratic discriminant analysis (QDA), Naive Bayes\\
+		% 
+		% \textbf{Discriminant approach }tries to optimize the discriminant functions directly, usually via empirical risk minimization:\\ 
+		% $ \fh = \argmin_{f \in \Hspace} \riske(f) = \argmin_{f \in \Hspace} \sumin \Lxyi.$\\
+		% \textbf{Examples}: Logistic/softmax regression, kNN
+
+
+		%\end{myblock}
+
+		%-------------------------------------------------------------------------------
+		% HRO - Components of Learning 
+		%-------------------------------------------------------------------------------          
+		%\begin{myblock}{Components of Learning}
+
+		%\textbf{Learning = Hypothesis space + Risk + Optimization} \\
+		%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetab \in \Theta} 
+		%\risket$
+
+		% 
+		% \textbf{Learning &= Hypothesis space &+ Risk  &+ Optimization} \\
+		% &= $\Hspace &+ \risket &+ \argmin_{\thetab \in \Theta} \risket$
+		% 
+		% \textbf{Hypothesis space: } Defines (and restricts!) what kind of model $f$
+		% can be learned from the data.
+		% 
+		% Examples: linear functions, decision trees
+		% 
+		% \vspace*{0.5ex}
+		% 
+		% \textbf{Risk: } Quantifies how well a model performs on a given
+		% data set. This allows us to rank candidate models in order to choose the best one.
+		% 
+		% Examples: squared error, negative (log-)likelihood
+		% 
+		% \vspace*{0.5ex}
+		% 
+		% \textbf{Optimization: } Defines how to search for the best model, i.e., the model with the smallest {risk}, in the hypothesis space.
+		% 
+		% Examples: gradient descent, quadratic programming
+
+
+		%\end{myblock}
+		% End Third Column
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					}
+					\end{minipage}
+				\end{beamercolorbox}
+			\end{column}
+		\end{columns}
+
+	\end{frame}
+\end{document}

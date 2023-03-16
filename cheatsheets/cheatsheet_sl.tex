@@ -1,0 +1,475 @@
+\documentclass{beamer}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{enumerate}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+\usepackage{nicefrac}
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+
+
+\title{SL :\,: BASICS} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ \invisible{x} % Package description in header
+	% The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+	
+
+	
+\begin{document}
+	\begin{frame}[fragile]{}
+		\vspace{-8ex}
+		\begin{columns}
+			\begin{column}{.31\textwidth}
+				\begin{beamercolorbox}[center]{postercolumn}
+					\begin{minipage}{.98\textwidth}
+						\parbox[t][\columnheight]{\textwidth}{
+							%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+							% First Column begin
+							%-------------------------------------------------------------------------------
+							% Data
+							%-------------------------------------------------------------------------------
+							\begin{myblock}{Advanced Risk Minimization}
+							%	
+							%	
+								Bayes risk:
+							%	
+								\begin{eqnarray*}
+									\riskbayes_{L} = \inf_{f: \Xspace \to \R^g} \risk_L\left(f\right) 
+								\end{eqnarray*}
+							%
+								Bayes regret:
+							%
+								{\small
+								\begin{eqnarray*}
+									\risk_L\left(f \right) - \riskbayes_{L} &=& \underbrace{\left[\risk_L\left( f \right) - \inf_{f \in \Hspace} \risk_L(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk_L(f) - \riskbayes_{L}\right]}_{\text{approximation error}}
+								\end{eqnarray*}}
+							%
+							%	Empirical risk of a hypothesis $f \in \Hspace$ for a loss $L$ on a data set $ \Dset$:
+							%%	
+							%	\begin{eqnarray*}
+							% 		\riskef =  \sumin \Lxyi
+							%	\end{eqnarray*}
+							%
+								Empirical risk minimizer:
+							%	
+								\begin{eqnarray*}
+									\hat f = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
+								\end{eqnarray*}
+							%
+								Pseudo-residuals:
+								%
+								\vspace*{-0.3cm}
+								\begin{eqnarray*}
+									\tilde r &=& - \frac{\partial \Lxy}{\partial \fx}
+								\end{eqnarray*}
+								%
+								Huber Loss:
+								%
+								$$
+									\Lxy = \begin{cases}
+												\frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
+												\epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
+											\end{cases}
+									, \quad \epsilon > 0
+								$$
+								Log-cosh Loss:
+								%
+								$$
+									\Lxy = \log \left( \cosh(\left|y - \fx\right|) \right)
+								% \log \left(\tfrac{1}{2} (\left|y - \fx\right| / c)^2 + 1\right), \quad c \in \R
+								$$
+								Cauchy loss:
+								%
+								$$
+									\Lxy = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - \fx\right|}{c}\right)^2 \right), 
+									\quad c \in \R
+								% \log \left(\tfrac{1}{2} (\left|y - \fx\right| / c)^2 + 1\right), \quad c \in \R
+								$$
+								Log-Barrier Loss:
+								%
+								\begin{small}
+									\[
+									\Lxy = \left\{\begin{array}{lr}
+										-\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - \fx\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-\fx\right| \leq \epsilon \\
+										\infty & \text{if } \left|y-\fx\right|  > \epsilon
+												\end{array}
+											\right.
+									\]
+								\end{small}
+								%
+								$\eps$-Insensitive loss :
+								%
+								$$
+									\Lxy =  \begin{cases}
+												0  & \text{if } |y - \fx| \le \epsilon \\
+												|y - \fx|-\epsilon & \text{otherwise }
+											\end{cases},
+									\quad \epsilon \in \R_{+}
+								$$
+								%
+								Quantile Loss / Pinball Loss:
+								%
+								$$
+									\Lxy = \begin{cases}
+												(1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
+												\alpha (y - \fx) & \text{ if } y \ge \fx
+											\end{cases},
+									\quad \alpha \in (0, 1)
+								$$
+								%  
+								\fbox{
+									\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{
+										\begin{table}[] 
+											\small
+											\renewcommand{\arraystretch}{1.25} %<- modify value to suit your needs
+											\begin{tabular}{c|lll}
+												Loss Function & Risk Minimizer & Optimal Constant Model\\ \hline
+												L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fx = \frac{1}{n} \sumin \yi$ \\
+												L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fx = \text{med}(\yi)$\\
+												0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hx = \text{mode} \left\{\yi\right\}$ \\
+												Brier & $\pi^*_k(\xv) = \P(y = k~|~\xv)$ & $\pikx =  \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}}$\\
+												Bernoulli (on probs) & $\pi^*_k(\xv) = \P(y = k~|~\xv)$ & $\pikx =  \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}}$ \\
+												Bernoulli (on scores) & $f^*_k(\xv) = \log\left(\frac{\P(y = k ~|~\xv)}{1 - \P(y = k ~|~\xv)}\right)$ & $\fkx = \log \frac{n_{k}}{n - n_{k}}$  
+											\end{tabular}
+										\end{table}
+									}
+								}\\
+
+								%
+								Bayes risk for  0-1-loss (also: Bayes error rate):
+								%
+								\begin{eqnarray*}  
+									\riskbayes &=& 1 - \E_x \left[\max_{l \in \Yspace} \P(y = l~|~ \xv = \xv)\right]
+								\end{eqnarray*}
+
+							\end{myblock}\vfill
+						}
+						% End First Column
+						%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+					\end{minipage}
+				\end{beamercolorbox}
+			\end{column}
+			\begin{column}{.31\textwidth}
+				\begin{beamercolorbox}[center]{postercolumn}
+					\begin{minipage}{.98\textwidth}
+						\parbox[t][\columnheight]{\textwidth}{
+							%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+							% Begin Second Column
+							\begin{myblock}{} \vspace{-4ex}
+
+								Hinge loss
+								$$\Lxy = \max \{ 0, 1 - y\fx \}$$
+								%
+								Squared Hinge Loss
+								$$\Lxy = \max \{ 0, (1 - y\fx)^2 \}$$
+								%
+								Exponential Loss
+								$$\Lxy = \exp(-y\fx)$$
+								%
+								AUC-loss
+								%
+								$$AUC = \frac{1}{n_+ n_-}   \sum\nolimits_{i: \yi = 1} \sum\nolimits_{j: \yi[j] = -1} [f^{(i)} > f^{(j)}]$$
+								%
+							\end{myblock} 
+							%
+							%
+							\begin{myblock}{Multiclass Classification}
+								%	
+								\begin{small}
+									\fbox{	
+										\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{
+											\begin{table}[]
+										%		\bgroup
+										%		\def\arraystretch{2}%  1 is the default, change whatever you need
+												\begin{tabular}{c|cc}
+													& Logistic Regression & Softmax Regression \\ \hline
+													$\Yspace$ & $\{0, 1\}$ & $\{1, 2, ..., g\}$ \\[0.5cm]
+													Discriminant fun. & $f(\xv) = \thetab^\top \xv$ & $f_k(\xv) = \thetab_{k}^{\top} \xv, k = 1, \ldots, g$ \\[0.5cm]
+													Probabilities & $\pi(\xv) = \frac{1}{1 + \exp\left(-\thetab^\top \xv\right)}$ & $\pi_k(\xv) = \frac{\exp(\thetab_k^\top \xv)}{\sum_{j = 1}^g \exp(\thetab_j^\top \xv) }$ \\[0.5cm]
+													$L(y, \pix)$ & Bernoulli / logarithmic loss & Multiclass logarithmic loss\\[-0.3cm]
+													& $-y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)$  & $ - \sum_{k = 1}^g [y = k] \log\left(\pi_k(\xv)\right)$ \\
+												\end{tabular}
+									%			\egroup
+											\end{table}
+										}
+									}
+								\end{small}
+
+								%
+								\textbf{Codebooks:}
+								The k-th column defines how classes of all observations are encoded in the binary subproblem / for binary classifier $f_k(\xv)$.
+								Entry $(m, i)$ takes values $\in \{-1, 0, +1\}$
+								\begin{itemize}
+									\setlength{\itemindent}{+.3in}
+									\item if $0$, observations of class $\yi = m$ are ignored.
+									\item if $1$, observations of class $\yi = m$ are encoded as $1$.
+									\item if $- 1$, observations of class $\yi = m$ are encoded as $- 1$.
+								\end{itemize} 
+								k-th row is called codeword for class k. \\
+								\textbf{One-vs-Rest:}
+								Create $g$ binary subproblems, where in each the $k$-th original class is encoded as $+1$, and all other classes (the \textbf{rest}) as $- 1$. Prediction:
+								%
+								$
+									\hat y = \text{arg max}_{k \in \{1, 2, ..., g\}} \hat f_k(\xv). 
+								$\\
+								%
+								\textbf{One-vs-One:}  Create $\nicefrac{g(g - 1)}{2}$ binary subproblems, where each $\D_{k, \tilde k} \subset \D$ only considers observations from a class-pair $\yi \in \{k, \tilde k\}$, other observations are omitted.  Prediction: majority voting. \\
+								%
+								\textbf{Error-Correcting Codes (ECOC):} Creating codes that can correct for as many errors as possible by row separation (codewords are well-separated in Hamming distance) and column separation (uncorrelated columns).
+							\end{myblock}
+
+							%-------------------------------------------------------------------------------
+							% Loss and Risk 
+							%-------------------------------------------------------------------------------
+							\begin{myblock}{Information Theory (Discrete)}
+								%	
+								\textbf{Entropy} of a discrete random variable $X$ with domain $\Xspace$ and pmf $p(x)$:
+								\begin{equation*}
+									\begin{aligned} 
+										H(X) := H(p) &= - \E[\log_2(p(X))]           &= -\sum\nolimits_{x \in \Xspace} p(x) \log_2 p(x) 
+									\end{aligned} 
+								\end{equation*}
+								%
+								\textbf{Joint entropy} of $n$ discrete random variables $X_1, X_2, \ldots, X_n:$   
+								%
+								\begin{small}  
+									$$ H(X_1, X_2, \ldots, X_n) = - \sum\nolimits_{x_1 \in \Xspace_1} \ldots \sum\nolimits_{x_n \in \Xspace_n} p(x_1,x_2, \ldots, x_n) \log_2(p(x_1,x_2, \ldots, x_n)) $$ 
+								\end{small}  
+
+							\end{myblock}
+% End Second Column					
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+						}
+					\end{minipage}
+				\end{beamercolorbox}
+			\end{column}
+
+			\begin{column}{.31\textwidth}
+				\begin{beamercolorbox}[center]{postercolumn}
+					\begin{minipage}{.98\textwidth}
+						\parbox[t][\columnheight]{\textwidth}{
+							%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+							% Begin Third Column#
+
+
+							%-------------------------------------------------------------------------------
+							% Regression Losses 
+							%------------------------------------------------------------------------------- 
+							\begin{myblock}{} \vspace{-4ex}
+								Properties of discrete entropy:
+								\begin{enumerate}
+									\setlength{\itemindent}{+.3in}
+									\item Entropy is non-negative, so $H(X) >= 0$.
+									\item If one event has probability $p(x) = 1$, then $H(X)=0$. 
+									\item Symmetry. Reordering values of $p(x)$ does not change entropy.
+									\item Adding or removing an event with $p(x)=0$ does not change entropy.
+									\item $H(X)$ is continuous in probabilities $p(x)$.
+									\item Entropy is additive for independent RVs.
+									\item Entropy is maximal for a uniform distribution.
+								\end{enumerate}
+								%
+								\vspace*{1ex}
+								%        \includegraphics[width=1\columnwidth]{img/reg_loss.PNG}
+								\textbf{Conditional entropy} of $Y$  given $X$ for $(X, Y) \sim p(x, y):$
+								% 
+								\vspace{-0.2cm}
+								%
+								\begin{small}  
+									\begin{equation*}
+										\begin{aligned}
+											H(Y | X) &= \E_X[H(Y|X=x)] = \sum_{x \in \Xspace} p(x) H(Y | X=x) \\
+											&=-\sum_{x \in \Xspace} p(x) \sum_{y \in \Yspace} p(y | x) \log p(y | x) 
+											=-\sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log p(y | x)  
+										\end{aligned}
+									\end{equation*}
+								\end{small}  
+								%
+								Chain rule for entropy:
+								%
+								$$H(X, Y)=H(X)+H(Y | X)$$
+								%
+								n-Variable version:
+								$$H\left(X_{1}, X_{2}, \ldots, X_{n}\right)=\sumin H\left(X_{i} | X_{i-1}, \ldots, X_{1}\right)$$
+								%
+								Other properties:
+								%
+								\begin{itemize}
+									\setlength{\itemindent}{+.3in}
+										\item $H(X, X)       = H(X)  $
+										\item $H(X | X)      = 0 $
+										\item $H(X, Y | Z)   =H(X | Z)+H(Y | X, Z)$
+										\item $H(X | Y) \leq H(X) $
+										\item  If $H(X|Y) = 0$, then $X$ is a function of $Y$
+								\end{itemize}
+								%
+								\textbf{Mutual information} between $X$ and $Y:$
+								%
+								\begin{equation*}
+									\begin{aligned}
+										I(X ; Y) &= \E_{p(x, y)} \left[ \log \frac{p(X, Y)}{p(X) p(Y)} \right] = \sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
+										&= H(X)-H(X | Y)
+									\end{aligned}
+								\end{equation*}
+								%
+								Properties:
+								\begin{itemize}
+									\setlength{\itemindent}{+.3in}
+										\item $ I(X ; Y) = H(X) - H(X | Y) $
+											\item $I(X ; Y) = H(Y) - H(Y | X) $
+											\item $I(X ; Y) = H(X) + H(Y) - H(X, Y)$
+											\item $I(X ; Y) = I(Y ; X) $
+											\item $I(X ; X) = H(X)$
+											\item $ I(X;Y) \geq 0$, with equality if and only if $X$ and $Y$ are independent
+								\end{itemize}
+								%
+								\textbf{Cross-entropy} of two distributions $p$ and $q$ on the same domain $\Xspace:$
+								%
+								$$ 
+									H_q(p) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) 
+								$$
+								%
+								\textbf{Kullback-Leibler Divergence:}
+								%
+								$$ 
+									D_{KL}(p \| q) = \E_p \left[\log \frac{p(X)}{q(X)}\right] = \sum_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)} 
+								$$
+								%
+								Relationship:
+								$$
+									H_q(p) = H(p) + D_{KL}(p \| q)
+								$$
+							\end{myblock}
+
+
+
+			  			}
+					\end{minipage}
+				\end{beamercolorbox}
+			\end{column}
+		\end{columns}
+
+	\end{frame}
+\end{document}
+
+
+
+%-------------------------------------------------------------------------------
+% Classification 
+%------------------------------------------------------------------------------- 
+
+%\begin{myblock}{Classification}
+% 				    We want to assign new observations to known categories according to criteria learned from a training set.  
+%             \vspace*{1ex}
+%             
+
+%$y \in \Yspace = \gset : $ categorical output variable (label)\\ 
+
+%\textbf{Classification} usually means to construct $g$ \textbf{discriminant functions}:
+  
+%$f_1(\xv), \ldots, \fgx$, so that we choose our class as \\ $h(\xv) = \argmax_{k \in \gset} \fkx$ \\
+
+%\textbf{Linear Classifier:} functions $\fkx$ can be specified as linear functions\\
+
+% \hspace*{1ex}\textbf{Note: }All linear classifiers can represent non-linear decision boundaries \hspace*{1ex}in our original input space if we include derived features. For example: \hspace*{1ex}higher order interactions, polynomials or other transformations of x in \hspace*{1ex}the model.
+
+%\textbf{Binary classification: }If only 2 classes ($\Yspace = \setzo$ or  $\Yspace = \setmp$) exist, we can use a single discriminant function $\fx = f_{1}(\xv) - f_{2}(\xv)$.  \\
+
+
+% \textbf{Generative approach }models $\pdfxyk$, usually by making some assumptions about the structure of these distributions and employs the Bayes theorem: 
+% $\pikx = \postk \propto \pdfxyk \pik$. \\ %It allows the computation of \hspace*{1ex}$\pikx$. \\
+% \textbf{Examples}: Linear discriminant analysis (LDA), Quadratic discriminant analysis (QDA), Naive Bayes\\
+% 
+% \textbf{Discriminant approach }tries to optimize the discriminant functions directly, usually via empirical risk minimization:\\ 
+% $ \fh = \argmin_{f \in \Hspace} \riske(f) = \argmin_{f \in \Hspace} \sumin \Lxyi.$\\
+% \textbf{Examples}: Logistic/softmax regression, kNN
+
+
+%\end{myblock}
+
+%-------------------------------------------------------------------------------
+% HRO - Components of Learning 
+%-------------------------------------------------------------------------------          
+%\begin{myblock}{Components of Learning}
+
+%\textbf{Learning = Hypothesis space + Risk + Optimization} \\
+%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetab \in \Theta} 
+%\risket$
+
+% 
+% \textbf{Learning &= Hypothesis space &+ Risk  &+ Optimization} \\
+% &= $\Hspace &+ \risket &+ \argmin_{\thetab \in \Theta} \risket$
+% 
+% \textbf{Hypothesis space: } Defines (and restricts!) what kind of model $f$
+% can be learned from the data.
+% 
+% Examples: linear functions, decision trees
+% 
+% \vspace*{0.5ex}
+% 
+% \textbf{Risk: } Quantifies how well a model performs on a given
+% data set. This allows us to rank candidate models in order to choose the best one.
+% 
+% Examples: squared error, negative (log-)likelihood
+% 
+% \vspace*{0.5ex}
+% 
+% \textbf{Optimization: } Defines how to search for the best model, i.e., the model with the smallest {risk}, in the hypothesis space.
+% 
+% Examples: gradient descent, quadratic programming
+
+
+%\end{myblock}
+% End Third Column
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
