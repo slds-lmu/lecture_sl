@@ -296,7 +296,7 @@ Suppose a feature $x_j \in \{1, \dots, G\}$.
   \item Two common options for encoding the categorical feature $x_j$ in a base learner $b_j$ are:
   \begin{itemize}
     \item 
-        One base learner to simultaneously estimate all classes: 
+        One base learner to simultaneously estimate all categories: 
         $$b_j(x_j | \thetab_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetab_j$$
         Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimates. 
     
@@ -311,10 +311,10 @@ Suppose a feature $x_j \in \{1, \dots, G\}$.
 % ------------------------------------------------------------------------------
 \framebreak
 
-Advantages within CWB of simultaneously handling all classes: 
+Advantages within CWB of simultaneously handling all categories: 
 \begin{itemize}
     \item 
-        Much faster estimation process compared to adding the classes as individual binary base learners.
+        Much faster estimation process compared to adding the categories as individual binary base learners.
 
     \item 
         Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$ with:
@@ -324,7 +324,7 @@ Advantages within CWB of simultaneously handling all classes:
         Adding regularization is easy by reframing the base learner as a linear model and using, e.g., Ridge regression for estimating $\thetabh$.  
 \end{itemize}
 
-Disadvantage within CWB of simultaneously handling all classes: 
+Disadvantage within CWB of simultaneously handling all categories: 
 \begin{itemize}
     \item 
         If class $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost sure) not $0$.
@@ -333,17 +333,17 @@ Disadvantage within CWB of simultaneously handling all classes:
 % ------------------------------------------------------------------------------
 \framebreak
 
-Advantages within CWB of including classes individually: 
+Advantages within CWB of including categories individually: 
 \begin{itemize}
     \item 
-        A finer selection within the feature is possible since non-informative classes are simply not included in the model and hence have an effect of $0$.
+        A finer selection within the feature is possible since non-informative categories are simply not included in the model and hence have an effect of $0$.
 
     \item 
         Explicit solution of $\thetah_{j,g} = \argmin_{\theta\in\R}\sumin (\yi - b_g(x^{(i)}_j|\theta))^2$ with:
         $$\thetah_{j,g} = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
 \end{itemize}
 
-Disadvantage within CWB of simultaneously handling all classes:
+Disadvantage within CWB of simultaneously handling all categories:
 \begin{itemize}
     \item 
         Fitting CWB is much slower due to the overhead in each iteration (updating the model, pseudo residuals, and doing the base learner selection) after conducting one tiny step into the direction of the 1-dim parameter $\thetah_{j,g}$.
