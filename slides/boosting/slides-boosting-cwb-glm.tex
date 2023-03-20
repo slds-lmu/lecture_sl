@@ -82,7 +82,7 @@ $\rightarrow$ post-selection inference.
 Fitting a logistic regression (GLM with a Bernoulli distributed response) requires the specification of the loss as function as
 
 $$
-  L(y, \fx) = -y \cdot \fx + \log (1 + \exp(\fx))
+  L(y, \fx) = -y \cdot \fx + \log (1 + \exp(\fx)),\ y\in\{0, 1\}
 $$
 
 Note that CWB (as gradient boosting in general) predicts a score $\fx \in \R$. Squashing the score $\fx$ to $\pi(\xv) = s(\fx) \in [0,1]$ corresponds to transforming the linear predictor of a GLM to the response domain with a link function $s$:
