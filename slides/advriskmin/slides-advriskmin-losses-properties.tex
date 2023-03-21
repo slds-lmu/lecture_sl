@@ -66,6 +66,9 @@ is influenced by the choice of the loss function.
   $r := y - \fx.$
   \item Classification losses are usually expressed in terms of the 
   \textbf{margin} $\nu := y \cdot \fx.$
+  \item Losses are called \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$. 
+  \item A loss is \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
+  $a \in \R$.
   \item A loss is called \textbf{distance-based} if
   \begin{itemize}
     \small
@@ -73,9 +76,6 @@ is influenced by the choice of the loss function.
     $\Lxy = \psi (r)$ \\for some $\psi: \R \to \R, ~ \text{and}$
     \item $\psi(r) = 0 \Leftrightarrow r = 0$.
   \end{itemize}
-  \item A loss is \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
-  $a \in \R$.
-  \item Losses are called \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$. 
 \end{itemize}
 
 \vfill
@@ -183,6 +183,7 @@ strongly affected by large residuals than others.
     generally not be smooth either. 
     \item This may require the use of derivative-free optimization (which 
     might not be desirable).
+    \item Smoothness of objective wrt $\thetab$ not only depends on $\Lxy$, but also requires smoothness of $\fx$! 
   \end{itemize}
 \end{itemize}
 
@@ -251,24 +252,35 @@ towards (0, 0) and compromises the original objective's smoothness.
 \begin{vbframe}{Analytical Properties: Convexity}
 
 \begin{itemize}
-  \footnotesize
+  %\footnotesize
+  \setlength\itemsep{1.2em}
   \item A function $\risket$ is convex if
   $$
   \riske\left(t \cdot \thetab + (1 - t) \cdot \tilde \thetab\right) \le t \cdot
   \riske\left(\thetab\right) + (1 - t) \cdot \riske\left(\tilde \thetab \right)
   $$
   $\forall$ $t \in [0, 1], ~\thetab, \tilde \thetab \in \Theta$
-  (strictly convex if the above holds without equality).
-  \item In optimization, convex optimization problems are desirable because 
-  they have a number of convenient properties. 
-  \item In particular, it holds for convex problems that local optima are 
-  global optima \\$\rightarrow$ a strictly convex function has at most 
-  \textbf{one} global minimum (uniqueness). 
-  \item Note, however, that convexity of $\risket$ depends both on convexity of 
+  (strictly convex if the above holds with strict inequality).
+  \item In optimization, convex problems are desirable because they have a number of convenient properties. In particular, all local minima are 
+  global. \vspace{0.2cm }\\
+  $\rightarrow$ strictly convex function has at most 
+  \textbf{one} global minimum (uniqueness).
+  \item For $\riske \in \mathcal{C}^{2}$, $\riske$ is convex iff Hessian $\nabla^2 \risket$ is psd.
+\end{itemize}
+
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Analytical Properties: Convexity}
+
+\begin{itemize}
+  \setlength\itemsep{1em}
+  \item Convexity of $\risket$ depends both on convexity of $L(\cdot)$ (given in most cases) and $\fxt$ (often problematic).
+  \item If we model our data using an exponential family distribution, we always get convex losses
   \begin{itemize} 
-    \footnotesize
-    \item $L(\cdot)$ -- given in most cases -- and 
-    \item $\fxt$ -- often problematic.
+    %\footnotesize
+    \item For $\fxt$ linear in $\thetab$, linear/logistic/softmax/poisson regression are convex problems! 
   \end{itemize}  
 \end{itemize} 
 
@@ -294,6 +306,8 @@ towards (0, 0) and compromises the original objective's smoothness.
 \end{vbframe}
 
 % ------------------------------------------------------------------------------
+
+
 
 \begin{vbframe}{Analytical Properties: Convergence}
 

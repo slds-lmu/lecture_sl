@@ -175,7 +175,7 @@ The data is then split into a training set and a test set.
 
 To obtain estimates for the bias and variance, we will train several models by sampling with replacement from the training data. This is commonly known as \textbf{bootstrapping}. \\
 \vspace{0.3cm}
-First, we train several (low capacity) univariate regression models.
+First, we train several (low capacity) linear models (polynomial of degree $d=1$).
 
 \begin{center}
   \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-bootstrap_1.png}
@@ -270,7 +270,7 @@ In our examples we could see that:
 \begin{itemize}
   \item The linear model failed to fit the training data well and thus underfitted (high bias).
   \item The high-degree polynomial model failed to generalize to new data and thus overfitted (high variance).
-  \item The lowest Generalization error is obtained when the model has the correct complexity.
+  \item The lowest generalization error is obtained when the model has the correct complexity.
 \end{itemize}
 
 \framebreak
