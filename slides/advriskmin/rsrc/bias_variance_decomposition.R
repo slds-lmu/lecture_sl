@@ -116,7 +116,7 @@ lines(X, Y_noiseless, col = "black", lwd = 2)
 # add the prediction of each model as dots
 for (i in 1:number_of_models) {
   points(X_test, Y_test_predicted[i,], col = "blue", pch = 19, cex = 1.5)
-  plot_polynomial(coef_list[[i]],1, col = "blue", lwd = 3, lty = 2)
+  plot_polynomial(coef_list[[i]],1, col = "blue", lwd = 1, lty = 3)
 }
 text(0, 9.5, paste("Variance: ",round(variance,3)), cex = 3)
 dev.off()
@@ -158,7 +158,7 @@ lines(X, Y_noiseless, col = "black", lwd = 2)
 # add the prediction of each model as dots
 for (i in 1:number_of_models) {
   points(X_test, Y_test_predicted[i,], col = "blue", pch = 19, cex = 1.5)
-  plot_polynomial(coef_list[[i]],grade=grade, col = "blue", lwd = 2, lty = 2,alpha = 0.1)
+  plot_polynomial(coef_list[[i]],grade, col = "blue", lwd = 1, lty = 3)
 }
 text(0, 9.5, paste("Variance: ",round(variance,3)), cex = 3)
 dev.off()
@@ -204,10 +204,7 @@ lines(X, Y_noiseless, col = "black", lwd = 2)
 # add the prediction of each model as dots
 for (i in 1:number_of_models) {
   points(X_test, Y_test_predicted[i,], col = "blue", pch = 19, cex = 1.5)
-  plot_polynomial(coef_list[[i]],grade=grade, col = "blue", lwd = 2, lty = 2,alpha = 0.1)
+  plot_polynomial(coef_list[[i]],grade, col = "blue", lwd = 1, lty = 3)
 }
 text(0, 9.5, paste("Variance: ",round(variance,3)), cex = 3)
 dev.off()
-
-
-lines(X, Y_noiseless, col = "black", lwd = 2,alpha=0.5)
