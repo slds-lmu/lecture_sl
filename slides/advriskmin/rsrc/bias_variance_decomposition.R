@@ -12,6 +12,7 @@ plot_polynomial <- function(coef,poly_grade,color="blue",lwd=2,lty=2){
     # Plot the polynomial using the coeffficients
     x <- seq(-3, 3, length.out = 100)
     y <- calculate_polynomial(coef,poly_grade,x)
+    # 
     lines(x, y, col = color, lwd=lwd,lty=lty)
 }
 
@@ -29,8 +30,8 @@ train_model <- function(training_lenght,X_train,Y_train,poly_grade=1,plot_points
         abline(model,col= "blue", lwd = 2,lty=2)
     }
     if (poly_grade > 1){
-        plot_polynomial(coef(model),poly_grade)        
-    }
+        plot_polynomial(coef(model),poly_grade)
+        }
     return(coef(model))
 }
 
@@ -115,6 +116,7 @@ lines(X, Y_noiseless, col = "black", lwd = 2)
 # add the prediction of each model as dots
 for (i in 1:number_of_models) {
   points(X_test, Y_test_predicted[i,], col = "blue", pch = 19, cex = 1.5)
+  plot_polynomial(coef_list[[i]],1, col = "blue", lwd = 3, lty = 2)
 }
 text(0, 9.5, paste("Variance: ",round(variance,3)), cex = 3)
 dev.off()
@@ -156,6 +158,7 @@ lines(X, Y_noiseless, col = "black", lwd = 2)
 # add the prediction of each model as dots
 for (i in 1:number_of_models) {
   points(X_test, Y_test_predicted[i,], col = "blue", pch = 19, cex = 1.5)
+  plot_polynomial(coef_list[[i]],grade=grade, col = "blue", lwd = 2, lty = 2,alpha = 0.1)
 }
 text(0, 9.5, paste("Variance: ",round(variance,3)), cex = 3)
 dev.off()
@@ -201,7 +204,10 @@ lines(X, Y_noiseless, col = "black", lwd = 2)
 # add the prediction of each model as dots
 for (i in 1:number_of_models) {
   points(X_test, Y_test_predicted[i,], col = "blue", pch = 19, cex = 1.5)
+  plot_polynomial(coef_list[[i]],grade=grade, col = "blue", lwd = 2, lty = 2,alpha = 0.1)
 }
 text(0, 9.5, paste("Variance: ",round(variance,3)), cex = 3)
 dev.off()
 
+
+lines(X, Y_noiseless, col = "black", lwd = 2,alpha=0.5)
