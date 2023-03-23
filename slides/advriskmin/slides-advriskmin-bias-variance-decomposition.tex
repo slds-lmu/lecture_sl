@@ -200,15 +200,18 @@ We can now estimate the (squared) bias, by computing the average squared differe
 
 \framebreak
 
-We can also compute the average variance of the predictions of the models we trained at the test point locations.
+We compute the average variance of the predictions of the models we trained at the test point locations.
 \vspace{-0.25cm}
 \begin{center}
   \includegraphics[width = 0.5\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
 \end{center}
 \vspace{-0.6cm}
-The generalization error is then: 
+
 $$GE_n\left(\ind_{L}\right) \approx 1 + 1.628 + 0.135 = 2.763 $$
 
+\begin{itemize}
+  \item The biggest component of the generalization error is the bias.
+\end{itemize}
 
 \framebreak
 
@@ -226,9 +229,13 @@ We will repeat the same procedure, but use a high-degree polynomial ($d=7$) with
   \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-complex_model_variance.png}
 \end{center}
 
-
-The generalization error is then: 
 $$GE_n\left(\ind_{L}\right) \approx 1 + 0.139 + 1.963 = 3.102 $$
+
+\begin{itemize}
+  \item The generalization error is higher than before
+  \item Even though the bias is lower, the variance of the learner is higher. 
+\end{itemize}
+
 
 
 \framebreak
@@ -246,13 +253,24 @@ What happens if we use a model with the same complexity as the true model (quadr
   \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-correct_model_variance.png}
 \end{center}
 
-
-The generalization error is then: 
 $$GE_n\left(\ind_{L}\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
+
+\begin{itemize}
+  \item The generalization error is the lowest at this complexity.
+  \item The variance of the data acts as a lower bound.
+\end{itemize}
+ 
 
 \end{vbframe}
 
 \begin{vbframe}{Capacity and overfitting}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width = 0.6\textwidth]{figure_man/lcurve_1.png}
+    \tiny{\\ Credit: Ian Goodfellow}
+  \end{figure}
+  
 
 \begin{itemize}
   \item 
@@ -264,14 +282,7 @@ $$GE_n\left(\ind_{L}\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
   \item Failure of the first point is called \textbf{underfitting}
   \item Failure of the second item is called \textbf{overfitting}
 \end{itemize}  
-\vspace{0.2cm}
-In our examples we could see that:
-\vspace{0.2cm}
-\begin{itemize}
-  \item The linear model failed to fit the training data well and thus underfitted (high bias).
-  \item The high-degree polynomial model failed to generalize to new data and thus overfitted (high variance).
-  \item The lowest generalization error is obtained when the model has the correct complexity.
-\end{itemize}
+
 
 \framebreak
 
