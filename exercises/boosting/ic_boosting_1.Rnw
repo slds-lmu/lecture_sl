@@ -10,7 +10,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-ensembles.tex}
 \input{../../latex-math/ml-trees.tex}
 
-\kopficsl{12}{Boosting}
+\kopficsl{11}{Boosting}
 
 
 
