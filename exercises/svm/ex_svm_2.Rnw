@@ -10,7 +10,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-svm.tex}
 \input{../../latex-math/ml-gp.tex}
 
-\kopfsl{11}{SVM}
+\kopfsl{10}{Nonlinear Support Vector Machines}
 
 \aufgabe{Kernelized Multiclass SVM}{
 	<<child="ex_rnw/ex_svm_kernelized_multiclass.Rnw">>=

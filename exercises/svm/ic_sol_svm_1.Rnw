@@ -10,7 +10,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-svm.tex}
 \input{../../latex-math/ml-gp.tex}
 
-\kopficsl{10}{Support Vector Machines}
+\kopficsl{9}{Linear Support Vector Machines}
 
 \loesung{Hard Margin Classifier}{
 	<<child="ex_rnw/sol_linsvm_hardmargin.Rnw">>=
