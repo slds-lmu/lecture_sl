@@ -5,10 +5,8 @@
 
 \newcommand{\titlefigure}{figure_man/feature_sel_vs_extr.png}
 \newcommand{\learninggoals}{
-  \item Find the set of features which achieves optimal prediction performance. This is an optimization problem.
-  \item Create models more efficiently and more cost-effectively, since fewer features are used.
-  Fewer features in the model $\Longrightarrow$ faster prediction, less disk space, lower costs for ascertaining features on test data.
-  \item Understand models better. Specifically, models with fewer features are easier to visualize and reason about.\linebreak \textbf{Attention}: Often a trade-off between model size and prediction performance is evident!
+  \item Understand that adding more features may be detrimental to prediction performance.
+  \item Understand the benefits of keeping only useful features for the model.
 }
 
 \title{Supervised Learning}
@@ -29,7 +27,7 @@
   \end{vbframe}
 
 
-  \begin{vbframe}{Feature selection overview}
+  \begin{vbframe}{Overview}
     \begin{center}
     \includegraphics{figure_man/varsel_overview.png}
     \end{center}
@@ -40,7 +38,7 @@
   \end{vbframe}
 
 
-  \begin{vbframe}{Motivation Feature Selection}
+  \begin{vbframe}{Motivation}
     \begin{itemize}
       \item The information about the target class is inherent in the features.
       \item Naive theoretical view:
@@ -208,55 +206,52 @@
     \end{blocki}
   \end{vbframe}
 
-  % \begin{vbframe}{Motivating example: Regularization}
-  % \begin{itemize}
-  %   \item In case of $p \gg n$ \enquote{less fitting is better}.
-  %   \item This can be demonstrated with the following simulation study.
-  %   \item Investigation of three different dimensionalities of the input space: $p \in \{ 20, 100, 1000 \}$.
-  %   \item Data generation process for $n = 100$:
-  %   \begin{itemize}
-  %     \item $p$ random variables $X$ are sampled from a standard Gaussian distribution with pairwise correlations of 0.2.
-  %     \item $y$ is generated according to the linear model
-  %   $ y = \sum_{j=1}^p \xj \theta_j + \sigma\epsilon $, where
-  %     \begin{itemize}
-  %       \item $\epsilon$ and $\bm{\theta}$ are also sampled from standard Gaussian distributions, and
-  %       \item $\sigma$ is chosen such that $\var (\E[y|X]) / \sigma^2 = 2$.
-  %     \end{itemize}
-  %   \item 100 simulation runs are performed.
-  %   \end{itemize}
-  %   \item A ridge regression model with $\lambda \in \{ 0.001, 100, 1000 \}$ is fitted to the simulated data.
-  % \end{itemize}
-  % 
-  % \framebreak
-  % 
-  % \begin{itemize}
-  % \small
-  %   \item Boxplots show the relative test error over 100 simulations for the different values of $p$ and for the different regularization parameters $\lambda \in \{ 0.001, 100, 1000 \}$ from left to right.
-  %   \item Relative test error = test error / Bayes error $\sigma^2$.
-  %   % $\text{Relative test error} = \text{test error} / \text{Bayes error }\sigma^2$
-  % \normalsize
-  % \end{itemize}
-  % \begin{center}
-  % \includegraphics{figure_man/tibshirani_fig_18_1_mod.png}
-  % \end{center}
-  % 
-  % \tiny{Hastie (2009). The Elements of Statistical Learning. In the case of 20 features with moderate shrinkage significant coefficients are identified; with 100 features moderate shrinkage is necessary to identify some; with 1000 and therefore many nonzero coefficients, there is not much hope of finding them and we need to shrink all the way down.}
-  %$\rightarrow$ More regularization for high dimensional data seems reasonable.
-
-  % \begin{itemize}
-  % \item On the x-axis the effective degrees of freedom (averaged over the 100 simulation runs) are displayed:
-  % $$df(\lambda) = \sum_{j=1}^p \frac{d_j^2}{d^2_j + \lambda}$$
-  % where $d$ are the singular values of $x$.
-  % \begin{itemize}
-  %   \item For $\lambda = 0$ (linear regression): $df(\lambda) = p$.
-  %   \item For $\lambda \rightarrow \infty$: $df(\lambda) \rightarrow 0$
-  % \end{itemize}
-  % \item $\lambda = 0.001$ (20 df) has smallest relative rest error for $p = 20$.
-  % \item $\lambda = 100$ (35 df) has smallest relative rest error for $p = 100$.
-  % \item $\lambda = 1000$ (43 df) has smallest relative rest error for $p = 1000$.
-  % \item[$\Rightarrow$] More regularization for high dimensional data seems reasonable.
-  % \end{itemize}
-  % \end{vbframe}
+  \begin{vbframe}{Motivating example: Regularization}
+  \begin{itemize}
+    \item In case of $p \gg n$ \enquote{less fitting is better}.
+    \item This can be demonstrated with the following simulation study.
+    \item Investigation of three different dimensionalities of the input space: $p \in \{ 20, 100, 1000 \}$.
+    \item Data generation process for $n = 100$:
+    \begin{itemize}
+      \item $p$ random variables $X$ are sampled from a standard Gaussian distribution with pairwise correlations of 0.2.
+      \item $y$ is generated according to the linear model
+    $ y = \sum_{j=1}^p \xj \theta_j + \sigma\epsilon $, where
+      \begin{itemize}
+        \item $\epsilon$ and $\bm{\theta}$ are also sampled from standard Gaussian distributions, and
+        \item $\sigma$ is chosen such that $\var (\E[y|X]) / \sigma^2 = 2$.
+      \end{itemize}
+    \item 100 simulation runs are performed.
+    \end{itemize}
+    \item A ridge regression model with $\lambda \in \{ 0.001, 100, 1000 \}$ is fitted to the simulated data.
+  \end{itemize}
+  
+  \framebreak
+  
+  \begin{itemize}
+  \small
+    \item Boxplots show the relative test error over 100 simulations for the different values of $p$ and for the different regularization parameters $\lambda \in \{ 0.001, 100, 1000 \}$ from left to right.
+    \item Relative test error = test error / Bayes error $\sigma^2$.
+    % $\text{Relative test error} = \text{test error} / \text{Bayes error }\sigma^2$
+  \normalsize
+  \end{itemize}
+  \begin{center}
+  \includegraphics{figure_man/tibshirani_fig_18_1_mod.png}
+  \end{center}
+  
+  \begin{itemize}
+  \item On the x-axis the effective degrees of freedom (averaged over the 100 simulation runs) are displayed:
+  $$df(\lambda) = \sum_{j=1}^p \frac{d_j^2}{d^2_j + \lambda}$$
+  where $d$ are the singular values of $x$.
+  \begin{itemize}
+    \item For $\lambda = 0$ (linear regression): $df(\lambda) = p$.
+    \item For $\lambda \rightarrow \infty$: $df(\lambda) \rightarrow 0$
+  \end{itemize}
+  \item $\lambda = 0.001$ (20 df) has smallest relative rest error for $p = 20$.
+  \item $\lambda = 100$ (35 df) has smallest relative rest error for $p = 100$.
+  \item $\lambda = 1000$ (43 df) has smallest relative rest error for $p = 1000$.
+  \item[$\Rightarrow$] More regularization for high dimensional data seems reasonable.
+  \end{itemize}
+  \end{vbframe}
 
   \begin{vbframe}{Motivating example: Different methods}
   Prediction results of eight different classification methods on micro-array data with $| \Dtrain | = 144$, $| \Dtest | = 54$, $p=16 063$ genes and a categorical target which specifies the type of cancer out of 14 different cancer types.

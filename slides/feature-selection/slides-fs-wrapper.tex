@@ -6,15 +6,21 @@
 
 \newcommand{\titlefigure}{figure_man/varsel_space.png}
 \newcommand{\learninggoals}{
-  \item Add Learning goals
+  \item Understand how wrapper methods work
+  \item Understand how they coudl help in feature selection
+  \item Know their advantages and disadvantages
 }
+
+
+\title{Supervised Learning}
+\date{}
 
 \begin{document}
 
-  \lecturechapter{Wrappers}
+  \lecturechapter{Wrapper methods}
   \lecture{Supervised Learning}
 
-  \begin{vbframe}{Wrappers}
+  \begin{vbframe}{Introduction}
 
     \begin{itemize}
       \item Wrapper methods emerged from the idea that different sets of features can be optimal for different classification learners.
@@ -47,9 +53,11 @@
       % Raum aller Feature-Mengen bei 4 Features. Die eingezeichnete Nachbarschaftsbeziehung unterstellt eine Art ,,gierige'' Suchstrategie, bei der wir entweder ein Feature hinzufügen oder entfernen.}
     \end{figure}
 
-    \framebreak
+  \end{vbframe}
+  
+  \begin{vbframe}{Greedy forward search}
 
-    \begin{blocki}{Greedy forward search:}
+    \begin{blocki}{}
       \item Let $S \subset \{1, \dots, p \}$, where $\{1, \dots p \}$ is an index set of all features.
       \item Start with the empty feature set $S = \emptyset$.
       \item For a given set $S$, generate all $S_j = S \cup \{j\}$ with $j \notin S$.
@@ -99,10 +107,14 @@
     \begin{center}
     \includegraphics[width = 0.65\textwidth]{figure_man/wrapperanim6.png}
     \end{center}
+    
+  \end{vbframe}
 
-    \framebreak
 
-    \begin{blocki}{Greedy backward search:}
+  \begin{vbframe}{Greedy backward search}
+
+
+    \begin{blocki}{}
       \item Start with the full index set of features $S = \{1, \ldots, p\}$.
       \item For a given set $S$ generate all
 
@@ -116,10 +128,12 @@
           \item a given performance value is undershot.
         \end{itemize}
       \end{blocki}
+    
+  \end{vbframe}
 
-    \framebreak
+  \begin{vbframe}{Extensions}
 
-    \begin{blocki}{Extensions:}
+    \begin{blocki}{}
       \item Eliminate or add several features at once to increase speed.
       \item Allow alternating forward and backward search.
       \item Randomly create candidate feature sets in each iteration.
@@ -146,7 +160,9 @@
     \end{algorithmic}
     \end{algorithm}
 
-    \framebreak
+    \end{vbframe}
+
+  \begin{vbframe}{Wrappers}
 
     \begin{blocki}{Advantages:}
       \item Can be combined with every learner.
@@ -161,6 +177,8 @@
       \item Does not scale well if number of features becomes large.
       \item Does not use much structure or available information from our model.
     \end{blocki}
+
+  \end{vbframe}
 
     % \framebreak
     %
@@ -193,7 +211,6 @@
     %   show.info = FALSE, models = TRUE, extract = getFeatSelResult)
     % res$extract[1:5]
     % @
-  \end{vbframe}
 
   \endlecture
 \end{document}

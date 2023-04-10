@@ -7,15 +7,18 @@
 
 \newcommand{\titlefigure}{figure_man/varsel_ex0.png}
 \newcommand{\learninggoals}{
-  \item Add Learning Goals
+  \item Understand how filter methods work
+  \item Understand how to apply them for feature selection
+  \item Understand  advantages and disadvantages, and how to overcome them.
 }
-
+\title{Supervised Learning}
+\date{}
 \begin{document}
 
-  \lecturechapter{Filter}
+  \lecturechapter{Filter Methods}
   \lecture{Supervised Learning}
 
-  \begin{vbframe}{Filter}
+  \begin{vbframe}{Introduction}
 
   \begin{itemize}
     \item Mostly, \textbf{filter methods} construct a measure that describes the strength of the (univariate) dependency between a feature and the target variable.
@@ -348,42 +351,42 @@
   % <<echo=TRUE>>=
   % # Calculate the information gain as filter value
   % fv = generateFilterValuesData(iris.task, method = "information.gain")
-  %
+  
   % # We can also pass multiple filter methods at once:
   % fv2 = generateFilterValuesData(iris.task,
   %   method = c("information.gain", "chi.squared"))
-  %
+  
   % # fv2 is a FilterValues object and fv2$data holds a data frame
   % # with the importance values for all features
   % fv2$data
   % @
-  %
+  
   % <<>>=
   % plotFilterValues(fv2) + ggtitle("Filters for the 4 features of iris dataset")
   % @
-  %
-  %
+  
+  
   % \framebreak
-  %
+  
   % <<size="tiny", echo=TRUE>>=
   % ## Keep the 2 most important features
   % filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2L)
-  %
+  
   % ## Keep the 25% most important features
   % filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
-  %
+  
   % ## Keep all features with importance greater than 0.5
   % filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
   % filtered.task
   % @
-  %
+  
   % \framebreak
 
   % \begin{itemize}
   %   \item Filter methods are often part of the data preprocessing process, wherein a subsequent step, a learning method is applied.
   %   \item In practice we want to automate this, so the feature selection can be part of the validation method of our choice:
   % \end{itemize}
-  % 
+  
   % <<size="tiny", echo=TRUE>>=
   % lrn = makeFilterWrapper(learner = "classif.kknn",
   %   fw.method = "anova.test", fw.abs = 2L)
@@ -392,7 +395,7 @@
   % )
   % ctrl = makeTuneControlGrid()
   % rdesc = makeResampleDesc("CV", iters = 10L)
-  % 
+  
   % res = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
   %   control = ctrl)
   % res$opt.path
