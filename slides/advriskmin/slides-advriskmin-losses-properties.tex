@@ -38,7 +38,7 @@
 
 \begin{vbframe}{The role of Loss Functions}
 
-Why should we care about how to choose the loss function $\Lxy$?
+Why should we care about the choice of the loss function $\Lxy$?
 
 \begin{itemize}
 % \item For regression, the loss usually only depends on residual $\Lxy = L\left(y - \fx\right) = L(\eps)$, this is a \emph{translation invariant} loss
@@ -132,7 +132,7 @@ strongly affected by large residuals than others.
 \end{minipage}%
 \begin{minipage}[c]{0.4\textwidth}
   \small
-  As a consequence, a model is less influenced by outliers than by inliers if 
+  As a consequence, a model is less influenced by outliers than by ``inliers" if 
   the loss is \textbf{robust}.
 \end{minipage}%
 
@@ -280,7 +280,7 @@ towards (0, 0) and compromises the original objective's smoothness.
   \item If we model our data using an exponential family distribution, we always get convex losses
   \begin{itemize} 
     %\footnotesize
-    \item For $\fxt$ linear in $\thetab$, linear/logistic/softmax/poisson regression are convex problems! 
+    \item For $\fxt$ linear in $\thetab$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
   \end{itemize}  
 \end{itemize} 
 
