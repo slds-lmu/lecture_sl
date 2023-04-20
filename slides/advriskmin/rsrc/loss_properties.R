@@ -22,8 +22,8 @@ df_3$y <- (df_3$x)^2
 # PLOT 1: DISTANCE-BASED -------------------------------------------------------
 
 add_markers <- function(plot, index, negative = TRUE) {
-  
-  plot + 
+
+  plot +
     ggplot2::geom_segment(
       mapping = aes(
         x = df_1[index, "x"],
@@ -38,12 +38,12 @@ add_markers <- function(plot, index, negative = TRUE) {
           y = df_1[index, "y"]),
         size = 2L,
         color = "blue")
-  
+
 }
 
 add_markers_2 <- function(plot, index, negative = TRUE) {
-  
-  plot + 
+
+  plot +
     ggplot2::geom_segment(
       aes(
         x = df_1[index, "diff"],
@@ -57,16 +57,16 @@ add_markers_2 <- function(plot, index, negative = TRUE) {
         y = abs(df_1[index, "diff"])),
       size = 2L,
       color = "blue")
-  
+
 }
 
-p_1 <- ggplot2::ggplot(df_1, aes(x, y)) + 
+p_1 <- ggplot2::ggplot(df_1, aes(x, y)) +
   theme_minimal() +
-  geom_point() + 
+  geom_point() +
   geom_abline(intercept = 0L, slope = 1L) +
   theme(axis.title = element_text(size = 15L))
-p_1 <- p_1 %>% 
-  add_markers(4L) %>% 
+p_1 <- p_1 %>%
+  add_markers(4L) %>%
   add_markers(45L)
 
 p_2 <- ggplot2::qplot(df_2$x, df_2$y, geom = "line") +
@@ -79,10 +79,10 @@ p_2 <- p_2 %>%
   add_markers_2(45L)
 
 p_3 <- cowplot::plot_grid(
-  p_1, 
-  p_2, 
-  ncol = 2L, 
-  align = "h", 
+  p_1,
+  p_2,
+  ncol = 2L,
+  align = "h",
   rel_widths = c(0.4, 0.6))
 
 ggplot2::ggsave(
@@ -96,7 +96,7 @@ ggplot2::ggsave(
 p_4 <- ggplot2::qplot(df_2$x, df_2$z, geom = "line") +
   theme_minimal() +
   xlab("(y + a) - (f(x) + a))") +
-  ylab(bquote(((y + a) - (f(x) + a))**2)) +  
+  ylab(bquote(((y + a) - (f(x) + a))**2)) +
   theme(axis.title = element_text(size = 15L))
 
 ggplot2::ggsave(
@@ -110,13 +110,13 @@ ggplot2::ggsave(
 p_5 <- ggplot2::qplot(df_3$x, df_3$y, geom = "line") +
   theme_minimal() +
   xlab(bquote(pi(x) - y)) +
-  ylab(bquote((pi(x) - y)**2)) +  
+  ylab(bquote((pi(x) - y)**2)) +
   theme(axis.title = element_text(size = 15L))
 
 p_6 <- ggplot2::qplot(df_3$x, df_3$y, geom = "line") +
   theme_minimal() +
   xlab(bquote(y - pi(x))) +
-  ylab(bquote((y - pi(x))**2)) +  
+  ylab(bquote((y - pi(x))**2)) +
   theme(axis.title = element_text(size = 15L))
 
 p_7 <- cowplot::plot_grid(p_5, p_6, ncol = 2L, align = "h")
@@ -124,5 +124,29 @@ p_7 <- cowplot::plot_grid(p_5, p_6, ncol = 2L, align = "h")
 ggplot2::ggsave(
   "../figure/loss_symmetric.png",
   p_7,
+  width = 5L,
+  height = 3L)
+
+
+# PLOT 4: L1 vs L2
+
+df_2_plus <- rbind(
+  data.frame(x = df_2$x, L = df_2$y, Loss = "L1"),
+  data.frame(x = df_2$x, L = df_2$z, Loss = "L2")
+)
+
+p_8 <- ggplot(df_2_plus, aes(x = x, y = L, color = Loss)) +
+  theme_minimal() + geom_line() +
+  xlab("r = y - f(x)") +
+  ylab("L") +
+  theme(axis.title = element_text(size = 15L),
+    legend.title = element_text(size=15), #change legend title font size
+    legend.text = element_text(size=13))
+
+#  scale_colour_manual(values=c("#b3cdce", "#e3753a"))
+
+ggplot2::ggsave(
+  "../figure/loss_l1_l2.png",
+  p_8,
   width = 5L,
   height = 3L)
