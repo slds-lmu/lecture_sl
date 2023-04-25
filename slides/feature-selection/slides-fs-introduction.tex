@@ -5,8 +5,8 @@
 
 \newcommand{\titlefigure}{figure_man/feature_sel_vs_extr.png}
 \newcommand{\learninggoals}{
-  \item Understand that adding more features may be detrimental to prediction performance.
-  \item Understand the benefits of keeping only useful features for the model.
+  \item Understand that adding more features can be detrimental to prediction performance.
+  \item Understand the benefits of keeping only informative features for the model.
 }
 
 \title{Supervised Learning}
@@ -21,68 +21,92 @@
 
     Feature selection deals with
     \begin{itemize}
-      \item evaluating the influence of features on the model,
-      \item techniques for choosing a suitable subset of features.
+     \item techniques for choosing a suitable subset of features
+      \item evaluating the influence of features on the model
     \end{itemize}
-  \end{vbframe}
-
-
-  \begin{vbframe}{Overview}
+    \vspace{0.5cm}
     \begin{center}
     \includegraphics{figure_man/varsel_overview.png}
     \end{center}
 
     \lz
 
-    It is the task of statisticians, data analysts and machine learners to filter out the relevant information which is \textbf{useful} for prediction!
+    Feature selection can be performed relying on domain knowledge and expert input, or using a data-driven algorithmic approach.
   \end{vbframe}
+
+
+%  \begin{vbframe}{Overview}
+%    \begin{center}
+%    \includegraphics{figure_man/varsel_overview.png}
+%    \end{center}
+%
+%    \lz
+%
+%    It is the task of statisticians, data analysts and machine learners to filter out the relevant information which is \textbf{useful} for prediction!
+%  \end{vbframe}
 
 
   \begin{vbframe}{Motivation}
     \begin{itemize}
-      \item The information about the target class is inherent in the features.
-      \item Naive theoretical view:
+    \setlength{\itemsep}{0.8em}
+      \item Naive view:
         \begin{itemize}
-          \item More features
-          \begin{itemize}
-            \item[$\rightarrow$] more information
-            \item[$\rightarrow$] more discriminant power
-          \end{itemize}
-          \item Model does not care about irrelevant features anyway (e.g. by estimating their coefficients to be 0).
+          \item More features $\rightarrow$ more information $\rightarrow$ discriminant power $\uparrow$
+          \item Model is not harmed by irrelevant features since their parameters can simply be estimated as 0.
         \end{itemize}
-      \item In practice there are many reasons why this is not the case!
-      \item Moreover, optimizing is (usually) good, so we should optimize the input-coding.
+     %\item In practice there are many reasons why this is not the case!
+     \item In practice, irrelevant and redundant features can \enquote{confuse} learners (see \textbf{curse of dimensionality}) and worsen performance.
+     \item Example: In linear regression, $R^2$ is monotonically increasing in $p$, but adding irrelevant features leads to overfitting (capturing noise). %instead of underlying relationship.
+    %\item Feature selection is critical for 
+    %\begin{itemize}
+    %    \item reducing noise and overfitting, 
+    %    \item improving performance/generalization,
+    %    \item enhancing interpretability by identifying most informative features.
+    %\end{itemize}
   \end{itemize}
+
+  \begin{center}
+     \includegraphics[width = 0.5\textwidth]{slides/feature-selection/figure_man/avoid_overfitting_02.png}\\
+    \end{center}
 
   \framebreak
 
     \begin{itemize}
-      \item In many domains we are confronted with an increasing number of features, many of which will be irrelevant or redundant, and multiple features of low quality.
+    \setlength{\itemsep}{1.0em}
+      \item In high-dimensional data sets, we often have prior information that many features are either irrelevant or redundant.
+      %many of which will be irrelevant or redundant, and multiple features of low quality.
       % \item This is due to the fact that there is an increasingly strong automation of measuring methods.
       % Especially the automatized collection of information by computers and the availability of information in the world wide web generates data sets with an extremely high dimensionality.
-      \item In domains with many features the underlying distribution function can be very complex and hard to estimate.
-      \item Irrelevant and redundant features can \enquote{confuse} learners (recall the \textbf{curse of dimensionality}).
-      \item Training data are limited.
-      \item Computational resources are limited.
-      \item Often the usual procedures are designed for $n > p$ problems.
-      \item Thus, we either need
+      %\item In domains with many features the underlying distribution function can be very complex and hard to estimate.
+      \item Feature selection is critical for 
+    \begin{itemize}
+        \item reducing noise and overfitting, 
+        \item improving performance/generalization,
+        \item interpretability by identifying most informative features.
+    \end{itemize}
+      \item Feature selection can also remedy problems arising in small $n$ regimes or under limited computational resources. 
+      %\item Training data are limited.
+      %\item Computational resources are limited.
+      \item Many models require $n > p$ data. Thus, we either need to
+      %\item Thus, we either need
       \begin{itemize}
-        \item to adapt these procedures to high-dimensional data (e.g. by regularization),
-        \item design entirely new procedures,
-        \item or use the preprocessing methods addressed in this lecture.
+        \item adapt models to high-dimensional data (e.g. regularization),
+        \item design entirely new procedures for $p>n$ data, or
+        \item use the preprocessing methods addressed in this lecture.
       \end{itemize}
     \end{itemize}
   \end{vbframe}
 
   \begin{vbframe}{Size of datasets}
+The increasingly automatized collection of information makes data sets with extremely high dimensionality available, while classical models were developed for small $p$ data.
+\vspace{0.5cm}
     \begin{itemize}
-      \item \textbf{Classical setting}: Up to around $10^2$ features,
-        feature selection might be relevant, but most of the time still manageable.
+    \setlength{\itemsep}{1.2em}
+      \item \textbf{Classical setting}: Up to around $10^2$ features, feature selection might be relevant, but benefits often negligible.
       \item \textbf{Datasets of medium to high dimensionality}:
-        Around $10^2$ to $10^3$ features, basic methods still often work well.
-      \item \textbf{High-dimensional data}: $10^3$ to $10^7$ features.
+        At around $10^2$ to $10^3$ features, classical approaches can still work well, while principled feature selection helps in many cases.
+      \item \textbf{High-dimensional data}: $10^3$ to $10^9$ or more features.
         Examples are e.g. micro-array / gene expression data and text categorization (bag-of-words features).
-
         If, in addition, observations are few, the scenario is called $p \gg n$.
     \end{itemize}
 
@@ -94,7 +118,7 @@
       %Both graphs taken out from Tim Conrad's presentation for Novisad (see cim2/external_material/tim_conrad_novisad)
 
       \column{0.49\textwidth}
-      \textbf{Feature selection}
+      %\textbf{Feature selection}
 
       \medskip
 
@@ -103,13 +127,13 @@
       \smallskip
 
       \begin{itemize}
-        \item Selects $\tilde{p} < p$ features.
-        \item Creates a subset of the original features.
-        \item Helps to understand the classification rules.
+        \item Creates a subset of original features $\xv$ by selecting $\tilde{p} < p$ features $\bm{f}$.
+        %\item Selected features are subset of $\xv$.
+        \item Retains information on selected individual features.
       \end{itemize}
 
       \column{0.49\textwidth}
-      \textbf{Feature extraction}
+      %\textbf{Feature extraction}
 
       \medskip
 
@@ -118,8 +142,9 @@
       \smallskip
 
       \begin{itemize}
-        \item Maps inputs to $\tilde{p}$ new features.
-        \item Forms linear and nonlinear combinations of the original features.
+        \item Maps $p$ features in $\xv$ to $\tilde{p}$ extracted features $\bm{f}$.
+        %\item Forms linear or nonlinear combinations of the original features.
+        \item Info on individual features can be lost through (non-)linear combination.
       \end{itemize}
 
     \end{columns}
@@ -130,25 +155,26 @@
 
     \framebreak
 
-    \begin{center}
-     %feature_sel_vs_extr.R
-     \includegraphics[width = 0.7\textwidth]{figure_man/feature_sel_vs_extr.png}
-    \end{center}
-
-    \footnotesize{Example for mixture of bivariate Gaussians. The projection onto the $x_1$ axis (i.e., feature selection) sees the two mixture components overlap, while projection onto the hyperplane perpendicular to the first principal component (i.e., feature extraction) separates the components.}
-
-    \normalsize
-
-    \framebreak
-
-    Both feature selection and feature extraction contribute to:
-
+    
+    %\framebreak
     \begin{itemize}
-      \item Dimensionality reduction
-      \item Simplicity of classification rules
+    \footnotesize
+        \item Both FS and FE contribute to\\ 1) dimensionality reduction, and 2) simplicity of classification rules.
+        \item FE can be unsupervised (PCA, Multidimensional Scaling, Manifold Learning) or supervised (supervised PCA, partial least squares).        
+        \item FE can produce lower dim projections which can be more informative than FS.
     \end{itemize}
 
-    Feature extraction can be supervised (Partial Least Squares (PLS), Sufficient Dimensional Reduction (SDR)) or unsupervised (Principal Component Analysis (PCA), Multidimensional Scaling (MDS), Manifold Learning).
+    \vspace{0.2cm}
+
+
+    \begin{center}
+     %feature_sel_vs_extr.R
+     \includegraphics[width = 0.7\textwidth]{figure_man/feature_sel_vs_extr.png}\\
+    \end{center}
+    %\vspace{-0.2cm}
+    %\scriptsize{Projection onto $x_1$ axis (feature selection) yields overlapping mixture components, while projection onto the hyperplane perpendicular to the first principal component (feature extraction) separates them.}
+    %\normalsize
+
 
   \end{vbframe}
 
@@ -156,41 +182,40 @@
 
   \begin{vbframe}{Objective function}
 
-    \small
+    %\small
 
-    Given a set of features $\{1, \dots, p\}$, the feature selection problem is to find a subset $S \subset \{ 1, \dots p \}$ that
-    maximizes the learner's ability to classify patterns.
-
-    Formally, $\Psi^*$ should maximize some objective function
-    $\Psi: \Omega \rightarrow \R$:
-
-
-    $$\Psi^* = \argmax_{{S \in \Omega}} \{ \Psi(S) \}.$$
-
+    Given $p$ features, the \textbf{best-subset selection problem} is to find a subset $S \subseteq \{ 1, \dots p \}$ optimizing objective $\Psi: \Omega \rightarrow \R$:
+    \vspace{-0.1cm}
+    %measuring the learner's generalization performance. The solution $S^*$ to the problem is
+    $$S^{*}  \in \argmin_{{S \in \Omega}} \{ \Psi(S) \}$$
+    %
+    \vspace{-0.8cm}
     \begin{itemize}
-     \item $\Omega$ is the space of all possible feature subsets of $\{ 1, \dots, p \}$.
-
-      \item $S$ can either be a subset of features (i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set) or a bit vector (i.e., $\Omega = \{0, 1\}^p$) characterizing this subset. We will switch between those variants and the context will make clear which case we are referring to.
-
-      \item $\Psi$ can be different \enquote{things}:
-      \begin{itemize}
-        \small
-        \item The BIC score in a linear regression model
-        \item The filter score of a Minimum Redundancy Maximum Relevance (mRMR) algorithm
-        \item The cross-validated test error of a learner
-      
-      \end{itemize}
+    \setlength{\itemsep}{0.9em}
+     \item $\Omega$  = search space of all feature subsets $S\subseteq\{ 1, \dots, p \}$. Usually we encode this by
+      %(i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set) 
+      bit vectors, i.e., $\Omega = \{0, 1\}^p$ (1 = feat. selected)
+      %It will be clear from the context which variant we refer to.
+     \item Objective $\Psi$ can be different functions, e.g., AIC/BIC for LM or cross-validated performance of a learner.
     \end{itemize}
 
-    \normalsize
+    \begin{center}
+     \includegraphics[width = 0.33\textwidth]{slides/feature-selection/figure_man/searchspace_binary.png}\\
+    \end{center}
+    %\normalsize
+  \end{vbframe} 
 
-    \framebreak
+  
+ \begin{vbframe}{How difficult is best-subset selection?}
 
-    \begin{blocki}{How difficult is it to solve the introduced optimization problem, that is, to find the optimal feature set?}
-      \item The size of our search space (power set!) is $2^p$.
-      \item Hence, this is a discrete optimization problem.
-      \item Of course this does not mean that we have to search the entire space, since there are more efficient search strategies.
-      \item Unfortunately, for the general case, it can be shown that this problem will never be perfectly and efficiently solved (NP-hard).
+    \begin{itemize}
+    \setlength{\itemsep}{1.2em}
+      \item Size of search space = $2^p$, i.e., grows exponentially in $p$ as it is the power set of $\{1,\ldots,p\}$.
+      \item Finding best subset is discrete combinatorial optimization problem also known as $L_0$ regularization.
+     \item It can be shown that this problem unfortunately can not be solved efficiently in general (NP-hard; see, e.g., Natarajan, 1995).
+     \item We can avoid having to search the entire space by employing efficient search strategies, moving through the search space in a smart way that finds performant feature subsets.
+     %\item By employing efficient search strategories, we can avoid searching the entire space.
+    %\item Of course this does not mean that we have to search the entire space, since there are more efficient search strategies.
     %  \item Formally spoken: One can show that the problem is NP-hard!
     %  \item This means that the problem cannot be solved in polynomial (P) time: ${\mathcal{O}} (p^c)$, where $c \in \N$ indicates the degree o the polynom.
     % \end{blocki}
@@ -202,129 +227,10 @@
     % 
     %   The latter means, that if you find an algorithm that solves a more difficult class of problems (than this optimization problem) in polynomial time, this implies that you found how to solve all easier problems (including our optimization problem) in polynomial time.
     % \item \textbf{Attention}: This does not imply that it is useless trying to construct strategies which work in practice!
-      \item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
-    \end{blocki}
-  \end{vbframe}
-
-  \begin{vbframe}{Motivating example: Regularization}
-  \begin{itemize}
-    \item In case of $p \gg n$ \enquote{less fitting is better}.
-    \item This can be demonstrated with the following simulation study.
-    \item Investigation of three different dimensionalities of the input space: $p \in \{ 20, 100, 1000 \}$.
-    \item Data generation process for $n = 100$:
-    \begin{itemize}
-      \item $p$ random variables $X$ are sampled from a standard Gaussian distribution with pairwise correlations of 0.2.
-      \item $y$ is generated according to the linear model
-    $ y = \sum_{j=1}^p \xj \theta_j + \sigma\epsilon $, where
-      \begin{itemize}
-        \item $\epsilon$ and $\bm{\theta}$ are also sampled from standard Gaussian distributions, and
-        \item $\sigma$ is chosen such that $\var (\E[y|X]) / \sigma^2 = 2$.
-      \end{itemize}
-    \item 100 simulation runs are performed.
+    %\item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
     \end{itemize}
-    \item A ridge regression model with $\lambda \in \{ 0.001, 100, 1000 \}$ is fitted to the simulated data.
-  \end{itemize}
-  
-  \framebreak
-  
-  \begin{itemize}
-  \small
-    \item Boxplots show the relative test error over 100 simulations for the different values of $p$ and for the different regularization parameters $\lambda \in \{ 0.001, 100, 1000 \}$ from left to right.
-    \item Relative test error = test error / Bayes error $\sigma^2$.
-    % $\text{Relative test error} = \text{test error} / \text{Bayes error }\sigma^2$
-  \normalsize
-  \end{itemize}
-  \begin{center}
-  \includegraphics{figure_man/tibshirani_fig_18_1_mod.png}
-  \end{center}
-  
-  \begin{itemize}
-  \item On the x-axis the effective degrees of freedom (averaged over the 100 simulation runs) are displayed:
-  $$df(\lambda) = \sum_{j=1}^p \frac{d_j^2}{d^2_j + \lambda}$$
-  where $d$ are the singular values of $x$.
-  \begin{itemize}
-    \item For $\lambda = 0$ (linear regression): $df(\lambda) = p$.
-    \item For $\lambda \rightarrow \infty$: $df(\lambda) \rightarrow 0$
-  \end{itemize}
-  \item $\lambda = 0.001$ (20 df) has smallest relative rest error for $p = 20$.
-  \item $\lambda = 100$ (35 df) has smallest relative rest error for $p = 100$.
-  \item $\lambda = 1000$ (43 df) has smallest relative rest error for $p = 1000$.
-  \item[$\Rightarrow$] More regularization for high dimensional data seems reasonable.
-  \end{itemize}
   \end{vbframe}
 
-  \begin{vbframe}{Motivating example: Different methods}
-  Prediction results of eight different classification methods on micro-array data with $| \Dtrain | = 144$, $| \Dtest | = 54$, $p=16 063$ genes and a categorical target which specifies the type of cancer out of 14 different cancer types.
-
-  \begin{center}
-  \includegraphics{figure_man/tibshirani_tab_18_1.png}
-
-  \footnotesize{Hastie (2009). The Elements of Statistical Learning}
-  \end{center}
-  \end{vbframe}
-
-  \begin{vbframe}{Motivating example: methods with integrated selection}
-
-  \begin{itemize}
-  \item We simulate data with function \code{sim.data} of the package \pkg{penalizedSVM}.
-  \item With \code{sim.data} one can simulate micro-array data.
-  \item Each simulated sample has \code{ng} genes.
-  \item \code{nsg} genes are relevant and affect the class levels.
-  \item The other \code{ng-nsg} have no influence.
-  \item The gene ratios are drawn from a multivariate normal distribution.
-  \end{itemize}
-
-  \framebreak
-
-  \begin{itemize}
-  \item Now we draw 200 observations with 50 features, 25 of which are positively and 25 are negatively correlated with the category.
-  \item Furthermore, we create 50 irrelevant features.
-  \item We compare several classification models regarding the misclassification rate.
-  \item Since we have relatively few data, we use repeated cross-validation with 10 folds and 10 repetitions.
-  \end{itemize}
-
-  \begin{table}[ht]
-    \begin{center}
-      \begin{tabular}{rrrrrrr}
-        \hline
-        & rpart & lda & logreg & nBayes & 7nn  & rForest \\
-        \hline
-        all feat. & 0.44 & 0.27 & 0.25 & 0.32 & 0.37 & 0.36 \\
-        relevant feat. & 0.44 & 0.18 & 0.19 & 0.27 & 0.33 & 0.30 \\
-        \hline
-      \end{tabular}
-    \end{center}
-  \end{table}
-
-  The models with integrated selection do not work very well here!
-
-  If we knew the relevant features, we would achieve a significant improvement.
-  \end{vbframe}
-
-
-
-
-  \begin{vbframe}{Types of feature selection methods}
-
-  In the following, we will get to know three different types of methods for feature selection:
-
-  \lz
-
-  \begin{itemize}
-    \item Filters
-    \item Wrappers
-    \item Embedded techniques
-  \end{itemize}
-
-  \lz
-
-  For each technique we will look at a simple example.
-
-  \lz
-
-  It should be noted that, in practice, complicated combinations of methods can also occur.
-
-  \end{vbframe}
 
   \endlecture
 \end{document}

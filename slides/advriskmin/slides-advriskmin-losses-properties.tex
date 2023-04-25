@@ -18,9 +18,10 @@
 \newcommand{\titlefigure}{figure_man/vgg_example.png}
 \newcommand{\learninggoals}{
   % \item Understand why you should care about properties of loss functions
-  \item Statistical properties, robustness 
+  \item Statistical properties 
+  \item Robustness 
   \item Numerical properties
-  \item Fundamental concepts like translation invariance
+  \item Some fundamental terminology
 
 }
 
@@ -43,7 +44,7 @@ Why should we care about the choice of the loss function $\Lxy$?
 
 \begin{itemize}
 % \item For regression, the loss usually only depends on residual $\Lxy = L\left(y - \fx\right) = L(\eps)$, this is a \emph{translation invariant} loss
-\item \textbf{Statistical} properties: choice of loss implies statistical assumptions on the distribution of $y ~|~ \xv = \xv$ (see \emph{maximum likelihood estimation vs.
+\item \textbf{Statistical} properties: choice of loss implies statistical assumptions about the distribution of $y ~|~ \xv = \xv$ (see \emph{maximum likelihood estimation vs.\
 empirical risk minimization}). 
 \item \textbf{Robustness} properties: some loss functions are more robust towards outliers than others. 
 \item \textbf{Numerical} properties: the computational complexity of
@@ -57,16 +58,36 @@ is influenced by the choice of the loss function.
 
 % ------------------------------------------------------------------------------
 
+
+\begin{vbframe}{Some basic terminology}
+
+% https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
+
+Classification losses are usually expressed in terms of the 
+  \textbf{margin}: $\nu := y \cdot \fx.$
+
+\vfill
+
+\begin{minipage}[b]{1\textwidth}
+  \includegraphics[width=0.75\textwidth]{figure/plot_loss_overview_classif_2}
+  \tiny \centering
+  %Margin-based losses
+\end{minipage}%
+
+
+\end{vbframe}
+
+
 \begin{vbframe}{Some basic terminology}
 
 % https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
 
 \begin{itemize}
   \small
-  \item Regression losses usually only depend on the \textbf{residuals}
+  \item Regression losses often only depend on the \textbf{residuals}
   $r := y - \fx.$
-  \item Classification losses are usually expressed in terms of the 
-  \textbf{margin} $\nu := y \cdot \fx.$
+%  \item Classification losses are usually expressed in terms of the 
+%  \textbf{margin} $\nu := y \cdot \fx.$
   \item Losses are called \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$. 
   \item A loss is \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
   $a \in \R$.
@@ -81,22 +102,22 @@ is influenced by the choice of the loss function.
 
 \vfill
 
-\begin{minipage}[b]{0.25\textwidth}
-  \includegraphics[width=\textwidth]{figure/plot_loss_overview_classif_2}
-  \tiny \centering
-  Margin-based losses
-\end{minipage}%
-\begin{minipage}[b]{0.25\textwidth}
+%\begin{minipage}[b]{0.25\textwidth}
+%  \includegraphics[width=\textwidth]{figure/plot_loss_overview_classif_2}
+%  \tiny \centering
+%  Margin-based losses
+%\end{minipage}%
+\begin{minipage}[b]{0.32\textwidth}
   \includegraphics[width=\textwidth]{figure/loss_dist_based}
   \tiny \centering
   Distance-based: $L1$
 \end{minipage}%
-\begin{minipage}[b]{0.2\textwidth}
+\begin{minipage}[b]{0.265\textwidth}
   \includegraphics[width=\textwidth]{figure/loss_transl_inv.png}
   \tiny \centering
   Translation-invariant: $L2$
 \end{minipage}%
-\begin{minipage}[b]{0.3\textwidth}
+\begin{minipage}[b]{0.40\textwidth}
   \includegraphics[width=\textwidth]{figure/loss_symmetric}
   \tiny \centering
   Symmetric: Brier score
@@ -111,12 +132,11 @@ is influenced by the choice of the loss function.
 \small
 
 Outliers (in $y$) have large residuals $r = y - \fx$. Some losses are more
-strongly affected by large residuals than others, if the go up superlinearly with the residuals (L2, not robust) or linearly (L1, 
- robust) -- or even sublinearly (really robust). 
+affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2) it is not robust, linear (L1) or even sublinear losses are more robust.
 
 \vspace{0.5cm}
 
-\begin{minipage}[c]{0.55\textwidth}
+\begin{minipage}[c]{0.5\textwidth}
   \footnotesize
   \begin{table}[]
   \begin{tabular}{r|r|r|r}
@@ -132,24 +152,29 @@ strongly affected by large residuals than others, if the go up superlinearly wit
 \begin{minipage}[c]{0.05\textwidth}
   \phantom{foo}
 \end{minipage}%
-\begin{minipage}[c]{0.4\textwidth}
+\begin{minipage}[c]{0.45\textwidth}
   \small
   As a consequence, a model is less influenced by outliers than by ``inliers" if 
-  the loss is \textbf{robust}.
+  the loss is \textbf{robust}.\\
+  Outliers e.g.\ strongly influence $L2$.
 \end{minipage}%
 
 \vfill
 
-\begin{minipage}[c]{0.55\textwidth}
-  \includegraphics[width=\textwidth]{figure/robustness}
+
+\begin{minipage}[c]{0.05\textwidth}
+  \phantom{foo}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+  \includegraphics[width=\textwidth]{figure/loss_l1_l2}
   \footnotesize \centering
 \end{minipage}%
 \begin{minipage}[c]{0.05\textwidth}
   \phantom{foo}
 \end{minipage}%
-\begin{minipage}[c]{0.4\textwidth}
-  \small \raggedright
-  $L2$ model is strongly influenced by outlier.
+\begin{minipage}[c]{0.45\textwidth}
+\includegraphics[width=\textwidth]{figure/robustness}
+  %\small \raggedright
   %is an example for a loss function that is not very robust towards
   %outliers. It penalizes large residuals more than $L1$ or Huber loss, which are
   %considered robust.
@@ -180,8 +205,8 @@ strongly affected by large residuals than others, if the go up superlinearly wit
   risk $\risket$ 
   \begin{itemize}
     \small
-    \item If loss is unsmooth, we mighht have to use derivative-free optimization (or worse, in case of 0-1)
-    \item Smoothness of objective wrt $\thetab$ not only depends on $\Lxy$, but also requires smoothness of $\fx$! 
+    \item If loss is unsmooth, we might have to use derivative-free optimization (or worse, in case of 0-1)
+    \item Smoothness of $\risket$ not only depends on $L$, but also requires smoothness of $\fx$! 
   \end{itemize}
 \end{itemize}
 
@@ -202,46 +227,46 @@ strongly affected by large residuals than others, if the go up superlinearly wit
 
 \framebreak
 
-\small
-\textbf{Example: Lasso regression}
+% \small
+% \textbf{Example: Lasso regression}
 
-\begin{itemize}
-  \small
-  \item Problem: Lasso has a non-differentiable 
-  objective function $$\riskrt = \| \yv - \Xmat \thetab \|^2_2
-  + \lambda \| \thetab \|_1 ~ \in \mathcal{C}^0,$$
-  but many optimization methods are derivative-based, e.g.,
-  \begin{itemize}
-    \small
-    \item Gradient descent: requires existence of gradient $\nabla \risket$, 
-    \item Newton-Raphson: requires existence of Hessian $\nabla^2 \risket$.
-  \end{itemize}
-  \item We must therefore resort to alternative optimization 
-  techniques -- for instance, coordinate descent with subgradients.
-\end{itemize}
+% \begin{itemize}
+%   \small
+%   \item Problem: Lasso has a non-differentiable 
+%   objective function $$\riskrt = \| \yv - \Xmat \thetab \|^2_2
+%   + \lambda \| \thetab \|_1 ~ \in \mathcal{C}^0,$$
+%   but many optimization methods are derivative-based, e.g.,
+%   \begin{itemize}
+%     \small
+%     \item Gradient descent: requires existence of gradient $\nabla \risket$, 
+%     \item Newton-Raphson: requires existence of Hessian $\nabla^2 \risket$.
+%   \end{itemize}
+%   \item We must therefore resort to alternative optimization 
+%   techniques -- for instance, coordinate descent with subgradients.
+% \end{itemize}
 
-\vfill
+% \vfill
 
-\begin{minipage}[c]{0.3\textwidth}
-  \includegraphics[width=\textwidth]{figure/lasso_unpenalized}
-\end{minipage}%
-\begin{minipage}[c]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[c]{0.3\textwidth}
-  \includegraphics[width=0.9\textwidth]{figure/lasso_penalty}
-\end{minipage}%
-\begin{minipage}[c]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[c]{0.3\textwidth}
-  \includegraphics[width=0.9\textwidth]{figure/lasso_penalized}
-\end{minipage}%
+% \begin{minipage}[c]{0.3\textwidth}
+%   \includegraphics[width=\textwidth]{figure/lasso_unpenalized}
+% \end{minipage}%
+% \begin{minipage}[c]{0.05\textwidth}
+%   \phantom{foo}
+% \end{minipage}%
+% \begin{minipage}[c]{0.3\textwidth}
+%   \includegraphics[width=0.9\textwidth]{figure/lasso_penalty}
+% \end{minipage}%
+% \begin{minipage}[c]{0.05\textwidth}
+%   \phantom{foo}
+% \end{minipage}%
+% \begin{minipage}[c]{0.3\textwidth}
+%   \includegraphics[width=0.9\textwidth]{figure/lasso_penalized}
+% \end{minipage}%
 
-\tiny Example: $y = x_1 + 1.2 x_2 + \epsilon$. \textit{Left:} unpenalized 
-objective, \textit{middle:} $L1$ penalty, \textit{right:} penalized objective 
-(all as functions of $\thetab$). We see how the $L1$ penalty nudges the optimum 
-towards (0, 0) and compromises the original objective's smoothness.
+% \tiny Example: $y = x_1 + 1.2 x_2 + \epsilon$. \textit{Left:} unpenalized 
+% objective, \textit{middle:} $L1$ penalty, \textit{right:} penalized objective 
+% (all as functions of $\thetab$). We see how the $L1$ penalty nudges the optimum 
+% towards (0, 0) and compromises the original objective's smoothness.
 
 \end{vbframe}
 
@@ -335,11 +360,11 @@ fail entirely, e.g.:
 
 \begin{itemize}
   \item $f$ linear in $\thetab$, e.g.,
-  \textbf{logistic regression} with $\fxt = s(\thx)$
+  \textbf{logistic regression} with $\fxt = \thx$
   %\begin{itemize}
     %\small
   \item Data perfectly separable by our learner, so we can find $\thetab$:
-   $$ \yi \fxit = |\fxt| > 0 ~~ \forall \xi \ne \zero$$
+   $$ \yi \fxit = \yi \thetab^T \xi > 0 ~~ \forall \xi$$
 %    \\ \vspace{0.1cm} \scriptsize 
     %as every $\xi$ is correctly classified: $\fxit < 0$ for
     %$\yi = -1$, $> 0$ for $\yi = 1$ \small
@@ -371,21 +396,23 @@ fail entirely, e.g.:
   
 \item Can now a construct a strictly better $\thetab$
 
-$$    \riske(2 \cdot \thetab) &= \sumin  
+$$    \riske(2 \cdot \thetab) = \sumin  
     % \log \left( 1 + \exp \left( - |2 \thetab^T \xi| \right)\right) \\
-    L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetab \right) \right \rvert  
-    \right)
+    L \left( 2 \yi \thetab^T \xi  
+    \right) < \risket
 $$
 
-    \begin{flalign*
-    \riske(2 \cdot \thetab) &= \sumin  
+\item As ||$\thetab$|| increases, sum strictly decreases, as argument of L is strictly larger
+
+  %  \begin{flalign*
+    %\riske(2 \cdot \thetab) &= \sumin  
     % \log \left( 1 + \exp \left( - |2 \thetab^T \xi| \right)\right) \\
-    L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetab \right) \right \rvert  
-    \right)
-    = \sumin L \left(2 \cdot \left \rvert \fxit \right \rvert \right) \\
-    &< \sumin L \left( \left \rvert \fxit \right \rvert \right) = \risket
-  \end{flalign*}
-\item Hence, problem unbounded from below
+   % L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetab \right) \right \rvert  
+   % \right)
+   %5 = \sumin L \left(2 \cdot \left \rvert %\fxit \right \rvert \right) \\
+   %5 &< \sumin L \left( \left \rvert \fxit \right \rvert \right) = \risket
+ % \end{flalign*}
+\item We can iterate that, so there is no local (or global) optimum, and no numerical procedure can converge
 %  \item This actually holds true for every $a \cdot \thetab$ with $a > 1$.
 %  \begin{itemize}
 %    \small
@@ -412,9 +439,9 @@ $$
   \begin{minipage}[b]{0.5\textwidth}
     \includegraphics[width=0.8\textwidth]{figure/softmax_2}
   \end{minipage}%
-  \item In practice, data are seldom linearly separable and misclassified 
+  \item In practice, data are seldomly linearly separable and misclassified 
   examples act as counterweights to increasing parameter values.
-  \item Besides, we can apply \textbf{regularization} to encourage convergence 
+  \item Besides, we can use \textbf{regularization} to encourage convergence 
   to robust solutions.
 \end{itemize}
 

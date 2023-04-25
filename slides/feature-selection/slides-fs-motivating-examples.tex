@@ -1,0 +1,144 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure_man/tibshirani_fig_18_1_mod.png}
+\newcommand{\learninggoals}{
+  \item Understand the practical importance of feature selection.
+  \item Understand that models with integrated selection do not always work.
+  \item Know different types of selection methods.
+}
+
+\title{Supervised Learning}
+\date{}
+
+\begin{document}
+
+  \lecturechapter{Feature Selection}
+  \lecture{Fortgeschrittene Computerintensive Methoden}
+
+  \begin{vbframe}{Motivating example 1: Regularization}
+  \begin{itemize}
+  \setlength{\itemsep}{1.15em}
+    \item In case of $p \gg n$,  \enquote{less fitting is better}.
+    \item This can be demonstrated with a simulation study of three datasets of feature dimensionalities $p \in \{ 20, 100, 1000 \}$ and $n=100$ samples over 100 simulation runs.
+    %\item Investigation of three different dimensionalities of the input space: $p \in \{ 20, 100, 1000 \}$.
+    \item For each dataset, $p$ features are drawn from a standard Gaussian with pairwise correlation $\rho=0.2$.
+      \item Target is simulated as
+    $ y = \sum_{j=1}^p x_j \theta_j + \sigma\varepsilon $, where $\varepsilon$ and $\bm{\theta}$ are both sampled from standard Gaussians, and $\sigma$ is fixed such that the signal-to-noise ratio is $\var (\E[y|X]) / \sigma^2 = 2$.
+    %\item 100 simulation runs are performed.
+    \item Three ridge regression models with $\lambda \in \{ 0.001, 100, 1000 \}$ are then fitted to each simulated dataset.
+  \end{itemize}
+  
+  \framebreak
+  
+  \begin{itemize}
+  \small
+    \item Boxplots show the relative test error ($\text{RTE} = \text{test error} / \text{Bayes error }\sigma^2$) over 100 simulations for the different values of $p$ and $\lambda$.
+    %\item Relative test error = test error / Bayes error $\sigma^2$.
+    % $\text{Relative test error} = \text{test error} / \text{Bayes error }\sigma^2$
+  \normalsize
+  \end{itemize}
+  \begin{center}
+  %\vspace{0.1cm}
+  \includegraphics[width = 0.8\textwidth]{figure_man/tibshirani_fig_18_1_mod.png}
+  %\footnotesize{Hastie (2009). The Elements of Statistical Learning}
+  \end{center}
+  \vspace{-0.3cm}
+  \begin{itemize}\small
+  %\item On the x-axis the effective degrees of freedom (averaged over the 100 simulation runs) are displayed:
+  %$$df(\lambda) = \sum_{j=1}^p \frac{d_j^2}{d^2_j + \lambda}$$
+  %where $d$ are the singular values of $x$.
+  %\begin{itemize}
+  %  \item For $\lambda = 0$ (linear regression): $df(\lambda) = p$.
+  %  \item For $\lambda \rightarrow \infty$: $df(\lambda) \rightarrow 0$
+  %\end{itemize}
+  \item Lowest RTE is obtained at $\lambda = 0.001$  for $p=20$, %df=20%
+  at $\lambda = 100$ for $p=100$,%df=35%
+  and at $\lambda = 100$ for $p=100$.%df=43%.
+  %\item For $p=100$, $\lambda = 100$ has smallest relative test error. %df=35%
+  %\item For $p=1000$, $\lambda = 1000$ has smallest relative test error. %df=43%
+ \item Optimal amount of regularization increases monotonically with $p$ here.
+  \item[$\Rightarrow$] High-dimensional settings require more complexity control through regularization or feature selection.
+  %More regularization for high dimensional data seems reasonable.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{Motivating ex. 2: Comparison of Methods}
+  Generalization performance of eight classification methods on micro-array data with $| \Dtrain | = 144$, $| \Dtest | = 54$, $p=16, 063$ genes and a categorical target encoding the type of cancer with 14 classes.
+\vspace{0.25cm}
+  \begin{center}
+  \includegraphics{figure_man/tibshirani_tab_18_1.png}
+
+  \footnotesize{Hastie (2009). The Elements of Statistical Learning}
+  \end{center}
+  \end{vbframe}
+
+  \begin{vbframe}{Motivating ex. 3: Comparing FS with integrated selection methods}
+\textbf{Set-up for simulated micro-array data:}
+\vspace{0.5cm}
+  \begin{itemize}
+  \setlength{\itemsep}{1.2em}
+  \item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
+  %\item With \code{sim.data} one can simulate micro-array data.
+  \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian.
+  \item Each simulated sample has $p=100$ genes, of which half are relevant for the target and half have no influence.
+  %\item The other $\code{ng-nsg}=50$ genes have no influence.
+  %\item The gene ratios are drawn from a multivariate normal distribution.
+  \item Among the informative features, 25 are positively and 25 negatively correlated with target.
+  \end{itemize}
+
+  \framebreak
+
+  \begin{itemize}
+  \setlength{\itemsep}{1.1em}
+  \item We compare several classifiers regarding their misclassification rate, of which two have integrated FS (rpart and rForest).
+  \item Since we have few observations, we use repeated 10-fold cross-validation with 10 repetitions.
+  \end{itemize}
+  \vspace{0.2cm}
+  \begin{table}[ht]
+    \begin{center}
+      \begin{tabular}{rrrrrrr}
+        \hline
+        & rpart & lda & logreg & nBayes & knn7  & rForest \\
+        \hline
+        all feat. & 0.44 & 0.27 & 0.25 & 0.32 & 0.37 & 0.36 \\
+        relevant feat. & 0.44 & 0.18 & 0.19 & 0.27 & 0.33 & 0.30 \\
+        \hline
+      \end{tabular}
+    \end{center}
+  \end{table}
+\vspace{0.35cm}
+\begin{itemize}
+\setlength{\itemsep}{1.2em}
+    \item[$\Rightarrow$] The models with integrated selection do not work well here!
+    \item[$\Rightarrow$]   Performance improves significantly for most methods when only trained on informative features.
+\end{itemize}
+
+\end{vbframe}
+
+  \begin{vbframe}{Types of feature selection methods}
+
+  In the rest of the chapter, we will get to know three different types of methods for feature selection:
+
+  \lz
+
+  \begin{itemize}
+    \item Filters: evaluate relevance of features using statistical properties such as correlation with target variable.
+    \item Wrappers: use a model to evaluate subsets of features. 
+    \item Embedded techniques: integrate feature selection during model training.
+  \end{itemize}
+
+  \lz
+
+  For each technique we will look at a simple example.
+
+  \lz
+
+  It should be noted that feature selection methods used in practice are often (complicated) combinations of these methods.
+
+  \end{vbframe}
+
+  \endlecture
+\end{document}
