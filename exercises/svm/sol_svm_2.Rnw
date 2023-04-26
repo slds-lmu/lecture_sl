@@ -9,7 +9,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-svm.tex}
 \input{../../latex-math/ml-gp.tex}
 
-\kopfsl{11}{SVM}
+\kopfsl{}{Non Linear SVM}
 
 
 \loesung{Kernelized Multiclass SVM}{
