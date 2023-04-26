@@ -8,7 +8,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopficsl{5}{Information Theory}
+\kopficsl{}{Information Theory}
 
 \aufgabe{Kullback-Leibler Divergence and model misspecification}{
 	<<child="ex_rnw/ex_kl_divergence_misspecification.Rnw">>=
