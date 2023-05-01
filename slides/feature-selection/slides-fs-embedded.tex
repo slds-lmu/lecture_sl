@@ -42,17 +42,17 @@
 
     Idea: Sequentially drop the feature with the smallest $|\theta_j|$.
 
+
+
+
     \framebreak
 
     \begin{blocki}{Recursive feature elimination}
-      \item Standardize the data.
-      \item Start with full set of features $S$.
+      \item Standardize the data and Start with the full set $S$ .
       \item Fit a linear SVM, using the features in $S$, and estimate coefficients $\thetab$.
       \item Remove feature(s) $j$ with minimal $|\theta_j|$ from $S$.
       \item Iterate  using the reduced $S$ for the SVM.
     \end{blocki}
-
-    \framebreak
 
     \begin{blocki}{Some notes:}
       \item Strictly speaking, this procedure does not perform selection, but rather constructs a ranking of the features.
@@ -60,6 +60,7 @@
       \item To improve speed one can drop $k$ features in each iteration.
       \item Extensions to other kernels or multi-class tasks are not trivial.
     \end{blocki}
+
 
   \end{vbframe}
 
