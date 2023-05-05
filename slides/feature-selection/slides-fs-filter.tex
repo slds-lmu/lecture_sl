@@ -7,9 +7,9 @@
 
 \newcommand{\titlefigure}{figure_man/varsel_ex0.png}
 \newcommand{\learninggoals}{
-  \item Understand how filter methods work
-  \item Understand how to apply them for feature selection
-  \item Understand  advantages and disadvantages, and how to overcome them.
+  \item Understand how filter methods work.
+  \item Understand how to apply them for feature selection.
+  \item Understand advantages and disadvantages, and how to overcome them.
 }
 \title{Supervised Learning}
 \date{}
@@ -19,10 +19,11 @@
   \lecture{Supervised Learning}
 
   \begin{vbframe}{Introduction}
-
+  \vspace{0.4cm}
   \begin{itemize}
-    \item \textbf{Filter methods} construct a measure that describes the dependency between a feature and the target variable.
-    \item They Yield a numeric score for each feature $j$, known as \textbf{variable-ranking}.
+  \setlength{\itemsep}{1.5em}
+    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
+    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
     \item They are model-agnostic and can be applied generically.
     \item Filter methods are strongly related to methods for determining variable importance.
   \end{itemize}
@@ -64,31 +65,31 @@
 
   \begin{vbframe}{$\chi^2$-statistic}
   \begin{itemize}
-    \item Test for independence between the $j$-th feature and the target $y$.
-    \item Numeric features or targets need to be discretized.
-    \item Hypotheses:
+    \item Test for independence between categorical $x_j$ and target $y$. Numeric features or targets can be discretized.
+    \item Hypotheses: \\
+    $H_0^{\;j}: p(x_j = m, y = k) = p(x_j = m)\, p(y = k) \,\forall m, k$\\
+    %$\forall m = 1, \dots, M, \forall k = 1, \dots, K$\\%, $\forall m = 1, \dots, M$
 
-    $H_0: p(x_j = l, y = k) = p(x_j = l)\, p(y = k)$, $\forall j = 1, \dots, k_1$
+    %\noindent\hspace*{6.55cm} $\forall k = 1, \dots, K$
 
-    \noindent\hspace*{6.55cm} $\forall k = 1, \dots, k_2$
-
-    $H_1: \exists \; j, k: p(x_j = l, y = k) \neq p(x_j = l)\, p(y = k)$
+    $H_1^{\;j}: \exists \; m, k: p(x_j = m, y = k) \neq p(x_j = m)\, p(y = k)$
     \item Calculate the $\chi^2$-statistic for each feature-target combination:
-      $$ \chi^2 = \sum_{j = 1}^{k_1} \sum_{k=1}^{k_2} (\frac{e_{jk} - \tilde{e}_{jk}}{\tilde{e}_{jk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((k_1-1)(k_2-1))$$
-    where $e_{jk}$ is the observed relative frequency of pair $(j,k)$ and $\tilde{e}_{jk} = \frac{e_{j \cdot} e_{\cdot k}}{n}$ is the expected relative frequency.
-    \item The greater $\chi^2$, the more dependent is the feature-target combination, the more relevant is the feature.
+      $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
+    where $e_{mk}$ is the observed relative frequency of pair $(m,k)$ and $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency.
+    \item The greater $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
   \end{itemize}
   \end{vbframe}
 
 
   \begin{vbframe}{Pearson \& Spearman correlation}
-  \textbf{Pearson correlation $r(\xj, y)$: }
+  \textbf{Pearson correlation $r(x_j, y)$: }
   \begin{itemize}
     \item For numeric features and targets only.
     \item Most sensitive for linear or monotonic relationships.
-    \item $ r(\xj, y) = \frac{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j) (\yi - \bar{y})}{\sqrt{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j)} \sqrt{(\sum_{i=1}^n \yi - \bar{y})}},\qquad -1 \le r \le 1$
+    \item $ r(x_j, y) = \frac{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j) (\yi - \bar{y})}{\sqrt{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j)} \sqrt{(\sum_{i=1}^n \yi - \bar{y})}},\qquad -1 \le r \le 1$
   \end{itemize}
-  \textbf{Spearman correlation $r_{SP}(\xj, y)$:}
+  \vspace{0.4cm}
+  \textbf{Spearman correlation $r_{SP}(x_j, y)$:}
   \begin{itemize}
     \item For features and targets at least on an ordinal scale.
     \item Equivalent to Pearson correlation computed on the ranks.
@@ -105,7 +106,7 @@
     % \item A higher score indicates a higher relevance of the feature.
   \end{itemize}
   \lz
-  Use absolute values $|r(\xj, y)|$ for feature ranking: higher score indicates a higher relevance.
+  Use absolute values $|r(x_j, y)|$ for feature ranking: higher score indicates a higher relevance.
 
   \framebreak
 
@@ -117,6 +118,7 @@
   \begin{figure}
     \includegraphics {figure_man/correlation_example.png}
   \end{figure}
+  Comparison of Pearson correlation for different dependency structures.
 
   % \begin{center}
   %   \includegraphics[width=0.9\textwidth]{figure_man/correlation_example.png}
@@ -152,15 +154,15 @@
 
 
   $$
-    r_D(\xj, y) = \sqrt{\frac{c_{D}^2(\xj, y)}{\sqrt{c_{D}^2(\xj, \xj) c_{D}^2(y, y)}}}:
+    r_D(x_j, y) = \sqrt{\frac{c_{D}^2(x_j, y)}{\sqrt{c_{D}^2(x_j, x_j) c_{D}^2(y, y)}}}
   $$
-
-  Normed version of \textbf{distance covariance} $$c_{D}(\xj, y) = \frac{1}{n^2}\sum^n_{i=1}\sum^n_{k=1} D^{(ik)}_{\xj} D^{(ik)}_{y}$$
-  $$ D^{(ik)}_{x} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{xj} + \bar{d}^{(\cdot k)}_{xj} - \bar{d}^{(\cdot \cdot)}_{xj}) $$
+  Normed version of \textbf{distance covariance}: 
+  $$c_{D}(x_j, y) = \frac{1}{n^2}\sum^n_{i=1}\sum^n_{k=1} D^{(ik)}_{x_j} D^{(ik)}_{y}$$
+  $$ D^{(ik)}_{x} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{x_j} + \bar{d}^{(\cdot k)}_{x_j} - \bar{d}^{(\cdot \cdot)}_{x_j}) $$
   \begin{itemize}
   \item $D^{(ik)}_{x}$ are the centered pairwise distances.
-  \item $d\left(x^{(i)}_j, x^{(k)}_j\right)$ represent the distances of observations.
-  \item $\bar{d}^{(i\cdot)}_{xj} = \tfrac{1}{n} \sum^n_{k=1} d\left(x^{(i)}_j, x^{(k)}_j\right)$ represent the mean distances.
+  \item $d\left(x^{(i)}_j, x^{(k)}_j\right)$ represents the distances of observations.
+  \item $\bar{d}^{(i\cdot)}_{x_j} = \tfrac{1}{n} \sum^n_{k=1} d\left(x^{(i)}_j, x^{(k)}_j\right)$ represent the mean distances.
 
 
   \end{itemize}
@@ -168,18 +170,19 @@
   \framebreak
 
   \begin{itemize}
-    \setlength{\itemsep}{1.0em}
-  \item $0 \leq r_D(\xj, y) \leq 1 \quad \forall  j \in \{1, …, p\}$
-  \item $r_D(\xj, y) = 0$ only if $\xv$ and $y$ are empirically independent (!)
-  \item $r_D(\xj, y) = 1$ for exact linear dependencies
+    \setlength{\itemsep}{1.6em}
+  \item $0 \leq r_D(x_j, y) \leq 1 \quad \forall  j \in \{1, …, p\}$
+  \item $r_D(x_j, y) = 0$ only if $\xv$ and $y$ are empirically independent (!)
+  \item $r_D(x_j, y) = 1$ for exact linear dependencies
   \item Assesses strength of \textbf{non-monotonic}, \textbf{non-linear}  dependencies
-  \item Gennerally applicable, even for ranking multivariate features or non-tabular inputs (text, images, audio, etc.)
+  \item Generally applicable, even for ranking multivariate features or non-tabular inputs (text, images, audio, etc.)
   \item Expensive to compute for large data.
   \end{itemize}
 
   \begin{figure}
-  \includegraphics[width = 0.9\textwidth]{figure_man/distance-corre.png}
+  \includegraphics[width = 0.85\textwidth]{figure_man/distance-corre.png}
   \end{figure}
+  {Comparison of Pearson, Spearman and distance correlation for different dependency structures.}
 
 
   \end{vbframe}
@@ -187,27 +190,27 @@
 
 
 
-  \begin{vbframe}{Welch's \MakeLowercase{t}-test}
-  \begin{itemize}
-    \item For binary classification with numeric features.
-    \item Test for unequal means of the $j$-th feature.
-    \item Let $\Yspace \in \{ 0, 1\}$. The subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
-    \item Hypotheses:
+  %\begin{vbframe}{Welch's \MakeLowercase{t}-test}
+  %\begin{itemize}
+  %  \item For binary classification with numeric features.
+  %  \item Test for unequal means of the $j$-th feature.
+  %  \item Let $\Yspace \in \{ 0, 1\}$. The subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
+  %  \item Hypotheses:
 
-    $H_0$: $\;\;\mu_{j_0} = \mu_{j_1} $ \qquad vs. \qquad $H_1$: $\;\;\mu_{j_0} \neq \mu_{j_1}$
+   % $H_0$: $\;\;\mu_{j_0} = \mu_{j_1} $ \qquad vs. \qquad $H_1$: $\;\;\mu_{j_0} \neq \mu_{j_1}$
 
-    \item Calculate Welch's t-statistic for every feature $\xj$
-    $$ t_j = \frac{\bar{x}_{j_0} - \bar{x}_{j_1}}{\sqrt{(\frac{S^2_{\xjNull}}{n_0} + \frac{S^2_{\xjEins}}{n_1})}}$$
-    where $\bar{x}_{j_0}$, $S^2_{\xjNull}$ and $n_0$ are the sample mean, the population variance and the sample size for y = 0, respectively.
-    \item A higher t-score indicates higher relevance of the feature.
-  \end{itemize}
-  \end{vbframe}
+    %\item Calculate Welch's t-statistic for every feature $x_j$
+    %$$ t_j = \frac{\bar{x}_{j_0} - \bar{x}_{j_1}}{\sqrt{(\frac{S^2_{x_jNull}}{n_0} + \frac{S^2_{x_jEins}}{n_1})}}$$
+    %where $\bar{x}_{j_0}$, $S^2_{x_jNull}$ and $n_0$ are the sample mean, the population variance and the sample size for y = 0, respectively.
+    %\item A higher t-score indicates higher relevance of the feature.
+  %\end{itemize}
+  %\end{vbframe}
 
 
   \begin{vbframe}{F-Test}
   \begin{itemize}
     \item For multiclass classification ($g \ge 2$) and numeric features.
-    \item Assesses whether the expected values of a feature $\xj$ within the classes of the target differ from each other.
+    \item Assesses whether the expected values of a feature $x_j$ within the classes of the target differ from each other.
     \item Hypotheses:
 
     $H_0: \mu_{j_0} = \mu_{j_1} = \dots = \mu_{j_g} \;\;\;\;$ vs. $\;\;\;\;H_1 : \exists \; k,l: \mu_{j_k} \neq \mu_{j_l}$
@@ -216,61 +219,32 @@
     F &= \frac{\text{between-group variability}}{\text{within-group variability}}\\
     F &= \frac{\sum_{k = 1}^g n_k (\bar{x}_{j_k} - \bar{x_j})^2/(g-1)}{\sum_{k = 1}^g \sum_{i = 1}^{n_k} (x_{j_k}^{(i)} - \bar{x}_{j_k})^2/(n-g)}
     \end{align*}
-    where $\bar{x}_{j_k}$ is the sample mean of feature $\xj$ where $y = k$ and $\bar{x_{j}}$ is the overall sample mean of feature $\xj$.
+    where $\bar{x}_{j_k}$ is the sample mean of feature $x_j$ where $y = k$ and $\bar{x_{j}}$ is the overall sample mean of feature $x_j$.
   \item A higher F-score indicates higher relevance of the feature.
   \end{itemize}
   \end{vbframe}
 
-  \begin{vbframe}{Mutual Information}
+  \begin{vbframe}{Mutual Information (MI)}
   $$I(X ; Y) = \E_{p(x, y)} \left[ \log \frac{p(X, Y)}{p(X) p(Y)} \right]$$
 
   \begin{itemize}
-    \item Each variable $\xj$ is rated according to $I(\xj;y)$, this is sometimes called information gain.
+  \setlength{\itemsep}{1.2em}
+    \item Each feature $x_j$ is rated according to $I(x_j;y)$; this is sometimes called information gain (IG).
     \item MI is a measure of the amount of "dependence" between variables. It is zero if and only if the variables are independent.
-    \item On the other hand, if one of the variables is a deterministic function of the other, the mutual information is maximal.
+    \item On the other hand, if one of the variables is a deterministic function of the other, MI is maximal.
   \item Not limited to real-valued random variables.
-    \item More general measure of dependence between variables than correlation.
+  \item More general measure of dependence between variables than correlation.
   \end{itemize}
   \end{vbframe}
 
-  \begin{vbframe}{Using Filter Methods}
-
-  \begin{enumerate}{}
-    \item Calculate filter-values.
-    \item Sort features by value.
-  %  \item Choose $\tilde{p}$ best features.
-    \item Train model on $\tilde{p}$ best features.
-  \end{enumerate}
-
-  \lz
-
-  \begin{blocki}{How to choose $\tilde{p}$?}
-    \item It can be prescribed by the application.
-    \item Eyeball estimation: Read from filter plots (i.e., Scree plots).
-    \item Use resampling.
-  \end{blocki}
-
-  \framebreak
-
-  \begin{blocki}{Advantages:}
-    \item Easy to calculate.
-    \item Typically scales well with the number of features $p$.
-    \item Generally Interpretable.
-    \item Model-agnostic.
-  \end{blocki}
-
-  \begin{blocki}{Disadvantages:}
-    \item Univariate analysis may ignore multivariate dependencies.
-    \item Redundant features will have similar weights.
-    \item Ignores the learning algorithm.
-  \end{blocki}
-  \end{vbframe}
+\begin{comment}
 
   \begin{vbframe}{Minimum Redundancy Maximum Relevancy}
   \begin{itemize}
-    \setlength{\itemsep}{1.0em}
-    \item Most filter type methods features based on a certain filter method  without considering relationships among the features.
+    \setlength{\itemsep}{2em}
+    \item Most filter-type methods rank features based on a univariate association score without considering relationships among the features.
     \begin{itemize}
+    \setlength{\itemsep}{1.5em}
       \item Features may be correlated and hence, may cause redundancy.
       \item Selected features cover narrow regions in space.
     \end{itemize}
@@ -283,9 +257,9 @@
   \begin{itemize}
   \item Let $S \subset \{1, \dots, p \}$ be a subset of features we want to find.
 
-  $$\min \text{Red}(S), \;\;\;\; \text{Red}(S) = \frac{1}{|S|^2} \sum_{j, l \in S} I_{xx}(\xj, \xl)$$
+  $$\min \text{Red}(S), \;\;\;\; \text{Red}(S) = \frac{1}{|S|^2} \sum_{j, l \in S} I_{xx}(x_j, x_l)$$
 
-  $$\max \text{Rel}(S), \;\;\;\; \text{Rel}(S) = \frac{1}{|S|} \sum_{j \in S} I_{xy}(\xj, \ydat)$$
+  $$\max \text{Rel}(S), \;\;\;\; \text{Rel}(S) = \frac{1}{|S|} \sum_{j \in S} I_{xy}(x_j, \ydat)$$
 
   \item $I_{xx}$ measures the strength of the dependency between two features.
   \item $I_{xy}$ measures the strength of the dependency between a feature and the target.
@@ -305,7 +279,7 @@
   \begin{itemize}
   \item Suppose we already have a feature set with $m-1$ features $S_{m-1}$.
   \item Next, we select the $m$-th feature from the set $\bar{S}_{m-1}$ by selecting the feature that maximizes:
-  $$\max_{j \, \in \, \bar{S}_{m-1}} [ I_{xy} (\xj, \ydat) - \frac{1}{|S_{m-1}|} \sum_{l \, \in \, S_{m-1}} I_{xx}(\xj, \xl)  ]$$
+  $$\max_{j \, \in \, \bar{S}_{m-1}} [ I_{xy} (x_j, \ydat) - \frac{1}{|S_{m-1}|} \sum_{l \, \in \, S_{m-1}} I_{xx}(x_j, x_l)  ]$$
   \item The complexity of this incremental algorithm is $\mathcal{O}(|p| \cdot| S|)$.
   \end{itemize}
   \end{vbframe}
@@ -317,16 +291,55 @@
     \begin{algorithmic}[1]
       \State Set $S = \emptyset$, $R = \{ 1, \dots, p \}$
       \State Find the feature with maximum relevancy:
-      $$j^* := \argmax_{j} I_{xy} (\xj, \ydat)$$
+      $$j^* := \argmax_{j} I_{xy} (x_j, \ydat)$$
       \State Set $S = \{ j^* \}$ and update $R \leftarrow R \setminus \{j^* \}$
       \Repeat
-        \State Find feature $\xj$ that maximizes:
-        $$\max_{j \, \in \, R} [ I_{xy} (\xj, \ydat) - \frac{1}{|S|} \sum_{l \, \in \, S} I_{xx}(\xj, \xl)  ]$$
+        \State Find feature $x_j$ that maximizes:
+        $$\max_{j \, \in \, R} [ I_{xy} (x_j, \ydat) - \frac{1}{|S|} \sum_{l \, \in \, S} I_{xx}(x_j, x_l)  ]$$
         \State Update $S \leftarrow S \cup \{j^* \}$ and $R \leftarrow R \setminus \{ j^* \}$
       \Until{Expected number of features have been obtained or some other constraints are satisfied.}
       \caption{mRMR algorithm}
     \end{algorithmic}
   \end{algorithm}
+  \end{vbframe}
+  
+\end{comment}
+
+
+\begin{vbframe}{Using Filter Methods}
+
+  \begin{enumerate}{}
+  \setlength{\itemsep}{1.2em}
+    \item Calculate filter score for each feature $x_j$.
+    \item Rank features according to score values.
+    \item Choose $\tilde{p}$ best features.
+    \item Train model on $\tilde{p}$ best features.
+  \end{enumerate}
+
+  \lz
+
+  \begin{blocki}{How to choose $\tilde{p}$?}
+    \item It can be prescribed by the application.
+    \item Eyeball estimation: read from filter plots (e.g., Scree plots).
+    \item Use resampling.
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Advantages:}
+  \setlength{\itemsep}{1.2em}
+    \item Easy to calculate.
+    \item Typically scales well with the number of features $p$.
+    \item Generally interpretable.
+    \item Model-agnostic.
+  \end{blocki}
+
+  \begin{blocki}{Disadvantages:}
+  \setlength{\itemsep}{1.2em}
+    \item Univariate analyses may ignore multivariate dependencies.
+    \item Redundant features will have similar weights.
+    \item Ignores the learning algorithm.
+  \end{blocki}
   \end{vbframe}
 
 
