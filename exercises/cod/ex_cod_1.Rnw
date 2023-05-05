@@ -8,7 +8,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/basic-math.tex}
 \input{../../latex-math/basic-ml.tex}
 
-\kopfsl{7}{Curse of Dimensionality}
+\kopfsl{}{Curse of Dimensionality}
 
 \aufgabe{High-dimensional Gaussian Distributions}{
 	<<child="ex_rnw/ex_high_dimensional_gaussian_1.Rnw">>=

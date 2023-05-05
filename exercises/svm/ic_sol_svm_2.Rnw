@@ -10,7 +10,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \input{../../latex-math/ml-svm.tex}
 \input{../../latex-math/ml-gp.tex}
 
-\kopficsl{11}{Support Vector Machines}
+\kopficsl{}{Non linear SVM}
 
 \loesung{Kernels}{
 	<<child="ex_rnw/sol_svm_kernel_definition.Rnw">>=
