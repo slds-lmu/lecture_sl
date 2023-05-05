@@ -24,18 +24,17 @@
 
     \begin{itemize}
       \item Wrapper methods emerged from the idea that different sets of features can be optimal for different classification learners.
-      \item Given a set of features, we can use the classifier itself to assess their quality.
-      \item We could just evaluate on the test set or use resampling techniques to achieve this.
-      \item A wrapper is nothing else than a discrete search strategy for $S$, where the cross-validated test error of a learner as a function of $S$ is now the objective criterion.
+      \item Use the classifier itself to assess the quality of the feature sets.
+      \item Evaluation on a test set or resampling techniques are used.
+      \item A wrapper is nothing else than a discrete search strategy for $S$, where the test error of a learner as a function of $S$ is now the objective criterion.
 
     \end{itemize}
 
 
     \framebreak
 
-    There are a lot of varieties of wrappers. To begin with we have to determine the following components:
+    Wrappers have the following components:
 
-    \lz
 
     \begin{itemize}
       \item A set of starting values
@@ -43,15 +42,15 @@
       \item A termination criterion
     \end{itemize}
 
-    \framebreak
 
     \begin{figure}
       \includegraphics[width=8cm]{figure_man/varsel_space.png}
-      \caption{Space of all feature sets for 4 features.
-      The indicated relationships between the sets insinuate a greedy search strategy which either adds or removes a feature.}
+      % \caption{Space of all feature sets for 4 features.
+      % The indicated relationships between the sets insinuate a greedy search strategy which either adds or removes a feature.}
       % Übersetzung von:
       % Raum aller Feature-Mengen bei 4 Features. Die eingezeichnete Nachbarschaftsbeziehung unterstellt eine Art ,,gierige'' Suchstrategie, bei der wir entweder ein Feature hinzufügen oder entfernen.}
     \end{figure}
+
 
   \end{vbframe}
   
@@ -65,8 +64,8 @@
       \item Iterate over this procedure.
       \item Terminate if:
         \begin{itemize}
-          \item the performance measure no longer shows relevant improvement,
-          \item a maximum number of features is used, or
+          \item the performance measure doesn't improve enough.
+          \item a maximum number of features is used.
           \item a given performance value is reached.
         \end{itemize}
     \end{blocki}
@@ -133,13 +132,14 @@
 
   \begin{vbframe}{Extensions}
 
-    \begin{blocki}{}
+    \begin{itemize}
+      \setlength{\itemsep}{1.0em}
       \item Eliminate or add several features at once to increase speed.
       \item Allow alternating forward and backward search.
       \item Randomly create candidate feature sets in each iteration.
       \item Continue search based on the set of features where an improvement is present.
       \item Use improvements of earlier iterations.
-    \end{blocki}
+    \end{itemize}
 
     \framebreak
 
