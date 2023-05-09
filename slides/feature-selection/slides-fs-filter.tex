@@ -7,9 +7,9 @@
 
 \newcommand{\titlefigure}{figure_man/varsel_ex0.png}
 \newcommand{\learninggoals}{
-  \item Understand how filter methods work.
-  \item Understand how to apply them for feature selection.
-  \item Understand advantages and disadvantages, and how to overcome them.
+  \item Understand how filter methods work and how to apply them for feature selection.
+  \item Understand advantages of filter methods and potential problems.
+  \item Know filter methods based on correlation, test statistics, and mutual information.
 }
 \title{Supervised Learning}
 \date{}
@@ -29,43 +29,41 @@
   \end{itemize}
   \end{vbframe}
 
-  % \begin{vbframe}{Examples, taken from Guyon (2003)}
+  \begin{vbframe}{Filter methods can be misleading}
 
-  % \begin{figure}
-  %   \includegraphics[width=9cm]{figure_man/varsel_ex0.png}
-  % \end{figure}
+   \begin{figure}
+     \includegraphics[width=9cm]{figure_man/varsel_ex0.png}
+   \end{figure}
 
-  % \begin{center}
-  % \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
-  % \end{center}
+   \begin{center}
+   \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
 
-  % \framebreak
+   \framebreak
 
-  % \begin{figure}
-  %   \includegraphics[width=9cm]{figure_man/varsel_ex1.png}
-  % \end{figure}
+   \begin{figure}
+     \includegraphics[width=9cm]{figure_man/varsel_ex1.png}
+   \end{figure}
 
-  % \begin{center}
-  % \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
-  % \end{center}
+   \begin{center}
+   \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
 
-  % \framebreak
+   \framebreak
 
-  % \begin{figure}
-  %   \includegraphics[width=9cm]{figure_man/varsel_ex2.png}
-  % \end{figure}
+   \begin{figure}
+     \includegraphics[width=9cm]{figure_man/varsel_ex2.png}
+   \end{figure}
 
-  % \begin{center}
-  % \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
-  % \end{center}
+   \begin{center}
+   \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
 
-  % \end{vbframe}
-
-
+   \end{vbframe}
 
   \begin{vbframe}{$\chi^2$-statistic}
   \begin{itemize}
-    \item Test for independence between categorical $x_j$ and target $y$. Numeric features or targets can be discretized.
+    \item Test for independence between categorical $x_j$ and cat. target $y$. Numeric features or targets can be discretized.
     \item Hypotheses: \\
     $H_0^{\;j}: p(x_j = m, y = k) = p(x_j = m)\, p(y = k) \,\forall m, k$\\
     %$\forall m = 1, \dots, M, \forall k = 1, \dots, K$\\%, $\forall m = 1, \dots, M$
@@ -75,7 +73,7 @@
     $H_1^{\;j}: \exists \; m, k: p(x_j = m, y = k) \neq p(x_j = m)\, p(y = k)$
     \item Calculate the $\chi^2$-statistic for each feature-target combination:
       $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
-    where $e_{mk}$ is the observed relative frequency of pair $(m,k)$ and $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency.
+    where $e_{mk}$ is the observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency, and $M,K$ are the number of values $x_j$ and $y$ can take.
     \item The greater $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
   \end{itemize}
   \end{vbframe}
@@ -115,10 +113,13 @@
   \lz
 
   % in rsrc/chunk2_filter_correlation.R created
-  \begin{figure}
-    \includegraphics {figure_man/correlation_example.png}
-  \end{figure}
-  Comparison of Pearson correlation for different dependency structures.
+  \begin{center}
+\includegraphics[width=0.75\textwidth]{figure_man/correlation_example.png}\\
+\footnotesize{Comparison of Pearson correlation for different dependency structures.}
+  \end{center}
+  %Comparison of Pearson correlation for different dependency structures.\\
+  \vspace{0.1cm}
+  To assess strength of non-linear/non-monotonic dependencies, generalizations such as \textbf{distance correlation} can be used.
 
   % \begin{center}
   %   \includegraphics[width=0.9\textwidth]{figure_man/correlation_example.png}
@@ -145,6 +146,7 @@
   % \end{vbframe}
   \end{vbframe}
 
+\begin{comment}
   \begin{vbframe}{Distance correlation}
   % sources: 
   %Szekely, G.J., Rizzo, M.L., and Bakirov, N.K. (2007), Measuring and Testing Dependence by Correlation of Distances, Annals of Statistics, Vol. 35 No. 6, pp. 2769-2794. 
@@ -158,9 +160,9 @@
   $$
   Normed version of \textbf{distance covariance}: 
   $$c_{D}(x_j, y) = \frac{1}{n^2}\sum^n_{i=1}\sum^n_{k=1} D^{(ik)}_{x_j} D^{(ik)}_{y}$$
-  $$ D^{(ik)}_{x} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{x_j} + \bar{d}^{(\cdot k)}_{x_j} - \bar{d}^{(\cdot \cdot)}_{x_j}) $$
+  $$ D^{(ik)}_{x_j} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{x_j} + \bar{d}^{(\cdot k)}_{x_j} - \bar{d}^{(\cdot \cdot)}_{x_j}) $$
   \begin{itemize}
-  \item $D^{(ik)}_{x}$ are the centered pairwise distances.
+  \item $D^{(ik)}_{x_j}$ are the centered pairwise distances.
   \item $d\left(x^{(i)}_j, x^{(k)}_j\right)$ represents the distances of observations.
   \item $\bar{d}^{(i\cdot)}_{x_j} = \tfrac{1}{n} \sum^n_{k=1} d\left(x^{(i)}_j, x^{(k)}_j\right)$ represent the mean distances.
 
@@ -186,25 +188,25 @@
 
 
   \end{vbframe}
+\end{comment}
 
 
 
+  \begin{vbframe}{Welch's \MakeLowercase{t}-test}
+  \begin{itemize}
+    \item For binary classification with numeric features.
+    \item Statistical test for unequal means of the $j$-th feature.
+    \item Let $\Yspace = \{ 0, 1\}$. The subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
+   \item Hypotheses:
 
-  %\begin{vbframe}{Welch's \MakeLowercase{t}-test}
-  %\begin{itemize}
-  %  \item For binary classification with numeric features.
-  %  \item Test for unequal means of the $j$-th feature.
-  %  \item Let $\Yspace \in \{ 0, 1\}$. The subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
-  %  \item Hypotheses:
+    $H_0$: $\;\;\mu_{j_0} = \mu_{j_1} $ \qquad vs. \qquad $H_1$: $\;\;\mu_{j_0} \neq \mu_{j_1}$
 
-   % $H_0$: $\;\;\mu_{j_0} = \mu_{j_1} $ \qquad vs. \qquad $H_1$: $\;\;\mu_{j_0} \neq \mu_{j_1}$
-
-    %\item Calculate Welch's t-statistic for every feature $x_j$
-    %$$ t_j = \frac{\bar{x}_{j_0} - \bar{x}_{j_1}}{\sqrt{(\frac{S^2_{x_jNull}}{n_0} + \frac{S^2_{x_jEins}}{n_1})}}$$
-    %where $\bar{x}_{j_0}$, $S^2_{x_jNull}$ and $n_0$ are the sample mean, the population variance and the sample size for y = 0, respectively.
-    %\item A higher t-score indicates higher relevance of the feature.
-  %\end{itemize}
-  %\end{vbframe}
+    \item Calculate Welch's t-statistic for every feature $x_j$
+    $$ t_j = \frac{\bar{x}_{j_0} - \bar{x}_{j_1}}{\sqrt{(\frac{S^2_{x_{j_0}}}{n_0} + \frac{S^2_{x_{j_1}}}{n_1})}}$$
+    where $\bar{x}_{j_y}$, $S^2_{x_{j_{y}}}$ and $n_y$ are the sample mean, the population variance and the sample size for $y\in\{0,1\}$, respectively.
+    \item A higher t-score indicates higher relevance of the feature.
+  \end{itemize}
+  \end{vbframe}
 
 
   \begin{vbframe}{F-Test}
@@ -230,10 +232,10 @@
   \begin{itemize}
   \setlength{\itemsep}{1.2em}
     \item Each feature $x_j$ is rated according to $I(x_j;y)$; this is sometimes called information gain (IG).
-    \item MI is a measure of the amount of "dependence" between variables. It is zero if and only if the variables are independent.
-    \item On the other hand, if one of the variables is a deterministic function of the other, MI is maximal.
-  \item Not limited to real-valued random variables.
-  \item More general measure of dependence between variables than correlation.
+    \item MI measures the amount of "dependence" between random variables by looking how
+    different their joint distribution is from strict independence $p(X)p(Y)$.
+    \item MI is zero, iff $X \perp \!\!\! \perp Y$. On the other hand, if $X$ is a deterministic function of $Y$ or vice versa, MI becomes maximal.
+  \item Unlike correlation, MI is defined for both numeric and categorical variables and provides a more general measure of dependence.
   \end{itemize}
   \end{vbframe}
 
