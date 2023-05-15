@@ -65,12 +65,12 @@
   \begin{itemize}
     \item Test for independence between categorical $x_j$ and cat. target $y$. Numeric features or targets can be discretized.
     \item Hypotheses: \\
-    $H_0^{\;j}: p(x_j = m, y = k) = p(x_j = m)\, p(y = k) \,\forall m, k$\\
+    $H_0: p(x_j = m, y = k) = p(x_j = m)\, p(y = k) \,\forall m, k$\\
     %$\forall m = 1, \dots, M, \forall k = 1, \dots, K$\\%, $\forall m = 1, \dots, M$
 
     %\noindent\hspace*{6.55cm} $\forall k = 1, \dots, K$
 
-    $H_1^{\;j}: \exists \; m, k: p(x_j = m, y = k) \neq p(x_j = m)\, p(y = k)$
+    $H_1: \exists \; m, k: p(x_j = m, y = k) \neq p(x_j = m)\, p(y = k)$
     \item Calculate the $\chi^2$-statistic for each feature-target combination:
       $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
     where $e_{mk}$ is the observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency, and $M,K$ are the number of values $x_j$ and $y$ can take.
