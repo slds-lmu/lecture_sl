@@ -36,6 +36,19 @@ task$select(features)
 filter = flt('auc')
 ranked_features= as.data.table(filter$calculate(task))
 
+
+
+# create a bar plot with the AUC of each feature, ordered by score
+p <- ggplot(ranked_features[1:30,], aes(x = reorder(feature, score), y = score)) +
+  geom_bar(stat = "identity", fill = "#619CFF") +
+  coord_flip() +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(title = "AUC metric for top 30 features. Dataset: Spam", x = "Feature", y = "AUC")
+#save the plot
+ggsave("slides/feature-selection/figure/fs-auc-barplot.png", p, width = 20, height = 12, units = "cm")
+
+
 # Get the best feature, the worst and another one in the middle
 first_feature=ranked_features[1,feature]
 mid_feature=ranked_features[round(nrow(ranked_features)/2)-20,feature]
