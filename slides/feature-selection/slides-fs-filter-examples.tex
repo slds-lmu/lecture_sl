@@ -1,0 +1,252 @@
+
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+\input{../../latex-math/ml-feature-sel}
+
+\newcommand{\titlefigure}{figure_man/varsel_ex0.png}
+\newcommand{\learninggoals}{
+  \item Understand how filter methods can be misleading.
+  \item Understand how filter methods work in practical applications.
+}
+\title{Supervised Learning}
+\date{}
+\begin{document}
+
+  \lecturechapter{Filter Methods: Examples and Caveats}
+  \lecture{Supervised Learning}
+
+  \begin{vbframe}{Introduction}
+  \vspace{0.4cm}
+  \begin{itemize}
+  \setlength{\itemsep}{1.5em}
+    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
+    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
+    \item They are model-agnostic and can be applied generically.
+    \item Filter methods are strongly related to methods for determining variable importance.
+  \end{itemize}
+  \end{vbframe}
+
+
+
+ 
+\begin{vbframe}{Example}
+Text explaining the figure here:
+
+   \begin{center}
+   \begin{figure}
+     \includegraphics[width=0.9\textwidth]{figure/filter_comparison_sonar_classif.log_reg.png}
+   \end{figure}
+
+   %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
+
+\end{vbframe}
+
+\begin{comment}
+
+  \begin{vbframe}{Minimum Redundancy Maximum Relevancy}
+  \begin{itemize}
+    \setlength{\itemsep}{2em}
+    \item Most filter-type methods rank features based on a univariate association score without considering relationships among the features.
+    \begin{itemize}
+    \setlength{\itemsep}{1.5em}
+      \item Features may be correlated and hence, may cause redundancy.
+      \item Selected features cover narrow regions in space.
+    \end{itemize}
+    \item We want the features to be relevant and maximally dissimilar to each other (minimum redundancy).
+    \item Features can be either continuous or categorical.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{\MakeLowercase{M}RMR: Criterion functions}
+  \begin{itemize}
+  \item Let $S \subset \{1, \dots, p \}$ be a subset of features we want to find.
+
+  $$\min \text{Red}(S), \;\;\;\; \text{Red}(S) = \frac{1}{|S|^2} \sum_{j, l \in S} I_{xx}(x_j, x_l)$$
+
+  $$\max \text{Rel}(S), \;\;\;\; \text{Rel}(S) = \frac{1}{|S|} \sum_{j \in S} I_{xy}(x_j, \ydat)$$
+
+  \item $I_{xx}$ measures the strength of the dependency between two features.
+  \item $I_{xy}$ measures the strength of the dependency between a feature and the target.
+  \item They could be mutual information, correlation, F-statistic, etc.
+  \end{itemize}
+
+
+  \framebreak
+
+  \begin{itemize}
+  \item To optimize simultainously, the criteria is combined into a single objective function:
+  $$\Psi(S) = (\text{Rel}(S) - \text{Red}(S)) \;\;\;\; \text{ or } \;\;\;\; \Psi(S) = (\text{Rel}(S)/\text{Red}(S))$$
+
+  \item Exact solution requires $ \order (|\Xspace|^{|S|})$ searches, where $|\Xspace|$ is the number of features and $|S|$ is the number of selected features.
+  \end{itemize}
+  In practice, incremental search methods are used to find near-optimal feature sets defined by $\Psi$:
+  \begin{itemize}
+  \item Suppose we already have a feature set with $m-1$ features $S_{m-1}$.
+  \item Next, we select the $m$-th feature from the set $\bar{S}_{m-1}$ by selecting the feature that maximizes:
+  $$\max_{j \, \in \, \bar{S}_{m-1}} [ I_{xy} (x_j, \ydat) - \frac{1}{|S_{m-1}|} \sum_{l \, \in \, S_{m-1}} I_{xx}(x_j, x_l)  ]$$
+  \item The complexity of this incremental algorithm is $\mathcal{O}(|p| \cdot| S|)$.
+  \end{itemize}
+  \end{vbframe}
+
+  \begin{vbframe}{\MakeLowercase{m}RMR: Algorithm}
+
+  \begin{algorithm}[H]
+  \footnotesize
+    \begin{algorithmic}[1]
+      \State Set $S = \emptyset$, $R = \{ 1, \dots, p \}$
+      \State Find the feature with maximum relevancy:
+      $$j^* := \argmax_{j} I_{xy} (x_j, \ydat)$$
+      \State Set $S = \{ j^* \}$ and update $R \leftarrow R \setminus \{j^* \}$
+      \Repeat
+        \State Find feature $x_j$ that maximizes:
+        $$\max_{j \, \in \, R} [ I_{xy} (x_j, \ydat) - \frac{1}{|S|} \sum_{l \, \in \, S} I_{xx}(x_j, x_l)  ]$$
+        \State Update $S \leftarrow S \cup \{j^* \}$ and $R \leftarrow R \setminus \{ j^* \}$
+      \Until{Expected number of features have been obtained or some other constraints are satisfied.}
+      \caption{mRMR algorithm}
+    \end{algorithmic}
+  \end{algorithm}
+  \end{vbframe}
+  
+\end{comment}
+
+  \begin{vbframe}{Filter methods can be misleading}
+
+   \begin{figure}
+     \includegraphics[width=9cm]{figure_man/varsel_ex0.png}
+   \end{figure}
+
+   \begin{center}
+   \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
+
+   \framebreak
+
+   \begin{figure}
+     \includegraphics[width=9cm]{figure_man/varsel_ex1.png}
+   \end{figure}
+
+   \begin{center}
+   \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
+
+   \framebreak
+
+   \begin{figure}
+     \includegraphics[width=9cm]{figure_man/varsel_ex2.png}
+   \end{figure}
+
+   \begin{center}
+   \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}
+
+    \framebreak
+
+   \begin{figure}
+     \includegraphics[width=0.6\textwidth]{figure/guyon_example_correlation.png}
+   \end{figure}
+
+   \begin{center}
+   \footnotesize{Patricio's implementation of Guyon correlation example.}
+  % \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
+   \end{center}  
+
+   \end{vbframe}
+
+\begin{vbframe}{Using Filter Methods}
+
+  \begin{enumerate}{}
+  \setlength{\itemsep}{1.2em}
+    \item Calculate filter score for each feature $x_j$.
+    \item Rank features according to score values.
+    \item Choose $\tilde{p}$ best features.
+    \item Train model on $\tilde{p}$ best features.
+  \end{enumerate}
+
+  \lz
+
+  \begin{blocki}{How to choose $\tilde{p}$?}
+    \item It can be prescribed by the application.
+    \item Eyeball estimation: read from filter plots (e.g., Scree plots).
+    \item Use resampling.
+  \end{blocki}
+
+  \framebreak
+
+  \begin{blocki}{Advantages:}
+  \setlength{\itemsep}{1.2em}
+    \item Easy to calculate.
+    \item Typically scales well with the number of features $p$.
+    \item Generally interpretable.
+    \item Model-agnostic.
+  \end{blocki}
+
+  \begin{blocki}{Disadvantages:}
+  \setlength{\itemsep}{1.2em}
+    \item Univariate analyses may ignore multivariate dependencies.
+    \item Redundant features will have similar weights.
+    \item Ignores the learning algorithm.
+  \end{blocki}
+  \end{vbframe}
+
+
+  % \begin{vbframe}{Filter: Practical example}
+  % <<echo=TRUE>>=
+  % # Calculate the information gain as filter value
+  % fv = generateFilterValuesData(iris.task, method = "information.gain")
+  
+  % # We can also pass multiple filter methods at once:
+  % fv2 = generateFilterValuesData(iris.task,
+  %   method = c("information.gain", "chi.squared"))
+  
+  % # fv2 is a FilterValues object and fv2$data holds a data frame
+  % # with the importance values for all features
+  % fv2$data
+  % @
+  
+  % <<>>=
+  % plotFilterValues(fv2) + ggtitle("Filters for the 4 features of iris dataset")
+  % @
+  
+  
+  % \framebreak
+  
+  % <<size="tiny", echo=TRUE>>=
+  % ## Keep the 2 most important features
+  % filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2L)
+  
+  % ## Keep the 25% most important features
+  % filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
+  
+  % ## Keep all features with importance greater than 0.5
+  % filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
+  % filtered.task
+  % @
+  
+  % \framebreak
+
+  % \begin{itemize}
+  %   \item Filter methods are often part of the data preprocessing process, wherein a subsequent step, a learning method is applied.
+  %   \item In practice we want to automate this, so the feature selection can be part of the validation method of our choice:
+  % \end{itemize}
+  
+  % <<size="tiny", echo=TRUE>>=
+  % lrn = makeFilterWrapper(learner = "classif.kknn",
+  %   fw.method = "anova.test", fw.abs = 2L)
+  % ps = makeParamSet(
+  %   makeDiscreteParam("fw.abs", values = 1:4)
+  % )
+  % ctrl = makeTuneControlGrid()
+  % rdesc = makeResampleDesc("CV", iters = 10L)
+  
+  % res = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
+  %   control = ctrl)
+  % res$opt.path
+  % @
+  % \end{vbframe}
+
+  \endlecture
+\end{document}
+
