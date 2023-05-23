@@ -29,109 +29,45 @@ create_classification_task<- function(covariance_matrix,n_data,means){
   return(list(x=x,y=y))
 }
 
-
 #Parameters
 variance=1
 n_data=1000
-
-####### INTRA CLASS COVARIANCE EXAMPLE ########
-# Create a multi-variate  normal distribution with high covariance
 covariance_matrix = matrix(c(variance,0,0,variance),ncol= 2)
-
-results = create_classification_task(covariance_matrix = covariance_matrix,
+task_data = create_classification_task(covariance_matrix = covariance_matrix,
                            n_data = n_data,
                            means = c(0,0)
                            )
-x1 = results$x[, 1]
-x2 = results$x[, 2]
-y = results$y
-# constant in direction of covariance
-x1[y==1] = x1[y==1]+0*variance
 
-# Create a dataframe with x and y
-data = data.frame(x1=x1,x2=x2,y=y)
-data$y = as.factor(data$y)
-
-#calculate the t test for x1 and y and extract the p value
-t_test = t.test(data[data$y==1,]$x1,data[data$y==0,]$x1)
-statistic0= t_test$statistic
-# Plot histogram of x1 for each y and add the p value in some text
-p0 <- ggplot(data, aes(x = x1, fill = y)) +
-  geom_histogram(alpha = 0.6, position = "identity") +
+create_histogram_plot <-function (task_data, translation){
+  x1 = task_data$x[, 1]
+  x2 = task_data$x[, 2]
+  y = task_data$y
+  x1[y==1] = x1[y==1]+translation * variance
+  data = data.frame(x1=x1,x2=x2,y=y)
+  data$y = as.factor(data$y)
+  #calculate the t test for x1 and y and extract the p value
+  t_test = t.test(data[data$y==1,]$x1,data[data$y==0,]$x1)
+  statistic= t_test$statistic
+  # Plot histogram and a line representing the gaussian of x1 for each y and add the p value in some text
+  plot <- ggplot(data, aes(x = x1, fill = y)) +
+  geom_histogram(alpha = 0.6, position = "identity",aes(y = ..density..)) +
+  stat_function(fun = dnorm, args = list(mean = mean(data[data$y==1,]$x1),
+   sd = sd(data[data$y==1,]$x1)), color = "#00BFC4", size = 1) +
+  stat_function(fun = dnorm, args = list(mean = mean(data[data$y==0,]$x1),
+   sd = sd(data[data$y==0,]$x1)), color = "#F8766D", size = 1) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  labs(title = "Histogram of x1 for each y", x = "x1", y = "Count") +
-  geom_text(aes(x = 0.5, y = 50, label = paste("statistic =", round(statistic0, 3))), size = 6)
+  #labs(title = "Histogram of x1 for each y", x = "x1", y = "Count") +
+  geom_text(aes(x = 0.5, y = 0.5,
+   label = paste("statistic =", round(statistic, 3))), size = 6)
+  
+  return(plot)
+}
 
-x1 = results$x[, 1]
-x2 = results$x[, 2]
-y = results$y
-# constant in direction of covariance
-x1[y==1] = x1[y==1]+0.5*variance
-
-# Create a dataframe with x and y
-data = data.frame(x1=x1,x2=x2,y=y)
-data$y = as.factor(data$y)
-
-#calculate the t test for x1 and y and extract the p value
-t_test = t.test(data[data$y==1,]$x1,data[data$y==0,]$x1)
-statistic05 = t_test$statistic
-
-# Plot histogram of x1 for each y and add the p value in some text
-p5 <- ggplot(data, aes(x = x1, fill = y)) +
-  geom_histogram(alpha = 0.6, position = "identity") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  labs(title = "Histogram of x1 for each y", x = "x1", y = "Count") +
-  geom_text(aes(x = 0.5, y = 50, label = paste("statistic =", round(statistic05, 3))), size = 5)
-
-
-x1 = results$x[, 1]
-x2 = results$x[, 2]
-y = results$y
-# constant in direction of covariance
-x1[y==1] = x1[y==1]+1*variance
-
-# Create a dataframe with x and y
-data = data.frame(x1=x1,x2=x2,y=y)
-data$y = as.factor(data$y)
-
-#calculate the t test for x1 and y and extract the p value
-t_test = t.test(data[data$y==1,]$x1,data[data$y==0,]$x1)
-statistic10 = t_test$statistic
-
-# Plot histogram of x1 for each y and add the p value in some text
-p10 <- ggplot(data, aes(x = x1, fill = y)) +
-  geom_histogram(alpha = 0.6, position = "identity") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  labs(title = "Histogram of x1 for each y", x = "x1", y = "Count") +
-  geom_text(aes(x = 0.5, y = 50, label = paste("statistic =", round(statistic10, 3))), size = 5)
-
-x1 = results$x[, 1]
-x2 = results$x[, 2]
-y = results$y
-# constant in direction of covariance
-x1[y==1] = x1[y==1]+2.5*variance
-
-# Create a dataframe with x and y
-data = data.frame(x1=x1,x2=x2,y=y)
-data$y = as.factor(data$y)
-
-#calculate the t test for x1 and y and extract the p value
-t_test = t.test(data[data$y==1,]$x1,data[data$y==0,]$x1)
-statistic25 = t_test$statistic
-
-# Plot histogram of x1 for each y and add the p value in some text
-p25 <- ggplot(data, aes(x = x1, fill = y)) +
-  geom_histogram(alpha = 0.6, position = "identity") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  labs(title = "Histogram of x1 for each y", x = "x1", y = "Count") +
-  geom_text(aes(x = 0.5, y = 50, label = paste("statistic =", round(statistic25, 3))), size = 5)
-
-# Create one plot with the 4 histogram
-
-grid= grid.arrange(p0,p5,p10,p25, ncol=2, nrow=2)
-
+plot1 = create_histogram_plot(task_data, 1) 
+plot25 = create_histogram_plot(task_data, 2.5)
+grid=grid.arrange(plot1,plot25, ncol=2)
 #save the plot
-ggsave("slides/feature-selection/figure/fs-t-test.png", grid, width = 20, height = 20, units = "cm")
+ggsave("slides/feature-selection/figure/fs-t-test.png", grid, width = 20, height = 10, units = "cm")
 
 
 
