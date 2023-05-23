@@ -19,34 +19,53 @@ library(mlr3filters)
 library(ggplot2)
 library(pROC)
 
-task=tsk("ilpd")
+# define a function that calculates the ROC curve for a given feature
+apply_roc_curve <- function(target, feature) {
+  roc <- roc(target, feature)
+  # If the AUC is less than 0.5, we need to invert the curve
+  if (roc$auc < 0.5) {
+    roc <- roc(target,-feature)
+  }
+  return(roc)
+}
+
+task = tsk("spam")
 task_data=data.frame(task$data())
 features=task$feature_names
-features = features [features!="gender"]
 task$select(features)
 filter = flt('auc')
 ranked_features= as.data.table(filter$calculate(task))
 
+
+
+# create a bar plot with the AUC of each feature, ordered by score
+p <- ggplot(ranked_features[1:30,], aes(x = reorder(feature, score), y = score)) +
+  geom_bar(stat = "identity", fill = "#619CFF") +
+  coord_flip() +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(title = "AUC metric for top 30 features. Dataset: Spam", x = "Feature", y = "AUC")
+#save the plot
+ggsave("slides/feature-selection/figure/fs-auc-barplot.png", p, width = 20, height = 12, units = "cm")
+
+
 # Get the best feature, the worst and another one in the middle
 first_feature=ranked_features[1,feature]
+mid_feature=ranked_features[round(nrow(ranked_features)/2)-20,feature]
 last_feature=ranked_features[nrow(ranked_features),feature]
-mid_feature=ranked_features[nrow(ranked_features)-2,feature]
+
 features= c(first_feature, mid_feature, last_feature)
-# For each feature
-for (feature in features){
-  # Normalize the data to 0-1 so that it can be used in ROC functions
-  task_data[,feature] = (task_data[,feature] - min(task_data[,feature])) / (max(task_data[,feature]) - min(task_data[,feature]))
-}
-# calculate rocs using the feature as threshold
-roc_first_feature <- roc(task_data$diseased,task_data[,first_feature],)
-roc_mid_feature <- roc(task_data$diseased,task_data[,mid_feature])
-roc_last_feature <- roc(task_data$diseased,task_data[,last_feature])
+
+
+roc_first_feature <- apply_roc_curve(task_data$type,task_data[,first_feature])
+roc_mid_feature <- apply_roc_curve(task_data$type,task_data[,mid_feature])
+roc_last_feature <- apply_roc_curve(task_data$type,task_data[,last_feature])
 
 #Plot
-p <- ggroc(list(aspartate_transaminase = roc_first_feature,
-                total_protein = roc_last_feature,
-                albumin= roc_mid_feature))
-p <- p + ggtitle("ROC using features as thresholds, Dataset: ILPD")
+p <- ggroc(list(charExclamation = roc_first_feature,
+                parts = roc_last_feature,
+                our= roc_mid_feature))
+p <- p + ggtitle("ROC using features (word/character frequency) as thresholds, Dataset: Spam")
 p <- p + theme(plot.title = element_text(hjust = 0.5))
 p <- p + ylab("Sensitivity")
 p <- p + xlab("Specificity")
