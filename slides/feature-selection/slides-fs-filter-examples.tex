@@ -5,7 +5,11 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-feature-sel}
 
-\newcommand{\titlefigure}{figure_man/varsel_ex0.png}
+\newcommand{\citebutton}[2]{%
+\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
+}
+
+\newcommand{\titlefigure}{figure/guyon_example_correlation.png}
 \newcommand{\learninggoals}{
   \item Understand how filter methods can be misleading.
   \item Understand how filter methods work in practical applications.
@@ -28,21 +32,18 @@
   \end{itemize}
   \end{vbframe}
 
+%\begin{vbframe}{Example}
+%Text explaining the figure here:
 
-
- 
-\begin{vbframe}{Example}
-Text explaining the figure here:
-
-   \begin{center}
-   \begin{figure}
-     \includegraphics[width=0.9\textwidth]{figure/filter_comparison_sonar_classif.log_reg.png}
-   \end{figure}
+%   \begin{center}
+%   \begin{figure}
+%     \includegraphics[width=0.9\textwidth]{figure/filter_comparison_sonar_classif.log_reg.png}
+%   \end{figure}
 
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
-   \end{center}
+%   \end{center}
 
-\end{vbframe}
+%\end{vbframe}
 
 \begin{comment}
 
@@ -109,7 +110,6 @@ Text explaining the figure here:
     \end{algorithmic}
   \end{algorithm}
   \end{vbframe}
-  
 \end{comment}
 
   \begin{vbframe}{Filter methods can be misleading}
@@ -123,7 +123,26 @@ Text explaining the figure here:
    \end{center}
 
    \framebreak
+   %%%%%%%%%%%%%%%%%%%
+   \begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figure/guyon_example_presumably_redundant.png} % first figure itself
+        %\caption{first figure}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figure/guyon_example_presumably_redundant_rotated.png} % second figure itself
+        %\caption{second figure}
+    \end{minipage}
+    \end{figure}
+\vspace{0.3cm}
+\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
+   %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
 
+   \framebreak
+   %%%%%%%%%%%%%%%%%%%%%%
    \begin{figure}
      \includegraphics[width=9cm]{figure_man/varsel_ex1.png}
    \end{figure}
@@ -134,6 +153,26 @@ Text explaining the figure here:
 
    \framebreak
 
+  %%%%%%%%%%%%%%%%%%%%%%%%
+     \begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figure/guyon_example_intra_class_covariance.png} % first figure itself
+        %\caption{first figure}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figure/guyon_example_intra_class_covariance_perpendicular.png} % second figure itself
+        %\caption{second figure}
+    \end{minipage}
+    \end{figure}
+\vspace{0.3cm}
+\footnotesize{\textbf{Intra-class covariance}. In projection onto the axes, distribution of two variables are same as before. Left: Class conditional distribution have high cov. in direction of the line of the two class centers. Right: Class conditional distr. have high cov. in direction perpendicular to line of two class centers. Important separation gain is obtained by using both variables.}
+
+ \framebreak
+   
+  %%%%%%%%%%%%%%%%%%%%%%%%
    \begin{figure}
      \includegraphics[width=9cm]{figure_man/varsel_ex2.png}
    \end{figure}
@@ -144,16 +183,26 @@ Text explaining the figure here:
 
     \framebreak
 
-   \begin{figure}
-     \includegraphics[width=0.6\textwidth]{figure/guyon_example_correlation.png}
-   \end{figure}
+    %%%%%%%%%%%%%%%%%%%%%%%%%
+      %%%%%%%%%%%%%%%%%%%%%%%%
+     \begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figure/guyon_example_correlation.png} % first figure itself
+        %\caption{first figure}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figure/guyon_example_xor.png} % second figure itself
+        %\caption{second figure}
+    \end{minipage}
+    \end{figure}
+\vspace{0.3cm}
+\footnotesize{\textbf{Variable useless by itself can be useful together with others}. Left: One var has completely overlapping class conditional densities. Still, jointly with other variable separability can be improved. Right: XOR-like chessboard problem. Classes consist of ``clumps" s.t. projection on the axes yield overlapping densities. Single vars have no separation power, only used together.}
 
-   \begin{center}
-   \footnotesize{Patricio's implementation of Guyon correlation example.}
-  % \footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
-   \end{center}  
 
-   \end{vbframe}
+\end{vbframe}
 
 \begin{vbframe}{Using Filter Methods}
 
@@ -169,7 +218,7 @@ Text explaining the figure here:
 
   \begin{blocki}{How to choose $\tilde{p}$?}
     \item It can be prescribed by the application.
-    \item Eyeball estimation: read from filter plots (e.g., Scree plots).
+    \item Eyeball estimation: read from filter plots
     \item Use resampling.
   \end{blocki}
 

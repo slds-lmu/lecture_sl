@@ -20,12 +20,18 @@
   \begin{vbframe}{Introduction}
   \vspace{0.4cm}
   \begin{itemize}
-  \setlength{\itemsep}{1.5em}
+  \setlength{\itemsep}{0.8em}
     \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
     \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
     \item They are model-agnostic and can be applied generically.
-    \item Filter methods are strongly related to methods for determining variable importance.
+    %\item Filter methods are strongly related to methods for determining variable importance.
   \end{itemize}
+  \vspace{-0.2cm}
+  \begin{center}
+  \includegraphics[width=0.55\textwidth]{figure/fs-auc-barplot.png}\\
+  \footnotesize{Exemplary filter score ranking for Spam data.}
+  \end{center}
+  
   \end{vbframe}
 
 
@@ -163,6 +169,7 @@
 
   \begin{vbframe}{Welch's \MakeLowercase{t}-test}
   \begin{itemize}
+  \setlength{\itemsep}{1.3em}
     \item For binary classification with $\Yspace = \{ 0, 1\}$ and numeric features
     \item Two-sample t-test for samples with unequal variances.
     %The subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
