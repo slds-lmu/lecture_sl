@@ -4,6 +4,10 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
+\newcommand{\citebutton}[2]{%
+\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
+}
+
 \newcommand{\titlefigure}{figure_man/varsel_space.png}
 \newcommand{\learninggoals}{
   \item Understand how wrapper methods work
@@ -24,7 +28,7 @@
 
     \begin{itemize}
       \item Wrapper methods emerged from the idea that different sets of features can be optimal for different learners.
-      \item Use the classifier itself to assess the quality of the feature sets.
+      \item Use the learner itself to assess the quality of the feature sets.
       \item Evaluation on a test set or resampling techniques are used.
       \item A wrapper is nothing else than a discrete search strategy for $S$, where the test error of a learner as a function of $S$ is now the objective criterion.
 
@@ -53,6 +57,59 @@
 
 
   \end{vbframe}
+
+  \begin{vbframe}{Objective function}
+
+    %\small
+
+    Given $p$ features, the \textbf{best-subset selection problem} is to find a subset $S \subseteq \{ 1, \dots p \}$ optimizing objective $\Psi: \Omega \rightarrow \R$:
+    \vspace{-0.1cm}
+    %measuring the learner's generalization performance. The solution $S^*$ to the problem is
+    $$S^{*}  \in \argmin_{{S \in \Omega}} \{ \Psi(S) \}$$
+    %
+    \vspace{-0.8cm}
+    \begin{itemize}
+    \setlength{\itemsep}{0.9em}
+     \item $\Omega$  = search space of all feature subsets $S\subseteq\{ 1, \dots, p \}$. Usually we encode this by
+      %(i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set) 
+      bit vectors, i.e., $\Omega = \{0, 1\}^p$ (1 = feat. selected)
+      %It will be clear from the context which variant we refer to.
+     \item Objective $\Psi$ can be different functions, e.g., AIC/BIC for LM or cross-validated performance of a learner.
+    \end{itemize}
+
+    \begin{center}
+     \includegraphics[width = 0.3\textwidth]{figure/searchspace_binary.png}\\
+     \scriptsize{Hasse diagram (source: Wikipedia)}
+    \end{center}
+    %\normalsize
+  \end{vbframe} 
+
+  
+ \begin{vbframe}{How difficult is best-subset selection?}
+
+    \begin{itemize}
+    \setlength{\itemsep}{1.2em}
+      \item Size of search space = $2^p$, i.e., grows exponentially in $p$ as it is the power set of $\{1,\ldots,p\}$.
+      \item Finding best subset is discrete combinatorial optimization problem also known as $L_0$ regularization.
+     \item It can be shown that this problem unfortunately can not be solved efficiently in general (NP hard; see, e.g., \citebutton{Natarajan, 1995}{https://epubs.siam.org/doi/10.1137/S0097539792240406})
+     \item We can avoid having to search the entire space by employing efficient search strategies, moving through the search space in a smart way that finds performant feature subsets.
+     %\item By employing efficient search strategories, we can avoid searching the entire space.
+    %\item Of course this does not mean that we have to search the entire space, since there are more efficient search strategies.
+    %  \item Formally spoken: One can show that the problem is NP-hard!
+    %  \item This means that the problem cannot be solved in polynomial (P) time: ${\mathcal{O}} (p^c)$, where $c \in \N$ indicates the degree o the polynom.
+    % \end{blocki}
+    % 
+    % \framebreak
+    % 
+    % \begin{blocki}{How difficult is it to solve the introduced optimization problem, hence, to find the optimal feature set?}
+    %  \item More precisely, the proof demonstrates that this problem cannot be approximated within any constant, unless P = NP.
+    % 
+    %   The latter means, that if you find an algorithm that solves a more difficult class of problems (than this optimization problem) in polynomial time, this implies that you found how to solve all easier problems (including our optimization problem) in polynomial time.
+    % \item \textbf{Attention}: This does not imply that it is useless trying to construct strategies which work in practice!
+    %\item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
+    \end{itemize}
+  \end{vbframe}
+
   
   \begin{vbframe}{Greedy forward search}
 
