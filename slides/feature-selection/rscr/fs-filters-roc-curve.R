@@ -36,8 +36,6 @@ task$select(features)
 filter = flt('auc')
 ranked_features= as.data.table(filter$calculate(task))
 
-
-
 # create a bar plot with the AUC of each feature, ordered by score
 p <- ggplot(ranked_features[1:30,], aes(x = reorder(feature, score), y = score)) +
   geom_bar(stat = "identity", fill = "#619CFF") +
