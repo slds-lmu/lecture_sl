@@ -127,9 +127,10 @@ for (filter_name in filter_names){
 write.csv(df, file = paste0("slides/feature-selection/rscr/filter_examples_data.csv"),row.names = TRUE)
 ################# LOAD DATA FROM DISK AND PLOT ###############################
 
-df= read.csv(file='slides/feature-selection/rscr/filter_examples_data')
+df= read.csv(file='slides/feature-selection/rscr/filter_examples_data.csv')
 # filter mrmr
 df = df[df$filter!= 'mrmr',]
+df = df[df$num_features >0,]
 # Melt the data frame from wide to long format for plotting
 df_long <- reshape2::melt(df, id.vars = c("filter", "num_features"), 
                           measure.vars = c("test_measure"), 
@@ -142,11 +143,11 @@ best_performance = df_long %>% group_by(filter) %>%
 
 # Create the lineplot of the performance and highlight the best performance for each filter 
 graph<- ggplot(df_long, aes(x = num_features, y = error, color = filter, group = filter)) +
-  geom_line() +
-  geom_point(data = best_performance, aes(x = num_features, y = error, color = filter), size = 6) +
+  geom_line(size=1.5) +
+  geom_point(data = best_performance, aes(x = num_features, y = error, color = filter), size = 16) +
   # add the perforamnce and number of features in text
-  geom_text(data = best_performance, aes(x = num_features, y = error, label = paste0(num_features, " features", "\n", round(error, 3))), 
-            size = 8, hjust = 0.5, vjust = 1.5) +
+  geom_text(data = best_performance, aes(x = num_features, y = error, label = paste0(num_features, "", "\n", round(error, 3))), 
+            size = 12, hjust = 0.5, vjust = 1.5) +
   # Set y axis limits and change the tick marks
   scale_y_continuous(limits = c(-0.05, 0.6), breaks = seq(-0.05, 0.6, 0.05)) +
   labs(x = "Number of Features", y = measure_name, color = "Error Type")  +
@@ -166,7 +167,7 @@ graph<- ggplot(df_long, aes(x = num_features, y = error, color = filter, group =
   guides(color = guide_legend(title = "")) 
 print(graph) 
 # Save the plot
-ggsave(filename, graph, width = 20, height = 12, units = "in", dpi = 300)
+ggsave(filename, graph, width = 16, height = 12, units = "in", dpi = 300)
 
 
 

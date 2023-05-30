@@ -108,9 +108,4 @@ plot <- p +
   theme(plot.title = element_text(hjust = 0.5)) 
 
 # save the plot
-ggsave("slides/feature-selection/figure/fs-filters-scree-plot.png", plot, width = 15, height = 20, units = "cm")
-
-
-
-
-
+ggsave("slides/feature-selection/figure/fs-filters-scree-plot.png", plot, width = 20, height = 15, units = "cm")
