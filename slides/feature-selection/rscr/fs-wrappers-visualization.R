@@ -21,7 +21,7 @@ library(dplyr)
 
 prepare_powerset_graph <- function(algorithm_path,n_var,stopping_point,drop_vertices = TRUE){
 
-    g <- graph.empty(n = nrow(all_combinations), directed = TRUE)
+    g <- graph.empty(n = nrow(algorithm_path), directed = TRUE)
     # The node names will be the variables used
     V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")}) 
     a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n RMSE: ", round(x[n_var+1],2), sep = "")})
@@ -62,7 +62,7 @@ prepare_powerset_graph <- function(algorithm_path,n_var,stopping_point,drop_vert
 
 prepare_powerset_graph_backwards <- function(algorithm_path,n_var,stopping_point,drop_vertices = TRUE){
     stopping_point = n_var-stopping_point
-    g <- graph.empty(n = nrow(all_combinations), directed = TRUE)
+    g <- graph.empty(n = nrow(algorithm_path), directed = TRUE)
     # The node names will be the variables used
     V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")}) 
     a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n RMSE: ", round(x[n_var+1],2), sep = "")})
@@ -101,7 +101,26 @@ prepare_powerset_graph_backwards <- function(algorithm_path,n_var,stopping_point
     return(g)
 }
 
+create_algorithm_path_matrix<- function(instance_results,n_var,featureless_rmse){
 
+# Obtain the archive, and convert it to a data.table and then to a dataframe
+     algorithm_path = as.data.frame(as.data.table(instance_results))[,0:n_var+1]*1
+     # Create a matrix with all possible combinations of 4 variables using zeros and 1 and order by the sum of the rows
+     all_combinations <- expand.grid(rep(list(0:1), n_var))
+     names(all_combinations) <- names(algorithm_path[,1:n_var])
+     #  Merge to get performances
+     algorithm_path <- merge(all_combinations,
+                         algorithm_path,
+                         by = names(all_combinations[,1:n_var]), all.x = TRUE)
+     algorithm_path[1,'regr.rmse'] <- featureless_rmse
+     # add the Sum of features used
+     algorithm_path$sum <- rowSums(algorithm_path[,1:n_var])
+     # Get minimum rmse for each sum of features used
+     algorithm_path <- algorithm_path %>% group_by(sum) %>% mutate(min_rmse = min(regr.rmse, na.rm = TRUE))
+     return(algorithm_path)
+}
+#define learner
+learner_name = "regr.rpart"
 
 # retrieve task
 task = tsk("bike_sharing")
@@ -110,11 +129,8 @@ variables_to_use=c("temperature", "humidity", "windspeed",'apparent_temperature'
 n_var = length(variables_to_use)
 task$select(variables_to_use)
 task$rename("apparent_temperature","realfeel")
-
-task$rename()
-
-# load learner
-learner = lrn("regr.rpart")
+# load learner and do forward selection
+learner = lrn(learner_name)
 instance = fselect(
   fselector   = fs("sequential", strategy = "sfs"),
   task = task,
@@ -123,7 +139,7 @@ instance = fselect(
   measure = msr("regr.rmse")
 )
 
-# get the performance of an empty set
+# get the performance of a featureless model
 featurless = fselect(
   fselector   = fs("sequential"),
   task = task,
@@ -133,23 +149,9 @@ featurless = fselect(
 )
 featureless_rmse = as.data.frame(as.data.table(featurless$archive))[1,n_var+1]
 
-# Obtain the archive, and convert it to a data.table and then to a dataframe
-df_history = as.data.frame(as.data.table(instance$archive))
-algorithm_path = df_history[,0:n_var+1]*1
-# Create a matrix with all possible combinations of 4 variables using zeros and 1 and order by the sum of the rows
-all_combinations <- expand.grid(rep(list(0:1), n_var))
-names(all_combinations) <- names(algorithm_path[,1:n_var])
-#  Merge to get performances
-algorithm_path <- merge(all_combinations,
-                        algorithm_path,
-                        by = names(all_combinations[,1:n_var]), all.x = TRUE)
-algorithm_path[1,'regr.rmse'] <- featureless_rmse
-# add the Sum of features used
-algorithm_path$sum <- rowSums(algorithm_path[,1:n_var])
-# Get minimum rmse for each sum of features used
-algorithm_path <- algorithm_path %>% group_by(sum) %>% mutate(min_rmse = min(regr.rmse, na.rm = TRUE))
 
 
+algorithm_path = create_algorithm_path_matrix(instance$archive,n_var,featureless_rmse)
 
 # Powerset diagram of depth 1
 g<- prepare_powerset_graph(algorithm_path,n_var,1)
@@ -209,7 +211,6 @@ plot(g,
      vertex.label.cex = 1.5, 
      vertex.size = 38)
 dev.off()
-
 
 
 # Powerset diagram of depth 1
@@ -272,13 +273,10 @@ plot(g,
 dev.off()
 
 
-
-
-
 ###### backwards #######
 
 # load learner
-learner = lrn("regr.rpart")
+learner = lrn(learner_name)
 instance = fselect(
   fselector   = fs("sequential", strategy = "sbs"),
   task = task,
@@ -287,23 +285,7 @@ instance = fselect(
   measure = msr("regr.rmse")
 )
 
-# Obtain the archive, and convert it to a data.table and then to a dataframe
-df_history = as.data.frame(as.data.table(instance$archive))
-algorithm_path = df_history[,0:n_var+1]*1
-# Create a matrix with all possible combinations of 4 variables using zeros and 1 and order by the sum of the rows
-all_combinations <- expand.grid(rep(list(0:1), n_var))
-names(all_combinations) <- names(algorithm_path[,1:n_var])
-#  Merge to get performances
-algorithm_path <- merge(all_combinations,
-                        algorithm_path,
-                        by = names(all_combinations[,1:n_var]), all.x = TRUE)
-algorithm_path[1,'regr.rmse'] <- featureless_rmse
-# add the Sum of features used
-algorithm_path$sum <- rowSums(algorithm_path[,1:n_var])
-# Get minimum rmse for each sum of features used
-algorithm_path <- algorithm_path %>% group_by(sum) %>% mutate(min_rmse = min(regr.rmse, na.rm = TRUE))
-
-
+algorithm_path = create_algorithm_path_matrix(instance$archive,n_var,featureless_rmse)
 # Powerset diagram of depth 4
 g<- prepare_powerset_graph_backwards(algorithm_path,n_var,4)
 
