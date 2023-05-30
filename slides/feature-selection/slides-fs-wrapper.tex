@@ -149,7 +149,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \item Evaluate the classifier on all $S_j$ and use the best $S_j$
       \end{enumerate}
     %\vspace{-0.2cm}
-    \textbf{Example for greedy forward search on bike sharing data:}
+    \textbf{Example} Greedy Forward Search on bike sharing data
     \begin{center}
     \includegraphics[width = 0.45\textwidth]{figure/fs-wrappers-powerset-tree-1.png}
     \end{center}
@@ -199,7 +199,6 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 
 \begin{vbframe}{Greedy backward search}
 
-
     \begin{blocki}{}
       \item Start with the full index set of features $S = \{1, \ldots, p\}$.
       \item For a given set $S$ generate all
@@ -222,19 +221,42 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
     
   \end{vbframe}
 
+  \begin{frame}{Visualization of GBS}    
+    %\begin{enumerate}
+    %\setcounter{enumi}{3}
+    %\item Iterate over this procedure
+    %\end{enumerate}
+    \textbf{Example} Greedy Backward Search on bike sharing data
+    \begin{center}
+      \includegraphics[width = 0.65\textwidth]{figure/fs-wrappers-backwards-powerset-tree-4.png}
+      \end{center}
+      %\framebreak
+\end{frame}
+
   \begin{vbframe}{Extensions}
-
+    \vspace{-0.1cm}
     \begin{itemize}
-      \setlength{\itemsep}{1.0em}
-      \item Eliminate or add several features at once to increase speed.
+      \setlength{\itemsep}{0.8em}
+      \item Eliminate or add multiple features at once to increase speed.
       \item Allow alternating forward and backward search.
-      \item Randomly create candidate feature sets in each iteration.
-      \item Continue search based on the set of features where an improvement is present.
-      \item Use improvements of earlier iterations.
+      \item Randomly sample candidate feature subsets in each iteration.
+      \item Focus search on regions of feature subsets where an improvement is present.
+      %\item Use improvements of earlier iterations.
     \end{itemize}
+\vspace{0.1cm}
+\textbf{Example}\, We can use a simple 1+1 genetic algorithm for FS:
+\begin{enumerate}
+    \item Evolutionary algorithms for FS start with a random subset $S$ represented as a bit vector.
+    \item In each iteration, randomly flip part of bits to obtain new subset $S'$
+    \item Evaluate performance on $S'$
+    \item If $S'$ is superior, update $S\leftarrow S'$, otherwise keep $S$
+    \item Use stopping criteria such as performance threshold or compute/time budget
+\end{enumerate}
 
-    \framebreak
+%\framebreak
+\end{vbframe}
 
+\begin{comment}
     \begin{algorithm}[H]
     \begin{algorithmic}[1]
       \State Start with a random set of features $S$ (bit vector $b$).
@@ -251,9 +273,10 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
         \caption{A simple 1+1 genetic algorithm}
     \end{algorithmic}
     \end{algorithm}
+\end{comment}
 
-    %\framebreak
- \end{vbframe}   
+%\framebreak
+%\end{vbframe}   
 %\begin{center}
 %\begin{minipage}{0.48\textwidth}
 %    \includegraphics[width=\textwidth]{figure/var-selection1.png}
@@ -290,14 +313,16 @@ By exploiting \textbf{Greedy} as a selection strategy, ensure that you always ch
 
 
 \begin{vbframe}{Extensions}
+\vspace{-0.3cm}
         %\vspace{1.3cm}
         \begin{center}
-            \includegraphics[width=0.53\textwidth]{figure/var-selection1.png}
+        \includegraphics[width=0.53\textwidth]{figure/var-selection1.png}
             %\hspace{0.2cm} \newline
-            \includegraphics[width=0.53\textwidth]{figure/var-selection2.png}
+        \includegraphics[width=0.53\textwidth]{figure/var-selection2.png}
      \end{center}
     \vspace{-0.5cm}
-Top: BIC over number of iterations. Bottom: Bit representation of the best variables included up to iteration $t$.
+\textbf{Top}: BIC over number of iterations.\\
+\textbf{Bottom}: Bit representation of selected features over iterations.
 \end{vbframe}
 
 
@@ -316,16 +341,16 @@ Top: BIC over number of iterations. Bottom: Bit representation of the best varia
 
     \begin{blocki}{Advantages:}
       \item Can be combined with every learner
-      \item Can be combined with every performance measure
+      \item Any performance measure can be used
       \item Optimizes the desired criterion directly
     \end{blocki}
 
     \lz
 
     \begin{blocki}{Disadvantages:}
-      \item Evaluating the target function is expensive
-      \item Does not scale well if number of features becomes large
-      \item Does not use much structure or available information from our model
+      \item Evaluating target function is expensive
+      \item Does not scale well with number of features%if number of features becomes large
+      \item Does not use additional info about model structure
       \item Nested resampling becomes necessary
     \end{blocki}
 
