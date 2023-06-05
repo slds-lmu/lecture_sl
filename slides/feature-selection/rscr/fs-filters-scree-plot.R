@@ -37,13 +37,11 @@ ranked_features[, score := score^2]
 p <- ggplot(ranked_features, aes(x = 1:nrow(ranked_features), y = score)) +
   geom_line(color = "#619CFF") +
   geom_point(size=2,color="#619CFF")+
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  labs(title = "Feature Score and log_reg model performance. Dataset: SPAM", x = "Feature rank/ Features used in the model",)
+  theme_minimal()
 
 classifier <- "classif.log_reg"
 measure_name <- "classif.auc"
-n_runs <- 200
+n_runs <- 2
 min_features <- 1
 max_features <- 53
 mlr_learners$get(classifier)
@@ -77,8 +75,8 @@ for (i in min_features:max_features){
 }
 df = read.csv("slides/feature-selection/rscr/scree-plot-data.csv")
 # Melt the data frame from wide to long format for plotting
-df_long <- reshape2::melt(df, id.vars = c("filter", "num_features"), 
-                          measure.vars = c("test_measure"), 
+df_long <- reshape2::melt(df, id.vars = c("filter", "num_features"),
+                          measure.vars = c("test_measure"),
                           variable.name = "error_type", value.name = "error")
 
 score.diff <- max(ranked_features$score) - min(ranked_features$score)
@@ -88,24 +86,32 @@ measure.min <- min(df$test_measure)
 
 
 # Add the plot of the performance to the first plot in a second y axis
+p <- p + labs(title = "Feature Score and log_reg model performance. Dataset: SPAM", x = "Feature rank/ Features used in the model")
+
 plot <- p +
   geom_line(data = df_long,
             aes(x = num_features,
-              y = (error-measure.min)/ measure.diff * score.diff + score.min,
-              color = filter,
-              group = filter),
+                y = (error-measure.min)/ measure.diff * score.diff + score.min,
+                color = filter,
+                group = filter),
             size=1.5) +
   geom_point(data = df_long,
              aes(x = num_features,
-              y = (error-measure.min)/ measure.diff * score.diff + score.min,
-              color = filter,
-              group = filter),
-            size=3) +
+                 y = (error-measure.min)/ measure.diff * score.diff + score.min,
+                 color = filter,
+                 group = filter),
+             size=3) +
   scale_y_continuous(sec.axis = sec_axis(
-                      ~((. -score.min) * measure.diff / score.diff) + measure.min, name = "AUC")) +
+    ~((. -score.min) * measure.diff / score.diff) + measure.min, name = "AUC")) +
   theme_gray() +
-  theme(legend.position = "none") +
-  theme(plot.title = element_text(hjust = 0.5)) 
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, size = 20),  # increased size for plot title
+        axis.title.x = element_text(size = 20),  # increased size for x axis title
+        axis.title.y = element_text(size = 20),  # increased size for y axis title
+        axis.text.x = element_text(size = 20),   # increased size for x axis text
+        axis.text.y = element_text(size = 20),   # increased size for y axis text
+        legend.text = element_text(size = 20),   # increased size for legend text
+        legend.title = element_text(size = 20))  # increased size for legend title
 
 # save the plot
 ggsave("slides/feature-selection/figure/fs-filters-scree-plot.png", plot, width = 20, height = 15, units = "cm")
