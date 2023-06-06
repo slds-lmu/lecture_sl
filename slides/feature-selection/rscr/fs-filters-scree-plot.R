@@ -36,8 +36,9 @@ ranked_features[, score := score^2]
 # Create a line plot with the number of features in the x axis and the score in the y
 p <- ggplot(ranked_features, aes(x = 1:nrow(ranked_features), y = score)) +
   geom_line(color = "#619CFF") +
-  geom_point(size=2,color="#619CFF")+
-  theme_minimal()
+  geom_point(size=2,color="#619CFF") +
+  theme_minimal() +
+  ylab("Information Gain")
 
 classifier <- "classif.log_reg"
 measure_name <- "classif.auc"
