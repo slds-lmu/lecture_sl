@@ -22,23 +22,23 @@
   \lecturechapter{Filter Methods: Examples and Caveats}
   \lecture{Supervised Learning}
 
-  \begin{vbframe}{Introduction}
-  \vspace{-0.3cm}
-  \begin{itemize}
-  \setlength{\itemsep}{0.8em}
-    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
-    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
-    \item They are model-agnostic and can be applied generically.
-    \item FM is strongly related to methods for variable importance.
-  \end{itemize}
-\vspace{-0.2cm}
-  \begin{center}
-  \begin{figure}
-    \includegraphics[width=0.48\textwidth]{figure/filter_comparison_har_classif.kknn.png}
-  \end{figure}
-  \end{center}
+%  \begin{vbframe}{Introduction}
+%  \vspace{0.3cm}
+%  \begin{itemize}
+%  \setlength{\itemsep}{1.4em}
+%    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
+%    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
+%    \item They are model-agnostic and can be applied generically.
+%    \item FM is strongly related to methods for variable importance.
+%  \end{itemize}
+%\vspace{-0.2cm}
+%  \begin{center}
+%  \begin{figure}
+%    \includegraphics[width=0.48\textwidth]{figure/filter_comparison_har_classif.kknn.png}
+%  \end{figure}
+%  \end{center}
 
-  \end{vbframe}
+% \end{vbframe}
 
 %\begin{vbframe}{Visualization of filter algorithms}
 %
@@ -129,8 +129,8 @@
     \end{minipage}
     \end{figure}
 \vspace{0.3cm}
-%\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
-\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
+\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
+%\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
 
    \framebreak

@@ -12,6 +12,10 @@
   \item Understand difference between bagging and boosting
 }
 
+\newcommand{\citebutton}[2]{%
+\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
+}
+
 \title{Introduction to Machine Learning}
 \date{}
 
@@ -57,13 +61,13 @@ The first boosting algorithm ever was in fact no algorithm for practical purpose
 \lz
 
 \enquote{Does the existence of a weak learner for a certain problem imply
-the existence of a strong learner?} (Kearns, 1988)
+the existence of a strong learner?} \citebutton{Kearns, 1988}{https://www.cis.upenn.edu/~mkearns/papers/boostnote.pdf}
 
 \lz
 
 \begin{itemize}
 \item \textbf{Weak learners} are defined as a prediction rule with a correct classification rate that is at least slightly better than random guessing (> 50\% accuracy on a balanced binary problem).
-\item We call a learner a \textbf{strong learner} \enquote{if there exists a polynomial-time algorithm that achieves low error with high confidence for all concepts in the class} (Schapire, 1990).
+\item We call a learner a \textbf{strong learner} \enquote{if there exists a polynomial-time algorithm that achieves low error with high confidence for all concepts in the class} \citebutton{Schapire, 1990}{https://link.springer.com/content/pdf/10.1007/BF00116037.pdf}.
 
 \end{itemize}
 
@@ -78,12 +82,12 @@ In practice it is typically easy to construct weak learners, but difficult to bu
 \begin{vbframe}{The boosting answer - AdaBoost}
 
 Any weak (base) learner can be iteratively boosted to become
-a strong learner (Schapire and Freund, 1990).
+a strong learner. %(Schapire and Freund, 1990).
 The proof of this ground-breaking idea generated the first boosting algorithm.
 
 \begin{itemize}
   \item The \textbf{AdaBoost} (Adaptive Boosting) algorithm is a \textbf{boosting} method
-    for binary classification by Freund and Schapire (1997).
+    for binary classification by \citebutton{Freund and Schapire (1996)}{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=d186abec952c4348870a73640bf849af9727f5a4}.
   \item The base learner is sequentially applied to weighted training observations.
   \item After each base learner fit, currently misclassified observations receive a higher weight for
     the next iteration, so we focus more on instances that are harder to classify.
