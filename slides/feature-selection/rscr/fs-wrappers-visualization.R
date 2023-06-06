@@ -23,7 +23,7 @@ prepare_powerset_graph <- function(algorithm_path,n_var,stopping_point,drop_vert
 
     g <- graph.empty(n = nrow(algorithm_path), directed = TRUE)
     # The node names will be the variables used
-    V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")}) 
+    V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")})
     a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n RMSE: ", round(x[n_var+1],2), sep = "")})
     a[a == "\n RMSE: NA"] <- ""
     a[algorithm_path[,'sum']>=stopping_point+1] <- ""
@@ -34,10 +34,10 @@ prepare_powerset_graph <- function(algorithm_path,n_var,stopping_point,drop_vert
     for (i in 1:(nrow(algorithm_path) - 1)) {
     for (j in (i + 1):nrow(algorithm_path)) {
         # If model i is a subset of model j and the difference between the number of features is 1, and we have a performance value, there is an edge
-        if ((all(algorithm_path[i,1:n_var ] <= algorithm_path[j,1:n_var ])) 
-            & (sum(algorithm_path[j,1:n_var ] - algorithm_path[i,1:n_var ]) == 1) 
+        if ((all(algorithm_path[i,1:n_var ] <= algorithm_path[j,1:n_var ]))
+            & (sum(algorithm_path[j,1:n_var ] - algorithm_path[i,1:n_var ]) == 1)
             & (!is.na(algorithm_path[j,'regr.rmse']))
-            & (!is.na(algorithm_path[i,'regr.rmse']) ) 
+            & (!is.na(algorithm_path[i,'regr.rmse']) )
             & (algorithm_path[i,'regr.rmse'] == algorithm_path[i,'min_rmse'])
             & sum(algorithm_path[j,1:n_var ]) <= stopping_point  # We only want to plot edges on the first n features to show the steps
         )
@@ -64,7 +64,7 @@ prepare_powerset_graph_backwards <- function(algorithm_path,n_var,stopping_point
     stopping_point = n_var-stopping_point
     g <- graph.empty(n = nrow(algorithm_path), directed = TRUE)
     # The node names will be the variables used
-    V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")}) 
+    V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")})
     a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n RMSE: ", round(x[n_var+1],2), sep = "")})
     a[a == "\n RMSE: NA"] <- ""
     a[algorithm_path[,'sum']<=stopping_point-1] <- ""
@@ -75,17 +75,17 @@ prepare_powerset_graph_backwards <- function(algorithm_path,n_var,stopping_point
     for (i in nrow(algorithm_path):2) {
     for (j in (i - 1):1) {
         # If model i is a superset of model j and the difference between the number of features is 1, and we have a performance value, there is an edge
-        if ((all(algorithm_path[i,1:n_var ] >= algorithm_path[j,1:n_var ])) 
-            & (sum(algorithm_path[i,1:n_var ] - algorithm_path[j,1:n_var ]) == 1) 
+        if ((all(algorithm_path[i,1:n_var ] >= algorithm_path[j,1:n_var ]))
+            & (sum(algorithm_path[i,1:n_var ] - algorithm_path[j,1:n_var ]) == 1)
             & (!is.na(algorithm_path[j,'regr.rmse']))
-            & (!is.na(algorithm_path[i,'regr.rmse'])) 
+            & (!is.na(algorithm_path[i,'regr.rmse']))
             & (algorithm_path[i,'regr.rmse'] == algorithm_path[i,'min_rmse'])
             & sum(algorithm_path[j,1:n_var ]) >= stopping_point  # We only want to plot edges on the first n features to show the steps
         )
             {
             # If the performance for the objective edge, we paint it red (critical path)
             if (algorithm_path[j,'regr.rmse'] == algorithm_path[j,'min_rmse']
-            & algorithm_path[j,'regr.rmse'] < algorithm_path[i,'regr.rmse'])
+            & algorithm_path[j,'regr.rmse'] <= algorithm_path[i,'regr.rmse'])
             {
             g <- g + edge(i, j, color = "red")
             } else {
@@ -158,8 +158,8 @@ g<- prepare_powerset_graph(algorithm_path,n_var,1)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-tree-1.png", width = 1200, height = 1200)
-plot(g, 
-     layout =  layout_as_tree(g), 
+plot(g,
+     layout =  layout_as_tree(g),
      vertex.shape='circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 4,
@@ -173,8 +173,8 @@ g<- prepare_powerset_graph(algorithm_path,n_var,2)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-tree-2.png", width = 1200, height = 1200)
-plot(g, 
-     layout =  layout_as_tree(g), 
+plot(g,
+     layout =  layout_as_tree(g),
      vertex.shape='circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 4,
@@ -188,8 +188,8 @@ g<- prepare_powerset_graph(algorithm_path,n_var,3)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-tree-3.png", width = 1200, height = 1200)
-plot(g, 
-     layout =  layout_as_tree(g), 
+plot(g,
+     layout =  layout_as_tree(g),
      vertex.shape='circle',
      vertex.label = V(g)$name,
      vertex.label.cex = 1.8,
@@ -203,12 +203,12 @@ g<- prepare_powerset_graph(algorithm_path,n_var,4)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-tree-4.png", width = 1000, height = 1000)
-plot(g, 
-     layout = layout_as_tree(g), 
+plot(g,
+     layout = layout_as_tree(g),
      vertex.shape='circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 2,
-     vertex.label.cex = 1.5, 
+     vertex.label.cex = 1.5,
      vertex.size = 38)
 dev.off()
 
@@ -218,7 +218,7 @@ g<- prepare_powerset_graph(algorithm_path,n_var,1,drop_vertices = FALSE)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-all-1.png", width = 1200, height = 1200)
-plot(g, 
+plot(g,
      layout = layout.reingold.tilford(graph, root = 1),
      vertex.shape='circle',
      vertex.label = V(g)$name,
@@ -233,7 +233,7 @@ g<- prepare_powerset_graph(algorithm_path,n_var,2,drop_vertices = FALSE)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-all-2.png", width = 1200, height = 1200)
-plot(g, 
+plot(g,
      layout = layout.reingold.tilford(graph, root = 1),
      vertex.shape='circle',
      vertex.label = V(g)$name,
@@ -248,7 +248,7 @@ g<- prepare_powerset_graph(algorithm_path,n_var,3,drop_vertices = FALSE)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-all-3.png", width = 1200, height = 1200)
-plot(g, 
+plot(g,
      layout = layout.reingold.tilford(graph, root = 1),
      vertex.shape='circle',
      vertex.label = V(g)$name,
@@ -263,7 +263,7 @@ g<- prepare_powerset_graph(algorithm_path,n_var,4,drop_vertices = FALSE)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-powerset-all-4.png", width = 1200, height = 1200)
-plot(g, 
+plot(g,
      layout = layout.reingold.tilford(graph, root = 1),
      vertex.shape='circle',
      vertex.label = V(g)$name,
@@ -291,11 +291,11 @@ g<- prepare_powerset_graph_backwards(algorithm_path,n_var,4)
 
 # Plot the Hasse diagram, the name of the nodes shold be the variables used
 png("slides/feature-selection/figure/fs-wrappers-backwards-powerset-tree-4.png", width = 1000, height = 1000)
-plot(g, 
-     layout = layout_as_tree(g), 
+plot(g,
+     layout = layout_as_tree(g),
      vertex.shape= 'circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 2,
-     vertex.label.cex = 1.5, 
+     vertex.label.cex = 1.5,
      vertex.size = 38)
 dev.off()
