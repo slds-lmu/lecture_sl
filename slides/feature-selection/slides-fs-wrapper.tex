@@ -236,24 +236,55 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
   \begin{vbframe}{Extensions}
     \vspace{-0.1cm}
     \begin{itemize}
-      \setlength{\itemsep}{0.8em}
-      \item Eliminate or add multiple features at once to increase speed.
-      \item Allow alternating forward and backward search.
-      \item Randomly sample candidate feature subsets in each iteration.
-      \item Focus search on regions of feature subsets where an improvement is present.
+      \setlength{\itemsep}{1.2em}
+      \item Eliminate or add multiple features at once to increase speed
+      \item Allow alternating forward and backward search
+      \item Randomly sample candidate feature subsets in each iteration
+      \item Focus search on regions of feature subsets where an improvement is present
       %\item Use improvements of earlier iterations.
+      \item Alternatively, we can also use a $(\mu+\lambda)$-Evolutionary Strategy to perform FS, applying random recombination and mutation operations
     \end{itemize}
-\vspace{0.1cm}
-\textbf{Example}\, We can use a simple 1+1 genetic algorithm for FS:
-\begin{enumerate}
-    \item Evolutionary algorithms for FS start with a random subset $S$ represented as a bit vector.
-    \item In each iteration, randomly flip part of bits to obtain new subset $S'$
-    \item Evaluate performance on $S'$
-    \item If $S'$ is superior, update $S\leftarrow S'$, otherwise keep $S$
-    \item Use stopping criteria such as performance threshold or compute/time budget
-\end{enumerate}
+\end{vbframe}
 
-%\framebreak
+\begin{vbframe}{Extensions: Genetic Algorithms for FS}
+    \textbf{Example}\, Template for $(\mu+\lambda)$-ES applied to FS
+\begin{enumerate}
+    %\item Start with a random subset $S$ represented as a bit vector.
+    %\item In each iteration, randomly flip part of bits to obtain new subset $S'$
+    %\item Evaluate performance on $S'$
+    %\item If $S'$ is superior, update $S\leftarrow S'$, otherwise keep $S$
+    %\item Use stopping criteria such as performance threshold or compute/time budget
+    \item Initialization: $\mu$ random bit vectors (feature inclusion/exclusion)
+    \item Evaluate model performance for bit vectors
+    \item Select $\mu$ fittest bit vectors (parents)
+    \item Generate $\lambda$ offspring applying crossover and mutation
+    \item Select $\mu$ fittest bit vectors from $(\mu+\lambda)$ options for next generation
+    \item Repeat steps 2-5 until stopping criterion is met
+    %\item Result: Highest fitness bit vector = best feature subset
+    %\item Use CV or validation set for eval. to avoid overfitting.
+\end{enumerate}
+%\vspace{-0.01cm}
+\begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+            \hspace{1cm}
+            \includegraphics[width = 0.75\textwidth]{figure/genetic-alg.png}
+        %\hspace{1cm}
+        \citebutton{Gu \& Cheng, 1996}{https://onlinelibrary.wiley.com/doi/book/10.1002/9780470172254}
+    \end{column}
+    %
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+        \setlength{\itemsep}{1.2em}
+            \item Use CV/validation set for evaluation to avoid overfitting
+            \item Choice of $\mu$ and $\lambda$ allows some control over exploration vs. exploitation trade-off
+            %\item item 3
+        \end{itemize}
+    \end{column}
+\end{columns}
+%\begin{center}
+%    \includegraphics[width = 0.35\textwidth]{figure/genetic-alg.png}
+%\end{center}
+
 \end{vbframe}
 
 \begin{comment}
@@ -312,7 +343,7 @@ By exploiting \textbf{Greedy} as a selection strategy, ensure that you always ch
 
 
 
-\begin{vbframe}{Extensions}
+\begin{vbframe}{Extensions: Genetic Algorithms for FS}
 \vspace{-0.3cm}
         %\vspace{1.3cm}
         \begin{center}
