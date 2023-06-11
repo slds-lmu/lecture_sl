@@ -119,57 +119,5 @@
 
 \end{vbframe}
 
-  \begin{vbframe}{Types of feature selection methods}
- 
-  In the rest of the chapter, we will get to know two different types of methods for feature selection:
-
-  \lz
-
-  \begin{itemize}
-    \item Filters: evaluate relevance of features using statistical properties such as correlation with target variable.
-    \item Wrappers: use a model to evaluate subsets of features. 
-  \end{itemize}
-
-  %\lz
-  %Feature selection methods used in practice are often (complex) combinations of these methods. Choice of best method depends on %data-generating process, 
-  %sample size, data structure, and the target of analysis.
-
-% \lz
- 
-%  \begin{itemize}
- %     \item Additionally, there are embedded methods that will not be covered in detail here.
-  %\end{itemize}
-
-   %integrate feature selection during training.
-
-  \end{vbframe}
-
-  \begin{vbframe}{Embedded Methods}
-  Integrate FS directly into specific ML model -- we look at them in their dedicated chapters\\
-    %\begin{itemize}
-      %\item Embedded techniques are methods that integrate feature selection directly into the learning process.
-      %\item They use an internal optimization criterion to control the search for useful features.
-      %\item Embedded techniques usually need to be tailored to each learner.
-    %\end{itemize}
-    \vspace{0.25cm}
-    \textbf{Example:} Lasso (least absolute shrinkage and selection operator)
-    \begin{itemize}
-      \item Regularizing the parameters of a model with an $L1$ penalty %in the empirical risk 
-      enables ``automatic" feature selection (contrasting $L2$ regularization):
-      \vspace{-0.28cm}
-      $$ \riskrt = \risket + \lambda \|\thetab\|_1 = \sumin \left(\yi - \thetab^\top \xi \right)^2 +\lambda \sum_{j=1}^p |\theta_j| $$
-      %are very popular for high-dimensional data.
-      %\item The penalty shrinks the coefficients towards 0 in the final model.
-      %\item Many (improved) variants: group LASSO, adaptive LASSO, ElasticNet, ...
-      %\item Has some very nice optimality results: e.g., compressed sensing.
-    \end{itemize}
-
-  \begin{center}
-  \includegraphics[width=0.75\textwidth]{figure/regu_example_lasso_ridge.png}
-  %\footnotesize{Lasso vs ridge regularization.}
-  \end{center}
-    
-  \end{vbframe}
-
   \endlecture
 \end{document}

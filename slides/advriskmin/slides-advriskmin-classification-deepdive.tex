@@ -46,13 +46,13 @@ The minimizer can be found by setting the derivative to zero, i.e.,
 
 \vspace*{-0.5cm}
 
-\begin{eqnarray*}
-  \frac{d}{d\theta}\riske  & = & 
+\begin{align*}
+  \frac{d}{d\theta}\riske\quad  & = & 
   -\sum^n_{i=1} \frac{y^{(i)}}{\theta} - \frac{1-y^{(i)}}{1-\theta} & \overset{!}{=}  0\\
-  &\iff&  -\sum^n_{i=1} y^{(i)}(1-\theta) - \theta(1-y^{(i)})  & \overset{!}{=} 0 \\
-    &\iff&  -\sum^n_{i=1} \left(y^{(i)} - \theta\right)  & \overset{!}{=} 0 \\
-  \Rightarrow \hat{\theta} = \frac{1}{n}\sum^n_{i=1} y^{(i)}&\in& (0,1)\;\checkmark \text{(assuming both labels occur).}
-\end{eqnarray*}
+  \quad&\iff&  -\sum^n_{i=1} y^{(i)}(1-\theta) - \theta(1-y^{(i)})  & \overset{!}{=} 0 \\
+   \quad &\iff&  -\sum^n_{i=1} \left(y^{(i)} - \theta\right)  & \overset{!}{=} 0 \\
+  \Rightarrow \hat{\theta} = \frac{1}{n}\sum^n_{i=1} y^{(i)}\quad &\quad\in& (0,1)\;\checkmark \text{(assuming both labels occur).}
+\end{align*}
 
 \end{vbframe}
 

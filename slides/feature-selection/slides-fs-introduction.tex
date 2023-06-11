@@ -182,5 +182,34 @@ The increasingly automatized collection of information makes data sets with extr
 
   \end{vbframe}
 
+  \begin{vbframe}{Types of feature selection methods}
+ 
+  In rest of the chapter, we introduce different types of methods for FS:
+
+  \begin{itemize}
+    \item Filters: evaluate relevance of features using statistical properties such as correlation with target variable.
+    \item Wrappers: use a model to evaluate subsets of features. 
+    \item Embedded methods: integrate FS directly into specific model - we look at them in their dedicated chapters (e.g., CART, $L_0$, $L_1$).
+  \end{itemize}
+
+      \textbf{Example: embedded method (Lasso)} regularizing model params with $L1$ penalty %in the empirical risk 
+      enables ``automatic" feature selection:
+      \vspace{-0.28cm}
+      $ \riskrt = \risket + \lambda \|\thetab\|_1 = \sumin \left(\yi - \thetab^\top \xi \right)^2 +\lambda \sum_{j=1}^p |\theta_j| $
+      %are very popular for high-dimensional data.
+      %\item The penalty shrinks the coefficients towards 0 in the final model.
+      %\item Many (improved) variants: group LASSO, adaptive LASSO, ElasticNet, ...
+      %\item Has some very nice optimality results: e.g., compressed sensing.
+\vspace{0.1cm}
+  \begin{center}
+  \includegraphics[width=0.65\textwidth]{figure/regu_example_lasso_ridge.png}
+  %\footnotesize{Lasso vs ridge regularization.}
+  \end{center}
+
+
+  \end{vbframe}
+
+
+
   \endlecture
 \end{document}

@@ -11,7 +11,7 @@
   \item Understand fitting process of gradient boosting for regression problems
 }
 
-\title{Introduction to Machine Learning}
+\title{Supervised Learning}
 \date{}
 
 \begin{document}
@@ -126,7 +126,8 @@ Hence, we minimize the empirical risk:
 
 $$
 \riskef = \sum_{i=1}^n L\left(\yi,\fxi \right) =
-\sum_{i=1}^n L\left(\yi, \sum_{m=1}^M \alpha^{[m]} \blxt\right)
+\sum_{i=1}^n L\left(\yi, \sum_{m=1}^M \alpha^{[m]} b(\xi, \thetab^{[m]}) %\blxt
+\right)
 $$
 
 

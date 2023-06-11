@@ -5,15 +5,16 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-feature-sel}
 
-\newcommand{\citebutton}[2]{%
-\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
-}
-
 \newcommand{\titlefigure}{figure/guyon_example_correlation.png}
 \newcommand{\learninggoals}{
   \item Understand how filter methods can be misleading.
   \item Understand how filter methods work in practical applications.
 }
+
+\newcommand{\citebutton}[2]{%
+\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
+}
+
 \title{Supervised Learning}
 \date{}
 \begin{document}
@@ -21,28 +22,27 @@
   \lecturechapter{Filter Methods: Examples and Caveats}
   \lecture{Supervised Learning}
 
-  \begin{vbframe}{Introduction}
-  \vspace{0.4cm}
-  \begin{itemize}
-  \setlength{\itemsep}{1.5em}
-    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
-    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
-    \item They are model-agnostic and can be applied generically.
-    \item Filter methods are strongly related to methods for determining variable importance.
-  \end{itemize}
-  \end{vbframe}
+%  \begin{vbframe}{Introduction}
+%  \vspace{0.3cm}
+%  \begin{itemize}
+%  \setlength{\itemsep}{1.4em}
+%    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
+%    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
+%    \item They are model-agnostic and can be applied generically.
+%    \item FM is strongly related to methods for variable importance.
+%  \end{itemize}
+%\vspace{-0.2cm}
+%  \begin{center}
+%  \begin{figure}
+%    \includegraphics[width=0.48\textwidth]{figure/filter_comparison_har_classif.kknn.png}
+%  \end{figure}
+%  \end{center}
 
-%\begin{vbframe}{Example}
-%Text explaining the figure here:
+% \end{vbframe}
 
-%   \begin{center}
-%   \begin{figure}
-%     \includegraphics[width=0.9\textwidth]{figure/filter_comparison_sonar_classif.log_reg.png}
-%   \end{figure}
-
-   %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
-%   \end{center}
-
+%\begin{vbframe}{Visualization of filter algorithms}
+%
+%
 %\end{vbframe}
 
 \begin{comment}
@@ -130,6 +130,7 @@
     \end{figure}
 \vspace{0.3cm}
 \footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
+%\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
 
    \framebreak
@@ -152,7 +153,7 @@
 \footnotesize{\textbf{Intra-class covariance}. In projection onto the axes, distribution of two variables are same as before. Left: Class conditional distribution have high cov. in direction of the line of the two class centers. Right: Class conditional distr. have high cov. in direction perpendicular to line of two class centers. Important separation gain is obtained by using both variables.}
 
  \framebreak
-   
+
 
     %%%%%%%%%%%%%%%%%%%%%%%%%
       %%%%%%%%%%%%%%%%%%%%%%%%
@@ -177,21 +178,45 @@
 
 \begin{vbframe}{Using Filter Methods}
 
-  \begin{enumerate}{}
-  \setlength{\itemsep}{1.2em}
-    \item Calculate filter score for each feature $x_j$.
-    \item Rank features according to score values.
-    \item Choose $\tilde{p}$ best features.
-    \item Train model on $\tilde{p}$ best features.
-  \end{enumerate}
+% \begin{minipage}{0.45\textwidth}
+%     \centering
+%     \includegraphics[width=\textwidth]{figure/guyon_example_xor.png} % second figure itself
+%     %\caption{second figure}
+% \end{minipage}
 
-  \lz
 
-  \begin{blocki}{How to choose $\tilde{p}$?}
-    \item It can be prescribed by the application.
-    \item Eyeball estimation: read from filter plots
-    \item Use resampling.
-  \end{blocki}
+  \begin{columns}
+    \begin{column}{0.65\textwidth}
+      \begin{enumerate}{}
+        \setlength{\itemsep}{1.2em}
+          \item Calculate filter score for each feature $x_j$.
+          \item Rank features according to score values.
+          \item Choose $\tilde{p}$ best features.
+          \item Train model on $\tilde{p}$ best features.
+        \end{enumerate}
+
+        \begin{blocki}{How to choose $\tilde{p}$?}
+          \item It can be prescribed by the application.
+          \item Eyeball estimation: read from filter plots
+          \item Use resampling.
+        \end{blocki}
+    \end{column}
+
+   \begin{column}{0.46\textwidth}
+      %\vspace{1cm}
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.89\textwidth]{figure/filter_comparison_har_classif.kknn.png}
+      \end{figure}
+      \vspace{-0.4cm}
+      \begin{figure}
+      \includegraphics[width=0.89\textwidth]{figure/fs-filters-scree-plot.png}
+      \end{figure}
+    \end{column}
+
+  \end{columns}
+
+
 
   \framebreak
 
@@ -216,42 +241,42 @@
   % <<echo=TRUE>>=
   % # Calculate the information gain as filter value
   % fv = generateFilterValuesData(iris.task, method = "information.gain")
-  
+
   % # We can also pass multiple filter methods at once:
   % fv2 = generateFilterValuesData(iris.task,
   %   method = c("information.gain", "chi.squared"))
-  
+
   % # fv2 is a FilterValues object and fv2$data holds a data frame
   % # with the importance values for all features
   % fv2$data
   % @
-  
+
   % <<>>=
   % plotFilterValues(fv2) + ggtitle("Filters for the 4 features of iris dataset")
   % @
-  
-  
+
+
   % \framebreak
-  
+
   % <<size="tiny", echo=TRUE>>=
   % ## Keep the 2 most important features
   % filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2L)
-  
+
   % ## Keep the 25% most important features
   % filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
-  
+
   % ## Keep all features with importance greater than 0.5
   % filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
   % filtered.task
   % @
-  
+
   % \framebreak
 
   % \begin{itemize}
   %   \item Filter methods are often part of the data preprocessing process, wherein a subsequent step, a learning method is applied.
   %   \item In practice we want to automate this, so the feature selection can be part of the validation method of our choice:
   % \end{itemize}
-  
+
   % <<size="tiny", echo=TRUE>>=
   % lrn = makeFilterWrapper(learner = "classif.kknn",
   %   fw.method = "anova.test", fw.abs = 2L)
@@ -260,7 +285,7 @@
   % )
   % ctrl = makeTuneControlGrid()
   % rdesc = makeResampleDesc("CV", iters = 10L)
-  
+
   % res = tuneParams(lrn, task = iris.task, resampling = rdesc, par.set = ps,
   %   control = ctrl)
   % res$opt.path
