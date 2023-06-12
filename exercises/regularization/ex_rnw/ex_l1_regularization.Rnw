@@ -13,9 +13,9 @@ where $\lambda > 0$ is the regularization parameter.
     \begin{itemize}
         \item and if $f$ is differentiable at $\tilde{\theta}\in\mathbb{R}$, then $\partial f(\tilde{\theta}) = \left\{\frac{d}{d\theta}f(\tilde{\theta})\right\},$ 
         %\item and for $f(\theta) = c$ with $c \in \mathbb{R}$, it holds that $\partial f(\lambda) = \{0\}$,
-        \item and for $f(\theta) =  \lambda\vert \theta \vert$ and $\lambda > 0,$ it holds that $\partial f(\lambda) = \begin{cases} \{-\lambda\} & \text{ for }\lambda < 0\\
-        [-\lambda, \lambda] & \text{ for }\lambda = 0 \\
-        \{\lambda\} & \text{ for }\lambda > 0
+        \item and for $f(\theta) =  \lambda\vert \theta \vert$ and $\lambda > 0,$ it holds that $\partial f(\theta) = \begin{cases} \{-\lambda\} & \text{ for }\theta < 0\\
+        [-\lambda, \lambda] & \text{ for }\theta = 0 \\
+        \{\lambda\} & \text{ for }\theta > 0
         \end{cases},$  \\
         \item and for $f, g$ real-valued convex functions with $\partial f(\tilde{\theta}) = [a, b], \partial g(\tilde{\theta}) = [c, d],$ 
         $$\partial(f + g)(\tilde{\theta}) = [a+c, b+d]$$
