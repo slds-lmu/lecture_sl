@@ -52,7 +52,7 @@ ggplot(df) +
     $$(\bm{X}\bm{A})^\top\bm{X}\bm{A} = \bm{A}^\top\bm{X}^\top\bm{X}\bm{A} = \bm{D}^{-0.5}\bm{V}^\top\bm{V}\bm{D}\bm{V}^\top\bm{V}\bm{D}^{-0.5} = \bm{D}^{-0.5}\bm{D}\bm{D}^{-0.5} = \bm{I}.$$
 \item 
 \begin{enumerate}
-    \item From $\nabla_{\bm{\theta}}\Vert \mathbf{X}\bm{A}\bm{\theta} - y\Vert^2_2 = 2\mathbf{X}\bm{A}\bm{\theta} \overset{!}{=} 2\mathbf{X}\bm{\theta} = \nabla_{\bm{\theta}}\Vert \mathbf{X}\bm{\theta} - y\Vert^2_2$ it follows that in general $\bm{A} = \bm{I}.$
+    \item From $\nabla_{\bm{\theta}}\Vert \mathbf{X}\bm{A}\bm{\theta} - y\Vert^2_2 = 2\bm{A}\mathbf{X}^\top\mathbf{X}\bm{A}\bm{\theta} - 2\bm{A}^\top\bm{X}^\top y \overset{!}{=} 2\bm{X}^\top\mathbf{X}\bm{\theta} - 2\bm{X}^\top y = \nabla_{\bm{\theta}}\Vert \mathbf{X}\bm{\theta} - y\Vert^2_2$ it follows that in general $\bm{A} = \bm{I}.$
     \item If we chose the penalty term to be $\Vert \bm{A}\bm{\theta}\Vert_1$ then this would result in $\argmin_{\bm{\theta}\in\mathbb{R}^p} \mathcal{R}_\text{reg}(\bm{A}\bm{\theta})$ and since $\bm{A}$ is invertible by construction, this minimization would be equivalent to the original Lasso regression. However, because of the $\Vert \bm{A}\bm{\theta}\Vert_1$ term, it is generally not possible anymore to split the regularized risk into a sum of functions that only depend on one parameter.
     \item We can see this procedure as a projection of the variables via $\bm{A}$ followed by a Lasso regression. Hence, we select variables in these projected coordinates, but this does not imply that the solution in the original coordinates $\bm{A}\bm{\theta}^*$ will be sparse.
 \end{enumerate}
