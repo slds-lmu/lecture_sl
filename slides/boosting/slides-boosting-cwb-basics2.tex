@@ -65,7 +65,7 @@ Advantages within CWB of simultaneously handling all categories:
 Disadvantage within CWB of simultaneously handling all categories: 
 \begin{itemize}
     \item 
-        If class $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost sure) not $0$.
+        If category $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost sure) not $0$.
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ Disadvantage within CWB of simultaneously handling all categories:
 Advantages within CWB of including categories individually: 
 \begin{itemize}
     \item 
-        A finer selection within the feature is possible since non-informative categories are simply not included in the model and hence have an effect of $0$.
+        Enables finer selection since non-informative categories are simply not included in the model. %and hence have an effect of $0$.
 
     \item 
         Explicit solution of $\thetah_{j,g} = \argmin_{\theta\in\R}\sumin (\yi - b_g(x^{(i)}_j|\theta))^2$ with:
@@ -84,10 +84,11 @@ Advantages within CWB of including categories individually:
 Disadvantage within CWB of simultaneously handling all categories:
 \begin{itemize}
     \item 
-        Fitting CWB is much slower due to the overhead in each iteration (updating the model, pseudo residuals, and doing the base learner selection) after conducting one tiny step into the direction of the 1-dim parameter $\thetah_{j,g}$.
+        Fitting CWB is much slower due to the overhead in each iteration %(updating the model, pseudo residuals, and doing the base learner selection) 
+        after conducting one tiny step into the direction of the 1-dim parameter $\thetah_{j,g}$.
 
     \item 
-        The base learner has exactly one degree of freedom which makes penalization and a fair selection very hard if not impossible.
+        Base learner has exactly one degree of freedom $\rightarrow$ penalization and a fair selection hard to intractable.
 \end{itemize}
 
 \end{vbframe}
@@ -145,7 +146,7 @@ The parameter estimates converge to the same value. The used data set is \href{h
 
 \begin{vbframe}{Example: Life expectancy}
 
-Consider the \texttt{life expectancy} (data set is provided by the WHO and is available on Kaggle: \url{https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who}) regression task, for which we fit a
+Consider the \texttt{life expectancy} (data set is provided by the WHO and is available on \citebutton{Kaggle}{https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who}\,: regression task, for which we fit a
 CWB model with linear base learners (with intercept) to predict the life expectancy:
 
 \begin{table}
