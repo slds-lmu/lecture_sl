@@ -86,10 +86,11 @@
   %\item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
   %\item With \code{sim.data} one can simulate micro-array data.
   \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian
-  \item 50\% are relevant for the target and half have no influence
+  \item 50\% are relevant for the target and 50\% have no influence, relevant features have weights $\{-1,1\}$
+  \item Target is simulated from Bernoulli distribution using linear predictor as log-odds (linear decision boundary!)
   %\item The other $\code{ng-nsg}=50$ genes have no influence.
   %\item The gene ratios are drawn from a multivariate normal distribution.
-  \item Among the informative features, 25 are positively and 25 negatively correlated with target.
+  \item Among the informative features, 25 are positively and 25 negatively correlated with target
   \end{itemize}
 
   \framebreak
@@ -114,8 +115,8 @@
   \end{table}
 \vspace{0.1cm}
 \begin{itemize}
-\setlength{\itemsep}{1.0em}
-    \item[$\Rightarrow$] The models with integrated selection do not work ideally here. Also, methods with lin. decision boundary are better due to our simulation set-up.
+\setlength{\itemsep}{0.8em}
+    \item[$\Rightarrow$] Different to Ex. 2, models with integrated FS do not work ideally here. Also, methods with lin. decision boundary are better due to our simulation set-up.
     \item[$\Rightarrow$]   Performance improves significantly for most methods when only trained on informative features.
 \end{itemize}
 

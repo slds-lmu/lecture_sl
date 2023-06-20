@@ -25,14 +25,15 @@
       \item Wrapper methods emerge from the idea that different sets of features can be optimal for different learners
       %\item Use the learner itself to assess the quality of the feature sets
       %\item Evaluation on a test set or resampling techniques are used
-      \item A wrapper is a discrete search strategy for $S$, where the test (or sometimes train) error of a learner as a function of $S$ is the objective criterion
+      \item Wrapper is a discrete search strategy for $S$, where objective criterion is test error of learner as function of $S$. Criterion can also be calculated on train set, approximating test error (AIC, BIC) 
     \end{itemize}
     $\Rightarrow$ Use the learner to assess the quality of the feature sets
-
+\vspace{-0.1cm}
     \begin{center}
      \includegraphics[width = 0.3\textwidth]{figure/searchspace_binary.png}\\
-     \scriptsize{Hasse diagram (source: Wikipedia)}
+     \scriptsize{Hasse diagram illustrating search space. Knots are connected if Hamming distance = 1 \\(Source: Wikipedia)}
     \end{center}
+
     
 \end{vbframe}
 
@@ -234,7 +235,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
     \begin{itemize}
       \setlength{\itemsep}{1.2em}
       \item Eliminate or add multiple features at once to increase speed
-      \item Allow alternating forward and backward search
+      \item Allow alternating forward and backward search (also known as stepwise model selection by AIC/BIC in statistics)
       \item Randomly sample candidate feature subsets in each iteration
       \item Focus search on regions of feature subsets where an improvement is present
       %\item Use improvements of earlier iterations.
