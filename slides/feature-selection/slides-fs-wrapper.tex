@@ -25,7 +25,7 @@
       \item Wrapper methods emerge from the idea that different sets of features can be optimal for different learners
       %\item Use the learner itself to assess the quality of the feature sets
       %\item Evaluation on a test set or resampling techniques are used
-      \item Wrapper is a discrete search strategy for $S$, where objective criterion is test error of learner as function of $S$. Criterion can also be calculated on train set, approximating test error (AIC, BIC) 
+      \item Wrapper is a discrete search strategy for $S$, where objective criterion is test error of learner as function of $S$. Criterion can also be calculated on train set, approximating test error (AIC, BIC)
     \end{itemize}
     $\Rightarrow$ Use the learner to assess the quality of the feature sets
 \vspace{-0.1cm}
@@ -34,7 +34,7 @@
      \scriptsize{Hasse diagram illustrating search space. Knots are connected if Hamming distance = 1 \\(Source: Wikipedia)}
     \end{center}
 
-    
+
 \end{vbframe}
 
 \begin{comment}
@@ -76,7 +76,7 @@
     \begin{itemize}
     \setlength{\itemsep}{0.8em}
      \item $\Omega$  = search space of all feature subsets $S\subseteq\{ 1, \dots, p \}$. Usually we encode this by
-      %(i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set) 
+      %(i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set)
       bit vectors, i.e., $\Omega = \{0, 1\}^p$ (1 = feat. selected)
       %It will be clear from the context which variant we refer to.
      \item Objective $\Psi$ can be different functions, e.g., AIC/BIC for LM or cross-validated performance of a learner
@@ -87,7 +87,7 @@
 
     \end{itemize}
 
-  \end{vbframe} 
+  \end{vbframe}
 
 
 \begin{comment}
@@ -105,18 +105,18 @@
     %  \item Formally spoken: One can show that the problem is NP-hard!
     %  \item This means that the problem cannot be solved in polynomial (P) time: ${\mathcal{O}} (p^c)$, where $c \in \N$ indicates the degree o the polynom.
     % \end{blocki}
-    % 
+    %
     % \framebreak
-    % 
+    %
     % \begin{blocki}{How difficult is it to solve the introduced optimization problem, hence, to find the optimal feature set?}
     %  \item More precisely, the proof demonstrates that this problem cannot be approximated within any constant, unless P = NP.
-    % 
+    %
     %   The latter means, that if you find an algorithm that solves a more difficult class of problems (than this optimization problem) in polynomial time, this implies that you found how to solve all easier problems (including our optimization problem) in polynomial time.
     % \item \textbf{Attention}: This does not imply that it is useless trying to construct strategies which work in practice!
     %\item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
     \end{itemize}
   \end{vbframe}
-  
+
 \begin{frame}{Greedy forward search}
 
     \begin{blocki}{}
@@ -146,7 +146,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \item Evaluate the classifier on all $S_j$ and use the best $S_j$
       \end{enumerate}
     %\vspace{-0.2cm}
-    \textbf{Example} Greedy Forward Search on bike sharing data
+    \textbf{Example} Greedy Forward Search on a subset of bike sharing data with features windspeed, temperature, humidity and feeling temperature
     \begin{center}
     \includegraphics[width = 0.45\textwidth]{figure/fs-wrappers-powerset-tree-1.png}
     \end{center}
@@ -154,7 +154,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 \end{frame}
     %\framebreak
 
-\begin{frame}[noframenumbering]{Visualization of GFS}    
+\begin{frame}[noframenumbering]{Visualization of GFS}
 \begin{enumerate}
     \setcounter{enumi}{3}
     \item Iterate over this procedure
@@ -175,7 +175,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \includegraphics[width = 0.65\textwidth]{figure/fs-wrappers-powerset-tree-3.png}
     \end{center}
 \end{frame}
-  
+
 \begin{frame}[noframenumbering]{Visualization of GFS}
     \begin{center}
       \includegraphics[width = 0.6\textwidth]{figure/fs-wrappers-powerset-tree-4.png}
@@ -186,7 +186,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
      \item Terminate if performance does not improve further or max. number of features is used
  \end{enumerate}
 \end{frame}
-  
+
 %\begin{frame}[noframenumbering]{Visualization of GFS}
 %    \begin{center}
 %    \includegraphics[width = 0.65\textwidth]{figure/fs-wrappers-powerset-all-4.png}
@@ -215,10 +215,10 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
           \item GFS is much faster and generates sparser feature selections
           \item GBS much more costly and slower, but sometimes slightly better.
       \end{itemize}
-    
+
   \end{vbframe}
 
-  \begin{frame}{Visualization of GBS}    
+  \begin{frame}{Visualization of GBS}
     %\begin{enumerate}
     %\setcounter{enumi}{3}
     %\item Iterate over this procedure
@@ -304,7 +304,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 \end{comment}
 
 %\framebreak
-%\end{vbframe}   
+%\end{vbframe}
 %\begin{center}
 %\begin{minipage}{0.48\textwidth}
 %    \includegraphics[width=\textwidth]{figure/var-selection1.png}
@@ -335,7 +335,7 @@ In addition:
 
 \lz
 
-By exploiting \textbf{Greedy} as a selection strategy, ensure that you always choose individuals with the best fitness. 
+By exploiting \textbf{Greedy} as a selection strategy, ensure that you always choose individuals with the best fitness.
 \end{comment}
 
 

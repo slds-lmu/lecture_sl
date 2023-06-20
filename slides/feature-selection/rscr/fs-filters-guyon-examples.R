@@ -11,11 +11,15 @@ if (!requireNamespace("mvtnorm")) {
 if (!requireNamespace("gridExtra")) {
   install.packages("gridExtra")
 }
+if (!requireNamespace("ml3verse")) {
+  install.packages("ml3verse")
+}
 
 library(gridExtra)
 library(GGally)
 library(ggplot2)
 library(mvtnorm)
+library(mlr3verse)
 
 custom_hist <- function(data, mapping, ...){
   ggplot(data = data, mapping = mapping) +
@@ -57,7 +61,7 @@ x2[y==1] = x2[y==1]+2*variance
 # Create a dataframe with x and y
 data = data.frame(x1=x1,x2=x2,y=y)
 data$y = as.factor(data$y)
-# Use ggpairs only for x and x1 
+# Use ggpairs only for x and x1
 graph<- ggpairs(data = data,
                 columns = c("x1","x2"),
                 legend=2,
@@ -70,7 +74,6 @@ graph<- ggpairs(data = data,
 ggsave(filename = "slides/feature-selection/figure/guyon_example_correlation.png",
        plot = graph,
        width = 10, height = 10, units = "cm")
-
 
 ####### Information gain from presumably redundant variables ########
 
@@ -91,7 +94,7 @@ x2[y==1] = x2[y==1]+1.5*variance
 data = data.frame(x1=x1,x2=x2,y=y)
 data$y = as.factor(data$y)
 
-# Use ggpairs only for x and x1 
+# Use ggpairs only for x and x1
 graph<- ggpairs(data = data,
                 columns = c("x1","x2"),
                 legend=2,
@@ -103,6 +106,23 @@ graph<- ggpairs(data = data,
 ggsave(filename = "slides/feature-selection/figure/guyon_example_presumably_redundant.png",
        plot = graph,
        width = 10, height = 10, units = "cm")
+
+#Calculate performance
+task = as_task_classif(data, target = "y")
+learner = lrn("classif.log_reg")
+learner$train(task)
+prediction = learner$predict(task)
+prediction$score(msr("classif.acc"))
+task = as_task_classif(data[,c(1,3)], target = "y")
+learner = lrn("classif.log_reg")
+learner$train(task)
+prediction = learner$predict(task)
+prediction$score(msr("classif.acc"))
+task = as_task_classif(data[,c(2,3)], target = "y")
+learner = lrn("classif.log_reg")
+learner$train(task)
+prediction = learner$predict(task)
+prediction$score(msr("classif.acc"))
 
 x1 <- results$x[, 1]
 x2 <- results$x[, 2]
