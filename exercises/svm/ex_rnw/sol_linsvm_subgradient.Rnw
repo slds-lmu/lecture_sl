@@ -65,15 +65,15 @@ plot(x = data$x.1, y = data$x.2, pch = ifelse(data$classes == 1, "-", "+"), col 
 
 # recode y
 y = ifelse(y == "2", 1, -1)
-mod_pegasos = pegasos_linear(y, cbind(1,X), lambda = C/(NROW(y)))
+mod_pegasos = pegasos_linear(y, cbind(1,X), lambda = 1/(C*NROW(y)))
 
 # Add estimated decision boundary:
-abline(a = - mod_pegasos[1] / mod_pegasos[2], 
+abline(a = - mod_pegasos[1] / mod_pegasos[3], 
        b = - mod_pegasos[2] / mod_pegasos[3], col = "#D55E00")
 
 # Compare to logistic regression:
 mod_logreg = glm(classes ~ ., data = data, family = binomial())
-abline(a = - coef(mod_logreg)[1] / coef(mod_logreg)[2], 
+abline(a = - coef(mod_logreg)[1] / coef(mod_logreg)[3], 
        b = - coef(mod_logreg)[2] / coef(mod_logreg)[3], col =  "#56B4E9", 
        lty = 3, lwd = 2)
 
@@ -100,30 +100,45 @@ table(sign(f_kernlab * y))
 print(range(abs(f_kernlab - f_pegasos)))
 
 # compare coeffs
-rbind(
+# (b is negative offset)
+all_params = rbind(
   mod_pegasos,
-  mod_kernlab = c(mod_kernlab@b,
+  mod_kernlab = c(-mod_kernlab@b,
   (params <- colSums(X[mod_kernlab@SVindex, ] * 
                        mod_kernlab@alpha[[1]] * 
                        y[mod_kernlab@SVindex])))
 )
+all_params
 # seems we were reasonably close
 
+# compare empirical risks
+emp_risk <- function(theta){
+  f = cbind(1, X) %*% theta
+  return(0.5 * sum(theta[2:3]^2) + C*sum(ifelse(f > 0, f, 0)))
+}
+apply(all_params, 1, emp_risk)
+
+params = all_params[2,]
 # recompute margin
-margin = 1 / sqrt(sum(params^2))
+margin = 1 / sqrt(sum(params[2:3]^2))
 
 # compute value of intercept shift (the margin shift is in orthogonal direction
 #   to the decision boundary, so this has to be transformed first)
-m = - params[1] / params[2]
-t_0 = margin * m / (cos(atan(1/m)))
+m = - params[2] / params[3]
+t_0 = margin / (cos(atan(m)))
 
 # add margins to visualization:
-abline(a = - mod_kernlab@b / params[1], 
+# 
+abline(a =  -params[1] / params[3], 
        b = m, col = "#0072B2")
-abline(a = - mod_kernlab@b / params[1] + t_0, 
+abline(a =  -params[1] / params[3] + t_0, 
        b = m, col = "#0072B2", lty = 2)
-abline(a = - mod_kernlab@b / params[1] - t_0, 
+abline(a =  -params[1] / params[3] - t_0, 
        b = m, col = "#0072B2", lty = 2)
+
+# find support vectors on decision border
+nv_sv_idx = y[mod_kernlab@SVindex] * f_kernlab[mod_kernlab@SVindex] > 0.98
+points(X[mod_kernlab@SVindex[nv_sv_idx],])
 
 
 # add legends
