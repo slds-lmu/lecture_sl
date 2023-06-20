@@ -10,68 +10,66 @@
 
 \newcommand{\titlefigure}{figure/compboost-illustration-2.png}
 \newcommand{\learninggoals}{
-  \item Concept of CWB and relation to GLM
-  \item Built-in feature selection process
-  \item Fair base learner selection
-}
-
-\newcommand{\citebutton}[2]{%
-\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
+  \item Handling of categorical features
+  \item Intercept handling
+  %\item Built-in feature selection process
+  %\item Fair base learner selection
 }
 
 \title{Supervised Learning}\date{}
 
 \begin{document}
 
-\lecturechapter{Componentwise Gradient Boosting}
-\lecture{Introduction to Machine Learning}
+\lecturechapter{Gradient Boosting: CWB Basics 2}
+\lecture{Supervised Learning}
 
 
 \begin{vbframe}{Handling of categorical features}
 
-Suppose a feature $x_j \in \{1, \dots, G\}$.
+Feature $x_j$ with $G$ categories. Two options for encoding:
+
 \begin{itemize}
-  \item Two common options for encoding the categorical feature $x_j$ in a base learner $b_j$ are:
-  \begin{itemize}
     \item 
         One base learner to simultaneously estimate all categories: 
         $$b_j(x_j | \thetab_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetab_j$$
-        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimates. 
+        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimators. 
     
     \item 
         One binary base learner per category:
         $$b_{j,g}(x_j | \theta_{j,g}) = \theta_{j,g}\mathds{1}_{\{g = x_j\}}$$  
-        Including all categories of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ with each accounting for one specific class.
+        Including all categories of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ %with each accounting for one specific class.
   \end{itemize}
   %\item The \texttt{compboost} package currently implements the first variant.
+
+% ------------------------------------------------------------------------------
+\framebreak
+
+Advantages of simultaneously handling all categories in CWB: 
+\begin{itemize}
+    \item 
+        Much faster estimation compared to using individual binary base learners.
+
+    \item 
+        Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$ given by:
+        $$
+        %\thetabh = (\thetah_1, \dots, \thetah_G)^T,\
+        \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}
+        $$
+
+    \item 
+        For features with many categories we usually add a ridge penalty
+\end{itemize}
+
+Disadvantage of simultaneously handling all categories in CWB: 
+\begin{itemize}
+    \item 
+        If category $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost surely) not $0$.
 \end{itemize}
 
 % ------------------------------------------------------------------------------
 \framebreak
 
-Advantages within CWB of simultaneously handling all categories: 
-\begin{itemize}
-    \item 
-        Much faster estimation process compared to adding the categories as individual binary base learners.
-
-    \item 
-        Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$ with:
-        $$\thetabh = (\thetah_1, \dots, \thetah_G)^T,\ \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
-
-    \item 
-        Adding regularization is easy by reframing the base learner as a linear model and using, e.g., Ridge regression for estimating $\thetabh$.  
-\end{itemize}
-
-Disadvantage within CWB of simultaneously handling all categories: 
-\begin{itemize}
-    \item 
-        If category $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost sure) not $0$.
-\end{itemize}
-
-% ------------------------------------------------------------------------------
-\framebreak
-
-Advantages within CWB of including categories individually: 
+Advantages of including categories individually in CWB: 
 \begin{itemize}
     \item 
         Enables finer selection since non-informative categories are simply not included in the model. %and hence have an effect of $0$.
@@ -81,14 +79,14 @@ Advantages within CWB of including categories individually:
         $$\thetah_{j,g} = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
 \end{itemize}
 
-Disadvantage within CWB of simultaneously handling all categories:
+Disadvantage of individually handling all categories in CWB:
 \begin{itemize}
     \item 
-        Fitting CWB is much slower due to the overhead in each iteration %(updating the model, pseudo residuals, and doing the base learner selection) 
-        after conducting one tiny step into the direction of the 1-dim parameter $\thetah_{j,g}$.
+        Fitting CWB is much slower due to overhead in each iteration %(updating the model, pseudo residuals, and doing the base learner selection) 
+        caused by conducting single steps in direction of 1-dim parameter $\thetah_{j,g}$.
 
     \item 
-        Base learner has exactly one degree of freedom $\rightarrow$ penalization and a fair selection hard to intractable.
+        Penalization and selection becomes difficult since base learner has exactly one degree of freedom.
 \end{itemize}
 
 \end{vbframe}
@@ -97,34 +95,55 @@ Disadvantage within CWB of simultaneously handling all categories:
 
 \begin{vbframe}{intercept handling}
 
+We define the loss-optimal constant $\fm[0](\xv)$ is an initial model intercept. \\
+\vspace{0.2cm}
+Two possible options to handle the intercept in CWB are:
+\vspace{0.3cm}
+\begin{enumerate}
+
+\item Include an intercept BL:
+  \begin{itemize}
+    \setlength{\itemsep}{1.1em}
+    \item Add base learner $b_{\text{int}} = \theta$ as potential candidate considered in each iteration.
+    \item Remove intercept from all linear base learners to only use $b_j(\xv) = \theta_j x_j$.
+    \item Final intercept is given as $\fm[0](\xv) + \hat{\theta}$.
+  \end{itemize}
+
+\framebreak
+  
+  \item Include intercept in each linear BL $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ and aggregate into global intercept post-fitting.
+  \begin{itemize}
+  \item  Assume linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ %per base learner
+  and slope $\theta_{j2}$.
+      \item If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
+    \item Over fitting process, intercept is adjusted $M$ times to yield:
+    $$
+    \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
+    $$
+    \end{itemize}
+\end{enumerate}
+$\Rightarrow$ All intercepts in the base learners are collected and aggregated in the model intercept.
+
+%-----------------------------------
+
+\begin{comment}
+    
 \begin{itemize}
   %\item The loss-optimal constant $\fm[0](\xv)$ is an initial model intercept.
   %\item An intercept is often referred to as part of a model which contains information independent of the features.
-  \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ per base learner and slope $\theta_{j2}$.
-  \item If base learner $\hat{b}_j$ with parameter estimates $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in the first iteration consequently updates the model intercept to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
-  \item Throughout the fitting process, the intercept is adjusted $M$ times to its final form:
+  \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ %per base learner
+  and slope $\theta_{j2}$.
+  \item If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
+  \item Over the fitting process, the intercept is adjusted $M$ times to its final form:
     $$
     \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
     $$
 \end{itemize}
-$\Rightarrow$ All intercepts in the base learners are collected and aggregated to one model intercept.
+$\Rightarrow$ All intercepts in the base learners are collected and aggregated in the model intercept.
 
 % ------------------------------------------------------------------------------
 \framebreak
-
-Two possible options to handle the intercept in CWB are:
-
-\begin{itemize}
-
-\item Include an intercept base learner:
-  \begin{itemize}
-    \item Add base learner $b_{\text{int}} = \theta$ as potential candidate considered in each iteration.
-    \item At the same time, remove the intercept from all linear base learners to only use $b_j(\xv) = \theta_j x_j$.
-    \item The final intercept is given by $\fm[0](\xv) + \hat{\theta}$.
-  \end{itemize}
-  \item Include an intercept in each linear base learner $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ and accumulate all intercepts to one global intercept after the fitting.
-
-\end{itemize}
+\end{comment}
 
 % ------------------------------------------------------------------------------
 
@@ -146,8 +165,9 @@ The parameter estimates converge to the same value. The used data set is \href{h
 
 \begin{vbframe}{Example: Life expectancy}
 
-Consider the \texttt{life expectancy} (data set is provided by the WHO and is available on \citebutton{Kaggle}{https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who}\,: regression task, for which we fit a
-CWB model with linear base learners (with intercept) to predict the life expectancy:
+Consider the \texttt{life expectancy} data set (WHO, available on \citebutton{Kaggle}{https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who})\,: regression task to predict life expectancy. \\
+\vspace{0.1cm}
+We fit a CWB model with linear BLs (with intercept) 
 
 \begin{table}
 \scriptsize
@@ -156,14 +176,16 @@ CWB model with linear base learners (with intercept) to predict the life expecta
     \hline
     \texttt{Life.expectancy} & Life expectancy in years \\	
     \hline
-    \texttt{Country}         & The country (just a selection GER, USE, SWE, ZAF, and ETH\\
+    \texttt{Country}         & The country (just a selection GER, USE, SWE, ZAF, and ETH)\\
     \texttt{Year}            & The recorded year\\
     \texttt{BMI}             & Average $\text{BMI} = \frac{\text{body weight in kg}}{(\text{Height in m})^2}$ in a year and country\\
-    \texttt{Adult.Mortality} & Adult Mortality Rates of both sexes (probability of dying between 15 \\
-                             & and 60 years per 1000 population)
+    \texttt{Adult.Mortality} & Adult mortality rates %of both sexes %(probability of death between age 15 \\
+                             %& and 60), 
+                             per 1000 population
 \end{tabular}
 \end{table}
-Using \texttt{compboost} with $M = 150$ iterations, we can visualize which base learner was selected when and how the estimated feature effects evolve over time.
+\vspace{0.4cm}
+Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL was selected when and how the estimated feature effects evolve over time.
 \end{vbframe}
 
 % tex file and figures are created automatically by: rsrc/fig-cwb-anim.R
