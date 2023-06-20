@@ -86,11 +86,11 @@
   %\item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
   %\item With \code{sim.data} one can simulate micro-array data.
   \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian
-  \item 50\% are relevant for the target and 50\% have no influence, relevant features have weights $\{-1,1\}$
+  \item 50\% are relevant for the target and 50\% have no influence
+  \item Among the informative features, 25 are positively and 25 negatively correlated with target using weights $\{-1,1\}$
   \item Target is simulated from Bernoulli distribution using linear predictor as log-odds (linear decision boundary!)
   %\item The other $\code{ng-nsg}=50$ genes have no influence.
   %\item The gene ratios are drawn from a multivariate normal distribution.
-  \item Among the informative features, 25 are positively and 25 negatively correlated with target
   \end{itemize}
 
   \framebreak
