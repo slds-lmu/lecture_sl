@@ -14,7 +14,7 @@
 \date{}
 \begin{document}
 
-  \lecturechapter{Filter Methods}
+  \lecturechapter{Feature Selection: Filter Methods}
   \lecture{Supervised Learning}
 
   \begin{vbframe}{Introduction}
@@ -49,7 +49,7 @@
     \item Calculate the $\chi^2$-statistic for each feature-target combination:
       $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
     where $e_{mk}$ is the observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency, and $M,K$ are the number of values $x_j$ and $y$ can take.
-    \item The greater $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
+    \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
   \end{itemize}
   \end{vbframe}
 

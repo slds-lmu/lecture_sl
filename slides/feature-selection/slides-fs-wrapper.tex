@@ -4,37 +4,33 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\citebutton}[2]{%
-\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
-}
-
 \newcommand{\titlefigure}{figure_man/varsel_space.png}
 \newcommand{\learninggoals}{
   \item Understand how wrapper methods work
-  \item Understand how they could help in feature selection
+  \item Understand how they can help in feature selection
   \item Know their advantages and disadvantages
 }
-
 
 \title{Supervised Learning}
 \date{}
 
 \begin{document}
 
-  \lecturechapter{Wrapper methods}
+  \lecturechapter{Feature Selection: Wrapper methods}
   \lecture{Supervised Learning}
 
   \begin{vbframe}{Introduction}
 
     \begin{itemize}
-      \item Wrapper methods emerged from the idea that different sets of features can be optimal for different learners
-      \item Use the learner itself to assess the quality of the feature sets
-      \item Evaluation on a test set or resampling techniques are used
-      \item A wrapper is nothing else than a discrete search strategy for $S$, where the test error of a learner as a function of $S$ is now the objective criterion
+      \item Wrapper methods emerge from the idea that different sets of features can be optimal for different learners
+      %\item Use the learner itself to assess the quality of the feature sets
+      %\item Evaluation on a test set or resampling techniques are used
+      \item A wrapper is a discrete search strategy for $S$, where the test error of a learner as a function of $S$ is the objective criterion
     \end{itemize}
+    $\Rightarrow$ Use the learner to assess the quality of the feature sets
 
     \begin{center}
-     \includegraphics[width = 0.3\textwidth]{figure/searchspace_binary.png}\\
+     \includegraphics[width = 0.4\textwidth]{figure/searchspace_binary.png}\\
      \scriptsize{Hasse diagram (source: Wikipedia)}
     \end{center}
     
@@ -242,12 +238,12 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \item Randomly sample candidate feature subsets in each iteration
       \item Focus search on regions of feature subsets where an improvement is present
       %\item Use improvements of earlier iterations.
-      \item Alternatively, we can also use a $(\mu+\lambda)$-Evolutionary Strategy to perform FS, applying random recombination and mutation operations
+      %\item Alternatively, we can also use a $(\mu+\lambda)$-Evolutionary Strategy to perform FS, applying random recombination and mutation operations
     \end{itemize}
 \end{vbframe}
 
 \begin{vbframe}{Extensions: Genetic Algorithms for FS}
-    \textbf{Example}\, Template for $(\mu+\lambda)$-ES applied to FS
+    \textbf{Example}\, Template for $(\mu+\lambda)$-Evolutionary Strategy applied to FS
 \begin{enumerate}
     %\item Start with a random subset $S$ represented as a bit vector.
     %\item In each iteration, randomly flip part of bits to obtain new subset $S'$

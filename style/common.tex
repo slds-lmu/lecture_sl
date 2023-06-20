@@ -6,6 +6,10 @@
 \newcommand{\oneliner}[1] % Oneliner for important statements
 {\begin{block}{}\begin{center}\begin{Large}#1\end{Large}\end{center}\end{block}}
 
+%citebutton
+\newcommand{\citebutton}[2]{%
+\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
+}
 
 %new environments
 \newenvironment{vbframe}  %frame with breaks and verbatim
