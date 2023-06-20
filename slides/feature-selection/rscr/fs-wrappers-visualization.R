@@ -24,8 +24,8 @@ prepare_powerset_graph <- function(algorithm_path,n_var,stopping_point,drop_vert
     g <- graph.empty(n = nrow(algorithm_path), directed = TRUE)
     # The node names will be the variables used
     V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")})
-    a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n RMSE: ", round(x[n_var+1],2), sep = "")})
-    a[a == "\n RMSE: NA"] <- ""
+    a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n", round(x[n_var+1],2), sep = "")})
+    a[a == "\n NA"] <- ""
     a[algorithm_path[,'sum']>=stopping_point+1] <- ""
     # add it to the names
     V(g)$name <- paste(V(g)$name, a, sep = "")
@@ -65,8 +65,8 @@ prepare_powerset_graph_backwards <- function(algorithm_path,n_var,stopping_point
     g <- graph.empty(n = nrow(algorithm_path), directed = TRUE)
     # The node names will be the variables used
     V(g)$name <- apply(algorithm_path[,1:n_var], 1, function(x) {paste(names(x[x == 1]), collapse = "\n")})
-    a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n RMSE: ", round(x[n_var+1],2), sep = "")})
-    a[a == "\n RMSE: NA"] <- ""
+    a <- apply(algorithm_path[,0:n_var+1], 1, function(x) {paste("\n ", round(x[n_var+1],2), sep = "")})
+    a[a == "\n NA"] <- ""
     a[algorithm_path[,'sum']<=stopping_point-1] <- ""
     # add it to the names
     V(g)$name <- paste(V(g)$name, a, sep = "")
@@ -125,10 +125,13 @@ learner_name = "regr.rpart"
 # retrieve task
 task = tsk("bike_sharing")
 # keep only a couple of columns
-variables_to_use=c("temperature", "humidity", "windspeed",'apparent_temperature')
+variables_to_use=c("temperature", "humidity", "windspeed","apparent_temperature")
 n_var = length(variables_to_use)
 task$select(variables_to_use)
-task$rename("apparent_temperature","realfeel")
+task$rename("temperature","temp")
+task$rename("humidity","humid")
+task$rename("windspeed","wind")
+task$rename("apparent_temperature","feel")
 # load learner and do forward selection
 learner = lrn(learner_name)
 instance = fselect(
@@ -163,7 +166,7 @@ plot(g,
      vertex.shape='circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 4,
-     vertex.label.cex = 2,
+     vertex.label.cex = 4,
      vertex.size = 48)
 dev.off()
 
@@ -178,7 +181,7 @@ plot(g,
      vertex.shape='circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 4,
-     vertex.label.cex = 2,
+     vertex.label.cex = 4,
      vertex.size = 48)
 dev.off()
 
@@ -192,7 +195,7 @@ plot(g,
      layout =  layout_as_tree(g),
      vertex.shape='circle',
      vertex.label = V(g)$name,
-     vertex.label.cex = 1.8,
+     vertex.label.cex = 2.7,
      edge.arrow.size = 3,
      vertex.size = 38)
 dev.off()
@@ -208,7 +211,7 @@ plot(g,
      vertex.shape='circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 2,
-     vertex.label.cex = 1.5,
+     vertex.label.cex = 2,
      vertex.size = 38)
 dev.off()
 
@@ -296,6 +299,6 @@ plot(g,
      vertex.shape= 'circle',
      vertex.label = V(g)$name,
      edge.arrow.size = 2,
-     vertex.label.cex = 1.5,
+     vertex.label.cex = 2.1,
      vertex.size = 38)
 dev.off()
