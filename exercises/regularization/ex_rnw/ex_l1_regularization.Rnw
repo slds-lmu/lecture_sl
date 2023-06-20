@@ -1,0 +1,125 @@
+For a design matrix $\mathbf{X} \in \mathbb{R}^{n\times p}$  and the vector of targets $\mathbf{y} \in \mathbb{R}^n$, consider Lasso regression, i.e., 
+
+$$\argmin_{\bm{\theta}\in\mathbb{R}^p}\underbrace{0.5\Vert \mathbf{X}\bm{\theta} - y\Vert^2_2 + \lambda\Vert \bm{\theta}\Vert_1}_{=: \mathcal{R}_\text{reg}}.$$
+where $\lambda > 0$ is the regularization parameter.
+\begin{enumerate}
+\item Since there exists no analytical solution to Lasso regression in general, we want to find a procedure similar to gradient descent that should converge to the true solution.  
+\begin{enumerate}
+    \item Explain why $\mathcal{R}_\text{reg}$ is not differentiable
+    \item Show that $\mathcal{R}_\text{reg}$ is convex \\
+     \emph{Hint: The sum of convex functions is convex}
+    \item \label{univ} Find $\rho_j, z_j \in \mathbb{R}$ for which $$0.5\frac{\partial}{\partial\theta_j}\Vert \mathbf{X}\bm{\theta} - y\Vert^2_2 = -\rho_j + \theta_j z_j.$$
+    \item In this situation, we can use the so-called subderivative (for further information see \href{https://en.wikipedia.org/wiki/Subderivative}{here}) which we denote with $\partial f$ for a real-valued convex continuous function $f$. The subderivative  maps a point $\theta \in \mathbb{R}$ to an interval 
+    \begin{itemize}
+        \item and if $f$ is differentiable at $\tilde{\theta}\in\mathbb{R}$, then $\partial f(\tilde{\theta}) = \left\{\frac{d}{d\theta}f(\tilde{\theta})\right\},$ 
+        %\item and for $f(\theta) = c$ with $c \in \mathbb{R}$, it holds that $\partial f(\lambda) = \{0\}$,
+        \item and for $f(\theta) =  \lambda\vert \theta \vert$ and $\lambda > 0,$ it holds that $\partial f(\theta) = \begin{cases} \{-\lambda\} & \text{ for }\theta < 0\\
+        [-\lambda, \lambda] & \text{ for }\theta = 0 \\
+        \{\lambda\} & \text{ for }\theta > 0
+        \end{cases},$  \\
+        \item and for $f, g$ real-valued convex functions with $\partial f(\tilde{\theta}) = [a, b], \partial g(\tilde{\theta}) = [c, d],$ 
+        $$\partial(f + g)(\tilde{\theta}) = [a+c, b+d]$$
+        where $b\geq a$ and $d \geq c.$
+    \end{itemize}
+    With this compute the subderivative of $\mathcal{R}_{\text{reg}, \bm{\theta}_{\neq j}}$ w.r.t. $\theta_j,$ i.e., $$\partial_{\theta_j}\mathcal{R}_{\text{reg}, \bm{\theta}_{\neq j}}$$
+    where $\mathcal{R}_{\text{reg}, \bm{\theta}_{\neq j}}:\mathbb{R}\rightarrow \mathbb{R}_{\geq 0}, \theta_j \mapsto \mathcal{R}_{\text{reg}}(\theta_1, \dots, \theta_j, \dots, \theta_p)$ for constant $\bm{\theta}_{\neq j} = \left(\theta_1, \dots, \theta_{j-1}, \theta_{j+1}, \dots, \theta_p\right)^\top.$\\
+    \emph{Hint: Use \ref{univ}}
+    \item For a real-valued convex function $f$, the global minimum (if it exists) can be characterized in the following way:\\
+    \vspace*{0.1px}
+    
+    A point $\theta^* \in \mathbb{R}$ is the global minimum of $f$ if and only if $0 \in \partial f(\theta^*).$ \\
+        \vspace*{0.1px}
+
+    With this show that $\theta^*_j \in \argmin_{\theta_j\in\mathbb{R}} \mathcal{R}_{\text{reg}, \bm{\theta}_{\neq j}} \iff \theta^*_j =\begin{cases}
+        \frac{\rho_j + \lambda}{z_j} & \text{ for } \rho_j < -\lambda\\
+        0 & \text{ for }  -\lambda \leq \rho_j \leq \lambda\\
+       \frac{\rho_j - \lambda}{z_j} & \text{ for } \rho_j > \lambda
+    \end{cases}.$
+\item Plot $\theta^*_j$ as a function of $\rho_j$ for $\rho_j \in [-5, 5], \lambda = 1, z_j = 1.$ \\
+(This function is called soft thresholding operator) 
+\end{enumerate}
+    \item \label{orth} 
+Find for non-singular $\bm{X}^\top\bm{X}$ the matrix $\bm{A} \in \mathbb{R}^{p\times p}$ for which $$\bm{A}^\top\bm{X}^\top\bm{X}\bm{A} = \bm{I}.$$
+\emph{Hint: $\bm{X}^\top\bm{X}$ is positive definite}
+\item \label{proj} For a design matrix with orthonormal columns, i.e., $\mathbf{X}^\top \mathbf{X} = \bm{I},$ exists an analytical minimizer of the Lasso regression $\hat{\bm{\theta}}_\text{Lasso} = \left(\hat{\theta}_{\text{Lasso},1},\dots,\hat{\theta}_{\text{Lasso},p}\right)^\top$ that is given by
+$$\hat{\theta}_{\text{Lasso},i} = \mathrm{sgn}\left(\hat{\theta}_i\right)\max\left\{\left\vert\hat{\theta}_i\right\vert - \lambda, 0\right\}, \quad i=1,\dots,p,$$
+where $\hat{\bm{\theta}} = \left(\hat{\theta}_1,\dots, \hat{\theta}_p\right)^\top = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$ is the minimizer of the unregularized empirical risk (w.r.t. the L2 loss). \\
+\vspace*{0.1px}
+
+Under the assumption that $\bm{X}^\top\bm{X}$ is non-singular, your colleague proposes to project $\bm{X}$ with $\bm{A}$ from \ref{orth}, i.e., use $\widetilde{\bm{X}} = \bm{X}\bm{A}$ and then apply the analytical solution given here.
+\begin{enumerate}
+    \item Show that this does not generally solve the original Lasso regression \\
+    \emph{Hint: You only need to check under which condition $\nabla_{\bm{\theta}}0.5\Vert \mathbf{X}\bm{\theta} - y\Vert^2_2 = \nabla_{\bm{\theta}}0.5\Vert \mathbf{X}\bm{A}\bm{\theta} - y\Vert^2_2$. The proof can be finished with a subgradient argument regarding stationarity, which you do not have to do.}
+    \item How could you adapt the penalty term such that the solution to the projected problem is equivalent to the original Lasso regression? In this case, can we still solve for parameters independently? 
+    \item Does the procedure proposed in \ref{proj} perform variable selection?
+\end{enumerate}
+\item You are given the following code to compare the quality of the projected Lasso regression vs. the regular Lasso regression:
+<<eval=FALSE>>=
+library(matlib)
+library(ggplot2)
+set.seed(2)
+
+proj_orth_lasso <- function(X, y, lambda){
+  # compute X_tilde
+
+  
+  X_tilde = 
+  
+  # compute analytical solution for X_tilde
+
+  theta_star =
+  return(c(theta_star))
+}
+
+lasso <- function(X, y, lambda, N){
+  p = ncol(X)
+  theta = rep(1.0, p)
+  for(i in seq(N)){
+    j = (i %% p)+1
+    
+    
+    
+    rho_j = 
+    z_j = 
+    
+    theta[j] = 
+  }
+  return(theta)
+}
+
+rmses = data.frame(rmse = numeric(), type = factor())
+
+p = 10
+n = 100
+
+num_opt_steps=400
+
+sigma_noise = 0.1
+sigma_signal = 1.0
+
+lambda = 1
+
+rmses = data.frame(rmse = numeric(), projected = factor())
+
+for(i in seq(100)){
+  X = matrix(rnorm(n*p, sd=sigma_signal), nrow=n)
+  theta_true = rnorm(p)
+  idx = rbinom(p, 1, 0.7)
+  theta_true[which(idx == 1)] = 0
+  
+  y = X %*% theta_true + rnorm(n, sd=sigma_noise) 
+  
+  rmses = rbind(rmses, data.frame(rmse = 
+                    n/(n-1)*sd(proj_orth_lasso(X, y, lambda) - theta_true), 
+                    projected=factor("yes", levels=c("yes", "no"))))
+  rmses = rbind(rmses, data.frame(rmse = 
+                    n/(n-1)*sd(lasso(X, y, lambda, num_opt_steps) - theta_true), 
+                    projected=factor("no", levels=c("yes", "no"))))
+}
+
+ggplot(rmses) +
+  geom_boxplot(aes(y = rmse, fill = projected)) +
+  ylab(expression(sqrt(Sigma~(hat(theta)[j]-theta["j,true"])^2/p)))
+@
+Complete the missing code of the algorithms and interpret the result.
+\end{enumerate}

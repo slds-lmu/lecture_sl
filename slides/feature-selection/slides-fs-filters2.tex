@@ -11,16 +11,12 @@
   \item Understand how filter methods work in practical applications.
 }
 
-\newcommand{\citebutton}[2]{%
-\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
-}
-
-\title{Supervised Learning}
+\title{Introduction to Machine Learning}
 \date{}
 \begin{document}
 
-  \lecturechapter{Filter Methods: Examples and Caveats}
-  \lecture{Supervised Learning}
+  \lecturechapter{Feature Selection: Filter Methods (Examples and Caveats)}
+  \lecture{Introduction to Machine Learning}
 
 %  \begin{vbframe}{Introduction}
 %  \vspace{0.3cm}
@@ -123,13 +119,20 @@
         %\caption{first figure}
     \end{minipage}\hfill
     \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figure/guyon_example_presumably_redundant_rotated.png} % second figure itself
+        $\rho_{ACC}$ of log. reg. classifier with:
+        \begin{itemize}
+        \item{feature $x_1$: 0.76}
+        \item{feature $x_2$: 0.78}
+        \item{both features: 0.85}
+        \end{itemize}
+        %\centering
+        %\includegraphics[width=\textwidth]{figure/guyon_example_presumably_redundant_rotated.png} % second figure itself
         %\caption{second figure}
     \end{minipage}
     \end{figure}
 \vspace{0.3cm}
-\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
+\footnotesize{\textbf{IG from presumably redundant variables}. 2 class problem with i.i.d. variables. Each class has Gaussian distribution with no covariance. While filter methods suggest redundancy, combination of both vars yields improvement, showing i.i.d. vars are not truly redundant. %Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. 
+For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
 %\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
 
@@ -196,7 +199,7 @@
         \end{enumerate}
 
         \begin{blocki}{How to choose $\tilde{p}$?}
-          \item It can be prescribed by the application.
+          \item It can be prescribed by the application
           \item Eyeball estimation: read from filter plots
           \item Use resampling.
         \end{blocki}

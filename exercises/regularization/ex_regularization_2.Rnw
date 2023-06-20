@@ -11,13 +11,9 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \kopfsl{}{Regularization}
 
 
-\loesung{L0 Regularization}{
-<<child="ex_rnw/sol_l0_regularization.Rnw">>=
-@
-}
-\dlz
 
-\loesung{Regularization}{
-	<<child="ex_rnw/sol_capacity_regularization.Rnw">>=
+\aufgabe{L1 Regularization}{
+	<<child="ex_rnw/ex_l1_regularization.Rnw">>=
 	@
 }
+\dlz

@@ -4,40 +4,37 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\citebutton}[2]{%
-\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
-}
-
 \newcommand{\titlefigure}{figure_man/varsel_space.png}
 \newcommand{\learninggoals}{
   \item Understand how wrapper methods work
-  \item Understand how they could help in feature selection
+  \item Understand how they can help in feature selection
   \item Know their advantages and disadvantages
 }
 
-
-\title{Supervised Learning}
+\title{Introduction to Machine Learning}
 \date{}
 
 \begin{document}
 
-  \lecturechapter{Wrapper methods}
-  \lecture{Supervised Learning}
+  \lecturechapter{Feature Selection: Wrapper methods}
+  \lecture{Introduction to Machine Learning}
 
   \begin{vbframe}{Introduction}
 
     \begin{itemize}
-      \item Wrapper methods emerged from the idea that different sets of features can be optimal for different learners
-      \item Use the learner itself to assess the quality of the feature sets
-      \item Evaluation on a test set or resampling techniques are used
-      \item A wrapper is nothing else than a discrete search strategy for $S$, where the test error of a learner as a function of $S$ is now the objective criterion
+      \item Wrapper methods emerge from the idea that different sets of features can be optimal for different learners
+      %\item Use the learner itself to assess the quality of the feature sets
+      %\item Evaluation on a test set or resampling techniques are used
+      \item Wrapper is a discrete search strategy for $S$, where objective criterion is test error of learner as function of $S$. Criterion can also be calculated on train set, approximating test error (AIC, BIC)
     \end{itemize}
-
+    $\Rightarrow$ Use the learner to assess the quality of the feature sets
+\vspace{-0.1cm}
     \begin{center}
      \includegraphics[width = 0.3\textwidth]{figure/searchspace_binary.png}\\
-     \scriptsize{Hasse diagram (source: Wikipedia)}
+     \scriptsize{Hasse diagram illustrating search space. Knots are connected if Hamming distance = 1 \\(Source: Wikipedia)}
     \end{center}
-    
+
+
 \end{vbframe}
 
 \begin{comment}
@@ -79,7 +76,7 @@
     \begin{itemize}
     \setlength{\itemsep}{0.8em}
      \item $\Omega$  = search space of all feature subsets $S\subseteq\{ 1, \dots, p \}$. Usually we encode this by
-      %(i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set) 
+      %(i.e., $\Omega \subseteq \mathcal{P}(\{ 1, \dots, p \})$, $\mathcal{P}$ denoting the power set)
       bit vectors, i.e., $\Omega = \{0, 1\}^p$ (1 = feat. selected)
       %It will be clear from the context which variant we refer to.
      \item Objective $\Psi$ can be different functions, e.g., AIC/BIC for LM or cross-validated performance of a learner
@@ -90,7 +87,7 @@
 
     \end{itemize}
 
-  \end{vbframe} 
+  \end{vbframe}
 
 
 \begin{comment}
@@ -108,18 +105,18 @@
     %  \item Formally spoken: One can show that the problem is NP-hard!
     %  \item This means that the problem cannot be solved in polynomial (P) time: ${\mathcal{O}} (p^c)$, where $c \in \N$ indicates the degree o the polynom.
     % \end{blocki}
-    % 
+    %
     % \framebreak
-    % 
+    %
     % \begin{blocki}{How difficult is it to solve the introduced optimization problem, hence, to find the optimal feature set?}
     %  \item More precisely, the proof demonstrates that this problem cannot be approximated within any constant, unless P = NP.
-    % 
+    %
     %   The latter means, that if you find an algorithm that solves a more difficult class of problems (than this optimization problem) in polynomial time, this implies that you found how to solve all easier problems (including our optimization problem) in polynomial time.
     % \item \textbf{Attention}: This does not imply that it is useless trying to construct strategies which work in practice!
     %\item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
     \end{itemize}
   \end{vbframe}
-  
+
 \begin{frame}{Greedy forward search}
 
     \begin{blocki}{}
@@ -149,7 +146,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \item Evaluate the classifier on all $S_j$ and use the best $S_j$
       \end{enumerate}
     %\vspace{-0.2cm}
-    \textbf{Example} Greedy Forward Search on bike sharing data
+    \textbf{Example} GFS on a subset of bike sharing data with features windspeed, temp., humidity and feeling temp. Node value is RMSE.
     \begin{center}
     \includegraphics[width = 0.45\textwidth]{figure/fs-wrappers-powerset-tree-1.png}
     \end{center}
@@ -157,7 +154,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 \end{frame}
     %\framebreak
 
-\begin{frame}[noframenumbering]{Visualization of GFS}    
+\begin{frame}[noframenumbering]{Visualization of GFS}
 \begin{enumerate}
     \setcounter{enumi}{3}
     \item Iterate over this procedure
@@ -178,7 +175,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \includegraphics[width = 0.65\textwidth]{figure/fs-wrappers-powerset-tree-3.png}
     \end{center}
 \end{frame}
-  
+
 \begin{frame}[noframenumbering]{Visualization of GFS}
     \begin{center}
       \includegraphics[width = 0.6\textwidth]{figure/fs-wrappers-powerset-tree-4.png}
@@ -189,12 +186,12 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
      \item Terminate if performance does not improve further or max. number of features is used
  \end{enumerate}
 \end{frame}
-  
-\begin{frame}[noframenumbering]{Visualization of GFS}
-    \begin{center}
-    \includegraphics[width = 0.65\textwidth]{figure/fs-wrappers-powerset-all-4.png}
-    \end{center}
-  \end{frame}
+
+%\begin{frame}[noframenumbering]{Visualization of GFS}
+%    \begin{center}
+%    \includegraphics[width = 0.65\textwidth]{figure/fs-wrappers-powerset-all-4.png}
+%    \end{center}
+%  \end{frame}
 
 
 \begin{vbframe}{Greedy backward search}
@@ -218,10 +215,10 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
           \item GFS is much faster and generates sparser feature selections
           \item GBS much more costly and slower, but sometimes slightly better.
       \end{itemize}
-    
+
   \end{vbframe}
 
-  \begin{frame}{Visualization of GBS}    
+  \begin{frame}{Visualization of GBS}
     %\begin{enumerate}
     %\setcounter{enumi}{3}
     %\item Iterate over this procedure
@@ -236,24 +233,55 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
   \begin{vbframe}{Extensions}
     \vspace{-0.1cm}
     \begin{itemize}
-      \setlength{\itemsep}{0.8em}
-      \item Eliminate or add multiple features at once to increase speed.
-      \item Allow alternating forward and backward search.
-      \item Randomly sample candidate feature subsets in each iteration.
-      \item Focus search on regions of feature subsets where an improvement is present.
+      \setlength{\itemsep}{1.2em}
+      \item Eliminate or add multiple features at once to increase speed
+      \item Allow alternating forward and backward search (also known as stepwise model selection by AIC/BIC in statistics)
+      \item Randomly sample candidate feature subsets in each iteration
+      \item Focus search on regions of feature subsets where an improvement is present
       %\item Use improvements of earlier iterations.
+      %\item Alternatively, we can also use a $(\mu+\lambda)$-Evolutionary Strategy to perform FS, applying random recombination and mutation operations
     \end{itemize}
-\vspace{0.1cm}
-\textbf{Example}\, We can use a simple 1+1 genetic algorithm for FS:
-\begin{enumerate}
-    \item Evolutionary algorithms for FS start with a random subset $S$ represented as a bit vector.
-    \item In each iteration, randomly flip part of bits to obtain new subset $S'$
-    \item Evaluate performance on $S'$
-    \item If $S'$ is superior, update $S\leftarrow S'$, otherwise keep $S$
-    \item Use stopping criteria such as performance threshold or compute/time budget
-\end{enumerate}
+\end{vbframe}
 
-%\framebreak
+\begin{vbframe}{Extensions: Genetic Algorithms for FS}
+    \textbf{Example}\, Template for $(\mu+\lambda)$-Evolutionary Strategy applied to FS
+\begin{enumerate}
+    %\item Start with a random subset $S$ represented as a bit vector.
+    %\item In each iteration, randomly flip part of bits to obtain new subset $S'$
+    %\item Evaluate performance on $S'$
+    %\item If $S'$ is superior, update $S\leftarrow S'$, otherwise keep $S$
+    %\item Use stopping criteria such as performance threshold or compute/time budget
+    \item Initialization: $\mu$ random bit vectors (feature inclusion/exclusion)
+    \item Evaluate model performance for bit vectors
+    \item Select $\mu$ fittest bit vectors (parents)
+    \item Generate $\lambda$ offspring applying crossover and mutation
+    \item Select $\mu$ fittest bit vectors from $(\mu+\lambda)$ options for next generation
+    \item Repeat steps 2-5 until stopping criterion is met
+    %\item Result: Highest fitness bit vector = best feature subset
+    %\item Use CV or validation set for eval. to avoid overfitting.
+\end{enumerate}
+%\vspace{-0.01cm}
+\begin{columns}[c]
+    \begin{column}{0.5\textwidth}
+            \hspace{1cm}
+            \includegraphics[width = 0.75\textwidth]{figure/genetic-alg.png}
+        %\hspace{1cm}
+        \citebutton{Gu \& Cheng, 1996}{https://onlinelibrary.wiley.com/doi/book/10.1002/9780470172254}
+    \end{column}
+    %
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+        \setlength{\itemsep}{0.8em}
+            \item Use CV/validation set for evaluation to avoid overfitting
+            \item Choice of $\mu$ and $\lambda$ allows some control over exploration vs. exploitation trade-off
+            \item See our \citebutton{optimization lecture}{https://slds-lmu.github.io/website_optimization/chapters/08_evolutionary/} for further information
+        \end{itemize}
+    \end{column}
+\end{columns}
+%\begin{center}
+%    \includegraphics[width = 0.35\textwidth]{figure/genetic-alg.png}
+%\end{center}
+
 \end{vbframe}
 
 \begin{comment}
@@ -276,7 +304,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 \end{comment}
 
 %\framebreak
-%\end{vbframe}   
+%\end{vbframe}
 %\begin{center}
 %\begin{minipage}{0.48\textwidth}
 %    \includegraphics[width=\textwidth]{figure/var-selection1.png}
@@ -307,12 +335,12 @@ In addition:
 
 \lz
 
-By exploiting \textbf{Greedy} as a selection strategy, ensure that you always choose individuals with the best fitness. 
+By exploiting \textbf{Greedy} as a selection strategy, ensure that you always choose individuals with the best fitness.
 \end{comment}
 
 
 
-\begin{vbframe}{Extensions}
+\begin{vbframe}{Extensions: Genetic Algorithms for FS}
 \vspace{-0.3cm}
         %\vspace{1.3cm}
         \begin{center}

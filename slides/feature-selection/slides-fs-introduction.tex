@@ -5,37 +5,40 @@
 
 \newcommand{\titlefigure}{figure_man/feature_sel_vs_extr.png}
 \newcommand{\learninggoals}{
-  \item Adding more features can be detrimental to predictive performance.
-  \item Benefits of keeping only informative features for the model
+  \item Too many features can be harmful in prediction
+  \item Selection vs. extraction
+  \item Types of selection methods
 }
 
-\newcommand{\citebutton}[2]{%
-\NoCaseChange{\resizebox{!}{9pt}{\protect\beamergotobutton{\href{#2}{#1}}}}%
-}
-
-\title{Supervised Learning}
+\title{Introduction to Machine Learning}
 \date{}
 
 \begin{document}
 
-  \lecturechapter{Feature Selection}
-  \lecture{Fortgeschrittene Computerintensive Methoden}
+\lecturechapter{Feature Selection: Introduction}
+ \lecture{Introduction to Machine Learning}
 
   \begin{vbframe}{Introduction}
 
-    Feature selection deals with
-    \begin{itemize}
-     \item techniques for choosing a suitable subset of features
-      \item evaluating the influence of features on the model
-    \end{itemize}
-    \vspace{0.5cm}
-    \begin{center}
-    \includegraphics{figure_man/varsel_overview.png}
-    \end{center}
+    Feature selection: Finding a well-performing, 
+    hopefully small set of features for a task.
+    
+    %\begin{center}
+    %\includegraphics{figure_man/varsel_overview.png}
+    %\end{center}
 
     \lz
+    Feature selection is critical for 
+    \begin{itemize}
+       \item reducing noise and overfitting
+       \item improving performance/generalization
+       \item enhancing interpretability by identifying most informative features
+    \end{itemize}
 
-    Feature selection can be performed relying on domain knowledge and expert input, or using a data-driven algorithmic approach.
+ \vspace{0.5cm}
+   
+
+    Features can be selected based on domain knowledge, or data-driven algorithmic approaches.
   \end{vbframe}
 
 
@@ -61,12 +64,6 @@
      %\item In practice there are many reasons why this is not the case!
      \item In practice, irrelevant and redundant features can \enquote{confuse} learners (see \textbf{curse of dimensionality}) and worsen performance.
      \item Example: In linear regression, $R^2$ is monotonically increasing in $p$, but adding irrelevant features leads to overfitting (capturing noise). %instead of underlying relationship.
-    %\item Feature selection is critical for 
-    %\begin{itemize}
-    %    \item reducing noise and overfitting, 
-    %    \item improving performance/generalization,
-    %    \item enhancing interpretability by identifying most informative features.
-    %\end{itemize}
   \end{itemize}
 
   \begin{center}
@@ -77,32 +74,25 @@
 
     \begin{itemize}
     \setlength{\itemsep}{1.0em}
-      \item In high-dimensional data sets, we often have prior information that many features are either irrelevant or redundant.
-      %many of which will be irrelevant or redundant, and multiple features of low quality.
-      % \item This is due to the fact that there is an increasingly strong automation of measuring methods.
-      % Especially the automatized collection of information by computers and the availability of information in the world wide web generates data sets with an extremely high dimensionality.
-      %\item In domains with many features the underlying distribution function can be very complex and hard to estimate.
-      \item Feature selection is critical for 
-    \begin{itemize}
-        \item reducing noise and overfitting, 
-        \item improving performance/generalization,
-        \item interpretability by identifying most informative features.
-    \end{itemize}
-      \item Feature selection can also remedy problems arising in small $n$ regimes or under limited computational resources. 
+      \item In high-dimensional data sets, we often have prior information that many features are either irrelevant %or redundant 
+      or of low quality
+      \item Having redundant features can cost something during prediction %cost something 
+      (money or time)
       %\item Training data are limited.
       %\item Computational resources are limited.
       \item Many models require $n > p$ data. Thus, we either need to
       %\item Thus, we either need
       \begin{itemize}
-        \item adapt models to high-dimensional data (e.g. regularization),
-        \item design entirely new procedures for $p>n$ data, or
-        \item use the preprocessing methods addressed in this lecture.
+        \item adapt models to high-dimensional data (e.g., regularization)
+        \item design entirely new procedures for $p>n$ data
+        \item use the preprocessing methods addressed in this lecture
       \end{itemize}
     \end{itemize}
   \end{vbframe}
 
   \begin{vbframe}{Size of datasets}
-The increasingly automatized collection of information makes data sets with extremely high dimensionality available, while classical models were developed for small $p$ data.
+Increasing availability of measuring methods, everything connected to everything via networks makes data sets with extremely high dimensionality available.
+
 \vspace{0.5cm}
     \begin{itemize}
     \setlength{\itemsep}{1.2em}
@@ -110,7 +100,7 @@ The increasingly automatized collection of information makes data sets with extr
       \item \textbf{Datasets of medium to high dimensionality}:
         At around $10^2$ to $10^3$ features, classical approaches can still work well, while principled feature selection helps in many cases.
       \item \textbf{High-dimensional data}: $10^3$ to $10^9$ or more features.
-        Examples are e.g. micro-array / gene expression data and text categorization (bag-of-words features).
+        Examples are, e.g., micro-array / gene expression data and text categorization (bag-of-words features).
         If, in addition, observations are few, the scenario is called $p \gg n$.
     \end{itemize}
 
@@ -163,9 +153,9 @@ The increasingly automatized collection of information makes data sets with extr
     %\framebreak
     \begin{itemize}
     \footnotesize
-        \item Both FS and FE contribute to\\ 1) dimensionality reduction, and 2) simplicity of classification rules.
-        \item FE can be unsupervised (PCA, Multidimensional Scaling, Manifold Learning) or supervised (supervised PCA, partial least squares).        
-        \item FE can produce lower dim projections which can be more informative than FS.
+        \item Both FS and FE contribute to\\ 1) dimensionality reduction and 2) simplicity of models
+        \item FE can be unsupervised (PCA, multidim scaling, manifold learning) or supervised (supervised PCA, partial least squares)        
+        \item FE can produce lower dim projections which can work better than FS; whether FE+model is interpretable depends on how interpretable extracted features are
     \end{itemize}
 
     \vspace{0.2cm}
@@ -187,9 +177,9 @@ The increasingly automatized collection of information makes data sets with extr
   In rest of the chapter, we introduce different types of methods for FS:
 
   \begin{itemize}
-    \item Filters: evaluate relevance of features using statistical properties such as correlation with target variable.
-    \item Wrappers: use a model to evaluate subsets of features. 
-    \item Embedded methods: integrate FS directly into specific model - we look at them in their dedicated chapters (e.g., CART, $L_0$, $L_1$).
+    \item Filters: evaluate relevance of features using statistical properties such as correlation with target variable
+    \item Wrappers: use a model to evaluate subsets of features
+    \item Embedded methods: integrate FS directly into specific model - we look at them in their dedicated chapters (e.g., CART, $L_0$, $L_1$)
   \end{itemize}
 
       \textbf{Example: embedded method (Lasso)} regularizing model params with $L1$ penalty %in the empirical risk 

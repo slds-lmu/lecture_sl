@@ -5,30 +5,32 @@
 
 \newcommand{\titlefigure}{figure_man/tibshirani_fig_18_1_mod.png}
 \newcommand{\learninggoals}{
-  \item Understand the practical importance of feature selection.
-  \item Understand that models with integrated selection do not always work.
-  \item Know different types of selection methods.
+  \item Understand the practical importance of feature selection
+  \item Understand that models with integrated selection do not always work
+  \item Know different categories of selection methods
 }
 
-\title{Supervised Learning}
+\title{Introduction to Machine Learning}
 \date{}
 
 \begin{document}
 
-  \lecturechapter{Feature Selection}
-  \lecture{Fortgeschrittene Computerintensive Methoden}
+  \lecturechapter{Feature Selection: Motivating Examples}
+  \lecture{Introduction to Machine Learning}
 
   \begin{vbframe}{Motivating example 1: Regularization}
+  In case of $p \gg n$,  overfitting becomes increasingly problematic, as can be shown by the following simulation study:
+  
   \begin{itemize}
-  \setlength{\itemsep}{1.15em}
-    \item In case of $p \gg n$,  overfitting becomes increasingly problematic.
-    \item This can be demonstrated with a simulation study of three datasets of feature dimensionalities $p \in \{ 20, 100, 1000 \}$ and $n=100$ samples over 100 simulation runs.
+  %\setlength{\itemsep}{1.15em}
+    \item For each of 100 simulation iterations:
+    \item Simulate 3 datasets with $n=100$, $p \in \{ 20, 100, 1000 \}$.
+%    \item This can be demonstrated with a simulation study of three datasets of feature dimensionalities $p \in \{ 20, 100, 1000 \}$ and $n=100$ samples over 100 simulation runs.
     %\item Investigation of three different dimensionalities of the input space: $p \in \{ 20, 100, 1000 \}$.
-    \item For each dataset, $p$ features are drawn from a standard Gaussian with pairwise correlation $\rho=0.2$.
+    \item Features are drawn from a standard Gaussian with pairwise correlation $\rho=0.2$.
       \item Target is simulated as
     $ y = \sum_{j=1}^p x_j \theta_j + \sigma\varepsilon $, where $\varepsilon$ and $\bm{\theta}$ are both sampled from standard Gaussians, and $\sigma$ is fixed such that the signal-to-noise ratio is $\var (\E[y|X]) / \sigma^2 = 2$.
-    %\item 100 simulation runs are performed.
-    \item Three ridge regression models with $\lambda \in \{ 0.001, 100, 1000 \}$ are then fitted to each simulated dataset.
+    \item Three ridge regression models with $\lambda \in \{ 0.001, 100, 1000 \}$ are fitted to each simulated dataset.
   \end{itemize}
   
   \framebreak
@@ -73,21 +75,22 @@
 
   \footnotesize{Hastie (2009). The Elements of Statistical Learning}
   \end{center}
-  Methods without in-built FS do not perform well, with best results obtained using only small subset of relevant features!
+  Methods without built-in FS do not perform well. \\ Best results obtained using small subset of relevant features.
   \end{vbframe}
 
-  \begin{vbframe}{Motivating ex. 3: Comparing FS with integrated selection methods}
+  \begin{vbframe}{Motivating ex. 3: Integrated selection}
 \textbf{Set-up for simulated micro-array data:}
 \vspace{0.5cm}
   \begin{itemize}
   \setlength{\itemsep}{1.2em}
-  \item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
+  %\item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
   %\item With \code{sim.data} one can simulate micro-array data.
-  \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian.
-  \item Each simulated sample has $p=100$ genes, of which half are relevant for the target and half have no influence.
+  \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian
+  \item 50\% are relevant for the target and 50\% have no influence
+  \item Among the informative features, 25 are positively and 25 negatively correlated with target using weights $\{-1,1\}$
+  \item Target is simulated from Bernoulli distribution using linear predictor as log-odds (linear decision boundary!)
   %\item The other $\code{ng-nsg}=50$ genes have no influence.
   %\item The gene ratios are drawn from a multivariate normal distribution.
-  \item Among the informative features, 25 are positively and 25 negatively correlated with target.
   \end{itemize}
 
   \framebreak
@@ -112,8 +115,8 @@
   \end{table}
 \vspace{0.1cm}
 \begin{itemize}
-\setlength{\itemsep}{1.0em}
-    \item[$\Rightarrow$] The models with integrated selection do not work ideally here! Also, methods with lin. decision boundary are better due to our simulation set-up.
+\setlength{\itemsep}{0.8em}
+    \item[$\Rightarrow$] Different to Ex. 2, models with integrated FS do not work ideally here. Also, methods with lin. decision boundary are better due to our simulation set-up.
     \item[$\Rightarrow$]   Performance improves significantly for most methods when only trained on informative features.
 \end{itemize}
 

@@ -10,12 +10,12 @@
   \item Understand how filter methods work and how to apply them for feature selection.
   \item Know filter methods based on correlation, test statistics, and mutual information.
 }
-\title{Supervised Learning}
+\title{Introduction to Machine Learning}
 \date{}
 \begin{document}
 
-  \lecturechapter{Filter Methods}
-  \lecture{Supervised Learning}
+  \lecturechapter{Feature Selection: Filter Methods}
+  \lecture{Introduction to Machine Learning}
 
   \begin{vbframe}{Introduction}
   \vspace{0.4cm}
@@ -49,7 +49,7 @@
     \item Calculate the $\chi^2$-statistic for each feature-target combination:
       $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
     where $e_{mk}$ is the observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency, and $M,K$ are the number of values $x_j$ and $y$ can take.
-    \item The greater $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
+    \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
   \end{itemize}
   \end{vbframe}
 
@@ -229,12 +229,13 @@
   $$I(X ; Y) = \E_{p(x, y)} \left[ \log \frac{p(X, Y)}{p(X) p(Y)} \right]$$
 
   \begin{itemize}
-  \setlength{\itemsep}{1.2em}
+  \setlength{\itemsep}{0.8em}
     \item Each feature $x_j$ is rated according to $I(x_j;y)$; this is sometimes called information gain (IG).
-    \item MI measures the amount of "dependence" between random variables by looking how
-    different their joint distribution is from strict independence $p(X)p(Y)$.
+    \item MI measures the amount of "dependence" between RV by looking how
+    different their joint dist. is from strict independence $p(X)p(Y)$.
     \item MI is zero, iff $X \perp \!\!\! \perp Y$. On the other hand, if $X$ is a deterministic function of $Y$ or vice versa, MI becomes maximal.
   \item Unlike correlation, MI is defined for both numeric and categorical variables and provides a more general measure of dependence.
+  \item To estimate MI: for discrete features, use observed frequencies. For continuous features, binning, kernel density estimation is used.
   \end{itemize}
   \end{vbframe}
 

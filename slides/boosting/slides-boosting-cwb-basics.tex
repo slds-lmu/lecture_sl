@@ -20,7 +20,7 @@
 
 \begin{document}
 
-\lecturechapter{Componentwise Gradient Boosting}
+\lecturechapter{Gradient Boosting: CWB Basics 1}
 \lecture{Introduction to Machine Learning}
 
 % ------------------------------------------------------------------------------
@@ -32,17 +32,17 @@ performance but is difficult to interpret unless the base learners are stumps.
 
 \lz
 
-The aim of CWB is to find a model that:
+The aim of CWB is to find a model that exhibits:
 
 \begin{itemize}
   \item
-    has strong predictive performance,
+    strong predictive performance,
 
   \item
-    has components that are still interpretable,
+    interpretable components,
 
   \item
-    does automatic selection of components,
+    automatic selection of components,
 
   \item
     is sparser than a model fitted with maximum-likelihood estimation.
@@ -92,17 +92,18 @@ $\{ \bm{\Theta}_1, ... \bm{\Theta}_J \}$,
 \]
 \vspace*{0.2cm}
 
-Different from GB, in each iteration multiple base learners 
-$b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fit to the 
-pseudo residuals $\rmm$ and only the best-fitting one
+%Different from GB, in each iteration multiple base learners 
+%$b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fit to the 
+%pseudo residuals $\rmm$ and only best-fitting one
 % $\bmm_{\hat{j}}(\xv, \thetam)$
-is selected and updated.
+%is selected and updated.
+In each iteration, base learners are fitted to the \textbf{pseudo residuals} $\rmm$.
 
 
 \framebreak
 
-Common examples of base learners are
-
+%Common examples of base learners are
+We restrict the base learners to additive model components, i.e.,
 \begin{minipage}{0.4\textwidth}
     \includegraphics[width=\linewidth]{figure/compboost-base-learner-linear.png}
 \end{minipage}\hfill
@@ -121,14 +122,14 @@ Common examples of base learners are
     \includegraphics[width=\linewidth]{figure/compboost-base-learner-ridge.png}
 \end{minipage}\hfill
 \begin{minipage}{0.5\textwidth}
-  dummy encoded linear model of a categorical feature
+  dummy encoded linear model of a cat. feature
 \end{minipage}
 
 \begin{minipage}{0.4\textwidth}
     \includegraphics[width=\linewidth]{figure/compboost-base-learner-tensor.png}
 \end{minipage}\hfill
 \begin{minipage}{0.5\textwidth}
-  product tensor of two base learners for interaction modelling (e.g. two splines)
+  tensor product spline for interaction modelling (e.g. spatial effects)
 \end{minipage}
 
 \vspace{\baselineskip}
@@ -137,7 +138,8 @@ More advanced base learners could also be  Markov random fields, random effects,
 
 \framebreak
 
-We restrict these base learners to additive models, i.e., having a base learner $ b_j(\xv, \thetab^{[1]})$ and another base learner $b_j$ of the same type but with a different parameter vector $\thetab^{[2]}$, then it is possible to combine them to a new base learner of the same type:
+%We restrict these base learners to additive models, i.e., 
+Two BLs of the same type can simply be added by adding up their parameter vectors:
 
 $$
  b_j(\xv, \thetab^{[1]}) + b_j(\xv, \thetab^{[2]}) =
@@ -170,36 +172,21 @@ Thus, if $\{ b_j(\xv, \thetab^{[1]}), b_j(\xv, \thetab^{[2]}) \} \in \mathcal{B}
 \end{vbframe}
 
 
-\begin{vbframe}{Feature selection in CWB}
-Often base learners are not defined on the entire feature vector $\xv$ but on
-a single feature $x_j$:
-
-$$
-  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
-$$
-Hence, CWB naturally incorporates variable selection:
-\begin{itemize}
-    \item Only the best base learner with the associated feature is selected
-    \item Due to the iterative nature of CWB, this is repeated $M$ times to obtain a selection of $M$ base learners by $j^{[1]}, \dots, j^{[m]}$ with $j^{[M]}\in\{1, \dots, p\}$
-    \item The number $\sum_{m=1}^M \mathds{1}_{[j = j^{[m]}]}$ tells us how often the feature $x_j$ in $b_j$ was selected
-\end{itemize}
-%The iterative nature of CWB and the additivity of the base learners 
-%directly incorporates a variable selection mechanism into the fitting
-%process, since in each iteration only the best base learner is selected in
-%combination with the associated feature, and each base learner can be
-%(substantially) more complex than a stump (e.g., univariate linear effects or 
-%splines).
-\end{vbframe}
-
-
 
 % ------------------------------------------------------------------------------
 
 \begin{vbframe}{Componentwise boosting algorithm}
+
+\footnotesize{Different from GB, multiple base learners 
+$b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fitted %to the pseudo residuals $\rmm$ 
+and only best-fitting one
+% $\bmm_{\hat{j}}(\xv, \thetam)$
+is selected and updated.}
+\vspace{-0.3cm}
 \definecolor{algocol}{rgb}{0, 0.125, 0.376}
 \input{algorithms/componentwise_gradient_boosting.tex}
-
-({\color{lightgray} Same as for GB, \color{algocol} New inner loop for CWB})
+\vspace{-0.3cm}
+\scriptsize{({\color{lightgray} Same as for GB, \color{algocol} New inner loop for CWB})}
 
 \end{vbframe}
 
@@ -271,6 +258,56 @@ Hence, CWB naturally incorporates variable selection:
 \addtocounter{framenumber}{-1}
 \end{vbframe}
 % ------------------------------------------------------------------------------
+
+\begin{vbframe}{Feature selection in CWB}
+In CWB, we often define BLs on a single feature
+
+$$
+  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
+$$
+Allows natural form of feature selection:
+\begin{itemize}
+    \item When we select the best BL in one iter of CWB, we thereby also only select one (associated) feature
+    \item Note that a feature (or rather a BL associated with it) can be selected in multiple iters, so $\leq M$ features are selected
+    %\item Due to the iterative nature of CWB, this is repeated $M$ times to obtain a selection of $M$ base learners by $j^{[1]}, \dots, j^{[m]}$ with $j^{[M]}\in\{1, \dots, p\}$
+    %\item The number $\sum_{m=1}^M \mathds{1}_{[j = j^{[m]}]}$ tells us how often the feature $x_j$ in $b_j$ was selected
+\end{itemize}
+\vspace{0.5cm}
+\begin{center}
+%\begin{minipage}{0.3\textwidth}
+%    \includegraphics[width=\textwidth]{figure/compboost-base-learner-linear.png}
+%\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figure/compboost-base-learner-spline.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figure/compboost-base-learner-ridge.png}
+\end{minipage}
+\end{center}
+
+
+%\begin{minipage}{0.4\textwidth}
+%    \includegraphics[width=\linewidth]{figure/compboost-base-learner-linear.png}
+%\end{minipage}%\hfill
+%\begin{minipage}{0.5\textwidth}
+%  linear effect
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%    \includegraphics[width=\linewidth]{figure/compboost-base-learner-spline.png}
+%\end{minipage}%\hfill
+%\begin{minipage}{0.5\textwidth}
+%  non-linear (spline) effect
+%\end{minipage}
+
+%The iterative nature of CWB and the additivity of the base learners 
+%directly incorporates a variable selection mechanism into the fitting
+%process, since in each iteration only the best base learner is selected in
+%combination with the associated feature, and each base learner can be
+%(substantially) more complex than a stump (e.g., univariate linear effects or 
+%splines).
+\end{vbframe}
+
 
 \endlecture
 \end{document}
