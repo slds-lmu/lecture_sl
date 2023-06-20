@@ -5,18 +5,18 @@
 
 \newcommand{\titlefigure}{figure_man/tibshirani_fig_18_1_mod.png}
 \newcommand{\learninggoals}{
-  \item Understand the practical importance of feature selection.
-  \item Understand that models with integrated selection do not always work.
-  \item Know different types of selection methods.
+  \item Understand the practical importance of feature selection
+  \item Understand that models with integrated selection do not always work
+  \item Know different categories of selection methods
 }
 
-\title{Supervised Learning}
+\title{Introduction to Machine Learning}
 \date{}
 
 \begin{document}
 
   \lecturechapter{Feature Selection: Motivating Examples}
-  \lecture{Supervised Learning}
+  \lecture{Introduction to Machine Learning}
 
   \begin{vbframe}{Motivating example 1: Regularization}
   In case of $p \gg n$,  overfitting becomes increasingly problematic, as can be shown by the following simulation study:
@@ -78,15 +78,15 @@
   Methods without built-in FS do not perform well. \\ Best results obtained using small subset of relevant features.
   \end{vbframe}
 
-  \begin{vbframe}{Motivating ex. 3: Comparing FS with integrated selection methods}
+  \begin{vbframe}{Motivating ex. 3: Integrated selection}
 \textbf{Set-up for simulated micro-array data:}
 \vspace{0.5cm}
   \begin{itemize}
   \setlength{\itemsep}{1.2em}
-  \item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
+  %\item We simulate micro-array data with function \code{sim.data} of the package \pkg{penalizedSVM}.
   %\item With \code{sim.data} one can simulate micro-array data.
-  \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian.
-  \item Each simulated sample has $p=100$ genes, of which half are relevant for the target and half have no influence.
+  \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian
+  \item 50\% are relevant for the target and half have no influence
   %\item The other $\code{ng-nsg}=50$ genes have no influence.
   %\item The gene ratios are drawn from a multivariate normal distribution.
   \item Among the informative features, 25 are positively and 25 negatively correlated with target.
