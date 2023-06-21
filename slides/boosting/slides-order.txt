@@ -10,4 +10,7 @@ Suggested order of slides:
 - slides-boosting-xgboost
 - slides-boosting-xgboost-deepdive
 - slides-boosting-lgm-ctbm
-- slides-boosting-comp-boost
+- slides-boosting-cwb-basics
+- slides-boosting-cwb-basics2
+- slides-boosting-cwb-glm
+- slides-boosting-cwb-advanced
