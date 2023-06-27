@@ -91,7 +91,8 @@ simple as possible.
 
 \lz
 
-Kneib~et~al. (2009) proposed a decomposition of each base learner into a
+\citebutton{Kneib~et~al., 2009}{https://epub.ub.uni-muenchen.de/2063/1/tr003.pdf} %Kneib~et~al. (2009) 
+proposed a decomposition of each base learner into a
 constant, a linear and a nonlinear part.
 The boosting algorithm will automatically decide which feature to include --
 linear, nonlinear, or none at all:
@@ -138,7 +139,7 @@ where
         The first $k$ columns of the $\bm{Q}$ matrix from the QR decomposition form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
 
     \item 
-        Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times d_{j,nonlin} - d_{j,lin}}$ which defines $b_{j,\text{nnonlin}^c}$
+        Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns, rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times d_{j,nonlin} - d_{j,lin}}$ which defines $b_{j,\text{nnonlin}^c}$
 \end{itemize}
 
 \end{vbframe}
@@ -150,7 +151,7 @@ where
         Suppose $n = 100$ uniformly distributed $x$ values between $0$ and $10$.
 
     \item 
-        The response $y = 2\sin(x) + 2x$ has a nonlinear and linear component.
+        The response predictor $y = 2\sin(x) + 2x$ has a nonlinear and linear component.
 
     \item
         We apply CWB with $M = 500$ to $\{(\xi, \yi) | i = 1, \dots, n\}$ with:
@@ -356,7 +357,7 @@ Hence, $\hat{f}$ can be decomposed into the marginal feature effects (PDPs).
   \item A drawback compared to statistical models is that we do not get valid
   inference for coefficients $\rightarrow$ post-selection inference.
   % This can be (partially) solved by bootstrap inference or related methods.
-  \item In most cases, gradient boosting with tree will dominate componentwise
+  \item In most cases, gradient boosting with trees will dominate componentwise
   boosting in terms of performance due to its inherent ability to include
   higher-order interaction terms.
   % In most cases, componentwise gradient boosting will have worse
