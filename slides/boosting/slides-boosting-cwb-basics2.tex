@@ -12,6 +12,7 @@
 \newcommand{\learninggoals}{
   \item Handling of categorical features
   \item Intercept handling
+  \item Understand practical application example
   %\item Built-in feature selection process
   %\item Fair base learner selection
 }
@@ -63,7 +64,7 @@ Advantages of simultaneously handling all categories in CWB:
 Disadvantage of simultaneously handling all categories in CWB: 
 \begin{itemize}
     \item 
-        If category $g^\ast\in\{1, \dots, G\}$ is not informative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost surely) not $0$.
+        If category $g^\ast\in\{1, \dots, G\}$ is uninformative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost surely) not $0$.
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -86,7 +87,7 @@ Disadvantage of individually handling all categories in CWB:
         caused by conducting single steps in direction of 1-dim parameter $\thetah_{j,g}$.
 
     \item 
-        Penalization and selection becomes difficult since base learner has exactly one degree of freedom.
+        Penalization and selection become difficult since base learner has exactly one degree of freedom.
 \end{itemize}
 
 \end{vbframe}
@@ -94,35 +95,31 @@ Disadvantage of individually handling all categories in CWB:
 % ------------------------------------------------------------------------------
 
 \begin{vbframe}{intercept handling}
-
-We define the loss-optimal constant $\fm[0](\xv)$ is an initial model intercept. \\
-\vspace{0.2cm}
-Two possible options to handle the intercept in CWB are:
-\vspace{0.3cm}
+%\vspace{0.2cm}
+There are two options to handle the intercept in CWB. In both, the loss-optimal constant $\fm[0](\xv)$ is an initial model intercept. \\
+%\vspace{0.3cm}
 \begin{enumerate}
-
-\item Include an intercept BL:
+\setlength{\itemsep}{0.8em}
+\item {\small Include an intercept BL}:
   \begin{itemize}
-    \setlength{\itemsep}{1.1em}
-    \item Add base learner $b_{\text{int}} = \theta$ as potential candidate considered in each iteration.
-    \item Remove intercept from all linear base learners to only use $b_j(\xv) = \theta_j x_j$.
-    \item Final intercept is given as $\fm[0](\xv) + \hat{\theta}$.
+    \setlength{\itemsep}{0.8em}
+    \item {\footnotesize Add BL $b_{\text{int}} = \theta$ as potential candidate considered in each iteration and remove intercept from all linear BLs, i.e., $b_j(\xv) = \theta_j x_j$.}
+    \item {\footnotesize Final intercept is given as $\fm[0](\xv) + \hat{\theta}$. Linear BLs without intercept only make sense if covariates are centered (see \citebutton{\texttt{mboost}}{https://cran.r-project.org/web/packages/mboost/vignettes/mboost_tutorial.pdf} tutorial, p.~7)}
   \end{itemize}
-
-\framebreak
   
-  \item Include intercept in each linear BL $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ and aggregate into global intercept post-fitting.
-  \begin{itemize}
-  \item  Assume linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ %per base learner
-  and slope $\theta_{j2}$.
-      \item If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
-    \item Over fitting process, intercept is adjusted $M$ times to yield:
-    $$
-    \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
-    $$
+%\framebreak
+  
+  \item {\small Include intercept in each linear BL and aggregate into global intercept post-hoc}:
+  \begin{itemize} \setlength{\itemsep}{0.8em}
+  \item  {\footnotesize Assume linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$. %with 
+  %one intercept $\theta_{j1}$ %per base learner
+  %and slope $\theta_{j2}$.
+  If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.}
+    \item {\footnotesize During training, intercept is adjusted $M$ times to yield $\fm[0](\xv) + \sum\limits_{m=1}^M %\hat{\theta}^{[m]}_{j^{[m]}1}
+    \hat{\theta}^{[m]}_{j1}$}
     \end{itemize}
 \end{enumerate}
-$\Rightarrow$ All intercepts in the base learners are collected and aggregated in the model intercept.
+%{\footnotesize $\Rightarrow$ All intercepts in the BLs are collected and aggregated post-hoc in the model intercept.}
 
 %-----------------------------------
 
@@ -150,6 +147,7 @@ $\Rightarrow$ All intercepts in the base learners are collected and aggregated i
 \framebreak
 
 The following figure shows a comparison of the parameter updates with different intercept handlings:
+\vspace{0.2cm}
 \begin{center}
 % Recreate figure: rsrc/fig-cwb-intercept-handling.R
 \includegraphics[width = \textwidth]{figure/compboost-intercept-handling.png}

@@ -121,16 +121,14 @@ where
 
 \begin{itemize}
     \item 
-        Suppose a base learner $b_{j,\text{nonlin}}\in\mathcal{B}_{j,\text{nonlin}}$ (a spline base learner) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear base learner $b_{j,\text{lin}}\in\mathcal{B}_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{nonlin}}}$.
+        Suppose a BL $b_{j,\text{nonlin}}\in\mathcal{B}_{j,\text{nonlin}}$ (a spline BL) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear BL $b_{j,\text{lin}}\in\mathcal{B}_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{lin}}}$.
 
     \item
-        Often, $\mathcal{B}_{j,\text{lin}} \subseteq \mathcal{B}_{j,\text{nonlin}}$ and hence $b_{j,\text{lin}}$ is overlayed by $b_{j,\text{nonlin}}$ and not selected during the fitting.
+        Often, $\mathcal{B}_{j,\text{lin}} \subseteq \mathcal{B}_{j,\text{nonlin}}$ and hence $b_{j,\text{lin}}$ is overlayed by $b_{j,\text{nonlin}}$ and not selected during training.
 
      \item
-        Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnnlin}}$ to obtain a centered nonlinear base learner $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$. 
-
-    \item 
-        Practically, this means that $b_{j,\text{nonlin}^c}\notin \mathcal{B}_{j,\text{lin}}$ and hence cannot model any linear effect.
+        Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnnlin}}$ to obtain a centered nonlinear BL $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$.  
+        It follows that $b_{j,\text{nonlin}^c}\notin \mathcal{B}_{j,\text{lin}}$ and hence the BL cannot model any linear effect.
 
     \item
         The centering is done by computing the QR decomposition of $\bm{A} = \bm{Z}_{j,nonlin}^T \bm{Z}_{j,lin}$.
@@ -139,7 +137,7 @@ where
         The first $k$ columns of the $\bm{Q}$ matrix from the QR decomposition form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
 
     \item 
-        Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns, rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times d_{j,nonlin} - d_{j,lin}}$ which defines $b_{j,\text{nnonlin}^c}$
+        Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns, rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times (d_{j,nonlin} - d_{j,lin})}$ which defines $b_{j,\text{nnonlin}^c}$
 \end{itemize}
 
 \end{vbframe}
@@ -151,10 +149,10 @@ where
         Suppose $n = 100$ uniformly distributed $x$ values between $0$ and $10$.
 
     \item 
-        The response predictor $y = 2\sin(x) + 2x$ has a nonlinear and linear component.
+        The response $y = 2\sin(x) + x + 2 + \varepsilon$ has a nonlinear and linear component ($\varepsilon \sim \mathcal{N}(0,\frac{1}{2})$).
 
     \item
-        We apply CWB with $M = 500$ to $\{(\xi, \yi) | i = 1, \dots, n\}$ with:
+        We apply CWB with $M = 500$ to $\{(\xi, \yi)\}_{i=1}^{n}$ with:
         \begin{itemize}
             \item One model with $\mathcal{B} = \{b_{j,\text{lin}}, b_{j,\text{nonlin}}\}$
             \item One model with $\mathcal{B} = \{b_{j,\text{lin}}, b_{j,\text{nonlin}^c}\}$
@@ -175,11 +173,11 @@ where
 
 \begin{vbframe}{Fair Base Learner Selection}
 
-\begin{itemize}
+\begin{itemize} \setlength{\itemsep}{1.6em}
 
   \item
     Using splines and linear base learners in CWB will favor
-    the more complex spline base learner over the linear base learner.
+    the more complex spline BLs over the linear BLs.
 
   \item
     This makes it harder to achieve the desired behavior of the base learner
@@ -199,7 +197,7 @@ where
 
 Especially for linear models and GAMs it is possible to transform the degrees of freedom into a corresponding penalty term.
 
-\textcolor{red}{@BB nochmal nachlesen}
+%\textcolor{red}{@BB nochmal nachlesen}
 
 \begin{itemize}
 
@@ -215,7 +213,7 @@ Especially for linear models and GAMs it is possible to transform the degrees of
   \item
     Having that kind of model, we use the hat matrix
     $\mathbf{S}_j = \mathbf{Z}_j\left(\mathbf{Z}_j^T \mathbf{Z}_j +
-    \lambda_j \mathbf{K}_j\right)^{-1}\mathbf{Z}_j^T$ to define the degrees of
+    \lambda_j \mathbf{K}_j\right)^{-1}\mathbf{Z}_j^T$ to define the (\textit{effective}) degrees of
     freedom:
     $$
     \operatorname{df}(\lambda_j) = \trace\left(2\mathbf{S}_j - \mathbf{S}_j^T
@@ -234,12 +232,11 @@ Especially for linear models and GAMs it is possible to transform the degrees of
 
 It is possible to calculate $\lambda_j$ by applying the Demmler-Reinsch
 orthogonalization (see
-\href{https://www.tandfonline.com/doi/abs/10.1198/jcgs.2011.09220}
-{Hofer et al. (2011)}).
+\citebutton{Hofer et al. (2011)}{https://www.tandfonline.com/doi/abs/10.1198/jcgs.2011.0922}).
 
 % (see Hofer et. al. (2011).\textit{\enquote{A framework for unbiased model selection based on boosting.}}).
 
-Consider the following example of a GAM using splines with 24 parameters:
+Consider the following example of a GAM using splines with 24 B-Spline basis functions:
 
 \begin{itemize}
 
@@ -262,7 +259,7 @@ Consider the following example of a GAM using splines with 24 parameters:
 
 \begin{vbframe}{Available base learners}
 
-There is a large amount of possible base learners, e.g.:
+There is a large number of possible base learners, e.g.:
 
 \begin{itemize}
   \item Linear effects and interactions (with or without intercept)
@@ -275,13 +272,15 @@ There is a large amount of possible base learners, e.g.:
 
 \lz
 
-In combination with the flexible choice of loss functions, this allows boosting to fit  a huge number of different statistical models with the same algorithm. Recent extensions include GAMLSS-models, where multiple additive predictors are boosted to model different distribution parameters (e.g., conditional mean and variance for a Gaussian model).
+In combination with the flexible choice of loss functions, boosting can be applied to fit a huge class of models.\\ 
+\vspace{0.1cm}
+Recent extensions include distributional regression (GAMLSS), where multiple additive predictors are boosted to model all distributional parameters (e.g., cond. mean and variance for a Gaussian model).
 
 \end{vbframe}
 % ------------------------------------------------------------------------------
 \begin{vbframe}{Partial Dependence Plots (PDP)}
 
-If we use single features in base learners, we think of each base learner as a wrapper around a feature which represents the effect of that feature on the target variable. Base learners can be selected more than once (with varying parameter estimates), signaling that this feature is more important.\\
+If we use single features in base learners, we think of each base learner as a wrapper around a feature representing the feature's effect on the target variable. Base learners can be selected more than once (with varying parameter estimates), signaling that this feature is more important.\\
 E.g. let $j \in \{ 1,2,3 \}$, the first three iterations might look as follows
 \begin{align*}
 m = 1: \quad & \hat{f}^{[1]}(\xv) = \hat{f}^{[0]} + \alpha \textcolor{blue}{\hat{b}_2(x_2, \hat{\theta}^{[1]})}\\

@@ -34,17 +34,19 @@ $$
 
 This definition will result in an ordinary \textbf{linear regression} model.
 
+\lz
 % .\footnote{Note: a linear model base learner without intercept only makes sense if the covariates are centered (see \texttt{mboost} tutorial, page7)}
 
 
-\begin{itemize}
-  \item Note that linear base learners without intercept only make sense for
-  covariates that have been centered before.
-  \item In the limit, boosting algorithm will converge to maximum likelihood solution.
+\begin{itemize} 
+\setlength{\itemsep}{1.6em}
+  %\item Note that linear base learners without intercept only make sense for
+  %covariates that have been centered before.
+  \item In the limit, boosting algorithm will converge to the maximum likelihood solution.
   %\item If we let the boosting algorithm converge, i.e., let it run for a really
   %long time, the parameters will converge to the \textbf{same solution} as the
   %maximum likelihood estimate.
-  \item By specifying loss as NLL of exponential family distribution with according link function, CWB is equivalent to (regularized) \textbf{GLM}.
+  \item By specifying loss as NLL of exponential family distribution with an appropriate link function, CWB is equivalent to (regularized) \textbf{GLM}.
   %\item This means that, by specifying a loss function according to the negative
   %likelihood of a distribution from an exponential family and defining a link
   %function accordingly, this kind of boosting is equivalent to a (regularized)
