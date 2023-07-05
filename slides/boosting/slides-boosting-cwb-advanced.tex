@@ -8,7 +8,7 @@
 \newcommand{\titlefigure}{figure/compboost-illustration-2.png}
 \newcommand{\learninggoals}{
   \item Details of nonlinear BLs and splines
-  \item Understand the built-in feature selection process
+  \item Decomposition for splines
   \item Fair base learner selection
   \item Feature importance and PDPs
 }
@@ -18,7 +18,7 @@
 
 \begin{document}
 
-\lecturechapter{Gradient Boosting: Advanced CWB Topics}
+\lecturechapter{Gradient Boosting: Advanced CWB}
 \lecture{Introduction to Machine Learning}
 
 % ------------------------------------------------------------------------------
@@ -86,10 +86,10 @@ their additive structure, which is the case for splines).
 
 \begin{vbframe}{Nonlinear effect decomposition}
 
-Even when allowing for more complexity we typically want to keep solutions as
-simple as possible.
+%Even when allowing for more complexity we typically want to keep solutions as
+%simple as possible.
 
-\lz
+%\lz
 
 \citebutton{Kneib~et~al., 2009}{https://epub.ub.uni-muenchen.de/2063/1/tr003.pdf} %Kneib~et~al. (2009) 
 proposed a decomposition of each base learner into a
@@ -114,35 +114,37 @@ where
   \item $x_j \cdot \theta^{[m]}_{j, \text{lin}}$ is a feature-specific linear
   base learner, and
   \item $s_j(x_j, \thetam_{j,\text{nonlin}})$ is a (centered) nonlinear base
-  learner capturing deviation from the linear effect (see next slide).
+  learner capturing deviation from the linear effect 
 \end{itemize}
+
+Careful: We usually also apply an orthogonalization procedure on top of this but skip technical details here. 
 
 \framebreak
 
-\begin{itemize}
-    \item 
-        Suppose a BL $b_{j,\text{nonlin}}\in\mathcal{B}_{j,\text{nonlin}}$ (a spline BL) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear BL $b_{j,\text{lin}}\in\mathcal{B}_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{lin}}}$.
+% \begin{itemize}
+%     \item 
+%         Suppose a BL $b_{j,\text{nonlin}}\in\mathcal{B}_{j,\text{nonlin}}$ (a spline BL) with design matrix $\bm{Z}_{j,\text{nonlin}}\in\R^{n\times d_{j,\text{nonlin}}}$ and a linear BL $b_{j,\text{lin}}\in\mathcal{B}_{j,\text{lin}}$ with design matrix $\bm{Z}_{j,\text{lin}}\in\R^{n\times d_{j,\text{lin}}}$.
 
-    \item
-        Often, $\mathcal{B}_{j,\text{lin}} \subseteq \mathcal{B}_{j,\text{nonlin}}$ and hence $b_{j,\text{lin}}$ is overlayed by $b_{j,\text{nonlin}}$ and not selected during training.
+%     \item
+%         Often, $\mathcal{B}_{j,\text{lin}} \subseteq \mathcal{B}_{j,\text{nonlin}}$ and hence $b_{j,\text{lin}}$ is overlayed by $b_{j,\text{nonlin}}$ and not selected during training.
 
-     \item
-        Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnnlin}}$ to obtain a centered nonlinear BL $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$.  
-        It follows that $b_{j,\text{nonlin}^c}\notin \mathcal{B}_{j,\text{lin}}$ and hence the BL cannot model any linear effect.
+%      \item
+%         Subtracting $b_{j,\text{lin}}$ from $b_{j,\text{nnnlin}}$ to obtain a centered nonlinear BL $b_{j,\text{nnonlin}^c}$ means to transform $\bm{Z}_{j,nonlin}$ so that the $span(\bm{Z}_{j,lin})$ is not included in $span(\bm{Z}_{j,nonlin})$.  
+%         It follows that $b_{j,\text{nonlin}^c}\notin \mathcal{B}_{j,\text{lin}}$ and hence the BL cannot model any linear effect.
 
-    \item
-        The centering is done by computing the QR decomposition of $\bm{A} := \bm{Z}_{j,nonlin}^T \bm{Z}_{j,lin}$.
+%     \item
+%         The centering is done by computing the QR decomposition of $\bm{A} := \bm{Z}_{j,nonlin}^T \bm{Z}_{j,lin}$.
 
-    \item 
-        The first $k$ columns of the $\bm{Q}$ matrix from the QR decomposition form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
+%     \item 
+%         The first $k$ columns of the $\bm{Q}$ matrix from the QR decomposition form an orthonormal basis for the span of the first $k$ columns of $\bm{A}$.
 
-    \item 
-        Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns, rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times (d_{j,nonlin} - d_{j,lin})}$ which defines $b_{j,\text{nnonlin}^c}$
-\end{itemize}
+%     \item 
+%         Hence $\bm{Q}^\ast$, which is $\bm{Q}$ without the first $d_{j,\text{lin}}$ columns, rotates $\bm{Z}_{j,nonlin}$ to $\bm{Z}_{j,nonlin^c} = \bm{Q}^\ast\bm{Z}_{j,nonlin}\in\R^{n\times (d_{j,nonlin} - d_{j,lin})}$ which defines $b_{j,\text{nnonlin}^c}$
+% \end{itemize}
 
 \end{vbframe}
 
-\begin{vbframe}{Example: Nonlinear effect decomposition}
+\begin{vbframe}{Nonlinear effect decomposition}
 
 \begin{itemize}
     \item 
@@ -177,17 +179,19 @@ where
 
   \item
     Using splines and linear base learners in CWB will favor
-    the more complex spline BLs over the linear BLs.
+    the more complex spline BLs over the linear BLs
 
   \item
     This makes it harder to achieve the desired behavior of the base learner
-    decomposition as explained previously.
+    decomposition as explained previously
 
   \item
-    To conduct a fair base learner selection we set the degrees of freedom of all base learners equal.
+    To conduct a fair base learner selection, we set the degrees of freedom of all base learners equal
 
   \item
-    The idea is to set the regularization/penalty term of a single learner in a manner that their complexity is treated equally.
+    The idea is to set a single learner's regularization/penalty term so that their complexity is treated equally
+
+\item We also skip some technical details here
 
 \end{itemize}
 
@@ -195,65 +199,65 @@ where
 
 % ------------------------------------------------------------------------------
 
-Especially for linear models and GAMs it is possible to transform the degrees of freedom into a corresponding penalty term.
+% Especially for linear models and GAMs it is possible to transform the degrees of freedom into a corresponding penalty term.
 
-%\textcolor{red}{@BB nochmal nachlesen}
+% %\textcolor{red}{@BB nochmal nachlesen}
 
-\begin{itemize}
+% \begin{itemize}
 
-  \item
-    Parameters of the base learners are estimated via:
-    $$
-    \thetam_j = \left(\mathbf{Z}_j^T \mathbf{Z}_j + \lambda_j \mathbf{K}_j
-    \right)^{-1}\mathbf{Z}_j^T \rmm\,,
-    $$
-    with $\mathbf{Z}_j$ the design matrix of the $j$-th base learner,
-    $\lambda_j$ the penalty term, and $\mathbf{K}_j$ the penalty matrix.
+%   \item
+%     Parameters of the base learners are estimated via:
+%     $$
+%     \thetam_j = \left(\mathbf{Z}_j^T \mathbf{Z}_j + \lambda_j \mathbf{K}_j
+%     \right)^{-1}\mathbf{Z}_j^T \rmm\,,
+%     $$
+%     with $\mathbf{Z}_j$ the design matrix of the $j$-th base learner,
+%     $\lambda_j$ the penalty term, and $\mathbf{K}_j$ the penalty matrix.
 
-  \item
-    Having that kind of model, we use the hat matrix
-    $\mathbf{S}_j = \mathbf{Z}_j\left(\mathbf{Z}_j^T \mathbf{Z}_j +
-    \lambda_j \mathbf{K}_j\right)^{-1}\mathbf{Z}_j^T$ to define the (\textit{effective}) degrees of
-    freedom:
-    $$
-    \operatorname{df}(\lambda_j) = \trace\left(2\mathbf{S}_j - \mathbf{S}_j^T
-    \mathbf{S}_j\right).
-    $$
-    \textbf{Note:} With $\lambda_j = 0$, $\mathbf{S}_j$ is the projection matrix
-    into the target space with
-    $\trace(\mathbf{S}_j) = \operatorname{rank}(\Xmat)$, which corresponds to
-    the number of parameters in the model.
+%   \item
+%     Having that kind of model, we use the hat matrix
+%     $\mathbf{S}_j = \mathbf{Z}_j\left(\mathbf{Z}_j^T \mathbf{Z}_j +
+%     \lambda_j \mathbf{K}_j\right)^{-1}\mathbf{Z}_j^T$ to define the (\textit{effective}) degrees of
+%     freedom:
+%     $$
+%     \operatorname{df}(\lambda_j) = \trace\left(2\mathbf{S}_j - \mathbf{S}_j^T
+%     \mathbf{S}_j\right).
+%     $$
+%     \textbf{Note:} With $\lambda_j = 0$, $\mathbf{S}_j$ is the projection matrix
+%     into the target space with
+%     $\trace(\mathbf{S}_j) = \operatorname{rank}(\Xmat)$, which corresponds to
+%     the number of parameters in the model.
 
-\end{itemize}
+% \end{itemize}
 
 \framebreak
 
 % ------------------------------------------------------------------------------
 
-It is possible to calculate $\lambda_j$ by applying the Demmler-Reinsch
-orthogonalization (see
-\citebutton{Hofer et al. (2011)}{https://www.tandfonline.com/doi/abs/10.1198/jcgs.2011.0922}).
+% It is possible to calculate $\lambda_j$ by applying the Demmler-Reinsch
+% orthogonalization (see
+% \citebutton{Hofer et al. (2011)}{https://www.tandfonline.com/doi/abs/10.1198/jcgs.2011.0922}).
 
-% (see Hofer et. al. (2011).\textit{\enquote{A framework for unbiased model selection based on boosting.}}).
+% % (see Hofer et. al. (2011).\textit{\enquote{A framework for unbiased model selection based on boosting.}}).
 
-Consider the following example of a GAM using splines with 24 B-Spline basis functions:
+% Consider the following example of a GAM using splines with 24 B-Spline basis functions:
 
-\begin{itemize}
+% \begin{itemize}
 
-  \item
-    Setting $\operatorname{df} = 24$ gives $B$-splines with $\lambda_j = 0$.
+%   \item
+%     Setting $\operatorname{df} = 24$ gives $B$-splines with $\lambda_j = 0$.
 
-  \item
-    Setting $\operatorname{df} = 4$ gives $P$-splines with $\lambda_j = 418$.
+%   \item
+%     Setting $\operatorname{df} = 4$ gives $P$-splines with $\lambda_j = 418$.
 
-  \item
-    Setting $\operatorname{df} = 2$ gives $P$-splines with $\lambda_j = 42751174892$.
+%   \item
+%     Setting $\operatorname{df} = 2$ gives $P$-splines with $\lambda_j = 42751174892$.
 
-\end{itemize}
+% \end{itemize}
 
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figure_man/df_to_lambda.pdf}
-\end{center}
+% \begin{center}
+% \includegraphics[width=0.7\textwidth]{figure_man/df_to_lambda.pdf}
+% \end{center}
 
 \end{vbframe}
 
@@ -278,9 +282,9 @@ Recent extensions include distributional regression (GAMLSS), where multiple add
 
 \end{vbframe}
 % ------------------------------------------------------------------------------
-\begin{vbframe}{Partial Dependence Plots (PDP)}
+\begin{vbframe}{Partial Dependence Plots }
 
-If we use single features in base learners, we think of each base learner as a wrapper around a feature representing the feature's effect on the target variable. Base learners can be selected more than once (with varying parameter estimates), signaling that this feature is more important.\\
+If we use single features in base learners, we consider each BL as a wrapper around a feature representing the feature's effect on the target. BLs can be selected more than once (with varying parameter estimates), signaling that this feature is more important.\\
 E.g. let $j \in \{ 1,2,3 \}$, the first three iterations might look as follows
 \begin{align*}
 m = 1: \quad & \hat{f}^{[1]}(\xv) = \hat{f}^{[0]} + \alpha \textcolor{blue}{\hat{b}_2(x_2, \hat{\theta}^{[1]})}\\
@@ -350,15 +354,15 @@ Hence, $\hat{f}$ can be decomposed into the marginal feature effects (PDPs).
 
 \begin{itemize}
   \item Componentwise gradient boosting is the statistical re-interpretation of
-  gradient boosting.
+  gradient boosting
   \item We can fit a large number of statistical models, even in high dimensions
-  ($p \gg n$).
+  ($p \gg n$)
   \item A drawback compared to statistical models is that we do not get valid
-  inference for coefficients $\rightarrow$ post-selection inference.
+  inference for coefficients $\rightarrow$ post-selection inference
   % This can be (partially) solved by bootstrap inference or related methods.
   \item In most cases, gradient boosting with trees will dominate componentwise
   boosting in terms of performance due to its inherent ability to include
-  higher-order interaction terms.
+  higher-order interaction terms
   % In most cases, componentwise gradient boosting will have worse
   % predictive performance than gradient boosting with trees. This is often
   % because additive base learner motivated by regression models (LM, GLM, GAM)

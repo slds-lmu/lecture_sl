@@ -12,7 +12,7 @@
 \newcommand{\learninggoals}{
   \item Handling of categorical features
   \item Intercept handling
-  \item Understand practical application example
+  \item Practical example
   %\item Built-in feature selection process
   %\item Fair base learner selection
 }
@@ -48,10 +48,10 @@ Feature $x_j$ with $G$ categories. Two options for encoding:
 Advantages of simultaneously handling all categories in CWB: 
 \begin{itemize}
     \item 
-        Much faster estimation compared to using individual binary base learners.
+        Much faster estimation compared to using individual binary BLs
 
     \item 
-        Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$ given by:
+        Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$:
         $$
         %\thetabh = (\thetah_1, \dots, \thetah_G)^T,\
         \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}
@@ -61,11 +61,11 @@ Advantages of simultaneously handling all categories in CWB:
         For features with many categories we usually add a ridge penalty
 \end{itemize}
 
-Disadvantage of simultaneously handling all categories in CWB: 
-\begin{itemize}
-    \item 
-        If category $g^\ast\in\{1, \dots, G\}$ is uninformative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost surely) not $0$.
-\end{itemize}
+%Disadvantage of simultaneously handling all categories in CWB: 
+%\begin{itemize}
+ %   \item 
+  %      If category $g^\ast\in\{1, \dots, G\}$ is uninformative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost surely) not $0$.
+%\end{itemize}
 
 % ------------------------------------------------------------------------------
 \framebreak
@@ -83,8 +83,9 @@ Advantages of including categories individually in CWB:
 Disadvantage of individually handling all categories in CWB:
 \begin{itemize}
     \item 
-        Fitting CWB is much slower due to overhead in each iteration %(updating the model, pseudo residuals, and doing the base learner selection) 
-        caused by conducting single steps in direction of 1-dim parameter $\thetah_{j,g}$.
+        Fitting CWB is slower 
+        %due to overhead in each iteration %(updating the model, pseudo residuals, and doing the base learner selection) 
+        %caused by conducting single steps in direction of 1-dim parameter $\thetah_{j,g}$.
 
     \item 
         Penalization and selection become difficult since base learner has exactly one degree of freedom.
@@ -146,13 +147,13 @@ $\Rightarrow$ All intercepts in the base learners are collected and aggregated i
 
 \framebreak
 
-The following figure shows a comparison of the parameter updates with different intercept handlings:
-\vspace{0.2cm}
-\begin{center}
-% Recreate figure: rsrc/fig-cwb-intercept-handling.R
-\includegraphics[width = \textwidth]{figure/compboost-intercept-handling.png}
-\end{center}
-The parameter estimates converge to the same value. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
+% The following figure shows a comparison of the parameter updates with different intercept handlings:
+% \vspace{0.2cm}
+% \begin{center}
+% % Recreate figure: rsrc/fig-cwb-intercept-handling.R
+% \includegraphics[width = \textwidth]{figure/compboost-intercept-handling.png}
+% \end{center}
+% The parameter estimates converge to the same value. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
 
 
 \end{vbframe}

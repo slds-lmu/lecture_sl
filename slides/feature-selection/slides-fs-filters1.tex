@@ -21,7 +21,7 @@
   \vspace{0.4cm}
   \begin{itemize}
   \setlength{\itemsep}{0.8em}
-    \item \textbf{Filter methods} construct a measure that quantifies the dependency between all features and the target variable.
+    \item \textbf{Filter methods} construct a measure that quantifies the dependency between features and the target variable.
     \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
     \item They are model-agnostic and can be applied generically.
     %\item Filter methods are strongly related to methods for determining variable importance.
@@ -46,10 +46,10 @@
     %\noindent\hspace*{6.55cm} $\forall k = 1, \dots, K$
 
     $H_1: \exists \; m, k: p(x_j = m, y = k) \neq p(x_j = m)\, p(y = k)$
-    \item Calculate the $\chi^2$-statistic for each feature-target combination:
+    \item Calculate $\chi^2$-statistic for each feature-target combination:
       $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
-    where $e_{mk}$ is the observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is the expected relative frequency, and $M,K$ are the number of values $x_j$ and $y$ can take.
-    \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevancy.
+    where $e_{mk}$ is observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is expected relative frequency, and $M,K$ are number of values $x_j$ and $y$ can take.
+    \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevance.
   \end{itemize}
   \end{vbframe}
 
@@ -58,15 +58,15 @@
   \textbf{Pearson correlation $r(x_j, y)$: }
   \begin{itemize}
     \item For numeric features and targets only.
-    \item Most sensitive for linear or monotonic relationships.
+    \item Measures linear dependency.
     \item $ r(x_j, y) = \frac{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j) (\yi - \bar{y})}{\sqrt{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j)} \sqrt{(\sum_{i=1}^n \yi - \bar{y})}},\qquad -1 \le r \le 1$
   \end{itemize}
   \vspace{0.4cm}
   \textbf{Spearman correlation $r_{SP}(x_j, y)$:}
   \begin{itemize}
-    \item For features and targets at least on an ordinal scale.
-    \item Equivalent to Pearson correlation computed on the ranks.
-    \item Assesses monotonicity of the dependency relationship.
+    \item For features and targets at least on ordinal scale
+    \item Equivalent to Pearson correlation computed on ranks
+    \item Assesses monotonicity of relationship
     % \item Calculate the Spearman correlation coefficient between each feature-target combination:
     % $$ r_{SP} = \frac{\sum (rg(\xi) - \bar{rg}_x) (rg(\yi) - \bar{rg}_y)}{\sqrt{\sum (rg(\xi) - \bar{rg}_x)^2 \sum (rg(\yi) - \bar{rg}_y)^2}}$$
     % $-1 \le r_{SP} \le 1$
@@ -79,7 +79,8 @@
     % \item A higher score indicates a higher relevance of the feature.
   \end{itemize}
   \lz
-  Use absolute values $|r(x_j, y)|$ for feature ranking: higher score indicates a higher relevance.
+  Use absolute values $|r(x_j, y)|$ for feature ranking:\\
+  higher score indicates a higher relevance.
 
   \framebreak
 
@@ -193,7 +194,7 @@
   \begin{vbframe}{AUC/ROC}
   \begin{itemize}
     \item For binary classification with $\Yspace = \{ 0, 1\}$ and numeric features
-    \item Classify samples using each feature's values (for different thresholds), computing AUC per feature as proxy for its ability to separate classes. 
+    \item Classify samples using single feature (with thresholds), compute AUC per feature as proxy for its ability to separate classes 
     %\item Uses each feature's values to classify samples for different thresholds, computing AUC per feature as proxy for its ability to separate classes.
     \item Features are then ranked; higher AUC scores $\to$ higher relevance.
     \end{itemize}
@@ -233,7 +234,7 @@
     \item Each feature $x_j$ is rated according to $I(x_j;y)$; this is sometimes called information gain (IG).
     \item MI measures the amount of "dependence" between RV by looking how
     different their joint dist. is from strict independence $p(X)p(Y)$.
-    \item MI is zero, iff $X \perp \!\!\! \perp Y$. On the other hand, if $X$ is a deterministic function of $Y$ or vice versa, MI becomes maximal.
+    \item MI is zero iff $X \perp \!\!\! \perp Y$. On the other hand, if $X$ is a deterministic function of $Y$ or vice versa, MI becomes maximal.
   \item Unlike correlation, MI is defined for both numeric and categorical variables and provides a more general measure of dependence.
   \item To estimate MI: for discrete features, use observed frequencies. For continuous features, binning, kernel density estimation is used.
   \end{itemize}

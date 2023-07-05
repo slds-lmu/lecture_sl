@@ -8,7 +8,7 @@
 \newcommand{\titlefigure}{figure/guyon_example_correlation.png}
 \newcommand{\learninggoals}{
   \item Understand how filter methods can be misleading.
-  \item Understand how filter methods work in practical applications.
+  \item Understand how filters can be applied and tuned.
 }
 
 \title{Introduction to Machine Learning}
@@ -174,7 +174,7 @@ For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr
     \end{minipage}
     \end{figure}
 \vspace{0.3cm}
-\footnotesize{\textbf{Variable useless by itself can be useful together with others}. Left: One var has completely overlapping class conditional densities. Still, jointly with other variable separability can be improved. Right: XOR-like chessboard problem. Classes consist of ``clumps" s.t. projection on the axes yield overlapping densities. Single vars have no separation power, only used together.}
+\footnotesize{\textbf{Variable useless by itself can be useful together with others}. Left: One var has completely overlapping class conditional densities. Still, jointly with other variable separability can be improved. Right: XOR-like chessboard problem. Classes consist of ``clumps" s.t. projection on the axes yields overlapping densities. Single vars have no separation power, only used together.}
 
 
 \end{vbframe}
@@ -192,16 +192,16 @@ For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr
     \begin{column}{0.65\textwidth}
       \begin{enumerate}{}
         \setlength{\itemsep}{1.2em}
-          \item Calculate filter score for each feature $x_j$.
+          \item Calculate filter score for each feature $x_j$
           \item Rank features according to score values.
-          \item Choose $\tilde{p}$ best features.
+          \item Choose $\tilde{p}$ best features
           \item Train model on $\tilde{p}$ best features.
         \end{enumerate}
 
         \begin{blocki}{How to choose $\tilde{p}$?}
-          \item It can be prescribed by the application
+          \item Could be prescribed by the application
           \item Eyeball estimation: read from filter plots
-          \item Use resampling.
+          \item Treat as hyperparameter and tune in a pipeline, based on resampling
         \end{blocki}
     \end{column}
 
@@ -225,17 +225,17 @@ For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr
 
   \begin{blocki}{Advantages:}
   \setlength{\itemsep}{1.2em}
-    \item Easy to calculate.
-    \item Typically scales well with the number of features $p$.
-    \item Generally interpretable.
-    \item Model-agnostic.
+    \item Easy to calculate
+    \item Typically scales well with the number of features $p$
+    \item Generally interpretable
+    \item Model-agnostic
   \end{blocki}
 
   \begin{blocki}{Disadvantages:}
   \setlength{\itemsep}{1.2em}
-    \item Univariate analyses may ignore multivariate dependencies.
-    \item Redundant features will have similar weights.
-    \item Ignores the learning algorithm.
+    \item Univariate analyses may ignore multivariate dependencies
+    \item Redundant features will have similar weights
+    \item Ignores the learning algorithm
   \end{blocki}
   \end{vbframe}
 

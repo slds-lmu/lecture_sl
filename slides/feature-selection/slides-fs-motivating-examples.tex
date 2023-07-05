@@ -57,7 +57,7 @@
   %  \item For $\lambda \rightarrow \infty$: $df(\lambda) \rightarrow 0$
   %\end{itemize}
   \item Lowest RTE is obtained at $\lambda = 0.001$  for $p=20$, %df=20%
-  at $\lambda = 100$ for $p=100$,%df=35%
+  at $\lambda = 100$ for $p=100$, %df=35%
   and at $\lambda = 100$ for $p=100$.%df=43%.
   %\item For $p=100$, $\lambda = 100$ has smallest relative test error. %df=35%
   %\item For $p=1000$, $\lambda = 1000$ has smallest relative test error. %df=43%
@@ -75,7 +75,7 @@
 
   \footnotesize{Hastie (2009). The Elements of Statistical Learning}
   \end{center}
-  Methods without built-in FS do not perform well. \\ Best results obtained using small subset of relevant features.
+  Methods need at least regularization or built-in FS to perform well. Possible to build good, small models which helps in interpretation 
   \end{vbframe}
 
   \begin{vbframe}{Motivating ex. 3: Integrated selection}
@@ -87,7 +87,7 @@
   %\item With \code{sim.data} one can simulate micro-array data.
   \item We generate $n=200$ samples with $p=100$ features drawn from a MV Gaussian
   \item 50\% are relevant for the target and 50\% have no influence
-  \item Among the informative features, 25 are positively and 25 negatively correlated with target using weights $\{-1,1\}$
+  \item Among the informative features, 25 are positively and 25 negatively correlated with target,  using weights $\{-1,1\}$
   \item Target is simulated from Bernoulli distribution using linear predictor as log-odds (linear decision boundary!)
   %\item The other $\code{ng-nsg}=50$ genes have no influence.
   %\item The gene ratios are drawn from a multivariate normal distribution.

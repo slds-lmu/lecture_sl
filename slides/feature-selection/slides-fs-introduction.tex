@@ -20,7 +20,8 @@
 
   \begin{vbframe}{Introduction}
 
-    Feature selection: Finding a well-performing, 
+    Feature selection: \\
+    Finding a well-performing, 
     hopefully small set of features for a task.
     
     %\begin{center}
@@ -38,7 +39,7 @@
  \vspace{0.5cm}
    
 
-    Features can be selected based on domain knowledge, or data-driven algorithmic approaches.
+    Features can be selected based on domain knowledge, or data-driven algorithmic approaches. We focus on the latter here.
   \end{vbframe}
 
 
@@ -85,13 +86,13 @@
       \begin{itemize}
         \item adapt models to high-dimensional data (e.g., regularization)
         \item design entirely new procedures for $p>n$ data
-        \item use the preprocessing methods addressed in this lecture
+        \item use filter preprocessing methods from this lecture
       \end{itemize}
     \end{itemize}
   \end{vbframe}
 
   \begin{vbframe}{Size of datasets}
-Increasing availability of measuring methods, everything connected to everything via networks makes data sets with extremely high dimensionality available.
+Many new forms of technical measurements and connected data leads to availability of extremely high-dimensional data sets.
 
 \vspace{0.5cm}
     \begin{itemize}
@@ -100,8 +101,8 @@ Increasing availability of measuring methods, everything connected to everything
       \item \textbf{Datasets of medium to high dimensionality}:
         At around $10^2$ to $10^3$ features, classical approaches can still work well, while principled feature selection helps in many cases.
       \item \textbf{High-dimensional data}: $10^3$ to $10^9$ or more features.
-        Examples are, e.g., micro-array / gene expression data and text categorization (bag-of-words features).
-        If, in addition, observations are few, the scenario is called $p \gg n$.
+        Examples: micro-array / gene expression data and text categorization (bag-of-words features).
+        If we also have few observations, scenario is called $p \gg n$.
     \end{itemize}
 
   \end{vbframe}
