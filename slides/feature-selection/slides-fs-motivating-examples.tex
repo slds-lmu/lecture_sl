@@ -20,7 +20,7 @@
 
   \begin{vbframe}{Motivating example 1: Regularization}
   In case of $p \gg n$,  overfitting becomes increasingly problematic, as can be shown by the following simulation study:
-  
+
   \begin{itemize}
   %\setlength{\itemsep}{1.15em}
     \item For each of 100 simulation iterations:
@@ -32,9 +32,9 @@
     $ y = \sum_{j=1}^p x_j \theta_j + \sigma\varepsilon $, where $\varepsilon$ and $\bm{\theta}$ are both sampled from standard Gaussians, and $\sigma$ is fixed such that the signal-to-noise ratio is $\var (\E[y|X]) / \sigma^2 = 2$.
     \item Three ridge regression models with $\lambda \in \{ 0.001, 100, 1000 \}$ are fitted to each simulated dataset.
   \end{itemize}
-  
+
   \framebreak
-  
+
   \begin{itemize}
   \small
     \item Boxplots show the relative test error ($\text{RTE} = \text{test error} / \text{Bayes error }\sigma^2$) over 100 simulations for the different values of $p$ and $\lambda$.
@@ -75,7 +75,7 @@
 
   \footnotesize{Hastie (2009). The Elements of Statistical Learning}
   \end{center}
-  Methods need at least regularization or built-in FS to perform well. Possible to build good, small models which helps in interpretation 
+  Methods need at least regularization or built-in FS to perform well. Possible to build good, small models which helps in interpretation
   \end{vbframe}
 
 \begin{vbframe}{Motivating ex. 3: Integrated selection}
@@ -95,7 +95,7 @@
   \end{itemize}
   \vspace{-0.35cm}
 
-  \begin{center} \includegraphics[width=0.37\textwidth]{figure/gene-data-points.pdf}
+  \begin{center} \includegraphics[width=0.39\textwidth]{figure/fs-micro-array.png}
   \end{center}
 
   \framebreak
