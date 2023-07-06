@@ -207,7 +207,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \item Terminate if:
         \begin{itemize}
           \item the performance drops drastically, or
-          \item a given performance value is undershot.
+          \item falls below given threshold.
         \end{itemize}
       \end{blocki}
 
@@ -237,7 +237,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
       \item Eliminate or add multiple features at once to increase speed
       \item Allow alternating forward and backward search (also known as stepwise model selection by AIC/BIC in statistics)
       \item Randomly sample candidate feature subsets in each iteration
-      \item Focus search on regions of feature subsets where an improvement is present
+      \item Focus search on regions of feature subsets where an improvement is more likely
       %\item Use improvements of earlier iterations.
       %\item Alternatively, we can also use a $(\mu+\lambda)$-Evolutionary Strategy to perform FS, applying random recombination and mutation operations
     \end{itemize}
@@ -368,7 +368,7 @@ By exploiting \textbf{Greedy} as a selection strategy, ensure that you always ch
   \begin{vbframe}{Wrappers}
 
     \begin{blocki}{Advantages:}
-      \item Can be combined with every learner
+      \item Can be combined with any learner
       \item Any performance measure can be used
       \item Optimizes the desired criterion directly
     \end{blocki}
