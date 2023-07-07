@@ -7,8 +7,8 @@
 
 \newcommand{\titlefigure}{figure/guyon_example_correlation.png}
 \newcommand{\learninggoals}{
-  \item Understand how filter methods can be misleading.
-  \item Understand how filters can be applied and tuned.
+  \item Understand how filter methods can be misleading
+  \item Understand how filters can be applied and tuned
 }
 
 \title{Introduction to Machine Learning}
@@ -131,7 +131,7 @@
     \end{minipage}
     \end{figure}
 \vspace{0.3cm}
-\footnotesize{\textbf{IG from presumably redundant variables}. 2 class problem with i.i.d. variables. Each class has Gaussian distribution with no covariance. While filter methods suggest redundancy, combination of both vars yields improvement, showing i.i.d. vars are not truly redundant. %Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. 
+\footnotesize{\textbf{Information gain from presumably redundant variables}. 2 class problem with indep features. Each class has Gaussian distribution with no covariance. While filter methods suggest redundancy, combination of both vars yields improvement, showing indep vars are not truly redundant. %Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. 
 For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
 %\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
@@ -153,7 +153,7 @@ For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr
     \end{minipage}
     \end{figure}
 \vspace{0.3cm}
-\footnotesize{\textbf{Intra-class covariance}. In projection onto the axes, distribution of two variables are same as before. Left: Class conditional distribution have high cov. in direction of the line of the two class centers. Right: Class conditional distr. have high cov. in direction perpendicular to line of two class centers. Important separation gain is obtained by using both variables.}
+\footnotesize{\textbf{Intra-class covariance}. In projection onto axes, distr. of two variables are same as before. Left: Class conditional distr. have high cov. in direction of the line of two class centers. Right: Class conditional distr. have high cov. in direction perpendicular to line of two class centers. Better separation by using both vars.}
 
  \framebreak
 
@@ -193,13 +193,13 @@ For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr
       \begin{enumerate}{}
         \setlength{\itemsep}{1.2em}
           \item Calculate filter score for each feature $x_j$
-          \item Rank features according to score values.
+          \item Rank features according to score values
           \item Choose $\tilde{p}$ best features
-          \item Train model on $\tilde{p}$ best features.
+          \item Train model on $\tilde{p}$ best features
         \end{enumerate}
 
         \begin{blocki}{How to choose $\tilde{p}$?}
-          \item Could be prescribed by the application
+          \item Could be prescribed by application
           \item Eyeball estimation: read from filter plots
           \item Treat as hyperparameter and tune in a pipeline, based on resampling
         \end{blocki}

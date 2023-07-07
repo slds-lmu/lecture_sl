@@ -21,15 +21,15 @@
   \vspace{0.4cm}
   \begin{itemize}
   \setlength{\itemsep}{0.8em}
-    \item \textbf{Filter methods} construct a measure that quantifies the dependency between features and the target variable.
-    \item They yield a numerical score for each feature $x_j$, according to which we rank the features.
-    \item They are model-agnostic and can be applied generically.
+    \item \textbf{Filter methods} construct a measure that quantifies the dependency between features and the target variable
+    \item They yield a numerical score for each feature $x_j$, according to which we rank the features
+    \item They are model-agnostic and can be applied generically
     %\item Filter methods are strongly related to methods for determining variable importance.
   \end{itemize}
   \vspace{-0.2cm}
   \begin{center}
   \includegraphics[width=0.55\textwidth]{figure/fs-auc-barplot.png}\\
-  \footnotesize{Exemplary filter score ranking for Spam data.}
+  \footnotesize{Exemplary filter score ranking for Spam data}
   \end{center}
   
   \end{vbframe}
@@ -48,8 +48,8 @@
     $H_1: \exists \; m, k: p(x_j = m, y = k) \neq p(x_j = m)\, p(y = k)$
     \item Calculate $\chi^2$-statistic for each feature-target combination:
       $$ \chi_j^2 = \sum_{m = 1}^{M} \sum_{k=1}^{K} (\frac{e_{mk} - \tilde{e}_{mk}}{\tilde{e}_{mk}}) \;\;\;   \stackrel{H_0}{\underset{approx.}{\sim}} \; \chi^2 ((M-1)(K-1))\,,$$
-    where $e_{mk}$ is observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is expected relative frequency, and $M,K$ are number of values $x_j$ and $y$ can take.
-    \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevance.
+    where $e_{mk}$ is observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is expected relative frequency, and $M,K$ are number of values $x_j$ and $y$ can take
+    \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevance
   \end{itemize}
   \end{vbframe}
 
@@ -57,8 +57,8 @@
   \begin{vbframe}{Pearson \& Spearman correlation}
   \textbf{Pearson correlation $r(x_j, y)$: }
   \begin{itemize}
-    \item For numeric features and targets only.
-    \item Measures linear dependency.
+    \item For numeric features and targets only
+    \item Measures linear dependency
     \item $ r(x_j, y) = \frac{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j) (\yi - \bar{y})}{\sqrt{\sum_{i=1}^n (x^{(i)}_j - \bar{x}_j)} \sqrt{(\sum_{i=1}^n \yi - \bar{y})}},\qquad -1 \le r \le 1$
   \end{itemize}
   \vspace{0.4cm}
@@ -80,7 +80,7 @@
   \end{itemize}
   \lz
   Use absolute values $|r(x_j, y)|$ for feature ranking:\\
-  higher score indicates a higher relevance.
+  higher score indicates a higher relevance
 
   \framebreak
 
@@ -171,8 +171,8 @@
   \begin{vbframe}{Welch's \MakeLowercase{t}-test}
   \begin{itemize}
   \setlength{\itemsep}{0.6em}
-    \item For binary classification with $\Yspace = \{ 0, 1\}$ and numeric features.
-    \item Two-sample t-test for samples with unequal variances.
+    \item For binary classification with $\Yspace = \{ 0, 1\}$ and numeric features
+    \item Two-sample t-test for samples with unequal variances
     %The subscript $j_0$ refers to the $j$-th feature where $y = 0$ and $j_1$ where $y = 1$.
    \item Hypotheses:
     $H_0$: $\;\;\mu_{j_0} = \mu_{j_1} $ \qquad vs. \qquad $H_1$: $\;\;\mu_{j_0} \neq \mu_{j_1}$
@@ -181,7 +181,7 @@
     $ t_j = (\bar{x}_{j_0} - \bar{x}_{j_1})/ \sqrt{(S^2_{x_{j_0}}/n_0 + S^2_{x_{j_1}}/n_1)}$\\
     ($\bar{x}_{j_y}$, $S^2_{x_{j_{y}}}$ and $n_y$ are the sample mean, %pop 
     variance and sample size)
-    \item Higher t-score indicates higher relevance.
+    \item Higher t-score indicates higher relevance
   \end{itemize}
 \vspace{-0.01cm}
   \begin{center}
@@ -211,8 +211,8 @@
 
   \begin{vbframe}{F-Test}
   \begin{itemize}
-    \item For multiclass classification ($g \ge 2$) and numeric features.
-    \item Assesses whether the expected values of a feature $x_j$ within the classes of the target differ from each other.
+    \item For multiclass classification ($g \ge 2$) and numeric features
+    \item Assesses whether the expected values of a feature $x_j$ within the classes of the target differ from each other
     \item Hypotheses:
 
     $H_0: \mu_{j_0} = \mu_{j_1} = \dots = \mu_{j_g} \;\;\;\;$ vs. $\;\;\;\;H_1 : \exists \; k,l: \mu_{j_k} \neq \mu_{j_l}$
@@ -221,8 +221,8 @@
     F &= \frac{\text{between-group variability}}{\text{within-group variability}}\\
     F &= \frac{\sum_{k = 1}^g n_k (\bar{x}_{j_k} - \bar{x_j})^2/(g-1)}{\sum_{k = 1}^g \sum_{i = 1}^{n_k} (x_{j_k}^{(i)} - \bar{x}_{j_k})^2/(n-g)}
     \end{align*}
-    where $\bar{x}_{j_k}$ is the sample mean of feature $x_j$ where $y = k$ and $\bar{x_{j}}$ is the overall sample mean of feature $x_j$.
-  \item A higher F-score indicates higher relevance of the feature.
+    where $\bar{x}_{j_k}$ is the sample mean of feature $x_j$ where $y = k$ and $\bar{x_{j}}$ is the overall sample mean of feature $x_j$
+  \item A higher F-score indicates higher relevance of the feature
   \end{itemize}
   \end{vbframe}
 
@@ -231,12 +231,12 @@
 
   \begin{itemize}
   \setlength{\itemsep}{0.8em}
-    \item Each feature $x_j$ is rated according to $I(x_j;y)$; this is sometimes called information gain (IG).
+    \item Each feature $x_j$ is rated according to $I(x_j;y)$; this is sometimes called information gain
     \item MI measures the amount of "dependence" between RV by looking how
     different their joint dist. is from strict independence $p(X)p(Y)$.
-    \item MI is zero iff $X \perp \!\!\! \perp Y$. On the other hand, if $X$ is a deterministic function of $Y$ or vice versa, MI becomes maximal.
-  \item Unlike correlation, MI is defined for both numeric and categorical variables and provides a more general measure of dependence.
-  \item To estimate MI: for discrete features, use observed frequencies. For continuous features, binning, kernel density estimation is used.
+    \item MI is zero iff $X \perp \!\!\! \perp Y$. On the other hand, if $X$ is a deterministic function of $Y$ or vice versa, MI becomes maximal
+  \item Unlike correlation, MI is defined for both numeric and categorical variables and provides a more general measure of dependence
+  \item To estimate MI: for discrete features, use observed frequencies; for continuous features, binning, kernel density estimation is used
   \end{itemize}
   \end{vbframe}
 
