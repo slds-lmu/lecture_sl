@@ -1,0 +1,27 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb.Rnw")
+@
+
+\input{../../latex-math/basic-math.tex}
+\input{../../latex-math/basic-ml.tex}
+
+\kopfsl{}{Feature Selection}
+
+
+\loesung{Filter problems}{
+<<child="ex_rnw/sol_filter_problem.Rnw">>=
+@
+}
+
+\loesung{Filter simulation}{
+<<child="ex_rnw/sol_filter_sim.Rnw">>=
+@
+}
+
+\loesung{Wrappers}{
+<<child="ex_rnw/sol_wrapper.Rnw">>=
+@
+}

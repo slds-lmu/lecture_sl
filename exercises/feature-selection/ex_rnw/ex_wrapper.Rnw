@@ -1,0 +1,29 @@
+You are given the following features and their respective BICs $\mathrm{BIC}_i$ with $i \in \{\{A\}, \{B\}, \{C\}, \{D\}, \{A, B\}, \{A, C\}, \{A, D\}, \{B, C\}, \{B, D\}, \{C, D\}, \{A, B, C\}, \{A, B, D\}, \{B, C, D\}, \{A, B, C, D\}\}$
+
+
+\begin{center}
+  \begin{tabular}{ c c }
+   Features & $\mathrm{BIC}_i$  \\ 
+   \hline 
+   \{A\} & 0.9  \\  
+   \{B\} & 0.8  \\  
+   \{C\} & 1.0  \\  
+   \{D\} & 1.0  \\  
+   \{A, B\} & 0.8  \\   
+   \{A, C\} & 0.7  \\  
+   \{A, D\} & 0.8  \\
+   \{B, C\} & 0.7  \\
+   \{B, D\} & 0.6  \\
+  \{C, D\} & 0.9  \\
+  \{A, B, C\} & 0.6  \\  
+  \{A, B, D\} & 0.8  \\   
+  \{B, C, D\} & 0.5  \\ 
+  \{A, B, C, D\} & 0.6  \\ 
+  \end{tabular}
+  \end{center}
+
+
+\begin{enumerate}	  
+  \item Do forward search and note down each iteration.
+  \item Do backward search and note down each iteration.
+\end{enumerate}

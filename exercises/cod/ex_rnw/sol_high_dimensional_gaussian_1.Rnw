@@ -272,10 +272,12 @@ var_eucl_dist   <- c()
 avg_inner_prod  <- c()
 var_inner_prod  <- c()
 
+n = 100
+
 for (p in p_range){
   
-  x               <- rmvnorm(n=100, mean=rep(0,p), sigma=diag(p))
-  x2              <- rmvnorm(n=100, mean=rep(0,p), sigma=diag(p))
+  x               <- rmvnorm(n=n, mean=rep(0,p), sigma=diag(p))
+  x2              <- rmvnorm(n=n, mean=rep(0,p), sigma=diag(p))
   
   avg_eucl_length <- c(avg_eucl_length,average_euclidean_length(x))
   var_eucl_length <- c(var_eucl_length,variance_euclidean_length(x))

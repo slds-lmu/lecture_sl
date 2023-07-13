@@ -1,0 +1,18 @@
+We want to implement a small simulation study:
+\begin{itemize}
+  \item $d = 10$
+  \item $n = 200$
+  \item $\rho \in \{0, 0.1, 0.2\}$
+  \item $\bm{\Sigma} \in \mathbb{R}^{d \times d}$ with $\bm{\Sigma}_{ii} = 1.0$ and
+  $\bm{\Sigma}_{ij} = \rho \quad \forall i\neq j.$
+  \item $\bm{x}_i \sim \mathcal{N}(\bm{0}, \bm{\Sigma}) \quad\forall i=1,\dots,n$
+  \item $\bm{\beta} \in \mathbb{R}^d$ with $\bm{\beta}_{1:4} = 1, \bm{\beta}_{5:10} = 0$
+\end{itemize}
+We want to benchmark a linear model, a linear model with feature selection (with optimal number of features fixed),
+a linear model with feature selection (number of features is internally tuned). Repeat the benchmark 5 times. 
+\begin{enumerate}	  
+  \item Implement the simulation study with $\texttt{mlr3}$ \\
+  \emph{Hint: \url{https://mlr3book.mlr-org.com/chapters/chapter8/non-sequential_pipelines_and_tuning.html\#sec-pipelines-featsel}, 
+  \url{https://mlr3.mlr-org.com/reference/benchmark.html\#ref-examples}}
+  \item Analyze your findings
+\end{enumerate}

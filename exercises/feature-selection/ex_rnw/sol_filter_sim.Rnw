@@ -1,0 +1,84 @@
+
+\begin{enumerate}	  
+  \item
+  <<fig_filter_sim, fig=TRUE, warning=FALSE, message=FALSE>>=
+  lgr::get_logger("mlr3")$set_threshold("warn")
+  lgr::get_logger("bbotk")$set_threshold("warn")
+
+  library(mlr3)
+  library(mlr3learners)
+  library(mlr3pipelines)
+  library(mlr3filters)
+  library(mlr3fselect)
+  library(ggplot2)
+  library(mlr3tuning)
+  library(mvtnorm)
+
+  set.seed(123)
+
+  # Define setup
+  p <- 10
+  frac <- 0.4
+  n <- 200
+  sigma_noise <- 0.1
+  num_benchmarks <- 5
+  # create sparse ground truth
+  beta <- c(rep(1, p * frac), rep(0, p * (1 - frac)))
+
+  resamplings <- rsmp("holdout")
+
+  # Define learners
+  po_flt <- po("filter", filter = flt("correlation"), filter.nfeat = p * frac)
+  graph_notune <- po_flt %>>% po("learner", lrn("regr.lm"))
+
+  po_filter <- po("filter", filter = flt("correlation"),
+                    filter.nfeat = to_tune(1, p - 1))
+
+  graph <- as_learner(po_filter %>>% po("learner", lrn("regr.lm")))
+
+  graph_tune <- auto_tuner(tnr("grid_search"),
+      graph,
+      rsmp("holdout"),
+      msr("regr.mse"),
+      term_evals = p - 1
+    )
+  learners <- list(lrn("regr.lm"), graph_notune, graph_tune)
+
+  # repeat benchmark
+  aggrs <- NULL
+  for (i in seq(1, num_benchmarks)){
+    tasks <- list()
+    # create tasks with varying correlation rho betweeen the features
+    for (rho in seq(0, 0.2, 0.1)) {
+      sigma <- matrix(rho, p, p)
+      diag(sigma) <- 1.0
+
+      x <- rmvnorm(n, sigma = sigma)
+      y <- x %*% beta + sigma_noise * rnorm(n)
+      tasks <- append(tasks, TaskRegr$new(as.character(rho),
+        data.frame(x = x, y = y), "y"))
+    }
+
+    # do benchmark
+    design <- benchmark_grid(tasks, learners, resamplings)
+    bmr <- benchmark(design)
+
+    # merge results
+    aggr <- bmr$aggregate()
+    aggrs <- rbind(aggrs, aggr[, c("task_id", "regr.mse",
+      "learner_id")])
+  }
+
+  ggplot(aggrs) +
+    geom_boxplot(aes(x = task_id, y = regr.mse,
+      fill = learner_id)) + #ylim(c(0, 0.02)) +
+      ylab("Test MSE") + xlab(expression(rho)) +
+      scale_fill_discrete(labels = c(
+        "lm (optimal number features)",
+        "lm (tuned number features)",
+        "lm")) +
+        guides(fill = guide_legend(title = "learners"))
+  @
+  \item The simulation study suggests that in this sparse scenario feature selection results in better performance (even if the true number 
+  of sparse features is unknown). This effect seems to be independent of the correlation between the features.
+\end{enumerate}

@@ -1,0 +1,56 @@
+\begin{enumerate}	  
+  \item \begin{figure}[H]
+    <<fig_filter, echo=FALSE, fig=TRUE, message=FALSE, warning=FALSE>>=
+  library(mvtnorm)
+  library(dplyr)
+  library(ggplot2)
+
+  x1 = seq(-3.2, 3.2, 0.1)
+  x2 = seq(-3.2, 3.2, 0.1)
+
+  density1 = function(x) dmvnorm(c(x), mean=c(1,1)) + 
+                                  dmvnorm(c(x), mean=c(-1,-1)) 
+  density2 = function(x) dmvnorm(c(x), mean=c(-1,1)) + 
+                                  dmvnorm(c(x), mean=c(1,-1)) 
+  fun1 = function(X) apply(X, 1, density1)
+  fun2 = function(X) apply(X, 1, density2)
+  data1 = expand.grid(X1 = x1, X2 = x2) %>%
+    mutate(Z = fun1(cbind(X1, X2)))
+  data2 = expand.grid(X1 = x1, X2 = x2) %>%
+    mutate(Z = fun2(cbind(X1, X2)))
+  data = rbind(cbind(data1, y="0"), cbind(data2, y="1"))
+
+  ggplot(data, aes(X1, X2, z = Z)) +
+    geom_contour(aes(color=y), linewidth=1.5, alpha=0.5) +
+    xlab(expression(x[1])) +
+    ylab(expression(x[2]))
+@
+  \end{figure}
+  \item Let $g_\mu$ be the density associated to $\mathcal{N}(\mu, 1).$ Note that, in general, 
+  for $\mathbf{x} \in \mathbb{R}^d \sim \mathcal{N}(\bm{\mu}, \bm{\Sigma})$ each component 
+  $x_i \sim \mathcal{N}(\bm{\mu}_i, \bm{\Sigma}_{ii}).$ Also for finite mixtures, it holds that the marginal
+  density of a mixture is the sum of the associated marginal densities since 
+  $\int\cdots\int \sum^m_{j=1} p_j(\bm{x})dx_1\cdots dx_{k-1}dx_{k+1}\cdots dx_d = 
+  \sum^m_{j=1}\int\cdots\int  p_j(\bm{x})dx_1\cdots dx_{k-1}dx_{k+1}\cdots dx_d$ where $p_1\dots p_m$
+   are densities. With this, it follows that
+  \begin{align*}
+  \mathbb{P}(Y = 1\vert x_i = \widetilde{x}_i) &=   \frac{p(x_i = \widetilde{x}_i\vert Y=1)\mathbb{P}(Y=1)}{
+    p(x_i = \widetilde{x}_i\vert Y=1)\mathbb{P}(Y=1) + p(x_i = \widetilde{x}_i\vert Y=0)\mathbb{P}(Y=0)} \\
+    &\overset{\mathbb{P}(Y=1) = \mathbb{P}(Y=0)}{=} \frac{p(x_i = \widetilde{x}_i\vert Y=1)}{
+    p(x_i = \widetilde{x}_i\vert Y=1) + p(x_i = \widetilde{x}_i\vert Y=0)} \\
+    &= \frac{0.5(g_{-1}(\widetilde{x}_i) + g_{1}(\widetilde{x}_i))}{
+    0.5(g_{-1}(\widetilde{x}_i) + g_{1}(\widetilde{x}_i)) + 
+    0.5(g_{-1}(\widetilde{x}_i) + g_{1}(\widetilde{x}_i))} = 0.5.
+  \end{align*}
+  \item \begin{align*}\mathbb{P}(Y = 1\vert x_1 = 1, x_2 = 1) &= \frac{p(\bm{x} = (1,1)^\top\vert Y=1)\mathbb{P}(Y=1)}{
+    p(\bm{x} = (1,1)^\top\vert Y=1)\mathbb{P}(Y=1) + p(\bm{x} = (1,1)^\top\vert Y=0)\mathbb{P}(Y=0)} \\
+    &= \frac{1}{1 + \frac{p(\bm{x} = (1,1)^\top\vert Y=0)}{p(\bm{x} = (1,1)^\top\vert Y=1)}} \\
+    &= \frac{1}{1 + \frac{\exp(0) + \exp(-0.5(-2, -2)^\top(-2, -2))}{2 \exp(-0.5(0, -2)^\top(0, -2))}} \\
+    &= \frac{1}{1 + \frac{\exp(0) + \exp(-4)}{2\exp(-2)}} \approx 0.21.
+    \end{align*}
+  \item It holds by b) that $x_1$ and $x_2$ are pairwise independent from $Y$ since 
+  $\mathbb{P}(Y= 1) = \mathbb{P}(Y = 1\vert x_i = \widetilde{x}_i) = 0.5.$ Hence the 
+  mutual information will be $0$ for both features. So any other feature would be preferred over 
+  them, although $Y$ is clearly jointly dependent on $x_1, x_2$, as shown in c).
+\end{enumerate}
+

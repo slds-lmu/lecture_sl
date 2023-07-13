@@ -1,0 +1,15 @@
+\begin{enumerate}	  
+  \item Iterations:
+  \begin{enumerate}
+  \item \{B\} since $\mathrm{BIC}_{\{B\}} < \mathrm{BIC}_{X} \quad \forall X \in \{\{A\}, \{C\}, \{D\}\},$ 
+  \item \{B, D\} since $\mathrm{BIC}_{\{B, D\}} < \mathrm{BIC}_{X} \quad \forall X \in \{\{A, B\}, \{B, C\}\},$ 
+  \item \{B, C, D\} since $\mathrm{BIC}_{\{B, C, D\}} < \mathrm{BIC}_{\{A,B,D\}},$
+  \item \{B, C, D\} and terminate since $\mathrm{BIC}_{\{B, C, D\}} < \mathrm{BIC}_{\{A,B,C,D\}}.$ 
+  \end{enumerate}
+  \item  Iterations:
+  \begin{enumerate}
+  \item Start with all features \{A, B, C, D\}
+  \item \{B, C, D\} since $\mathrm{BIC}_{\{B, C, D\}} < \mathrm{BIC}_{X} \quad \forall X \in \{\{A, B, C\}, \{A, C, D\}\},$ 
+  \item \{B, C, D\} and terminate since $\mathrm{BIC}_{\{B, C, D\}} < \mathrm{BIC}_{X} \quad \forall X \in \{\{B, C\}, \{B, D\}, \{C,D\}\},$ 
+  \end{enumerate}
+\end{enumerate}
