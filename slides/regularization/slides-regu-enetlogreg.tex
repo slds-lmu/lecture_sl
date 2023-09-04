@@ -24,7 +24,7 @@
 \begin{vbframe} {Elastic Net}
 
 
-Elastic Net combines the $L_1$ and $L_2$ penalties:
+Elastic Net combines the $L1$ and $L2$ penalties:
 
 $$
 \mathcal{R}_{\text{elnet}}(\thetab) =  \sumin (\yi - \thetab^\top \xi)^2 + \lambda_1 \|\thetab\|_1 + \lambda_2 \|\thetab\|_2^2.
@@ -90,7 +90,7 @@ Regularizers can be added very flexibly to basically any model which is based on
 
 \lz 
 
-Hence, we can, e.g., construct $L_1$- or $L_2$-penalized logistic regression to enable coefficient shrinkage and variable selection in this model. 
+Hence, we can, e.g., construct $L1$- or $L2$-penalized logistic regression to enable coefficient shrinkage and variable selection in this model. 
 
 % \lz 
 % We can add a regularizer to the risk of logistic regression
@@ -110,7 +110,7 @@ Hence, we can, e.g., construct $L_1$- or $L_2$-penalized logistic regression to 
 
 
 We fit a logistic regression model using polynomial features for \(x_1\)
-and \(x_2\) with maximum degree of \(7\). We add an $L_2$ penalty. We
+and \(x_2\) with maximum degree of \(7\). We add an $L2$ penalty. We
 see for
 
 \begin{itemize}
