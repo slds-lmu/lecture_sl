@@ -135,24 +135,30 @@ The optimizer of the empirical risk is $\text{med}(\yi)$ over $\yi$, which is th
 \textbf{Proof}: 
 
 \begin{itemize}
-  \item Firstly note that for $n = 1$ the median $\thetah = \text{med}(\yi) = y^{(1)}$ obviously minimizes the empirical risk $\riske$ associated to the $L1$ loss $L$. 
+  \item Firstly note that for $n = 1$ the median $\thetah = \text{med}(\yi) = y^{(1)}$ obviously minimizes the emp. risk $\riske$ using the $L1$ loss. 
 
 
 % Take proof from this page? 
 % https://math.stackexchange.com/questions/113270/the-median-minimizes-the-sum-of-absolute-deviations-the-l-1-norm/1024462#1024462
 
-  \item Hence let $n > 1$ in the following: Let 
-
+  \item Hence let $n > 1$ in the following For $a,b \in \mathbb{R}$, define 
   $$
     S_{a,b}:\mathbb{R} \rightarrow \mathbb{R}^+_0, \theta \mapsto |a- \theta| + |b-\theta|
   $$
-
-  for $a, b \in \mathbb{R}$. It holds that
+  \vspace*{-0.3cm}
+  Any $\thetah \in [a,b]$ minimizes $S_{a,b}(\theta)$, because it holds that
+  \vspace*{-0.0cm}
   \begin{eqnarray*}
   S_{a,b}(\theta) &=& \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 2\cdot\min\{|a-\theta|,|b-\theta|\}
   ,& \text{ otherwise. }\end{cases}
   \end{eqnarray*}
-  Thus, any $\thetah \in [a,b]$ minimizes $S_{a,b}$. \\
+
+\vspace*{-0.15cm}
+
+\begin{center}
+\includegraphics[width = 0.4\textwidth ]{figure_man/S_function_plot.pdf} \\
+\end{center}
+
 
 
   \framebreak
