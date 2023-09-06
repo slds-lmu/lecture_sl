@@ -69,13 +69,13 @@ Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lxy = \l
 \item By the law of total expectation
   \begin{eqnarray*}
     \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
-    \\ &=& \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right] \\
+    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right] \\
   &=& \E_x
   \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xv\right]\right]. 
   \end{eqnarray*}
 % \item As our hypothesis space is not restricted at all, we can proceed quite \enquote{arbitrarily} when constructing our model $\hat f$.  
 
-\item Since $\Hspace$ is unrestricted we can choose $f$ as we wish: At any point $\xv = \xv$ we can predict any value $c$ we want. The best point-wise prediction is the conditional mean
+\item Since $\Hspace$ is unrestricted, at any point $\xv = \xv$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
 $$
   \fxbayes = \mbox{argmin}_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xv \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
 $$
@@ -132,24 +132,18 @@ We calculate the first derivative of $\riske$ w.r.t. $\theta$ and set it to $0$:
 \begin{vbframe}{L2 loss means minimizing variance}
 
 Rethinking what we just did:
-We optimized for the constant, whose squared distance to all data points is minimal
+We optimized for a constant whose squared distance to all data points is minimal
 (in sum, or on average). This turned out to be the mean.
 
-\lz
+\vspace{0.1cm}
 
-What happens if we calculcate the incurred loss of $\hat{\theta} = \bar{y}$
+What happens if we calculcate the loss of $\hat{\theta} = \bar{y}$? That's $\riske = \sumin (\yi - \bar{y})^2$. Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$ to get the variance. 
 
-\lz
+\begin{center}
+\includegraphics[width=0.4\textwidth]{figure_man/plot_const_var.png} \\
+\end{center}
 
-Thats obviously $\riske = \sumin (\yi - \bar{y})^2$. 
-
-\lz
-
-Average this sum by $\frac{1}{n}$ or $\frac{1}{n-1}$, and we get the empirical variance. 
-
-\lz
-
-The same holds true for the pointwise construction / conditional distribution as considered in the slides before.
+%The same holds true for the pointwise construction / conditional distribution as considered in the slides before.
 
 \end{vbframe}
 
