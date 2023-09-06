@@ -33,19 +33,21 @@
 \begin{vbframe}{L1-Loss}
 
 % Description
-\vspace*{-0.3cm}
-
+\vspace*{-0.1cm}
+The L1 loss is defined as
 $$
 \Lxy = \left|y-\fx\right|
 $$
 
 \begin{itemize}
+\setlength{\itemsep}{1.5em}
 \item More robust than $L2$, outliers in $y$ are less problematic.
 \item Analytical properties: convex, not differentiable for $y = f(\bm{x})$ (optimization becomes harder).
 \end{itemize}
 
-\begin{center}
-  \includegraphics[width = 9cm]{figure/loss_absolute_2.png} \\
+\vspace*{0.2cm}
+
+\begin{center}  \includegraphics[width = 9cm]{figure/loss_absolute_2.png} \\
 \end{center}
 
 
@@ -56,13 +58,17 @@ $$
 
 We calculate the (true) risk for the $L1$-Loss $\Lxy = \left|y-\fx\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
 
+\vspace{0.5cm}
+
 \begin{itemize}
-  \item We use the law of total expectation 
+  \setlength{\itemsep}{1.4em}  
+  \item We use the law of total expectation
+  \vspace{0.3cm}
   $$
     \riskf = \E_x \left[\E_{y|x}\left[|y-\fx|~|\xv = \xv\right]\right]. 
   $$
   \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xv$. The best prediction at $\xv = \xv$ is then 
-
+  \vspace{0.3cm}  
   $$
     \fxh = \mbox{argmin}_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
   $$
@@ -194,12 +200,15 @@ The optimizer of the empirical risk is $\text{med}(\yi)$ over $\yi$, which is th
 
 
   From this follows that
+  \vspace{0.35cm}
   \begin{itemize}
+  \setlength{\itemsep}{1.4em}
   \item for \enquote{$n$ is even}: $\thetah \in  \mathcal{I}_{i_{\max}} = [y^{(n/2)},y^{(n/2+1)}]$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\} \; \Rightarrow$  it minimizes $\riske$,
-  \item for \enquote{$n$ is odd}: $\thetah = y^{(n+1)/2} \in \mathcal{I}_{i_{\max}}$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\}$ and its minimal for
-  $|\yi[(n + 1)/2] - \theta| \; \Rightarrow$ it minimizes $\riske$,
+  \item for \enquote{$n$ is odd}: $\thetah = y^{(n+1)/2} \in \mathcal{I}_{i_{\max}}$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\}$ and it's minimal for
+  $|\yi[(n + 1)/2] - \theta|$ \\ $\Rightarrow$
+  it minimizes $\riske$.
   \end{itemize}
-
+  \vspace{0.35cm}  
   Since the median fulfills these conditions, we can conclude that it minimizes 
   the $L1$ loss.
 \end{itemize}
