@@ -137,11 +137,31 @@ We optimized for a constant whose squared distance to all data points is minimal
 
 \vspace{0.1cm}
 
-What happens if we calculcate the loss of $\hat{\theta} = \bar{y}$? That's $\riske = \sumin (\yi - \bar{y})^2$. Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$ to get the variance. 
+What if we calculcate the loss of $\hat{\theta} = \bar{y}$? That's ${\textstyle \riske = \sumin (\yi - \bar{y})^2}$. Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$ 
+to obtain variance. 
 
-\begin{center}
-\includegraphics[width=0.4\textwidth]{figure_man/plot_const_var.png} \\
-\end{center}
+\vspace{0.2cm}
+
+
+\begin{minipage}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{figure_man/plot_const_var.png}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+    \begin{itemize}
+    \small
+        \item  Generally, if model yields unbiased predictions, { $\E_{y~|~\xv}\left[y-\fx~|~\xv\right]=0$}, using $L2$-loss means minimizing variance of model residuals
+        \item Same holds for the pointwise construction / conditional distribution considered before
+     \end{itemize}
+\end{minipage}
+
+
+%\vspace{-0.2cm}
+%\begin{center}
+%\includegraphics[width=0.4\textwidth]{figure_man/plot_const_var.png} \\
+%\end{center}
+%\vspace{-0.2cm}
+%{\small $\Rightarrow$ Generally, if model yields unbiased predictions, {\scriptsize $\E_{y~|~\xv}\left[y-\fx~|~\xv\right]=0$}, using $L2$-loss $\triangleq$ minimizing variance of model residuals}
 
 %The same holds true for the pointwise construction / conditional distribution as considered in the slides before.
 
