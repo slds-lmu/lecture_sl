@@ -1,0 +1,14 @@
+Let $f(x_1, x_2\vert\bm{\mu})$ be the density function of the bivariate Normal distribution with mean $\bm{\mu}$ and covariance matrix $\bm{\Sigma} = \bm{I}_2$. You are given the following data generating process (DGP):\\
+\begin{itemize}
+\item the target $Y \sim \texttt{Bernoulli}(0.5),$ 
+\item the likelihood $p(x_1, x_2\vert Y=1) = 0.5\left(f(x_1, x_2\vert(1, -1)^\top) + f(x_1, x_2\vert(-1, 1)^\top) \right),$
+\item the likelihood $p(x_1, x_2\vert Y=0) = 0.5\left(f(x_1, x_2\vert(1, 1)^\top) + f(x_1, x_2\vert(-1, -1)^\top) \right).$
+\end{itemize}
+
+
+\begin{enumerate}	  
+  \item Sketch the DGP 
+  \item Compute $\mathbb{P}(Y = 1\vert x_1 = \widetilde{x}_1), \mathbb{P}(Y = 1\vert x_2 = \widetilde{x}_2), \mathbb{P}(Y = 1\vert x_1 = 1, x_2 = 1) $
+  \item Explain what happens if we apply mutual information as filter in this scenario
+  
+\end{enumerate}
