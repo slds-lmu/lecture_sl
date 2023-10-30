@@ -14,9 +14,9 @@
 
 \newcommand{\titlefigure}{figure/residuals_plot_L1_title.png}
 \newcommand{\learninggoals}{
-	\item Learn the correspondence between a Laplacian error distribution and the L1 loss
-	\item Learn that there is no error distribution for the Huber loss
-	\item Learn the correspondence between Bernoulli-distributed targets and the Bernoulli loss 
+	\item Correspondence between Laplace errors and L1 loss
+
+	\item Correspondence between Bernoulli targets and the Bernoulli / log loss 
 
 }
 
@@ -34,19 +34,22 @@ Empirical Risk Minimization}
 
 \begin{vbframe}{Laplace Errors - L1-Loss}
 
-Let us assume that errors are Laplacian, i.e. $\eps$ follows a Laplace distribution which has the density 
+Let's consider Laplacian errors $\eps$ now, with density: 
 
+\begin{minipage}{0.5\textwidth}
 $$
  \frac{1}{2\sigma} \exp\left(-\frac{|\eps|}{\sigma}\right)\,, \sigma > 0.
-$$ 
-
+$$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width = 0.75\textwidth]{slides/advriskmin/figure/laplace_plot.pdf}
+\end{minipage}
 Then
-
 $$
 y = \ftrue(\xv) + \eps 
 $$
 
-follows a Laplace distribution with mean $\fxit$ and scale parameter $\sigma$. 
+also follows Laplace distrib. with mean $\fxit$ and scale  $\sigma$. 
 
 \framebreak 
 
@@ -55,16 +58,19 @@ The likelihood is then
 \begin{eqnarray*}
 \LL(\thetab) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,.
 \end{eqnarray*}
-
-
 The negative log-likelihood is
-
 $$
 - \loglt \propto - \sumin \left|\yi - \fxit\right|.
 $$
 
-Minimizing the negative log-likelihood for Laplacian error terms corresponds to empirical risk minimization with L1-loss. 
+MLE for Laplacian errors = ERM with L1-loss. 
 
+\begin{itemize}
+\item Some losses correspond to more complex or less known error densities, like the Huber loss \citebutton{Meyer, 2021}{https://openaccess.thecvf.com/content/CVPR2021/papers/Meyer_An_Alternative_Probabilistic_Interpretation_of_the_Huber_Loss_CVPR_2021_paper.pdf}
+
+\item Huber density is (unsurprisingly) a hybrid of Gaussian and Laplace
+
+\end{itemize}
 
 \framebreak 
 
@@ -77,31 +83,7 @@ Minimizing the negative log-likelihood for Laplacian error terms corresponds to 
 \end{footnotesize}
 \includegraphics{figure/residuals_plot_L1.pdf}
 
-\end{vbframe}
 
-\begin{vbframe}{Other Error Distributions}
-
-\begin{itemize}
-\item There are losses that do not correspond to \enquote{real} error densities, like the Huber loss. (In the QQ-plot below we show residuals against quantiles of a normal. )
-\end{itemize}
-
-\begin{center}
-\includegraphics{figure/residuals_plot_Huber_L1.pdf}
-\end{center}
-
-% \framebreak 
-
-% However, intuitively, we see that a certain type of loss function corresponds to a certain error distribution. 
-
-% \begin{table}[]
-% \begin{tabular}{ll}
-% Loss function & Error Distribution \\
-% \hline
-% $L2$-Loss & Gaussian Errors \\
-% $L1$-Loss & Laplace Errors \\
-% Huber Loss & \enquote{Huber Errors}
-% \end{tabular}
-% \end{table}
 
 \end{vbframe}
 

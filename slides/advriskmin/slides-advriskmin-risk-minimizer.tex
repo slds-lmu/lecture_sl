@@ -20,7 +20,7 @@
     \item Consistent learners
     \item Bayes regret, estimation and approximation error    
 	\item Optimal constant model
-	\item Proper scoring rules
+	%\item Proper scoring rules
 }
 
 \title{Introduction to Machine Learning}
@@ -34,6 +34,21 @@
 \lecturechapter{Risk Minimizers}
 \lecture{Introduction to Machine Learning}
 
+\begin{vbframe}{Empirical Risk Minimization}
+Very often, in ML, we minimize the empirical risk
+$$\riskef = \sumin \Lxyi$$
+where 
+\begin{itemize}
+    \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$ and $\Xspace, \Yspace$ are the feature and target spaces, respectively, 
+    \item $f:\Xspace \rightarrow \mathbb{R}^g, f \in \Hspace$ is a model which maps a feature vector to a numerically encoded element of $\Yspace$ and $\Hspace$ is the hypothesis space, 
+    \item $L:\left(\Yspace\times\mathbb{R}^g\right)\rightarrow\mathbb{R}$ is the loss function which measures the dissimilarity of the model prediction and the true target,
+    \item and we assume that $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ where $\Pxy$ is the distribution of the data generating process (DGP).
+\end{itemize}
+\smallskip
+What is the theoretical justification for this procedure?
+
+\end{vbframe}
+
 
 \begin{vbframe}{Risk Minimizer}
 
@@ -44,7 +59,7 @@ $$ \risk_L\left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. $$
 for a certain hypothesis $\fx \in \Hspace$ and a loss $\Lxy$. 
 
 {\tiny NB: As $\risk_L$ depends on loss $L$, we sometimes 
-make this explicit with a subscript if needed, and omit in other cases.}
+make this explicit with a subscript if needed and omit it in other cases.}
 
 \lz 
 
@@ -82,26 +97,46 @@ The resulting risk is called \textbf{Bayes risk}
 
 \end{vbframe}
 
+% \begin{frame}[t]{optimal point-wise predictions}  
+
+% To derive the risk minimizer we usually make use of the following trick: 
+
+% \begin{itemize}
+% 	\item We can choose $\fx$ as we want (unrestricted hypothesis space, no assumed functional form)
+% 	\item Consequently, for a fixed value $\xv \in \Xspace$ we can select \textbf{any} value $c$ we want to predict 
+%         % (we are not restricted by any functional form, e.g., a linear function)
+% 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
+% 	\item So we construct the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
+% \end{itemize}
+
+% \lz
+% \begin{center}
+% \includegraphics[width=1\textwidth]{figure/optimal_pointwise.png}
+% \end{center}
+
+
+% \end{frame}
+
 \begin{frame}[t]{optimal point-wise predictions}  
 
-To derive the risk minimizer we usually make use of the following trick: 
+To derive the risk minimizer, observe that by the law of total expectation 
+$$    \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
+    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right].$$
 
 \begin{itemize}
 	\item We can choose $\fx$ as we want (unrestricted hypothesis space, no assumed functional form)
-	\item Consequently, for a fixed value $\xv \in \Xspace$ we can select \textbf{any} value $c$ we want to predict 
+	\item Hence, for a fixed value $\xv \in \Xspace$ we can select \textbf{any} value $c$ we want to predict. So we construct the \textbf{point-wise optimizer} 
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
-	\item So we construct the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
+ $$\fxbayes = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \xv \right] \quad \forall \xv \in \Xspace.$$
 \end{itemize}
 
-\lz
 \begin{center}
 \includegraphics[width=1\textwidth]{figure/optimal_pointwise.png}
 \end{center}
 
 
 \end{frame}
-
 
 \begin{vbframe}{Theoretical and Empirical Risk}  
  
@@ -170,20 +205,20 @@ The Bayes regret can be decomposed as follows:
 
 \lz 
 
-Let $\ind:\mathbb{D}\times \Lambda \to \Hspace$ be a learning algorithm$^{(*)}$ that takes a training set $\Dtrain \sim \Pxy$ of size $n_\text{train}$ and estimates a model $\hat f: \Xspace \to \R^g$. 
+Let $\ind:\mathbb{D} \to \Hspace$ be a learning algorithm that takes a training set $\Dtrain \sim \Pxy$ of size $n_\text{train}$ and estimates a model $\hat f: \Xspace \to \R^g$. 
 
 \lz 
 
 The learning method $\ind$ is said to be \textbf{consistent} w.r.t. a certain distribution $\Pxy$ if the risk of the estimated model $\hat f$ converges in probability ( \enquote{$\overset{p}{\longrightarrow}$}) to the Bayes risk $\riskbayes$ when $n_\text{train}$ goes to $\infty$: 
 
 $$
-	\risk\left(\ind\left(\Dtrain, \lamv\right)\right) \overset{p}{\longrightarrow} \riskbayes_L \quad \text{for } n_\text{train} \to \infty.
+	\risk\left(\ind\left(\Dtrain\right)\right) \overset{p}{\longrightarrow} \riskbayes_L \quad \text{for } n_\text{train} \to \infty.
 $$
 
 \vfill
 
 
-\begin{footnotesize}$^{(*)}$ $\lamv \in \Lambda$ denotes hyperparameters of the learning algorithm.\end{footnotesize} 
+
 
 \framebreak 
 
@@ -207,7 +242,7 @@ In Stone's famous consistency theorem from 1977, the universal consistency of a 
 
 \begin{vbframe}{Optimal Constant Model}
 
-While the risk minimizer gives us the (theoretical) optimal solution, the \textbf{optimal constant model} (also: featureless predictor) gives us an computable empirical lower baseline solution.
+While the risk minimizer gives us the (theoretical) optimal solution, the \textbf{optimal constant model} (also: featureless predictor) gives us a computable empirical lower baseline solution.
 
 \vspace*{0.2cm}
 
@@ -221,35 +256,35 @@ The constant model is the model $\fx = \thetab$ that optimizes the empirical ris
 
 \end{vbframe}
 
-\begin{frame}[t]{Risk Minimizer And Optimal Constant}
+% \begin{frame}[t]{Risk Minimizer And Optimal Constant}
 
-Later, we will derive risk minimizers for various losses. 
+% Later, we will derive risk minimizers for various losses. 
 
-\begin{table}[] 
-\footnotesize
-\renewcommand{\arraystretch}{1.5} %<- modify value to suit your needs
-  \begin{tabular}{c|lll}
-  Name & Risk Minimizer & Optimal Constant\\ \hline
-  L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \frac{1}{n} \sumin \yi$ \\
-  L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \text{med}(\yi)$\\
-  0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hxh = \text{mode} \left\{\yi\right\}$ \\
-  Brier & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
-  Bernoulli (on probs) & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
-  Bernoulli (on scores) & $\fxbayes = \log\left(\frac{\P(y = 1 ~|~\xv)}{1 - \P(y = 1 ~|~\xv)}\right)$ & $\fxh = \log \frac{n_{+1}}{n_{-1}}$  
-  \end{tabular}
-\end{table}
+% \begin{table}[] 
+% \footnotesize
+% \renewcommand{\arraystretch}{1.5} %<- modify value to suit your needs
+%   \begin{tabular}{c|lll}
+%   Name & Risk Minimizer & Optimal Constant\\ \hline
+%   L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \frac{1}{n} \sumin \yi$ \\
+%   L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \text{med}(\yi)$\\
+%   0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hxh = \text{mode} \left\{\yi\right\}$ \\
+%   Brier & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
+%   Bernoulli (on probs) & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
+%   Bernoulli (on scores) & $\fxbayes = \log\left(\frac{\P(y = 1 ~|~\xv)}{1 - \P(y = 1 ~|~\xv)}\right)$ & $\fxh = \log \frac{n_{+1}}{n_{-1}}$  
+%   \end{tabular}
+% \end{table}
 
-\only<1>{
-We see: For regression, the RMs model the conditional expectation and median of the underlying distribution. This makes intuitive sense, depending on your concept of how to best estimate central location / how robust this location should be.
-}
-\only<2>{
-    For the 0-1 loss, the risk minimizer constructs the \textbf{optimal Bayes decision rule}: We predict the class with maximal posterior probability.
-}
-\only<3>{
-    For Brier and Bernoulli, we predict the posterior probabilities (of the true DGP!). Losses that have this desirable property are called \textbf{proper scoring (rules)}.
-}
+% \only<1>{
+% We see: For regression, the RMs model the conditional expectation and median of the underlying distribution. This makes intuitive sense, depending on your concept of how to best estimate central location / how robust this location should be.
+% }
+% \only<2>{
+%     For the 0-1 loss, the risk minimizer constructs the \textbf{optimal Bayes decision rule}: We predict the class with maximal posterior probability.
+% }
+% \only<3>{
+%     For Brier and Bernoulli, we predict the posterior probabilities (of the true DGP!). Losses that have this desirable property are called \textbf{proper scoring (rules)}.
+% }
 
-\end{frame}
+% \end{frame}
 
 
 

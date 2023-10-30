@@ -8,9 +8,9 @@
 \newcommand{\learninggoals}{
   \item Understand how to decompose the generalization error of a learner into 
   \begin{itemize}
-    \item \footnotesize Bias of the learner
-    \item \footnotesize Variance of the learner
-    \item \footnotesize Inherent noise in the data
+    \item \footnotesize bias of the learner
+    \item \footnotesize variance of the learner
+    \item \footnotesize inherent noise in the data
   \end{itemize} 
   }
 
@@ -128,19 +128,41 @@ We can now estimate the (squared) bias, by computing the average squared differe
 \framebreak
 
 We compute the average variance of the predictions of the models we trained at the test point locations.
-\vspace{-0.25cm}
+\vspace{-0.35cm}
 \begin{center}
-  \includegraphics[width = 0.5\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
+  \includegraphics[width = 0.35\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
 \end{center}
-\vspace{-0.6cm}
+\vspace{-0.8cm}
 
 $$GE_n\left(\ind_{L}\right) \approx 1 + 1.628 + 0.135 = 2.763 $$
 
+
 \begin{itemize}
   \item The biggest component of the generalization error is the bias.
+  \item Computing the MSE in the usual way for each model, via L2 loss, and then averaging over models gives rise to nearly the same value, as expected
 \end{itemize}
 
 \framebreak
+
+\begin{center}
+  \includegraphics[width = 0.35\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
+\end{center}
+
+\begin{footnotesize}
+
+\begin{itemize}
+  \item We can now check whether this alternative computation of the GE is correct
+  \item So, we simply compute the MSE in the standard fashion for each model
+  \item So for each model we compute the L2 loss at each data point, then average
+  \item Then we average these MSEs over all models
+  \item Result = 2.72, would be closer if we average over more models and test points 
+\end{itemize}
+
+\end{footnotesize}
+
+
+\framebreak
+
 
 We will repeat the same procedure, but use a high-degree polynomial ($d=7$) with more capacity.
 

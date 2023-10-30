@@ -1,0 +1,57 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+%<<setup-child, include = FALSE>>=
+%library(knitr)
+%library(qrmix)
+%library(mlr)
+%library(quantreg)
+%library(reshape2)
+%set_parent("../style/preamble.Rnw")
+%@
+
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+\input{../../latex-math/ml-hpo}
+
+
+
+\begin{document}
+
+
+
+\begin{frame}[t]{Risk Minimizer And Optimal Constant}
+
+
+\begin{table}[] 
+\footnotesize
+\renewcommand{\arraystretch}{1.5} %<- modify value to suit your needs
+  \begin{tabular}{c|lll}
+  Name & Risk Minimizer & Optimal Constant\\ \hline
+  L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \frac{1}{n} \sumin \yi$ \\
+  L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \text{med}(\yi)$\\
+  0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hxh = \text{mode} \left\{\yi\right\}$ \\
+  Brier & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
+  Bernoulli (on probs) & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
+  Bernoulli (on scores) & $\fxbayes = \log\left(\frac{\P(y = 1 ~|~\xv)}{1 - \P(y = 1 ~|~\xv)}\right)$ & $\fxh = \log \frac{n_{+1}}{n_{-1}}$  
+  \end{tabular}
+\end{table}
+
+\only<1>{
+We see: For regression, the RMs model the conditional expectation and median of the underlying distribution. This makes intuitive sense, depending on your concept of how to best estimate central location / how robust this location should be.
+}
+\only<2>{
+    For the 0-1 loss, the risk minimizer constructs the \textbf{optimal Bayes decision rule}: We predict the class with maximal posterior probability.
+}
+\only<3>{
+    For Brier and Bernoulli, we predict the posterior probabilities (of the true DGP!). Losses that have this desirable property are called \textbf{proper scoring (rules)}.
+}
+
+\end{frame}
+
+
+
+
+
+\endlecture
+
+\end{document} 

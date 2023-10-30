@@ -31,20 +31,29 @@ Empirical Risk Minimization}
 
 \begin{vbframe}{Maximum Likelihood}
 
-Let us approach regression from a maximum likelihood perspective. In the following we assume that 
+Let's consider regression from a maximum likelihood perspective. Assume: 
 
 $$
-	y~|~ \xv \sim p(y~|~\xv, \thetab), 
+	y~|~ \xv \sim p(y~|~\xv, \thetab) 
 $$
 
-\lz 
+\vspace{0.5cm}
 
-For example, we commonly consider a true underlying relationship $\ftrue$ with additive noise: 
+Common case: 
+true underlying relationship $\ftrue$ with additive noise: 
 
+\vspace{0.5cm}
+
+\begin{minipage}{0.5\textwidth}
 $$
-y = \ftrue(\xv) + \eps,
+y = \ftrue(\xv) + \eps
 $$
-where $\ftrue$ is a function that is parameterized by $\thetab$ and $\eps$ being a RV that follows some distribution $\P_\eps$, with $\E[\eps] = 0$. Further, we assume $\epsilon$ to be independent of $\xv$. 
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width = 0.75\textwidth]{figure/ftrue.pdf}
+\end{minipage}
+
+where $\ftrue$ has params $\thetab$ and $\eps$ a RV that follows some distribution $\P_\eps$, with $\E[\eps] = 0$. Also, assume $\epsilon \perp \!\!\! \perp \xv$. 
 
 
 \framebreak 
@@ -52,38 +61,47 @@ where $\ftrue$ is a function that is parameterized by $\thetab$ and $\eps$ being
 From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution $p(y~|~\xv, \thetab)$. 
 
 \begin{itemize}
-\item Then, given data 
-$$
+\item Then, given i.i.d data $
 \D = \Dset
-$$ 
+$
+ from $\Pxy$ 
 
 the maximum-likelihood principle is to maximize the \textbf{likelihood}
 
+\begin{minipage}{0.5\textwidth}
 $$ \LLt = \prod_{i=1}^n \pdfyigxit $$
-or to minimize the \textbf{negative log-likelihood}
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width = 0.75\textwidth]{slides/advriskmin/figure/log_reg_ml.pdf}
+\end{minipage}
+
+or equivalently to minimize the \textbf{negative log-likelihood}
+
+\begin{minipage}{0.5\textwidth}
 $$ -\loglt = -\sumin \lpdfyigxit. $$
+\end{minipage}%
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width = 0.75\textwidth]{slides/advriskmin/figure/log_reg_erm.pdf}
+\end{minipage}
 \end{itemize}
 
 
 \framebreak 
 
-Let us take a machine learning perspective and assume our hypothesis space corresponds to the space of the (parameterized) $\ftrue$. 
+From an ML perspective we assume our hypothesis space corresponds to the space of the (parameterized) $\ftrue$. 
 
 \begin{itemize}
-\item Let us now simply define the negative log-likelihood as \textbf{loss function} 
+\item Simply define neg. log-likelihood as \textbf{loss function} 
 $$ \Lxyt := - \lpdfygxt $$
-\item Maximum-likelihood optimization can be formulated as an empirical risk minimization problem
+\item Then, maximum-likelihood 
+ = ERM
 $$\risket = \sumin \Lxyit$$
 
 % \item Then the maximum-likelihood estimator $\thetah$, which we obtain by optimizing $\LLt$ is identical
 % to the loss-minimal $\thetah$ we obtain by minimizing $\risket$.
-\item We can even disregard multiplicative or additive constants in the loss as they do not change the minimizer.
+\item NB: When we are only interested in the minimizer, we can ignore multiplicative or additive constants.
+\item We use $\propto$ as \enquote{proportional up to multiplicative and additive constants}
 
-\framebreak 
-
-\item For every error distribution $\P_\eps$ we can derive an equivalent loss function, which leads to the same point estimator for the parameter vector $\thetab$ as maximum-likelihood.
-\lz
-\item \textbf{NB}: The other way around does not always work: We cannot derive a probability density function or error distribution corresponding to every loss function -- the Hinge loss is a prominent example.
 \end{itemize}
 
 \end{vbframe}
@@ -91,45 +109,72 @@ $$\risket = \sumin \Lxyit$$
 
 \begin{vbframe}{Gaussian Errors - L2-Loss} 
 
-Let us assume $y = \ftrue(\xv) + \eps$ with additive Gaussian errors, i.e. $\epsi \sim \mathcal{N}(0, \sigma^2)$. Then
+Assume $y = \ftrue(\xv) + \eps$ with additive Gaussian errors, i.e. $\epsi \sim \mathcal{N}(0, \sigma^2)$. Then
 
-$$y~|~\xv \sim N\left(\ftrue(\xv), \sigma^2\right).$$
+$$y~|~\xv \sim N\left(\ftrue(\xv), \sigma^2\right)$$
 
 
 The likelihood is then 
 
 \begin{eqnarray*}
-\LL(\thetab) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \exp\left(-\frac{1}{2\sigma^2}\sumin \left(\yi - \fxit\right)^2\right)\,.
+\LL(\thetab) &=& \prodin \pdf\left(\yi ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)
 \end{eqnarray*}
 
 \framebreak 
 
-It is easy to see that minimizing the negative log-likelihood is equivalent to the $L2$-loss minimization approach since
+Easy to see: minimizing neg. negative log-likelihood with Gaussian errors is the same as ERM with $L2$-loss:
 
 \begin{eqnarray*}
 - \loglt &=& - \log\left(\LL(\thetab)\right) \\
-&=& - \log\left(\exp\left(-\frac{1}{2\sigma^2}\sumin \left(\yi - \fxit\right)^2\right)\right) \\
-&\propto& \sumin \left(\yi - \fxit\right)^2.
+&=& - \log\left(\prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)\right) \\
+&\propto& \sumin \left(\yi - \fxit\right)^2
 \end{eqnarray*}
 
 
-\begin{footnotesize}
-\textbf{Note:} We use $\propto$ as \enquote{proportional to ... up to multiplicative and additive constants}. 
-\end{footnotesize}
 
 \framebreak 
 
 \begin{footnotesize}
 \begin{itemize}
-	\item We simulate data $y ~|~\xv \sim \mathcal{N}\left(\ftrue(\xv), 1\right)$ with $\ftrue = 0.2 \cdot \xv$. 
-\item We can plot the empirical error distribution, i.e. the distribution of the residuals after fitting a regression model w.r.t. $L2$-loss.
-\item With the help of a Q-Q-plot we can compare the empirical residuals vs. the theoretical quantiles of a Gaussian distribution.  
+	\item We simulate data $y ~|~\xv \sim \mathcal{N}\left(\ftrue(\xv), 1\right)$ with $\ftrue = 0.2 \cdot \xv$ 
+\item Let's plot empirical errors as histogram, after fitting our model with $L2$-loss
+\item Q-Q-plot compares empirical residuals vs. theoretical quantiles of Gaussian 
 \end{itemize}
 \end{footnotesize}
 
 \includegraphics[width = 0.8\textwidth]{figure/residuals_plot_L2.pdf}
 
 \end{vbframe}
+
+\begin{vbframe}{Distributions and losses}
+
+\begin{itemize} 
+\item For every error distribution $\P_\eps$ we can derive an equivalent loss function, which leads to the same point estimator for the parameter vector $\thetab$ as maximum-likelihood. Formally,
+\begin{itemize}
+    \item $\thetah \in \argmax_{\thetab} \LL(\thetab) \implies \thetah \in \argmin_{\thetab}-\log(\LL(\thetab))$  %\implies \thetah \in \argmin_{\thetab}-\log(\LL(\thetab))$ 
+    %\item $\thetah \in \argmax_{\thetab} \log\left(\LL(\thetab)\right) \implies $
+\end{itemize}
+%\lz
+\item \textbf{But}: The other way around does not always work: We cannot derive a corresponding pdf or error distribution for every loss function -- the Hinge loss is one prominent example, for which some probabilistic interpretation is still possible however, see \citebutton{Sollich, 1999}{https://ieeexplore.ieee.org/abstract/document/819547}.
+
+\framebreak
+
+When does the reverse direction hold?
+\item If we can write the loss as $L(y,\fx)=L(y-\fx)=L(r)$ for $r \in \mathbb{R}$, then minimizing $L(y-\fx)$ is equivalent to maximizing a conditional log-likelihood $\log(p(y-f(\xv|\thetab))$ if
+\begin{itemize}
+ \setlength{\itemsep}{1.2em}
+    \item $\log(p(r))$ is affine trafo of $L$ (undoing the $\propto$):
+% minus due to sign chance when we go from loss to loglik
+    $$\log(p(r)) = a - bL(r),\,\,a \in \mathbb{R}, b>0$$
+    \item  $p$ is a pdf (non-negative and integrates to one)
+\end{itemize}
+\lz
+Thus, a loss $L$ corresponds to MLE under \textit{some} distribution if there exist $a \in \mathbb{R},\, b>0$ such that
+$$ \int_{\mathbb{R}} \exp(a-bL(r))\text{d}r = 1$$
+\end{itemize}
+    
+\end{vbframe}
+
 
 \endlecture
 \end{document}
