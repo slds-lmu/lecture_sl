@@ -30,16 +30,17 @@ Regularization can also be motivated from a numerical perspective:
     \item $\Xmat$ is of square form and has full rank. This is normal linear system solving and irrelevant for us here, now. 
    \item $\Xmat$ has more rows than columns. The system is "overdetermined". We now try to solve
       $\Xmat \thetab \approx \bm{y}$, by minimizing $|| \Xmat \thetab - \bm{y}||$. Ideally, this difference would be zero, but due to the too many rows this is often not possible. This is equivalent to linear regression!
-   \item $\Xmat$ has more columns than rows / linear dependence between columns exists. Now there are usually an infinite number of solutions. We have to define a "preference" for them to make the problem well-defined (sounds familiar?). Such problems are called $"$underdetermined$"$.
+   \item $\Xmat$ has more columns than rows / linear dependence between columns exists. Now there is usually an infinite number of solutions. We have to define a "preference" for them to make the problem well-defined (sounds familiar?). Such problems are called $"$underdetermined$"$.
   \end{footnotesize}
   \end{enumerate}
   \end{itemize}
 
 \framebreak
   \begin{itemize}
-   \item A very old and well-known approach in underdetermined cases is to still reduce the problem to optimization by minimizing $|| \Xmat \thetab - \bm{y}||$, but adding a small positiv constant to the diagonal of $\Xmat^T \Xmat$.
+   \item A very old and well-known approach in underdetermined cases is to still reduce the problem to optimization by minimizing $|| \Xmat \thetab - \bm{y}||$, but adding a small positive constant to the diagonal of $\Xmat^T \Xmat$.
    \item In optimization / numerical analysis this is known as \textbf{Tikhonov} regularization. 
-   \item But as you should be able to see now: This is completely equivalent to Ridge regression!
+   \item But as you should be able to see now: This is completely equivalent to Ridge regression! Recall:
+   $$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
   \end{itemize}
 
 \framebreak

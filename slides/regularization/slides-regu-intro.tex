@@ -62,7 +62,8 @@ to new test data (right). We overfitted.
 \begin{vbframe}{Avoid Overfitting} 
 
 Why can \textbf{overfitting} happen? And how to avoid it?
-
+\lz
+\lz
 \begin{enumerate}
 \item Not enough data \\
 $\to$ collect \textbf{more data} 
@@ -96,7 +97,7 @@ Good idea, but often not feasible in practice.
 
 \lz 
 
-We try the simplest model we can think of: the constant model. For the $L2$ loss, the optimal constant model is
+We try the simplest model we can think of: the constant model. For the $L2$ loss, the optimal constant model is the empirical mean
 
 $$
 \fxt = \frac{1}{n}\sumin \yi
@@ -163,7 +164,7 @@ We need to find the \enquote{sweet spot}.
 
 \framebreak 
 
-Until now, we can either add a feature completely or not at all.
+Until now, we can either include or exclude features in a binary fashsion.
 
 \lz 
 
@@ -183,7 +184,7 @@ we might prefer to control the complexity  \textbf{on a continuum} from simple t
 \begin{vbframe}{Regularized Empirical Risk Minimization}
 
   
-Recall, empirical risk minimization with a complex hypothesis set tends to overfit. A major tool to handle overfitting is \textbf{regularization}.
+Recall, empirical risk minimization with a complex hypothesis set tends to overfit. A major tool for handling overfitting is \textbf{regularization}.
   
   \lz
   
