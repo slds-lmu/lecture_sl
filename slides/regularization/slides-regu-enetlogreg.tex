@@ -25,28 +25,27 @@
 
 
 Elastic Net combines the $L1$ and $L2$ penalties:
-
-$$
-\mathcal{R}_{\text{elnet}}(\thetab) =  \sumin (\yi - \thetab^\top \xi)^2 + \lambda_1 \|\thetab\|_1 + \lambda_2 \|\thetab\|_2^2.
-$$
-
+\small{
+\begin{align*}
+\mathcal{R}_{\text{elnet}}(\thetab) &=  \sumin (\yi - \thetab^\top \xi)^2 + \lambda_1 \|\thetab\|_1 + \lambda_2 \|\thetab\|_2^2 \\
+&= \sumin (\yi - \thetab^\top \xi)^2 + \lambda \left( (1-\alpha) \|\thetab\|_1 + \alpha \|\thetab\|_2^2\right),\, \alpha=\frac{\lambda_2}{\lambda_1+\lambda_2}, \lambda=\lambda_1+\lambda_2
+\end{align*}}
 \begin{figure}
-\includegraphics[width=0.6\textwidth]{figure/lasso_ridge_enet_2d.png}\\
+\includegraphics[width=0.55\textwidth]{figure/lasso_ridge_enet_2d.png}\\
 \end{figure}
-
-
+\vspace{-0.2cm}
 \begin{itemize}
-\item Correlated predictors tend to be either selected or zeroed out together.
+\item Correlated features tend to be either selected or zeroed out together.
 \item Selection of more than $n$ features possible for $p>n$.
 \end{itemize}
 
 
 \framebreak
 \footnotesize
-Simulating two examples with each 50 data sets and 100 observations each: \\
+Simulating 50 data sets with 100 observations each for two coefficient settings: \\
 
 
-$$\yv =\Xmat \boldsymbol{\beta}+\sigma \epsilon, \quad \epsilon \sim N(0,1), \quad \sigma = 1$$
+$$\yv =\Xmat \boldsymbol{\beta}+ \epsilon, \quad \epsilon \sim N(0,1)$$
   
   \begin{columns}
 \begin{column}{0.5\textwidth}
@@ -90,7 +89,7 @@ Regularizers can be added very flexibly to basically any model which is based on
 
 \lz 
 
-Hence, we can, e.g., construct $L1$- or $L2$-penalized logistic regression to enable coefficient shrinkage and variable selection in this model. 
+Hence, we can construct, e.g., $L1$- or $L2$-penalized logistic regression to enable coefficient shrinkage and variable selection in this model class. 
 
 % \lz 
 % We can add a regularizer to the risk of logistic regression

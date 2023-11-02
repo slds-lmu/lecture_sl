@@ -23,8 +23,8 @@
 
   \begin{itemize}
   \item Linear models can also overfit if we operate in a high-dimensional space with not that many observations.    
-  \item OLS usually require a full-rank design matrix.
-  \item When features are highly correlated, the least-squares estimate becomes highly sensitive to random errors in the observed response, producing a large variance in the fit. 
+  \item The OLS estimator requires a full-rank design matrix.
+  \item For highly correlated features, the least-squares estimate becomes highly sensitive to random errors in the observed response, producing a large variance in the fit. 
   \item We now add a complexity penalty to the loss:
   $$
   \riskrt = \sumin \left(\yi - \thetab^\top \xi \right)^2 + \lambda \cdot J(\thetab). 
@@ -86,7 +86,7 @@ NB: Relationship between $\lambda$ and $t$ will be explained later.
 \begin{footnotesize} 
 \begin{itemize}
   \item We still optimize the $\risket$, but cannot leave a ball around the origin.
-  \item $\risket$ grows monotonically if we move away from $\thetah$.
+  \item $\risket$ grows monotonically if we move away from $\thetah$ (elliptic contours).
   \item Inside constraints perspective: From origin, jump from contour line to contour line (better) until you become infeasible, stop before.
 \item Outside constraints perspective: From $\thetah$, jump from contour line to contour line (worse) until you become feasible, stop then.
   \item So our new optimum will lie on the boundary of that ball.
@@ -102,11 +102,11 @@ NB: Relationship between $\lambda$ and $t$ will be explained later.
 
 \begin{vbframe}{Example: Polynomial Ridge Regression}
 
-True (unknown) function is \(f(x) = 5 + 2x +10x^2 - 2x^3 + \epsilon\) (in red).
+Consider $y=f(x)+\epsilon$ where the true (unknown) function is \(f(x) = 5 + 2x +10x^2 - 2x^3\) (in red).
 
 \lz
 
-Let us consider a \(d\)th-order polynomial
+We now fit the data using a \(d\)th-order polynomial
 \[ f(x) = \theta_0 + \theta_1 x + \cdots + \theta_d x^d = \sum_{j = 0}^{d} \theta_j x^j\text{.} \]
 Using model complexity $d = 10$ overfits:
 
