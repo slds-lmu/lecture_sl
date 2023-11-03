@@ -12,8 +12,7 @@ p1 <- c(0.0, 0.0, 1, 0, 0)
 p2 <- c(0, 0.1, 0.8, 0.1, 0)
 p3 <- c(0.1, 0.1, 0.6, 0.1, 0.1)
 p4 <- c(0.15, 0.15, 0.4, 0.15, 0.15)
-p5 <- c(0.175, 0.175, 0.3, 0.175, 0.175)
-p6 <- c(0.2, 0.2, 0.2, 0.2, 0.2)
+p5 <- c(0.2, 0.2, 0.2, 0.2, 0.2)
 
 # ENTROPY MAXIMAL FOR UNIFORM DISTRIBUTION PLOTS ------------------------------------------------------------------------
 
@@ -32,7 +31,7 @@ plot_ent <- function(p) {
 }
 
 
-plot_list = lapply(list(p1, p2, p3, p4, p5, p6), plot_ent)
+plot_list = lapply(list(p1, p2, p3, p4, p5), plot_ent)
 
 for (i in 1:length(plot_list)){
   ggsave(paste0(".../figure/max_entropy_", i, ".pdf"), plot_list[[i]], width = 6.5, height = 5)
