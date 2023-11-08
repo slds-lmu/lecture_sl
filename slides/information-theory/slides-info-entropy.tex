@@ -65,8 +65,32 @@ Base $2$ means the information is measured in bits, but you can use any number $
     \item \textbf{Note:} If $p(x) = 0$, then $p(x) \log_2 p(x)$ is taken to be zero, because $\lim _{p \rightarrow 0} p \log_2 p=0$. %for $x=0$.
     \item NB: $H$ is actually Greek capital letter \textbf{E}ta ($\eta$) for \textbf{e}ntropy
   \end{itemize}
+  
+\end{vbframe}
 
-\framebreak
+\begin{vbframe}{Entropy Calculation}
+
+  \begin{itemize}
+  \item The negative log probabilities $\log_2 p(x)$ are called "Surprise".
+  \end{itemize}
+
+\begin{equation*}
+\begin{aligned} 
+  H(X) = - \E[\log_2(p(X))]           &= -\sum_{x \in \Xspace} p(x) \log_2 p(x)} 
+\end{aligned} 
+\end{equation*}
+
+\begin{center}
+\includegraphics[width = 12cm ]{figure/entropy_calc.png} \\
+\end{center}
+
+  \begin{itemize}
+  \item The final entropy is $H(X)=1.5$.
+  \end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{Entropy Properties}
 
 We can directly note some basic properties:
 \vspace{0.2cm}
@@ -115,22 +139,17 @@ Unpredictability grows \textit{monotonically} with the number of potential outco
 \end{vbframe}
 
 
-\begin{frame}{Entropy is Maximal for Uniform}
+\begin{vbframe}{Entropy is Maximal for Uniform}
 
 \begin{center}
-        \begin{figure}
-            \centering
-            \foreach \x in{1,2,3,4,5} {
-            \includegraphics<\x>[width=0.6\linewidth]{figure/max_entropy_\x.pdf}\par
-            }
-        \end{figure}
+\includegraphics[width = 0.9\textwidth]{figure/max_entropy.png}
 \end{center}
 
 \begin{itemize}
    \item Naive observation: Entropy minimal for peaked distribution and maximal for uniform distribution.
 \end{itemize}
 
-\end{frame}
+\end{vbframe}
 
 \begin{vbframe}{Entropy is Maximal for Uniform}
 \begin{enumerate}
@@ -167,7 +186,7 @@ Let $X$ be Bernoulli / a coin with $\P(X=1) = s$ and $\P(X=0) = 1 - s$.
 $$ H(X)= -s \cdot \log_2(s)-(1-s)\cdot \log_2(1-s). $$
 
 \begin{center}
-\includegraphics[width = 6.5cm ]{figure_man/coin-entropy.png} \\
+\includegraphics[width = 8.0cm ]{figure/entropy_bernoulli.png} \\
 \end{center}
 
 We note: If the coin is deterministic, so $s=1$ or $s=0$, then $H(s)=0$; 
