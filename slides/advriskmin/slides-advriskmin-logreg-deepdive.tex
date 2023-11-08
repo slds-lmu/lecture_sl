@@ -1,0 +1,148 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+%<<setup-child, include = FALSE>>=
+%library(knitr)
+%library(qrmix)
+%library(mlr)
+%library(quantreg)
+%library(reshape2)
+%set_parent("../style/preamble.Rnw")
+%@
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}
+{figure/plot_bernoulli_prob}
+\newcommand{\learninggoals}{
+  \item Derive the gradient of the logistic regression
+  \item Derive the Hessian of the logistic regression
+  \item Show that the logistic regression is a convex problem
+}
+
+\title{Introduction to Machine Learning}
+% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
+\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
+\date{}
+
+\newcommand{\argminl}{\mathop{\operatorname{arg\,min}}\limits}
+
+\begin{document}
+
+\lecturechapter{Logistic regression (deep-dive)}
+\lecture{Introduction to Machine Learning}
+
+
+\begin{vbframe}{Logistic regression: Problem}
+
+Given $n \in \mathbb{N}$ observations $\left(\xi, \yi\right) \in \Xspace \times \Yspace$ with  $\Xspace = \mathbb{R}^d, \Yspace = \{0, 1\}$ we want to minimize the following risk 
+
+
+\vspace*{-0.5cm}
+
+\begin{eqnarray*}
+\pixit[1]
+  \riske  & = & 
+  -\sum^n_{i=1} y^{(i)}\log(\pi_{\bm{\theta}}(\xi)) + (1-y^{(i)})\log(1-\pi_{\bm{\theta}}(\xi))
+\end{eqnarray*}
+
+with respect to $\bm{\theta}$ where the probabilistic classifier
+
+\begin{eqnarray*}
+  \pi_{\bm{\theta}}(\xi)  & = & 
+ \sigma(f(\xi, \bm{\theta})),
+\end{eqnarray*}
+
+the sigmoid function $\sigma(f) = \frac{1}{1 + \exp(-f)}$ and the score $f(\xi, \bm{\theta}) = \bm{\theta}^\top \xi.$
+
+\vspace*{0.5cm} 
+
+NB: Note that $\frac{\partial}{\partial f} \sigma(f) = \sigma(f)(1-\sigma(f))$ and $\frac{\partial f(\xi, \bm{\theta})}{\partial \bm{\theta}} = \left(\xi\right)^\top.$
+
+\end{vbframe}
+\begin{vbframe}{Logistic regression: Gradient}
+
+We find the gradient of logistic regression with the chain rule, s.t., 
+
+\vspace*{-0.5cm}
+
+\begin{align*}
+  \frac{\partial}{\partial\bm{\theta}}\riske  & = & 
+ -\sum^n_{i=1} \frac{\partial}{\partial \pi_{\bm{\theta}}(\xi)}y^{(i)}\log(\pi_{\bm{\theta}}(\xi))\frac{\partial \pi_{\bm{\theta}}(\xi)}{\partial \bm{\theta}} +  \\
+ &&  \frac{\partial}{\partial \pi_{\bm{\theta}}(\xi)}(1-y^{(i)})\log(1-\pi_{\bm{\theta}}(\xi))\frac{\partial \pi_{\bm{\theta}}(\xi)}{\partial \bm{\theta}}\\
+ & = & 
+ -\sum^n_{i=1} \frac{y^{(i)}}{\pi_{\bm{\theta}}(\xi)}\frac{\partial \pi_{\bm{\theta}}(\xi)}{\partial \bm{\theta}} -  \frac{1-y^{(i)}}{1-\pi_{\bm{\theta}}(\xi)}\frac{\partial \pi_{\bm{\theta}}(\xi)}{\partial \bm{\theta}}\\
+ &=&  
+  -\sum^n_{i=1} \left(\frac{y^{(i)}}{\pi_{\bm{\theta}}(\xi)} -  \frac{1-y^{(i)}}{1-\pi_{\bm{\theta}}(\xi)}\right)\frac{\partial \sigma(f(\xi, \bm{\theta}))}{\partial  f(\xi, \bm{\theta})}\frac{\partial  f(\xi, \bm{\theta})}{\partial\bm{\theta}}\\
+  &=&  
+  -\sum^n_{i=1} \left(y^{(i)}(1-\pi_{\bm{\theta}}(\xi))  -  (1-y^{(i)})\pi_{\bm{\theta}}(\xi) \right)\left(\xi\right)^\top.\\
+\end{align*}
+
+\framebreak
+
+\begin{align*}
+  \quad &=& 
+  \sum^n_{i=1} \left(\pi_{\bm{\theta}}(\xi) - y^{(i)}\right)\left(\xi\right)^\top.\\
+    \quad &=& 
+  \left(\pi_{\bm{\theta}}(\mathbf{X}) - \mathbf{y}\right)^\top\mathbf{X}\\
+\end{align*}
+
+where \\ $\mathbf{X} = \begin{pmatrix}
+    \xi[1]^\top \\
+    \vdots \\
+    \xi[n]^\top
+\end{pmatrix} \in \mathbb{R}^{n\times d}, \mathbf{y} = \begin{pmatrix}
+    \yi[1] \\
+    \vdots \\
+    \yi[n]
+\end{pmatrix}, \pi_{\bm{\theta}}(\mathbf{X}) = \begin{pmatrix}
+    \pi_{\bm{\theta}}(\xi[1]) \\
+    \vdots \\
+    \pi_{\bm{\theta}}(\xi[n])
+\end{pmatrix} \in \mathbb{R}^{n}$.
+
+\vspace*{1cm}
+
+$\Rightarrow$ The gradient $\nabla_{\bm{\theta}}\riske = \left(\frac{\partial}{\partial\bm{\theta}}\riske\right)^\top =  \mathbf{X}^\top\left(\pi_{\bm{\theta}}(\mathbf{X}) - \mathbf{y}\right)$ 
+
+\end{vbframe}
+
+
+\begin{vbframe}{Logistic regression: Hessian}
+
+We find the Hessian via differentiation, s.t.,
+
+\begin{align*}
+  \nabla^2_{\bm{\theta}}\riske  = \frac{\partial^2}{\partial{\bm{\theta}^\top}\partial\bm{\theta}}\riske  & = & 
+ \frac{\partial}{\partial{\bm{\theta}^\top}} \sum^n_{i=1} \left(\pi_{\bm{\theta}}(\xi) - y^{(i)}\right)\left(\xi\right)^\top\\
+ & = & 
+  \sum^n_{i=1}\xi \left(\pi_{\bm{\theta}}(\xi)(1-\pi_{\bm{\theta}}(\xi))\right)\left(\xi\right)^\top\\
+  & = & 
+\mathbf{X}^\top \mathbf{D} \mathbf{X}\\
+\end{align*}
+
+where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
+$$(\pi_{\bm{\theta}}(\xi[1])(1-\pi_{\bm{\theta}}(\xi[1]), \dots, \pi_{\bm{\theta}}(\xi[n])(1-\pi_{\bm{\theta}}(\xi[n])).$$
+
+\end{vbframe}
+
+\begin{vbframe}{Logistic regression: Convexity}
+Finally, we check that logistic regression is a convex problem:
+\vspace*{0.3cm}
+
+We define the diagonal matrix $\bar{\mathbf{D}} \in \mathbb{R}^{n \times n}$ with diagonal 
+$$\left(\sqrt{\pi_{\bm{\theta}}(\xi[1])(1-\pi_{\bm{\theta}}(\xi[1])}, \dots, \sqrt{\pi_{\bm{\theta}}(\xi[n])(1-\pi_{\bm{\theta}}(\xi[n])}\right) $$
+which is possible since $\pi_{\bm{\theta}}$ maps into (0, 1). \\
+\vspace*{0.3cm}
+With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that
+
+$$\mathbf{w}^\top  \nabla^2_{\bm{\theta}}\riske \mathbf{w} =   \mathbf{w}^\top  \mathbf{X}^\top \bar{\mathbf{D}}^\top \bar{\mathbf{D}}\mathbf{X} \mathbf{w} = (\bar{\mathbf{D}}\mathbf{X} \mathbf{w})^\top\bar{\mathbf{D}}\mathbf{X} \mathbf{w} = \Vert \bar{\mathbf{D}}\mathbf{X} \mathbf{w} \Vert^2_2 \geq 0$$
+
+since obviously $\mathbf{D} = \bar{\mathbf{D}}^\top \bar{\mathbf{D}}.$ \\
+\vspace*{0.3cm}
+$\Rightarrow \nabla^2_{\bm{\theta}}\riske$ is positive semi-definite $\Rightarrow \riske$ is convex.
+
+\end{vbframe}
+
+\endlecture
+
+\end{document}

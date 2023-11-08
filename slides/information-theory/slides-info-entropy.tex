@@ -215,7 +215,7 @@ Let $X$ and $Y$ be two independent RVs. Then:
 
 
 
-\begin{vbframe}{The Uniqueness Theorem}
+\begin{vbframe}{The Uniqueness Theorem \citebutton{Khinchin, 1957}{https://books.google.de/books/about/Mathematical_Foundations_of_Information.html?id=0uvKF-LT_tMC&redir_esc=y}}
 
 Khinchin (1957) showed that the only family of functions satisfying
 \begin{itemize}
@@ -232,34 +232,6 @@ $$ H(p) = - \lambda \sum_{x \in \Xspace} p(x) \log p(x) $$
 where $\lambda$ is a positive constant. Setting $\lambda = 1$ and using the binary logarithm gives us the Shannon entropy.
 \end{vbframe}
 
-\begin{comment}
-\begin{vbframe}{Properties of Discrete Entropy}
-  \begin{enumerate}
-    \item Entropy is non-negative, so $H(X) \geq 0$.
-    \item If one event has probability $p(x) = 1$, then $H(X)=0$. 
-    \item Symmetry. If the values $p(x)$ in the pmf are re-ordered, entropy does not change.
-    \item Adding or removing an event with $p(x)=0$ does not change entropy.
-    \item $H(X)$ is continuous in probabilities $p(x)$.
-    \item Entropy is additive for independent RVs.
-    \item Entropy is maximal for a uniform distribution, so for a domain with $g$ elements:  
-      $H(X) \leq -g\frac{1}{g} \log_2(\frac{1}{g}) = log_2(g)$.
-  \end{enumerate}
-\lz
-All properties except the last 2 follow trivially from the definition.
-\end{vbframe}
-
-\begin{itemize}
-    \item We have encountered various other measures of spread or uncertainty in statistics before.
-    \item Furthermore, the formula does not seem to make intuitive sense?
-    \item We will now do the following:
-    \begin{itemize}
-      \item Approach it by various simple examples.
-      \item Note some basic properties - which seem desirable for an uncertainty measure.
-      \item Note that if we require these measures axiomatically, entropy drops out automatically as the result.
-      \item Note even more nice properties.
-  \end{itemize}
-\end{itemize}
-\end{comment}
 
 \endlecture
 \end{document}
