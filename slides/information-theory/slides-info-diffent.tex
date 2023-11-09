@@ -23,9 +23,24 @@
     $$ h(X) := h(f) := - \int_{\Xspace} f(x) \log(f(x)) dx $$
     \item The base of the log is again somewhat arbitrary, and we could either use 2 (and measure in bits) or e (to measure in nats).
     \item The integral above does not necessarily exist for all densities.
-    \item Differential entropy lacks some properties of discrete entropy.
-    \item $h(X) < 0$ is possible because $f(x) > 1$ is possible.
+    \item Differential entropy lacks the non-negativeness property of the discrete entropy: $h(X) < 0$ is possible because $f(x) > 1$ is possible.
     \end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Differential Entropy Calculation} 
+  \begin{itemize}
+    \item Visualize the entropy calculation of a Beta(2,5) distribution.
+    $$ h(X) =- \int_{\Xspace} f(x) \log(f(x)) dx $$
+    \end{itemize}
+    
+    \begin{center}
+    \includegraphics[width = 10cm ]{figure/beta_entropy.png}
+    \end{center}
+    
+  \begin{itemize}
+    \item The final differential entropy is simply the integral: $h(X)-0.48$.
+    \end{itemize}    
+    
 \end{vbframe}
 
 \begin{vbframe}{Diff. Entropy of Uniform Distribution}
@@ -39,6 +54,11 @@ Let $X$ be a uniform random variable on $[0, a]$.
   \begin{itemize}
     \item For $a < 1$, $h(X) < 0$.
     \end{itemize}
+    
+    \begin{center}
+    \includegraphics[width = 10cm ]{figure/uni_entropy.png}
+    \end{center}
+    
 \end{vbframe}
 
 
@@ -54,12 +74,20 @@ Let $X$ be a Gaussian random variable $X \sim \normal(\mu, \sigma^2)$ and let us
           &= \frac{1}{2} \log \left(2 \pi \sigma^{2}\right) + \frac{1}{2} =  \log(\sigma \sqrt{2\pi e})
     \end{aligned}
   \end{equation*}
-\framebreak
+\end{vbframe}
 
+
+\begin{vbframe}{Diff. Entropy of Gaussian}
   \begin{itemize}
     \item $h(X)$ is not a function of $\mu$ (see translation invariance).
     \item As $\sigma^2$ increases, the differential entropy also increases.
-    \item For $\sigma^2 < \frac{1}{2\pi e}$, it is negative.
+     \begin{center}
+    \includegraphics[width = 7cm ]{figure/normal_entropy.png}
+    \end{center}
+    \item For $\sigma^2 < \frac{1}{2\pi e}\approx 0.059$, it is negative.
+    \begin{center}
+    \includegraphics[width = 5cm ]{figure/normal_entropy_sigma.png}
+    \end{center}
     
   \end{itemize}
 \end{vbframe}
@@ -104,6 +132,7 @@ If $X \sim N(\mu, \Sigma)$ is multivariate Gaussian, then
     $h(X) \leq \frac{1}{2} \log(2 \pi e)^n |\Sigma|.$
     % We postpone the proof to a later chapter, as it is based on Kullback-Leibler divergence.
     % $H(X) \leq -g\frac{1}{g} \log_2(\frac{1}{g}) = log_2(g)$.
+    \item $h(f)$ is maximized by the continuous uniform distribution for a random variable with a fixed range.
 \item Translation-invariant, $ h(X+a) = h(X)$. 
 \item $h(aX) = h(X) + \log |a|$.
 \item $h(AX) = h(X) + \log |A|$ for random vectors and matrix A.
