@@ -28,6 +28,22 @@
     \end{itemize}
 \end{vbframe}
 
+\begin{vbframe}{Differential Entropy Calculation} 
+  \begin{itemize}
+    \item Visualize the entropy calculation of a Beta(2,5) distribution.
+    $$ h(X) =- \int_{\Xspace} f(x) \log(f(x)) dx $$
+    \end{itemize}
+    
+    \begin{center}
+    \includegraphics[width = 10cm ]{figure/beta_entropy.png}
+    \end{center}
+    
+  \begin{itemize}
+    \item The final differential entropy is simply the integral: $h(X)-0.48$.
+    \end{itemize}    
+    
+\end{vbframe}
+
 \begin{vbframe}{Diff. Entropy of Uniform Distribution}
 Let $X$ be a uniform random variable on $[0, a]$.
   \begin{equation*}
@@ -39,6 +55,11 @@ Let $X$ be a uniform random variable on $[0, a]$.
   \begin{itemize}
     \item For $a < 1$, $h(X) < 0$.
     \end{itemize}
+    
+    \begin{center}
+    \includegraphics[width = 10cm ]{figure/uni_entropy.png}
+    \end{center}
+    
 \end{vbframe}
 
 
@@ -54,12 +75,19 @@ Let $X$ be a Gaussian random variable $X \sim \normal(\mu, \sigma^2)$ and let us
           &= \frac{1}{2} \log \left(2 \pi \sigma^{2}\right) + \frac{1}{2} =  \log(\sigma \sqrt{2\pi e})
     \end{aligned}
   \end{equation*}
-\framebreak
+\end{vbframe}
 
+\begin{vbframe}{Diff. Entropy of Gaussian}
   \begin{itemize}
     \item $h(X)$ is not a function of $\mu$ (see translation invariance).
     \item As $\sigma^2$ increases, the differential entropy also increases.
-    \item For $\sigma^2 < \frac{1}{2\pi e}$, it is negative.
+     \begin{center}
+    \includegraphics[width = 7cm ]{figure/normal_entropy.png}
+    \end{center}
+    \item For $\sigma^2 < \frac{1}{2\pi e}\approx 0.059$, it is negative.
+    \begin{center}
+    \includegraphics[width = 5cm ]{figure/normal_entropy_sigma.png}
+    \end{center}
     
   \end{itemize}
 \end{vbframe}
