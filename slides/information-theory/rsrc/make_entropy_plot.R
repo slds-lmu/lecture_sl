@@ -11,7 +11,7 @@ p1 <- c(0.1, 0.2, 0.4, 0.2, 0.1)
 
 n <- length(p1)
 logp <- -log(p1)
-lp <- ifelse(p1 == 0, 0, lp)
+lp <- ifelse(p1 == 0, 0, logp)
 r <- p1 * lp
 H <- sum(r)
 dd <- data.frame(x = 1:n, p = p1, logp = logp, r = r)
@@ -22,11 +22,11 @@ pl1 <- ggplot(data = dd, aes(x = x)) +
 
 pl2 <- ggplot(data = dd, aes(x = x)) +
   geom_bar(aes(y = logp), stat = "identity") +
-  ggtitle("Surprise") + ylab("-log(p)")
+  ggtitle("Surprisal") + ylab("-log(p)")
 
 pl3 <- ggplot(data = dd, aes(x = x)) +
   geom_bar(aes(y = r), stat = "identity") +
-  ggtitle("p*Surprise") + ylab("-p*log(p)")
+  ggtitle("p*Surprisal") + ylab("-p*log(p)")
 
 p <- grid.arrange(grobs = list(pl1, pl2, pl3), nrow = 1, ncol = 3)
 ggsave(filename = "...figure/entropy_calc.png", plot = p, width = 6, height = 2)
