@@ -76,7 +76,7 @@ Base $2$ means the information is measured in bits, but you can use any number $
 
 \begin{equation*}
 \begin{aligned} 
-  H(X) = - \E[\log_2(p(X))]           &= -\sum_{x \in \Xspace} p(x) \log_2 p(x)} 
+  H(X) = - \E[\log_2(p(X))]           &= -\sum_{x \in \Xspace} p(x) \log_2 p(x) 
 \end{aligned} 
 \end{equation*}
 
@@ -91,6 +91,8 @@ Base $2$ means the information is measured in bits, but you can use any number $
 \end{vbframe}
 
 \begin{vbframe}{Entropy Properties}
+
+$$H(X) := H(p) = - \E[\log_2(p(X))] = -\sum_{x \in \Xspace} p(x) \log_2 p(x)$$
 
 We can directly note some basic properties:
 \vspace{0.2cm}
@@ -176,6 +178,8 @@ Unpredictability grows \textit{monotonically} with the number of potential outco
     \implies p_i = 2^{(-1 - \lambda)} \implies p_i = \frac{1}{g},
   \end{gather*}
   where the last step follows from the fact that all $p_i$ are equal and the constraint.
+  \vspace{0.2cm}\\
+  \textbf{NB}: We also could have solved the constraint for $p_1$ and substitute $p_1=1-\sum_{i=2}^{g} p_i$ in the objective to avoid constrained optimization.
 
 \end{vbframe}
 

@@ -23,8 +23,7 @@
     $$ h(X) := h(f) := - \int_{\Xspace} f(x) \log(f(x)) dx $$
     \item The base of the log is again somewhat arbitrary, and we could either use 2 (and measure in bits) or e (to measure in nats).
     \item The integral above does not necessarily exist for all densities.
-    \item Differential entropy lacks some properties of discrete entropy.
-    \item $h(X) < 0$ is possible because $f(x) > 1$ is possible.
+    \item Differential entropy lacks the non-negativeness property of the discrete entropy: $h(X) < 0$ is possible because $f(x) > 1$ is possible.
     \end{itemize}
 \end{vbframe}
 
@@ -76,6 +75,7 @@ Let $X$ be a Gaussian random variable $X \sim \normal(\mu, \sigma^2)$ and let us
     \end{aligned}
   \end{equation*}
 \end{vbframe}
+
 
 \begin{vbframe}{Diff. Entropy of Gaussian}
   \begin{itemize}
