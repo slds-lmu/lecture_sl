@@ -20,27 +20,20 @@
 \begin{vbframe}{Differential Entropy} 
   \begin{itemize}
     \item For a continuous random variable $X$ with density function $f(x)$ and support $\Xspace$, the analogue of entropy is \textbf{differential entropy}:
-    $$ h(X) := h(f) := - \int_{\Xspace} f(x) \log(f(x)) dx $$
+    \small{
+    $$ h(X) := h(f) := - \int_{\Xspace} f(x) \log(f(x)) dx $$}
     \item The base of the log is again somewhat arbitrary, and we could either use 2 (and measure in bits) or e (to measure in nats).
     \item The integral above does not necessarily exist for all densities.
-    \item Differential entropy lacks the non-negativeness property of the discrete entropy: $h(X) < 0$ is possible because $f(x) > 1$ is possible.
+    \item Differential entropy lacks the non-negativeness of discrete entropy: $h(X) < 0$ is possible as $f(x) > 1$ is possible:
     \end{itemize}
-\end{vbframe}
-
-\begin{vbframe}{Differential Entropy Calculation} 
-  \begin{itemize}
-    \item Visualize the entropy calculation of a Beta(2,5) distribution.
-    $$ h(X) =- \int_{\Xspace} f(x) \log(f(x)) dx $$
-    \end{itemize}
-    
+\begin{minipage}{0.8\textwidth}
     \begin{center}
-    \includegraphics[width = 10cm ]{figure/beta_entropy.png}
+    \includegraphics[width = 0.95\textwidth]{figure/beta_entropy.png}
     \end{center}
-    
-  \begin{itemize}
-    \item The final differential entropy is simply the integral: $h(X)-0.48$.
-    \end{itemize}    
-    
+\end{minipage}%
+\begin{minipage}{0.2\textwidth}
+  \scriptsize{The diffent. is given by the integral:\\ $h(X)=-0.48$.}
+\end{minipage}
 \end{vbframe}
 
 \begin{vbframe}{Diff. Entropy of Uniform Distribution}
@@ -63,32 +56,36 @@ Let $X$ be a uniform random variable on $[0, a]$.
 
 
 \begin{vbframe}{Diff. Entropy of Gaussian}
-Let $X$ be a Gaussian random variable $X \sim \normal(\mu, \sigma^2)$ and let us measure in nats:
+Let $X \sim \normal(\mu, \sigma^2)$ and let us measure in nats:
+\vspace{-0.2cm}
 % The differential entropy is then given by
+{\small
   \begin{equation*}
     \begin{aligned} 
-     h(X) &= - \int_{\R} f(x) \log(f(x)) dx \\
-          &=  - \int_{\R} f(x) \log\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}} \right) dx \\
+     h(X) &= - \int_{\R} f(x) \log(f(x)) dx =  - \int_{\R} f(x) \log\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}} \right) dx \\
           &= - \int_{\R} f(x) \log\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right) dx + \int_{\R} f(x) \frac{(x-\mu)^{2}}{2 \sigma^{2}} dx \\
           &= - \log \left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right) \underbrace{\int_{\R} f(x) dx}_{= 1} + \frac{1}{2\sigma^2} \underbrace{\int_{\R} f(x) (x-\mu)^{2}\,dx}_{=: \sigma^2} \\
           &= \frac{1}{2} \log \left(2 \pi \sigma^{2}\right) + \frac{1}{2} =  \log(\sigma \sqrt{2\pi e})
     \end{aligned}
   \end{equation*}
+  } \vspace{-0.5cm}
+\begin{center}
+    \includegraphics[width = 0.72\textwidth]{figure/normal_entropy.png}
+\end{center}
 \end{vbframe}
 
 
 \begin{vbframe}{Diff. Entropy of Gaussian}
+$$h(X) = - \int_{\R} f(x) \log(f(x)) dx = \log(\sigma \sqrt{2\pi e})$$
+\vspace{-0.2cm}
   \begin{itemize}
-    \item $h(X)$ is not a function of $\mu$ (see translation invariance).
+    \item $h(X)$ is not a function of $\mu$ (see translation invariance later).
     \item As $\sigma^2$ increases, the differential entropy also increases.
-     \begin{center}
-    \includegraphics[width = 7cm ]{figure/normal_entropy.png}
-    \end{center}
     \item For $\sigma^2 < \frac{1}{2\pi e}\approx 0.059$, it is negative.
+    \vspace{0.1cm}
     \begin{center}
-    \includegraphics[width = 5cm ]{figure/normal_entropy_sigma.png}
+    \includegraphics[width = 0.6\textwidth]{figure/normal_entropy_sigma.png}
     \end{center}
-    
   \end{itemize}
 \end{vbframe}
 

@@ -32,7 +32,7 @@
 \lecture{Introduction to Machine Learning}
 
 
-\begin{vbframe}{Logistic regression: Problem}
+\begin{vbframe}{Logistic regression: Risk Problem}
 
 Given $n \in \mathbb{N}$ observations $\left(\xi, \yi\right) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \{0, 1\}$ we want to minimize the following risk 
 
@@ -67,7 +67,7 @@ We find the gradient of logistic regression with the chain rule, s.t.,
 
 \begin{align*}
   \frac{\partial}{\partial\thetab}\riske  & = & 
- -\sumin \frac{\partial}{\partial\pixit \yi}\log(\pixit)\frac{\partial\pixit}{\partial \thetab} +  \\
+ -\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetab} +  \\
  &&  \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetab}\\
  & = & 
  -\sumin \frac{\yi}{\pixit}\frac{\partial\pixit}{\partial \thetab} -  \frac{1-\yi}{1-\pixit}\frac{\partial\pixit}{\partial \thetab}\\
@@ -101,6 +101,10 @@ where  $\mathbf{X} = \left(
 
 $\Rightarrow$ The gradient $\nabla_{\thetab}\riske = \left(\frac{\partial}{\partial\thetab}\riske\right)^\top =  \mathbf{X}^\top\left(\pi(\mathbf{X}\vert\;\thetab) - \mathbf{y}\right)$ 
 
+\vspace*{1cm}
+
+This formula can now be used in gradient descent and its friends.
+
 \end{vbframe}
 
 
@@ -119,6 +123,9 @@ We find the Hessian via differentiation, s.t.,
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
 $$\left(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]\right).$$
+
+Can now be used in Newton-Raphson and other 2nd order optimizers.
+
 
 \end{vbframe}
 
