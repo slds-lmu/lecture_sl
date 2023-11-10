@@ -103,10 +103,10 @@ We can directly note some basic properties:
     \item Adding or removing an event with $p(x)=0$ does not change entropy.
     \item $H(X)$ is continuous in probabilities $p(x)$.
   \end{enumerate}
-  \lz
+\vspace{0.2cm}  
 All these properties follow directly from the definition.
 
-\vspace{0.4cm}
+\vspace{0.2cm}
 
 In the following, we will look at various simple examples are derive some more properties of the entropy.
 
@@ -253,6 +253,20 @@ is of the following form:
 $$ H(p) = - \lambda \sum_{x \in \Xspace} p(x) \log p(x) $$ 
 
 where $\lambda$ is a positive constant. Setting $\lambda = 1$ and using the binary logarithm gives us the Shannon entropy.
+\end{vbframe}
+
+\begin{vbframe}{The Maximum Entropy Principle \citebutton{Jaynes, 2003}{https://www.cambridge.org/core/books/probability-theory/9CA08E224FF30123304E6D8935CF1A99}}
+
+Assume we know $M$ properties about a discrete distribution $p(x)$, given as moment conditions for functions $g_m(\cdot)$ and scalars $\alpha_m$:
+$$\mathbb{E}[g_m(X)]=\sum_{x \in \Xspace}g_m(x)p(x) = \alpha_m\,\,\text{for}\,\, m=1,\ldots,M$$
+\vspace{-0.4cm}
+\begin{itemize}
+    \item Principle of maximum entropy: Among all distributions satisfying these constraints, choose the one with maximum entropy
+    \item Intuitively, this ensures that amount of prior assumptions on distribution are minimized
+    \item We already saw an application of this: for (trivial) constraint $g(x)=1=\alpha$, we derived the uniform distribution as having maximum entropy 
+\end{itemize}
+General form of max. ent. distribution given $M$ constraints can be obtained from Lagrangian with multipliers $\lambda_1,\ldots,\lambda_M$:
+\small{$$p^{\ast}(x)=\frac{\exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}{\sum_{x \in \Xspace} \exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}$$}
 \end{vbframe}
 
 
