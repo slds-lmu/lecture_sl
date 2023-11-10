@@ -1,0 +1,125 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure/entropy_plot.png}
+\newcommand{\learninggoals}{
+  \item Further propterties of entropy and joint entropy
+  \item Understand that uniqueness theorem justifies choice of entropy formula
+  \item Maximum entropy principle
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Entropy II}
+\lecture{Introduction to Machine Learning}
+
+\begin{vbframe}{Entropy of Bernoulli distribution}
+
+Let $X$ be Bernoulli / a coin with $\P(X=1) = s$ and $\P(X=0) = 1 - s$.
+
+$$ H(X)= -s \cdot \log_2(s)-(1-s)\cdot \log_2(1-s). $$
+
+\begin{center}
+\includegraphics[width = 8.0cm ]{figure/entropy_bernoulli.png} \\
+\end{center}
+
+We note: If the coin is deterministic, so $s=1$ or $s=0$, then $H(s)=0$; 
+$H(s)$ is maximal for $s = 0.5$, a fair coin. 
+$H(s)$ increases monotonically the closer we get to $s=0.5$.
+This all seems plausible.
+
+\end{vbframe}
+
+\begin{vbframe} {Joint entropy}
+\begin{itemize}
+  \item The \textbf{joint entropy} of two discrete random variables $X$ and $Y$ is:
+    $$ H(X,Y) = H(p_{X,Y}) = - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  p(x,y) \log_2(p(x,y))$$
+  % where $I(x,y)$ is the self-information of $(x,y)$.
+  \item Intuitively, the joint entropy is a measure of the total uncertainty in the two variables $X$ and $Y$. In other words, it is simply the entropy of the joint distribution $p(x,y)$.
+  \item There is nothing really new in this definition because $H(X, Y)$ can be considered to be a single vector-valued random variable.
+  \item More generally:
+    \begin{footnotesize}  
+  $$ H(X_1, X_2, \ldots, X_n) = - \sum_{x_1 \in \Xspace_1} \ldots \sum_{x_n \in \Xspace_n} p(x_1,x_2, \ldots, x_n) \log_2(p(x_1,x_2, \ldots, x_n)) $$ 
+    \end{footnotesize}  
+\end{itemize}
+\end{vbframe}
+
+\begin{vbframe} {Entropy is additive under independence}
+\begin{enumerate}
+\setcounter{enumi}{6}
+    \item Entropy is additive for independent RVs.
+\end{enumerate}
+\vspace{0.2cm}
+Let $X$ and $Y$ be two independent RVs. Then:
+  \begin{small}
+  \begin{equation*}
+    \begin{aligned} 
+     H(X,Y) &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  p(x,y) \log_2(p(x,y)) \\ 
+            &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  p_X(x)p_Y(y) \log_2(p_X(x)p_Y(y)) \\
+            &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  p_X(x)p_Y(y)\log_2(p_X(x)) + p_X(x)p_Y(y)\log_2(p_Y(y)) \\
+            &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  p_X(x)p_Y(y)\log_2(p_X(x)) - \sum_{y \in \Yspace} \sum_{x \in \Xspace} p_X(x)p_Y(y)\log_2(p_Y(y)) \\
+            &= - \sum_{x \in \Xspace} p_X(x)\log_2(p_X(x)) - \sum_{y \in \Yspace} p_Y(y)\log_2(p_Y(y)) = H(X) + H(Y)
+    \end{aligned} 
+  \end{equation*}
+\end{small}
+% \begin{itemize}
+% \end{itemize}
+\end{vbframe}
+
+
+
+\begin{vbframe}{The Uniqueness Theorem \citebutton{Khinchin, 1957}{https://books.google.de/books/about/Mathematical_Foundations_of_Information.html?id=0uvKF-LT_tMC&redir_esc=y}}
+
+Khinchin (1957) showed that the only family of functions satisfying
+\begin{itemize}
+  \item $H(p)$ is continuous in probabilities $p(x)$
+  \item adding or removing an event with $p(x)=0$ does not change it
+  \item is additive for independent RVs
+  \item is maximal for a uniform distribution.
+\end{itemize}
+
+is of the following form:
+
+$$ H(p) = - \lambda \sum_{x \in \Xspace} p(x) \log p(x) $$ 
+
+where $\lambda$ is a positive constant. Setting $\lambda = 1$ and using the binary logarithm gives us the Shannon entropy.
+\end{vbframe}
+
+\begin{vbframe}{The Maximum Entropy Principle \citebutton{Jaynes, 2003}{https://www.cambridge.org/core/books/probability-theory/9CA08E224FF30123304E6D8935CF1A99}}
+
+Assume we know $M$ properties about a discrete distribution $p(x)$, given as moment conditions for functions $g_m(\cdot)$ and scalars $\alpha_m$:
+\normalsize{$$\mathbb{E}[g_m(X)]=\sum_{x \in \Xspace}g_m(x)p(x) = \alpha_m\,\,\text{for}\,\, m=0,\ldots,M$$}
+\vspace{-0.4cm}
+\begin{itemize}
+    \item Principle of maximum entropy: Among all distributions satisfying these constraints, choose the one with maximum entropy
+    \item Intuitively, this ensures that amount of prior assumptions on $p(x)$ are minimimal (avoids ``overfitting'')
+    \item We already saw an application of this: for the (trivial) constraint $\sum_{x \in \Xspace} p(x) = 1$ ($g_0(x)=1=\alpha_0$), we derived the uniform distribution as having maximum entropy 
+\end{itemize}
+Maxent distribution given $M$ constraints can be computed from Lagrangian with multipliers $\lambda_1,\ldots,\lambda_M$. Finding the optimal $\lambda_m$ means finding the constrained maxent distribution. 
+\end{vbframe}
+
+\begin{vbframe}{The Maximum Entropy Principle}
+The Lagrangian for this problem using base $e$ is given by:
+\small{$$L(p(x),(\lambda_m)_{m=0}^{M}) = - \sum_{x \in \Xspace} p(x) \log(p(x)) + \lambda_0 \big( \sum_{x \in \Xspace} p(x) - 1 \big) + \sum_{m=1}^{M} \lambda_m \big( \sum_{x \in \Xspace} g_m(x)p(x)-\alpha_m \big)$$}
+Finding critical points $p^{\ast}(x)$:
+$$\frac{\partial L}{\partial p(x)} = -\log(p(x)) -1 + \lambda_0 + \sum_{m=1}^{M} \lambda_m g_m(x) \overset{!}{=} 0 \iff p^{\ast}(x)=\exp(\lambda_0-1)
+\exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)$$
+This is a maximum as $-1/p(x)<0$. Since probs must sum to 1 we get
+$$1=\sum_{x \in \Xspace} p^{\ast}(x)=\frac{1}{\exp(1-\lambda_0)} \sum_{x \in \Xspace} \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big) \Rightarrow \exp(1-\lambda_0)=\sum_{x \in \Xspace} \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)$$
+Plugging $\exp(1-\lambda_0)$ into $p^{\ast}(x)$ we obtain the constrained maxent distribution:
+
+$$p^{\ast}(x)=\frac{\exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}{\sum_{x \in \Xspace} \exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}$$
+
+
+\end{vbframe}
+
+
+
+\endlecture
+\end{document}
+
