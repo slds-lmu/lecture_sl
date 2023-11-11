@@ -92,30 +92,53 @@ where $\lambda$ is a positive constant. Setting $\lambda = 1$ and using the bina
 
 \begin{vbframe}{The Maximum Entropy Principle \citebutton{Jaynes, 2003}{https://www.cambridge.org/core/books/probability-theory/9CA08E224FF30123304E6D8935CF1A99}}
 
-Assume we know $M$ properties about a discrete distribution $p(x)$, given as moment conditions for functions $g_m(\cdot)$ and scalars $\alpha_m$:
+Assume we know $M$ properties about a discrete distribution $p(x)$ on $\Xspace$, stated as ``moment conditions'' for functions $g_m(\cdot)$ and scalars $\alpha_m$:
 \normalsize{$$\mathbb{E}[g_m(X)]=\sum_{x \in \Xspace}g_m(x)p(x) = \alpha_m\,\,\text{for}\,\, m=0,\ldots,M$$}
 \vspace{-0.4cm}
+
+\textbf{Maximum entropy principle}: Among all feasible distributions satisfying the constraints, choose the one with maximum entropy!
 \begin{itemize}
-    \item Principle of maximum entropy: Among all distributions satisfying these constraints, choose the one with maximum entropy
-    \item Intuitively, this ensures that amount of prior assumptions on $p(x)$ are minimimal (avoids ``overfitting'')
-    \item We already saw an application of this: for the (trivial) constraint $\sum_{x \in \Xspace} p(x) = 1$ ($g_0(x)=1=\alpha_0$), we derived the uniform distribution as having maximum entropy 
+    \item Motivation: ensure no unwarranted assumptions on $p(x)$ are made beyond what we know. MEP follows similar logic to Occam's razor and principle of insufficient reason
+    \item We already saw an application of this: the (trivial) constraint $\sum_{x \in \Xspace} p(x) = 1$ for which we obtained the uniform distribution as having maximum entropy translates to $g_0(x)=1$ and $\alpha_0=1$ 
 \end{itemize}
-Maxent distribution given $M$ constraints can be computed from Lagrangian with multipliers $\lambda_1,\ldots,\lambda_M$. Finding the optimal $\lambda_m$ means finding the constrained maxent distribution. 
+Maxent distribution given $M$ constraints can be derived using Lagrangian with multipliers $\lambda_1,\ldots,\lambda_M$. Finding the optimal $\lambda_m$ means finding the constrained maxent distribution. 
 \end{vbframe}
 
 \begin{vbframe}{The Maximum Entropy Principle}
-The Lagrangian for this problem using base $e$ is given by:
+The Lagrangian for this problem using base $e$ in the entropy is given by:
 \small{$$L(p(x),(\lambda_m)_{m=0}^{M}) = - \sum_{x \in \Xspace} p(x) \log(p(x)) + \lambda_0 \big( \sum_{x \in \Xspace} p(x) - 1 \big) + \sum_{m=1}^{M} \lambda_m \big( \sum_{x \in \Xspace} g_m(x)p(x)-\alpha_m \big)$$}
-Finding critical points $p^{\ast}(x)$:
-$$\frac{\partial L}{\partial p(x)} = -\log(p(x)) -1 + \lambda_0 + \sum_{m=1}^{M} \lambda_m g_m(x) \overset{!}{=} 0 \iff p^{\ast}(x)=\exp(\lambda_0-1)
-\exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)$$
+Finding critical points $p^{\ast}(x)$ :
+$$\frac{\partial L}{\partial p(x)} = -\log(p(x)) -1 + \lambda_0 + \sum_{m=1}^{M} \lambda_m g_m(x) \overset{!}{=} 0 \iff p^{\ast}(x)=\textcolor{blue}{\exp(\lambda_0-1)}\textcolor{red}{
+\exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)}$$
 This is a maximum as $-1/p(x)<0$. Since probs must sum to 1 we get
-$$1=\sum_{x \in \Xspace} p^{\ast}(x)=\frac{1}{\exp(1-\lambda_0)} \sum_{x \in \Xspace} \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big) \Rightarrow \exp(1-\lambda_0)=\sum_{x \in \Xspace} \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)$$
-Plugging $\exp(1-\lambda_0)$ into $p^{\ast}(x)$ we obtain the constrained maxent distribution:
+$$1\overset{!}{=}\sum_{x \in \Xspace} p^{\ast}(x)=\textcolor{blue}{\frac{1}{\exp(1-\lambda_0)}} \sum_{x \in \Xspace} \textcolor{red}{\exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)} \Rightarrow \textcolor{blue}{\exp(1-\lambda_0)}=\textcolor{blue}{\sum_{x \in \Xspace} \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)}$$
+Plugging $\textcolor{blue}{\exp(1-\lambda_0)}$ into $p^{\ast}(x)$ we obtain the constrained maxent distribution:
 
-$$p^{\ast}(x)=\frac{\exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}{\sum_{x \in \Xspace} \exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}$$
+$$p^{\ast}(x)=\frac{\textcolor{red}{\exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}}{\textcolor{blue}{\sum_{x \in \Xspace} \exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}}$$
 
+\end{vbframe}
 
+\begin{vbframe}{The Maximum Entropy Principle}
+
+\textbf{Example}: Consider discrete RV representing a six-sided die roll and the moment condition $\mathbb{E}(X)=4.8$. What is the maxent distribution?\\
+
+\begin{itemize}
+\setlength{\itemsep}{0.9em}
+    \item Condition means $g_1(x)=x$, $\alpha_1=4.8$. Then for some $\lambda$ solution is
+    {\small $$p^{\ast}(x)=\frac{\exp{(\lambda g(x))}}{\sum_{j=1}^{6} \exp({\lambda g(x_j)})} = \frac{\exp{(\lambda x)}}{\sum_{j=1}^{6} \exp{(\lambda x_j)}}$$}
+    \item Inserting into moment condition and solving (numerically) for $\lambda$: 
+    $$4.8\overset{!}{=}\sum_{j=1}^{6} x_j p^{\ast}(x_j) = \frac{e^\lambda+\ldots+6(e^\lambda)^6}{e^\lambda+\ldots+(e^{\lambda})^6} \Rightarrow \lambda \approx 0.5141$$
+{\small
+\begin{tabular}{|c|c|c|c|c|c|c|c}
+\hline
+x & 1 & 2 & 3 & 4 & 5 & 6 \\ 
+\hline
+$p^{\ast}(x)$ & 3.22\% & 5.38\% & 9.01\% & 15.06\% & 25.19\% & 42.13\%\\ 
+\hline
+\end{tabular}
+}
+\item For a fair die ($\mathbb{E}(X)=\alpha_1=3.5$) it is not hard to see that $\lambda=0$ satisfies the equation, resulting in uniform probabilities
+\end{itemize}
 \end{vbframe}
 
 
