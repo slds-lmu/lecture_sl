@@ -1,0 +1,167 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure/kl_log_diff_plot.png}
+\newcommand{\learninggoals}{
+  \item Understand why measuring distribution similarity is important in ML
+  \item Understand the advantages of forward and reverse KL
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+
+
+\lecturechapter{KL for ML}
+\lecture{Introduction to Machine Learning}
+
+\begin{vbframe} {Measuring Distribution Similarity in ML}
+\begin{itemize}
+    \item Information theory provides tools (e.g., divergence measures) to quantify the similarity between probability distributions
+    \begin{tikzpicture}
+  % Define parameters for the first Gaussian curve
+  \def\muA{0}
+  \def\sigmaA{1}
+  \def\scaleA{1.3}
+  
+  % Define parameters for the second Gaussian curve
+  \def\muB{4}
+  \def\sigmaB{1}
+  \def\scaleB{1.3}
+  
+  % Plot the first Gaussian curve
+  \draw[domain=-3:3, smooth, samples=100, variable=\x, blue] plot ({\x}, {\scaleA*exp(-(\x-\muA)^2/(2*\sigmaA^2))});
+  
+  % Plot the second Gaussian curve
+  \draw[domain=1:7, smooth, samples=100, variable=\x, red] plot ({\x}, {\scaleB*exp(-(\x-\muB)^2/(2*\sigmaB^2))});
+  
+  % Add a question mark symbol above the curves
+  \node at (2, 1.5) {?};
+\end{tikzpicture}
+    \item The most prominent divergence measure is the KL divergence 
+\item In ML, measuring (and maximizing) the similarity between probability distributions is a ubiquitous concept, which will be shown in the following.
+\end{itemize}
+\framebreak
+\begin{itemize}
+    \item \textbf{Probabilistic model fitting}\\
+Assume our learner is probabilistic, i.e., we model $p(y| \mathbf{x})$ for example (for example, ridge regression, logistic regression, ...).
+
+\lz 
+
+TODO: picture
+
+\lz 
+
+We want to minimize the difference between $p(y \vert \mathbf{x})$ and the conditional data generating process $\mathbb{P}_{y\vert\mathbf{x}}$ based on the data stemming from $\mathbb{P}_{y, \mathbf{x}}.$
+
+\lz
+
+Many losses can be derived this way. (e.g. cross-entropy loss)
+
+\end{itemize}
+
+\framebreak
+
+\begin{itemize}
+    \item \textbf{Feature selection}
+In feature selection, we want to select features that the target strongly depends on. 
+
+\lz 
+
+TODO: picture
+
+\lz 
+
+We can measure dependency by measuring the similarity between $p(\mathbf{x}, y)$ and $p(\mathbf{x})\cdot p(y).$ \\
+We will later see that measuring this similarity with KL  leads to the concept of mutual information.
+
+\end{itemize}
+
+\framebreak
+
+\begin{itemize}
+    \item \textbf{Variational inference (VI)}
+Our data can also induce probability distributions: By Bayes' theorem it holds that the posterior density $$p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})}{\int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}}.$$ However, computing this density analytically is usually intractable.
+
+\lz 
+
+TODO: picture
+
+\lz 
+
+In VI, we want to fit a density $q_{\bm{\phi}}$ with parameters $\bm{\phi}$ to 
+    $p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}).$
+This scenario fundamentally differs from the previous ones because we can now generate samples.
+
+\end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{KL divergence}
+
+Divergences can be used to measure the similarity of distributions. \\ \lz \\For distributions $p, q$ they are defined such that
+\begin{enumerate}
+    \item $D(p, q) \geq 0,$
+    \item $D(p, q) = 0$ iff $p = q.$
+    %\item $D(p, p + dp)$ is a positive-definite quadratic form for infinitesimal displacements $dp$ from $p$.
+\end{enumerate}
+$\Rightarrow$ divergences can be (and often are) non-symmetrical. \\
+ \lz
+ 
+If the same measure dominates the distributions $p,q$, we can use KL. \\
+For a target distribution $p$ and parametrized distribution $q_{\bm{\phi}}$, we call
+\begin{itemize}
+    \item $D_{KL}(p \| q_{\bm{\phi}})$ forward KL,
+    \item $D_{KL}(q_{\bm{\phi}} \| p)$ reverse KL.
+\end{itemize}
+\lz
+In the following, we highlight some properties of the KL that make it attractive from an ML perspective.
+
+\framebreak
+
+\begin{itemize}
+    \item \textbf{Forward KL for probabilistic model fitting}
+    \\ We have samples from the DGP $p(y|x)$ when we fit our ML model.
+    \\
+    \lz
+    \\
+    If we have a probabilistic ML model $q_{\bm{\phi}}$ and can specify $p(y|x)$ then the forward KL can be directly applied such that
+    $$\E_{\xv \sim p_{\xv}}D_{KL}(p(\cdot|\xv) \| q_{\bm{\phi}}(\cdot|\xv)) = \E_{\xv \sim p_{\xv}}\E_{y \sim p_{y|\xv}}\log\left(\frac{p(y|\xv)}{q_{\bm{\phi}}(y|\xv)}\right).$$
+For example, if $p$ and $q_{\bm{\phi}}$ are Gaussians with the same $\sigma$, minimizing this expression is equivalent to L2 minimization. \\
+\lz 
+Assuming we have i.i.d. observations, an unbiased estimator of this expected forward KL is
+$$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow \text{can be used for mini-batching.} $$
+
+\end{itemize}
+ \framebreak
+
+ \begin{itemize}
+     \item \textbf{Reverse KL for VI} \\
+     Here, we know our target density $p(\bm{\theta}\vert \mathbf{X}, \mathbf{y})$ only up to the normalization constant, and we do not have samples from it. \\
+     \lz
+     We can directly apply the reverse KL since for any $c\in \R_+$
+     \begin{align*}
+         \nabla_{\bm{\phi}} D_{KL}(q_{\bm{\phi}}\|p) &= \nabla_{\bm{\phi}} \E_{\bm{\theta} \sim q_{\bm{\phi}}}\log\left(\frac{q_{\bm{\phi}}(\bm{\theta})}{p(\bm{\theta})}\right) \\
+         &= \nabla_{\bm{\phi}} \E_{\bm{\theta} \sim q_{\bm{\phi}}}\log\left(\frac{q_{\bm{\phi}}(\bm{\theta})}{p(\bm{\theta})}\right) - \underbrace{\nabla_{\bm{\phi}} \E_{\bm{\theta} \sim q_{\bm{\phi}}}\log c}_{=0}\\
+         &= \nabla_{\bm{\phi}} \E_{\bm{\theta} \sim q_{\bm{\phi}}}\log\left(\frac{q_{\bm{\phi}}(\bm{\theta})}{c\cdot p(\bm{\theta})}\right).
+     \end{align*}
+     $\Rightarrow$ We can estimate the gradient of the reverse KL without bias (even if we only have an unnormalized target distribution)
+ \end{itemize}
+ \framebreak
+
+TODO: image
+\lz \\ \lz \\
+The asymmetry of the KL has the following implications
+\begin{itemize}
+    \item The forward KL $D_{KL}(p\|q_{\bm{\phi}}) = \E_{\xv \sim p} \log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right)$ is mass-covering since $p(\xv)\log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right) \approx 0$ if $p(\xv) \approx 0$ (as long as both distribution do not extremely differ)
+        \item The reverse KL $D_{KL}(q_{\bm{\phi}}\|p) = \E_{\xv \sim q_{\bm{\phi}}} \log\left(\frac{q_{\bm{\phi}}(\xv)}{p(\xv)}\right)$ is mode-seeking / zero-avoiding since $q_{\bm{\phi}}(\xv)\log\left(\frac{q_{\bm{\phi}}(\xv)}{p(\xv)}\right) \gg 0$ if $p(\xv) \approx 0$ and $q_{\bm{\phi}}(\xv) > 0$ 
+\end{itemize}
+ 
+\end{vbframe}
+
+\endlecture
+\end{document}
