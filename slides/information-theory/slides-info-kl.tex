@@ -48,6 +48,18 @@ $$ D_{KL}(p \| q) = \E_p \left[\log \frac{p(X)}{q(X)}\right] $$
 
 \end{vbframe}
 
+\begin{vbframe} {KL-Divergence Example}
+
+Consider the KL-Divergence between two continuous distributions with $p(X)=N(0,1)$ and $q(X)=LP(0, 1.5)$ given by
+
+  $$ D_{KL}(p \| q) = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}. $$
+
+\begin{figure}
+\includegraphics[width = 8cm ]{figure/kl_calculation_plot.png} 
+\end{figure}
+
+\end{vbframe}
+
 \begin{vbframe} {Information Inequality}
 
 $ D_{KL}(p \| q) \geq 0$ holds always true for any pair of distributions, and holds with equality if and only if $p=q$. 
