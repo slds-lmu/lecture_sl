@@ -69,15 +69,17 @@ uni_plot = function(a, b){
       geom_segment(aes(x = b, y = 0,
                      xend = b, yend = uniform_density), color = "blue", size = 1) +
       geom_segment(aes(x = a, y = 0,
-                     xend = a, yend = uniform_density), color = "blue", size = 1) 
+                     xend = a, yend = uniform_density), color = "blue", size = 1) +
+      xlim(0, 1.5) +
+      ylim(0, 1)
   return(p)
 }
 
-plot1 = uni_plot(0, 1)
-plot2 = uni_plot(2,8)
+plot1 = uni_plot(0, 1.5)
+plot2 = uni_plot(0, 1)
 
 p = grid.arrange(plot1, plot2, ncol = 2)
-ggsave("..figure/uni_entropy.png", plot = p, width = 8, height = 3)
+ggsave("..figure/uni_entropy.png", plot = p, width = 7, height = 3)
 
 
 ########## CREATE NORMAL DISTRIBUTIONS
@@ -97,12 +99,14 @@ normal_plot = function(mu,sigma){
   p = ggplot(data, aes(x = x)) +
     geom_line(aes(y = NormalDensity), color = "blue", size = 1) +
     labs(title =  paste("Differential entropy:", entropy_normal), x = "x", 
-         y = sprintf("N(%d,%s)", mu, sigma))
+         y = sprintf("N(%d,%s)", mu, sigma)) +
+    xlim(-4, 4) +
+    ylim(0, 0.4)
   return(p)
 }
 
 plot1 = normal_plot(0, 1)
-plot2 = normal_plot(2,8)
+plot2 = normal_plot(0, 1.5)
 
 p = grid.arrange(plot1, plot2, ncol = 2)
 ggsave("..figure/normal_entropy.png", plot = p, width = 8, height = 3)
