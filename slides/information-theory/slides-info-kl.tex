@@ -22,22 +22,21 @@
 
 \begin{vbframe} {Kullback-Leibler Divergence}
 
-We now want to establish a measure of distance between (discrete or continuous) distributions with the same support:
+We now want to establish a measure of distance between (discrete or continuous) distributions with the same support for $X \sim p(X)$:
 
-  $$ D_{KL}(p \| q) = \E_p \left[\log \frac{p(X)}{q(X)}\right] = \sum_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}, $$
+  $$ D_{KL}(p \| q) = \E_{X \sim p} \left[\log \frac{p(X)}{q(X)}\right] = \sum_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}, $$
   
   or: 
   
-  $$ D_{KL}(p \| q) = \E_p \left[\log \frac{p(X)}{q(X)}\right] = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}. $$
+  $$ D_{KL}(p \| q) = \E_{X \sim p} \left[\log \frac{p(X)}{q(X)}\right] = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)} \mathrm{d}x. $$
 
-In the above definition, we use the convention that $0 \log (0/0) = 0$ and the
-convention (based on continuity arguments) that $0 \log (0/q) = 0$ and $p \log(p/0) = \infty$. 
+In the above definition, we use the conventions that $0 \log (0/0) = 0$, $0 \log (0/q) = 0$ and $p \log(p/0) = \infty$ (based on continuity arguments where $p \to 0$). 
 Thus, if there is any symbol $x \in \Xspace$ such that $p(x) > 0$ and $q(x) = 0$,
 then $D_{KL}(p \| q) = \infty.$
   
 \framebreak
 
-$$ D_{KL}(p \| q) = \E_p \left[\log \frac{p(X)}{q(X)}\right] $$
+$$ D_{KL}(p \| q) = \E_{X \sim p} \left[\log \frac{p(X)}{q(X)}\right] $$
 
 \begin{itemize}
   \item  What is the intuition behind this formula?  
@@ -48,11 +47,11 @@ $$ D_{KL}(p \| q) = \E_p \left[\log \frac{p(X)}{q(X)}\right] $$
 
 \end{vbframe}
 
-\begin{vbframe} {KL-Divergence Example}
+\begin{vbframe} {KL Divergence Example}
 
-Consider the KL-Divergence between two continuous distributions with $p(X)=N(0,1)$ and $q(X)=LP(0, 1.5)$ given by
+Consider the KL divergence between two continuous distributions with $p(x)=N(0,1)$ and $q(x)=LP(0, 1.5)$ given by
 
-  $$ D_{KL}(p \| q) = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}. $$
+  $$ D_{KL}(p \| q) = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}\mathrm{d}x. $$
 
 \begin{figure}
 \includegraphics[width = 8cm ]{figure/kl_calculation_plot.png} 
@@ -86,7 +85,7 @@ Suppose we modeled $p(x)$ using an approximating distribution $q(x)$.
 
 First, we could simply see KL as the expected log-difference between $p(x)$ and $q(x)$:
 
-  $$ D_{KL}(p \| q) = \E_p(\log(p(x)) - \log(q(x)).$$
+  $$ D_{KL}(p \| q) = \E_{X \sim p}[\log(p(x)) - \log(q(x)].$$
 
 This is why we integrate out with respect to the data distribution $p$.
 A \enquote{good} approximation $q(x)$ should minimize the difference to $p(x)$.
