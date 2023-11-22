@@ -22,26 +22,7 @@
 \begin{vbframe} {Measuring Distribution Similarity in ML}
 \begin{itemize}
     \item Information theory provides tools (e.g., divergence measures) to quantify the similarity between probability distributions
-    \begin{tikzpicture}
-  % Define parameters for the first Gaussian curve
-  \def\muA{0}
-  \def\sigmaA{1}
-  \def\scaleA{1.3}
-  
-  % Define parameters for the second Gaussian curve
-  \def\muB{4}
-  \def\sigmaB{1}
-  \def\scaleB{1.3}
-  
-  % Plot the first Gaussian curve
-  \draw[domain=-3:3, smooth, samples=100, variable=\x, blue] plot ({\x}, {\scaleA*exp(-(\x-\muA)^2/(2*\sigmaA^2))});
-  
-  % Plot the second Gaussian curve
-  \draw[domain=1:7, smooth, samples=100, variable=\x, red] plot ({\x}, {\scaleB*exp(-(\x-\muB)^2/(2*\sigmaB^2))});
-  
-  % Add a question mark symbol above the curves
-  \node at (2, 1.5) {?};
-\end{tikzpicture}
+\includegraphics[width=0.4\linewidth]{slides/information-theory/figure_man/kl_ml_dist_sim.png}
     \item The most prominent divergence measure is the KL divergence 
 \item In ML, measuring (and maximizing) the similarity between probability distributions is a ubiquitous concept, which will be shown in the following.
 \end{itemize}
@@ -50,11 +31,7 @@
     \item \textbf{Probabilistic model fitting}\\
 Assume our learner is probabilistic, i.e., we model $p(y| \mathbf{x})$ for example (for example, ridge regression, logistic regression, ...).
 
-\lz 
-
-TODO: picture
-
-\lz 
+\includegraphics[width=0.4\linewidth]{slides/information-theory/figure_man/kl_ml_prob_fit.png}
 
 We want to minimize the difference between $p(y \vert \mathbf{x})$ and the conditional data generating process $\mathbb{P}_{y\vert\mathbf{x}}$ based on the data stemming from $\mathbb{P}_{y, \mathbf{x}}.$
 
@@ -68,13 +45,9 @@ Many losses can be derived this way. (e.g. cross-entropy loss)
 
 \begin{itemize}
     \item \textbf{Feature selection}
-In feature selection, we want to select features that the target strongly depends on. 
+In feature selection, we want to choose features the target strongly depends on. 
 
-\lz 
-
-TODO: picture
-
-\lz 
+\includegraphics[width=0.6\linewidth]{slides/information-theory/figure_man/kl_ml_mi.png}
 
 We can measure dependency by measuring the similarity between $p(\mathbf{x}, y)$ and $p(\mathbf{x})\cdot p(y).$ \\
 We will later see that measuring this similarity with KL  leads to the concept of mutual information.
@@ -87,11 +60,7 @@ We will later see that measuring this similarity with KL  leads to the concept o
     \item \textbf{Variational inference (VI)}
 Our data can also induce probability distributions: By Bayes' theorem it holds that the posterior density $$p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})}{\int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}}.$$ However, computing this density analytically is usually intractable.
 
-\lz 
-
-TODO: picture
-
-\lz 
+\includegraphics[width=0.99\linewidth]{slides/information-theory/figure_man/kl_ml_vi.png}
 
 In VI, we want to fit a density $q_{\bm{\phi}}$ with parameters $\bm{\phi}$ to 
     $p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}).$
@@ -153,8 +122,7 @@ $$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow 
  \end{itemize}
  \framebreak
 
-TODO: image
-\lz \\ \lz \\
+\includegraphics[width=0.6\linewidth]{slides/information-theory/figure_man/kl_ml_fkl_rkl.png} \\
 The asymmetry of the KL has the following implications
 \begin{itemize}
     \item The forward KL $D_{KL}(p\|q_{\bm{\phi}}) = \E_{\xv \sim p} \log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right)$ is mass-covering since $p(\xv)\log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right) \approx 0$ if $p(\xv) \approx 0$ (as long as both distribution do not extremely differ)

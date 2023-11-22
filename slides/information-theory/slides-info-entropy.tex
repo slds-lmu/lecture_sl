@@ -41,16 +41,16 @@
   \item We will show some proofs, but not for everything. We recommend 
     \textit{Elements of Information Theory} by Cover and Thomas as a reference for more. 
   \item The application of information theory to the concepts of statistics and ML can sometimes be confusing, we will try to make the connection as clear as possible.
+  \item In this unit we develop entropy as a measure of uncertainty in terms of expected information.
 \end{itemize}
 \end{vbframe}
 
 \begin{vbframe}{Entropy}
-\begin{itemize}
-  \item We develop in this unit entropy as a measure of uncertainty in terms of expected information.
+%\begin{itemize}
   %\item Entropy is often introduced in IT as a measure of
   %  expected information or in terms of bits needed for efficient coding, 
   %but for us in stats and ML the first type of intuition seems most useful.
-\end{itemize}
+%\end{itemize}
 
 
 For a discrete random variable $X$ with domain $\Xspace \ni x$ and pmf $p(x)$:
@@ -60,20 +60,20 @@ For a discrete random variable $X$ with domain $\Xspace \ni x$ and pmf $p(x)$:
                &=   \E\left[\log_2\left(\frac{1}{p(X)}\right)\right] &= \sum_{x \in \Xspace} p(x) \log_2 \frac{1}{p(x)} 
 \end{aligned} 
 \end{equation*}
-    \begin{itemize}
-  \item \textbf{Definition:}
-Base $2$ means the information is measured in bits, but you can use any number $>1$ as base of the logarithm.
-    \item \textbf{Note:} If $p(x) = 0$, then $p(x) \log_2 p(x)$ is taken to be zero, because $\lim _{p \rightarrow 0} p \log_2 p=0$. %for $x=0$.
-    \item NB: $H$ is actually Greek capital letter \textbf{E}ta ($\eta$) for \textbf{e}ntropy
-  \end{itemize}
+
+\begin{center}
+\includegraphics[width = 11cm ]{figure/entropy_calc.png} 
+\end{center}
+\vspace{-0.5cm}
+\begin{itemize}
+\item The final entropy is $H(X)=1.5$.
+\end{itemize}
+
   
 \end{vbframe}
 
 \begin{vbframe}{Entropy Calculation}
 
-  \begin{itemize}
-  \item The negative log probabilities $\log_2 p(x)$ are called "Surprisal".
-  \end{itemize}
 
 \begin{equation*}
 \begin{aligned} 
@@ -81,13 +81,16 @@ Base $2$ means the information is measured in bits, but you can use any number $
 \end{aligned} 
 \end{equation*}
 
-\begin{center}
-\includegraphics[width = 12cm ]{figure/entropy_calc.png} \\
-\end{center}
+\begin{itemize}
+\setlength\itemsep{1.2em} 
+\item \textbf{Definition:}
+Base $2$ means the information is measured in bits, but you can use any number $>1$ as base of the logarithm.
+\item \textbf{Note:} If $p(x) = 0$, then $p(x) \log_2 p(x)$ is taken to be zero, because $\lim _{p \rightarrow 0} p \log_2 p=0$. %for $x=0$.
+\item NB: $H$ is actually Greek capital letter \textbf{E}ta ($\eta$) for \textbf{e}ntropy
+\item The negative log probabilities $\log_2 p(x)$ are called "Surprisal".
+\end{itemize}
 
-  \begin{itemize}
-  \item The final entropy is $H(X)=1.5$.
-  \end{itemize}
+
 
 \end{vbframe}
 

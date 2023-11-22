@@ -21,7 +21,7 @@
   \begin{itemize}
     \item For a continuous random variable $X$ with density function $f(x)$ and support $\Xspace$, the analogue of entropy is \textbf{differential entropy}:
     \small{
-    $$ h(X) := h(f) := - \int_{\Xspace} f(x) \log(f(x)) dx $$}
+    $$ h(X) := h(f) := - \mathbb{E}[\log(f(x))]= - \int_{\Xspace} f(x) \log(f(x)) dx $$}
     \item The base of the log is again somewhat arbitrary, and we could either use 2 (and measure in bits) or e (to measure in nats).
     \item The integral above does not necessarily exist for all densities.
     \item Differential entropy lacks the non-negativeness of discrete entropy: $h(X) < 0$ is possible as $f(x) > 1$ is possible:
@@ -134,6 +134,9 @@ If $X \sim N(\mu, \Sigma)$ is multivariate Gaussian, then
 \item $h(aX) = h(X) + \log |a|$.
 \item $h(AX) = h(X) + \log |A|$ for random vectors and matrix A.
 \end{enumerate}
+\lz
+3) and 4) are slightly involved to prove, while the other properties are relatively straightforward to show
+
 \end{vbframe}
 
 \endlecture

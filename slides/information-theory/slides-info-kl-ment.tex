@@ -35,7 +35,7 @@ In the following, we derive an alternative measure, namely the KL divergence (re
     \lz
     Let $\mathcal{X}$ be a measurable space with $\sigma$-algebra $\mathcal{F}$ and measure $\mu$ that can be continuous or discrete. \\
     We start with a prior distribution $q$ over $\mathcal{X}$ dominated by $\mu$ and a constraint of the form $$\int_D a(\xv) dq(\xv) = c \in \R$$
-    with $D \in \mathcal{F}.$
+    with $D \in \mathcal{F}.$ Note that the constraint function $a(\xv)$ is analogous to moment condition functions $g(\cdot)$ in the discrete case.
     We want to update the prior distribution $q$ to a posterior distribution $p$ that fulfills the constraint and is maximal w.r.t. $S(p).$  \\
     \lz
     For this maximization to make sense, $S$ must be transitive, i.e., 
@@ -44,9 +44,9 @@ In the following, we derive an alternative measure, namely the KL divergence (re
 \begin{vbframe}{Constructing the KL}
     \textbf{1) Locality} \\
     The constraint must only update the prior distribution in $D, i.e.,$ the region where it is active. \\
-
+\includegraphics[width=0.3\linewidth]{slides/information-theory/figure_man/kl_me_constraint.png} \\
     \lz
-    For this, it can be shown that the non-overlapping domains of $\mathal{X}$ must contribute additively to the entropy, i.e.,
+    For this, it can be shown that the non-overlapping domains of $\mathcal{X}$ must contribute additively to the entropy, i.e.,
     $$S(p) = \int F(p(\xv), \xv) d\mu(\xv)$$
     where $F$ is an unknown function.
     
@@ -54,8 +54,7 @@ In the following, we derive an alternative measure, namely the KL divergence (re
     
     \textbf{2) Invariance to coordinate system} \\
     \lz 
-    TODO: image \\
-    \lz
+    \includegraphics[width=0.5\linewidth]{slides/information-theory/figure_man/kl_me_cosy.png} \\
     Enforcing 2) results in 
     $$S(p) = \int \bm{\Phi}\left(\frac{dp}{dm}(\xv)\right)dm(\xv)$$
     where $\bm{\Phi}$ is an unknown function, $m$ is another measure on $\mathcal{X}$ dominated by $\mu$ and $\frac{dp}{dm}$ the Radon–Nikodym derivative which becomes 
@@ -70,8 +69,7 @@ In the following, we derive an alternative measure, namely the KL divergence (re
     \\ $\Rightarrow m$ must be the prior distribution $q$, and our entropy measure must be understood relatively to this prior, so $S(p)$ becomes, in fact, $S(p\|q).$\\
     \lz 
     \textbf{3) Independent subsystems} \\
-    TODO: image \\
-    \lz
+    \includegraphics[width=0.6\linewidth]{slides/information-theory/figure_man/kl_me_indep_sub.png} \\
     If the prior distribution defines a subsystem of $\mathcal{X}$ to be independent, then the priors can be independently updated, and the resulting posterior is just their product density.
     
     \framebreak
@@ -85,7 +83,7 @@ In the following, we derive an alternative measure, namely the KL divergence (re
         \item With our desired properties, we ended up with KL minimization
         \item This is called the principle of minimum discrimination information, i.e., the posterior should differ from the prior as least as possible
         \item This principle is meaningful for continuous and discrete RVs
-        \item Maximum entropy is just a special case when $\mathcal{X}$ is discrete and $q$ is the uniform distribution.
+        \item The maximum entropy principle is just a special case when $\mathcal{X}$ is discrete and $q$ is the uniform distribution.
         \item Analogously, Shannon entropy can always be treated as negative KL  with uniform reference distribution.
     \end{itemize}
     
