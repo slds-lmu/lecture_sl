@@ -85,7 +85,7 @@ Suppose we modeled $p(x)$ using an approximating distribution $q(x)$.
 
 First, we could simply see KL as the expected log-difference between $p(x)$ and $q(x)$:
 
-  $$ D_{KL}(p \| q) = \E_{X \sim p}[\log(p(x)) - \log(q(x))].$$
+  $$ D_{KL}(p \| q) = \E_{X \sim p}[\log(p(X)) - \log(q(X))].$$
 
 This is why we integrate out with respect to the data distribution $p$.
 A \enquote{good} approximation $q(x)$ should minimize the difference to $p(x)$.
@@ -168,7 +168,7 @@ whether $p$ or $q$ fit the data better.
 
 But maybe we want to pose the question "How different is $q$ from $p$?" by formulating it as:
 "If we sample many data from $p$, how easily can we see that $p$ is better than $q$ through LR, on average?"
-$$ \E_p \left[\log \frac{p(x)}{q(x)}\right] $$
+$$ \E_p \left[\log \frac{p(X)}{q(X)}\right] $$
 That expected LR is really KL!
 
 \framebreak 
