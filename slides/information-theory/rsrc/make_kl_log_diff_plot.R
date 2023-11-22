@@ -32,6 +32,8 @@ plot <- ggplot(data = distributions_plot, aes (x = x, y = y, group = distributio
 # adjust table like in wikipedia
 names(distributions) <- c("x", x)
 distributions$x <- c('Distribution p(x)', 'Distribution q(x)')
+# Assuming your dataframe is named df
+distributions <- data.frame(lapply(distributions, function(x) if(is.numeric(x)) round(x, 2) else x))
 tbl <- tableGrob(distributions, rows = NULL, theme = ttheme_default())
 
 #show table with plot
