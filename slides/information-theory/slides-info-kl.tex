@@ -47,15 +47,37 @@ $$ D_{KL}(p \| q) = \E_{X \sim p} \left[\log \frac{p(X)}{q(X)}\right] $$
 
 \end{vbframe}
 
-\begin{vbframe} {KL Divergence Example}
+\begin{vbframe} {KL-Divergence Example}
 
-Consider the KL divergence between two continuous distributions with $p(x)=N(0,1)$ and $q(x)=LP(0, 1.5)$ given by
+KL divergence between $p(x)=N(0,1)$ and $q(x)=LP(0, 1.5)$ given by
 
-  $$ D_{KL}(p \| q) = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}\mathrm{d}x. $$
+  $$ D_{KL}(p \| q) = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)}. $$
 
 \begin{figure}
-\includegraphics[width = 8cm ]{figure/kl_calculation_plot.png} 
+\includegraphics[width = 8cm ]{figure/kl_calculation_plot_1.png} 
 \end{figure}
+
+\end{vbframe}
+
+\begin{vbframe} {KL-Divergence Example}
+
+KL divergence between $p(x)=LP(0, 1.5)$ and $q(x)=N(0,1)$ is different since KL not symmetric
+
+\begin{figure}
+\includegraphics[width = 9cm ]{figure/kl_calculation_plot_2.png} 
+\end{figure}
+
+\end{vbframe}
+
+\begin{vbframe} {KL-Divergence Example}
+
+KL divergence of $p(x)=N(0,1)$ and $q(x)=LP(0, \sigma)$ for varying $\sigma$
+
+\begin{figure}
+\includegraphics[width = 12cm ]{figure/kl_norm_lp.png} 
+\includegraphics[width = 6cm ]{figure/kl_norm_lp_sigma.png} 
+\end{figure}
+
 
 \end{vbframe}
 
