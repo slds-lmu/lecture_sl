@@ -114,6 +114,20 @@ A \enquote{good} approximation $q(x)$ should minimize the difference to $p(x)$.
 
 \framebreak
 
+Let $p(x)=N(0,1)$ and $q(x)=LP(0, 3)$. Observe
+\begin{equation*}
+    \begin{aligned}   
+   D_{KL}(p \| q)&= \E_{X \sim p}[\log(p(X)) - \log(q(X))] \\
+  				 &= \E_{X \sim p}[\log(p(X))]-\E_{X \sim p}[\log(q(X))].
+    \end{aligned} 
+  \end{equation*}
+  
+\begin{figure}
+\includegraphics[width = 8.5cm ]{figure/kl_log_diff.png} 
+\end{figure}
+
+\framebreak
+
 In machine learning, KL divergence is commonly used to quantify how different one distribution is from another.\\
 \lz
 \textbf{Example}:

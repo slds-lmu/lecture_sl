@@ -131,3 +131,64 @@ plot_2 = ggplot(data, aes(x = Sigma)) +
 
 ggsave("..figure/kl_norm_lp_sigma.png", plot = plot_2, width = 5, height = 3)
 
+
+### CREATE LOG DIFFERENCE PLOT FOR KL
+
+x <- seq(-4, 4, length.out = 1000)
+p <- dnorm(x, 0, 1)
+q <- dlaplace(x, 0, 3)
+logp <- log(p)
+logq <- log(q)
+plogp <- p*logp
+plogq <- p*logq
+diff <- plogp - plogq
+
+data <- data.frame(x = x, P = p,
+                   Q = q,
+                   LogP = logp,
+                   LogQ = logq,
+                   PlogP = plogp,
+                   PlogQ = plogq,
+                   Diff = diff)
+
+integrand <- function(x) {
+  p <- dnorm(x, 0, 1)
+  q <- dlaplace(x, 0, 3)
+  log_ratio <- log(p/q)
+  p*log_ratio
+}
+result <- integrate(integrand, lower = -20, upper = 20)
+kl <- round(result$value, 2)
+
+plot1 = ggplot(data, aes(x = x)) +
+  geom_line(aes(y = P), color = "blue", size = 1, linetype = "solid") +
+  geom_line(aes(y = Q), color = "red", size = 1, linetype = "solid") +
+  labs(title = "N(0,1) and LP(0,3) Densities", x = "x", y = "Density") +
+  scale_color_manual(values = c("blue"))
+
+
+plot2 = ggplot(data, aes(x = x)) +
+  geom_line(aes(y = LogP), color = "blue", size = 1, linetype = "solid") +
+  geom_line(aes(y = LogQ), color = "red", size = 1, linetype = "solid") +
+  geom_ribbon(aes(ymin = LogQ, ymax = LogP), alpha = 0.2) +
+  labs(title = "log(p(x)) - log(q(x))", x = "x", y = "Log-Density") +
+  scale_color_manual(values = c("blue"))
+
+plot3 = ggplot(data, aes(x = x)) +
+  geom_line(aes(y = PlogP), color = "blue", size = 1, linetype = "solid") +
+  geom_line(aes(y = PlogQ), color = "red", size = 1, linetype = "solid") +
+  geom_ribbon(aes(ymin = PlogQ, ymax = PlogP), alpha = 0.2) +
+  labs(title = "E[log(p(x))] - E[log(q(x))]", x = "x", y = "Expectation Difference") +
+  geom_text(aes(x = 2.5, y = -0.5, label = paste("D_KL =",kl)), color = "black", size = 3) +
+  scale_color_manual(values = c("blue"))
+
+plot4 = ggplot(data, aes(x = x)) +
+  geom_line(aes(y = diff), color = "orange", size = 1, linetype = "solid") +
+  geom_ribbon(aes(ymin = 0, ymax = diff), alpha = 0.2) +
+  labs(title = "E[log(p(x)/q(x))]", x = "x", y = "Expectation Ratio") +
+  geom_text(aes(x = 2.5, y = 0.1, label = paste("D_KL =",kl)), color = "black", size = 3) +
+  scale_color_manual(values = c("blue"))
+
+plot = grid.arrange(plot1, plot2, plot3, plot4,  ncol = 2)
+ggsave("..figure/kl_log_diff.png", plot = plot, width =8, height = 5)
+
