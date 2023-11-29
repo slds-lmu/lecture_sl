@@ -21,28 +21,29 @@
 \begin{vbframe} {Cross-Entropy - Discrete Case}
 
 \textbf{Cross-entropy} measures the average amount of information required to represent an event from one distribution $p$ using a predictive scheme based on another distribution $q$ (assume they have the same domain $\Xspace$ as in KL).
-  $$ H_q(p) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) = - \mathbb{E}_{X\sim p}[\log(q(X))]$$
+  $$ H(p \| q) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) = - \mathbb{E}_{X\sim p}[\log(q(X))]$$
 
-
+For now, we accept the formula as-is. More on the underlying intuition follows in the concent on inf. theory for ML and sourcecoding.
 \begin{itemize}
-\setlength{\itemsep}{1.2em}
+\setlength{\itemsep}{0.9em}
 \item Entropy = Avg. amount of information if we optimally encode $p$
 \item Cross-Entropy = Avg. amount of information if we suboptimally encode $p$ with $q$
 \item $DL_ {KL}(p \| q)$: Difference between the two
+\item $H(p \| q)$ sometimes also denoted as $H_{q}(p)$ to set it apart from KL
 \end{itemize}
 
-\lz
+\framebreak
 
 We can summarize this also through this identity: 
 \lz
 $$
-H_q(p) = H(p) + D_{KL}(p \| q)
+H(p \| q) = H(p) + D_{KL}(p \| q)
 $$
 This is because: 
 \begin{eqnarray*}
 H(p) + D_{KL}(p \| q) &=& - \sum_{x \in \Xspace} p(x) \log p(x) + \sum_{x \in \Xspace} p(x) \log \frac{p(x)}{q(x)} \\
                       &=& \sum_{x \in \Xspace} p(x) (-\log p(x) +  \log p(x) - \log q(x)) \\
-&=& - \sum_{x \in \Xspace} p(x) \log q(x) = H_q(p) \\
+&=& - \sum_{x \in \Xspace} p(x) \log q(x) = H(p \| q) \\
 \end{eqnarray*}
    
 \framebreak
@@ -52,11 +53,11 @@ H(p) + D_{KL}(p \| q) &=& - \sum_{x \in \Xspace} p(x) \log p(x) + \sum_{x \in \X
 
 For continuous density functions $p(x)$ and $q(x)$: 
 
-$$ H_q(p) = \int p(x) \log\left(\frac{1}{q(x)}\right) dx = - \int p(x) \log\left(q(x)\right) dx = - \mathbb{E}_{X \sim p}[\log(q(X))]$$
+$$ H(p \| q) = \int p(x) \log\left(\frac{1}{q(x)}\right) dx = - \int p(x) \log\left(q(x)\right) dx = - \mathbb{E}_{X \sim p}[\log(q(X))]$$
 
 \begin{itemize}
 \item It is not symmetric.
-\item As for the discrete case, $H_q(p) = h(p) + D_{KL}(p \| q)$ holds.
+\item As for the discrete case, $H(p \| q) = h(p) + D_{KL}(p \| q)$ holds.
 \item Can now become negative, as the $h(p)$ can be negative! 
 \end{itemize}
 \end{vbframe}
@@ -103,10 +104,10 @@ with equality when $f(x) = g(x)$ (following from the properties of Kullback-Leib
 %      $$ H_p(q) = \sum_{x \in \Xspace} q(x) \log_2\left(\frac{1}{p(x)}\right) = - \sum_{x \in \Xspace} q(x) log_2(p(x))$$
 %      \item For probability densities $p(x)$ and $q(x)$, it is: 
 %      $$ H_p(q) = \int_{\Xspace} q(x) \ln\left(\frac{1}{p(x)}\right) dx = - \int_{\Xspace} q(x) \ln\left(p(x)\right) dx $$
-%     \item It is not symmetric: $ H_p(q) \neq H_q(p)$.
+%     \item It is not symmetric: $ H_p(q) \neq H(p \| q)$.
 %     \item Relationship to KL divergence:
 %       \begin{align*}
-%         H_q(p) &= H(p) + D_{KL}(p \| q) \\
+%         H(p \| q) &= H(p) + D_{KL}(p \| q) \\
 %         H_p(q) &= H(q) + D_{KL}(q \| p)
 %       \end{align*}
 %     \item It is non-negative. If the two distributions are the same, cross-entropy equals entropy and KL divergence is zero. 

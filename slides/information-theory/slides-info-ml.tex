@@ -23,27 +23,26 @@
 \begin{vbframe}{KL vs Maximum Likelihood}
 Minimizing KL between the true distribution $p(x)$ and approximating model $q(x|\thetab)$ is equivalent to maximizing the log-likelihood.
   \begin{align*}
-    D_{KL}(p \| q_{\thetab})) &= \E_{x \sim p} \left[ \log \frac{p(x)}{q(x|\thetab)}\right] \\
-     &= \E_{x \sim p} \log p(x) - \E_{x \sim p} \log q(x|\thetab)
+    D_{KL}(p \| q_{\thetab}) &= \E_{X \sim p} \left[ \log \frac{p(x)}{q(x|\thetab)}\right] \\
+     &= \E_{X \sim p} \log p(x) - \E_{X \sim p} \log q(x|\thetab)
   \end{align*}
-  The first term above does not depend on $\thetab$. Therefore,
+  The first term above does not depend on $\thetab$ and the second term can be defined as the cross-entropy. Therefore,
   \begin{align*}
-    \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) &= \argmin_{\thetab} -\E_{x \sim p} \log q(x|\thetab)\\ 
-                                           &= \argmax_{\thetab} \E_{x \sim p} \log q(x|\thetab)
+    \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) &= \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab)\\ 
+                                           &= \argmax_{\thetab} \E_{X \sim p} \log q(x|\thetab)
   \end{align*}
   For a finite dataset of $n$ samples from $p$, this is approximated as 
-  $$\argmax_{\thetab} \E_{x \sim p} \log q(x|\thetab) \approx \argmax_{\thetab} \frac{1}{n} \sumin \log q(\xi|\thetab)\,.$$
+  $$\argmax_{\thetab} \E_{X \sim p} \log q(x|\thetab) \approx \argmax_{\thetab} \frac{1}{n} \sumin \log q(\xi|\thetab)\,.$$
 
 % This demonstrates that density estimation and optimal coding are closely related. If the estimated distribution is different from the true one, any code based on the estimated distribution will necessarily be suboptimal (in terms of the expected length of \enquote{messages} from the true distribution).
 \end{vbframe}
 
 \begin{vbframe}{KL vs Cross-Entropy}
 From this here we can actually see much more:
-$$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{x \sim p} \log q(x|\thetab) = \argmin_{\thetab} H_{q_{\thetab}}(p) $$
+$$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab) = \argmin_{\thetab} H(p \| q_{\thetab}) $$
   \begin{itemize}
-    \item So minimizing with respect to KL is the same as minimizing with respect to cross-entropy! 
-    \item That implies minimizing with respect to cross-entropy is the same as maximum likelihood!
-    \item Remember, how we only characterized cross-entropy through source coding / bits? We could now motivate cross-entropy as the "relevant" term that you have to minimize, when you minimize KL - after you drop $\E_p \log p(x)$, which is simply the neg. entropy H(p)!
+    \item So minimizing w.r.t. to KL is the same as minimizing with respect to cross-entropy, which implies minimizing w.r.t. cross-entropy is the same as maximum likelihood!
+    \item Remember, how we only characterized cross-entropy through bits? We could now motivate cross-entropy as the "relevant" term that you have to minimize, when you minimize KL - after you drop $\E_p \log p(x)$, which is simply the neg. entropy H(p)!
     \item Or we could say: Cross-entropy between $p$ and $q$ is simply the expected negative log-likelihood of $q$, when our data comes from $p$!
   \end{itemize}
 \end{vbframe}
@@ -67,14 +66,14 @@ $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{x \sim p}
 
     
 To train the model, we minimize KL between $d^{(i)}$ and $\pi(\xv^{(i)}|\thetab)$ :
-$$ \argmin_{\thetab} \sum_{i=1}^n D_{KL} (d^{(i)} \| \pi(\xv^{(i)}|\thetab)) = \argmin_{\thetab} \sum_{i=1}^n  H_{\pi(\xv^{(i)}|\thetab)}(d^{(i)}) $$
+$$ \argmin_{\thetab} \sum_{i=1}^n D_{KL} (d^{(i)} \| \pi(\xv^{(i)}|\thetab)) = \argmin_{\thetab} \sum_{i=1}^n  H(d^{(i)} \| \pi(\xv^{(i)}|\thetab)) $$
     % where the entropy $H(d^{(i)})$ was dropped because it is not a function of $\thetab$.
   
 We see that this is equivalent to log-loss risk minimization!
   \begin{footnotesize}
     \begin{equation*}
       \begin{split}
-               R &= \sumin  H_{\pi_k(\xv^{(i)}|\thetab)}(d^{(i)}) \\
+               R &= \sumin  H(d^{(i)} \| \pi_k(\xv^{(i)}|\thetab)) \\
                  &= \sumin \left( - \sum_k d^{(i)}_k \log\pi_k(\xv^{(i)}|\thetab) \right) \\
                  & = \sumin \underbrace{ \left( -\sum_{k = 1}^g [\yi = k]\log \pi_{k}(\xv^{(i)}|\thetab) \right) }_{\text{log loss}} \\
                  & = \sumin (-\log\pi_{y^{(i)}}(\xv^{(i)}|\thetab)) 
@@ -106,7 +105,7 @@ For completeness sake:\\
 
 \lz
 
-  If $p$ represents a $\text{Ber}(y)$ distribution (so deterministic, where the true label receives probability mass 1) and we also interpret $\pix$ as a Bernoulli distribution $\text{Ber}(\pix)$, the Bernoulli loss $L(y,\pix)$ is the cross-entropy $H_{\pix}(p)$.
+  If $p$ represents a $\text{Ber}(y)$ distribution (so deterministic, where the true label receives probability mass 1) and we also interpret $\pix$ as a Bernoulli distribution $\text{Ber}(\pix)$, the Bernoulli loss $L(y,\pix)$ is the cross-entropy $H(p \| \pix)$.
 %    \item If $\hat{y}$ is a Bernoulli random variable with distribution defined by $\pi(x)$, $L(y,\pix)$ is the cross-entropy $H_{\hat{y}}(y)$.
     % \item For a given training set with $n$ samples, the cost function is computed by taking the average of all the cross-entropies in the sample
     %   $$-\frac{1}{n} \sum_{i=1}^{n}\left[\yi \log \pi(\xi)+\left(1-\yi\right) \log \left(1-\pi(\xi)\right)\right].$$
@@ -118,13 +117,9 @@ $$\pik = \frac{n_k}{n} = \frac{\sumin [\yi = 1]}{n}$$
 
 What is the (average) risk of that minimal constant model?
 
-\framebreak
-
 \begin{align*}
-  \risk &= \frac{1}{n} \sumin \left( -\sumkg [\yi = k]\log \pik \right)  \\
-        &= - \frac{1}{n} \sumkg \sumin [\yi = k]\log \pik  \\
-        &= -\sumkg \frac{n_k}{n}\log \pik \\
-        &= -\sumkg \pi_k \log \pik = H(\pi) 
+  \risk &= \frac{1}{n} \sumin \left( -\sumkg [\yi = k]\log \pik \right) = - \frac{1}{n} \sumkg \sumin [\yi = k]\log \pik  \\
+        &= -\sumkg \frac{n_k}{n}\log \pik = -\sumkg \pi_k \log \pik = H(\pi) 
 \end{align*}
 
 So entropy is the (average) risk of the optimal "observed class frequency" model under log-loss! 
