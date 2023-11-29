@@ -47,7 +47,7 @@ Many losses can be derived this way. (e.g. cross-entropy loss)
     \item \textbf{Feature selection}
 In feature selection, we want to choose features the target strongly depends on. 
 
-\includegraphics[width=0.6\linewidth]{slides/information-theory/figure_man/kl_ml_mi.png}
+\includegraphics[width=0.6\linewidth]{figure_man/kl_ml_mi.png}
 
 We can measure dependency by measuring the similarity between $p(\mathbf{x}, y)$ and $p(\mathbf{x})\cdot p(y).$ \\
 We will later see that measuring this similarity with KL  leads to the concept of mutual information.
@@ -72,7 +72,7 @@ This scenario fundamentally differs from the previous ones because we can now ge
 
 \begin{vbframe}{KL divergence}
 
-Divergences can be used to measure the similarity of distributions. \\ \lz \\For distributions $p, q$ they are defined such that
+Divergences can be used to measure the similarity of distributions. \lz For distributions $p, q$ they are defined such that
 \begin{enumerate}
     \item $D(p, q) \geq 0,$
     \item $D(p, q) = 0$ iff $p = q.$
@@ -97,7 +97,7 @@ In the following, we highlight some properties of the KL that make it attractive
     \\ We have samples from the DGP $p(y|x)$ when we fit our ML model.
     \\
     \lz
-    \\
+    
     If we have a probabilistic ML model $q_{\bm{\phi}}$ and can specify $p(y|x)$ then the forward KL can be directly applied such that
     $$\E_{\xv \sim p_{\xv}}D_{KL}(p(\cdot|\xv) \| q_{\bm{\phi}}(\cdot|\xv)) = \E_{\xv \sim p_{\xv}}\E_{y \sim p_{y|\xv}}\log\left(\frac{p(y|\xv)}{q_{\bm{\phi}}(y|\xv)}\right).$$
 For example, if $p$ and $q_{\bm{\phi}}$ are Gaussians with the same $\sigma$, minimizing this expression is equivalent to L2 minimization. \\

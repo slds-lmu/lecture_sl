@@ -44,7 +44,7 @@ In the following, we derive an alternative measure, namely the KL divergence (re
 \begin{vbframe}{Constructing the KL}
     \textbf{1) Locality} \\
     The constraint must only update the prior distribution in $D, i.e.,$ the region where it is active. \\
-\includegraphics[width=0.3\linewidth]{slides/information-theory/figure_man/kl_me_constraint.png} \\
+\includegraphics[width=0.3\linewidth]{figure_man/kl_me_constraint.png} \\
     \lz
     For this, it can be shown that the non-overlapping domains of $\mathcal{X}$ must contribute additively to the entropy, i.e.,
     $$S(p) = \int F(p(\xv), \xv) d\mu(\xv)$$
@@ -54,7 +54,7 @@ In the following, we derive an alternative measure, namely the KL divergence (re
     
     \textbf{2) Invariance to coordinate system} \\
     \lz 
-    \includegraphics[width=0.5\linewidth]{slides/information-theory/figure_man/kl_me_cosy.png} \\
+    \includegraphics[width=0.5\linewidth]{figure_man/kl_me_cosy.png} \\
     Enforcing 2) results in 
     $$S(p) = \int \bm{\Phi}\left(\frac{dp}{dm}(\xv)\right)dm(\xv)$$
     where $\bm{\Phi}$ is an unknown function, $m$ is another measure on $\mathcal{X}$ dominated by $\mu$ and $\frac{dp}{dm}$ the Radon–Nikodym derivative which becomes 

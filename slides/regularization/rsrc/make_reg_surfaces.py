@@ -32,7 +32,7 @@ def updated_objective(beta, x1, x2, y, lam, regularization):
 # Compute the Minima for each plot
 minima = {}
 regularizations = ['l1', 'l2']
-lambdas = [0, 0.5, 5]
+lambdas = [0, 1, 10]
 for reg in regularizations:
     for lam in lambdas:
         result = minimize(updated_objective, [0, 0], args=(x1, x2, y, lam, reg), method='L-BFGS-B')
@@ -44,7 +44,7 @@ beta2_range = np.linspace(-10, 10, 100)
 beta1_grid, beta2_grid = np.meshgrid(beta1_range, beta2_range)
 
 # Plotting
-fig, axes = plt.subplots(2, 3, subplot_kw={"projection": "3d", "facecolor": "white"}, figsize=(18, 12))
+fig, axes = plt.subplots(2, 3, subplot_kw={"projection": "3d"}, figsize=(18, 12))
 for i, reg in enumerate(regularizations):
     for j, lam in enumerate(lambdas):
         objective_values = np.array([updated_objective([b1, b2], x1, x2, y, lam, reg) 
@@ -53,16 +53,10 @@ for i, reg in enumerate(regularizations):
 
         ax = axes[i, j]
         ax.plot_surface(beta1_grid, beta2_grid, objective_values, cmap='viridis')
-        ax.set_title(f'Regularization: {reg.upper()}, Lambda: {lam}', fontsize=14)  # Increased font size
-        ax.set_xlabel('Theta1', fontsize=10)  # Increased font size
-        ax.set_ylabel('Theta2', fontsize=10)  # Increased font size
-        ax.set_zlabel('Objective', fontsize=10)  # Increased font size
-        ax.w_xaxis.pane.fill = False
-        ax.w_yaxis.pane.fill = False
-        ax.w_zaxis.pane.fill = False
-        ax.w_xaxis.pane.set_edgecolor('white')
-        ax.w_yaxis.pane.set_edgecolor('white')
-        ax.w_zaxis.pane.set_edgecolor('white')
+        ax.set_title(f'Regularization: {reg.upper()}, Lambda: {lam}', fontsize=20)  # Increased font size
+        ax.set_xlabel('Theta 1', fontsize=14)  # Increased font size
+        ax.set_ylabel('Theta 2', fontsize=14)  # Increased font size
+        ax.set_zlabel('Emp. risk', fontsize=14)  # Increased font size
 
         # Add the minima as a red dot
         min_beta1, min_beta2 = minima[(reg, lam)]

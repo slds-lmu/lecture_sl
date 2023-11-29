@@ -174,10 +174,10 @@ We can also rewrite this as a constrained optimization problem. The penalty resu
 \end{vbframe}
 
 \begin{vbframe}{Loss Surfaces}
-Loss surfaces for increasing amounts of regularization. Ridge surface becomes more ellipsoidal, Lasso surface less smooth.
+Regularized empirical risk $\riskr$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward an elliptic paraboloid. 
  
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/reg_surfaces.png}\\
+\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
 \end{figure}
 
 \end{vbframe}
