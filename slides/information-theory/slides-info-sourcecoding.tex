@@ -146,6 +146,65 @@ from symbols in X to a set of codewords of binary strings.
   
 \end{vbframe}
 
+\begin{vbframe} {Source coding and (cross-)entropy}
+
+\begin{itemize}
+  \item For a random source / distribution $p$, the minimal number of bits to optimally encode messages from is the entropy $H(p)$.
+  \item If the optimal code for a different distribution $q(x)$ is instead used to encode messages from $p(x)$, expected code length will grow.
+%  (Note: Both distributions are assumed to have the same support.)
+\end{itemize}
+  \vspace{-0.3cm}
+  \begin{figure}
+    \centering
+      \scalebox{0.5}{\includegraphics{figure_man/shift.png}}
+      \scalebox{1}{\includegraphics{figure_man/xent_pq.png}}
+      \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
+  \end{figure}
+
+\framebreak
+\textbf{Cross-entropy} is the average length of communicating an event from one distribution with the optimal code for another distribution (assume they have the same domain $\Xspace$ as in KL).
+  $$ H_q(p) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) $$
+
+\begin{figure}
+    \centering
+      \scalebox{1}{\includegraphics{figure_man/xent_pq.png}}
+      \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
+  \end{figure}
+  
+We directly see: cross-entropy of $p$ with itself is entropy: $H_p(p) = H(p)$.
+  
+\framebreak
+  \begin{figure}
+    \centering
+      \scalebox{0.8}{\includegraphics{figure_man/crossent.png}}
+      \tiny{\\ Credit: Chris Olah}
+  \end{figure}
+  
+  \begin{itemize}
+    \item \small{In top, $H_q(p)$ is greater than $H(p)$ primarily because the blue event that is very likely under $p$ has a very long codeword in $q$.
+    \item Same, in bottom, for pink when we go from $q$ to $p$.
+    \item Note that $H_q(p) \neq H_p(q)$}. 
+  \end{itemize}
+
+  \framebreak
+
+  \begin{figure}
+    \centering
+      \scalebox{1}{\includegraphics{figure_man/xent_pq.png}}
+      \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
+  \end{figure}
+  
+  \begin{itemize}
+   \item Let $x^\prime$ denote the symbol "dog". The difference in code lengths is:
+  $$ \log \left ( \frac{1}{q(x^\prime)} \right ) - \log \left( \frac{1}{p(x^\prime)} \right) = \log \frac{p(x^\prime)}{q(x^\prime)} $$
+  
+\item If $p(x^\prime) > q(x^\prime)$, this is positive, if $p(x^\prime) < q(x^\prime)$, it is negative. 
+    \item The expected difference is KL, if we encode symbols from $p$:
+  $$ D_{KL}(p \| q) = \sum_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)} $$
+  \end{itemize}
+
+\end{vbframe}
+
 
 \endlecture
 \end{document}
