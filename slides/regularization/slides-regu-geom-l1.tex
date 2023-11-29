@@ -24,7 +24,7 @@
     \item The L1-regularized risk of a model $\fxt$ is
 
       \[
-      \min_{\thetab} \riskrt = \risket + \lambda ||\thetab||_1
+     \mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|
       \] 
       
       and the (sub-)gradient is:

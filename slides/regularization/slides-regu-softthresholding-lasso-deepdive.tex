@@ -1,0 +1,57 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure/graddes_vs_weightdecay.png}
+\newcommand{\learninggoals}{
+  \item todo
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Soft-thresholding and L1 regularization deep-dive}
+\lecture{Introduction to Machine Learning}
+
+
+
+\begin{vbframe}{Soft-thresholding and L1 regularization}
+In the lecture, we wanted to solve
+     \[
+      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|.
+      \] 
+This is a convex problem (since it is the sum of convex functions) for which, in general, no analytical solution exists. \\
+\lz
+
+For convex functions, every stationary point is a minimum. \\
+\lz
+
+ Hence, we will analyze the coordinate-wise derivative $\frac{\partial}{\partial \thetab_j} \mathcal{\tilde R}_{\text{reg}}.$ \\
+ (Note: This derivative is not defined for $\thetab_j = 0)$\\
+
+\framebreak
+
+First, we will focus on the everywhere differentiable part:
+\begin{align*}
+\frac{\partial}{\partial \thetab_j}\sum_j \left[\frac{1}{2}  H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right]
+    &=  H_{j,j} (\theta_j - \hat{\theta}_j)\cdot(-1)  \\
+        &=H_{j,j} \hat{\theta}_j - H_{j,j}\theta_j  \\
+\end{align*}
+Now, we analyze the stationary points of $\riskrt.$ \\
+So, we consider the three cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0, \hat{\theta}_{\text{Lasso},j} = 0$ \\
+\lz
+1) $\hat{\theta}_{\text{Lasso},j} < 0:$
+$\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}}$ 
+\framebreak
+
+
+
+
+\end{vbframe}
+
+\endlecture
+\end{document}
+
