@@ -159,22 +159,20 @@ Name: least absolute shrinkage and selection operator.
 \framebreak 
 
 We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
-
+\vspace{-0.2cm}
 \begin{eqnarray*}
 \min_{\thetab} && \sumin \left(\yi - \fxit\right)^2\\
 \text{subject to: } && \|\thetab\|_1 \leq t \\
 \end{eqnarray*}
-
-\vspace*{-1cm}
-
-  \begin{figure}
-\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
+\vspace{-0.2cm}
+\begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
+\includegraphics[width=0.95\textwidth]{figure/lasso_contours_cases.png}\\
 \end{figure}
 
 \end{vbframe}
 
-\begin{vbframe}{Loss Surfaces}
-Regularized empirical risk $\riskr$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward an elliptic paraboloid. 
+\begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
+Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
  
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
