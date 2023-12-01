@@ -37,18 +37,35 @@ For convex functions, every stationary point is a minimum. \\
 First, we will focus on the everywhere differentiable part:
 \begin{align*}
 \frac{\partial}{\partial \thetab_j}\sum_j \left[\frac{1}{2}  H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right]
-    &=  H_{j,j} (\theta_j - \hat{\theta}_j)\cdot(-1)  \\
-        &=H_{j,j} \hat{\theta}_j - H_{j,j}\theta_j  \\
+    &=  H_{j,j} (\theta_j - \hat{\theta}_j)  \\
+        &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j  \\
 \end{align*}
-Now, we analyze the stationary points of $\riskrt.$ \\
-So, we consider the three cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0, \hat{\theta}_{\text{Lasso},j} = 0$ \\
+Now, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $\riskrt.$ \\
+First, we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0.$ \\
+(Here $\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}}$ exists) \\
 \lz
-1) $\hat{\theta}_{\text{Lasso},j} < 0:$
-$\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}}$ 
+1) $\hat{\theta}_{\text{Lasso},j} > 0:$
+$\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} = H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0$ \\
+$\quad \Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
+ -\frac{\lambda}{H_{j,j}} > 0 \iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}$\\
+
 \framebreak
 
+2) $\hat{\theta}_{\text{Lasso},j} < 0:$
+$\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} = H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0$ \\
+$\quad \Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
+ + \frac{\lambda}{H_{j,j}} < 0 \iff \hat{\theta}_j <  -\frac{\lambda}{H_{j,j}}$\\
+ \lz
 
+$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $\mathcal{\tilde R}_{\text{reg}}$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ \\
+However, there must be at least one stationary point since $\mathcal{\tilde R}_{\text{reg}}$ is a regularized convex risk. \\
 
+\begin{align*}\Rightarrow \hat{\theta}_{\text{Lasso},j} &= \begin{cases} 
+     \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \\
+       0 &, \text{if}   \;\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}] \\
+     \hat{\theta}_j - \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j > \frac{\lambda}{H_{j,j}} \\
+     \end{cases}
+     \end{align*}
 
 \end{vbframe}
 
