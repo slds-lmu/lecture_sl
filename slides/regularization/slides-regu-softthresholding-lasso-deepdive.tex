@@ -21,29 +21,33 @@
 \begin{vbframe}{Soft-thresholding and L1 regularization}
 In the lecture, we wanted to solve
      \[
-      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_k \left[ \frac{1}{2} H_{k,k} (\theta_k - \hat{\theta}_k)^2 \right] + \sum_k \lambda |\theta_k|.
-      \] 
-This is a convex problem (since it is the sum of convex functions) for which, in general, no analytical solution exists. \\
+      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|.
+      \]
+Note that we can separate the dimensions, i.e.,
+
+\[\mathcal{\tilde R}_{\text{reg}}(\thetab) = \sum_j g_j(\theta_j) \text{ with } g_j(\theta_j) = \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 + \lambda |\theta_j|.\]
+      
+Hence, we can minimize each $g_j$ separately to find the global minimum. \\
 \lz
 
-For convex functions, every stationary point is a minimum. \\
+Each $g_j$ is convex since it is a sum of convex functions. For convex functions, every stationary point is a minimum. \\
 \lz
 
- Hence, we will analyze the coordinate-wise derivative $\frac{\partial}{\partial \thetab_j} \mathcal{\tilde R}_{\text{reg}}.$ \\
- (Note: This derivative is not defined for $\thetab_j = 0)$\\
+
 
 \framebreak
 
-First, we will focus on the everywhere differentiable part:
-\begin{align*}
-\frac{\partial}{\partial \thetab_j}\sum_k \left[\frac{1}{2}  H_{k,k} (\theta_k - \hat{\theta}_k)^2 \right]
-    &=  H_{j,j} (\theta_j - \hat{\theta}_j)  \\
-        &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j  \\
-\end{align*}
-Now, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $\riskrt.$ \\
-First, we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0.$ \\
-(Here $\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}}$ exists) \\
+Thus, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $g_j.$ \\
+\lz 
+For this, we assume we already know the sign of the minimizer and then derive conditions for which our assumption holds. \\
+\lz 
+So, first we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0.$\\
 \lz
+NB: 
+\begin{itemize}
+    \item For $\theta_j > 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\theta_j = 1$ and 
+    \item For $\theta_j < 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\left(-\theta_j\right) = -1$.
+\end{itemize}
 
 \framebreak
 
@@ -55,7 +59,7 @@ First, we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\
 \hfill
 \begin{minipage}{0.49\textwidth}
 \begin{align*}
-    \frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
+    \frac{d}{d \theta_j}g_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
     &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
  -\frac{\lambda}{H_{j,j}} > 0 \\
  &\iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}
@@ -71,7 +75,7 @@ First, we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\
 \hfill
 \begin{minipage}{0.49\textwidth}
 \begin{align*}
-    \frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
+    \frac{d}{d \theta_j}g_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
     &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
  +\frac{\lambda}{H_{j,j}} < 0 \\
  &\iff \hat{\theta}_j < -\frac{\lambda}{H_{j,j}}
@@ -85,8 +89,9 @@ First, we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\
 \end{minipage}
 \hfill
 \begin{minipage}{0.49\textwidth}
-$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $\mathcal{\tilde R}_{\text{reg}}$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ \\
-However, there must be at least one stationary point since $\mathcal{\tilde R}_{\text{reg}}$ is a regularized convex risk.
+$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $g_j$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ \\
+However, at least one stationary point must exist since $g_j$ is a regularized convex function with $\lambda > 0.$\\
+$\Rightarrow$ An equivalent constraint with $\vert\theta_j\vert \leq t \in\R_+$ must exist.
 \end{minipage}
  \\
 

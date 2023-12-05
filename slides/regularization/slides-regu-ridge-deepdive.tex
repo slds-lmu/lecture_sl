@@ -20,28 +20,37 @@
 
 
 \begin{vbframe}{Perspectives on $L2$ regularization}
-We already saw that $L2$ regularization is equivalent to a constrained optimization problem:
-\begin{eqnarray*}  
+We already saw two interpretations of $L2$ regularization. 
+\begin{itemize}
+    \item We know that it is equivalent to a constrained optimization problem:
+  \begin{eqnarray*}  
   \thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv\\
   %&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab \\
   &=& \argmin_{\thetab} \sumin \left(\yi - \fxit\right)^2 \,
   \text{s.t. } \|\thetab\|_2^2  \leq t
   \end{eqnarray*}
-We can also recover the Ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let \scriptsize{$\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
-    \yv \\ \bm{0}_{p}
-\end{pmatrix}$.} \normalsize{Using the augmented data, the least-squares objective becomes}
-\small{
-$$%\argmin_{\thetab} 
-\sum_{i=1}^{n+p} \left(\tilde{\yi} - \thetab^T \tilde{\xi} \right)^2 = %\argmin_{\thetab} 
-\sum_{i=1}^{n} \left(\yi - \thetab^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 %= \thetah_{\text{Ridge}}
-=\sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2
-$$
-}
-\normalsize{$\Longrightarrow$ $\thetah_{\text{Ridge}}$ is the least-squares solution $\thetah$ using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!}
-%$$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+  \item Bayesian interpretation of Ridge regression: For normal likelihood contributions $\mathcal{N}(\thetab^{\top}\xi,\sigma^2)$ and i.i.d. normal priors $\theta_j \sim \mathcal{N}(0,\tau^{2})$, the resulting MAP estimate is $\thetah_{\text{Ridge}}$ with $\lambda=\frac{\sigma^2}{\tau^2}$:
+  $$\thetah_{\text{MAP}}=\argmax_{\theta} \log[p(\yv|\Xmat,\thetab)p(\thetab)] = \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \frac{\sigma^2}{\tau^2} \|\thetab\|_2^2$$
+\end{itemize}
+
 \end{vbframe}
 
 \begin{vbframe}{Another perspective on $L2$}
+We can also recover the Ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let $\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
+    \yv \\ \bm{0}_{p}
+\end{pmatrix}$. Using the augmented data, the unregularized least-squares solution $\tilde{\thetab}$ can be written as
+\begin{eqnarray*}
+\tilde{\thetab} &=& \argmin_{\thetab} 
+\sum_{i=1}^{n+p} \left(\tilde{\yi} - \thetab^T \tilde{\xi} \right)^2 \\ &=& \argmin_{\thetab} 
+\sum_{i=1}^{n} \left(\yi - \thetab^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 \\ %= \thetah_{\text{Ridge}}
+&=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2
+\end{eqnarray*}
+
+$\Longrightarrow$ $\thetah_{\text{Ridge}}$ is the least-squares solution $\tilde{\thetab}$ but using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!
+%$$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+\end{vbframe}
+
+\begin{vbframe}{Yet Another perspective on $L2$}
 Now consider perturbed features $ \tilde{\xi}:= \xi + \bm{\delta}_i$ where $\bm{\delta}_i \overset{iid}{\sim} (\bm{0},\frac{\lambda}{n} \id_p)$. Note that no parametric family is assumed. We want to minimize the expected squared error taken w.r.t. the random perturbations:
 $$\riskt:= \mathbb{E}_{\bm{\delta}}[(y-\thetab^{\top}\tilde{\bm{x}})^2] = \mathbb{E}_{\bm{\delta}}[(y-\thetab^{\top}(\bm{x}+\bm{\delta}))^2]$$
 Expanding, we obtain
@@ -50,7 +59,7 @@ $$\riskt = \mathbb{E}_{\bm{\delta}}[(y-\thetab^{\top}\bm{x})^2 - 2 \thetab^{\top
 By linearity of expectation, $\mathbb{E}_{\bm{\delta}}[\bm{\delta}]=\bm{0}$ and $\mathbb{E}[\bm{\delta}\bm{\delta}^{\top}]=\frac{\lambda}{n} \id_p$, we get
 $$\riskt=(y-\thetab^{\top}\bm{x})^2 - 2 \thetab^{\top}\mathbb{E}[\bm{\delta}](y-\thetab^{\top}\bm{x}) + \thetab^{\top}\mathbb{E}[\bm{\delta}\bm{\delta}^{\top}]\thetab = (y-\thetab^{\top}\bm{x})^2+\frac{\lambda}{n} \Vert \thetab \Vert_2^2$$
 
-Summed over $n$ samples this is exactly to Ridge regression with regularization strength $\lambda$.\\
+Summing over $n$ samples exactly yields Ridge regression with hyperparameter $\lambda$.\\
 $\Longrightarrow$ Minimizing squared loss over noise distribution is Ridge regression on unperturbed features $\xi$!
 
 \end{vbframe}
