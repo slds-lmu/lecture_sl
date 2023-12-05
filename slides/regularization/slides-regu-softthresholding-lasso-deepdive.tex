@@ -3,9 +3,9 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/graddes_vs_weightdecay.png}
+\newcommand{\titlefigure}{slides/regularization/figure/th_l1_pos.pdf}
 \newcommand{\learninggoals}{
-  \item todo
+  \item Understand the relationship between soft-thresholding and L1 regularization
 }
 
 \title{Introduction to Machine Learning}
@@ -21,7 +21,7 @@
 \begin{vbframe}{Soft-thresholding and L1 regularization}
 In the lecture, we wanted to solve
      \[
-      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|.
+      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_k \left[ \frac{1}{2} H_{k,k} (\theta_k - \hat{\theta}_k)^2 \right] + \sum_k \lambda |\theta_k|.
       \] 
 This is a convex problem (since it is the sum of convex functions) for which, in general, no analytical solution exists. \\
 \lz
@@ -36,7 +36,7 @@ For convex functions, every stationary point is a minimum. \\
 
 First, we will focus on the everywhere differentiable part:
 \begin{align*}
-\frac{\partial}{\partial \thetab_j}\sum_j \left[\frac{1}{2}  H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right]
+\frac{\partial}{\partial \thetab_j}\sum_k \left[\frac{1}{2}  H_{k,k} (\theta_k - \hat{\theta}_k)^2 \right]
     &=  H_{j,j} (\theta_j - \hat{\theta}_j)  \\
         &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j  \\
 \end{align*}
@@ -44,21 +44,51 @@ Now, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $\riskr
 First, we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0.$ \\
 (Here $\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}}$ exists) \\
 \lz
-1) $\hat{\theta}_{\text{Lasso},j} > 0:$
-$\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} = H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0$ \\
-$\quad \Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
- -\frac{\lambda}{H_{j,j}} > 0 \iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}$\\
 
 \framebreak
 
-2) $\hat{\theta}_{\text{Lasso},j} < 0:$
-$\frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} = H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0$ \\
-$\quad \Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
- + \frac{\lambda}{H_{j,j}} < 0 \iff \hat{\theta}_j <  -\frac{\lambda}{H_{j,j}}$\\
- \lz
+1) $\hat{\theta}_{\text{Lasso},j} > 0:$ \\
+\lz
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=5cm]{slides/regularization/figure/th_l1_pos.pdf}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\textwidth}
+\begin{align*}
+    \frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
+    &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
+ -\frac{\lambda}{H_{j,j}} > 0 \\
+ &\iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}
+\end{align*}
+\end{minipage}
+ \newpage
 
+2) $\hat{\theta}_{\text{Lasso},j} < 0:$ \\
+\lz
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=5cm]{slides/regularization/figure/th_l1_neg.pdf}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\textwidth}
+\begin{align*}
+    \frac{\partial}{\partial \thetab_j}\mathcal{\tilde R}_{\text{reg}} &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
+    &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
+ +\frac{\lambda}{H_{j,j}} < 0 \\
+ &\iff \hat{\theta}_j < -\frac{\lambda}{H_{j,j}}
+\end{align*}
+\end{minipage}
+ \newpage
+
+
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=5cm]{slides/regularization/figure/th_l1_zero.pdf}
+\end{minipage}
+\hfill
+\begin{minipage}{0.49\textwidth}
 $\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $\mathcal{\tilde R}_{\text{reg}}$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ \\
-However, there must be at least one stationary point since $\mathcal{\tilde R}_{\text{reg}}$ is a regularized convex risk. \\
+However, there must be at least one stationary point since $\mathcal{\tilde R}_{\text{reg}}$ is a regularized convex risk.
+\end{minipage}
+ \\
 
 \begin{align*}\Rightarrow \hat{\theta}_{\text{Lasso},j} &= \begin{cases} 
      \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \\

@@ -1,0 +1,45 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure_man/bias-variance-ridge.png}
+\newcommand{\learninggoals}{
+  \item Know alternative interpretations of Ridge regression
+  \item Derivation of the bias-variance tradeoff for Ridge regression
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Ridge Regression Deep-Dive}
+\lecture{Introduction to Machine Learning}
+
+
+
+\begin{vbframe}{Perspectives on $L2$ regularization}
+We already saw that $L2$ regularization is equivalent to a constrained optimization problem:
+\begin{eqnarray*}  
+  \thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv\\
+  %&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab \\
+  &=& \argmin_{\thetab} \sumin \left(\yi - \fxit\right)^2 \,
+  \text{s.t. } \|\thetab\|_2^2  \leq t
+  \end{eqnarray*}
+We can also recover the Ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let \scriptsize{$\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
+    \yv \\ \bm{0}_{p}
+\end{pmatrix}$.} \normalsize{Using the augmented data, the least-squares objective becomes}
+\small{
+$$%\argmin_{\thetab} 
+\sum_{i=1}^{n+p} \left(\tilde{\yi} - \thetab^T \tilde{\xi} \right)^2 = %\argmin_{\thetab} 
+\sum_{i=1}^{n} \left(\yi - \thetab^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 %= \thetah_{\text{Ridge}}
+=\sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2
+$$
+}
+\normalsize{Thus the least-squares solution $\thetah$ using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$ is $\thetah_{\text{Ridge}}$.}
+%$$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+\end{vbframe}
+
+\endlecture
+\end{document}

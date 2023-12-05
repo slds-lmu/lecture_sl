@@ -143,28 +143,33 @@ With an $L2$ penalty we can now select $d$ "too large" but regularize our model 
 
 \begin{vbframe}{Lasso Regression}
 
-Another shrinkage method is the so-called \textbf{Lasso regression}, which uses an $L1$ penalty on $\thetab$:
-
+Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
+\vspace{-0.2cm}
 \begin{eqnarray*}
-\thetah_{\text{Lasso}} &=&  \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi\right)^2 + \lambda \|\thetab\|_1 \\
-  &=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \|\thetab\|_1.
+\thetah_{\text{Lasso}}= \argmin_{\thetab} \underbrace{\sumin \left(\yi - \thetab^T \xi\right)^2}_{\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right)} + \lambda \|\thetab\|_1
 \end{eqnarray*}
+Optimization is much harder now. $\riskrt$ is still convex, but in general there is no analytical solution and it is non-differentiable.\\
+\vspace{0.2cm}
 
-Note that optimization now becomes much harder. $\riskrt$ is still convex, but we have moved from an optimization problem with an analytical solution towards a non-differentiable problem.
+For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can get closed-form solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
+$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
 
-\lz
+Comparing this to $\thetah_{\text{Ridge}}$ we see different behavior as $\lambda \uparrow$:
+$$\thetah_{\text{Ridge}}=\frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{no sparsity, uniform downscaling})$$
 
-Name: least absolute shrinkage and selection operator.
+
+%\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
 \framebreak 
 
 We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
 \vspace{-0.2cm}
 \begin{eqnarray*}
-\min_{\thetab} && \sumin \left(\yi - \fxit\right)^2\\
-\text{subject to: } && \|\thetab\|_1 \leq t \\
+\min_{\thetab} \sumin \left(\yi - \fxit\right)^2\,
+\text{subject to: } \|\thetab\|_1 \leq t
 \end{eqnarray*}
-\vspace{-0.2cm}
+The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
+\vspace{-0.1cm}
 \begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
 \includegraphics[width=0.95\textwidth]{figure/lasso_contours_cases.png}\\
 \end{figure}

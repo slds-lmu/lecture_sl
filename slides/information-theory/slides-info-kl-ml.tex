@@ -22,7 +22,7 @@
 \begin{vbframe} {Measuring Distribution Similarity in ML}
 \begin{itemize}
     \item Information theory provides tools (e.g., divergence measures) to quantify the similarity between probability distributions
-\includegraphics[width=0.4\linewidth]{slides/information-theory/figure_man/kl_ml_dist_sim.png}
+\includegraphics[width=0.4\linewidth]{figure_man/kl_ml_dist_sim.png}
     \item The most prominent divergence measure is the KL divergence 
 \item In ML, measuring (and maximizing) the similarity between probability distributions is a ubiquitous concept, which will be shown in the following.
 \end{itemize}
@@ -60,7 +60,7 @@ We will later see that measuring this similarity with KL  leads to the concept o
     \item \textbf{Variational inference (VI)}
 Our data can also induce probability distributions: By Bayes' theorem it holds that the posterior density $$p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})}{\int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}}.$$ However, computing this density analytically is usually intractable.
 
-\includegraphics[width=0.99\linewidth]{slides/information-theory/figure_man/kl_ml_vi.png}
+\includegraphics[width=0.99\linewidth]{figure_man/kl_ml_vi.png}
 
 In VI, we want to fit a density $q_{\bm{\phi}}$ with parameters $\bm{\phi}$ to 
     $p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}).$

@@ -3,7 +3,7 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure_man/biasvariance_scheme.png}
+\newcommand{\titlefigure}{figure_man/bias-variance-ridge.png}
 \newcommand{\learninggoals}{
   \item Understand why overfitting happens
   \item Know how overfitting can be avoided
@@ -19,6 +19,19 @@
 \lecture{Introduction to Machine Learning}
 
 %\section{Motivation for Regularization}
+
+\begin{vbframe}{What is Regularization?}
+
+Regularization comprises all methods that add preferences for specific solutions (\textbf{inductive bias}) to a model, usually in the context of ``low complexity'' priors (shrinkage and sparsity). By controlling complexity we can reduce overfitting and achieve an optimal bias-variance tradeoff.
+\vspace{0.1cm}
+\begin{itemize}
+\setlength{\itemsep}{1.0em}
+    \item \textbf{Explicit regularization} methods define an explicit measure of model complexity and add this as penalty to empirical risk (e.g., $L1/L2$)
+    \item \textbf{Implicit regularization} includes removing outliers, early stopping, data augmentation, parameter sharing, dropout or ensembling
+    \item \textbf{Structured regularization} methods incorporate structural prior knowledge over groups of parameters or subnetworks (e.g., the group lasso \citebutton{Yuan and Lin, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00532.x})
+\end{itemize}
+
+\end{vbframe}
 
 
 \begin{vbframe}{Example: Overfitting}

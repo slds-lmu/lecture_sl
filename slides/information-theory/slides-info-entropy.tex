@@ -80,14 +80,14 @@ For a discrete random variable $X$ with domain $\Xspace \ni x$ and pmf $p(x)$:
   H(X) = - \E[\log_2(p(X))]           &= -\sum_{x \in \Xspace} p(x) \log_2 p(x) 
 \end{aligned} 
 \end{equation*}
-
 \begin{itemize}
 \setlength\itemsep{1.2em} 
 \item \textbf{Definition:}
 Base $2$ means the information is measured in bits, but you can use any number $>1$ as base of the logarithm.
 \item \textbf{Note:} If $p(x) = 0$, then $p(x) \log_2 p(x)$ is taken to be zero, because $\lim _{p \rightarrow 0} p \log_2 p=0$. %for $x=0$.
 \item NB: $H$ is actually Greek capital letter \textbf{E}ta ($\eta$) for \textbf{e}ntropy
-\item The negative log probabilities $\log_2 p(x)$ are called "Surprisal".
+\item The negative log probabilities $-\log_2 p(x)$ are called "Surprisal".
+\item More surprising means less likely. Distributions are more surprising, i.e., have higher entropy, when events are equally likely.
 \end{itemize}
 
 
