@@ -37,9 +37,28 @@ $$%\argmin_{\thetab}
 =\sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2
 $$
 }
-\normalsize{Thus the least-squares solution $\thetah$ using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$ is $\thetah_{\text{Ridge}}$.}
+\normalsize{$\Longrightarrow$ $\thetah_{\text{Ridge}}$ is the least-squares solution $\thetah$ using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!}
 %$$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
 \end{vbframe}
+
+\begin{vbframe}{Another perspective on $L2$}
+Now consider perturbed features $ \tilde{\xi}:= \xi + \bm{\delta}_i$ where $\bm{\delta}_i \overset{iid}{\sim} (\bm{0},\frac{\lambda}{n} \id_p)$. Note that no parametric family is assumed. We want to minimize the expected squared error taken w.r.t. the random perturbations:
+$$\riskt:= \mathbb{E}_{\bm{\delta}}[(y-\thetab^{\top}\tilde{\bm{x}})^2] = \mathbb{E}_{\bm{\delta}}[(y-\thetab^{\top}(\bm{x}+\bm{\delta}))^2]$$
+Expanding, we obtain
+$$\riskt = \mathbb{E}_{\bm{\delta}}[(y-\thetab^{\top}\bm{x})^2 - 2 \thetab^{\top}\bm{\delta}(y-\thetab^{\top}\bm{x}) + \thetab^{\top}\bm{\delta}\bm{\delta}^{\top}\thetab]$$
+
+By linearity of expectation, $\mathbb{E}_{\bm{\delta}}[\bm{\delta}]=\bm{0}$ and $\mathbb{E}[\bm{\delta}\bm{\delta}^{\top}]=\frac{\lambda}{n} \id_p$, we get
+$$\riskt=(y-\thetab^{\top}\bm{x})^2 - 2 \thetab^{\top}\mathbb{E}[\bm{\delta}](y-\thetab^{\top}\bm{x}) + \thetab^{\top}\mathbb{E}[\bm{\delta}\bm{\delta}^{\top}]\thetab = (y-\thetab^{\top}\bm{x})^2+\frac{\lambda}{n} \Vert \thetab \Vert_2^2$$
+
+Summed over $n$ samples this is exactly to Ridge regression with regularization strength $\lambda$.\\
+$\Longrightarrow$ Minimizing squared loss over noise distribution is Ridge regression on unperturbed features $\xi$!
+
+\end{vbframe}
+
+
+
+
+
 
 \endlecture
 \end{document}
