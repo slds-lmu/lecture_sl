@@ -31,7 +31,7 @@
     \item \textbf{Probabilistic model fitting}\\
 Assume our learner is probabilistic, i.e., we model $p(y| \mathbf{x})$ for example (for example, ridge regression, logistic regression, ...).
 
-\includegraphics[width=0.4\linewidth]{slides/information-theory/figure_man/kl_ml_prob_fit.png}
+\includegraphics[width=0.4\linewidth]{figure_man/kl_ml_prob_fit.png}
 
 We want to minimize the difference between $p(y \vert \mathbf{x})$ and the conditional data generating process $\mathbb{P}_{y\vert\mathbf{x}}$ based on the data stemming from $\mathbb{P}_{y, \mathbf{x}}.$
 
@@ -122,7 +122,7 @@ $$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow 
  \end{itemize}
  \framebreak
 
-\includegraphics[width=0.6\linewidth]{slides/information-theory/figure_man/kl_ml_fkl_rkl.png} \\
+\includegraphics[width=0.6\linewidth]{figure_man/kl_ml_fkl_rkl.png} \\
 The asymmetry of the KL has the following implications
 \begin{itemize}
     \item The forward KL $D_{KL}(p\|q_{\bm{\phi}}) = \E_{\xv \sim p} \log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right)$ is mass-covering since $p(\xv)\log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right) \approx 0$ if $p(\xv) \approx 0$ (as long as both distribution do not extremely differ)
