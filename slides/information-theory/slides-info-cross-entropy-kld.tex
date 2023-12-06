@@ -61,6 +61,31 @@ $$ H(p \| q) = \int p(x) \log\left(\frac{1}{q(x)}\right) dx = - \int p(x) \log\l
 \item Can now become negative, as the $h(p)$ can be negative! 
 \end{itemize}
 \end{vbframe}
+
+\begin{vbframe} {Cross-Entropy Example}
+
+Let $p(x)=N(0,1)$ and $q(x)=LP(0, 3)$. We can visualize 
+$$
+H(p \| q) = H(p) + D_{KL}(p \| q)
+$$
+\begin{center}
+    \includegraphics[width = 0.8\textwidth]{figure/cross_entropy_plot_1.png}
+\end{center}
+
+\end{vbframe}
+
+\begin{vbframe} {Cross-Entropy Example}
+
+Let $p(x)=LP(0, 3)$ and $q(x)=N(0,1)$. We can visualize 
+$$
+H(p \| q) = H(p) + D_{KL}(p \| q)
+$$
+
+\begin{center}
+	\includegraphics[width = 0.8\textwidth]{figure/cross_entropy_plot_2.png}
+\end{center}
+
+\end{vbframe}
  
 \begin{vbframe}{Proof: Maximum of Differential Entropy}
   \textbf{Claim}: For a given variance, the continuous distribution that maximizes differential entropy is the Gaussian.
