@@ -3,7 +3,7 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure_man/ridge_hat.png}
+\newcommand{\titlefigure}{figure_man/solution-path-ridge-only.png}
 \newcommand{\learninggoals}{
   \item Know the regularized linear model
   \item Know Ridge regression ($L2$ penalty)
@@ -77,8 +77,9 @@ NB: Relationship between $\lambda$ and $t$ will be explained later.
   
 \begin{columns}
 \begin{column}{0.5\textwidth}
+\lz
 \begin{figure}
-\includegraphics[width=\textwidth]{figure_man/ridge_hat.png}
+\includegraphics[width=\textwidth]{figure_man/solution-path-ridge-only.png}
 \end{figure}
 \end{column}
 
@@ -154,7 +155,7 @@ Optimization is much harder now. $\riskrt$ is still convex, but in general there
 For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can get closed-form solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
 $$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
 
-Comparing this to $\thetah_{\text{Ridge}}$ we see different behavior as $\lambda \uparrow$:
+Comparing this to $\thetah_{\text{Ridge}}$ we see qualitatively different behavior as $\lambda \uparrow$:
 $$\thetah_{\text{Ridge}}=\frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{no sparsity, uniform downscaling})$$
 
 
@@ -172,6 +173,18 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \vspace{-0.1cm}
 \begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
 \includegraphics[width=0.95\textwidth]{figure/lasso_contours_cases.png}\\
+\end{figure}
+
+\end{vbframe}
+
+\begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
+\begin{itemize}
+    \item Ridge regression results in a smooth solution path with non-sparse parameters
+    \item Lasso regression induces sparsity, but only for large enough $\lambda$
+\end{itemize}
+ \lz
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{figure_man/solution-path-ridge-lasso.png}\\
 \end{figure}
 
 \end{vbframe}
