@@ -163,7 +163,7 @@ from symbols in X to a set of codewords of binary strings.
 
 \framebreak
 \textbf{Cross-entropy} is the average length of communicating an event from one distribution with the optimal code for another distribution (assume they have the same domain $\Xspace$ as in KL).
-  $$ H_q(p) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) $$
+  $$ H(p \| q) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) $$
 
 \begin{figure}
     \centering
@@ -171,7 +171,7 @@ from symbols in X to a set of codewords of binary strings.
       \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
   \end{figure}
   
-We directly see: cross-entropy of $p$ with itself is entropy: $H_p(p) = H(p)$.
+We directly see: cross-entropy of $p$ with itself is entropy: $H(p \| p) = H(p)$.
   
 \framebreak
   \begin{figure}
@@ -181,9 +181,9 @@ We directly see: cross-entropy of $p$ with itself is entropy: $H_p(p) = H(p)$.
   \end{figure}
   
   \begin{itemize}
-    \item \small{In top, $H_q(p)$ is greater than $H(p)$ primarily because the blue event that is very likely under $p$ has a very long codeword in $q$.
+    \item \small{In top, $H(p \| q)$ is greater than $H(p)$ primarily because the blue event that is very likely under $p$ has a very long codeword in $q$.
     \item Same, in bottom, for pink when we go from $q$ to $p$.
-    \item Note that $H_q(p) \neq H_p(q)$}. 
+    \item Note that $H(p \| q) \neq H(q \| p)$}. 
   \end{itemize}
 
   \framebreak
