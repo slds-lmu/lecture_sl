@@ -21,23 +21,22 @@
 \begin{vbframe}{Soft-thresholding and L1 regularization}
 In the lecture, we wanted to solve
      \[
-      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|.
+      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|
       \]
-Note that we can separate the dimensions, i.e.,
+with $H_{j,j} \geq 0, \lambda > 0$. Note that we can separate the dimensions, i.e.,
 
-\[\mathcal{\tilde R}_{\text{reg}}(\thetab) = \sum_j g_j(\theta_j) \text{ with } g_j(\theta_j) = \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 + \lambda |\theta_j|.\]
+\[\mathcal{\tilde R}_{\text{reg}}(\thetab) = \sum_j z_j(\theta_j) \text{ with } z_j(\theta_j) = \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 + \lambda |\theta_j|.\]
       
-Hence, we can minimize each $g_j$ separately to find the global minimum. \\
+Hence, we can minimize each $z_j$ separately to find the global minimum. \\
 \lz
 
-Each $g_j$ is convex since it is a sum of convex functions. For convex functions, every stationary point is a minimum. \\
-\lz
-
+If $H_{j,j} = 0$, then $z_j$ is clearly minimized by $\hat{\theta}_{\text{Lasso},j} = 0.$ Otherwise, $z_j$ is strictly convex since $\frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2$ is strictly convex and the sum of a strictly convex function and a convex function is strictly convex. \\
 
 
 \framebreak
 
-Thus, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $g_j.$ \\
+For convex functions, every stationary point is a minimum.
+Thus, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $z_j$ for $H_{j,j} > 0.$ \\
 \lz 
 For this, we assume we already know the sign of the minimizer and then derive conditions for which our assumption holds. \\
 \lz 
@@ -45,7 +44,7 @@ So, first we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}
 \lz
 NB: 
 \begin{itemize}
-    \item For $\theta_j > 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\theta_j = 1$ and 
+    \item For $\theta_j > 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\theta_j = 1.$
     \item For $\theta_j < 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\left(-\theta_j\right) = -1$.
 \end{itemize}
 
@@ -59,7 +58,7 @@ NB:
 \hfill
 \begin{minipage}{0.49\textwidth}
 \begin{align*}
-    \frac{d}{d \theta_j}g_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
+    \frac{d}{d \theta_j}z_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
     &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
  -\frac{\lambda}{H_{j,j}} > 0 \\
  &\iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}
@@ -75,7 +74,7 @@ NB:
 \hfill
 \begin{minipage}{0.49\textwidth}
 \begin{align*}
-    \frac{d}{d \theta_j}g_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
+    \frac{d}{d \theta_j}z_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
     &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
  +\frac{\lambda}{H_{j,j}} < 0 \\
  &\iff \hat{\theta}_j < -\frac{\lambda}{H_{j,j}}
@@ -89,16 +88,15 @@ NB:
 \end{minipage}
 \hfill
 \begin{minipage}{0.49\textwidth}
-$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $g_j$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ \\
-However, at least one stationary point must exist since $g_j$ is a regularized convex function with $\lambda > 0.$\\
-$(\Rightarrow$ An equivalent constraint with $\vert\theta_j\vert \leq t \in\R_+$ must exist.)
+$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $z_j$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ 
+However, a unique stationary point must exist since $z_j$ is strictly convex for $H_{j,j} > 0$. This means, here, $z_j$ is strictly monotonically decreasing (increasing) for $\theta_j < 0 $ ($\theta_j > 0 $). \\
 \end{minipage}
  \\
 
 \begin{align*}\Rightarrow \hat{\theta}_{\text{Lasso},j} &= \begin{cases} 
-     \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \\
-       0 &, \text{if}   \;\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}] \\
-     \hat{\theta}_j - \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j > \frac{\lambda}{H_{j,j}} \\
+     \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \text{ and } H_{j,j} > 0\\
+       0 &, \text{if}   \;\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}] \text{ or } H_{j,j} = 0\\
+     \hat{\theta}_j - \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j > \frac{\lambda}{H_{j,j}} \text{ and } H_{j,j} > 0 \\
      \end{cases}
      \end{align*}
 
