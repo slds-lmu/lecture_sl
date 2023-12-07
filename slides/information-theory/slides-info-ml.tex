@@ -47,6 +47,16 @@ $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p}
   \end{itemize}
 \end{vbframe}
 
+\begin{vbframe}{KL vs Cross-Entropy Example}
+Let $p(x)=N(0,1)$ and $q(x)=LP(0,3)$ and consider again
+$$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab) = \argmin_{\thetab} H(p \| q_{\thetab}) $$
+
+\begin{center}
+	\includegraphics[width=1\textwidth]{figure/kl_ce_comparison.png}
+\end{center}
+
+\end{vbframe}
+
 \begin{vbframe}{Cross-Entropy vs. Log-Loss}
 
   \begin{itemize}
