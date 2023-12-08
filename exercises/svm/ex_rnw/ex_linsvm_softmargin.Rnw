@@ -39,7 +39,7 @@ points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 1.5)
     Add the decision boundary to the figure for $\hat\theta = (1, 1)^T, \hat\theta_0 = -2$. (NB: This is the approximate optimum for $C=10$)
 
   \item
-    Identify the coordinates of the support vector(s) and compute the values of their slack variables $\sli$.
+    Identify the coordinates of the points on the margin hyperplanes and compute the values of their slack variables $\sli$.
 
   \item
     Compute the Euclidean distance of the non-margin-violating support vector(s) (i.e. support vectors that are located on the margin hyperplanes) to the decision boundary.
