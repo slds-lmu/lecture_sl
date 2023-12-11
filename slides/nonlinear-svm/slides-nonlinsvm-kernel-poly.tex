@@ -40,9 +40,25 @@ $$ (\xv^T \xtil + b)^d = (x_1 \tilde{x}_1 + \ldots + x_p \tilde{x_p} + \sqrt{b} 
 The feature map contains all monomials up to order $d$.
   $$\phix = \left( \sqrt{\mat{d \\ k_1, \ldots, k_{p+1}}} x_1^{k_1} \ldots x_p^{k_p} b^{k_{p+1}/2} \right)_{k_i \geq 0, \sum_i k_i = d}$$
 The map $\phix$ has $\mat{p + d\\ d}$ dimensions. For $p=d=2$: 
-$$\phix = (x_1^2, x_2^2, \sqrt{2} x_1 x_2, \sqrt{2b} x_1, \sqrt{2b} x_2, \sqrt{b})$$
+$$\phix = (x_1^2, x_2^2, \sqrt{2} x_1 x_2, \sqrt{2b} x_1, \sqrt{2b} x_2, b)$$
 % From the sum-product rules it directly follows that this is a kernel.
+
+\framebreak
+  The relationship between the kernel and the feature map can be shown by unraveling the polynomial formula. For p=d=2:
+  
+  \begin{equation*}
+    \begin{aligned}
+        \left ( \xv^T \xtil + b  \right)^2 &=       \left (   (x_1 \ x_2) \cdot \mat{\xt_1 \\ \xt_2} + b  \right) \cdot      \left ( (x_1 \ x_2)  \cdot \mat{\xt_1 \\ \xt_2}  + b  \right) \\[10pt]
+        &= (x_1 \xt_1 + x_1 \xt_2 + x_2 \xt_1 + x_2 \xt_2 + b) \cdot \\
+         & \ \ \ \ \ \ (x_1 \xt_1 + x_1 \xt_2 + x_2 \xt_1 + x_2 \xt_2 + b) \\[10pt]
+        &= x_1^2 \xt_1^2 + x_2^2 \xt_2^2  +  2  x_1 \xt_1 x_2 \xt_2  + 2 b x_1 \xt_1 + 2 b x_2 \xt_2  + b^2 \\[10pt]
+        &= ( x_1^2 , x_2^2 , \sqrt{2} x_1 x_2 , \sqrt{2b} x_1 , \sqrt{2b} x_2 , b )^T \cdot \\
+        & \ \ \ \ \ \  ( \xt_1^2 , \xt_2^2 ,\sqrt{2} \xt_1 \xt_2 , \sqrt{2b} \xt_1 , \sqrt{2b} \xt_2 ,  b ) \\[10pt]
+        &= \phix^T \cdot \phixt
+    \end{aligned}
+  \end{equation*}
 \end{vbframe}
+
 
 
 \begin{vbframe}{Polynomial Kernel}
