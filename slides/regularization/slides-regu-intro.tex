@@ -33,6 +33,22 @@ Regularization comprises all methods that add preferences for specific solutions
 
 \end{vbframe}
 
+\begin{vbframe}{Invariance/Symmetry}
+Prior knowledge often requires that model predictions should be invariant under certain input transformations.\\
+In image classification, label ``cat'' should hold regardless of position or size of relevant object (translation/scale invariance)
+\begin{enumerate}\setlength\itemsep{1.02em}
+    \item \textbf{Pre-processing}: By computing invariant features under transformations, downstream models too will respect invariances
+    %\item \textbf{Explicit regularization}: Penalty for changes in model output under transformed inputs is added to loss
+    \item \textbf{Data augmentation}: Extend training data by replicating inputs under invariant transformations (e.g., flipping/rotating images)
+    \begin{figure}
+    \includegraphics[width=0.75\textwidth]{figure_man/data-augmentation-cat.png}\\
+    \end{figure}
+    \item \textbf{Network architecture}: Build invariance property directly into network structure, e.g. CNNs \citebutton{Geometric DL, Bronstein et al., 2021}{https://arxiv.org/pdf/2104.13478.pdf}
+\end{enumerate}
+
+
+\end{vbframe}
+
 
 \begin{vbframe}{Example: Overfitting}
 

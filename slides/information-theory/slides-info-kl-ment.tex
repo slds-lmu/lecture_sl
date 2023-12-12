@@ -31,13 +31,12 @@ $\Rightarrow$ Differential entropy is not an uncertainty measure and can not be 
 In the following, we derive an alternative measure, namely the KL divergence (relative entropy), that fixes these shortcomings by taking an inductive inference viewpoint.  \citebutton{Caticha, 2003}{https://arxiv.org/pdf/physics/0311093.pdf}
 \end{vbframe}
 \begin{vbframe}{Inductive inference}
-    Let's construct a "new" entropy measure $S(p)$ just by desired properties.\\
+    We construct a "new" entropy measure $S(p)$ just by desired properties.\\
     \lz
     Let $\mathcal{X}$ be a measurable space with $\sigma$-algebra $\mathcal{F}$ and measure $\mu$ that can be continuous or discrete. \\
     We start with a prior distribution $q$ over $\mathcal{X}$ dominated by $\mu$ and a constraint of the form $$\int_D a(\xv) dq(\xv) = c \in \R$$
-    with $D \in \mathcal{F}.$ Note that the constraint function $a(\xv)$ is analogous to moment condition functions $g(\cdot)$ in the discrete case.
+    with $D \in \mathcal{F}.$ The constraint function $a(\xv)$ is analogous to moment condition functions $g(\cdot)$ in the discrete case.
     We want to update the prior distribution $q$ to a posterior distribution $p$ that fulfills the constraint and is maximal w.r.t. $S(p).$  \\
-    \lz
     For this maximization to make sense, $S$ must be transitive, i.e., 
     $$S(p_1) < S(p_2), S(p_2) < S(p_3) \Rightarrow S(p_1) < S(p_3).$$
 \end{vbframe}
