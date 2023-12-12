@@ -34,13 +34,16 @@ As an example for $p=d=2$: $\phix = (x_1^2, x_2^2, \sqrt{2} x_1 x_2)$.
 \end{vbframe}
 
 \begin{vbframe}{NonHomogeneous Polynomial Kernel}
+\small
  $$k(\xv, \xtil) = (\xv^T \xtil + b)^d, \text{ for } b\geq 0, d \in \N$$
 The maths is very similar as before, we kind of add a further constant term in the original space, with
-$$ (\xv^T \xtil + b)^d = (x_1 \tilde{x}_1 + \ldots + x_p \tilde{x_p} + \sqrt{b} \sqrt{b})^d$$
+$$ (\xv^T \xtil + b)^d = (x_1 \tilde{x}_1 + \ldots + x_p \tilde{x_p} + b)^d$$
 The feature map contains all monomials up to order $d$.
   $$\phix = \left( \sqrt{\mat{d \\ k_1, \ldots, k_{p+1}}} x_1^{k_1} \ldots x_p^{k_p} b^{k_{p+1}/2} \right)_{k_i \geq 0, \sum_i k_i = d}$$
 The map $\phix$ has $\mat{p + d\\ d}$ dimensions. For $p=d=2$: 
-$$\phix = (x_1^2, x_2^2, \sqrt{2} x_1 x_2, \sqrt{2b} x_1, \sqrt{2b} x_2, \sqrt{b})$$
+$$(x_1 \tilde{x}_1 + x_2 \tilde{x}_2 + b)^2 = x_1^2\tilde{x}_1^2 + x_2^2 \tilde{x}_2^2 + 2 x_1 x_2 \tilde{x}_1 \tilde{x}_2 + 2b x_1 \tilde{x}_1 + 2b x_2 \tilde{x}_2 + b^2$$
+Therefore, 
+$$\phix = (x_1^2, x_2^2, \sqrt{2} x_1 x_2, \sqrt{2b} x_1, \sqrt{2b} x_2, b)$$
 % From the sum-product rules it directly follows that this is a kernel.
 \end{vbframe}
 
