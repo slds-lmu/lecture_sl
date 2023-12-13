@@ -129,15 +129,22 @@ from symbols in X to a set of codewords of binary strings.
     \centering
       \scalebox{0.85}{\includegraphics{figure_man/length_var.png}}
   \end{figure}
-  \item \small{Here, the expected code length is :
+  \item \normalsize{Here, the expected code length is :
+  \lz
   \begin{equation*}
-  \scriptsize
+  \normalsize
     \begin{split}
     \E[L(X)] & = \frac{1}{2} \cdot 1 + \frac{1}{4} \cdot 2 + \frac{1}{8} \cdot 3 + \frac{1}{8} \cdot 3 \\
      & = - \frac{1}{2} \cdot \log_2\left(\frac{1}{2}\right) - \frac{1}{4} \cdot \log_2\left(\frac{1}{4}\right) - \frac{1}{8} \cdot \log_2\left(\frac{1}{8}\right) - \frac{1}{8} \cdot \log_2\left(\frac{1}{8}\right) \\ & =  H(X) = \textcolor{red}{1.75} \text{ bits. (< 2 bits)}
     \end{split}
   \end{equation*}
-  \item Actually, this coding scheme is the most efficient way to store and transmit these messages. It is simply not possible to do better!}
+  }
+  \end{itemize}
+
+  \framebreak 
+  
+  \begin{itemize}\setlength\itemsep{1.2em}
+  \item Actually, this coding scheme is the most efficient way to store and transmit these messages. It is simply not possible to do better!
     \item In fact, Shannon's \textbf{source coding theorem} (or \textbf{noiseless coding theorem}) tells us that the optimal trade-off is made when the code length of a symbol with probability $p$ is $\log(1/p)$.
     \item In other words, the entropy of the source distribution is the theoretical lower bound on the average code length.
     \item If it is any lower, some information will be distorted or lost.
@@ -146,64 +153,7 @@ from symbols in X to a set of codewords of binary strings.
   
 \end{vbframe}
 
-\begin{vbframe} {Source coding and (cross-)entropy}
-
-\begin{itemize}
-  \item For a random source / distribution $p$, the minimal number of bits to optimally encode messages from is the entropy $H(p)$.
-  \item If the optimal code for a different distribution $q(x)$ is instead used to encode messages from $p(x)$, expected code length will grow.
-%  (Note: Both distributions are assumed to have the same support.)
-\end{itemize}
-  \vspace{-0.3cm}
-  \begin{figure}
-    \centering
-      \scalebox{0.5}{\includegraphics{figure_man/shift.png}}
-      \scalebox{1}{\includegraphics{figure_man/xent_pq.png}}
-      \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
-  \end{figure}
-
-\framebreak
-\textbf{Cross-entropy} is the average length of communicating an event from one distribution with the optimal code for another distribution (assume they have the same domain $\Xspace$ as in KL).
-  $$ H(p \| q) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) $$
-
-\begin{figure}
-    \centering
-      \scalebox{1}{\includegraphics{figure_man/xent_pq.png}}
-      \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
-  \end{figure}
-  
-We directly see: cross-entropy of $p$ with itself is entropy: $H(p \| p) = H(p)$.
-  
-\framebreak
-  \begin{figure}
-    \centering
-      \scalebox{0.8}{\includegraphics{figure_man/crossent.png}}
-      \tiny{\\ Credit: Chris Olah}
-  \end{figure}
-  
-  \begin{itemize}
-    \item \small{In top, $H(p \| q)$ is greater than $H(p)$ primarily because the blue event that is very likely under $p$ has a very long codeword in $q$.
-    \item Same, in bottom, for pink when we go from $q$ to $p$.
-    \item Note that $H(p \| q) \neq H(q \| p)$}. 
-  \end{itemize}
-
-  \framebreak
-
-  \begin{figure}
-    \centering
-      \scalebox{1}{\includegraphics{figure_man/xent_pq.png}}
-      \caption{\footnotesize{$L_p(x)$, $L_q(x)$ are the optimal code lengths for $p(x)$ and $q(x)$}}
-  \end{figure}
-  
-  \begin{itemize}
-   \item Let $x^\prime$ denote the symbol "dog". The difference in code lengths is:
-  $$ \log \left ( \frac{1}{q(x^\prime)} \right ) - \log \left( \frac{1}{p(x^\prime)} \right) = \log \frac{p(x^\prime)}{q(x^\prime)} $$
-  
-\item If $p(x^\prime) > q(x^\prime)$, this is positive, if $p(x^\prime) < q(x^\prime)$, it is negative. 
-    \item The expected difference is KL, if we encode symbols from $p$:
-  $$ D_{KL}(p \| q) = \sum_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)} $$
-  \end{itemize}
-
-\end{vbframe}
+%%%%%%% CUT HERE SECOND SOURCE CODING CHUNK
 
 
 \endlecture

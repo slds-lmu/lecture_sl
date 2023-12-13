@@ -1,0 +1,52 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure/correlation_plot.png}
+\newcommand{\learninggoals}{
+  \item Understand why MI is invariant under certain reparametrizations
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Mutual Information under Reparametrization (Deep-Dive)}
+\lecture{Introduction to Machine Learning}
+
+
+\begin{vbframe} {Mutual information properties}
+\begin{itemize}
+    \item MI is invariant w.r.t. injective reparametrizations that are in $\mathcal{C}^1:$\\
+    \medskip
+    Let $f, g: \R^d\rightarrow\R^d \in \mathcal{C}^1$ be injective transformations and $X, Y$ be continuous random variables in $\mathbb{R}^d$ then by the change of variables the joint and marginal densities of  $\tilde{X} = f(X), \tilde{Y} = g(Y)$
+    \begin{align*}
+        \tilde{p}(\tilde{x}, \tilde{y}) &= p(f^{-1}(\tilde{x}), g^{-1}(\tilde{y}))\cdot\vert J_{f^{-1}}(\tilde{x})\vert\cdot\vert J_{g^{-1}}(\tilde{y})\vert, \\
+        \tilde{p}(\tilde{x}) &= p(f^{-1}(\tilde{x}))\cdot\vert J_{f^{-1}}(\tilde{x})\vert,\quad \tilde{p}(\tilde{y}) = p(g^{-1}(\tilde{y}))\cdot\vert J_{g^{-1}}(\tilde{y})\vert, 
+    \end{align*}
+    where $p(x, y)$ is the joint density of $X$ and $Y$ and $p(x), p(y)$ are the respective marginal densities. ($J$ denotes the Jacobian) \\
+    \medskip
+    With this, it follows that 
+    \begin{align*}
+      I(\tilde{X}; \tilde{Y}) &= \int \tilde{p}(\tilde{x}, \tilde{y}) \log\left(\frac{\tilde{p}(\tilde{x}, \tilde{y})}{\tilde{p}(\tilde{x})\tilde{p}(\tilde{y})}\right)d\tilde{x}d\tilde{y}  = *
+    \end{align*}
+\end{itemize}
+\end{vbframe}
+\begin{vbframe}{Mutual information properties}
+\begin{align*}
+* & = \int p(f^{-1}(\tilde{x}), g^{-1}(\tilde{y}))\cdot\vert J_{f^{-1}}(\tilde{x})\vert\cdot\vert J_{g^{-1}}(\tilde{y})\vert \\ &\quad\cdot \log\left(\frac{ p(f^{-1}(\tilde{x}), g^{-1}(\tilde{y}))\cdot\vert J_{f^{-1}}(\tilde{x})\vert\cdot\vert J_{g^{-1}}(\tilde{y})\vert }{p(f^{-1}(\tilde{x}))\vert J_{f^{-1}}(\tilde{x})\vert \cdot p(g^{-1}(\tilde{y}))\vert J_{g^{-1}}(\tilde{y})\vert}\right)d\tilde{x}d\tilde{y}
+\\&= \int p(f^{-1}(f(x)), g^{-1}(g(y)))\cdot\vert J_{f^{-1}}(f(x))\vert\cdot\vert J_{g^{-1}}(g(y))\vert \\ &\quad\cdot \log\left(\frac{p(f^{-1}(f(x)), g^{-1}(g(y)))}{p(f^{-1}(f(x)))p(g^{-1}(g(y)))}\right)\vert J_f(x)\vert\cdot\vert J_g(y)\vert dxdy \\
+    &=   \int p(x, y)\cdot\vert J_{f^{-1}}(f(x))J_f(x)\vert\cdot\vert J_{g^{-1}}(g(y))J_g(y)\vert  \log\left(\frac{p(x, y)}{p(x)p(y)}\right)dxdy \\
+        &=   \int p(x, y)\cdot \log\left(\frac{p(x, y)}{p(x)p(y)}\right)dxdy = I(X; Y).
+\end{align*}
+(The fourth equality holds by the inverse function theorem)
+\end{vbframe}
+
+
+\endlecture
+\end{document}
+
+
+
