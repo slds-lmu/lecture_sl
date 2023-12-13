@@ -4,6 +4,7 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-svm}
 
+
 \newcommand{\titlefigure}{figure/svm_geometry}
 \newcommand{\learninggoals}{
   \item Know how to derive the SVM dual problem
@@ -307,6 +308,27 @@ $$
 
 \end{vbframe}
 
+\begin{vbframe}{Dual Variable and Support Vectors}
+  \begin{itemize}
+      \item SVs are defined to be points with $\alphah_i > 0$. In the case of hard margin linear SVM, the SVs are on the edge of margin.
+      \item However, not all points on edge of margin are necessarily SVs.
+      \item In other words, it is possible that both $\alphah_i = 0$ and $\yi \left(\langle\thetab, \xi \rangle \right) - 1 = 0$ hold.
+  \end{itemize}
+
+  \begin{minipage}[t]{0.4\columnwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\columnwidth]{figure/linear_svm_support_vectors_1.png}
+    \end{figure}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.4\columnwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\columnwidth]{figure/linear_svm_support_vectors_2.png}
+    \end{figure}
+  \end{minipage}
+\end{vbframe}
 
 \endlecture
 \end{document}
