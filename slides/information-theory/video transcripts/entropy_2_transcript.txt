@@ -1,0 +1,225 @@
+Intro:
+
+Welcome to the second video in our chapter on information
+
+theory. Today, we will continue our discussion on entropy by
+
+introducing its additional properties and the concept of
+
+joint entropy. We will also talk about the uniqueness
+
+theorem and introduce the maximum entropy principle. Let's
+
+dive right in.
+
+
+Slide 1:
+
+We begin with an example: the mathematical calculation of
+
+the entropy formula for a Bernoulli random variable with two
+
+outcomes: success, one, and failure, zero. This can be
+
+likened to tossing a coin, that is not necessarily fair.
+
+With a success probability S and the complementary
+
+probability 1 - S, we apply the entropy formula to this
+
+probability mass function, resulting in two terms, a direct
+
+application of the definition. We can plot this against the
+
+success probability S. On the left graph, we have marked
+S=0.3, and on the
+
+right, the corresponding PMF with an entropy of 0.6.
+
+Note that with a deterministic coin, where the success
+
+probability is either zero or one, entropy is zero,
+
+indicating no uncertainty. The entropy is maximal for a fair
+
+coin with a success probability of 50%. For such a coin, we
+
+have the least information about the outcome of a toss. For
+
+other success rates, the further they are from the point of
+
+maximal uncertainty, the lower the entropy.
+
+
+Slide 2:
+
+Now, I want to introduce the concept of joint entropy for
+
+two or more discrete random variables. Written as H(X, Y)
+
+for two random variables, it involves a double sum over the
+
+joint probability mass function and the log of the joint
+
+probability mass function. Joint entropy measures the total
+
+uncertainty in both variables, X and Y, taken together, or
+
+the entropy of the joint distribution. This definition could
+
+be considered redundant since the entropy of H(X, Y) could
+
+be seen as the entropy of a single vector-valued random
+
+variable. However, it is worth specifying this important
+
+case.
+
+Of course, this can be extended to more than two random
+
+variables, resulting in multiple sums and the joint
+
+probability mass function.
+
+
+Slide 3:
+
+Now we can prove that entropy is additive under
+
+independence.
+
+Proof.
+
+
+Slide 4:
+
+There exists the uniqueness theorem by Khinchin from a bit
+
+more than 50 years ago, where he showed that only requiring
+
+a subset of these properties. We only require the following
+
+properties: H is indeed continuous in the probabilities,
+
+adding or removing an event with probability zero doesn't
+
+change H, it's additive for independent random variables,
+
+and it's maximal for a uniform distribution in the way that
+
+I discussed before, then we can directly show that for all
+
+functions H now that follow these properties, the
+
+function H must have exactly this structure. We require
+
+minus some positive constant times the sum over p of x times
+
+log p of x, and that is nearly the structural form of our
+
+entropy definition. The only thing that's not fixed here is
+
+the log. We can play around with the base. This is also
+
+why we have this constant here in front of the sum. I hope
+
+you still know that if I change the base of a log, that
+
+simply changes the value by multiplying with a constant, and
+
+this is exactly this constant here. So if we set
+
+this to one and then use the binary logarithm, that gives us
+
+exactly Shannon's definition of entropy.
+
+
+Slide 5:
+
+Now I want to continue with the maximum entropy principle.
+
+We assume we know M properties about a discrete distribution
+
+p(x) on curly X, which are called “moment conditions” for
+
+functions g_m(.) and scalars alpha_m(.).
+
+Then the expectation of these g_m(X) functions is equal to
+
+summing over all possible values of x in curly X for the
+
+product of our g_m(x) with p(x) functions, which is
+
+equivalent to our scalar value alpha_m for m=0,…,M.
+
+The maximum entropy principle states that among all feasible
+
+distributions that satisfy this constraint, we choose the
+
+one with maximum entropy. We can motivate that by ensuring
+
+no unwarranted assumptions on p(x) are made beyond what we
+
+know. The MEP follows a similar logic to Occam’s razor and
+
+principle insufficient reason.
+
+We have already seen an example for this with the trivial
+
+constraint that all our probabilities sum up to 1, for which
+
+we have obtained the uniform distribution as having the
+
+maximum entropy. This translates to g_0(x)=1 and alpha_0=1.
+
+The Maxent distribution given M constraints can be derived
+
+by using a Lagrangian with multipliers lambda_1,…,lambda_M.
+
+Finding the optimal lambda_m means that we find the
+
+constrained maxent distribution.
+
+
+Slide 6:
+
+Proof.
+
+
+Slide 7:
+
+Here we have an example for the MEP. We consider a discrete
+
+RV representing a six-sided die roll and the moment
+
+condition that our expectation is equal to 4.8. We ask
+
+ourselves what is the maxent distribution?
+
+This condition simply means that g_1(x)=x and alpha_1=4.8.
+
+Then for some lambda the solution is (again technical
+
+formula).
+
+We can insert this result into the moment condition and
+
+solve numerically for the optimal lambda as we show in this
+
+equation.
+
+Finally, we obtain the maxent distribution which you can see
+
+in this table below. Because our expectation is
+
+quite high with 4.8 we would expect to have a lot of the
+
+probability mass on the higher values.
+
+Last, if we have a fair die, meaning that our expectation
+
+which is equal to alpha_1 is 3.5, our optimal lambda has to
+
+be 0 to satisfy the equation, resulting in uniform
+
+probabilities.

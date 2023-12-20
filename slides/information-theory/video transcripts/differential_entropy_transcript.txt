@@ -1,0 +1,335 @@
+Intro:
+
+Hi, welcome to the next lecture unit where I will now
+
+generalize the concept of discrete entropy defined for the
+
+discrete random variables to the continuous case for continuous
+
+random variables and again derive a couple of properties and
+
+compare this to the discrete case. We will see that many of
+
+the things work in a very similar manner but not all.
+
+Differential entropy lacks a couple of the nice properties
+
+of discrete entropy. Let's discuss this
+
+now.
+
+
+Slide 1:
+
+First of all, we'll do a very analogous definition of
+
+entropy for the continuous case. Let's assume we have a
+
+continuous random variable X in front of us with a density
+
+function lowercase F and a support curly X. Now,
+
+define the entropy H as the negative expected value of our
+
+log density which is equivalent to the negative integral
+
+over the support or the univariate one-dimensional
+
+domain of F times the log of f. To differentiate a little
+
+bit between discrete entropy and continuous entropy, we'll
+
+use a lowercase h to denote differential entropy. This
+
+definition only depends on the density.
+
+I could also write H of F instead of H of X. The base of
+
+the log is arbitrary; we could use two as a default
+
+to measure in bits. But for this continuous case,
+
+and if we deal with Gaussians, natural logs
+
+make things a bit more convenient to measure in nats.
+
+I should also say that for many of these integral
+
+definitions, the integral does not necessarily exist.
+
+In a more precise manner, we define the entropy
+
+as the value of this integral, if it exists and converges.
+
+As I have foreshadowed, differential entropy lacks some of
+
+the properties of discrete entropy.
+
+We said before that non-negativity is
+
+reasonable for measures of uncertainty. Unfortunately,
+
+differential entropy can be negative because the product
+
+of the density with the log density is not ensured to
+
+to be negative. F can be larger than one because
+
+it's a density, so it's not a probability anymore, and in
+
+such cases, this expression can be positive.
+
+That might result in an entropy and
+
+a differential entropy value that's negative.
+
+For example, I have plotted a Beta(2, 5) density. We can
+
+again calculate the Surprisal by taking the negative log
+
+density. In the last picture, we have multiplied the
+
+Surprisal with the density function. If we integrate this
+
+function, we get the differential entropy, which is
+
+visualized by the dark grey area under the orange
+
+curve. And as we can see, the differential entropy is in
+
+fact negative with a value of -0. 48.
+
+
+Slide 2:
+
+We consider another simple example: the uniform random
+
+variable on the interval 0 to A. We plug in
+
+the definition of differential entropy; The
+
+integral goes from 0 to A over the support of
+
+the density. We have F times log of F. We can plug
+
+in the definition for the density of the uniform.
+
+This becomes a constant one divided by A.
+
+We can draw this outside of the integral because all of these
+
+terms don't depend on X anymore. Then, the integral from
+
+0 to A over a constant one function is going to be A.
+
+We have A times one divided by A, so that nicely cancels
+
+out, and the only thing that is left is the log of one
+
+divided by A. That's the same as minus log of A, and
+
+even the minus now cancels out with this minus sign.
+
+The only thing that's left is log A. We know that
+
+the differential entropy of such a uniform distribution is
+
+simply log of A. We can also observe from this is
+
+if our interval from zero to A becomes too small, especially
+
+if A becomes smaller than one, this is going to be negative.
+
+Below I have plotted two different uniform distributions. We
+
+can see that the differential entropy is 0. 41 for U(0, 1.
+
+5) and 0 for U(0, 1) by the the above formula.
+
+
+Slide 3:
+
+The next obvious case that's of interest is a one-dimensional
+
+normal distribution. We now assume that X is Gaussian,
+
+with a mean value of mu and a variance of Sigma squared.
+
+Proof.
+
+Below we have plotted two Gaussian distributions. You can
+
+see right away that the differential entropy is larger for
+
+the N(0, 1. 5) distribution in comparison to the standard
+
+normal. This makes sense, because the differential entropy
+is
+
+only dependent on sigma squared.
+
+
+Slide 4:
+
+So to summarize, H of X is not a function of MU; it's only a
+
+function of Sigma squared. You can either see this
+
+as a function of the variance or as a function of the
+
+standard deviation. We'll later mention the property of
+
+the differential entropy being translation invariant. If we
+
+just shift my densities around, uncertainty doesn't change.
+
+We can see this here concretely because of this
+
+non-dependence on mu for the differential entropy of the
+
+Gaussian. We can also easily see that as the variance
+
+increases for my Gaussian, differential entropy also
+
+increases. This monotonically increases either
+
+with the standard deviation or the variance.
+
+I can make the variance larger and larger,
+
+without any finite upper bound for the differential entropy.
+
+That's interesting because, in the discrete case,
+
+we have this finite upper bound that we could prove.
+
+Even for this Gaussian, we can arrive at negative entropies.
+
+We can also see this threshold nicely in the
+
+graph below. Then, we are applying the log to a value that's
+
+again smaller than one. So, it will become negative,
+
+if my distribution peaked around a central value.
+
+
+Slide 5:
+
+It makes sense to discuss how differential
+
+entropy compares to the discrete definition. It's
+
+defined similarly. One could characterize differential
+
+entropy as a generalization of the discrete case
+
+through a limiting process. However, this isn't as
+
+straightforward as it may seem. We could try
+
+quantizing a continuous random variable X into
+
+discrete intervals and define a new discrete variable
+
+X Delta. This variable would take the value of X
+
+inside these intervals. By calculating the discrete
+
+entropy of X Delta and observing what happens as
+
+the quantization gets finer (Delta approaches
+
+zero), we find that the limit doesn't neatly become
+
+the differential entropy. Instead, it approaches
+
+differential entropy with an addition of the log of
+
+Delta. As Delta becomes smaller, log Delta doesn't
+
+vanish, and this is why differential entropy can be
+
+negative. For an n-bit quantization, the entropy is
+
+approximately the differential entropy plus n,
+
+showing a constant difference when comparing the
+
+limit of discrete entropy with the differential
+
+counterpart, which highlights a mismatch between
+
+the two.
+
+
+Slide 6:
+
+Generalizing the one-dimensional case to
+
+multivariate is straightforward. We can talk about
+
+joint differential entropy for the continuous case,
+
+which looks identical to the one-variable formula.
+
+We take our random vector X with n components
+
+and integrate over the plane or space, depending
+
+on the dimensionality. This provides a concept for
+
+joint differential entropy for a set of continuous
+
+random variables. One notable result is the entropy
+
+of a multivariate normal distribution with a mean
+
+vector mu and covariance matrix Sigma. The
+
+formal proof of this is omitted, but the resulting
+
+formula is available. For those interested, the proof
+
+can be found in "Elements of Information Theory" by
+
+Cover and Thomas, or you could try the calculations
+
+yourself.
+
+
+Slide 7:
+
+Summarizing the properties of differential entropy,
+
+it can be negative. It's still additive for independent
+
+random variables, as in the discrete case.
+
+We need to set constraints to find distributions
+
+maximize differential entropy. In one dimension, we limit
+
+distributions with the same variance and, in
+
+multiple dimensions, the same covariance. Under
+
+these constraints, the normal distribution maximizes
+
+differential entropy, providing an upper bound for
+
+the entropy of any random variable.
+
+Differential entropy is translation invariant; adding a constant
+
+vector doesn't change it. There are also formulas for
+
+scaling a random variable by a constant or
+
+transforming a random vector with a matrix. These
+
+lemmas are useful for computations and, while not
+
+difficult to prove, will be skipped due to time
+
+constraints.

@@ -1,0 +1,149 @@
+Intro:  
+
+Welcome to the next lecture unit in the lecture
+
+chapter on information theory on cross-entropy and its
+
+connection to Kullback-Leibler divergence.   
+
+
+Slide 1:
+
+
+Cross-entropy measures the average amount of information
+
+required to represent an event from one distribution p,
+
+using a predictive scheme based on another distribution q,
+
+assuming that both have the same domain curly X as in KL.
+
+The formula of the cross entropy is then denoted by H(p||q)
+
+and is equivalent to summing over all possible values of x
+
+in curly X and multiplying p(x) with the log of 1 over q(x).
+
+We can then just write this as the sum over all x of p(x)
+
+times log(q(x)), which is equivalent to the negative
+
+expectation of log(q(x)) over p. We will discuss what this
+
+formula means in the later chapters of information theory,
+
+specifically when we talk about source coding. For now,
+
+let’s summarize some important facts:  Entropy measures the
+
+average amount of information if we optimally encode p.
+
+Cross-entropy is the average amount of information if we sub
+
+optimally encode p with q The KL divergence is simply the
+
+difference between the two. The cross-entropy is what we
+
+have just discussed and denoted similarly to the KL
+
+divergence.   
+
+
+Slide 2:  
+
+
+What I just explained here with this
+
+difference can also be nicely summarized through this
+
+identity: The cross-entropy between P and Q is the entropy
+
+of P plus the Kullback-Leibler divergence between P and Q.
+
+
+Proof.
+
+
+Slide 3:  
+
+
+We can now generalize the concept for continuous density
+
+functions to get the continuous cross-entropy between Q and
+
+P. This is a direct generalization of the formula we have
+
+seen before for the discrete case. We just use the integral
+
+instead of the sum.  Watch out; this integral doesn't
+
+necessarily have to exist for all cases. Again, this
+
+function is not symmetric. We can prove this formula here.
+
+We now just use differential entropy instead of discrete
+
+entropy. Watch out; cross-entropy for the continuous case
+
+can also become negative because this differential entropy
+
+can be negative. You can check it for the simple case where
+
+if you do cross-entropy between P and P, this would then be
+
+differential entropy. As we already know, differential
+
+entropy can be negative. That's already a case, or if you
+
+compare the continuous cross-entropy between two densities
+
+that are very peaked and which are also pretty close to each
+
+other but not necessarily the same.  
+
+
+Slide 4:  
+
+
+If we consider our example from the KL divergence again with a
+
+standard normal and a Laplace(0,3) distribution, we can
+
+visualize this property quite nicely. In the top right plot
+
+you can see the entropy of the standard normal as the area
+
+under the blue curve and the KL divergence between the two
+
+distributions as the area under the orange curve. We can now
+
+add the entropy and the KL divergence and see that this is
+
+equal to the cross entropy.  
+
+
+Slide 5:  
+
+
+If we switch p and q we can again see that the cross entropy
+
+is not symmetric.  
+
+
+Slide 6:
+  
+
+Because we now have continuous Kullback-Leibler and 
+
+continuous cross-entropy available to us, 
+
+we can now finally prove that for a given variance, the
+
+distribution that maximizes differential entropy is the
+
+Gaussian. I stated that even more broadly in the beginning
+
+for multivariate Gaussians.
+
+
+Proof.
