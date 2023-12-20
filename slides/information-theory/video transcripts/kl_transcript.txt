@@ -1,0 +1,548 @@
+Intro:
+
+
+
+Hi, welcome to the next lecture unit in
+
+
+information theory. We want to introduce Kullback-Leibler as
+
+
+a fundamental measure of difference or distance between
+
+
+distributions or densities. Later we'll connect that to
+
+
+topics like maximum likelihood, minimal risk, and cross-
+
+
+entropy.
+
+
+
+
+Slide 1:
+
+
+
+As I did before for entropy, I'm going to
+
+
+define mathematically how this new object is
+
+
+going to look like, and then later on, I'll try to motivate
+
+
+why this might make sense in that specific form
+
+
+that we have defined here. We want to establish something
+
+
+like a measure of distance between two either discrete or
+
+
+continuous distributions. I will assume that these two
+
+
+distributions have therefore the same support.
+
+
+I now define KL as the expectation of the log of P divided
+by Q,
+
+
+when I compute that expectation with respect to P.
+
+
+You can see that this is not symmetric.
+
+
+If this would be a true metric, then it should be symmetric.
+
+
+There are also other problems associated with KL. It doesn't
+
+
+respect the triangle inequality and other things.
+
+
+However, there are still valid reasons to use KL.
+
+
+After we have now written down this expectation, we can
+
+
+unwrap that for the discrete and for the continuous case and
+
+
+For example, as the sum of P times the log of
+
+
+P divided by Q, or here as this integral. There are some
+
+
+technical comments here; as before, for entropy,
+
+
+we have to be a bit careful if P or Q becomes zero.
+
+
+If we look at these continuity arguments and limits,
+
+
+everything at the end works out fine, also for these edge
+
+
+cases, if we are a little bit careful about this.
+
+
+
+
+Slide 2:
+
+
+
+What is the intuition behind this formula? I'll try to
+
+
+explain this in at least two different ways here, and then
+
+
+later on, I think it will become even clearer if we make
+
+
+this connection to maximum likelihood and risk minimization.
+
+
+There's also a nice interpretation in terms of source coding
+
+
+and used bits under optimal and not optimal coding. I will
+
+
+also explain this in another lecture unit. One thing to keep
+
+
+in mind is that because of this asymmetry of the formula, it
+
+
+often makes sense to think of P as the special
+
+
+density, the special distribution which is the distribution
+
+
+that, for example, our data could come from. Q, is then
+
+
+something like an approximating distribution. This is the
+
+
+reason why we take this expectation with respect to P,
+
+
+because this is where we are assuming that we are sampling
+
+
+from.
+
+
+
+
+Slide 3:
+
+
+
+Here we have an example of the KL divergence between a
+
+
+standard normal distribution and a Laplace(0, 1. 5)
+
+
+distribution. We can visualize this calculation again
+
+
+nicely as we did for the differential entropy. First we
+
+
+start with our two distributions. Then, we calculate the
+
+
+ratio of the two densities, shown in the top right plot.
+
+
+Then, we take the logarithm and lastly,
+
+
+multiply it with the density of our p distribution,
+
+
+in our case the standard normal. Integrating
+
+
+gives us the KL divergence which is 0. 21 in this case.
+
+
+
+
+Slide 4:
+
+
+
+We now switch p and q and repeat the calculation.
+
+
+From these plots, we can see that the KL divergence is not
+symmetric,
+
+
+because we integrate over a different function.
+
+
+Now, our KL divergence is 1. 07 whereas before it was to 0.
+21.
+
+
+
+
+Slide 5:
+
+
+
+On this next slide, I have visualized a standard normal
+
+
+distribution with respect to different Laplace distribution,
+
+
+where I have changed the values for sigma. We can tell from
+
+
+the plot that the KL divergence changes because
+
+
+it gets higher for really small values of sigma and larger
+
+
+for larger values of sigma. This implies something
+
+
+interesting, namely that there might exist a Laplace
+
+
+distribution that minimizes the KL divergence. This might
+
+
+also be an interesting notion in machine learning. But we
+
+
+will discuss this a bit later.
+
+
+
+
+Slide 6:
+
+
+
+Now I want to at prove one very fundamental property,
+
+
+so we have a bit of reason to believe that
+
+
+this KL divergence could act as a distance between
+densities.
+
+
+I want to prove that this is always non-negative and only
+then
+
+
+exactly zero if P and Q are the same.
+
+
+
+Proof.
+
+
+
+
+Slide 7:
+
+
+
+We can now start understanding KL a bit more by
+
+
+seeing it as a log difference between densities. Suppose,
+
+
+data is being generated from an unknown distribution P,
+
+
+and suppose we model P by using an approximating
+
+
+distribution Q. How do we measure that distance?
+
+
+If you would use KL, we can say that by rewriting
+
+
+log of P divided by Q to the expected log difference
+
+
+between the density P and the density Q. This,
+
+
+resembles something like a difference or a distance.
+
+
+We integrate out with respect to P,
+
+
+assuming that is something like a data distribution,
+
+
+Because we want to fit our data to that DGP.
+
+
+
+
+Slide 8:
+
+
+
+We can visualize this log difference by considering
+
+
+our previous example with a standard normal distribution and
+
+
+a Laplace distribution. What we can see is the
+
+
+difference between the low densities as shown in the top
+
+
+right plot. When we take the expectation of these two
+
+
+densities with respect to p and subtract them from another,
+
+
+we get the KL divergence. We can see that the areas on both
+
+
+bottom plots are identical.
+
+
+
+
+Slide 9:
+
+
+
+For applications in machine learning, the KL divergence is
+
+
+commonly used to quantify how different one distribution is
+
+
+from another. Therefore it can be used as loss function,
+
+
+since we want to approximate the real distribution p with
+
+
+the distribution of our data q. The idea is to minimize
+
+
+the KL divergence between the two distributions. If we
+
+
+consider our previous example from earlier with a standard
+
+
+normal distribution and Laplace distributions with different
+
+
+values for sigma, we can see that there must
+
+
+exist an ideal value of sigma that minimizes the KL between
+
+
+these two distributions. We will later derive this
+
+
+mathematically, but for now, this intuition is enough.
+
+
+
+
+Slide 10:
+
+
+
+If you're wondering whether this differs
+
+
+from maximum likelihood, the answer is no.
+
+
+It's essentially the same, as I'll
+
+
+demonstrate later. Consider an alternative
+
+
+interpretation of the KL divergence as a
+
+
+likelihood ratio. This approach isn’t much
+
+
+different computationally or formula-wise,
+
+
+but offers a unique perspective. Suppose
+
+
+we have two equal densities, P and Q, with
+
+
+no preference for either. Imagine having data,
+
+
+possibly a single data point, and
+
+
+determining whether P or Q better matches it.
+
+
+In statistics, we commonly compute the
+
+
+likelihood ratio. If this ratio exceeds 1,
+
+
+it indicates that P aligns more closely
+
+
+with the data than Q, and vice versa.
+
+
+This method applies to entire datasets too.
+
+
+By factoring the likelihood ratio terms
+
+
+across the dataset, we obtain a
+
+
+comprehensive likelihood ratio. Utilizing
+
+
+logarithms simplifies this process, turning
+
+
+the product into a sum without altering the
+
+
+relative accuracy of P and Q against the
+
+
+data.
+
+
+
+Now, assume the data originates from P.
+
+
+The question of whether P or Q fits better
+
+
+becomes redundant; P is naturally the
+
+
+better fit. However, a different question
+
+
+arises: how distinct is Q from P? To
+
+
+explore this, we consider sampling multiple
+
+
+data points from P and assessing how well
+
+
+P fares against Q using the average
+
+
+likelihood ratio.
+
+
+
+Mathematically, this involves calculating
+
+
+the log likelihood ratio of P divided by Q,
+
+
+and then averaging it over P. This
+
+
+calculation is essentially the KL
+
+
+divergence. In summary, the KL divergence
+
+
+quantifies the average evidence each sample
+
+
+provides to differentiate P from Q when
+
+
+sampling from P. It reflects the difficulty
+
+
+in discerning P and Q based on samples from
+
+
+P. The more alike P and Q are, the more
+
+
+challenging it becomes to distinguish them
+
+
+empirically. Conversely, distinct
+
+
+distributions yield clear evidence of their
+
+
+differences. In practice, we often aim to
+
+
+make Q indistinguishable from the actual P,
+
+
+where P represents the empirical data
+
+
+distribution and Q an approximation. As
+
+
+I've illustrated, this process aligns with
+
+
+maximum likelihood.
+

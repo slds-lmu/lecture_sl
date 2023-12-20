@@ -1,0 +1,585 @@
+Script: Entropy 1
+
+Intro:
+
+Hi, and welcome to the
+
+first lecture unit in our new
+
+chapter on information theory.
+
+
+Slide 1:
+
+Information theory is a field
+
+of study created by Claude
+
+Shannon in 1948. Since then, it
+
+has found incredibly diverse
+
+applications in areas like
+
+communication theory, computer
+
+science, optimization,
+
+cryptography, machine learning,
+
+and statistical inference.
+
+These are some of the reasons
+
+why it's important for us to
+
+understand its fundamental
+
+concepts. Information theory
+
+attempts to quantify information
+
+as a mathematical concept. It
+
+was primarily motivated by the
+
+need to develop a mathematical
+
+theory for efficiently storing
+
+and transmitting information in
+
+communication theory and
+
+cryptography. In essence,
+
+information theory quantifies
+
+the amount of information by
+
+specifying the information
+
+gained or the uncertainty
+
+reduced when a random variable
+
+is observed.
+
+
+Slide 2:
+
+In this lecture chapter, I will
+
+introduce the basic concepts
+
+from a purely probabilistic
+
+perspective. I won't focus much
+
+on aspects like communication
+
+channels or coding, though I
+
+will touch on this background in
+
+at least one dedicated lecture
+
+unit. My aim is to discuss the
+
+probabilistic side of things
+
+and its connection to machine
+
+learning and statistics.
+
+Understanding this context
+
+is useful for comprehending
+
+more complex concepts like
+
+cross-entropy.
+
+I plan to show some proofs in
+
+this and other subsequent
+
+lecture units to help us get
+
+familiar with the mathematical
+
+definitions. However, due to
+
+time constraints, I won't be
+
+able to cover every theory. For
+
+those interested in a deeper
+
+mathematical understanding, I
+
+highly recommend the book
+
+"Elements of Information
+
+Theory" by Calvin Thomas.
+
+Applying information theory to
+
+statistics and machine learning
+
+can be somewhat confusing for
+
+beginners. My goal is to
+
+introduce these concepts with as
+
+little external complexity as
+
+possible. In later units, I'll
+
+focus on making the connections
+
+between information theory,
+
+statistical inference, machine
+
+learning, and risk minimization
+
+clear, and I'll also prove some
+
+equivalences.
+
+Let's start discussing entropy,
+
+which is a measure of
+
+uncertainty in random variables
+
+and distributions. Entropy is
+
+often introduced as a measure of
+
+expected information or the bits
+
+required for efficient coding.
+
+While both perspectives are
+
+valuable, for our purposes in
+
+statistics and machine learning,
+
+viewing entropy as a measure of
+
+uncertainty, spread, or
+
+unpredictability is most
+
+helpful. In this lecture unit,
+
+I'll concentrate on discrete
+
+random variables, and in a later
+
+unit, I'll extend the concept
+
+to continuous random variables.
+
+
+Slide 3:
+
+Let's begin with a definition.
+
+For a discrete random variable X,
+
+with a specific domain and
+
+probability mass function,
+
+entropy is defined as the
+
+negative expectation of applying
+
+the probability mass function to
+
+X and then taking the logarithm
+
+of that. This can also be
+
+written out more expansively as
+
+a sum over all the values in the
+
+domain of X and then multiplying
+
+the probability of each event
+
+times the log of the function of
+
+X. Another way to express this
+
+is by using the logarithm of the
+
+inverse of the probability mass
+
+function. Both expressions are
+
+equivalent and sometimes one
+
+formulation is more intuitive
+
+than the other.
+
+It's important to note that
+
+entropy can be considered as a
+
+function of the probability mass
+
+function itself, which is why
+
+it's sometimes denoted
+
+differently in terms of
+
+notation.
+
+Below, we visualize an entropy
+
+calculation. We start with a
+
+probability mass function of a
+
+discrete distribution, then
+
+calculate the Surprisal, which
+
+is the negative log
+
+probabilities. Multiplying the
+
+Surprisal of each event by its
+
+probability and summing these
+
+gives us the entropy. In this
+
+example, the entropy is
+
+calculated as 1.5.
+
+
+Slide 4:
+
+The logarithm in the definition
+
+of entropy is often base two,
+
+meaning we measure information
+
+in bits. Alternatively, using
+
+Euler's number as the base means
+
+measuring information in nats.
+
+The choice of base depends on the
+
+specific context; if unspecified,
+
+my default is base two,
+
+especially in the discrete case.
+
+A common question is how to
+
+handle zero probability events.
+
+One approach is to only sum over
+
+events with non-zero probability.
+
+Alternatively, we define the
+
+product of the probability and
+
+its logarithm as zero when the
+
+probability is zero, allowing
+
+for a complete summation over
+
+the domain.
+
+Entropy, symbolized by the Greek
+
+letter Eta, intuitively reflects
+
+that more surprising events are
+
+less likely. The negative log
+
+probabilities as we have seen
+
+before are called Surprisal. The
+
+intuition here is that more
+
+surprising means less likely. If
+
+distributions are more
+
+surprising, meaning higher
+
+entropy, events tend to be
+
+equally likely.
+
+
+Slide 5:
+
+Let's dive deeper and examine some
+
+mathematical properties of the entropy
+
+function, denoted as 'H'. First and
+
+foremost, entropy is a non-negative
+
+function, which means it's always zero
+
+or positive. This is clear from its
+
+definition. When we look at the
+
+components of entropy, each part is
+
+non-negative because probabilities are
+
+between zero and one. If the probability
+
+of an event is zero, then the
+
+contribution to entropy from that event
+
+is also zero. On the other hand, when
+
+the probability is not zero, the terms
+
+in the entropy calculation will be
+
+positive. This is a sensible property
+
+because a negative measure of uncertainty
+
+would be counterintuitive. If an event is
+
+certain to occur (with a probability of
+
+one), the process is deterministic, not
+
+stochastic, leading to zero entropy. This
+
+is confirmed by the fact that when all
+
+probabilities for other events are zero,
+
+and one event has a probability of one,
+
+the overall entropy sum is zero.
+
+Moreover, it's apparent that for any
+
+event with zero probability, entropy
+
+remains unchanged. The entropy function
+
+is continuous with respect to the
+
+probabilities. So, if there are small
+
+changes in the probabilities within the
+
+probability mass function, the entropy,
+
+'H of X', changes in a continuous manner
+
+with those adjustments. This continuity
+
+is also a logical attribute for a measure
+
+like entropy. These properties should be
+
+self-evident as they follow directly
+
+from the entropy definition. As we move
+
+forward, we will explore some examples
+
+and derive additional properties.
+
+
+Slide 6:
+
+Entropy possesses a property called
+
+symmetry: if we rearrange the values in
+
+our probability mass function, entropy
+
+remains unaffected. This is because the
+
+summation process in calculating entropy
+
+is commutative, meaning the order of
+
+summation does not alter the result. It's
+
+a finite sum, so any reordering will not
+
+change the entropy value. For example, if
+
+we consider four categorical distributions
+
+and simply change the order of the outcomes,
+
+it's evident from the visualization that
+
+the entropy is identical for all four
+
+distributions.
+
+
+Slide 7:
+
+Now, let's consider a straightforward
+
+example involving a uniform discrete
+
+random variable with a certain number of
+
+possible outcomes—think of it as a fair
+
+die with multiple sides. What is the
+
+entropy in this case? By plugging into the
+
+entropy formula, where each event has an
+
+equal probability, the calculation
+
+simplifies to the logarithm of the number
+
+of outcomes. We can graph this to observe
+
+how entropy evolves as we increase the
+
+number of potential outcomes. The more
+
+sides the die has, the more difficult it
+
+becomes to predict the outcome. With just
+
+two outcomes, there's a 50/50 chance, but
+
+as the number of sides grows, the
+
+likelihood of correctly predicting the
+
+outcome decreases, and thus the
+
+uncertainty—or entropy—increases in a
+
+consistent manner. This is a plausible and
+
+intuitive understanding that further
+
+acquaints us with the concept of entropy.
+
+
+Slide 8:
+
+Here are four different categorical
+
+distributions. We observe that the entropy
+
+is zero when our distribution is sharply
+
+peaked, indicating no uncertainty. However,
+
+as we alter the distribution to become
+
+increasingly uniform, the entropy grows
+
+and eventually reaches its maximum for the
+
+uniform distribution. This suggests that
+
+uncertainty is greatest when all possible
+
+events are equally likely. While this
+
+concept seems intuitive, we will
+
+substantiate it with a proof in the
+
+subsequent slides.
+
+
+Slide 9:
+
+A fundamental characteristic of entropy is
+
+that it is maximized for a uniform
+
+distribution. If we have a set with a
+
+certain number of elements, we know that
+
+entropy is capped by the logarithm of the
+
+number of elements—a fact already
+
+demonstrated in the previous example for a
+
+uniform distribution. This seems quite
+
+rational: the highest level of uncertainty
+
+or entropy we encounter is with a uniform
+
+distribution. This also sets an upper limit
+
+for the entropy of any discrete random
+
+variable. This concept is not immediately
+
+obvious, so I will go through a proof of
+
+this in this lecture.
+
+Next, we intend to prove that the entropy
+
+for a discrete random variable is maximal
+
+for uniform distributions. I'm going to
+
+assume that my random variable has exactly
+
+G outcomes, some arbitrary values X1 to XG,
+
+and I have some arbitrary associated
+
+probabilities P1 to PG. Now I want to
+
+maximize this arbitrary entropy formula
+
+under the constraint that all of my
+
+probabilities sum to one.
+
+
+Slide 10:
+
+Proof.
