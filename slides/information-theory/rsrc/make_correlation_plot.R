@@ -4,6 +4,9 @@
 library(ggplot2)
 library(gridExtra)
 library(mvtnorm)
+library(infotheo)
+
+set.seed(123)
 
 # DATA -------------------------------------------------------------------------
 n <- 400
@@ -36,15 +39,34 @@ df6 <- data.frame(x = xy6[,1], y = xy6[,2])
 # PLOTS ------------------------------------------------------------------------
 
 make_plot <- function(df, xlimit = NULL) {
+  
+  df <- na.omit(df)
+  # Calculate Pearson correlation
+  corr <- cor(df$x, df$y, method = "pearson")
+  
+  # Discretize for mutual information calculation
+  df_discrete <- df
+  num_bins <- ceiling(sqrt(nrow(df_discrete)))  # Using the square root heuristic
+  df_discrete$x <- cut(df_discrete$x, breaks = num_bins, labels = FALSE)
+  df_discrete$y <- cut(df_discrete$y, breaks = num_bins, labels = FALSE)
+  mi <- mutinformation(df_discrete$x, df_discrete$y)
+  
+  # Create the plot
   p <- ggplot(df, aes(x = x, y = y)) +
     geom_point(shape = 1, size = 2, stroke = 1) +
     theme_bw() +
-    theme(axis.title = element_blank())
+    ggtitle(paste("Corr: ", round(corr, 2),
+                  ", MI: ", round(mi, 2))) +
+    theme(axis.title = element_blank(), plot.title = element_text(size = 10))
+  
+  # Set x limits if specified
   if (!is.null(xlimit)) {
     p <- p + xlim(xlimit[1], xlimit[2])
   }
+  
   p
 }
+
 
 p1 <- make_plot(df1)
 p2 <- make_plot(df2, xlimit = c(-1, 1))
