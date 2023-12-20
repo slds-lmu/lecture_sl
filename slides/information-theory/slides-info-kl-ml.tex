@@ -22,7 +22,11 @@
 \begin{vbframe} {Measuring Distribution Similarity in ML}
 \begin{itemize}
     \item Information theory provides tools (e.g., divergence measures) to quantify the similarity between probability distributions
-\includegraphics[width=0.4\linewidth]{figure_man/kl_ml_dist_sim.png}
+    
+    \begin{center}
+    \includegraphics[width=0.7\linewidth]{figure/normal_distributions.png}
+    \end{center}
+    
     \item The most prominent divergence measure is the KL divergence 
 \item In ML, measuring (and maximizing) the similarity between probability distributions is a ubiquitous concept, which will be shown in the following.
 \end{itemize}
@@ -31,7 +35,9 @@
     \item \textbf{Probabilistic model fitting}\\
 Assume our learner is probabilistic, i.e., we model $p(y| \mathbf{x})$ for example (for example, ridge regression, logistic regression, ...).
 
-\includegraphics[width=0.4\linewidth]{figure_man/kl_ml_prob_fit.png}
+\begin{center}
+\includegraphics[width=0.5\linewidth]{figure/ftrue.pdf}
+\end{center}
 
 We want to minimize the difference between $p(y \vert \mathbf{x})$ and the conditional data generating process $\mathbb{P}_{y\vert\mathbf{x}}$ based on the data stemming from $\mathbb{P}_{y, \mathbf{x}}.$
 
@@ -47,7 +53,9 @@ Many losses can be derived this way. (e.g. cross-entropy loss)
     \item \textbf{Feature selection}
 In feature selection, we want to choose features the target strongly depends on. 
 
-\includegraphics[width=0.6\linewidth]{figure_man/kl_ml_mi.png}
+\begin{center}
+\includegraphics[width=0.9\linewidth]{figure/gaussian_mixture_with_marginals.png}
+\end{center}
 
 We can measure dependency by measuring the similarity between $p(\mathbf{x}, y)$ and $p(\mathbf{x})\cdot p(y).$ \\
 We will later see that measuring this similarity with KL  leads to the concept of mutual information.
@@ -60,7 +68,9 @@ We will later see that measuring this similarity with KL  leads to the concept o
     \item \textbf{Variational inference (VI)}
 Our data can also induce probability distributions: By Bayes' theorem it holds that the posterior density $$p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})}{\int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}}.$$ However, computing this density analytically is usually intractable.
 
-\includegraphics[width=0.99\linewidth]{figure_man/kl_ml_vi.png}
+\begin{center}
+\includegraphics[width=0.99\linewidth]{figure/gaussian_mixture_scatter.png}
+\end{center}
 
 In VI, we want to fit a density $q_{\bm{\phi}}$ with parameters $\bm{\phi}$ to 
     $p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}).$
@@ -122,8 +132,11 @@ $$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow 
      $\Rightarrow$ We can estimate the gradient of the reverse KL without bias (even if we only have an unnormalized target distribution)
  \end{itemize}
  \framebreak
+ 
+\begin{center}
+\includegraphics[width=0.7\linewidth]{figure/kl_fitting_plot.png}
+\end{center}
 
-\includegraphics[width=0.6\linewidth]{figure_man/kl_ml_fkl_rkl.png} \\
 The asymmetry of the KL has the following implications
 \begin{itemize}
     \item The forward KL $D_{KL}(p\|q_{\bm{\phi}}) = \E_{\xv \sim p} \log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right)$ is mass-covering since $p(\xv)\log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right) \approx 0$ if $p(\xv) \approx 0$ (as long as both distribution do not extremely differ)
