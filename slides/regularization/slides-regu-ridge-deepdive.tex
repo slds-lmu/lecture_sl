@@ -67,6 +67,53 @@ By linearity of expectation, $\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}]=\bm{0}
 $\Longrightarrow$ Ridge regression on unperturbed features {\small $\xi$} turns out to be minimizing squared loss averaged over feature noise distribution!
 \end{vbframe}
 
+\begin{vbframe}{Bias-Variance Decomposition for Ridge}
+For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with $\Xmat \in \mathbb{R}^{n \times p},\,\bm{\varepsilon} \sim (\bm{0},\sigma^2 \bm{I}_n)$, bias of ridge estimator $\thetah_{\text{Ridge}}$ is given by 
+\begin{equation*}
+    \begin{aligned}
+        \text{Bias}(\thetah_{\text{Ridge}}) := \mathbb{E}[\thetah_{\text{Ridge}}-\bm{\theta}] &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}] - \bm{\theta}\\
+        &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}(\bm{X}\bm{\theta}+\bm{\varepsilon})] - \bm{\theta} \\
+        &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} \bm{\theta} + (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \underbrace{\mathbb{E}[\bm{\varepsilon}]}_{=0} - \bm{\theta} \\
+        &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} \bm{\theta} - \bm{\theta} \\
+        &= \left[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} - (\bm{X}^{\top} \bm{X})^{-1} \right] \bm{X}^{\top} \bm{X} \bm{\theta}
+        \end{aligned}
+    \end{equation*}
+
+\begin{itemize}
+    \item Last expression shows bias of Ridge estimator only vanishes for $\lambda=0$, which is simply (unbiased) OLS solution
+    \item It follows $\Vert \text{Bias}(\thetah_{\text{Ridge}})\Vert_2^2>0$ for all $\lambda>0$, later important
+\end{itemize}
+
+    For the variance of $\thetah_{\text{Ridge}}$, we have
+    \begin{equation*}
+        \begin{aligned}
+            \text{Var}(\thetah_{\text{Ridge}})  &= \text{Var}\left((\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}\right) \quad \quad \big| \;\; \text{apply} \;\; \text{Var}_u(\bm{A}\bm{u}) = \bm{A} \text{Var}(\bm{u}) \bm{A}^{\top} \\
+            &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \text{Var}(\bm{y}) \left( (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \right)^{\top} \\
+            &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \text{Var}(\bm{\varepsilon}) \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
+            &=  (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \sigma^2 \bm{I}_n \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
+            &= \sigma^2 (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
+        \end{aligned}
+    \end{equation*}
+
+\begin{itemize}
+    \item $\text{Var}(\thetah_{\text{Ridge}})$ is strictly smaller than $\text{Var}(\thetah_{\text{OLS}})=\sigma^2 (\Xmat^{\top}\Xmat)^{-1}$ for any $\lambda>0$, meaning matrix of their difference $\text{Var}(\thetah_{\text{OLS}})-\text{Var}(\thetah_{\text{Ridge}})$ is positive definite (bit tedious derivation)
+    \item This further means $\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{Ridge}})}\big)>0 \, \forall \lambda>0$
+\end{itemize}
+
+\framebreak
+
+With bias and variance of the ridge estimator we can decompose its mean squared error as follows:
+
+$$\text{MSE}(\thetah_{\text{Ridge}})=\Vert \text{Bias}(\thetah_{\text{Ridge}})\Vert_2^2 + \text{trace}\big(\text{Var}(\thetah_{\text{Ridge}})\big)$$
+
+Comparing MSEs of $\thetah_{\text{Ridge}}$ and $\thetah_{\text{OLS}}$ and using $\text{Bias}(\thetah_{\text{OLS}})=0$ we find 
+$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{Ridge}}) = \underbrace{\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{Ridge}})}\big)}_{>0} - \underbrace{\Vert \text{Bias}(\thetah_{\text{Ridge}})\Vert_2^2}_{>0}$$
+
+Since both terms are positive, their difference is \textit{a priori} undetermined. \citebutton{Theobald, 1973}{https://www.jstor.org/stable/2984775} and \citebutton{Farebrother, 1976}{https://www.jstor.org/stable/2984971} prove there always exists some $\lambda^{\ast}>0$ so that
+$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{Ridge}})>0$$
+Important theoretical result: While Gauss-Markov guarantuees $\thetah_{\text{OLS}}$ is best linear unbiased estimator (BLUE) there are biased estimators with lower MSE.
+
+\end{vbframe}
 
 
 

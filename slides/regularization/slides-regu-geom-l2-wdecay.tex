@@ -88,8 +88,6 @@ where $\bm{H}$ is the Hessian matrix of $\risket$ evaluated at $\thetah$.
 
 The minimum of $\mathcal{\tilde R}_{\text{emp}}(\thetab)$ occurs where $\nabla_{\thetab}\mathcal{\tilde R}_{\text{emp}}(\thetab) = \bm{H}(\thetab - \thetah)$ is $0$.
 
-\lz
-
 Now we $L2$-regularize $\mathcal{\tilde R}_{\text{emp}}(\thetab)$, such that 
 \[
 \mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{\tilde R}_{\text{emp}}(\thetab) + \frac{\lambda}{2} \|\thetab\|^2_2\]
@@ -104,6 +102,9 @@ and solve this approximation of $\riskr$ for the minimizer $\hat{\thetab}_{\text
 
 % where $\id$ is the identity matrix.
 This gives us a formula to see how the minimizer of the $L2$-regularized version is a transformation of the minimizer of the unpenalized version.
+\vspace{0.2cm}
+
+\textbf{Caveat}: Equivalence of weight decay and $L2$ regularization only holds for vanilla SGD (not e.g. Adam)
 
 
 \framebreak

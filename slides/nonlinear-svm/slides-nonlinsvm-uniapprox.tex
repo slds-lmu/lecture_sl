@@ -115,6 +115,83 @@
 
 \end{vbframe}
 
+\begin{vbframe}{SVM -- Pro's \& Con's}
+
+\begin{columns}[T, totalwidth=\textwidth]
+  \begin{column}{0.5\textwidth}
+    \textbf{Advantages}
+    \normalsize
+    \begin{itemize}
+      % \item High \textbf{accuracy}
+      \item Often \textbf{sparse} solution (w.r.t. observations)
+      \item Robust against overfitting (\textbf{regularized}); especially in 
+      high-dimensional space
+      \item \textbf{Stable} solutions (w.r.t. changes in train data)\\
+      $\rightarrow$ Non-SV do not affect decision boundary
+      \item Convex optimization problem \\
+      $\rightarrow$ local minimum $\hat{=}$ global minimum
+      %\item \textbf{memory efficient} (only use non-SVs)
+    \end{itemize}
+    
+    % \textbf{Advantages (nonlinear SVM)}
+    % \begin{itemize}
+    %    \item Can learn \textbf{nonlinear decision boundaries}
+    %    \item \textbf{Very flexible} due to custom kernels \\
+    %    $\rightarrow$ RBF kernel yields local model \\
+    %    $\rightarrow$ kernel for time series, strings etc.
+    % \end{itemize}
+  \end{column}
+
+  \begin{column}{0.5\textwidth}
+    \textbf{Disadvantages}
+    \normalsize
+    \begin{itemize}
+      \item \textbf{Long} training times $\rightarrow O(n^2 p + n^3)$
+      %\item \textbf{Limited scalability} to larger data sets 
+      %\textcolor{blue}{\textbf{??}}
+      \item Confined to \textbf{linear model}
+      \item Restricted to \textbf{continuous features}
+      \item Optimization can also fail or get stuck
+      % \item Poor \textbf{interpretability}
+      %\item No handling of \textbf{missing} data
+    \end{itemize}
+
+    %     \textbf{Disadvantages (nonlinear SVM)}
+    % \begin{itemize}
+    %    \item Poor \textbf{interpretability} due to complex kernel
+    %    \item \textbf{Not easy tunable} as it is highly important to choose the right kernel (which also introduces further hyperparameters)
+    % \end{itemize}
+  \end{column}
+\end{columns}
+
+\framebreak
+\lz 
+
+\begin{columns}[t, totalwidth=\textwidth]
+  \begin{column}{0.5\textwidth}    
+    \textbf{Advantages (nonlinear SVM)}
+    \begin{itemize}
+       \item Can learn \textbf{nonlin. decision boundaries}
+       \item \textbf{Very flexible} due to custom kernels \\
+       $\rightarrow$ RBF kernel yields local model \\
+       $\rightarrow$ kernel for time series, strings etc.
+    \end{itemize}
+  \end{column}
+
+  \begin{column}{0.5\textwidth}
+    \textbf{Disadvantages (nonlin. SVM)}
+    \begin{itemize}
+       \item Poor \textbf{interpretability} due to complex kernel
+       \item \textbf{Not easy tunable} as it is highly important to choose the right kernel (which also introduces further hyperparameters)
+    \end{itemize}
+  \end{column}
+\end{columns}
+
+% \conclbox{Very accurate solution for high-dimensional data that is linearly 
+% separable}
+
+\end{vbframe}
+
 
 
 \section{Kernels on Infinite-Dimensional Vector Spaces}

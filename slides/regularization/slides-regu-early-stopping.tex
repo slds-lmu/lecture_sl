@@ -7,6 +7,7 @@
 \newcommand{\learninggoals}{
   \item Know how early stopping works 
   \item Understand how early stopping acts as a regularizer
+  \item Know early stopping imitates $L2$ regularization in some cases
 }
 
 \title{Introduction to Machine Learning}
@@ -39,7 +40,9 @@
     \item Use parameters of the previous step for the actual model.
   \end{enumerate}
   More sophisticated forms also apply cross-validation.
-\framebreak
+\end{vbframe}
+
+\begin{vbframe}{Early Stopping and $L2$ \citebutton{Goodfellow et al., 2016, p. 249 ff.}{https://www.deeplearningbook.org/contents/regularization.html}}
   \begin{table}
     \begin{tabular}{p{4cm}|p{6cm}}
     Strengths & Weaknesses \\
@@ -49,18 +52,20 @@
     \hline
     Applicable to almost any model without adjustment \note{of objective function, parameter space, training procedure} & Temporary copy of $\thetab$ (we have to save the whole model each time validation error improves) \\
     \hline
-    Combinable with other regularization methods & Less data for training $\rightarrow$ include $\mathcal{D}_{\text{val}}$ afterwards
+    Combinable with other regularization methods & Less data for training $\rightarrow$ include $\mathcal{D}_{\text{val}}$ afterwards\\ \hline\hline
     \end{tabular}
   \end{table}
   \begin{itemize}
-    \item Relation between optimal early-stopping iteration $T_{\text{stop}}$ and weight-decay penalization parameter $\lambda$ for step-size $\alpha$ (see Goodfellow et al. (2016) page 251-252 for proof):
-  \end{itemize}
-    \begin{equation*}
-      T_{\text{stop}} \approx \frac{1}{\alpha \lambda} 
-        \Leftrightarrow \lambda \approx \frac{1}{T_{\text{stop}} \alpha}
-    \end{equation*}
+    \item For simple case of LM with squared loss and GD optim initialized at $\thetab=0$: Early stopping has exact correspondence with $L2$ regularization/WD: %Relation between
+    optimal early-stopping iter $T_{\text{stop}}$ inversely proportional to  $\lambda$ scaled by step-size $\alpha$
+    
+ \end{itemize}
+\begin{equation*}
+T_{\text{stop}} \approx \frac{1}{\alpha \lambda} 
+\Leftrightarrow \lambda \approx \frac{1}{T_{\text{stop}} \alpha}
+\end{equation*}
   \begin{itemize}
-    \item Small $\lambda$ (low penalization) $\Rightarrow$ high $T_{\text{stop}}$ (complex model / lots of updates).
+    \item Small $\lambda$ ( regu. $\downarrow$) $\Rightarrow$ large $T_{\text{stop}}$ (complexity $\uparrow$) and vice versa
   \end{itemize}
 \framebreak
   % \begin{itemize}
@@ -75,14 +80,26 @@
   \begin{figure}
     \centering
       \scalebox{0.75}{\includegraphics{figure_man/earlystop_int_hat.png}}
-      \tiny{\\ Credit: Goodfellow et al. (2016)\\}
+      \tiny{\\Goodfellow et al. (2016)\\}
   \end{figure}
   
 \footnotesize 
-\textbf{Figure:} An illustration of the effect of early stopping. \textit{Left:} The solid contour lines indicate the contours of the negative log-likelihood. The dashed line indicates the trajectory taken by SGD beginning from the origin. Rather than stopping at the point $\thetah$ that minimizes the risk, early stopping results in the trajectory stopping at an earlier point $\hat{\thetab}_{\text{Ridge}}$. \textit{Right:} An illustration of the effect of $L2$ regularization for comparison. The dashed circles indicate the contours of the $L2$ penalty which causes the minimum of the total cost to lie closer to the origin than the minimum of the unregularized cost.
+\textbf{Figure:} Effect of early stopping. \textit{Left:} The solid lines indicate contours of the square loss objective. Dashed line indicates trajectory taken by GD initialized at origin. Instead of reaching minimizer $\thetah$, ES results in trajectory stopping earlier at $\hat{\thetab}_{\text{Ridge}}$. \textit{Right:} Effect of $L2$ regularization. Dashed circles indicate contours of $L2$ constraint which push minimizer of regularized cost closer to origin than minimizer of unregularized cost.
 \end{vbframe}
 
+\begin{vbframe}{SGD Trajectory and $L2$ \citebutton{Ali et al., 2020}{https://proceedings.mlr.press/v119/ali20a/ali20a.pdf}}
+Solution paths for $L2$ regularized linear model closely matches SGD trajectory of unregularized LM initialized at $\thetab=0$
+\lz
+  \begin{figure}
+    \centering
+      %\scalebox{0.75}
+      {\includegraphics{figure_man/ridge-vs-sgd-path.png}}
+      %\scriptsize{\\Ali et al. (2020)\\}
+  \end{figure}
 
+\textbf{Caveat}: Initialization at the origin is crucial for this equivalence to hold, which is almost never used in practice in ML/DL applications
+
+\end{vbframe}
 
 \endlecture
 \end{document}
