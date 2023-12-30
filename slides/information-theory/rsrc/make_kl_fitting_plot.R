@@ -52,7 +52,8 @@ p2 <- ggplot(density_df, aes(x = value, y = density)) +
        y = "Density") +
   stat_function(fun = dnorm, args = list(mean = 2.5, sd = 3), aes(color = "q(x)")) + 
   scale_color_manual(name = "", values = c("p(x)" = "blue", "q(x)" = "red")) +  
-  theme(legend.position = "right") 
+  theme(legend.position = "right") +
+  ylim(0, 0.4)  
 
 plot = grid.arrange(p1, p2, ncol = 2, widths = c(1, 1.25))
 ggsave("../figure/kl_fitting_plot.png", plot =plot, width = 8, height = 3)

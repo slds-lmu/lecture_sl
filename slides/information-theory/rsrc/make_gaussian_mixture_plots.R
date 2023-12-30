@@ -5,7 +5,7 @@ library(gridExtra)
 
 # Define parameters for the Gaussian distributions
 mean1 <- c(0, 0)
-mean2 <- c(5, 5)
+mean2 <- c(10, 10)
 covariance <- matrix(c(1, 0, 0, 1), nrow = 2)
 
 # Generate samples
