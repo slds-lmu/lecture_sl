@@ -3,7 +3,7 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/kl_log_diff_plot.png}
+\newcommand{\titlefigure}{figure/normal_distributions.png}
 \newcommand{\learninggoals}{
   \item Understand why measuring distribution similarity is important in ML
   \item Understand the advantages of forward and reverse KL
@@ -43,7 +43,7 @@ We want to minimize the difference between $p(y \vert \mathbf{x})$ and the condi
 
 \lz
 
-Many losses can be derived this way. (e.g. cross-entropy loss)
+Many losses can be derived this way. (e.g., cross-entropy loss)
 
 \end{itemize}
 
@@ -58,6 +58,7 @@ In feature selection, we want to choose features the target strongly depends on.
 \end{center}
 
 We can measure dependency by measuring the similarity between $p(\mathbf{x}, y)$ and $p(\mathbf{x})\cdot p(y).$ \\
+\lz
 We will later see that measuring this similarity with KL  leads to the concept of mutual information.
 
 \end{itemize}
@@ -66,7 +67,8 @@ We will later see that measuring this similarity with KL  leads to the concept o
 
 \begin{itemize}
     \item \textbf{Variational inference (VI)}
-Our data can also induce probability distributions: By Bayes' theorem it holds that the posterior density $$p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})}{\int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}}.$$ However, computing this density analytically is usually intractable.
+%Our data can also induce probability distributions: 
+By Bayes' theorem it holds that the posterior density $$p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}) = \frac{p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})}{\int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}}.$$ However, computing the normaliziation constant $c = \int p(\mathbf{y}|\mathbf{X}, \bm{\theta})p(\bm{\theta})d\bm{\theta}$ analytically is usually intractable.
 
 \begin{center}
 \includegraphics[width=0.99\linewidth]{figure/gaussian_mixture_scatter.png}
@@ -74,7 +76,7 @@ Our data can also induce probability distributions: By Bayes' theorem it holds t
 
 In VI, we want to fit a density $q_{\bm{\phi}}$ with parameters $\bm{\phi}$ to 
     $p(\bm{\theta}\vert \mathbf{X}, \mathbf{y}).$
-This scenario fundamentally differs from the previous ones because we can now generate samples.
+%This scenario fundamentally differs from the previous ones because we can now generate samples.
 
 \end{itemize}
 
@@ -105,17 +107,22 @@ In the following, we highlight some properties of the KL that make it attractive
 
 \begin{itemize}
     \item \textbf{Forward KL for probabilistic model fitting}
-    \\ We have samples from the DGP $p(y|x)$ when we fit our ML model.
+    \\ We have samples from the DGP $p(y, \xv)$ when we fit our ML model.
     \\
     \lz
     
-    If we have a probabilistic ML model $q_{\bm{\phi}}$ and can specify $p(y|x)$ then the forward KL can be directly applied such that
+    If we have a probabilistic ML model $q_{\bm{\phi}}$ the  expected forward KL
     $$\E_{\xv \sim p_{\xv}}D_{KL}(p(\cdot|\xv) \| q_{\bm{\phi}}(\cdot|\xv)) = \E_{\xv \sim p_{\xv}}\E_{y \sim p_{y|\xv}}\log\left(\frac{p(y|\xv)}{q_{\bm{\phi}}(y|\xv)}\right).$$
-For example, if $p$ and $q_{\bm{\phi}}$ are Gaussians with the same $\sigma$, minimizing this expression is equivalent to L2 minimization. \\
-\lz 
-Assuming we have i.i.d. observations, an unbiased estimator of this expected forward KL is
-$$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow \text{can be used for mini-batching.} $$
-
+We can directly minimize this objective since 
+\begin{align*}
+         \nabla_{\bm{\phi}} \E_{\xv \sim p_{\xv}}D_{KL}(p(\cdot|\xv) \| q_{\bm{\phi}}(\cdot|\xv)) &=  \E_{\xv \sim p_{\xv}}\E_{y \sim p_{y|\xv}}\nabla_{\bm{\phi}}\log\left(
+         p(y|\xv)\right) \\
+         &- \E_{\xv \sim p_{\xv}}\E_{y \sim p_{y|\xv}}\nabla_{\bm{\phi}}\log\left(q_{\bm{\phi}}(y|\xv)\right) \\
+         &= -\nabla_{\bm{\phi}} \E_{\xv \sim p_{\xv}}\E_{y \sim p_{y|\xv}}\log\left(q_{\bm{\phi}}(y|\xv)\right)
+     \end{align*}
+% Assuming we have i.i.d. observations, an unbiased estimator of this expected forward KL is
+% $$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow \text{can be used for mini-batching.} $$
+     $\Rightarrow$ We can estimate the gradient of the expected forward KL without bias, although we can not evaluate $p(y\vert \xv)$ in general. 
 \end{itemize}
  \framebreak
 
@@ -132,17 +139,16 @@ $$\sumin \log\left(\frac{p(\yi|\xi)}{q_{\bm{\phi}}(\yi|\xi)}\right) \Rightarrow 
      $\Rightarrow$ We can estimate the gradient of the reverse KL without bias (even if we only have an unnormalized target distribution)
  \end{itemize}
  \framebreak
- 
-\begin{center}
-\includegraphics[width=0.7\linewidth]{figure/kl_fitting_plot.png}
-\end{center}
 
 The asymmetry of the KL has the following implications
 \begin{itemize}
-    \item The forward KL $D_{KL}(p\|q_{\bm{\phi}}) = \E_{\xv \sim p} \log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right)$ is mass-covering since $p(\xv)\log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right) \approx 0$ if $p(\xv) \approx 0$ (as long as both distribution do not extremely differ)
-        \item The reverse KL $D_{KL}(q_{\bm{\phi}}\|p) = \E_{\xv \sim q_{\bm{\phi}}} \log\left(\frac{q_{\bm{\phi}}(\xv)}{p(\xv)}\right)$ is mode-seeking / zero-avoiding since $q_{\bm{\phi}}(\xv)\log\left(\frac{q_{\bm{\phi}}(\xv)}{p(\xv)}\right) \gg 0$ if $p(\xv) \approx 0$ and $q_{\bm{\phi}}(\xv) > 0$ 
+    \item Forward KL $D_{KL}(p\|q_{\bm{\phi}}) = \E_{\xv \sim p} \log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right)$ is mass-covering since $p(\xv)\log\left(\frac{p(\xv)}{q_{\bm{\phi}}(\xv)}\right) \approx 0$ if $p(\xv) \approx 0$ and $q_{\bm{\phi}}(\xv) \not\gg p(\xv).$
+        \item Reverse KL $D_{KL}(q_{\bm{\phi}}\|p) = \E_{\xv \sim q_{\bm{\phi}}} \log\left(\frac{q_{\bm{\phi}}(\xv)}{p(\xv)}\right)$ is mode-seeking (zero-avoiding) since $q_{\bm{\phi}}(\xv)\log\left(\frac{q_{\bm{\phi}}(\xv)}{p(\xv)}\right) \gg 0$ if $p(\xv) \approx 0$ and $q_{\bm{\phi}}(\xv) > 0$ 
 \end{itemize}
- 
+ \begin{center}
+\includegraphics[width=0.7\linewidth]{figure/kl_fitting_plot.png}
+\end{center}
+\small Figure: Optimal $q_{\bm{\phi}}$ when $q_{\bm{\phi}}$ is restricted to be Gaussian.
 \end{vbframe}
 
 \endlecture
