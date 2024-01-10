@@ -21,7 +21,7 @@
 
 \begin{vbframe}{Regularization in the linear model}
 
-  \begin{itemize}
+  \begin{itemize} \setlength{\itemsep}{1.3em}
   \item Linear models can also overfit if we operate in a high-dimensional space with not that many observations.    
   \item The OLS estimator requires a full-rank design matrix.
   \item For highly correlated features, the least-squares estimate becomes highly sensitive to random errors in the observed response, producing a large variance in the fit. 
@@ -29,9 +29,6 @@
   $$
   \riskrt = \sumin \left(\yi - \thetab^\top \xi \right)^2 + \lambda \cdot J(\thetab). 
   $$ 
-  \item Intuitive to measure model complexity as deviation from the 0-origin, as the 0-model is empty and contains no effects. Models close to this either have few active features or only weak effects. 
-  \item So we measure $J(\thetab)$ through a vector norm.
-    This shrinks coefficients closer 0, hence the term \textbf{shrinkage methods}.
   \end{itemize}
 
 \end{vbframe}
@@ -40,17 +37,19 @@
 % \section{Ridge Regression}
 
 \begin{vbframe}{Ridge Regression}
-
-  \textbf{Ridge regression} uses a simple $L2$ penalty:
-  \begin{eqnarray*}  
-  \thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 \\
-  &=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab.
-  \end{eqnarray*}
+Intuitive measure of model complexity is deviation from 0-origin, as 0-model contains no effects. %Models close to this either have few active features or only weak effects. 
+So we measure $J(\thetab)$ through a vector norm, shrinking coefs closer 0 (\textbf{shrinkage methods}).\\
+\vspace{0.2cm}
+\textbf{Ridge regression} uses a simple $L2$ penalty:
+\begin{eqnarray*}  
+\thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 \\
+&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab
+\end{eqnarray*}
 
 Optimization is possible (as in the normal LM) in analytical form:
 $$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
 
-Name comes from the fact that we add positive entries along the diagonal "ridge" $\Xmat^T \Xmat$.
+Name comes from the fact that we add positive entries along the diagonal "ridge" $\Xmat^T \Xmat$
 
 \framebreak 
 
@@ -129,7 +128,7 @@ With an $L2$ penalty we can now select $d$ "too large" but regularize our model 
 \begin{center}
 \tiny
 \begin{tabular}{ c| c c c c c c c c c c c c}
- $\lambda$ & $\beta_0$ & $\beta_1$ & $\beta_2$ & $\beta_3$ & $\beta_4$ & $\beta_5$ & $\beta_6$ & $\beta_7$ & $\beta_8$ & $\beta_9$ & $\beta_{10}$ \\ 
+ $\lambda$ & $\theta_0$ & $\theta_1$ & $\theta_2$ & $\theta_3$ & $\theta_4$ & $\theta_5$ & $\theta_6$ & $\theta_7$ & $\theta_8$ & $\theta_9$ & $\theta_{10}$ \\ 
  \hline
  0.00 & 12.00 & -16.00 & 4.80 & 23.00 & -5.40 & -9.30 & 4.20 & 0.53 & -0.63 & 0.13 & -0.01 \\  
  10.00 & 5.20 &1.30 & 3.70 & 0.69 & 1.90 & -2.00 & 0.47 & 0.20 & -0.14 & 0.03 & -0.00 \\ 
