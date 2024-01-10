@@ -48,7 +48,7 @@ $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p}
 \end{vbframe}
 
 \begin{vbframe}{KL vs Cross-Entropy Example}
-Let $p(x)=N(0,1)$ and $q(x)=LP(0,3)$ and consider again
+Let $p(x)=N(0,1)$ and $q(x)=LP(0,\sigma)$ and consider again
 $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab) = \argmin_{\thetab} H(p \| q_{\thetab}) $$
 
 \begin{center}
