@@ -1,0 +1,87 @@
+Intro:
+
+hi and welcome to the next lecture unit
+
+in the chapter on information theory
+
+which is on entropy between pairs and
+
+sets of random variables so joint
+
+entropy conditional entropy and also
+
+mutual information as a general measure
+
+of dependence between random variables
+
+which we some hope refer a bit in
+
+machine learning over correlation as a
+
+measure of dependence because
+
+correlation only measures linear
+
+dependence while mutual information is
+
+more general measure that also measures
+
+nonlinear dependence between random
+
+variables which I will show here and
+
+demonstrate and discuss at the end of
+
+this unit 
+
+
+Slide 1:
+
+Joint entropy formulas.
+
+
+Slide 2:
+
+Conditional entropy formulas.
+
+
+Slide 3:
+
+Chain rule for entropy proof.
+
+
+Slide 4:
+
+Joint and conditional entropy properties.
+
+
+Slide 5:
+
+MI describes the amount of information about 
+
+one random variable obtained through the other,
+
+or how different the joint distribution is from
+
+pure independence.
+
+Definition and Formulas.
+
+
+Slide 6:
+
+MI formula derivation.
+
+
+Slide 7:
+
+MI Properties
+
+
+Slide 8:
+
+MI Example.
+
+Slide 9:
+
+MI Example continued.

@@ -1,0 +1,222 @@
+Intro:
+
+Welcome to the second lecture on 
+
+joint entropy and MI. In this lecture
+
+we will consider MI as the amount of
+
+information of an RV obtained by another
+
+and introduce further properties of the MI.
+
+
+Slide 1:
+
+MI Corollaries.
+
+
+Slide 2:
+
+Independence bound on entropy proof.
+
+
+Slide 3:
+
+Okay, let's wrap this up a little. We've introduced
+
+mutual information as a measure of dependence
+
+between random variables. It is zero if, and only
+
+if, the variables are independent. On the other
+
+hand, we can discuss when mutual information is
+
+at its maximum. Mutual information reaches its
+
+maximum if the first variable is a deterministic
+
+function of the second. Why is this easy to see?
+
+Well, it's not difficult. Mutual information is
+
+expressed like this. When can this expression
+
+reach its maximal value? Ideally, this should be
+
+0, resulting in the maximal value being the
+
+entropy of X. When can this value be 0? As
+
+discussed earlier, it's precisely 0 if X is a
+
+deterministic function of Y. In this case, our
+
+mutual information becomes maximal, equaling the
+
+entropy of this function X, which is now a
+
+deterministic function of Y. This is interesting.
+
+What's also notable, as I will compare on the next
+
+slide, is how mutual information relates to
+
+normal statistical correlation. Mutual information
+
+is not limited to real-valued random variables
+
+alone; it applies to both continuous and discrete
+
+random variables. In this sense, it's already a
+
+generalization of Pearson correlation, but more
+
+will follow on the next slide.
+
+Mutual information is a popular measure for
+
+feature selection through feature filtering. In
+
+these cases, we often measure the mutual
+
+information of X_i and Y, taking it as a measure
+
+of dependence between X_i and Y. Then, we say
+
+that X_i is more important for learning Y, or for
+
+predicting Y, the higher this mutual information
+
+is. We often filter variables with regard to this
+
+metric. This will be discussed in more detail in
+
+the lecture chapter on feature selection and
+
+feature filtering.
+
+There is some confusing terminology in this area.
+
+Some people call the specific mutual information
+
+between X_i and Y in such a feature selection
+
+scenario 'information gain.' The same principle of
+
+measuring this information gain between X_i and
+
+Y can also be used in decision trees, particularly
+
+those variants introduced from an information
+
+theoretic perspective. In these cases, people
+
+refer to splitting with respect to information
+
+gain. They measure the information gain between
+
+all potential features for a split with respect to
+
+Y, or between X_i and Y, and then choose the
+
+feature with maximal information gain for the
+
+split. This approach is equivalent to risk
+
+reduction as introduced in decision trees, which
+
+split with respect to maximal risk reduction with
+
+a certain loss function. If the loss function used
+
+is log loss, this is exactly equivalent to
+
+information gain or mutual information splitting.
+
+For risk minimization, it's also very easy to see.
+
+Further, MI is invariant with respect to injective
+
+and continuously differentiable reparametrizations.
+
+
+Slide 4:
+
+Here's one slide now to compare mutual
+
+information versus correlation. Mutual
+
+information is supposed to be a measure
+
+of dependence or independence, as is
+
+correlation in classical statistics. So,
+
+how do we compare the two? First, we know
+
+if two variables are independent, the
+
+correlation is zero, similar to mutual
+
+information. However, the reverse is not
+
+necessarily true for correlation. It's
+
+only true for joint Gaussians. If both
+
+random variables are jointly normally
+
+distributed, then zero correlation also
+
+implies independence. In the general
+
+case, this is not true for correlation,
+
+but as we have proved, it is true for
+
+mutual information. Mutual information
+
+is, in this regard, much more
+
+comprehensive.
+
+Another important aspect of mutual
+
+information as a measure of dependence
+
+is its distinction from correlation.
+
+Correlation measures linear dependence
+
+between random variables, not general
+
+dependence. Situations with strong
+
+dependence between random variables X
+
+and Y may have zero correlation. If you
+
+compute mutual information in these
+
+cases, you'll find it significantly
+
+large, reflecting the nonlinear
+
+dependence between X and Y. Therefore,
+
+we can view mutual information as a more
+
+general and perhaps more attractive
+
+measure of nonlinear, general
+
+dependence between random variables
+
+than correlation.
+
+
+Slide 5:
+
+MI Gaussian example.

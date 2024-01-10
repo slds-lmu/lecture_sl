@@ -1,0 +1,779 @@
+Intro:
+
+Hi, and welcome to the next lecture unit
+
+in the lecture chapter on information
+
+theory. In this lecture chapter, I'll
+
+connect the entropy concept, previously
+
+studied more in a probabilistic sense,
+
+to the setting of optimum code length
+
+construction when transmitting messages
+
+over a channel. In a certain sense, this
+
+is a bonus unit. You could skip this if
+
+you're really only interested in
+
+understanding information theory with
+
+regard to statistical inference and
+
+machine learning. On the other hand,
+
+this is where information theory
+
+originates from. As the concepts of
+
+information theory themselves are not
+
+that simple to understand and to connect
+
+with intuitive concepts, understanding
+
+this background here does make sense.
+
+I encourage you to still look into this
+
+and understand this aspect of
+
+information theory.
+
+
+Slide 1:
+
+Let's start. As I said, we're now
+
+switching contexts considerably. This
+
+might be a little unusual for most of
+
+you, so I ask for a bit of patience here
+
+and encourage you to try to get into the
+
+context as best and as quickly as
+
+possible. I'll try to make it as easy
+
+and basic as I can in this short lecture
+
+unit. We will now delve into a subfield
+
+of information theory known as source
+
+coding. By 'source' here, we mean any
+
+type of system, process, or the
+
+abstraction of those that generates
+
+messages or information. Our general
+
+goal is to create codes to represent
+
+these messages, technical codes or
+
+numerical codes, so we can store or
+
+transmit these messages over a
+
+communication channel, such as a radio
+
+or fiber optic cables.
+
+For example, it's commonly known that we
+
+usually use binary strings to encode
+
+these types of messages. Since it can be
+
+expensive to transmit messages, it seems
+
+natural to address the problem of
+
+constructing an efficient or potentially
+
+optimal code of minimal average length.
+
+We don't want to spend more bits than
+
+necessary to encode our messages.
+
+
+Slide 2:
+
+Let's try to formalize this a bit more.
+
+There's not a lot of notation here
+
+that's necessary.
+
+First of all, I'll assume that we're
+
+given a certain dictionary alphabet of
+
+message symbols. So, we have a finite
+
+set of all potential messages we want to
+
+transmit. Then, there's a binary code.
+
+A binary code is simply a mapping from
+
+all the symbols in our set to codewords
+
+of binary strings. I'll use a running
+
+example here, a super simple one, where
+
+our dictionary only consists of four
+
+animal-related words. So maybe we only
+
+want to talk about dogs, cats, fishes,
+
+and birds. We cannot formulate that many
+
+interesting sequences with these words,
+
+but it's a simple example so we can
+
+study the basic concepts here in this
+
+lecture unit.
+
+We are now using a binary string
+
+encoding of always length 2. So, 'dog'
+
+we might encode with the double 0,
+
+'cat' we could encode with 01, 'fish'
+
+with 10, and 'bird' with 11. Then, we
+
+can easily now encode our source symbols
+
+uniquely and precisely with these
+
+codewords. We can concatenate all of
+
+these codewords and transmit this
+
+sentence. We will now transmit this
+
+encoded string of length 8. Obviously,
+
+at the receiving end of the channel, we
+
+can also uniquely decode this sentence
+
+into again this sequence of source
+
+symbols by simply mapping these strings
+
+of length 2 to the associated symbols
+
+from our dictionary, and basically just
+
+using these rules now in reverse.
+
+So far, so good, and so simple.
+
+
+
+Slide 3:
+
+Now, what we want to talk about is how
+
+many of these bits are we using on
+
+average when transmitting messages for a
+
+given source over a channel. That means
+
+we need to consider how likely all of
+
+these words are. How often do we use the
+
+word 'dog', 'cat', 'fish', or 'bird'? To
+
+model this in a very simple fashion,
+
+we'll regard our message-emitting source
+
+as a random variable that outputs random
+
+symbols from our dictionary. Essentially,
+
+our source is a discrete distribution
+
+where each symbol in our dictionary of
+
+messages has an associated probability.
+
+Maybe our source, let's say a person,
+
+talks more about dogs than about cats,
+
+and more about cats than fishes and
+
+birds. We'd use this discrete
+
+categorical distribution to model the
+
+probability distribution of our source.
+
+We can also talk about the length of a
+
+binary string. I'll use this capital L
+
+of X here to simply count the number of
+
+bits in a corresponding codeword. It
+
+often makes sense to visualize the whole
+
+thing. I'll often use this type of
+
+visualization, where on the x-axis, you
+
+can see the number of bits used in the
+
+codeword representation of the symbol,
+
+and on the y-axis, the probability that
+
+the message has in our source
+
+probability distribution.
+
+I should also mention that all of these
+
+visualizations and many of the examples
+
+have been taken from this super nice
+
+tutorial by Chris Ola, titled 'A Visual
+
+Explanation of Information Theory'. I
+
+highly recommend reading it in addition
+
+to this lecture unit. We cover a
+
+considerable part of its content here in
+
+the slides.
+
+We now have some notation to discuss the
+
+length of the codewords. Naturally, it
+
+makes sense to calculate something like
+
+the expected length of a message emitted
+
+by our source. This is just the
+
+expectation of L of X, where X is this
+
+random variable representing our source.
+
+You can go through this simple
+
+calculation. For our specific source and
+
+coding scheme in this example, the
+
+average string length is, of course,
+
+two bits, as we are using strings of
+
+length two for all symbols. You could
+
+also look into this visualization with
+
+rectangles. For later examples to make
+
+more sense, note that the length of the
+
+codeword and its associated probability
+
+mean the area of each partial rectangle
+
+reflects the value of this product in
+
+our expectation computation.
+
+
+Slide 4:
+
+The obvious question now is, can we do
+
+better? Can we construct more
+
+intelligent, more efficient codes
+
+instead of always using the same number
+
+of bits for each codeword? How about
+
+variable-length codes? The obvious idea
+
+is to assign shorter codewords to more
+
+likely messages with higher probability
+
+and longer ones to less likely messages.
+
+So, on average, we are using fewer bits
+
+because for the symbols that are
+
+generated very often by the source, we
+
+are using not that many bits. We can
+
+then allow ourselves to use more bits
+
+for messages that are only rarely
+
+generated by the source.
+
+Before we study that, let's talk about
+
+the problem of being able to also
+
+uniquely decode the messages at the
+
+receiving end of the channel. This might
+
+be problematic with variable-length
+
+codes, as we can't regularly split up
+
+our received code string anymore. We
+
+don't know exactly how many bits are
+
+currently being used for a certain word
+
+that we are receiving, right? That
+
+creates a problem for us.
+
+What we would normally do is study and
+
+analyze the beginning of this string,
+
+then try to peel off these encoding
+
+rules in reverse. For example, if we
+
+receive a zero and see that there is a
+
+dog encoding rule that ends with a zero,
+
+the first word is probably going to be
+
+'dog'. But as we continue, the
+
+ambiguity becomes apparent. For us to
+
+always be able to uniquely peel off
+
+these rules in reverse, one property
+
+that we require of our code is that it's
+
+prefix-free, sometimes just called a
+
+prefix code. What this means is that the
+
+used codeword for a certain symbol
+
+should never be used as a prefix for
+
+another codeword.
+
+This issue arises here with 'dog' and
+
+'fish', and also with 'cat' and 'bird',
+
+where these codewords appear as prefixes
+
+in other codewords. If the code is
+
+actually a prefix code and prefix-free,
+
+it's obvious that we can always peel off
+
+codewords in a unique manner. The worst
+
+thing that could happen is that at some
+
+point, no rule would be applicable, and
+
+in that case, our codeword would just be
+
+simply illegal, indicating either an
+
+error in transmission or an incorrectly
+
+generated code by the source. I don't
+
+want to delve into transmission errors
+
+here, so I'll always assume that these
+
+codewords are valid and correctly
+
+generated by a source. In that case, for
+
+a prefix code, we can always uniquely
+
+decode it.
+
+
+
+Slide 5:
+
+So, from now on, I will always assume
+
+that if I'm studying a variable-length
+
+code, that code is always a prefix code.
+
+Now, let's do a quick calculation on
+
+what that actually means, especially in
+
+terms of how many potential codewords
+
+are available to construct efficient
+
+codes.
+
+First of all, it's pretty obvious that
+
+for codewords of exactly length L,
+
+there are always exactly 2^L possible
+
+binary words. This is straightforward
+
+since we have L binary decisions
+
+available for each position, leading to
+
+2^L possible codewords of exactly length
+
+L.
+
+We can also calculate how many codewords
+
+there are of length L or less. That's
+
+just the sum of all these possibilities.
+
+This amounts to 2^(L+1) minus 2. The
+
+reason for this formula is the geometric
+
+sum. We are summing up 2, 2^2, 2^3,
+
+until 2^L. We form the geometric sum
+
+and, in the end, we subtract 1 because
+
+we're not adding 2^0. We're not using
+
+codewords of length 0, which would be
+
+empty.
+
+
+Slide 6:
+
+Now, that was pretty simple, and kind of
+
+boring. One thing that's actually very
+
+relevant when discussing these prefix
+
+variable-length codes is the problem
+
+that arises if we use codewords of very
+
+short length. This is interesting to us
+
+because we want to save bits, right? We
+
+also want to assign these very short
+
+codewords to symbols with very high
+
+probability. This means that, with high
+
+probability, we are using not too many
+
+bits.
+
+If we use these very short codewords, we
+
+can run a quick calculation to see how
+
+many other codewords we are now not
+
+allowed to use. For example, if you're
+
+using a codeword of length 2, like '01',
+
+and assigning that to a symbol of very
+
+high probability, we're only using two
+
+bits for that symbol. However, this
+
+means we can't use all of these other
+
+codewords anymore, like '010', '011', or
+
+longer codewords which use this '01'
+
+prefix.
+
+Looking at this graphical
+
+representation of our potential
+
+codewords, you can see that you're
+
+losing all of these options in this
+
+rectangle of infinite length. You are
+
+essentially throwing out about one
+
+quarter of all potential codewords, if
+
+you only count codewords of length 3 and
+
+larger. In total, it's still
+
+approximately about 1/4 of potential
+
+codewords you're not using.
+
+Compared to what happens in the
+
+left-hand side area, not too many
+
+codewords are there. So, in general, you
+
+are approximately throwing out 1 over 2
+
+to the L potential codewords, especially
+
+if you only consider codewords larger
+
+than L that you now have to discard.
+
+This includes codewords of length 3, 4,
+
+and so on, which are still potentially
+
+attractive to you because they are not
+
+much longer than the special codeword of
+
+length 2 you are assigning.
+
+The shorter the codeword you choose in
+
+this prefix code to represent a symbol,
+
+the more you're throwing away. In the
+
+extreme case, if you just want to use a
+
+one-length codeword, just '0' or '1',
+
+you're immediately discarding 50% of all
+
+other codewords, which you cannot use
+
+anymore in your coding scheme.
+
+
+Slide 7:
+
+So, keeping that in mind, we now have to
+
+construct a certain trade-off. For very
+
+likely words, we are using super short
+
+codewords. On the other hand, we don't
+
+want to make them too short because we
+
+are throwing out too many options. I
+
+won't go into the exact construction of
+
+the optimal code now, but I want to
+
+discuss one example. Here, I'm using '0'
+
+for the dog, '10' for the cat, '110' for
+
+the fish, and '111' for the bird. So, I'm
+
+using a variable-length code of
+
+sometimes one, sometimes two, and
+
+sometimes three bits.
+
+You can easily check that this code is
+
+prefix-free. The '0' doesn't occur as a
+
+prefix, and '10' also doesn't act as a
+
+prefix. We can again look at this
+
+visualization, where we have the length
+
+of the codeword here and the probability
+
+of the occurrence of our symbol or
+
+message here. This area again reflects
+
+the computation and expectation. 
+
+It's not totally obvious what comes out
+
+of this calculation, so we have to go
+
+through the motions. We can see that
+
+this coding scheme creates an average
+
+length that is actually a bit better
+
+than what we have seen before. This is
+
+compared to the two bits average length
+
+for the much simpler, regular-length
+
+code where we were always exactly using
+
+two bits per codeword.
+
+
+Slide 8:
+
+So, first of all, we have succeeded. 
+
+We have constructed something
+
+that's better. Apparently, it's possible
+
+at least for some examples. If you study
+
+this pattern a bit, you can guess how
+
+such a code is constructed. In the first
+
+position of the product, you always see
+
+the occurrence probability of the
+
+message, and here you now see the length
+
+of my constructed codeword. If you look
+
+at this more precisely, you can see that
+
+we are effectively calculating the log
+
+base 2 of this occurrence probability,
+
+which is how my specific example here is
+
+constructed.
+
+First of all, apparently, that seems to
+
+work. It seems to construct a better
+
+average length for this code, for this
+
+example. Interestingly, this formula is
+
+exactly the formula we introduced before
+
+for the entropy of a discrete
+
+probability distribution. Now, this
+
+very well-known source coding theorem of
+
+Shannon, sometimes called the noiseless
+
+coding theorem, tells us that this is a
+
+valid construction and the optimal
+
+construction policy.
+
+If we are using or assigning a code of
+
+length log of 1 divided by P for a
+
+symbol with probability P, then the
+
+average length of that code is
+
+obviously the entropy. This is optimal;
+
+we can't construct better codes with a
+
+better average length.
+
+There are also practical algorithms,
+
+like Huffman coding, that we can use in
+
+practice to construct these codes. I
+
+won't discuss this further. Shannon's
+
+source coding theorem tells us that if
+
+we use this entropy construction or
+
+calculate the entropy for a certain
+
+probability distribution, and match this
+
+distribution with our message-emitting
+
+source, the entropy itself is the best
+
+possible average length for a coding
+
+scheme that can be constructed for such
+
+a source.

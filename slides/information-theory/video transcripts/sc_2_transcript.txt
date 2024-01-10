@@ -1,0 +1,312 @@
+Intro:
+
+Welcome to the next lecture unit in 
+
+information theory. In this lecture unit
+
+we will connect source coding with
+
+cross-entropy and see that the entropy
+
+of the source distribution is the lower
+ 
+bound for the average code length
+
+
+Slide 1:
+
+
+I've used this running example again
+
+that I also used in the previous unit on
+
+source coding, where we have these four
+
+messages: dog, cat, fish, and bird. Dog
+
+is the message with the largest
+
+associated occurrence probability.
+
+Now, remember a bit how optimal codes
+
+were actually constructed or how long
+
+codewords for optimal codes were. What
+
+we did was we calculated minus log of
+
+the occurrence probability. For dog, that
+
+would be one for a log with base two;
+
+for cat, that would be two; and for fish
+
+and bird, it would be three.
+
+Now, here's a different distribution
+
+where dog is much less likely. Cat has a
+
+fifty percent occurrence probability,
+
+and for this different distribution Q,
+
+there's also an optimal code. This
+
+optimal code would assign one bit to
+
+cat, one bit here, and now three bits to
+
+dog, two bits to fish, and three bits to
+
+bird.
+
+Here we now see the entropy of the
+
+optimal coding scheme for P, which is
+
+1.75 bits. We can't do better than that,
+
+but we can do considerably worse by now
+
+using, for these messages here from P,
+
+this suboptimal coding scheme, which is
+
+optimal only under Q. This would assign
+
+three bits to dog, which is probably not
+
+so good because dog is a very likely
+
+word. It would assign a short codeword
+
+to cat, which is not that likely under
+
+P. It's likely under Q, but not under P.
+
+
+
+Slide 2:
+
+We can now make a formal definition
+
+for cross-entropy. We define it as the
+
+average length of communicating an event
+
+from one distribution using the optimal
+
+code for another distribution. We'll
+
+assume that both distributions have the
+
+same domain, currently X, as we did in
+
+the definition for Kullback-Leibler
+
+divergence.
+
+The optimal code for X under Q, or the
+
+length of the optimal codeword, was
+
+simply log of 1 divided by Q of X. We
+
+now have to compare the average of these
+
+guys under something from P, and this is
+
+simply this year. We can rewrite this
+
+slightly by saying this is minus the sum
+
+over all Xs, P of x times log of Q of X.
+
+Yeah, this now is the formula for the
+
+concept we discussed before on this
+
+example.
+
+We can also directly check that the
+
+cross-entropy of P with itself is simply
+
+entropy. That also makes a lot of sense,
+
+right? Because if we do the cross-
+
+entropy of P with itself, we don't
+
+encode with a sub-optimal encoding
+
+strategy, but we still encode with the
+
+optimal encoding strategy, and hence
+
+this should be entropy. It is. You can
+
+easily check this by simply transforming
+
+this Q here into a P, and then it's the
+
+formula for entropy.
+
+Here's another visual explanation of the
+
+thing, I guess we can move through this
+
+quickly.
+
+
+
+Slide 3:
+
+So, here we have P, and we have the
+
+optimal encoding strategy for P. We
+
+discussed that this is entropy. Here we
+
+have a different distribution, Q. We
+
+also discussed the optimal encoding
+
+scheme for Q. If you want to calculate
+
+the length of these codewords, just do
+
+minus log of Q. It's pure coincidence
+
+here that this entropy is also 1.75 bits.
+
+Now, here you have the cross-entropy
+
+between P and Q, and here you have the
+
+cross-entropy between Q and P. First,
+
+you can see why this cross-entropy
+
+becomes larger than the entropy. We have
+
+a high-probability word here, and we're
+
+using a much longer codeword associated
+
+with it. Hence, we are losing a certain
+
+amount of bits in terms of efficiency.
+
+The same thing happens for this pinkish
+
+event which has a higher probability
+
+under Q, and now if we encode with a
+
+strategy for P, the codeword becomes
+
+much longer, and we lose bits here in
+
+the resulting average code length.
+
+From this simple example, you can also
+
+see that apparently, the order matters.
+
+This is a non-symmetric function. You
+
+can see the cross-entropy between P and
+
+Q here, and the cross-entropy between Q
+
+and P here. They're not exactly the same
+
+number, so watch out for that. This is
+
+the same as for Kullback-Leibler
+
+divergence. As you will see in the next
+
+slide, cross-entropy and Kullback-Leibler
+
+divergence are also very tightly
+
+connected. So, in order to understand
+
+this...
+
+
+Slide 4:
+
+So, let's look into these differences in
+
+length a bit more closely. Let X dash
+
+denote some symbol, maybe it's the
+
+message 'dog'. We can compute the
+
+different code lengths. We just compute
+
+the code length under Q here, which is
+
+log of 1 divided by Q of X dash. This is
+
+the code length under the encoding
+
+scheme of P. The difference is just the
+
+difference between these two values.
+
+You can rewrite this slightly as log of
+
+P of X dash divided by Q of X dash. It's
+
+obvious that if this quotient here is
+
+larger than 1, that length will be
+
+greater, and the difference will be
+
+negative. So, this is the difference in
+
+code length for a certain message X
+
+dash.
+
+Now, how about we compute the
+
+expectation of that? The average
+
+difference in code lengths for all
+
+codewords if we sample from P. This is
+
+simply this formula here. This is the
+
+difference in code length, and we now
+
+simply compute the expectation with
+
+respect to the probability mass function
+
+P. This is exactly the number of bits we
+
+lose if we go from the optimal encoding
+
+strategy for P to this suboptimal
+
+encoding strategy, which was optimal for
+
+Q. For this example, this is
+
+approximately 0.6 bits. The expected
+
+Difference is the KL-divergence, if
+
+we encode symbols from p.
+
+
