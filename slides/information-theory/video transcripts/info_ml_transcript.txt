@@ -1,0 +1,264 @@
+Intro:
+
+Hi and welcome to the next lecture unit
+
+in the lecture chapter on information
+
+theory. In this lecture unit we will show 
+
+that minimizing KL is equivalent to 
+
+maximizing the log-likelihood and 
+
+minimizing the cross-entropy.
+
+We will also show that minimizing
+
+Cross-entropy between modelled and observed
+
+Probabilities is equivalent to log-loss
+
+minimization.
+
+
+Slide 1:
+
+We start with this first fundamental 
+
+property: Minimizing KL between the true
+
+Distribution p(x) and approximating model
+
+q(x|theta) is equivalent to maximizing
+
+the log-likelihood.
+
+
+Formulas.
+
+
+Slide 2:
+
+
+Formula.
+
+Consequently, minimizing with
+
+respect to Kullback-Leibler divergence equates to
+
+minimizing with respect to cross-entropy, leading
+
+to the same result. This implies that minimization
+
+with respect to Kullback-Leibler divergence aligns
+
+with maximum likelihood. Minimizing cross-
+
+entropy is synonymous with maximizing likelihood.
+
+Remember, maximizing likelihood, or the maximum
+
+likelihood principle in Bayesian inference, is
+
+equivalent to risk minimization. These concepts
+
+are interconnected and will be explored further in
+
+upcoming slides.
+
+
+A particularly interesting aspect to note is the
+
+characterization of cross-entropy in the context of
+
+source coding. Discussions around average bits lost
+
+in transitioning from optimal to suboptimal encoding
+
+highlighted cross-entropy's relevance. It was
+
+initially unclear why such a concept mattered in
+
+statistical inference or machine learning. However,
+
+cross-entropy emerges as a crucial term to minimize
+
+when addressing KL divergence.
+
+
+Minimizing KL divergence is intuitively about
+
+reducing the 'distance' between two distributions:
+
+the true data-generating distribution and our
+
+approximating model. When focusing on these
+
+distributions, the first term of the equation, which
+
+is independent of theta, becomes irrelevant.
+
+Discarding this term, we focus on the remaining
+
+part, the cross-entropy. If we had initially defined
+
+cross-entropy from this standpoint, it might have
+
+been more intuitive.
+
+
+The discarded component, the log of P integrated
+
+with respect to P, is essentially the entropy. This
+
+is the constant part, independent of theta,
+
+representing the entropy of the data-generating
+
+distribution. It is disregarded in the minimization
+
+process.
+
+
+Another connection to consider is that the cross-
+
+entropy between P and Q can be viewed as the
+
+expected negative log likelihood of Q, given data
+
+from P. This understanding stems from considering
+
+the negative log likelihood of the model Q with
+
+parameter theta, and then taking its expectation
+
+over the data-generating distribution P. This
+
+represents the expected negative log likelihood
+
+over the entire data-generating distribution,
+
+establishing another significant link in
+
+understanding these concepts.
+
+
+Slide 3:
+
+In this example we consider the KL divergence
+
+and cross-entropy between a standard normal
+
+distribution and a Laplace distribution with
+
+different values for sigma. We can again see,
+
+that there is some sigma that minimies the KL
+
+distribution and that this sigma is identical to 
+
+the one minimizing the cross-entropy. Note that
+
+the values of KL-divergence and cross-entropy
+
+are still different, only the argmin is identical.
+ 
+
+Slide 4:
+
+Let's examine a relevant example in cross-
+
+entropy machine learning, particularly in making
+
+the connection to cross-entropy: multi-class
+
+classification. It's important to note that this
+
+formally applies to binary classification as well.
+
+Often, you'll hear people mention minimizing cross-
+
+entropy. What does this actually mean? Let's
+
+explore this. In a multi-class classification task,
+
+considering our dataset with N samples and
+
+assuming three classes, each label Y_i is encoded
+
+using one-hot coding. We've frequently used this
+
+approach before, and we refer to this one-hot
+
+encoding vector as D_i. This vector, of length J,
+
+lends itself to a probabilistic interpretation.
+
+D_i can be viewed as a categorical distribution,
+
+focusing all probability mass on the true label Y_i.
+
+For instance, if the ith observation is in class
+
+four, the categorical distribution, due to one-hot
+
+encoding, appears deterministic. There's also P_i
+
+of X_i, the probability output vector of our model.
+
+This too can be interpreted as a categorical
+
+distribution across all classes.
+
+
+Slide 5:
+
+Proof.
+
+
+Slide 6:
+
+We now use this binary Bernoulli loss.
+
+You should be familiar with
+
+this formula by now. We can interpret our
+
+data distribution P on our labels. Here,
+
+P represents a Bernoulli distribution
+
+with parameter Y, where Y can only be 0
+
+or 1. This distribution is deterministic,
+
+indicating a 100% probability for either
+
+a positive or negative outcome, depending
+
+on the label Y. We can also interpret the
+
+posterior probability P_i of X as a
+
+Bernoulli distribution with a success
+
+probability P_i of X. We can say that the
+
+Bernoulli loss is simply the cross-
+
+entropy between P, the deterministic data
+
+distribution of the label, and our
+
+posterior probability vector. By plugging
+
+these two into the definition of cross-
+
+entropy, we can see that this results in
+
+the formula for the Bernoulli loss.
+
+
+Slide 7:
+
+Proof.
