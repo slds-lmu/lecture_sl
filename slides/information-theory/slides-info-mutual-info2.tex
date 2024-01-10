@@ -225,6 +225,22 @@ For $\rho = 0$, $X$ and $Y$ are independent and $I(X;Y) = 0$. \\
 For $\rho = \pm 1$, $X$ and $Y$ are perfectly correlated and $I(X;Y) \rightarrow \infty$. 
 \end{vbframe}
 
+\begin{vbframe}{Estimation of MI}
+
+\begin{itemize}
+    \item In practice, estimation of the mutual information $$I(X;Y) = H(X) + H(Y) - H(X,Y)$$ is usually based on the \textit{empirical information}, i.e., $$\hat{I}(X;Y) = \hat{H}(X) + \hat{H}(Y) - \hat{H}(X,Y)$$
+\end{itemize}
+
+Here, we simply plug in the estimates of the empirical distribution $\hat{p}(x),\hat{p}(y),\hat{p}(x,y)$:
+{\small
+\begin{align*}
+       \hat{H}(X)&=-\sum_{x \in \Xspace} \hat{p}(x) \log_2 \hat{p}(x)\\
+       \hat{H}(Y)&=-\sum_{y \in \mathcal{Y}} \hat{p}(y) \log_2 \hat{p}(y)\\
+       \hat{H}(X,Y) &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  \hat{p}(x,y) \log_2(\hat{p}(x,y))\\
+\end{align*}
+}
+\end{vbframe}
+
 % \begin{vbframe} {Chain rule for information}
 
 
