@@ -88,6 +88,26 @@ to new test data (right). We overfitted.
 
 \end{vbframe}
 
+\begin{vbframe}{Example: Overfitting}
+
+We train an overparameterized neural network and a support vector machine with RBF kernel on the Boston housing dataset. No form of regularization is imposed on the models. The target variable is house price.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrr}
+  \hline
+ & Neural Network & SVM \\ 
+  \hline
+Training MSE & 0.00 & 24.88 \\ 
+  Test MSE & 0.72 & 86.15 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+Both neural network and support vector machine perform significantly better on the training set.
+
+\end{vbframe}
+
 \begin{vbframe}{Avoid Overfitting} 
 
 Why can \textbf{overfitting} happen? And how to avoid it?
