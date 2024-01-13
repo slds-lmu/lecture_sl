@@ -98,14 +98,15 @@ Assume we know $M$ properties about a discrete distribution $p(x)$ on $\Xspace$,
 
 \textbf{Maximum entropy principle}: Among all feasible distributions satisfying the constraints, choose the one with maximum entropy!
 \begin{itemize}
-    \item Motivation: ensure no unwarranted assumptions on $p(x)$ are made beyond what we know. MEP follows similar logic to Occam's razor and principle of insufficient reason
-    \item We already saw an application of this: the (trivial) constraint $\sum_{x \in \Xspace} p(x) = 1$ for which we obtained the uniform distribution as having maximum entropy translates to $g_0(x)=1$ and $\alpha_0=1$ 
+    \item Motivation: ensure no unwarranted assumptions on $p(x)$ are made beyond what we know. 
+    \item MEP follows similar logic to Occam's razor and principle of insufficient reason
 \end{itemize}
-Maxent distribution given $M$ constraints can be derived using Lagrangian with multipliers $\lambda_1,\ldots,\lambda_M$. Finding the optimal $\lambda_m$ means finding the constrained maxent distribution. 
+
+
 \end{vbframe}
 
 \begin{vbframe}{The Maximum Entropy Principle}
-The Lagrangian for this problem using base $e$ in the entropy is given by:
+Can be solved via Lagrangian multipliers (here with base $e$)
 \small{$$L(p(x),(\lambda_m)_{m=0}^{M}) = - \sum_{x \in \Xspace} p(x) \log(p(x)) + \lambda_0 \big( \sum_{x \in \Xspace} p(x) - 1 \big) + \sum_{m=1}^{M} \lambda_m \big( \sum_{x \in \Xspace} g_m(x)p(x)-\alpha_m \big)$$}
 Finding critical points $p^{\ast}(x)$ :
 $$\frac{\partial L}{\partial p(x)} = -\log(p(x)) -1 + \lambda_0 + \sum_{m=1}^{M} \lambda_m g_m(x) \overset{!}{=} 0 \iff p^{\ast}(x)=\textcolor{blue}{\exp(\lambda_0-1)}\textcolor{red}{
@@ -119,6 +120,10 @@ $$p^{\ast}(x)=\frac{\textcolor{red}{\exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}}{\text
 \end{vbframe}
 
 \begin{vbframe}{The Maximum Entropy Principle}
+
+We now have: functional form of our distribution, up to $M$ unknowns, the $\lambda_m$. But also: $M$ equations, the moment conditions. So we can solve.
+
+\vspace{0.5cm}
 
 \textbf{Example}: Consider discrete RV representing a six-sided die roll and the moment condition $\mathbb{E}(X)=4.8$. What is the maxent distribution?\\
 
@@ -137,7 +142,7 @@ $p^{\ast}(x)$ & 3.22\% & 5.38\% & 9.01\% & 15.06\% & 25.19\% & 42.13\%\\
 \hline
 \end{tabular}
 }
-\item For a fair die ($\mathbb{E}(X)=\alpha_1=3.5$) it is not hard to see that $\lambda=0$ satisfies the equation, resulting in uniform probabilities
+%\item For a fair die ($\mathbb{E}(X)=\alpha_1=3.5$) it is not hard to see that $\lambda=0$ satisfies the equation, resulting in uniform probabilities
 \end{itemize}
 \end{vbframe}
 
