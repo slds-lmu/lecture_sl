@@ -99,7 +99,7 @@ $$
   The KL divergence (which is non-negative) between $f(x)$ and $g(x)$ is:
   \begin{equation}
     \begin{aligned}
-       0 \leq D_{KL}(f \| g) & = -h(f) + H_g(f) \\
+       0 \leq D_{KL}(f \| g) & = -h(f) + H(p \| q) \\
                              & =-h(f)-\int_{-\infty}^{\infty} f(x) \log (g(x)) dx
     \end{aligned}
   \end{equation}
