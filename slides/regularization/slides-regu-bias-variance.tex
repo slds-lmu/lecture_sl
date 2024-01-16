@@ -25,11 +25,25 @@
 In this slide set, we will visualize the bias-variance trade-off. \\
 \lz 
 
-First, we start with the DGP. Assume the true function $$f: [0, 1] \rightarrow \mathbb{R}, x\mapsto +\I_{\{x \geq 0.3\}}(x) - \I_{\{x \geq 0.6\}}(x).$$
+First, we start with the DGP $\mathbb{P}_{xy}$. Assume the true function $$f: [0, 1] \rightarrow \mathbb{R}, x\mapsto +\I_{\{x \geq 0.3\}}(x) - \I_{\{x \geq 0.6\}}(x).$$
 
-Let the feature $x$ be uniformly d
-
+Let the feature $x \sim \mathcal{U}([0, 1])$ and the target $y\vert x \sim \mathcal{N}(f(x), \sigma).$
+\begin{center}
+\includegraphics[width=0.5\textwidth]{slides/regularization/figure_man/bv_true_fun.png}
+\end{center}
 \framebreak 
+
+Obviously, $f$ is an element of the function family $$\mathcal{H} := \{f: [0, 1] \rightarrow \mathbb{R}\vert\; f \text{ is continuous except for at most 2 jump discontinuities}\}$$
+
+To make our following discussion more formal, we introduce two distance functions.
+\begin{itemize}
+    \item The distance between two functions $d:\mathcal{H}^2\rightarrow \mathbb{R}_{\geq 0}$ in $\mathcal{H}$ such that $$d(f_1, f_2) = \int_0^1(f_1(x) - f_2(x))^2dx.$$
+    \item The distance between a function and $k$ observations $\overline{d}:\mathcal{H}\times([0,1]\times \mathbb{R})^k \rightarrow \mathbb{R}_{\geq 0}$ in $\mathcal{H}$ such that 
+    $$\overline d(f, ((x_1, y_1), \dots, (x_k, y_k)) = \frac{1}{k}\sum^k_{i=1}(f_1(x_i) - y_i)^2 $$
+\end{itemize}
+
+
+\framebreak
 
 \center
 \vspace*{0.5cm}

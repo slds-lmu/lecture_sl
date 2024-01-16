@@ -17,7 +17,7 @@
 \lecturechapter{L0 Regularization}
 \lecture{Introduction to Machine Learning}
 
-\begin{vbframe}{LQ norm Regularization} 
+\begin{vbframe}{Lq norm Regularization} 
 
 Besides $L1$ and $L2$ norm we could use any $Lq$ norm for regularization.
 
@@ -39,11 +39,12 @@ Besides $L1$ and $L2$ norm we could use any $Lq$ norm for regularization.
   \riskrt = \risket + \lambda \|\thetab\|_0 := \risket + \lambda \sum_j |\theta_j|^0.
   $$
       \item Unlike the $L1$ and $L2$ norms, the $L0$ "norm" simply counts the number of non-zero parameters in the model.
+      \vspace{0.3cm}
     \begin{figure}
       \centering
-        \scalebox{0.8}{\includegraphics{figure_man/l0_norm.png}}
-        \tiny{\\ Credit: Christos Louizos}
-        \caption{\footnotesize $Lp$ norm penalties for a parameter $\thetab$ according to different values of $p$.}
+        \scalebox{0.99}{\includegraphics{figure_man/lq-penalty-plots.png}}
+        %\tiny{\\ Credit: Christos Louizos}
+        \caption{\footnotesize $Lq$ (quasi-)norm penalties for a scalar parameter $\thetab$ for different values of $q$}
     \end{figure}
     \item For any parameter $\thetab$, the $L0$ penalty is zero for $\thetab = 0$ (defining $0^0 := 0$) and is constant for any $\thetab \neq 0$, no matter how large or small it is.
     \item $L0$ regularization induces sparsity in the parameter vector more aggressively than $L1$ regularization, but does not shrink concrete parameter values as L1 and L2 does.
