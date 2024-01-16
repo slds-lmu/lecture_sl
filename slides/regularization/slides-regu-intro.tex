@@ -33,8 +33,8 @@ Regularization comprises all methods that add preferences for specific solutions
 
 \end{vbframe}
 
-\begin{vbframe}{Regularization for Invariance/Symmetry}
-Prior knowledge often requires that model predictions should be invariant under certain input transformations.\\
+\begin{vbframe}{Regularization for Invariance}
+Prior knowledge can also be of the form that predictions should remain invariant under certain input transformations.\\
 In image classification, label ``cat'' should hold regardless of position or size of relevant object (translation/scale invariance)
 \begin{enumerate}\setlength\itemsep{1.02em}
     \item \textbf{Pre-processing}: By computing invariant features under transformations, downstream models too will respect invariances
@@ -49,8 +49,31 @@ In image classification, label ``cat'' should hold regardless of position or siz
 
 \end{vbframe}
 
+\begin{vbframe}{Recap: Overfitting}
 
-\begin{vbframe}{Example: Overfitting}
+Reducing overfitting is an important application of regularization, so let's first motivate it from that perspective.
+
+\begin{itemize}
+  \item Overfitting occurs when the model reflects noise or artifacts in training data which do not generalize (small train error, at cost of test high error)
+  \item Hence, predictions of overfitting models cannot be trusted to generalize beyond the training data
+\end{itemize}
+\lz
+\begin{columns}
+\begin{column}{0.5\textwidth}
+  \raggedright
+  Overfitted model\\
+  \includegraphics[width=0.85\textwidth]{figure/eval_ofit_1o}
+\end{column}
+\begin{column}{0.5\textwidth}
+  \raggedright
+    Appropriate model\\
+  \includegraphics[width=0.85\textwidth]{figure/eval_ofit_1a}
+\end{column}
+\end{columns}
+    
+\end{vbframe}
+
+\begin{vbframe}{Example I: Overfitting}
 
 \begin{itemize}
 \item Assume we want to predict the daily maximum \textbf{ozone level} in LA given a data set containing $50$ observations.
@@ -88,10 +111,10 @@ to new test data (right). We overfitted.
 
 \end{vbframe}
 
-\begin{vbframe}{Example: Overfitting}
+\begin{vbframe}{Example II: Overfitting}
 
-We train an overparameterized neural network and a support vector machine with RBF kernel on the Boston housing dataset. No form of regularization is imposed on the models. The target variable is house price.
-
+We train a shallow neural network with one hidden layer and 100 hidden units as well as a SVM with RBF kernel on a small regression task. No form of explicit regularization is imposed on the models. %The target variable is house price.
+\vspace{0.2cm}
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrr}
@@ -103,14 +126,18 @@ Training MSE & 0.00 & 24.88 \\
    \hline
 \end{tabular}
 \end{table}
-
-Both neural network and support vector machine perform significantly better on the training set.
+\vspace{0.3cm}
+\begin{itemize}
+    \item Both neural network and SVM perform significantly better on the training set
+    \item The shallow NN even achieves zero training error (interpolating)
+    \item Test error is significantly higher for both models, indicating overfitting
+\end{itemize}
 
 \end{vbframe}
 
 \begin{vbframe}{Avoid Overfitting} 
 
-Why can \textbf{overfitting} happen? And how to avoid it?
+Why can \textbf{overfitting} happen in practice? And how to avoid it?
 \lz
 \lz
 \begin{enumerate}
@@ -138,7 +165,7 @@ The fit worsens slightly, but the test error decreases.
 \includegraphics[width=0.7\textwidth]{figure/avoid_overfitting_01.png}\\
 \end{figure}
 
-Good idea, but often not feasible in practice.
+Good insight, but getting more data is often not feasible in practice.
 
 \framebreak
 

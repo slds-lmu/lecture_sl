@@ -1,0 +1,45 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure_man/biasvariance_scheme.png}
+\newcommand{\learninggoals}{
+  \item Understand why overfitting happens
+  \item Know how overfitting can be avoided
+  \item Know regularized empirical risk minimization 
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Bias variance}
+\lecture{Introduction to Machine Learning}
+
+%\section{Motivation for Regularization}
+
+\begin{vbframe}{Bias variance}
+
+In this slide set, we will visualize the bias-variance trade-off. \\
+\lz 
+
+First, we start with the DGP. Assume the true function $$f: [0, 1] \rightarrow \mathbb{R}, x\mapsto +\I_{\{x \geq 0.3\}}(x) - \I_{\{x \geq 0.6\}}(x).$$
+
+Let the feature $x$ be uniformly d
+
+\framebreak 
+
+\center
+\vspace*{0.5cm}
+\includegraphics[width=0.6\textwidth]{figure_man/biasvariance_scheme.png} \\
+\footnotesize{Hastie, The Elements of Statistical Learning, 2009 (p. 225)}
+
+
+\end{vbframe}
+
+
+
+\endlecture
+\end{document}

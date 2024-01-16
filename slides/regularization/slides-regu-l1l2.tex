@@ -24,7 +24,7 @@
   \begin{itemize} \setlength{\itemsep}{1.3em}
   \item Linear models can also overfit if we operate in a high-dimensional space with not that many observations.    
   \item The OLS estimator requires a full-rank design matrix.
-  \item For highly correlated features, the least-squares estimate becomes highly sensitive to random errors in the observed response, producing a large variance in the fit. 
+  \item For highly correlated features, OLS becomes highly sensitive to random errors in the observed response, producing a large variance in the fit. 
   \item We now add a complexity penalty to the loss:
   $$
   \riskrt = \sumin \left(\yi - \thetab^\top \xi \right)^2 + \lambda \cdot J(\thetab). 
