@@ -75,8 +75,8 @@ Coefficient histograms for different $\lambda$ values for Ridge and Lasso for si
 
   \begin{itemize}
     \item Typically we omit $\theta_0$ in the penalty term $J(\thetab)$ so that the ``infinitely'' regularized model is the constant model (but this can be implementation-dependent).
-    \item Penalty methods are typically not equivariant under scaling of the inputs, so one usually standardizes the features beforehand. 
-    \item Note a normal LM has the inductive bias of rescaling equivariance, i.e., if you scale some features, we can simply "anti-scale" the coefficients the same way. The risk does not change. 
+    \item Note that unregularized LM has inductive bias of \textbf{rescaling equivariance}, i.e., if you scale some features, we can simply "anti-scale" the coefs and the risk does not change.
+    \item Penalty methods typically not equivariant under rescaling of the inputs, so one usually standardizes the features beforehand.  
     \item While regularized LMs exhibit low-complexity inductive bias, they lose equivariance property: if you down-scale features, coefficients have to become larger to counteract. Then they are penalized stronger in $J(\thetab)$, making some features less attractive without relevant changes in data.
       
     % \item While ridge regression usually leads to smaller estimated coefficients, but still dense $\thetab$ vectors,
@@ -140,8 +140,8 @@ We see that Lasso shrinks the coefficient for $X_5$ to zero early on, while Ridg
 \begin{vbframe}{Summarizing Comments}
 
 \begin{itemize}
-\item Neither one can be classified as overall better. 
-\item Lasso is likely better if the true underlying structure is sparse, so if only few features influence $y$. Ridge works well if there are many (weakly) influential features.
+\item Neither one can be classified as overall better (no free lunch!)
+\item Lasso is likely better if true underlying structure is sparse, so if only few features influence $y$. Ridge works well if there are many (weakly) influential features.
 \item Lasso can set some coefficients to zero, thus performing variable selection, while Ridge regression usually leads to smaller estimated coefficients, but still dense parameter vectors $\thetab$.
 \item Lasso has difficulties handling correlated predictors. For high correlation Ridge dominates Lasso in performance.
 \item For Lasso one of the correlated predictors will have a larger coefficient, while the rest are (nearly) zeroed. The respective feature is, however, selected randomly. 

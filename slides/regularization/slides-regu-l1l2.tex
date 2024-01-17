@@ -33,16 +33,16 @@
 
 \end{vbframe}
 
-\begin{vbframe}{Example: Ridge Regression}
-Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displaystyle \epsilon \sim N( 0,1)$. The true minimizer is given by $\theta ^{*} =( 3,-2)^{T}$.
+%\begin{vbframe}{Example: Ridge Regression}
+%Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displaystyle \epsilon \sim N( 0,1)$. The true minimizer is given by $\theta ^{*} =( 3,-2)^{T}$.
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
-\end{figure}
+%\begin{figure}
+%\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
+%\end{figure}
 
-With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
+%With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
 
-\end{vbframe}
+%\end{vbframe}
 
 
 % \section{Ridge Regression}
@@ -64,6 +64,16 @@ Name comes from the fact that we add positive entries along the diagonal "ridge"
 
 \framebreak 
 
+Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displaystyle \epsilon \sim N( 0,1)$. The true minimizer is given by $\theta ^{*} =( 3,-2)^{T}$.
+
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
+\end{figure}
+
+With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
+
+\framebreak 
+
 We understand the geometry of these 2 mixed components in our regularized risk objective much better, if we formulate the optimization as a constrained problem (see this as Lagrange multipliers in reverse).
 
 \vspace{-0.5cm}
@@ -80,7 +90,7 @@ We understand the geometry of these 2 mixed components in our regularized risk o
 \end{figure}
 
 \begin{footnotesize} 
-NB: Relationship between $\lambda$ and $t$ will be explained later.
+NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \uparrow \,\, \Rightarrow \,\, t \downarrow$ and vice versa.
 \end{footnotesize}
 
 \framebreak
