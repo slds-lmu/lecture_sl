@@ -3,7 +3,7 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure_man/solution-path-ridge-only.png}
+\newcommand{\titlefigure}{figure_man/solution_path_l2.png}
 \newcommand{\learninggoals}{
   \item Know the regularized linear model
   \item Know Ridge regression ($L2$ penalty)
@@ -64,7 +64,7 @@ Name comes from the fact that we add positive entries along the diagonal "ridge"
 
 \framebreak 
 
-Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displaystyle \epsilon \sim N( 0,1)$. The true minimizer is given by $\theta ^{*} =( 3,-2)^{T}$.
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.1, 1, 2.5, 5, 10, 20, 100.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
@@ -73,6 +73,13 @@ Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displa
 With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
 
 \framebreak 
+Contours of regularized objective for different $\lambda$ values.
+
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{figure/ridge_contours.png}
+\end{figure}
+
+\framebreak
 
 We understand the geometry of these 2 mixed components in our regularized risk objective much better, if we formulate the optimization as a constrained problem (see this as Lagrange multipliers in reverse).
 
@@ -99,7 +106,7 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \begin{column}{0.5\textwidth}
 \lz
 \begin{figure}
-\includegraphics[width=\textwidth]{figure_man/solution-path-ridge-only.png}
+\includegraphics[width=\textwidth]{figure_man/solution_path_l2.png}
 \end{figure}
 \end{column}
 
@@ -109,7 +116,26 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
   \item We still optimize the $\risket$, but cannot leave a ball around the origin.
   \item $\risket$ grows monotonically if we move away from $\thetah$ (elliptic contours).
   \item Inside constraints perspective: From origin, jump from contour line to contour line (better) until you become infeasible, stop before.
-\item Outside constraints perspective: From $\thetah$, jump from contour line to contour line (worse) until you become feasible, stop then.
+\end{itemize}
+\end{footnotesize}
+\end{column}
+\end{columns}
+
+\framebreak
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\lz
+\begin{figure}
+\includegraphics[width=\textwidth]{figure_man/solution_path.png}
+\end{figure}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{footnotesize} 
+\begin{itemize}
+
+	\item Outside constraints perspective: From $\thetah$, jump from contour line to contour line (worse) until you become feasible, stop then.
   \item So our new optimum will lie on the boundary of that ball.
 \end{itemize}
 \end{footnotesize}
@@ -178,10 +204,26 @@ $$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{
 Comparing this to $\thetah_{\text{Ridge}}$ we see qualitatively different behavior as $\lambda \uparrow$:
 $$\thetah_{\text{Ridge}}=\frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{no sparsity, uniform downscaling})$$
 
+\framebreak
+
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.01, 0.5, 1, 1.5, 2, 2.5, 10.
+
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{figure/lin_reg_l1.png}
+\end{figure}
+
+With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
 \framebreak 
+
+Contours of regularized objective for different $\lambda$ values.
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{figure/lasso_contours.png}
+\end{figure}
+
+\framebreak
 
 We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
 \vspace{-0.2cm}
@@ -204,7 +246,7 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \end{itemize}
  \lz
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure_man/solution-path-ridge-lasso.png}\\
+\includegraphics[width=0.9\textwidth]{figure_man/solution_paths_l1_l2.png}\\
 \end{figure}
 
 \end{vbframe}
