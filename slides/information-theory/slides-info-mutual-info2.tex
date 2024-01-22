@@ -38,10 +38,10 @@ with equality if and only if $X$ and $Y$ are independent.
 
 \textbf{Proof:}$\quad 0 \leq I(X ; Y)=H(X)-H(X | Y)$
 
-Intuitively, the theorem says that knowing another random variable $Y$ can only reduce the uncertainty in $X$. Note that this is true only on the average. 
+Intuitively, the theorem says that knowing another random variable $Y$ can only reduce the uncertainty in $X$. Note that this is true only on average. 
 \vspace{0.5cm}
 
-\textbf{Remark}: Because $H(X)\geq H(X|Y)$ and $H(X)$ is only bounded from below, $I(X ; Y)$ is unbounded from above (lives in all of $\mathbb{R}_{0}^{+}$)
+%\textbf{Remark}: Because $H(X)\geq H(X|Y)$ and $H(X)$ is only bounded from below, $I(X ; Y)$ is unbounded from above (lives in all of $\mathbb{R}_{0}^{+}$)
 
 \framebreak
 
@@ -104,28 +104,33 @@ Intuitively, the theorem says that knowing another random variable $Y$ can only 
 
 \framebreak
 
-\textbf{Independence bound on entropy:} Let $X_{1}, X_{2}, \ldots, X_{n}$ be drawn according to $p\left(x_{1}, x_{2}, \ldots, x_{n}\right) .$ Then
+\textbf{Independence bound on entropy:} 
+
+%Let $X_{1}, X_{2}, \ldots, X_{n}$ be drawn according to $p\left(x_{1}, x_{2}, \ldots, x_{n}\right) .$ Then
 
 \footnotesize
 $$H\left(X_{1}, X_{2}, \ldots, X_{n}\right) \leq \sum_{i=1}^{n} H\left(X_{i}\right),$$
 \normalsize
 
-with equality if and only if the $X_{i}$ are independent.\\
+Holds with equality if and only if $X_{i}$ are jointly independent.
 
 \lz
 
-\textbf{Proof:} With the chain rule for entropies,
+\textbf{Proof:} With chain rule and "conditioning reduces entropy"
 
 \footnotesize
 \begin{equation*}
 \begin{aligned}
 H\left(X_{1}, X_{2}, \ldots, X_{n}\right) &=\sum_{i=1}^{n} H\left(X_{i} | X_{i-1}, \ldots, X_{1}\right) 
-&\leq \sum_{i=1}^{n} H\left(X_{i}\right),
+&\leq \sum_{i=1}^{n} H\left(X_{i}\right)
 \end{aligned}
 \end{equation*}
 \normalsize
 
-where the inequality follows directly from above. We have equality if and only if $X_{i}$ is independent of $X_{i-1}, \ldots, X_{1}$ for all $i$ (i.e., if and only if the $X_{i}$ 's are independent).
+
+Equality holds iff $X_i$ is independent of 
+$X_{i-1},\ldots, X_1$ for all $i$,
+so iff all $X_i$ are jointly independent.
 
 
 \end{vbframe}
@@ -175,19 +180,20 @@ where the inequality follows directly from above. We have equality if and only i
 \begin{itemize}
   % \item Intuitively, mutual information quantifies the amount of shared information between variables.
   \item MI is a measure of the amount of "dependence" between variables. It is zero if and only if the variables are independent.
-  \item On the other hand, if one of the variables is a deterministic function of the other, the mutual information is maximal, i.e. entropy of the first.
- \item Unlike (Pearson) correlation, mutual information is not limited to real-valued random variables.
-    \item Mutual information can be used to perform \textbf{feature selection}. Quite simply, each variable $X_i$ is rated according to $I(X_i;Y)$, this is sometimes called information gain.
-  \item The same principle can also be used in decision trees to select a feature to split on. Splitting on MI/IG is then equivalent to risk reduction with log-loss.
-  \item MI is invariant w.r.t. injective and continuously differentiable reparametrizations
+  \item OTOH, if one RV is a deterministic function of the other, MI is maximal, i.e. entropy of the first RV.
+ \item Unlike (Pearson) correlation, MI is not limited to real-valued RVs.
+    \item Can use MI as a \textbf{feature filter},
+    sometimes called information gain.
+  \item Can also be used in CART to select feature for split.\\ Splitting on MI/IG = risk reduction with log-loss.
+  \item MI invariant under injective and continuously differentiable reparametrizations.
 \end{itemize}
 \end{vbframe}
 
 \begin{vbframe} {Mutual information vs. correlation}
   
 \begin{itemize}
-    \item If two variables are independent, their correlation is 0.
-    \item However, the reverse is not necessarily true. It is possible for two dependent variables to have 0 correlation because correlation only measures linear dependence.
+    \item If two RVs are independent, their correlation is 0.
+    \item But: two dependent RVs can have correlation 0 because correlation only measures linear dependence.
 \end{itemize}
     
 \begin{center}
@@ -195,8 +201,9 @@ where the inequality follows directly from above. We have equality if and only i
 \end{center}
 
 \begin{itemize}
-    \item The figure above shows various scatterplots where, in each case, the correlation is 0 even though the two variables are strongly dependent, and MI is large. 
-    \item Mutual information can therefore be seen as a more general measure of dependence between variables than correlation.
+    \item Above: Many examples with strong dependence, nearly 0 correlation and much larger MI.
+    
+    \item MI can be seen as more general measure of dependence than correlation.
 \end{itemize}
 
 \end{vbframe}
@@ -225,21 +232,21 @@ For $\rho = 0$, $X$ and $Y$ are independent and $I(X;Y) = 0$. \\
 For $\rho = \pm 1$, $X$ and $Y$ are perfectly correlated and $I(X;Y) \rightarrow \infty$. 
 \end{vbframe}
 
-\begin{vbframe}{Estimation of MI}
+% \begin{vbframe}{Estimation of MI}
 
-\begin{itemize}
-    \item In practice, estimation of the mutual information $$I(X;Y) = H(X) + H(Y) - H(X,Y)$$ is usually based on the \textit{empirical information}, i.e., $$\hat{I}(X;Y) = \hat{H}(X) + \hat{H}(Y) - \hat{H}(X,Y)$$
-\end{itemize}
+% \begin{itemize}
+%     \item In practice, estimation of the mutual information $$I(X;Y) = H(X) + H(Y) - H(X,Y)$$ is usually based on the \textit{empirical information}, i.e., $$\hat{I}(X;Y) = \hat{H}(X) + \hat{H}(Y) - \hat{H}(X,Y)$$
+% \end{itemize}
 
-Here, we simply plug in the estimates of the empirical distribution $\hat{p}(x),\hat{p}(y),\hat{p}(x,y)$:
-{\small
-\begin{align*}
-       \hat{H}(X)&=-\sum_{x \in \Xspace} \hat{p}(x) \log_2 \hat{p}(x)\\
-       \hat{H}(Y)&=-\sum_{y \in \mathcal{Y}} \hat{p}(y) \log_2 \hat{p}(y)\\
-       \hat{H}(X,Y) &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  \hat{p}(x,y) \log_2(\hat{p}(x,y))\\
-\end{align*}
-}
-\end{vbframe}
+% Here, we simply plug in the estimates of the empirical distribution $\hat{p}(x),\hat{p}(y),\hat{p}(x,y)$:
+% {\small
+% \begin{align*}
+%        \hat{H}(X)&=-\sum_{x \in \Xspace} \hat{p}(x) \log_2 \hat{p}(x)\\
+%        \hat{H}(Y)&=-\sum_{y \in \mathcal{Y}} \hat{p}(y) \log_2 \hat{p}(y)\\
+%        \hat{H}(X,Y) &= - \sum_{x \in \Xspace} \sum_{y \in \Yspace}  \hat{p}(x,y) \log_2(\hat{p}(x,y))\\
+% \end{align*}
+% }
+% \end{vbframe}
 
 % \begin{vbframe} {Chain rule for information}
 

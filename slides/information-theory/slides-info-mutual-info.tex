@@ -21,7 +21,7 @@
 
 \begin{vbframe}{Joint entropy}
 \begin{itemize}
-  \item The \textbf{joint entropy} of two discrete random variables $X$ and $Y$ with a joint distribution $p(x, y)$ is:
+  \item Recap: The \textbf{joint entropy} of two discrete RVs $X$ and $Y$ with joint pmf $p(x, y)$ is:
   $$ H(X,Y) = -\sum_{x \in \Xspace} \sum_{y \in \Yspace}  p(x,y) \log(p(x,y)),$$ 
   which can also be expressed as $$ H(X,Y) = -\E \left[ \log(p(X,Y)) \right].$$
   % where $I(x,y)$ is the self-information of $(x,y)$.
@@ -33,7 +33,7 @@
   % \begin{footnotesize}
   % $$ H(X_1, X_2, \ldots, X_n) = - \sum_{x_1 \in \Xspace_1} \ldots \sum_{x_n \in \Xspace_n} p(x_1,x_2, \ldots, x_n) \log_2(p(x_1,x_2, \ldots, x_n)) $$ 
   % \end{footnotesize}
-  \item For continuous random variables $X$ and $Y$ with joint density $p(x,y)$, the differential joint entropy is:\\
+  \item For continuous RVs $X$ and $Y$ with joint density $p(x,y)$, the differential joint entropy is:\\
   $$ h(X,Y) = - \int_{\Xspace \times \Yspace} p(x,y) \log p(x,y) dx dy$$
 \end{itemize}
 
@@ -73,7 +73,7 @@ H(Y | X) &= \E_X[H(Y|X=x)] = \sum_{x \in \Xspace} p(x) H(Y | X=x) \\
 
 
 \begin{vbframe} {Chain rule for entropy}
-The \textbf{chain rule for entropy} is analogous to the chain rule for probability and, in fact, derives directly from it.
+The \textbf{chain rule for entropy} is analogous to the chain rule for probability and derives directly from it.
 $$H(X, Y)=H(X)+H(Y | X)$$
 \footnotesize
 \textbf{Proof:}
@@ -91,7 +91,7 @@ $
 
 \lz
 
-n-Variable version:
+n-variable version:
 $$H\left(X_{1}, X_{2}, \ldots, X_{n}\right)=\sumin H\left(X_{i} | X_{i-1}, \ldots, X_{1}\right).$$
 
 
@@ -157,7 +157,7 @@ The following relations hold:
 \begin{aligned}
 H(X, X)       &= H(X)  \\
 H(X | X)      &= 0  \\
-H(X, Y | Z)   &=H(X | Z)+H(Y | X, Z)\\
+H( (X, Y) | Z)   &=H(X | Z)+H(Y | (X, Z))\\
 \end{aligned}
 \end{equation*}
 
@@ -181,8 +181,8 @@ Proof is not hard, but also not completely trivial.
 % \normalsize
 
 \begin{itemize}
-\item The MI describes the amount of information about one random variable obtained through the other one or how different the joint distribution is from pure independence.
-\item Consider two random variables $X$ and $Y$ with a joint probability mass function $p(x, y)$ and marginal probability mass functions $p(x)$ and $p(y)$. The MI $I (X;Y)$ is the Kullback-Leibler Divergence between the joint distribution and the product distribution $p(x)p(y)$:
+\item The MI describes the amount of info about one RV obtained through another RV or how different their joint distribution is from pure independence.
+\item Consider two RVs $X$ and $Y$ with a joint pmf $p(x, y)$ and marginal pmfs $p(x)$ and $p(y)$. The MI $I (X;Y)$ is the Kullback-Leibler Divergence between the joint distribution and the product distribution $p(x)p(y)$:
 \footnotesize
 \begin{equation*}\begin{aligned}
 I(X ; Y) &=\sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
@@ -216,8 +216,7 @@ I(X ; Y) &=\sum_{x, y} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
 &=H(X)-H(X | Y).
 \end{aligned}\end{equation*}
 
-Thus, mutual information $I(X;Y)$ is the reduction in the uncertainty
-of $X$ due to the knowledge of $Y$.
+So, $I(X;Y)$ is reduction in uncertainty of $X$ due to knowledge of $Y$.
 
 \end{vbframe}
 
@@ -264,7 +263,7 @@ Let $X, Y$ have the following joint distribution:
 
 \lz
 
-The marginal distribution of $X$ is $(\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$ and the marginal distribution of $Y$ is $(\frac{1}{4}, \frac{1}{4}, \frac{1}{4}, \frac{1}{4})$, and hence $H(X) = \frac{7}{4}$ bits and $H(Y) = 2$ bits.
+Marginal distribution of $X$ is $(\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$ and marginal distribution of $Y$ is $(\frac{1}{4}, \frac{1}{4}, \frac{1}{4}, \frac{1}{4})$, and hence $H(X) = \frac{7}{4}$ bits and $H(Y) = 2$ bits.
 
 \framebreak
 

@@ -5,9 +5,9 @@
 
 \newcommand{\titlefigure}{figure_man/multinoulli.png}
 \newcommand{\learninggoals}{
-  \item Minimizing KL is equivalent to maximizing the log-likelihod
-  \item Minimizing KL is equivalent to minimizinig cross-entropy
-  \item Minimizing cross-entropy between modeled and observed probabilities is equivalent to log-loss minimization
+  \item Minimizing KL =\\ maximizing log-likelihood
+  \item Minimizing KL =\\ minimizing cross-entropy
+  \item Minimizing CE between modeled and observed probabilities =\\log-loss minimization
 }
 
 \title{Introduction to Machine Learning}
@@ -26,7 +26,9 @@ Minimizing KL between the true distribution $p(x)$ and approximating model $q(x|
     D_{KL}(p \| q_{\thetab}) &= \E_{X \sim p} \left[ \log \frac{p(x)}{q(x|\thetab)}\right] \\
      &= \E_{X \sim p} \log p(x) - \E_{X \sim p} \log q(x|\thetab)
   \end{align*}
-  The first term above does not depend on $\thetab$ and the second term we could also as a def for CE! Therefore,
+  as first term above does not depend on $\thetab$.
+  %and the second term we could also as a def for CE! 
+  Therefore,
   \begin{align*}
     \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) &= \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab)\\ 
                                            &= \argmax_{\thetab} \E_{X \sim p} \log q(x|\thetab)
@@ -34,16 +36,18 @@ Minimizing KL between the true distribution $p(x)$ and approximating model $q(x|
   For a finite dataset of $n$ samples from $p$, this is approximated as 
   $$\argmax_{\thetab} \E_{X \sim p} \log q(x|\thetab) \approx \argmax_{\thetab} \frac{1}{n} \sumin \log q(\xi|\thetab)\,.$$
 
+  This also directly implies an equivalence to risk minimization!
+
 % This demonstrates that density estimation and optimal coding are closely related. If the estimated distribution is different from the true one, any code based on the estimated distribution will necessarily be suboptimal (in terms of the expected length of \enquote{messages} from the true distribution).
 \end{vbframe}
 
 \begin{vbframe}{KL vs Cross-Entropy}
-From this here we can actually see much more:
+From this here we can see much more:
 $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab) = \argmin_{\thetab} H(p \| q_{\thetab}) $$
   \begin{itemize}
-    \item So minimizing w.r.t. KL is the same as minimizing w.r.t. cross-entropy, which implies minimizing w.r.t. cross-entropy is the same as maximum likelihood!
-    \item We could now motivate cross-entropy as the "relevant" term that you have to minimize, when you minimize KL - after you drop $\E_p \log p(x)$, which is simply the neg. entropy H(p)!
-    \item Or we could say: Cross-entropy between $p$ and $q$ is simply the expected negative log-likelihood of $q$, when our data comes from $p$!
+    \item So minimizing KL is the same as minimizing CE, is the same as maximum likelihood!
+    \item We could now motivate CE as the "relevant" term that you have to minimize when you minimize KL - after you drop $\E_p \log p(x)$, which is simply the neg. entropy H(p)!
+    \item Or we could say: CE between $p$ and $q$ is simply the expected negative log-likelihood of $q$, when our data comes from $p$!
   \end{itemize}
 \end{vbframe}
 
