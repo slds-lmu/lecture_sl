@@ -188,8 +188,8 @@ So we want to maximize w.r.t. all $p_i$:
   
   Solving when requiring $\nabla L = 0$,
   \begin{gather*}
-    \frac{\partial L(p_1, \ldots, p_g, \lambda)}{\partial p_i} = 0 = - \log_2(p_i) - 1 - \lambda \\
-    \implies p_i = 2^{(-1 - \lambda)} \implies p_i = \frac{1}{g},
+    \frac{\partial L(p_1, \ldots, p_g, \lambda)}{\partial p_i} = 0 = - \log_2(p_i) - \frac{1}{\log(2)} - \lambda \\
+    \implies p_i = \frac{2^{- \lambda}}{e} \implies p_i = \frac{1}{g},
   \end{gather*}
   last step follows from that all $p_i$ are equal and constraint
   \vspace{0.2cm}\\
