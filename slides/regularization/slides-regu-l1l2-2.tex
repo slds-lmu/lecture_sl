@@ -70,15 +70,19 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \end{vbframe}
 
 \begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
-For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
-$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
-
+\small For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
+\vspace{-0.1cm}
+$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})\vspace{-0.1cm}$$
 Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
-\vspace{0.2cm}
+%\vspace{0.05cm}
 Comparing this to $\thetah_{\text{Ridge}}$ under orthonormal design: %we see qualitatively different behavior as $\lambda \uparrow$:
-$$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}$$
-
-While soft threshold ensures exact zeros in solution, $L2$ penalty uniformly downscales parameters (no sparsity).
+\vspace{-0.3cm}
+$$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{no sparsity})\vspace{-0.22cm}$$
+%Soft threshold ensures exact zeros, while $L2$ penalty shrinks uniformly.
+\vspace{-0.16cm}
+\begin{figure}
+\includegraphics[width=0.52\textwidth]{figure_man/soft-threshold-ridge-ols.pdf}\\
+\end{figure}
 
 \end{vbframe}
 
