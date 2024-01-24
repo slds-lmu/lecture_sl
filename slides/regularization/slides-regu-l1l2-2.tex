@@ -1,0 +1,109 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure/lin_reg_l1.png}
+\newcommand{\learninggoals}{
+  \item Know the regularized linear model
+  \item Know Ridge regression ($L2$ penalty)
+  \item Know Lasso regression ($L1$ penalty)
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Ridge and Lasso Regression II}
+\lecture{Introduction to Machine Learning}
+
+% \section{Lasso Regression}
+
+\begin{vbframe}{Lasso Regression}
+
+Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
+\vspace{0.4cm}
+\begin{eqnarray*}
+\thetah_{\text{Lasso}}= \argmin_{\thetab} \underbrace{\sumin \left(\yi - \thetab^T \xi\right)^2}_{\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right)} + \lambda \|\thetab\|_1
+\end{eqnarray*}
+
+\vspace{0.4cm}
+
+Optimization is much harder now. $\riskrt$ is still convex, but in general there is no analytical solution and it is non-differentiable.\\
+\vspace{0.2cm}
+
+
+\framebreak
+
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.01, 0.5, 1, 1.5, 2, 2.5, 10.
+
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{figure/lin_reg_l1.png}
+\end{figure}
+
+With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
+
+%\textbf{NB}: lasso=least absolute shrinkage and selection operator.
+
+\framebreak 
+
+Contours of regularized objective for different $\lambda$ values.
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{figure/lasso_contours.png}
+\end{figure}
+
+\framebreak
+
+We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
+\vspace{-0.2cm}
+\begin{eqnarray*}
+\min_{\thetab} \sumin \left(\yi - \fxit\right)^2\,
+\text{subject to: } \|\thetab\|_1 \leq t
+\end{eqnarray*}
+The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
+\vspace{-0.1cm}
+\begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
+\includegraphics[width=0.95\textwidth]{figure/lasso_contours_cases.png}\\
+\end{figure}
+
+\end{vbframe}
+
+\begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
+For the special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
+$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
+
+Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
+\vspace{0.2cm}
+Comparing this to $\thetah_{\text{Ridge}}$ under orthonormal design we see qualitatively different behavior as $\lambda \uparrow$:
+$$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}$$
+
+While soft threshold ensures exact zeros in solution, $L2$ penalty uniformly downscales parameters (no sparsity).
+
+\end{vbframe}
+
+\begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
+\begin{itemize}
+    \item Ridge regression results in a smooth solution path with non-sparse parameters
+    \item Lasso regression induces sparsity, but only for large enough $\lambda$
+\end{itemize}
+ \lz
+\begin{figure}
+\includegraphics[width=0.9\textwidth]{figure_man/solution_paths_l1_l2.png}\\
+\end{figure}
+
+\end{vbframe}
+
+\begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
+Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
+ 
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
+\end{figure}
+
+\end{vbframe}
+
+
+\endlecture
+\end{document}
+
