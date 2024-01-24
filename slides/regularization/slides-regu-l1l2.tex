@@ -7,7 +7,8 @@
 \newcommand{\learninggoals}{
   \item Know the regularized linear model
   \item Know Ridge regression ($L2$ penalty)
-  \item Know Lasso regression ($L1$ penalty)
+  \item Understand correspondence to constrained optimization
+  %\item Know Lasso regression ($L1$ penalty)
 }
 
 \title{Introduction to Machine Learning}
@@ -15,7 +16,7 @@
 
 \begin{document}
 
-\lecturechapter{Lasso and Ridge Regression}
+\lecturechapter{Ridge and Lasso Regression I}
 \lecture{Introduction to Machine Learning}
 
 
@@ -188,6 +189,7 @@ With an $L2$ penalty we can now select $d$ "too large" but regularize our model 
 
 % \section{Lasso Regression}
 
+\begin{comment}
 \begin{vbframe}{Lasso Regression}
 
 Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
@@ -198,21 +200,16 @@ Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsiz
 Optimization is much harder now. $\riskrt$ is still convex, but in general there is no analytical solution and it is non-differentiable.\\
 \vspace{0.2cm}
 
-For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can get closed-form solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
-$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
-
-Comparing this to $\thetah_{\text{Ridge}}$ we see qualitatively different behavior as $\lambda \uparrow$:
-$$\thetah_{\text{Ridge}}=\frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{no sparsity, uniform downscaling})$$
 
 \framebreak
 
 Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.01, 0.5, 1, 1.5, 2, 2.5, 10.
 
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/lin_reg_l1.png}
+\includegraphics[width=0.7\textwidth]{figure/lin_reg_l1.png}
 \end{figure}
 
-With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
+With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
@@ -239,6 +236,17 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 
 \end{vbframe}
 
+\begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
+For the special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
+$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
+
+The function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called the \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
+\vspace{0.2cm}
+Comparing this to $\thetah_{\text{Ridge}}$ under orthonormal design we see qualitatively different behavior as $\lambda \uparrow$:
+$$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{uniform downscaling})$$
+
+\end{vbframe}
+
 \begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
 \begin{itemize}
     \item Ridge regression results in a smooth solution path with non-sparse parameters
@@ -259,7 +267,7 @@ Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\
 \end{figure}
 
 \end{vbframe}
-
+\end{comment}
 
 \endlecture
 \end{document}
