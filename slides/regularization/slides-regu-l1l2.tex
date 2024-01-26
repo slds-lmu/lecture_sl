@@ -65,7 +65,7 @@ Name comes from the fact that we add positive entries along the diagonal "ridge"
 
 \framebreak 
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.1, 1, 2.5, 5, 10, 20, 100.
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
@@ -77,8 +77,10 @@ With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the or
 Contours of regularized objective for different $\lambda$ values.
 
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/ridge_contours.png}
+\includegraphics[width=0.85\textwidth]{figure/ridge_contours.png}
 \end{figure}
+
+Green marks true minimizer and red the estimates.
 
 \framebreak
 
@@ -116,6 +118,25 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \begin{itemize}
   \item We still optimize the $\risket$, but cannot leave a ball around the origin.
   \item $\risket$ grows monotonically if we move away from $\thetah$ (elliptic contours).
+  \item Solution path moves from origin to border of feasible region with minimal $L_2$ distance.
+\end{itemize}
+\end{footnotesize}
+\end{column}
+\end{columns}
+
+\framebreak
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\lz
+\begin{figure}
+\includegraphics[width=\textwidth]{figure/ridge_inside.png}
+\end{figure}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{footnotesize} 
+\begin{itemize}
   \item Inside constraints perspective: From origin, jump from contour line to contour line (better) until you become infeasible, stop before.
 \end{itemize}
 \end{footnotesize}
@@ -129,6 +150,26 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \lz
 \begin{figure}
 \includegraphics[width=\textwidth]{figure_man/solution_path.png}
+\end{figure}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{footnotesize} 
+\begin{itemize}
+
+	\item Solution path moves from unregularized estimate to feasible region of regularized objective with minimal $L_2$ distance.
+\end{itemize}
+\end{footnotesize}
+\end{column}
+\end{columns}
+
+\framebreak
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\lz
+\begin{figure}
+\includegraphics[width=\textwidth]{figure/ridge_outside.png}
 \end{figure}
 \end{column}
 
