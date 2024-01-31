@@ -5,9 +5,8 @@
 
 \newcommand{\titlefigure}{figure/lin_reg_l1.png}
 \newcommand{\learninggoals}{
-  \item Know the regularized linear model
-  \item Know Ridge regression ($L2$ penalty)
   \item Know Lasso regression ($L1$ penalty)
+  \item Know the properties of $L1$ regularization
 }
 
 \title{Introduction to Machine Learning}
@@ -15,7 +14,7 @@
 
 \begin{document}
 
-\lecturechapter{Ridge and Lasso Regression II}
+\lecturechapter{Lasso Regression}
 \lecture{Introduction to Machine Learning}
 
 % \section{Lasso Regression}
@@ -24,9 +23,10 @@
 
 Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
 \vspace{0.4cm}
-\begin{eqnarray*}
-\thetah_{\text{Lasso}}= \argmin_{\thetab} \underbrace{\sumin \left(\yi - \thetab^T \xi\right)^2}_{\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right)} + \lambda \|\thetab\|_1
-\end{eqnarray*}
+\begin{align*}
+\thetah_{\text{Lasso}}&= \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi\right)^2 + \lambda \sum_{j=1}^{p} \vert\theta_j\vert\\
+&= \argmin_{\thetab}\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \|\thetab\|_1
+\end{align*}
 
 \vspace{0.4cm}
 
@@ -36,13 +36,34 @@ Optimization is much harder now. $\riskrt$ is still convex, but in general there
 
 \framebreak
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. 
-
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. \\
+\vspace{0.1cm}
+Left plot shows effect of $L1$ regularization, right plot shows corresponding with $L2$ for comparison:
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\lz
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/lin_reg_l1.png}
+\includegraphics[width=0.99\textwidth]{figure/lin_reg_l1.png}
 \end{figure}
+\end{column}
 
-With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
+\begin{column}{0.5\textwidth}
+\lz
+\begin{figure}
+\includegraphics[width=0.99\textwidth]{figure/lin_reg_l2.png}
+\end{figure}
+\end{column}
+\end{columns}
+
+%\begin{figure}
+%\includegraphics[width=0.8\textwidth]{figure/lin_reg_l1.png}
+%\end{figure}
+
+%\begin{figure}
+%\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
+%\end{figure}
+
+With increasing regularization, $\hat{\theta}_{\textit{Lasso}}$ is pulled back to the origin, but takes a different ``route''.
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
@@ -53,7 +74,7 @@ Contours of regularized objective for different $\lambda$ values.
 \includegraphics[width=0.85\textwidth]{figure/lasso_contours.png}
 \end{figure}
 
-Green marks true minimizer and red the estimates.
+Green  = true minimizer of the unreg.objective and red = lasso solution.
 
 \framebreak
 
@@ -83,7 +104,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 %Soft threshold ensures exact zeros, while $L2$ penalty shrinks uniformly.
 \vspace{-0.16cm}
 \begin{figure}
-\includegraphics[width=0.52\textwidth]{figure_man/soft-threshold-ridge-ols.pdf}\\
+\includegraphics[width=0.5\textwidth]{figure_man/soft-thresholding.pdf}\\
 \end{figure}
 
 \end{vbframe}

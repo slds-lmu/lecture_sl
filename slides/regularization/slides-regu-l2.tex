@@ -3,7 +3,7 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure_man/solution_path_l2.png}
+\newcommand{\titlefigure}{figure/ridge_outside.png}
 \newcommand{\learninggoals}{
   \item Know the regularized linear model
   \item Know Ridge regression ($L2$ penalty)
@@ -16,7 +16,7 @@
 
 \begin{document}
 
-\lecturechapter{Ridge and Lasso Regression I}
+\lecturechapter{Ridge Regression}
 \lecture{Introduction to Machine Learning}
 
 
@@ -54,8 +54,8 @@ So we measure $J(\thetab)$ through a vector norm, shrinking coefs closer 0 (\tex
 \vspace{0.2cm}
 \textbf{Ridge regression} uses a simple $L2$ penalty:
 \begin{eqnarray*}  
-\thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 \\
-&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab
+\thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
+&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \underbrace{\thetab^\top \thetab}_{\|\thetab\|_2^2}
 \end{eqnarray*}
 
 Optimization is possible (as in the normal LM) in analytical form:
@@ -70,17 +70,17 @@ Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 \end{figure}
-
-With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
+%\vspace{-0.2cm}
+With increasing regularization, $\hat{\theta}_{\textit{Ridge}}$ is pulled back to the origin.
 
 \framebreak 
 Contours of regularized objective for different $\lambda$ values.
 
 \begin{figure}
-\includegraphics[width=0.85\textwidth]{figure/ridge_contours.png}
+\includegraphics[width=0.8\textwidth]{figure/ridge_contours.png}
 \end{figure}
-
-Green marks true minimizer and red the estimates.
+\vspace{-0.2cm}
+Green  = true minimizer of the unreg.objective and red = ridge solution.
 
 \framebreak
 
@@ -104,27 +104,6 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \end{footnotesize}
 
 \framebreak
-  
-\begin{columns}
-\begin{column}{0.5\textwidth}
-\lz
-\begin{figure}
-\includegraphics[width=\textwidth]{figure_man/solution_path_l2.png}
-\end{figure}
-\end{column}
-
-\begin{column}{0.5\textwidth}
-\begin{footnotesize} 
-\begin{itemize}
-  \item We still optimize the $\risket$, but cannot leave a ball around the origin.
-  \item $\risket$ grows monotonically if we move away from $\thetah$ (elliptic contours).
-  \item Solution path moves from origin to border of feasible region with minimal $L_2$ distance.
-\end{itemize}
-\end{footnotesize}
-\end{column}
-\end{columns}
-
-\framebreak
 
 \begin{columns}
 \begin{column}{0.5\textwidth}
@@ -138,30 +117,14 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \begin{footnotesize} 
 \begin{itemize}
   \item Inside constraints perspective: From origin, jump from contour line to contour line (better) until you become infeasible, stop before.
+  \item We still optimize the $\risket$, but cannot leave a ball around the origin.
+  \item $\risket$ grows monotonically if we move away from $\thetah$ (elliptic contours).
+  \item Solution path moves from origin to border of feasible region with minimal $L_2$ distance.
 \end{itemize}
 \end{footnotesize}
 \end{column}
 \end{columns}
 
-\framebreak
-
-\begin{columns}
-\begin{column}{0.5\textwidth}
-\lz
-\begin{figure}
-\includegraphics[width=\textwidth]{figure_man/solution_path.png}
-\end{figure}
-\end{column}
-
-\begin{column}{0.5\textwidth}
-\begin{footnotesize} 
-\begin{itemize}
-
-	\item Solution path moves from unregularized estimate to feasible region of regularized objective with minimal $L_2$ distance.
-\end{itemize}
-\end{footnotesize}
-\end{column}
-\end{columns}
 
 \framebreak
 
@@ -179,11 +142,34 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 
 	\item Outside constraints perspective: From $\thetah$, jump from contour line to contour line (worse) until you become feasible, stop then.
   \item So our new optimum will lie on the boundary of that ball.
+  \item Solution path moves from unregularized estimate to feasible region of regularized objective with minimal $L_2$ distance.
 \end{itemize}
 \end{footnotesize}
 \end{column}
 \end{columns}
 
+\framebreak
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\lz
+\begin{figure}
+\includegraphics[width=\textwidth]{slides/regularization/figure_man/solution-path-ridge-only.png}
+\end{figure}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\lz
+\begin{footnotesize} 
+\begin{itemize}
+    \item Here we can see entire solution path for Ridge regression
+    \item Cyan contours indicate feasible regions induced by different $\lambda$s
+    \item Red contour lines indicate different levels of the unreg. objective
+    \item Ridge solution (red points) gets pulled toward origin for increasing $\lambda$
+\end{itemize}
+\end{footnotesize}
+\end{column}
+\end{columns}
 
 \end{vbframe}
 
@@ -250,7 +236,7 @@ Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer 
 \includegraphics[width=0.7\textwidth]{figure/lin_reg_l1.png}
 \end{figure}
 
-With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
+With increasing regularization, $\theta_{\textit{Ridge}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 

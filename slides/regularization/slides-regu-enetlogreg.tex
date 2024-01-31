@@ -21,7 +21,7 @@
 
 % \section{Elastic Net}
 
-\begin{vbframe} {Elastic Net}
+\begin{vbframe} {Elastic Net \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-9868.2005.00503.x}}
 
 
 Elastic Net combines the $L1$ and $L2$ penalties:
@@ -43,21 +43,20 @@ Elastic Net combines the $L1$ and $L2$ penalties:
 \framebreak
 \footnotesize
 Simulating 50 data sets with 100 observations each for two coefficient settings: \\
-
-
+\vspace{-0.3cm}
 $$\yv =\Xmat \boldsymbol{\theta}+ \epsilon, \quad \epsilon \sim N(0,1)$$
-  
-  \begin{columns}
+\vspace{-0.3cm}
+\begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{center}
-\textbf{Ridge} performs better for: \\ 
+{\footnotesize \textbf{Ridge} performs better for correlated features}: \\ 
 $\boldsymbol{\theta}=(\underbrace{2,\ldots,2}_{5},\underbrace{0,\ldots,0}_{5})$\\
 $ \operatorname{corr}(\Xmat_{i},\Xmat_{j})=0.8^{|i-j|}$ for all $i$ and $j$
   \end{center}
 \end{column}
 \begin{column}{0.5\textwidth} 
 \begin{center}
-\textbf{Lasso} performs better for: \\
+{\footnotesize \textbf{Lasso} performs better for sparse truth/no correlation:} \\
 $\boldsymbol{\theta}=(2, 2, 2,\underbrace{0,\ldots,0}_{7})$ \\
 $\operatorname{corr}(\Xmat_{i},\Xmat_{j})= 0$ for all $i \neq j$, otherwise 1
 \end{center}
@@ -65,9 +64,9 @@ $\operatorname{corr}(\Xmat_{i},\Xmat_{j})= 0$ for all $i \neq j$, otherwise 1
 \end{columns}
 
 \begin{figure}
-\includegraphics[width=1\textwidth]{figure/enet_lasso_ridge_mse.png}\\
+\includegraphics[width=0.7\textwidth]{figure/enet_lasso_ridge_mse.png}\\
 \end{figure}
-
+{\normalsize $\implies$ Elastic Net handles both cases well}
 \framebreak
 
 \begin{figure}
@@ -75,8 +74,10 @@ $\operatorname{corr}(\Xmat_{i},\Xmat_{j})= 0$ for all $i \neq j$, otherwise 1
 \end{figure}
 
 
-\normalsize
-Since Elastic Net offers a compromise between Ridge and Lasso, it is suitable for both data situations.
+\footnotesize
+LHS: Ridge can not perform variable selection compared to Lasso/E-Net. Lasso more often ignores relevant features than E-Net (longer tails in violin plot).\\
+RHS: Ridge estimates of noise features hover around $0$ while Lasso/E-Net produce $0$s.
+%Since Elastic Net offers a compromise between Ridge and Lasso, it is suitable for both data situations.
 
 \end{vbframe}
 

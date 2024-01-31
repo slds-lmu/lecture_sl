@@ -1,0 +1,131 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+\newcommand{\titlefigure}{figure_man/lasso_ridge_hat.png}
+\newcommand{\learninggoals}{
+  \item Know $L1$/$L2$ regularization induces bias
+  \item Know Lq (quasi-)norm regularization
+  \item Understand that L0 regularization simply counts number of non-zero parameters
+  \item Know SCAD and MCP
+}
+
+\title{Introduction to Machine Learning}
+\date{}
+
+\begin{document}
+
+\lecturechapter{Other Types of Regularizers}
+\lecture{Introduction to Machine Learning}
+
+\begin{vbframe}{Ridge and Lasso are biased estimators} 
+Although ridge and lasso regression have many nice properties, they are biased estimators and the bias does not (necessarily) vanish as $n \rightarrow \infty$.\\
+\vspace{0.3cm}
+
+For example, in the orthonormal case ($\Xmat^{\top}\Xmat=\bm{I}$) the bias of the lasso is
+$$
+\begin{cases}\mathbb{E}\left|\widehat{\theta}_j-\theta_j\right|=0 & \text { if } \theta_j=0 \\ \mathbb{E}\left|\widehat{\theta}_j-\theta_j\right| \approx \theta_j & \text { if }\left|\theta_j\right| \in[0, \lambda] \\ \mathbb{E}\left|\widehat{\theta}_j-\theta_j\right| \approx \lambda & \text { if }\left|\theta_j\right|>\lambda\end{cases}
+$$
+\vspace{0.3cm}
+
+The bias of the lasso for noise features is thus about $\lambda$ for large $|\theta|$.\\
+\vspace{0.2cm}
+To reduce the bias/shrinkage of regularized estimators various penalties were proposed, a few of which we briefly introduce now.
+
+\end{vbframe}
+
+\begin{vbframe}{$Lq$ regularization}
+Besides $L1$ and $L2$ norm we could use any $Lq$ (quasi-)norm for regularization.
+
+
+\begin{figure}
+  \scalebox{0.55}{\includegraphics{figure_man/lasso_ridge_hat.png}}\\
+%\includegraphics[height=2.3cm]{figure_man/contour.pdf}
+\caption{\textit{Top:} Ridge and Lasso loss contours and feasible regions.
+\textit{Bottom:} Different feasible region shapes for $Lq$ norms $\sum_j |\theta_j|^q$.}
+\end{figure}
+
+Note that for $q<1$ the penalty becomes non-convex (much harder to optimize!) and for $q>1$ no sparsity is obtained
+
+\end{vbframe}
+
+
+\begin{vbframe}{L0 regularization}
+
+  \begin{itemize}
+    \item Consider the $L0$-regularized risk of a model $\fxt$
+  $$
+  \riskrt = \risket + \lambda \|\thetab\|_0 := \risket + \lambda \sum_j |\theta_j|^0.
+  $$
+      \item Unlike the $L1$ and $L2$ norms, the $L0$ "norm" simply counts the number of non-zero parameters in the model.
+      \vspace{0.3cm}
+    \begin{figure}
+      \centering
+        \scalebox{0.99}{\includegraphics{figure_man/lq-penalty-plots.png}}
+        %\tiny{\\ Credit: Christos Louizos}
+        \caption{\footnotesize $Lq$ (quasi-)norm penalties for a scalar parameter $\thetab$ for different values of $q$}
+    \end{figure}
+
+    \end{itemize}
+    
+\end{vbframe}
+
+\begin{vbframe} {L0 regularization}
+
+    \begin{itemize}
+    \item For any parameter $\thetab$, the $L0$ penalty is zero for $\thetab = 0$ (defining $0^0 := 0$) and is constant for any $\thetab \neq 0$, no matter how large or small it is.
+    \item $L0$ regularization induces sparsity in the parameter vector more aggressively than $L1$ regularization, but does not shrink concrete parameter values as L1 and L2 does (unbiased).
+    \item Model selection criteria such as Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) are special cases of $L0$ regularization (corresponding to specific values of $\lambda$).
+    \item The $L0$-regularized risk is neither continuous, differentiable nor convex. 
+    \item It is computationally hard to optimize (NP-hard) and likely intractable. 
+      For smaller $n$ and $p$ we might be able to solve this nowadays directly, for larger scenarios efficient approximations of the $L0$ are still topic of current research.
+  \end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{SCAD \citebutton{Fan and Li, 2007}{https://www.tandfonline.com/doi/full/10.1080/00401706.2020.1801256?casa_token=JhnIrgzTysMAAAAA:Z216Mc0l0qPEBUOW7kL2W0NjHC9TxdU4J6RtVs6ME7MW3_rN7CwqXZMAjKUwZo2Qz5iPd-jzKc4ffA}}
+
+The SCAD ({\footnotesize{Smoothly Clipped Absolute Deviations}}) penalty is non-convex regularizer with piece-wise definition using add. hyperparam $\gamma>2$ controlling how fast penalty tapers off:
+$$
+\text{SCAD}(\theta \mid \lambda, \gamma)= \begin{cases}\lambda|\theta| & \text { if }|\theta| \leq \lambda \\ \frac{2 \gamma \lambda|\theta|-\theta^2-\lambda^2}{2(\gamma-1)} & \text { if } \lambda<|\theta|<\gamma \lambda \\ \frac{\lambda^2(\gamma+1)}{2} & \text { if }|\theta| \geq \gamma \lambda\end{cases}
+$$
+
+The SCAD penalty 
+\begin{enumerate}
+    \item coincides with the lasso for small values until $|\theta|=\lambda$,
+    \item then (smoothly) transitions to a quadratic up to $|\theta|=\gamma \lambda$,
+    \item remains constant for all $|\theta|>\gamma \lambda$
+\end{enumerate}
+\vspace{0.3cm}
+As opposed to the Lasso/Ridge regression, SCAD continuously relaxes penalization rate as $|\theta|$ increases above $\lambda$. %SCAD is asymptotically unbiased due to the ``clipping'' of the penalty.
+
+
+\end{vbframe}
+
+\begin{vbframe}{MCP \citebutton{Zhang, 2010}{https://arxiv.org/pdf/1002.4734.pdf}}
+
+MCP ({\footnotesize{Minimax Concave Penalty}}) is another non-convex regularizer with a similar idea to SCAD, defined as (for $\gamma>1$):
+
+$$
+MCP(\theta | \lambda, \gamma)= \begin{cases}\lambda|\theta|-\frac{\theta^2}{2 \gamma}, & \text { if }|\theta| \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2, & \text { if }|\theta|>\gamma \lambda\end{cases}
+$$
+\vspace{0.3cm}
+\begin{itemize}\setlength{\itemsep}{1.3em}
+    \item As with SCAD, MCP starts by applying same penalization rate as lasso, then smoothly reduces rate down to zero as $|\theta|$ increases
+    \item Different from SCAD, MCP immediately starts relaxing the penalization rate, while for SCAD rate remains flat until $|\theta|>\lambda$
+    \item Both SCAD and MCP possess oracle property: they can consistently select true model as $n \to \infty$ while lasso may fail
+\end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{SCAD and MCP vs Lasso}
+
+\begin{figure}
+      \centering
+        \scalebox{0.95}{\includegraphics{figure_man/penalties-comparison.pdf}}
+        \caption{\footnotesize Lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetab$}
+    \end{figure}
+\end{vbframe}
+
+\endlecture
+\end{document}

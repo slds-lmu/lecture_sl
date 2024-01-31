@@ -31,7 +31,7 @@ p <- ggplot(data, aes(x = rho)) +
   geom_line(aes(y = theta), color = 'blue', linetype = "solid", size=1.2) +
   geom_line(aes(y = OLS), color = 'grey', linetype = "dashed", size=1.2) +
   geom_line(aes(y = Ridge), color = 'red', linetype = "solid", size=1.2) + 
-  labs(x = expression(theta[j]), y = expression(theta[j]), title = 'Lasso vs Ridge solution in terms of OLS (orthonormal design)') +
+  labs(x = expression(theta[j]), y = expression(theta[j]), title = 'Lasso vs Ridge solution in terms of OLS (orthonormal design, lambda=3)') +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, size = 20),  

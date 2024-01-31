@@ -32,7 +32,7 @@ $$
     \item \small{In both cases, the solution which minimizes $\riskrt$ is always a point on the boundary of the feasible region (for sufficiently large $\lambda$).
     \item As expected, $\hat{\thetab}_{\text{Lasso}}$ and $\hat{\thetab}_{\text{Ridge}}$ have smaller parameter norms than $\thetah$.}
     \item For Lasso, the solution likely touches vertices of the constraint region. This induces sparsity and is a form of variable selection.
-    \item In the $p>n$ case, the Lasso selects at most $n$ features (due to the nature of the convex optimization problem).
+    \item In the $p>n$ case, Lasso selects at most $n$ features \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}.
     
   \end{itemize}
   
@@ -128,7 +128,8 @@ $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
 
 \includegraphics[width=0.9\textwidth]{figure/regu_example_multicollinearity.png}
 
-Consider $n=100$ simulated observations using $y = 0.2X_1 + 0.2X_2 + 0.2X_3 + 0.2X_4 + 0.2X_5 + \epsilon$, $\epsilon \sim \normal (0,1)$. $X_1$-$X_4$ are independently drawn from different normal distributions: $X_1, X_2, X_3, X_4 \sim \normal (0,2)$. While $X_1$-$X_4$ have pairwise correlation coefficients of 0, $X_4$ and $X_5$ are nearly perfectly correlated: $X_5 = X_4 + \delta, \delta \sim \normal (0,0.3), \rho(X_4, X_5) = 0.98. $
+Consider $n=100$ simulated observations using $y = 0.2X_1 + 0.2X_2 + 0.2X_3 + 0.2X_4 + 0.2X_5 + \epsilon$.\\
+$X_1$-$X_4$ are independent, but $X_4$ and $X_5$ are strongly correlated.
 
 \vspace{0.1cm}
 
@@ -137,12 +138,12 @@ We see that Lasso shrinks the coefficient for $X_5$ to zero early on, while Ridg
 \end{vbframe}
 
 
-\begin{vbframe}{Summarizing Comments}
+\begin{vbframe}{Synopsis \citebutton{Tibshirani, 1996}{https://www.jstor.org/stable/2346178} \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-9868.2005.00503.x}}
 
 \begin{itemize}
-\item Neither one can be classified as overall better (no free lunch!)
-\item Lasso is likely better if true underlying structure is sparse, so if only few features influence $y$. Ridge works well if there are many (weakly) influential features.
+\item Neither one can be classified as overall better
 \item Lasso can set some coefficients to zero, thus performing variable selection, while Ridge regression usually leads to smaller estimated coefficients, but still dense parameter vectors $\thetab$.
+\item Lasso is likely better if true underlying structure is sparse, so if only few features influence $y$. Ridge works well if there are many (weakly) influential features.
 \item Lasso has difficulties handling correlated predictors. For high correlation Ridge dominates Lasso in performance.
 \item For Lasso one of the correlated predictors will have a larger coefficient, while the rest are (nearly) zeroed. The respective feature is, however, selected randomly. 
 \item For Ridge the coefficients of correlated features are similar.
