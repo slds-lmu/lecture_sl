@@ -86,6 +86,46 @@ Coefficient histograms for different $\lambda$ values for Ridge and Lasso for si
 
 \framebreak
 
+\textbf{Example:}\\
+
+\footnotesize{
+\begin{itemize}
+    \item Let the DGP be $y_i = \sum_{j=1}^{5} \theta_j x_{ij} +\varepsilon_i$ for $\thetab=(1,2,3,4,5)^\top$, $\varepsilon_i \sim \mathcal{N}(0,1)$ %and $n=100$
+    \item Suppose $x_5$ was measured in $m$ but we change the unit to $cm$ ($\Tilde{x}_5=100 \cdot x_5$):
+\end{itemize}
+\vspace{-0.4cm}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c c c c c c|}
+\hline
+\textbf{Method} & \( \hat{\theta}_1 \) & \( \hat{\theta}_2 \) & \( \hat{\theta}_3 \) & \( \hat{\theta}_4 \) & \( \hat{\theta}_5 \) & MSE \\ \hline
+OLS             & 0.9835872 & 2.147303 & 3.005854 & 3.917807 & \textbf{5.20491245} & 0.8124301 \\ %\hline
+OLS Rescaled    & 0.9835872 & 2.147303 & 3.005854 & 3.917807 & \textbf{0.05204912} & 0.8124301 \\ \hline
+\end{tabular}
+%\caption{Equivariant OLS estimates under rescaling of $x_5$}
+\end{table}
+\vspace{-0.1cm}
+\begin{itemize}
+    \item Estimate $\hat{\theta}_5$ gets scaled by $1/100$ while other estimates and MSE are invariant
+    \item Running ridge regression with $\lambda=10$ on same data shows that rescaling of of $x_5$ does not result in inverse rescaling of $\hat{\theta}_5$ (everything changes!)
+    \item This is because $\hat{\theta}_5$ now lives on small scale while $L2$ constraint stays the same. Hence remaining estimates can ``afford'' larger magnitudes.
+\end{itemize}
+\vspace{-0.4cm}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c c c c c c|}
+\hline
+\textbf{Method} & \( \hat{\theta}_1 \) & \( \hat{\theta}_2 \) & \( \hat{\theta}_3 \) & \( \hat{\theta}_4 \) & \( \hat{\theta}_5 \) & MSE \\ \hline
+Ridge           & 0.7093407 & 1.873643 & 2.661345 & 3.557891 & \textbf{4.63642392} & 1.3664731 \\ %\hline
+Ridge Rescaled  & 0.8021802 & 1.942568 & 2.675207 & 3.569190 & \textbf{0.05134698} & 1.0796400 \\ \hline
+\end{tabular}
+%\caption{Ridge estimates for $\lambda=10$ under rescaling of $x_5$}
+\end{table}
+}
+
+\framebreak
+
+\begin{comment}
 \textbf{Example:}
 \begin{itemize}
 \item Let the true data generating process be
@@ -119,6 +159,7 @@ $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
 
 \item This is due to the fact, that the coefficient of $x_2$ will live on a very small scale as the covariate itself is large. The feature will thus get less penalized by the $L1$-norm and is favored by Lasso.
 \end{itemize}
+\end{comment}
 
 \end{vbframe}
 
