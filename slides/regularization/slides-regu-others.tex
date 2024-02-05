@@ -35,19 +35,24 @@ To reduce the bias/shrinkage of regularized estimators various penalties were pr
 
 \end{vbframe}
 
-\begin{vbframe}{$Lq$ regularization}
-Besides $L1$ and $L2$ norm we could use any $Lq$ (quasi-)norm for regularization.
+\begin{vbframe}{$Lq$ regularization \citebutton{Knight and Fu, 2000}{https://websites.umich.edu/~jizhu/jizhu/KnightFu-AoS00.pdf}}
+Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \thetab \Vert_q^q$.
 
 
 \begin{figure}
-  \scalebox{0.55}{\includegraphics{figure_man/lasso_ridge_hat.png}}\\
+  \scalebox{0.53}{\includegraphics{figure_man/lasso_ridge_hat.png}}\\
 %\includegraphics[height=2.3cm]{figure_man/contour.pdf}
-\caption{\textit{Top:} Ridge and Lasso loss contours and feasible regions.
-\textit{Bottom:} Different feasible region shapes for $Lq$ norms $\sum_j |\theta_j|^q$.}
+\caption{{\scriptsize \textit{Top:} loss contours and $L1$/$L2$ constraints.
+\textit{Bottom:} Constraints for $Lq$ norms $\sum_j |\theta_j|^q$.}}
 \end{figure}
-
-Note that for $q<1$ the penalty becomes non-convex (much harder to optimize!) and for $q>1$ no sparsity is obtained
-
+\vspace{-0.4cm}
+{\footnotesize
+\begin{itemize}
+    \item For $q<1$ penalty becomes non-convex but for $q>1$ no sparsity is achieved
+    \item Non-convex $Lq$ regularization has some nice properties like \textbf{oracle property} \citebutton{Zou, 2006}{http://users.stat.umn.edu/~zouxx019/Papers/adalasso.pdf}: consistent (+asy. unbiased) param estimation and variable selection
+    \item Downside: non-convexity of penalty makes optimization even harder than $L1$ (no unique global minimum but many bad local minima)
+\end{itemize}
+}
 \end{vbframe}
 
 
