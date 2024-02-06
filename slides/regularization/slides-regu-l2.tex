@@ -65,7 +65,7 @@ Name comes from the fact that we add positive entries along the diagonal "ridge"
 
 \framebreak 
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$.
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$, with $ \thetah_{\text{Ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
@@ -74,7 +74,8 @@ Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer 
 With increasing regularization, $\hat{\theta}_{\textit{Ridge}}$ is pulled back to the origin.
 
 \framebreak 
-Contours of regularized objective for different $\lambda$ values.
+Contours of regularized objective for different $\lambda$ values.\\
+$ \thetah_{\text{Ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/ridge_contours.png}
@@ -96,7 +97,7 @@ We understand the geometry of these 2 mixed components in our regularized risk o
 \vspace{-1.0cm}
 
 \begin{figure}
-\includegraphics[width=0.3\textwidth]{figure_man/ridge_hat.png}
+\includegraphics[width=0.6\textwidth]{figure/ridge_constraints.png}
 \end{figure}
 
 \begin{footnotesize} 

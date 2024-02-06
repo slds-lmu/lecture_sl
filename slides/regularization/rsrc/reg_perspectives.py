@@ -240,3 +240,78 @@ for i, ax in enumerate(axs.flatten()):
 
 plt.tight_layout()
 plt.show()
+
+
+# Elliptical objective function with rotation
+def rotated_elliptical_objective(X, Y, center, a, b, angle_deg):
+    """ Rotated elliptical objective function. """
+    angle_rad = np.radians(angle_deg)
+    X_rot = np.cos(angle_rad) * (X - center[0]) - np.sin(angle_rad) * (Y - center[1])
+    Y_rot = np.sin(angle_rad) * (X - center[0]) + np.cos(angle_rad) * (Y - center[1])
+    return (X_rot**2 / a**2) + (Y_rot**2 / b**2)
+
+# Define elliptical parameters
+a, b = 1.5, 0.75  # Semi-major and semi-minor axes lengths
+rotation_angle = -30  # Rotation angle in degrees
+
+# Calculate rotated elliptical objective function values
+Z_rotated_elliptical = rotated_elliptical_objective(X, Y, objective_center, a, b, rotation_angle)
+
+# Define the constraint circle for ridge regression (L2)
+constraint_radius = 1.0  # Example radius
+constraint_radius_large = 1.33  # Larger radius for comparison
+
+# Create contour levels
+contour_levels = [0.1, 0.3, 0.6]  # Example contour levels
+
+# Create a 2x1 grid of plots
+fig, axs = plt.subplots(1, 2, figsize=(12, 6), dpi=100)
+
+def draw_plot(ax, constraint_radius, contour_levels):
+    # Plot contour lines around the objective center
+    CS = ax.contour(X, Y, Z_rotated_elliptical, levels=contour_levels, colors='red', linewidths=0.5)
+    
+    # Plot the constraint circle
+    circle = Circle((0, 0), constraint_radius, color='blue', alpha=0.3, linestyle='--')
+    ax.add_artist(circle)
+    
+    # Plot the minimum point
+    ax.plot(objective_center[0], objective_center[1], 'o', color='black', markersize=6)
+
+    # Set the same scale for both axes and set limits
+    ax.set_aspect('equal', 'box')
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-3, 3)
+    ax.axhline(0, color='black', linewidth=0.5)
+    ax.axvline(0, color='black', linewidth=0.5)
+
+    # Define the legend elements
+    legend_elements = [
+        plt.Line2D([0], [0], marker='o', color='black', markersize=6, label=r'$\hat{\theta}$', linestyle='None')
+    ]
+    
+    # Calculate and plot the intersection point for the second contour and larger circle if needed
+    if constraint_radius == constraint_radius_large:
+        last_contour = CS.allsegs[1][0]  # Use the second contour for intersection
+        distances = np.sqrt((last_contour[:, 0])**2 + (last_contour[:, 1])**2)
+        min_idx = np.argmin(np.abs(distances - constraint_radius))
+        intersection_point = last_contour[min_idx]
+        ax.plot(intersection_point[0], intersection_point[1], 'o', color='green', markersize=6)
+        legend_elements.append(plt.Line2D([0], [0], color='green', marker='o', linestyle='None', markersize=6, label=r'$\hat{\theta}_{ridge}$'))
+    else:
+        last_contour = CS.allsegs[2][0]  # Use the second contour for intersection
+        distances = np.sqrt((last_contour[:, 0])**2 + (last_contour[:, 1])**2)
+        min_idx = np.argmin(np.abs(distances - constraint_radius))
+        intersection_point = last_contour[min_idx]
+        ax.plot(intersection_point[0], intersection_point[1], 'o', color='green', markersize=6)
+        legend_elements.append(plt.Line2D([0], [0], color='green', marker='o', linestyle='None', markersize=6, label=r'$\hat{\theta}_{ridge}$')) 
+
+    # Add the legend
+    ax.legend(handles=legend_elements, loc='upper left', fontsize='large', frameon=True, handletextpad=0.4, borderpad=0.1, labelspacing=0.1)
+
+# Draw plots
+draw_plot(axs[0], constraint_radius, contour_levels)
+draw_plot(axs[1], constraint_radius_large, contour_levels)
+
+plt.tight_layout()
+plt.show()
