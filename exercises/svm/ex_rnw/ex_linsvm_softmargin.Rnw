@@ -41,10 +41,4 @@ points(x1, x2, pch = ifelse(y == -1, "-", "+"), cex = 1.5)
   \item
     Identify the coordinates of the points on the margin hyperplanes and compute the values of their slack variables $\sli$.
 
-  \item
-    Compute the Euclidean distance of the non-margin-violating support vector(s) (i.e. support vectors that are located on the margin hyperplanes) to the decision boundary.
-
-  \item
-    What needs to be changed in the plot such that a hard margin SVM results into the same decision boundary?
-
 \end{enumerate}
