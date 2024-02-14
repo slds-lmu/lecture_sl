@@ -5,7 +5,7 @@
 
 \newcommand{\titlefigure}{figure/lasso_ridge_enet_2d.png}
 \newcommand{\learninggoals}{
-  \item Know the elastic net as compromise between Ridge and Lasso regression
+  \item Know the elastic net as compromise between ridge and lasso regression
   \item Know regularized logistic regression
 }
 
@@ -21,10 +21,10 @@
 
 % \section{Elastic Net}
 
-\begin{vbframe} {Elastic Net \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-9868.2005.00503.x}}
+\begin{vbframe} {Elastic Net}
 
 
-Elastic Net combines the $L1$ and $L2$ penalties:
+Elastic Net \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x} combines the $L1$ and $L2$ penalties:
 \small{
 \begin{align*}
 \mathcal{R}_{\text{elnet}}(\thetab) &=  \sumin (\yi - \thetab^\top \xi)^2 + \lambda_1 \|\thetab\|_1 + \lambda_2 \|\thetab\|_2^2 \\
@@ -75,9 +75,9 @@ $\operatorname{corr}(\Xmat_{i},\Xmat_{j})= 0$ for all $i \neq j$, otherwise 1
 
 
 \footnotesize
-LHS: Ridge can not perform variable selection compared to Lasso/E-Net. Lasso more often ignores relevant features than E-Net (longer tails in violin plot).\\
-RHS: Ridge estimates of noise features hover around $0$ while Lasso/E-Net produce $0$s.
-%Since Elastic Net offers a compromise between Ridge and Lasso, it is suitable for both data situations.
+LHS: ridge can not perform variable selection compared to lasso/E-Net. Lasso more often ignores relevant features than E-Net (longer tails in violin plot).\\
+RHS: ridge estimates of noise features hover around $0$ while lasso/E-Net produce $0$s.
+%Since Elastic Net offers a compromise between Ridge and lasso, it is suitable for both data situations.
 
 \end{vbframe}
 

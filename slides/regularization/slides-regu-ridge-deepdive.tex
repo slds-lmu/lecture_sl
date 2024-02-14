@@ -7,7 +7,7 @@
 \newcommand{\learninggoals}{
   \item Know interpretation of $L2$ regularization as row-augmentation
   \item Know interpretation of $L2$ regularization as minimizing risk under feature noise
-  \item Bias-variance tradeoff for Ridge regression
+  \item Bias-variance tradeoff for ridge regression
 }
 
 \title{Introduction to Machine Learning}
@@ -25,30 +25,30 @@ We already saw two interpretations of $L2$ regularization.
 \begin{itemize}
     \item We know that it is equivalent to a constrained optimization problem:
   \begin{eqnarray*}  
-  \thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv\\
+  \thetah_{\text{ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv\\
   %&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab \\
   &=& \argmin_{\thetab} \sumin \left(\yi - \fxit\right)^2 \,
   \text{s.t. } \|\thetab\|_2^2  \leq t
   \end{eqnarray*}
-  \item Bayesian interpretation of Ridge regression: For normal likelihood contributions $\mathcal{N}(\thetab^{\top}\xi,\sigma^2)$ and i.i.d. normal priors $\theta_j \sim \mathcal{N}(0,\tau^{2})$, the resulting MAP estimate is $\thetah_{\text{Ridge}}$ with $\lambda=\frac{\sigma^2}{\tau^2}$:
+  \item Bayesian interpretation of ridge regression: For normal likelihood contributions $\mathcal{N}(\thetab^{\top}\xi,\sigma^2)$ and i.i.d. normal priors $\theta_j \sim \mathcal{N}(0,\tau^{2})$, the resulting MAP estimate is $\thetah_{\text{ridge}}$ with $\lambda=\frac{\sigma^2}{\tau^2}$:
   $$\thetah_{\text{MAP}}=\argmax_{\theta} \log[p(\yv|\Xmat,\thetab)p(\thetab)] = \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \frac{\sigma^2}{\tau^2} \|\thetab\|_2^2$$
 \end{itemize}
 
 \end{vbframe}
 
 \begin{vbframe}{$L2$ and row-augmentation}
-We can also recover the Ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let $\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
+We can also recover the ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let $\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
     \yv \\ \bm{0}_{p}
 \end{pmatrix}$. Using the augmented data, the unregularized least-squares solution $\tilde{\thetab}$ can be written as
 \begin{eqnarray*}
 \tilde{\thetab} &=& \argmin_{\thetab} 
 \sum_{i=1}^{n+p} \left(\tilde{\yi} - \thetab^T \tilde{\xi} \right)^2 \\ &=& \argmin_{\thetab} 
-\sum_{i=1}^{n} \left(\yi - \thetab^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 \\ %= \thetah_{\text{Ridge}}
+\sum_{i=1}^{n} \left(\yi - \thetab^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 \\ %= \thetah_{\text{ridge}}
 &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2
 \end{eqnarray*}
 
-$\Longrightarrow$ $\thetah_{\text{Ridge}}$ is the least-squares solution $\tilde{\thetab}$ but using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!
-%$$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+$\Longrightarrow$ $\thetah_{\text{ridge}}$ is the least-squares solution $\tilde{\thetab}$ but using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!
+%$$\thetah_{\text{ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
 \end{vbframe}
 
 \begin{vbframe}{$L2$ and noisy features}
@@ -68,10 +68,10 @@ $\Longrightarrow$ Ridge regression on unperturbed features {\small $\xi$} turns 
 \end{vbframe}
 
 \begin{vbframe}{Bias-Variance Decomposition for Ridge}
-For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with $\Xmat \in \mathbb{R}^{n \times p},\,\bm{\varepsilon} \sim (\bm{0},\sigma^2 \bm{I}_n)$, bias of ridge estimator $\thetah_{\text{Ridge}}$ is given by 
+For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with $\Xmat \in \mathbb{R}^{n \times p},\,\bm{\varepsilon} \sim (\bm{0},\sigma^2 \bm{I}_n)$, bias of ridge estimator $\thetah_{\text{ridge}}$ is given by 
 \begin{equation*}
     \begin{aligned}
-        \text{Bias}(\thetah_{\text{Ridge}}) := \mathbb{E}[\thetah_{\text{Ridge}}-\bm{\theta}] &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}] - \bm{\theta}\\
+        \text{Bias}(\thetah_{\text{ridge}}) := \mathbb{E}[\thetah_{\text{ridge}}-\bm{\theta}] &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}] - \bm{\theta}\\
         &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}(\bm{X}\bm{\theta}+\bm{\varepsilon})] - \bm{\theta} \\
         &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} \bm{\theta} + (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \underbrace{\mathbb{E}[\bm{\varepsilon}]}_{=0} - \bm{\theta} \\
         &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} \bm{\theta} - \bm{\theta} \\
@@ -80,14 +80,14 @@ For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with $\Xmat \in \mathb
     \end{equation*}
 
 \begin{itemize}
-    \item Last expression shows bias of Ridge estimator only vanishes for $\lambda=0$, which is simply (unbiased) OLS solution
-    \item It follows $\Vert \text{Bias}(\thetah_{\text{Ridge}})\Vert_2^2>0$ for all $\lambda>0$, later important
+    \item Last expression shows bias of ridge estimator only vanishes for $\lambda=0$, which is simply (unbiased) OLS solution
+    \item It follows $\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2>0$ for all $\lambda>0$, later important
 \end{itemize}
 
-    For the variance of $\thetah_{\text{Ridge}}$, we have
+    For the variance of $\thetah_{\text{ridge}}$, we have
     \begin{equation*}
         \begin{aligned}
-            \text{Var}(\thetah_{\text{Ridge}})  &= \text{Var}\left((\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}\right) \quad \quad \big| \;\; \text{apply} \;\; \text{Var}_u(\bm{A}\bm{u}) = \bm{A} \text{Var}(\bm{u}) \bm{A}^{\top} \\
+            \text{Var}(\thetah_{\text{ridge}})  &= \text{Var}\left((\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}\right) \quad \quad \big| \;\; \text{apply} \;\; \text{Var}_u(\bm{A}\bm{u}) = \bm{A} \text{Var}(\bm{u}) \bm{A}^{\top} \\
             &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \text{Var}(\bm{y}) \left( (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \right)^{\top} \\
             &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \text{Var}(\bm{\varepsilon}) \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
             &=  (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \sigma^2 \bm{I}_n \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
@@ -96,21 +96,21 @@ For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with $\Xmat \in \mathb
     \end{equation*}
 
 \begin{itemize}
-    \item $\text{Var}(\thetah_{\text{Ridge}})$ is strictly smaller than $\text{Var}(\thetah_{\text{OLS}})=\sigma^2 (\Xmat^{\top}\Xmat)^{-1}$ for any $\lambda>0$, meaning matrix of their difference $\text{Var}(\thetah_{\text{OLS}})-\text{Var}(\thetah_{\text{Ridge}})$ is positive definite (bit tedious derivation)
-    \item This further means $\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{Ridge}})}\big)>0 \, \forall \lambda>0$
+    \item $\text{Var}(\thetah_{\text{ridge}})$ is strictly smaller than $\text{Var}(\thetah_{\text{OLS}})=\sigma^2 (\Xmat^{\top}\Xmat)^{-1}$ for any $\lambda>0$, meaning matrix of their difference $\text{Var}(\thetah_{\text{OLS}})-\text{Var}(\thetah_{\text{ridge}})$ is positive definite (bit tedious derivation)
+    \item This further means $\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{ridge}})}\big)>0 \, \forall \lambda>0$
 \end{itemize}
 
 \framebreak
 
 With bias and variance of the ridge estimator we can decompose its mean squared error as follows:
 
-$$\text{MSE}(\thetah_{\text{Ridge}})=\Vert \text{Bias}(\thetah_{\text{Ridge}})\Vert_2^2 + \text{trace}\big(\text{Var}(\thetah_{\text{Ridge}})\big)$$
+$$\text{MSE}(\thetah_{\text{ridge}})=\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2 + \text{trace}\big(\text{Var}(\thetah_{\text{ridge}})\big)$$
 
-Comparing MSEs of $\thetah_{\text{Ridge}}$ and $\thetah_{\text{OLS}}$ and using $\text{Bias}(\thetah_{\text{OLS}})=0$ we find 
-$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{Ridge}}) = \underbrace{\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{Ridge}})}\big)}_{>0} - \underbrace{\Vert \text{Bias}(\thetah_{\text{Ridge}})\Vert_2^2}_{>0}$$
+Comparing MSEs of $\thetah_{\text{ridge}}$ and $\thetah_{\text{OLS}}$ and using $\text{Bias}(\thetah_{\text{OLS}})=0$ we find 
+$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}}) = \underbrace{\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{ridge}})}\big)}_{>0} - \underbrace{\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2}_{>0}$$
 
 Since both terms are positive, sign of their diff is \textit{a priori} undetermined. \citebutton{Theobald, 1973}{https://www.jstor.org/stable/2984775} and \citebutton{Farebrother, 1976}{https://www.jstor.org/stable/2984971} prove there always exists some $\lambda^{\ast}>0$ so that
-$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{Ridge}})>0$$
+$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}})>0$$
 Important theoretical result: While Gauss-Markov guarantuees $\thetah_{\text{OLS}}$ is best linear unbiased estimator (BLUE) there are biased estimators with lower MSE.
 
 \end{vbframe}

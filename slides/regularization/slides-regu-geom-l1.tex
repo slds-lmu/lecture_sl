@@ -43,14 +43,14 @@
   $$\mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|$$
   % where $\thetah$ is the minimizer of the unregularized risk $\risket$.
     \item We can minimize analytically:
-     \begin{align*}\hat{\theta}_{\text{Lasso},j} &= \sign(\hat{\theta}_j) \max \left\{ |\hat{\theta}_j| - \frac{\lambda}{H_{j,j}},0 \right\} \\
+     \begin{align*}\hat{\theta}_{\text{lasso},j} &= \sign(\hat{\theta}_j) \max \left\{ |\hat{\theta}_j| - \frac{\lambda}{H_{j,j}},0 \right\} \\
      &= \begin{cases} 
      \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \\
        0 &, \text{if}   \;\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}] \\
      \hat{\theta}_j - \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j > \frac{\lambda}{H_{j,j}} \\
      \end{cases}
      \end{align*}
-  \item If $H_{j,j} = 0$ exactly, $\thetah_{\text{Lasso},j} = 0$.
+  \item If $H_{j,j} = 0$ exactly, $\thetah_{\text{lasso},j} = 0$.
 % This is also called the \textbf{soft thresholding}.
 
 \framebreak

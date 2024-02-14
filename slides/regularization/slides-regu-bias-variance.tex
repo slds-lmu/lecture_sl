@@ -5,9 +5,8 @@
 
 \newcommand{\titlefigure}{figure_man/biasvariance_scheme.png}
 \newcommand{\learninggoals}{
-  \item Understand why overfitting happens
-  \item Know how overfitting can be avoided
-  \item Know regularized empirical risk minimization 
+  \item Understand the bias-variance trade-off
+  \item Know the definition of model bias, estimation bias, and estimation variance
 }
 
 \title{Introduction to Machine Learning}
@@ -15,41 +14,93 @@
 
 \begin{document}
 
-\lecturechapter{Bias variance}
+\lecturechapter{Bias-variance Tradeoff}
 \lecture{Introduction to Machine Learning}
 
 %\section{Motivation for Regularization}
 
-\begin{vbframe}{Bias variance}
+\begin{vbframe}{Bias-variance tradeoff}
 
 In this slide set, we will visualize the bias-variance trade-off. \\
 \lz 
 
-First, we start with the DGP $\mathbb{P}_{xy}$. Assume the true function $$f: [0, 1] \rightarrow \mathbb{R}, x\mapsto +\I_{\{x \geq 0.3\}}(x) - \I_{\{x \geq 0.6\}}(x).$$
+First, we start with a DGP $\Pxy$ and a suitable loss function $L:\mathbb{R}^g\times\mathbb{R}^g\rightarrow\mathbb{R}$ where $\mathbb{R}^g$ is numerical encoding of $\Yspace$. We measure the distance between models $f:\Xspace\rightarrow\mathbb{R}^g$ via $$d(f, f^\prime) = \E_{\xv\sim\mathbb{P}_{\xv}}\left[L(f(\xv), f^\prime(\xv)\right].$$
+We restrict our attention to losses for which $d$ becomes a metric, e.g., L1-loss, L2-loss, etc. \\
+\lz
+We define $\ftrue$ as the risk minimizer such that $$\ftrue \in \argmin_{f \in \Hspace_0} \E_{\xy \sim \Pxy}\left[L(y, f(\xv))\right]$$
 
-Let the feature $x \sim \mathcal{U}([0, 1])$ and the target $y\vert x \sim \mathcal{N}(f(x), \sigma).$
-\begin{center}
-\includegraphics[width=0.5\textwidth]{slides/regularization/figure_man/bv_true_fun.png}
-\end{center}
-\framebreak 
-
-Obviously, $f$ is an element of the function family $$\mathcal{H} := \{f: [0, 1] \rightarrow \mathbb{R}\vert\; f \text{ is continuous except for at most 2 jump discontinuities}\}$$
-
-To make our following discussion more formal, we introduce two distance functions.
-\begin{itemize}
-    \item The distance between two functions $d:\mathcal{H}^2\rightarrow \mathbb{R}_{\geq 0}$ in $\mathcal{H}$ such that $$d(f_1, f_2) = \int_0^1(f_1(x) - f_2(x))^2dx.$$
-    \item The distance between a function and $k$ observations $\overline{d}:\mathcal{H}\times([0,1]\times \mathbb{R})^k \rightarrow \mathbb{R}_{\geq 0}$ in $\mathcal{H}$ such that 
-    $$\overline d(f, ((x_1, y_1), \dots, (x_k, y_k)) = \frac{1}{k}\sum^k_{i=1}(f_1(x_i) - y_i)^2 $$
-\end{itemize}
-
+where $\Hspace_0 = \left\{f:\Xspace\rightarrow\mathbb{R}^g\vert\; d(\underline{0}, f) < \infty \right\}$ and $\underline{0}:\Xspace\rightarrow\{0\}$.
 
 \framebreak
 
-\center
-\vspace*{0.5cm}
-\includegraphics[width=0.6\textwidth]{figure_man/biasvariance_scheme.png} \\
-\footnotesize{Hastie, The Elements of Statistical Learning, 2009 (p. 225)}
+In practice, our model space $\Hspace$ usually is a proper subset of $\Hspace_0$ and in general $\ftrue \notin \Hspace.$\\
+We define $\fbayes$ as the risk minimizer in $\Hspace,$ i.e.,
+$$\fbayes \in \argmin_{f \in \Hspace} \E_{\xy \sim \Pxy}\left[L(f(\xv, y)\right].$$
+It is the function in $\Hspace$ closest to $\ftrue$, and we call $d(\ftrue, \fbayes)$ the model bias.
 
+\begin{center}
+\includegraphics[width=0.5\textwidth]{slides/regularization/figure_man/to_replace_model_bias.png}
+\end{center}
+\framebreak 
+We can further restrict the model space such that $\Hspace_R$ is a proper subset of $\Hspace.$
+We define $\fbayes_R$ as the risk minimizer in $\Hspace_R,$ i.e.,
+$$\fbayes_R \in \argmin_{f \in \Hspace_R} \E_{\xy \sim \Pxy}\left[L(f(\xv, y)\right].$$
+It is the function in $\Hspace_R$ closest to $\ftrue$, and we call $d(\fbayes_R, \fbayes)$ the estimation bias.
+\begin{center}
+\includegraphics[width=0.49\textwidth]{slides/regularization/figure_man/to_replace_estimation_bias.png}
+\end{center}
+\framebreak
+
+We sample a finite dataset $\D = \xyi^n \in \left(\Pxy\right)^n$ and find via ERM
+$$\fh \in \argmin_{f\in\Hspace} \sumin L\left(\yi, \fh (\xi)\right).$$
+
+\begin{columns}[onlytextwidth,T]
+      \column{0.5\linewidth}
+
+  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/to_replace_sampling.png}
+
+      \column{0.5\linewidth}
+      \lz
+      Note: \\
+      \begin{itemize}
+          \item $L:\Yspace\times\R^g\rightarrow\R$ is overloaded.
+          \item The samples are only shown in the visualization for didactic purposes but are not an element of $\Hspace.$
+      \end{itemize}
+    \end{columns}
+
+\framebreak
+
+Let's assume that $\fh$ is an unbiased estimate of $\fbayes$ (e.g., valid for linear regression), and we repeat the sampling process of $\fh$.
+
+\begin{columns}[onlytextwidth,T]
+      \column{0.5\linewidth}
+
+  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/to_replace_estimation_variance.png}
+
+      \column{0.5\linewidth}
+      \lz 
+      \begin{itemize}
+          \item We can measure the spread of sampled $\fh$ around $\fbayes$ via $\delta = \var_\D\left[d(\fbayes, \fh)\right]$ which we call the estimation variance.
+          \item We visualize this as a circle around $\fbayes$ with radius $\delta.$
+      \end{itemize}
+    \end{columns}
+
+\framebreak
+
+We repeat the previous construction in the restricted model space $\Hspace_R$ and sample $\fh_R$ such that 
+$$\fh_R \in \argmin_{f\in\Hspace_R} \sumin L\left(\yi, \fh (\xi)\right).$$
+\begin{columns}[onlytextwidth,T]
+      \column{0.48\linewidth}
+
+  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/to_replace_estimation_variance_res.png}
+
+      \column{0.5\linewidth}
+      \lz 
+      \begin{itemize}
+          \item We can measure the spread of sampled $\fh_R$ around $\fbayes_R$ via $\delta = \var_\D\left[d(\fbayes, \fh_R)\right]$ which we also call estimation variance.
+          \item We observe that the increased bias results in a smaller estimation variance in $\Hspace_R$ compared to $\Hspace.$
+      \end{itemize}
+    \end{columns}
 
 \end{vbframe}
 

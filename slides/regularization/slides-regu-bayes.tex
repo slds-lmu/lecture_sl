@@ -67,6 +67,7 @@ $$
   \scalebox{1}{\includegraphics[width=\textwidth]{figure/bayes_prior.png}}
 \end{figure}
 
+{\footnotesize
 \begin{itemize}
   \item $L2$ regularization corresponds to a zero-mean Gaussian prior with 
   constant variance on our parameters:
@@ -79,8 +80,10 @@ $$
   \item In both cases, regularization strength increases as the 
   variance of the prior decreases: a prior probability mass more narrowly 
   concentrated around 0 encourages shrinkage.
+  \item Elastic-net regularization corresponds to a compromise between Gaussian and Laplacian priors \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}
 \end{itemize}
-  
+ }
+ 
 \end{vbframe}
 
 % ------------------------------------------------------------------------------

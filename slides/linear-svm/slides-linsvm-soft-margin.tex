@@ -143,31 +143,58 @@ with $\bm{K}:=\Xmat \Xmat^T$.
   \end{itemize}
 \end{vbframe}
 
-
 \begin{vbframe}{Support Vectors}
 
 \begin{small}
-  There are three types of training examples:
+  There are two types of training examples:
 
 
 \begin{itemize}
-    \item Non-SVs have a margin $> ~ 1$ and can be
-    removed from the problem without changing the solution.
-    \item Some SVs are located exactly on the
-    margin and have $y\fx=1$.
-    \item Other SVs are margin violators, with $y\fx < 1$, 
-     and have an associated positive slack $\sli > 0$. 
-     They are misclassified if $\sli \geq 1$.
+    \item Non-SVs have $\alpha^{(i)} = 0$ and can be
+    removed from the problem without changing the solution. Their margin $\geq ~ 1.$ 
+    They are always classified correctly and never inside of the margin. 
+    
+    \item SVs have $\alpha^{(i)} > 0.$ 
+    Some SVs are located exactly on the
+    margin and have $y\fx=1$. Other SVs are margin violators, with $y\fx < 1$, 
+     and have an associated
+     slack $\sli > 0$. 
+     SVs are misclassified if $\sli \geq 1$.
 \end{itemize}
 \end{small}
+As for hard-margin case: on the margin we can have SVs and non-SVs.
 
 \vspace{0.1cm}
 \begin{center}
 \includegraphics[width = 0.35\textwidth ]{figure/soft_margin_svs.png} \\
 \end{center}
-
-
 \end{vbframe}
+
+
+% \begin{vbframe}{Support Vectors}
+
+% \begin{small}
+%   There are three types of training examples:
+
+
+% \begin{itemize}
+%     \item Non-SVs have a margin $> ~ 1$ and can be
+%     removed from the problem without changing the solution.
+%     \item Some SVs are located exactly on the
+%     margin and have $y\fx=1$.
+%     \item Other SVs are margin violators, with $y\fx < 1$, 
+%      and have an associated positive slack $\sli > 0$. 
+%      They are misclassified if $\sli \geq 1$.
+% \end{itemize}
+% \end{small}
+
+% \vspace{0.1cm}
+% \begin{center}
+% \includegraphics[width = 0.35\textwidth ]{figure/soft_margin_svs.png} \\
+% \end{center}
+
+
+% \end{vbframe}
 
 
 \endlecture

@@ -6,7 +6,7 @@
 \newcommand{\titlefigure}{figure/ridge_outside.png}
 \newcommand{\learninggoals}{
   \item Know the regularized linear model
-  \item Know Ridge regression ($L2$ penalty)
+  \item Know ridge regression ($L2$ penalty)
   \item Understand correspondence to constrained optimization
   %\item Know Lasso regression ($L1$ penalty)
 }
@@ -34,7 +34,7 @@
 
 \end{vbframe}
 
-%\begin{vbframe}{Example: Ridge Regression}
+%\begin{vbframe}{Example: ridge Regression}
 %Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displaystyle \epsilon \sim N( 0,1)$. The true minimizer is given by $\theta ^{*} =( 3,-2)^{T}$.
 
 %\begin{figure}
@@ -46,36 +46,36 @@
 %\end{vbframe}
 
 
-% \section{Ridge Regression}
+% \section{ridge Regression}
 
 \begin{vbframe}{Ridge Regression}
 Intuitive measure of model complexity is deviation from 0-origin, as 0-model contains no effects. %Models close to this either have few active features or only weak effects. 
 So we measure $J(\thetab)$ through a vector norm, shrinking coefs closer 0 (\textbf{shrinkage methods}).\\
 \vspace{0.2cm}
-\textbf{Ridge regression} uses a simple $L2$ penalty:
+\textbf{ridge regression} uses a simple $L2$ penalty:
 \begin{eqnarray*}  
-\thetah_{\text{Ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
+\thetah_{\text{ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
 &=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \underbrace{\thetab^\top \thetab}_{\|\thetab\|_2^2}
 \end{eqnarray*}
 
 Optimization is possible (as in the normal LM) in analytical form:
-$$\thetah_{\text{Ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+$$\thetah_{\text{ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
 
 Name comes from the fact that we add positive entries along the diagonal "ridge" $\Xmat^T \Xmat$
 
 \framebreak 
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$, with $ \thetah_{\text{Ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$, with $ \thetah_{\text{ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 \end{figure}
-%\vspace{-0.2cm}
-With increasing regularization, $\hat{\theta}_{\textit{Ridge}}$ is pulled back to the origin.
+\vspace{-0.2cm}
+{\small With increasing regularization, $\hat{\theta}_{\textit{ridge}}$ is pulled back to the origin\\ (contour lines show unregularized objective).}
 
 \framebreak 
 Contours of regularized objective for different $\lambda$ values.\\
-$ \thetah_{\text{Ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
+$ \thetah_{\text{ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/ridge_contours.png}
@@ -163,7 +163,7 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \lz
 \begin{footnotesize} 
 \begin{itemize}
-    \item Here we can see entire solution path for Ridge regression
+    \item Here we can see entire solution path for ridge regression
     \item Cyan contours indicate feasible regions induced by different $\lambda$s
     \item Red contour lines indicate different levels of the unreg. objective
     \item Ridge solution (red points) gets pulled toward origin for increasing $\lambda$
@@ -237,7 +237,7 @@ Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer 
 \includegraphics[width=0.7\textwidth]{figure/lin_reg_l1.png}
 \end{figure}
 
-With increasing regularization, $\theta_{\textit{Ridge}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
+With increasing regularization, $\theta_{\textit{ridge}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
@@ -270,14 +270,14 @@ $$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{
 
 The function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called the \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
 \vspace{0.2cm}
-Comparing this to $\thetah_{\text{Ridge}}$ under orthonormal design we see qualitatively different behavior as $\lambda \uparrow$:
-$$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{uniform downscaling})$$
+Comparing this to $\thetah_{\text{ridge}}$ under orthonormal design we see qualitatively different behavior as $\lambda \uparrow$:
+$$\thetah_{\text{ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{uniform downscaling})$$
 
 \end{vbframe}
 
 \begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
 \begin{itemize}
-    \item Ridge regression results in a smooth solution path with non-sparse parameters
+    \item ridge regression results in a smooth solution path with non-sparse parameters
     \item Lasso regression induces sparsity, but only for large enough $\lambda$
 \end{itemize}
  \lz

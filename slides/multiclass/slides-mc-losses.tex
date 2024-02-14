@@ -126,22 +126,25 @@ $$
 $$
 \end{footnotesize}
 
-The optimal constant model $\pix = \left(\theta_1, ..., \theta_g\right)$ (outputting a vector of constant class probabilities) is  
+Optimal constant prob vector $\pix = \left(\theta_1, ..., \theta_g\right)$: 
 
 \vspace*{-0.5cm}
 \begin{footnotesize}
   \begin{eqnarray*}
-    \pikx =\text{arg min}_{\theta_k} \riske(\theta) = \text{arg min}_{\theta_k} \left(\sumin \sum_{k = 1}^g \left(\mathds{1}_{\{\yi = k\}} - \theta_k\right)^2\right) 
+    \thetab = \argminlim_{\thetab \in \R^g, \sum \theta_k = 1} \risket \quad \text{ with } \quad \risket = \left(\sumin \sum_{k = 1}^g \left(\mathds{1}_{\{\yi = k\}} - \theta_k\right)^2\right) 
       \end{eqnarray*}
       \end{footnotesize}
         We solve this by setting the derivative w.r.t. $\theta_k$ to 0
         \begin{footnotesize}
       \begin{eqnarray*}
-      \frac{\partial \riske(\theta)}{\partial \theta_k} = - 2 \cdot \sumin (\mathds{1}_{\{\yi = k\}} - \theta_k) = 0 \\
+      \frac{\partial \risket}{\partial \theta_k} = - 2 \cdot \sumin (\mathds{1}_{\{\yi = k\}} - \theta_k) = 0 \Rightarrow
     \pikxh = \thetah_k = \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}},   
     \end{eqnarray*}
 \end{footnotesize}
-being the fraction of class-$k$ observations. 
+being the fraction of class-$k$ observations. \\
+\vspace*{0.3cm}
+\footnotesize
+\textbf{NB:} We naively ignored the constraints!  But since $\sum\limits^g_{k=1}\thetah_k=1$ holds for the minimizer of the unconstrained problem, we are fine. Could have also used Lagrange multipliers!
 
 \framebreak
 
@@ -187,7 +190,7 @@ with $\pi_k(\xv)$ denoting the predicted probability for class $k$.
 
 \vspace*{0.2cm}
  
-The optimal constant model $\pix = \left(\theta_1, ..., \theta_g\right)$ (outputting a vector of constant class probabilities) is
+Optimal constant prob vector $\pix = \left(\theta_1, ..., \theta_g\right)$: 
 \begin{footnotesize}
 $$
     \pikx = \theta_k = \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}},   

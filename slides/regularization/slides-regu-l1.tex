@@ -5,7 +5,7 @@
 
 \newcommand{\titlefigure}{figure/lin_reg_l1.png}
 \newcommand{\learninggoals}{
-  \item Know Lasso regression ($L1$ penalty)
+  \item Know lasso regression ($L1$ penalty)
   \item Know the properties of $L1$ regularization
 }
 
@@ -21,10 +21,10 @@
 
 \begin{vbframe}{Lasso Regression}
 
-Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
+Another shrinkage method is the so-called \textbf{lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
 \vspace{0.4cm}
 \begin{align*}
-\thetah_{\text{Lasso}}&= \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi\right)^2 + \lambda \sum_{j=1}^{p} \vert\theta_j\vert\\
+\thetah_{\text{lasso}}&= \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi\right)^2 + \lambda \sum_{j=1}^{p} \vert\theta_j\vert\\
 &= \argmin_{\thetab}\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \|\thetab\|_1
 \end{align*}
 
@@ -63,7 +63,7 @@ Left plot shows effect of $L1$ regularization, right plot shows corresponding wi
 %\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 %\end{figure}
 
-With increasing regularization, $\hat{\theta}_{\textit{Lasso}}$ is pulled back to the origin, but takes a different ``route''.
+With increasing regularization, $\hat{\theta}_{\textit{lasso}}$ is pulled back to the origin, but takes a different ``route''.
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
@@ -75,6 +75,14 @@ Contours of regularized objective for different $\lambda$ values.
 \end{figure}
 
 Green  = true minimizer of the unreg.objective and red = lasso solution.
+
+\framebreak
+
+Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
+ 
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
+\end{figure}
 
 \framebreak
 
@@ -95,7 +103,7 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
 \small For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
 \vspace{-0.1cm}
-$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})\vspace{-0.1cm}$$
+$$\thetah_{\text{lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})\vspace{-0.1cm}$$
 Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
 %\vspace{0.05cm}
 Comparing this to $\thetah_{\text{Ridge}}$ under orthonormal design: %we see qualitatively different behavior as $\lambda \uparrow$:
@@ -112,7 +120,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 \begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
 \begin{itemize}
     \item Ridge regression results in a smooth solution path with non-sparse parameters
-    \item Lasso regression induces sparsity, but only for large enough $\lambda$
+    \item lasso regression induces sparsity, but only for large enough $\lambda$
 \end{itemize}
  \lz
 \begin{figure}
@@ -121,15 +129,35 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 
 \end{vbframe}
 
-\begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
-Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
+%\begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
+%Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
  
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
-\end{figure}
+%\begin{figure}
+%\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
+%\end{figure}
+
+%\end{vbframe}
+
+\begin{vbframe}{Support Recovery of Lasso}
+In which cases can the lasso select the true support of $\thetab$? This can be formalized as sign consistency: 
+\begin{align*}
+\mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty
+\end{align*}
+\\
+%\vspace{0.1cm}
+Suppose the true DGP is $\bm{Y}=\Xmat\thetab + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ and only the first $q<p$ entries of $\thetab$ being non-zero. 
+\vspace{0.1cm}
+
+Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix containing noise features. It can be proven that $\thetah_{lasso}$ is sign consistent under a \textbf{irrepresentable condition} \citebutton{Zhao and Yu, 2006}{https://www.jmlr.org/papers/volume7/zhao06a/zhao06a.pdf}:
+\begin{align*}
+    \vert (\Xmat_2^{\top} \Xmat_1^{\top})^{-1} (\Xmat_1^{\top} \Xmat_1) \text{sign}(\thetab_1)\vert < \bm{1} %\,\, (\text{element-wise})
+\end{align*}
+
+In fact, lasso can only be sign consistent if irrepresentable cond. holds.
+
+Intuitively, the irrelevant variables must not be too correlated with (hence the name \textit{representable}) the informative features.
 
 \end{vbframe}
-
 
 \endlecture
 \end{document}

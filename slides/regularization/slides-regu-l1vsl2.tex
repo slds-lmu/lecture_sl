@@ -5,9 +5,9 @@
 
 \newcommand{\titlefigure}{figure_man/l1_l2_hat.png}
 \newcommand{\learninggoals}{
-  \item Know the geometry of Ridge vs. Lasso regularization 
+  \item Know the geometry of ridge vs. lasso regularization 
   \item Understand the effects of the methods on model coefficients
-  \item Understand that Lasso creates sparse solutions
+  \item Understand that lasso creates sparse solutions
 }
 
 \title{Introduction to Machine Learning}
@@ -15,10 +15,10 @@
 
 \begin{document}
  
-\lecturechapter{Lasso vs. Ridge Regression}
+\lecturechapter{Lasso vs. ridge Regression}
 \lecture{Introduction to Machine Learning}
 
-\begin{vbframe}{Lasso vs. Ridge Geometry}
+\begin{vbframe}{Lasso vs. ridge Geometry}
 $$ 
   \min_{\thetab} \sumin \left(\yi - \fxit\right)^2 \qquad \text{ s.t. } \|\thetab\|_p^p  \leq t 
 $$ 
@@ -30,9 +30,9 @@ $$
 
   \begin{itemize}
     \item \small{In both cases, the solution which minimizes $\riskrt$ is always a point on the boundary of the feasible region (for sufficiently large $\lambda$).
-    \item As expected, $\hat{\thetab}_{\text{Lasso}}$ and $\hat{\thetab}_{\text{Ridge}}$ have smaller parameter norms than $\thetah$.}
-    \item For Lasso, the solution likely touches vertices of the constraint region. This induces sparsity and is a form of variable selection.
-    \item In the $p>n$ case, Lasso selects at most $n$ features \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}.
+    \item As expected, $\hat{\thetab}_{\text{lasso}}$ and $\hat{\thetab}_{\text{ridge}}$ have smaller parameter norms than $\thetah$.}
+    \item For lasso, the solution likely touches vertices of the constraint region. This induces sparsity and is a form of variable selection.
+    \item In the $p>n$ case, lasso selects at most $n$ features \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}.
     
   \end{itemize}
   
@@ -42,13 +42,13 @@ $$
 
 \textbf{Example 1: Boston Housing} (few features removed for readability) \\
 
-We cannot overfit here with an unregularized linear model as the task is so low-dimensional. But we see how only Lasso shrinks to exactly 0.
+We cannot overfit here with an unregularized linear model as the task is so low-dimensional. But we see how only lasso shrinks to exactly 0.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{figure/shrinkage_1.png}\\
 \end{figure}
 
-Coef paths and cross-val. MSE for $\lambda$ values for Ridge and Lasso.
+Coef paths and cross-val. MSE for $\lambda$ values for ridge and lasso.
 
 \framebreak
 \textbf{Example 2: High-dimensional simulated data} \\
@@ -63,7 +63,7 @@ $$Cov(x_k, x_l) =
 $$ 
 Note that 36 of the 50 features are noise variables. \\
 \framebreak 
-Coefficient histograms for different $\lambda$ values for Ridge and Lasso for simulated data along with the cross-validated MSE.
+Coefficient histograms for different $\lambda$ values for ridge and lasso for simulated data along with the cross-validated MSE.
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{figure/shrinkage_2.png}\\
@@ -80,17 +80,17 @@ Coefficient histograms for different $\lambda$ values for Ridge and Lasso for si
     \item While regularized LMs exhibit low-complexity inductive bias, they lose equivariance property: if you down-scale features, coefficients have to become larger to counteract. Then they are penalized stronger in $J(\thetab)$, making some features less attractive without relevant changes in data.
       
     % \item While ridge regression usually leads to smaller estimated coefficients, but still dense $\thetab$ vectors,
-    %   the Lasso will usually create a sparse $\thetab$ vector and can therefore be used for variable selection.
+    %   the lasso will usually create a sparse $\thetab$ vector and can therefore be used for variable selection.
     %\item SVMs combine (usually) hinge loss with L2-regularization. But also for SMVs this concept is generalized to different losses and different penalties.
   \end{itemize}
 
 \framebreak
 
-\textbf{Example:}\\
+%\textbf{Example:}\\
 
 \footnotesize{
 \begin{itemize}
-    \item Let the DGP be $y_i = \sum_{j=1}^{5} \theta_j x_{ij} +\varepsilon_i$ for $\thetab=(1,2,3,4,5)^\top$, $\varepsilon_i \sim \mathcal{N}(0,1)$ %and $n=100$
+    \item Let the DGP be $y = \sum_{j=1}^{5} \theta_j x_{j} +\varepsilon$ for $\thetab=(1,2,3,4,5)^\top$, $\varepsilon \sim \mathcal{N}(0,1)$ %and $n=100$
     \item Suppose $x_5$ was measured in $m$ but we change the unit to $cm$ ($\Tilde{x}_5=100 \cdot x_5$):
 \end{itemize}
 \vspace{-0.4cm}
@@ -116,12 +116,16 @@ OLS Rescaled    & 0.9835872 & 2.147303 & 3.005854 & 3.917807 & \textbf{0.0520491
 \begin{tabular}{|c|c c c c c c|}
 \hline
 \textbf{Method} & \( \hat{\theta}_1 \) & \( \hat{\theta}_2 \) & \( \hat{\theta}_3 \) & \( \hat{\theta}_4 \) & \( \hat{\theta}_5 \) & MSE \\ \hline
-Ridge           & 0.7093407 & 1.873643 & 2.661345 & 3.557891 & \textbf{4.63642392} & 1.3664731 \\ %\hline
-Ridge Rescaled  & 0.8021802 & 1.942568 & 2.675207 & 3.569190 & \textbf{0.05134698} & 1.0796400 \\ \hline
+ridge           & 0.7093407 & 1.873643 & 2.661345 & 3.557891 & \textbf{4.63642392} & 1.3664731 \\ %\hline
+ridge Rescaled  & 0.8021802 & 1.942568 & 2.675207 & 3.569190 & \textbf{0.05134698} & 1.0796400 \\ \hline
 \end{tabular}
-%\caption{Ridge estimates for $\lambda=10$ under rescaling of $x_5$}
+%\caption{ridge estimates for $\lambda=10$ under rescaling of $x_5$}
 \end{table}
 }
+
+\begin{itemize}
+    \item This also implies that for very correlated features in lasso through a unit change we could arbitrarily force a feature out of he model
+\end{itemize}
 
 \framebreak
 
@@ -131,7 +135,7 @@ Ridge Rescaled  & 0.8021802 & 1.942568 & 2.675207 & 3.569190 & \textbf{0.0513469
 \item Let the true data generating process be
 $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
 \item Let there be 5 features $x_1, \ldots, x_5 \sim \normal (0,1)$.
-\item Using the Lasso (package \texttt{glmnet}), we get
+\item Using the lasso (package \texttt{glmnet}), we get
 \footnotesize
 \vspace{0.2cm}
 
@@ -157,7 +161,7 @@ $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
 
 \normalsize
 
-\item This is due to the fact, that the coefficient of $x_2$ will live on a very small scale as the covariate itself is large. The feature will thus get less penalized by the $L1$-norm and is favored by Lasso.
+\item This is due to the fact, that the coefficient of $x_2$ will live on a very small scale as the covariate itself is large. The feature will thus get less penalized by the $L1$-norm and is favored by lasso.
 \end{itemize}
 \end{comment}
 
@@ -165,7 +169,7 @@ $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
 
 \begin{vbframe}{Correlated Features}
 
-% \textbf{Example:} Lasso vs Ridge for two highly correlated variables ($X_4, X_5$). 
+% \textbf{Example:} lasso vs ridge for two highly correlated variables ($X_4, X_5$). 
 
 \includegraphics[width=0.9\textwidth]{figure/regu_example_multicollinearity.png}
 
@@ -174,20 +178,21 @@ $X_1$-$X_4$ are independent, but $X_4$ and $X_5$ are strongly correlated.
 
 \vspace{0.1cm}
 
-We see that Lasso shrinks the coefficient for $X_5$ to zero early on, while Ridge assigns similar coefficients to $X_4, X_5$ for larger $\lambda$.
+We see that lasso shrinks the coefficient for $X_5$ to zero early on, while ridge assigns similar coefficients to $X_4, X_5$ for larger $\lambda$.
 
 \end{vbframe}
 
 
-\begin{vbframe}{Synopsis \citebutton{Tibshirani, 1996}{https://www.jstor.org/stable/2346178} \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1467-9868.2005.00503.x}}
+\begin{vbframe}{Synopsis}
 
 \begin{itemize}
 \item Neither one can be classified as overall better
-\item Lasso can set some coefficients to zero, thus performing variable selection, while Ridge regression usually leads to smaller estimated coefficients, but still dense parameter vectors $\thetab$.
+\item lasso can set some coefficients to zero, thus performing variable selection, while ridge regression usually leads to smaller estimated coefficients, but still dense parameter vectors $\thetab$.
 \item Lasso is likely better if true underlying structure is sparse, so if only few features influence $y$. Ridge works well if there are many (weakly) influential features.
-\item Lasso has difficulties handling correlated predictors. For high correlation Ridge dominates Lasso in performance.
-\item For Lasso one of the correlated predictors will have a larger coefficient, while the rest are (nearly) zeroed. The respective feature is, however, selected randomly. 
-\item For Ridge the coefficients of correlated features are similar.
+\item Lasso has difficulties handling correlated predictors. For high correlation ridge dominates lasso in performance.
+\item For lasso one of the correlated predictors will have a larger coefficient, while the rest are (nearly) zeroed. The respective feature is, however, selected randomly. 
+\item For ridge the coefficients of correlated features are similar.
+\item \citebutton{Tibshirani, 1996}{https://www.jstor.org/stable/2346178} \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}
 \end{itemize}
 
 \end{vbframe}

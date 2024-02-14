@@ -91,13 +91,13 @@ The minimum of $\mathcal{\tilde R}_{\text{emp}}(\thetab)$ occurs where $\nabla_{
 Now we $L2$-regularize $\mathcal{\tilde R}_{\text{emp}}(\thetab)$, such that 
 \[
 \mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{\tilde R}_{\text{emp}}(\thetab) + \frac{\lambda}{2} \|\thetab\|^2_2\]
-and solve this approximation of $\riskr$ for the minimizer $\hat{\thetab}_{\text{Ridge}}$:
+and solve this approximation of $\riskr$ for the minimizer $\hat{\thetab}_{\text{ridge}}$:
 \begin{align*}
  \nabla_{\thetab}\mathcal{\tilde R}_{\text{reg}}(\thetab) = 0,\\
 %  \lambda \thetab + \nabla_{\thetab}\mathcal{\tilde R}_{\text{emp}}(\thetab) = 0,\\
   \lambda \thetab + \bm{H}(\thetab - \thetah) = 0,\\
       (\bm{H} + \lambda \id) \thetab = \bm{H} \thetah,\\
-      \hat{\thetab}_{\text{Ridge}} = (\bm{H} + \lambda \id)^{-1}\bm{H} \thetah,
+      \hat{\thetab}_{\text{ridge}} = (\bm{H} + \lambda \id)^{-1}\bm{H} \thetah,
 \end{align*}
 
 % where $\id$ is the identity matrix.
@@ -110,12 +110,12 @@ This gives us a formula to see how the minimizer of the $L2$-regularized version
 \framebreak
 
   \begin{itemize}
-    \item As $\lambda$ approaches $0$, the regularized solution $\hat{\thetab}_{\text{Ridge}}$ approaches $\thetah$. What happens as $\lambda$ grows?
+    \item As $\lambda$ approaches $0$, the regularized solution $\hat{\thetab}_{\text{ridge}}$ approaches $\thetah$. What happens as $\lambda$ grows?
     \item Because $\bm{H}$ is a real symmetric matrix, it can be decomposed as $\bm{H} = \bm{Q} \bm{\Sigma} \bm{Q}^\top$, where $\bm{\Sigma}$ is a diagonal matrix of eigenvalues and $\bm{Q}$ is an orthonormal basis of eigenvectors.
     \item Rewriting the transformation formula with this:
   \begin{equation*}
     \begin{aligned} 
-    \hat{\thetab}_{\text{Ridge}} &=\left(\bm{Q} \bm{\Sigma} \bm{Q}^{\top}+\lambda \id\right)^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
+    \hat{\thetab}_{\text{ridge}} &=\left(\bm{Q} \bm{\Sigma} \bm{Q}^{\top}+\lambda \id\right)^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
               &=\left[\bm{Q}(\bm{\Sigma}+\lambda \id) \bm{Q}^{\top}\right]^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
               &=\bm{Q}(\bm{\Sigma} + \lambda \id)^{-1} \bm{\Sigma} \bm{Q}^{\top} \thetah 
     \end{aligned}
@@ -147,7 +147,7 @@ Since, for $\lambda = 0$, the transformation matrix $(\bm{\Sigma} + \lambda \id)
 \framebreak
   
 % \begin{footnotesize}
-If $\lambda > 0$, the component projected on the $j$-th axis gets rescaled by $\frac{\sigma_j}{\sigma_j + \lambda}$ before $\hat{\thetab}_{\text{Ridge}}$ is rotated back.
+If $\lambda > 0$, the component projected on the $j$-th axis gets rescaled by $\frac{\sigma_j}{\sigma_j + \lambda}$ before $\hat{\thetab}_{\text{ridge}}$ is rotated back.
 % \end{footnotesize}
 
 \begin{figure}
@@ -171,7 +171,7 @@ If $\lambda > 0$, the component projected on the $j$-th axis gets rescaled by $\
     \centering
       \scalebox{0.36}{\includegraphics{figure_man/wt_decay_hat.png}}
       \tiny{\\ Credit: Goodfellow et al. (2016), ch. 7}
-      \caption{\footnotesize The solid ellipses represent the contours of the unregularized objective and the dashed circles represent the contours of the $L2$ penalty. At $\hat{\thetab}_{\text{Ridge}}$, the competing objectives reach an equilibrium.}
+      \caption{\footnotesize The solid ellipses represent the contours of the unregularized objective and the dashed circles represent the contours of the $L2$ penalty. At $\hat{\thetab}_{\text{ridge}}$, the competing objectives reach an equilibrium.}
   \end{figure}
   \small
   
@@ -183,7 +183,7 @@ If $\lambda > 0$, the component projected on the $j$-th axis gets rescaled by $\
     \centering
       \scalebox{0.36}{\includegraphics{figure_man/wt_decay_hat.png}}
       \tiny{\\ Credit: Goodfellow et al. (2016), ch. 7}
-      \caption{\footnotesize The solid ellipses represent the contours of the unregularized objective and the dashed circles represent the contours of the $L2$ penalty. At $\hat{\thetab}_{\text{Ridge}}$, the competing objectives reach an equilibrium.}
+      \caption{\footnotesize The solid ellipses represent the contours of the unregularized objective and the dashed circles represent the contours of the $L2$ penalty. At $\hat{\thetab}_{\text{ridge}}$, the competing objectives reach an equilibrium.}
   \end{figure}
   
     In the second dimension, the corresponding eigenvalue is large indicating high curvature. The objective function is very sensitive to movement along this axis and, as a result, the position of $\theta_2$ is less affected by the regularization.
