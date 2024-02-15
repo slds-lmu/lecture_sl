@@ -40,14 +40,15 @@ $$
 
 \begin{vbframe}{Coefficient Paths and 0-Shrinkage}
 
-\textbf{Example 1: Boston Housing} (few features removed for readability) \\
+\textbf{Example 1: Motor Trend Car Roads Test (mtcars)} \\
 
-We cannot overfit here with an unregularized linear model as the task is so low-dimensional. But we see how only lasso shrinks to exactly 0.
+%We cannot overfit here with an unregularized linear model as the task is so low-dimensional. But 
+We see how only lasso shrinks to exactly 0.
 
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/shrinkage_1.png}\\
+\includegraphics[width=0.8\textwidth]{figure_man/l1_l2_regupaths_mse.pdf}\\
 \end{figure}
-
+\vspace{-0.3cm}
 Coef paths and cross-val. MSE for $\lambda$ values for ridge and lasso.
 
 \framebreak

@@ -139,24 +139,29 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 %\end{vbframe}
 
 \begin{vbframe}{Support Recovery of Lasso}
-In which cases can the lasso select the true support of $\thetab$? This can be formalized as sign consistency: 
+\begin{small}
+In which cases can the lasso select the true support of $\thetab$? This can be formalized as sign consistency (different from $\ell_2$ consistency!): 
 \begin{align*}
 \mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty
 \end{align*}
 \\
 %\vspace{0.1cm}
-Suppose the true DGP is $\bm{Y}=\Xmat\thetab + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ and only the first $q<p$ entries of $\thetab$ being non-zero. 
-\vspace{0.1cm}
-
-Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix containing noise features. It can be proven that $\thetah_{lasso}$ is sign consistent under a \textbf{irrepresentable condition} \citebutton{Zhao and Yu, 2006}{https://www.jmlr.org/papers/volume7/zhao06a/zhao06a.pdf}:
+Suppose the true DGP given a partition $\thetab=(\thetab_1,\thetab_2)^{\top}$ is 
 \begin{align*}
-    \vert (\Xmat_2^{\top} \Xmat_1^{\top})^{-1} (\Xmat_1^{\top} \Xmat_1) \text{sign}(\thetab_1)\vert < \bm{1} %\,\, (\text{element-wise})
+    \bm{Y}=\Xmat\thetab + \bm{\varepsilon} = \Xmat_1 \thetab_1 + \Xmat_2 \thetab_2 + \bm{\varepsilon}\,\text{with}\,\bm{\varepsilon}\sim (0,\sigma^2 \id)
+\end{align*}
+%$\bm{Y}=\Xmat\thetab + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ 
+and only $\thetab_1$ is non-zero.
+\vspace{0.1cm}
+Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix of noise features. It can be shown that $\thetah_{lasso}$ is sign consistent under a \textbf{irrepresentable condition} \citebutton{Zhao and Yu, 2006}{https://www.jmlr.org/papers/volume7/zhao06a/zhao06a.pdf}:
+\begin{align*}
+    \vert (\Xmat_2^{\top} \Xmat_1)(\Xmat_1^{\top} \Xmat_1)^{-1} \text{sign}(\thetab_1)\vert < \bm{1} %\,\, (\text{element-wise})
 \end{align*}
 
-In fact, lasso can only be sign consistent if irrepresentable cond. holds.
+In fact, lasso can only be sign consistent if this condition holds.
 
-Intuitively, the irrelevant variables must not be too correlated with (hence the name \textit{representable}) the informative features.
-
+Intuitively, the irrelevant variables in $\Xmat_2$ must not be too correlated with (or \textit{representable} by) the informative features \citebutton{Meinshausen and Yu, 2006}{https://apps.dtic.mil/sti/tr/pdf/ADA472998.pdf}.
+\end{small}
 \end{vbframe}
 
 \endlecture
