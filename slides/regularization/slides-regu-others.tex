@@ -90,7 +90,7 @@ Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \the
 
 \begin{vbframe}{SCAD}
 
-The SCAD ({\footnotesize{Smoothly Clipped Absolute Deviations}, \citebutton{Fan and Li, 2007}{https://www.tandfonline.com/doi/full/10.1080/00401706.2020.1801256?casa_token=JhnIrgzTysMAAAAA:Z216Mc0l0qPEBUOW7kL2W0NjHC9TxdU4J6RtVs6ME7MW3_rN7CwqXZMAjKUwZo2Qz5iPd-jzKc4ffA}}) penalty is non-convex regularizer with piece-wise definition using add. hyperparam $\gamma>2$ controlling how fast penalty tapers off:
+The SCAD ({\footnotesize{Smoothly Clipped Absolute Deviations}, \citebutton{Fan and Li, 2007}{https://www.tandfonline.com/doi/full/10.1080/00401706.2020.1801256?casa_token=JhnIrgzTysMAAAAA:Z216Mc0l0qPEBUOW7kL2W0NjHC9TxdU4J6RtVs6ME7MW3_rN7CwqXZMAjKUwZo2Qz5iPd-jzKc4ffA}}) penalty is non-convex regularizer with piece-wise definition using additional hyperparam $\gamma>2$ controlling how fast penalty ``tapers off'':
 {\footnotesize
 $$
 \text{SCAD}(\theta \mid \lambda, \gamma)= \begin{cases}\lambda|\theta| & \text { if }|\theta| \leq \lambda \\ \frac{2 \gamma \lambda|\theta|-\theta^2-\lambda^2}{2(\gamma-1)} & \text { if } \lambda<|\theta|<\gamma \lambda \\ \frac{\lambda^2(\gamma+1)}{2} & \text { if }|\theta| \geq \gamma \lambda\end{cases}
