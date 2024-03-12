@@ -33,14 +33,14 @@
 \vspace*{-0.5cm}
 
 $$
-\Lxy = \left(y-\fx\right)^2 \quad \text{or} \quad \Lxy = 0.5 \left(y-\fx\right)^2
+L(y,f) = \left(y-f\right)^2 \quad \text{or} \quad L(y,f) = 0.5 \left(y-f\right)^2
 $$
 
 \vspace*{-2mm}
 
 \begin{itemize}
 \item Tries to reduce large residuals (if residual is twice as large, loss is 4 times as large), hence outliers in $y$ can become problematic
-\item Analytic properties: convex, differentiable $\Rightarrow$ gradient no problem in loss minimization (\textbf{Warning}: $\risket$ can still be non-smooth/non-convex due to $f(\xv)$)
+\item Analytic properties: convex, differentiable $\Rightarrow$ gradient no problem in loss minimization\\ {\small (\textbf{Warning}: $\riskef$ can still be non-smooth/non-convex due to $f(\xv)$)}
 %\item Residuals = Pseudo-residuals: \begin{footnotesize} $\tilde r = - \pd{0.5 (y-\fx)^2}{\fx} = y - \fx = r$\end{footnotesize}
 \end{itemize}
 
@@ -61,57 +61,37 @@ $$
 \end{vbframe}
 
 
-\begin{vbframe}{L2-Loss: Risk Minimizer}
 
-Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lxy = \left(y-\fx\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$. 
-
-\begin{itemize}
-\item By the law of total expectation
-  \begin{eqnarray*}
-    \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
-    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right] \\
-  &=& \E_x
-  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xv\right]\right]. 
-  \end{eqnarray*}
-% \item As our hypothesis space is not restricted at all, we can proceed quite \enquote{arbitrarily} when constructing our model $\hat f$.  
-
-\item Since $\Hspace$ is unrestricted, at any point $\xv = \xv$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
-$$
-  \fxbayes = \mbox{argmin}_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xv \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
-$$
-
-\begin{footnotesize}
-$^{(*)}$ follows from:
-  \begin{eqnarray*}
-  && \mbox{argmin}_c \E\left[(y - c)^2\right] = \mbox{argmin}_c \underbrace{\E\left[(y - c)^2\right] - \left(\E[y] - c\right)^2}_{= \var[y - c] = \var[y]} + \left(\E[y] - c\right)^2 \\ &=& \mbox{argmin}_c \var[y] + \left(\E[y] - c\right)^2 = \E[y]. 
-  \end{eqnarray*}
-\end{footnotesize}
-
-\end{itemize}
-
-
-\end{vbframe}
 
 \begin{vbframe}{L2-loss: Optimal Constant Model}
+Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $L(y,f) = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
 
-The optimal constant model in terms of the (theoretical) risk for the L2 loss is the expected value over $y$: 
+\medskip
+
   \begin{eqnarray*}
-    \fx &=& \E_{y~|~\xv}\left[y~|~\xv\right] \overset{\text{drop } \xv}{=} \E_y \left[y\right] 
+    f_{c}^{\ast} &=& \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right] %= \E_{y~|~\xv}\left[y~|~\xv\right] \overset{\text{drop } \xv}{=} \E_y \left[y\right] 
+    \\
+    %&=& \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right] \\
+    &=& \argmin_{c \in \mathbb{R}} \underbrace{\E_{y}\left[(y - c)^2\right] - \left(\E_{y}[y] - c\right)^2}_{= \var_{y}[y - c] = \var_{y}[y]} + \left(\E_{y}[y] - c\right)^2 \\
+    &=& \argmin_{c \in \mathbb{R}} \var_{y}[y] + \left(\E_{y}[y] - c\right)^2  \\
+    &=& \E_{y}[y]
   \end{eqnarray*} 
 
-The optimizer of the empirical risk is $\bar y$ (the empirical mean over $\yi$), which is the empirical estimate for $\E_y \left[y\right]$. 
+\framebreak 
+
+The optimizer $\hat{f}_{c}$ of the empirical risk is $\bar y$ (the empirical mean over $\yi$), which is the empirical estimate for $\E_y \left[y\right]$. 
 
 \begin{center}
-\includegraphics[width = 0.5\textwidth ]{figure/L2-loss.png} \\
+\includegraphics[width = 0.6\textwidth ]{figure/L2-loss.png} \\
 \end{center}
 
-\framebreak 
+\framebreak
 
 \textbf{Proof: }
 
 \vspace{0.2cm}
 
-For the optimal constant model $\fx = \theta$ for the L2-loss $\Lxy = \left(y - \fx\right)^2$ we solve the optimization problem 
+For the optimal constant model $f_{c}^{\ast}$ for the L2-loss $L(y,f) = \left(y - f\right)^2$ we solve the optimization problem 
 $$
 \argmin_{f \in \Hspace} \riskef = \argmin_{\theta \in \R} \sumin (\yi - \theta)^2. 
 $$
@@ -129,9 +109,40 @@ We calculate the first derivative of $\riske$ w.r.t. $\theta$ and set it to $0$:
 
 \end{vbframe}
 
+\begin{vbframe}{L2-Loss: Risk Minimizer}
+
+Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $L(y,f) = \left(y-f\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$. 
+
+\begin{itemize}
+\item By the law of total expectation
+  \begin{eqnarray*}
+    \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
+    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right] \\
+  &=& \E_x
+  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xv\right]\right]. 
+  \end{eqnarray*}
+% \item As our hypothesis space is not restricted at all, we can proceed quite \enquote{arbitrarily} when constructing our model $\hat f$.  
+
+\item Since $\Hspace$ is unrestricted, at any point $\xv = \xv$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
+$$
+  \fxbayes = \mbox{argmin}_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xv \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
+$$
+
+\begin{footnotesize}
+$^{(*)}$ follows from the drivation of $f_{c}^{\ast}$
+%  \begin{eqnarray*}
+%  && \mbox{argmin}_c \E\left[(y - c)^2\right] = \mbox{argmin}_c \underbrace{\E\left[(y - c)^2\right] - \left(\E[y] - c\right)^2}_{= \var[y - c] = \var[y]} + \left(\E[y] - c\right)^2 \\ &=& \mbox{argmin}_c \var[y] + \left(\E[y] - c\right)^2 = \E[y]. 
+%  \end{eqnarray*}
+\end{footnotesize}
+
+\end{itemize}
+
+
+\end{vbframe}
+
 \begin{vbframe}{L2 loss means minimizing variance}
 
-Rethinking what we just did:
+Rethinking what we did in the opt. constant model:
 We optimized for a constant whose squared distance to all data points is minimal
 (in sum, or on average). This turned out to be the mean.
 

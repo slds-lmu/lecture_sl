@@ -36,7 +36,7 @@
 \vspace*{-0.1cm}
 The L1 loss is defined as
 $$
-\Lxy = \left|y-\fx\right|
+L(y,f) = \left|y-f\right|
 $$
 
 \begin{itemize}
@@ -56,7 +56,7 @@ $$
 
 \begin{vbframe}{L1-Loss: Risk Minimizer}
 
-We calculate the (true) risk for the $L1$-Loss $\Lxy = \left|y-\fx\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
+We calculate the (true) risk for the $L1$-Loss $L(y,f) = \left|y-f\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
 
 \vspace{0.5cm}
 
@@ -70,7 +70,7 @@ We calculate the (true) risk for the $L1$-Loss $\Lxy = \left|y-\fx\right|$ with 
   \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xv$. The best prediction at $\xv = \xv$ is then 
   \vspace{0.3cm}  
   $$
-    \fxh = \mbox{argmin}_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
+    f^{\ast}(\xv) = \mbox{argmin}_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
   $$
 
 \end{itemize}
@@ -124,10 +124,10 @@ We get
 The optimal constant model in terms of the theoretical risk for the L1 loss is the median over $y$:
 
 \begin{eqnarray*}
-  \fx &=& \text{med}_{y|x} \left[y ~|~ \xv \right] \overset{\text{drop } \xv}{=}  \text{med}_{y} \left[y \right]
+  f_{c}^{\ast} &=& \text{med}_{y|x} \left[y ~|~ \xv \right] \overset{\text{drop } \xv}{=}  \text{med}_{y} \left[y \right]
   \end{eqnarray*} 
 
-The optimizer of the empirical risk is $\text{med}(\yi)$ over $\yi$, which is the empirical estimate for $\text{med}_{y} \left[y \right]$. 
+The optimizer $\hat{f}_c$ of the empirical risk is $\text{med}(\yi)$ over $\yi$, which is the empirical estimate for $\text{med}_{y} \left[y \right]$. 
 
 \vspace*{-0.3cm}
 

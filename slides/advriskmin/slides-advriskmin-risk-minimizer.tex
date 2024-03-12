@@ -36,15 +36,19 @@
 
 \begin{vbframe}{Empirical Risk Minimization}
 Very often, in ML, we minimize the empirical risk
-$$\riskef = \sumin \Lxyi$$
-where 
-\begin{itemize}
-    \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$ and $\Xspace, \Yspace$ are the feature and target spaces, respectively, 
-    \item $f:\Xspace \rightarrow \mathbb{R}^g, f \in \Hspace$ is a model which maps a feature vector to a numerically encoded element of $\Yspace$ and $\Hspace$ is the hypothesis space, 
+\vspace{-0.3cm}
+$$\riskef = \sumin \Lxyi\,\quad \text{where}$$
+\vspace{-0.2cm}
+{\small
+\begin{itemize}\setlength\itemsep{0.5pt} 
+    \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$ and $\Xspace, \Yspace$ are the feature and target spaces, respectively
+    \item $f_{\Hspace}:\Xspace \rightarrow \mathbb{R}^g, f \in \Hspace$ is a model which maps a feature vector to a numerically encoded element of $\Yspace$ and $\Hspace$ is the hypothesis space {\small(if $\Hspace$ is omitted it is clear from the context)} 
     \item $L:\left(\Yspace\times\mathbb{R}^g\right)\rightarrow\mathbb{R}$ is the loss function which measures the dissimilarity of the model prediction and the true target,
-    \item and we assume that $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ where $\Pxy$ is the distribution of the data generating process (DGP).
+    \item and we assume that $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ where $\Pxy$ is the distribution of the data generating process (DGP)
+    \item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
 \end{itemize}
-\smallskip
+}
+%\smallskip
 What is the theoretical justification for this procedure?
 
 \end{vbframe}
@@ -56,7 +60,7 @@ Our goal is to minimize the risk
 
 $$ \risk_L\left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. $$
 
-for a certain hypothesis $\fx \in \Hspace$ and a loss $\Lxy$. 
+for a certain hypothesis $f \in \Hspace$ and a loss $L(y,f)$. 
 
 {\tiny NB: As $\risk_L$ depends on loss $L$, we sometimes 
 make this explicit with a subscript if needed and omit it in other cases.}
@@ -148,7 +152,7 @@ The risk minimizer is mainly a theoretical tool:
 	\item In practice we (usually) do not know $\Pxy$. Instead of $\riskf$, we are optimizing the empirical risk
 
 	\begin{eqnarray*}
-		\hat f = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
+		{\hat f}_{\Hspace} = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
 	\end{eqnarray*}
 
 \end{itemize}
@@ -242,12 +246,18 @@ In Stone's famous consistency theorem from 1977, the universal consistency of a 
 
 \begin{vbframe}{Optimal Constant Model}
 
-While the risk minimizer gives us the (theoretical) optimal solution, the \textbf{optimal constant model} (also: featureless predictor) gives us a 
-baseline solution in experiments, when we want to compare to a simple model.
+While the risk minimizer gives us the (theoretical) optimal solution, the \textbf{optimal constant model} (also: featureless predictor) gives us a simple 
+baseline solution in experiments.
 
-\vspace*{0.2cm}
+\vspace{0.2cm}
 
-The constant model is the model $\fx = \thetab$ that optimizes the empirical risk $\risket$.
+By restricting $\Hspace$ to constant functions $f_c$ independenx of $\xv$, the constant model minimizing the theoretical risk $\E_{xy}\left[L(y,f(\xv)\right]$ is defined as:
+
+$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[L(y,c)\right]$$
+
+\vspace{0.3cm}
+
+The constant model $\fx = \theta = c$ that optimizes the empirical risk $\risket$ is denoted as as $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$.
 
 \vspace*{-0.5cm}
 
