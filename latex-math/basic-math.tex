@@ -19,8 +19,10 @@
 
 % basic math stuff
 \newcommand{\xt}{\tilde x} % x tilde
-\newcommand{\argmax}{\operatorname{arg\,max}} % argmax
-\newcommand{\argmin}{\operatorname{arg\,min}} % argmin
+%\newcommand{\argmax}{\operatorname{arg\,max}} % argmax
+%\newcommand{\argmin}{\operatorname{arg\,min}} % argmin
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \newcommand{\argminlim}{\mathop{\mathrm{arg\,min}}\limits} % argmax with limits
 \newcommand{\argmaxlim}{\mathop{\mathrm{arg\,max}}\limits} % argmin with limits  
 \newcommand{\sign}{\operatorname{sign}} % sign, signum

@@ -70,7 +70,7 @@ We calculate the (true) risk for the $L1$-Loss $L(y,f) = \left|y-f\right|$ with 
   \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xv$. The best prediction at $\xv = \xv$ is then 
   \vspace{0.3cm}  
   $$
-    f^{\ast}(\xv) = \mbox{argmin}_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
+    f^{\ast}(\xv) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
   $$
 
 \end{itemize}
@@ -80,8 +80,8 @@ We calculate the (true) risk for the $L1$-Loss $L(y,f) = \left|y-f\right|$ with 
 \begin{footnotesize}
 \textbf{Proof:} Let $p(y)$ be the density function of $y$. Then: 
   \begin{eqnarray*}
-  && \mbox{argmin}_c \E\left[|y - c|\right] = \mbox{argmin}_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
-  &=& \mbox{argmin}_c \int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y 
+  && \argmin_c \E\left[|y - c|\right] = \argmin_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
+  &=& \argmin_c \int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y 
   \end{eqnarray*}
 
 We now compute the derivative of the above term and set it to $0$
