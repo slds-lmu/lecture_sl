@@ -56,9 +56,9 @@ Examples:
 \vspace*{-0.5cm}
 
 $$
-\Lxy = \begin{cases}
-  \frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
-  \epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
+L(y,f) = \begin{cases}
+  \frac{1}{2}(y - f)^2  & \text{ if } |y - f| \le \epsilon \\
+  \epsilon |y - f|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
   \end{cases}, \quad \epsilon > 0
 $$
 
@@ -101,14 +101,14 @@ $$
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
 $$
-\Lxy = \log \left( \cosh(\left|y - \fx\right|) \right)
-% \log \left(\tfrac{1}{2} (\left|y - \fx\right| / c)^2 + 1\right), \quad c \in \R
+L(y,f) = \log \left( \cosh(\left|y - f\right|) \right)
+% \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
 
 \normalsize
 \begin{itemize}
 \item Logarithm of the hyperbolic cosine of the residual.
-\item Approximately equal to $0.5 (\left|y - \fx\right|)^2$ for small $\xv$ and to $\left|y - \fx\right| - \log 2$ for large $\xv$, meaning it works mostly like $L2$ loss but is less outlier-sensitive.
+\item Approximately equal to $0.5 (\left|y - f\right|)^2$ for small $f$ and to $\left|y - f\right| - \log 2$ for large $f$, meaning it works mostly like $L2$ loss but is less outlier-sensitive.
 \item Has all the advantages of Huber loss and is, moreover, twice differentiable everywhere.
 \end{itemize}
 
@@ -126,9 +126,9 @@ $$
 % Confirmed with Bernd: use def from https://www.user.tu-berlin.de/mtoussai/teaching/15-MachineLearning/15-MachineLearning-script.pdf, p. 24 
 
 $$
-\Lxy = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - \fx\right|}{c}\right)^2 \right), 
+L(y,f) = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - f\right|}{c}\right)^2 \right), 
 \quad c \in \R
-% \log \left(\tfrac{1}{2} (\left|y - \fx\right| / c)^2 + 1\right), \quad c \in \R
+% \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
 
 \normalsize
@@ -151,9 +151,9 @@ $$
 
 \begin{small}
 \[
-  \Lxy = \left\{\begin{array}{lr}
-        -\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - \fx\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-\fx\right| \leq \epsilon \\
-        \infty & \text{if } \left|y-\fx\right|  > \epsilon
+  L(y,f) = \left\{\begin{array}{lr}
+        -\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - f\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-f\right| \leq \epsilon \\
+        \infty & \text{if } \left|y-f\right|  > \epsilon
         \end{array}\right.
   \]
 \end{small}
@@ -178,7 +178,7 @@ $$
 \begin{vbframe}{Log-Barrier loss}
 
 \begin{itemize}
- % \item Similarly to the Huber loss, there is no closed-form solution for the optimal constant model $\fx = \thetab$ w.r.t. the log-barrier loss. Numerical optimization is necessary.
+ % \item Similarly to the Huber loss, there is no closed-form solution for the optimal constant model $f = \thetab$ w.r.t. the log-barrier loss. Numerical optimization is necessary.
  \item Note that the optimization problem has no (finite) solution if there is no way to fit a constant where all residuals are smaller than $\epsilon$.  
 \end{itemize}
 
@@ -209,15 +209,15 @@ $$
 
 \vspace*{-0.3cm}
 $$
-\Lxy =  \begin{cases}
-  0  & \text{if } |y - \fx| \le \epsilon \\
-  |y - \fx|-\epsilon & \text{otherwise }
+L(y,f) =  \begin{cases}
+  0  & \text{if } |y - f| \le \epsilon \\
+  |y - f|-\epsilon & \text{otherwise }
   \end{cases}, \quad \epsilon \in \R_{+}
 $$
 \begin{itemize}
 \item Modification of $L1$ loss, errors below $\epsilon$ accepted without penalty.
 \item Used in SVM regression.
-\item Properties: convex and not differentiable for $ y - \fx \in \{-\epsilon, \epsilon\}$.
+\item Properties: convex and not differentiable for $ y - f \in \{-\epsilon, \epsilon\}$.
 \end{itemize}
 
 \vfill
@@ -234,17 +234,17 @@ $$
 %% \begin{vbframe}{$\epsilon$-insensitive Loss: Optimal Constant}
 
 %% % Derive Constant model and eps-insens loss
-%What is the optimal constant model $\fx = \thetab$ w.r.t. the $\epsilon$-insensitive loss $\Lxy =  |y - \fx| ~ \mathds{1}_{ \left\{|y - \fx| > \epsilon \right\}}$?
+%What is the optimal constant model $f = \thetab$ w.r.t. the $\epsilon$-insensitive loss $L(y,f) =  |y - f| ~ \mathds{1}_{ \left\{|y - f| > \epsilon \right\}}$?
 
 %\vspace{-0.2cm}
 %\begin{eqnarray*}
-%\hat \thetab&=& \argmin_{\thetab\in \R}\sumin \Lxyi \\
+%\hat \thetab&=& \argmin_{\thetab\in \R}\sumin L(y,f)i \\
 %&=& \argmin_{\thetab\in \R} \sum_{i \in I_\eps} \left| \yi - \thetab \right| - \eps  \\
 %&=& \argmin_{\thetab\in \R} \sum_{i \in I_\eps} \left| \yi - \thetab \right| - \sum_{i \in I_\eps} \eps \\
 %&=& \text{median}\left(\left\{\yi ~|~ i \in I_\eps\right\}\right) - |I_\eps| \cdot \eps \\
 %\end{eqnarray*}
 
-%with $I_\eps := \left\{i: |\yi - \fxi| \le \eps \right\}$.
+%with $I_\eps := \left\{i: |\yi - fi| \le \eps \right\}$.
 
 %% \framebreak
 
@@ -265,8 +265,8 @@ $$
 
 \small
 $$
-\Lxy = \begin{cases} (1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
-\alpha (y - \fx) & \text{ if } y \ge \fx
+L(y,f) = \begin{cases} (1 - \alpha) (f - y) & \text{ if } y < f\\
+\alpha (y - f) & \text{ if } y \ge f
 \end{cases}, \quad \alpha \in (0, 1)
 $$
 
@@ -290,7 +290,7 @@ $$
 % \framebreak
 
 % BB: this proof cannot be true, it simply states what it claimed???
-% What is the optimal constant model $\fx = \thetab$ w.r.t.\ the quantile loss?
+% What is the optimal constant model $f = \thetab$ w.r.t.\ the quantile loss?
 % \vspace{-0.2cm}
 % \begin{eqnarray*}
 % \thetah&=& \argmin_{\thetab\in \R}\sumin \Lxyi \\
