@@ -33,7 +33,7 @@
 \vspace*{-0.5cm}
 
 $$
-L(y,f) = \left(y-f\right)^2 \quad \text{or} \quad L(y,f) = 0.5 \left(y-f\right)^2
+\Lyf = \left(y-f\right)^2 \quad \text{or} \quad \Lyf = 0.5 \left(y-f\right)^2
 $$
 
 \vspace*{-2mm}
@@ -64,7 +64,7 @@ $$
 
 
 \begin{vbframe}{L2-loss: Optimal Constant Model}
-Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $L(y,f) = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
+Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lyf = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
 
 \medskip
 
@@ -91,7 +91,7 @@ The optimizer $\hat{f}_{c}$ of the empirical risk is $\bar y$ (the empirical mea
 
 \vspace{0.2cm}
 
-For the optimal constant model $f_{c}^{\ast}$ for the L2-loss $L(y,f) = \left(y - f\right)^2$ we solve the optimization problem 
+For the optimal constant model $f_{c}^{\ast}$ for the L2-loss $\Lyf = \left(y - f\right)^2$ we solve the optimization problem 
 $$
 \argmin_{f \in \Hspace} \riskef = \argmin_{\theta \in \R} \sumin (\yi - \theta)^2. 
 $$
@@ -111,7 +111,7 @@ We calculate the first derivative of $\riske$ w.r.t. $\theta$ and set it to $0$:
 
 \begin{vbframe}{L2-Loss: Risk Minimizer}
 
-Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $L(y,f) = \left(y-f\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$. 
+Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lyf = \left(y-f\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$. 
 
 \begin{itemize}
 \item By the law of total expectation

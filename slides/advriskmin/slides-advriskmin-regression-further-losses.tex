@@ -56,7 +56,7 @@ Examples:
 \vspace*{-0.5cm}
 
 $$
-L(y,f) = \begin{cases}
+\Lyf = \begin{cases}
   \frac{1}{2}(y - f)^2  & \text{ if } |y - f| \le \epsilon \\
   \epsilon |y - f|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
   \end{cases}, \quad \epsilon > 0
@@ -101,7 +101,7 @@ $$
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
 $$
-L(y,f) = \log \left( \cosh(\left|y - f\right|) \right)
+\Lyf = \log \left( \cosh(\left|y - f\right|) \right)
 % \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
 
@@ -126,7 +126,7 @@ $$
 % Confirmed with Bernd: use def from https://www.user.tu-berlin.de/mtoussai/teaching/15-MachineLearning/15-MachineLearning-script.pdf, p. 24 
 
 $$
-L(y,f) = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - f\right|}{c}\right)^2 \right), 
+\Lyf = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - f\right|}{c}\right)^2 \right), 
 \quad c \in \R
 % \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
@@ -151,7 +151,7 @@ $$
 
 \begin{small}
 \[
-  L(y,f) = \left\{\begin{array}{lr}
+  \Lyf = \left\{\begin{array}{lr}
         -\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - f\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-f\right| \leq \epsilon \\
         \infty & \text{if } \left|y-f\right|  > \epsilon
         \end{array}\right.
@@ -209,7 +209,7 @@ $$
 
 \vspace*{-0.3cm}
 $$
-L(y,f) =  \begin{cases}
+\Lyf =  \begin{cases}
   0  & \text{if } |y - f| \le \epsilon \\
   |y - f|-\epsilon & \text{otherwise }
   \end{cases}, \quad \epsilon \in \R_{+}
@@ -234,11 +234,11 @@ $$
 %% \begin{vbframe}{$\epsilon$-insensitive Loss: Optimal Constant}
 
 %% % Derive Constant model and eps-insens loss
-%What is the optimal constant model $f = \thetab$ w.r.t. the $\epsilon$-insensitive loss $L(y,f) =  |y - f| ~ \mathds{1}_{ \left\{|y - f| > \epsilon \right\}}$?
+%What is the optimal constant model $f = \thetab$ w.r.t. the $\epsilon$-insensitive loss $\Lyf =  |y - f| ~ \mathds{1}_{ \left\{|y - f| > \epsilon \right\}}$?
 
 %\vspace{-0.2cm}
 %\begin{eqnarray*}
-%\hat \thetab&=& \argmin_{\thetab\in \R}\sumin L(y,f)i \\
+%\hat \thetab&=& \argmin_{\thetab\in \R}\sumin \Lyfi \\
 %&=& \argmin_{\thetab\in \R} \sum_{i \in I_\eps} \left| \yi - \thetab \right| - \eps  \\
 %&=& \argmin_{\thetab\in \R} \sum_{i \in I_\eps} \left| \yi - \thetab \right| - \sum_{i \in I_\eps} \eps \\
 %&=& \text{median}\left(\left\{\yi ~|~ i \in I_\eps\right\}\right) - |I_\eps| \cdot \eps \\
@@ -265,7 +265,7 @@ $$
 
 \small
 $$
-L(y,f) = \begin{cases} (1 - \alpha) (f - y) & \text{ if } y < f\\
+\Lyf = \begin{cases} (1 - \alpha) (f - y) & \text{ if } y < f\\
 \alpha (y - f) & \text{ if } y \ge f
 \end{cases}, \quad \alpha \in (0, 1)
 $$
