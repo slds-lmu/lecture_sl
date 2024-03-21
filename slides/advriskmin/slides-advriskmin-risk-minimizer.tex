@@ -15,16 +15,14 @@
 
 \newcommand{\titlefigure}{figure_man/optimization_steps.jpeg}
 \newcommand{\learninggoals}{
-	\item Know the concepts of the Bayes optimal model (also: risk minimizer, population minimizer)
+	\item Bayes optimal model (also: risk minimizer, population minimizer)
 	\item Bayes risk
-    \item Consistent learners
     \item Bayes regret, estimation and approximation error    
 	\item Optimal constant model
-	%\item Proper scoring rules
+    \item Consistent learners
 }
 
 \title{Introduction to Machine Learning}
-% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
 \institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
 \date{}
 
@@ -37,33 +35,125 @@
 \begin{vbframe}{Empirical Risk Minimization}
 Very often, in ML, we minimize the empirical risk
 \vspace{-0.3cm}
-$$\riskef = \sumin \Lxyi\,\quad \text{where}$$
+$$\riskef = \sumin \Lxyi$$
 \vspace{-0.2cm}
 {\small
 \begin{itemize}\setlength\itemsep{0.5pt} 
-    \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$ and $\Xspace, \Yspace$ are the feature and target spaces, respectively
-    \item $f_{\Hspace}:\Xspace \rightarrow \mathbb{R}^g, f \in \Hspace$ is a model which maps a feature vector to a numerically encoded element of $\Yspace$ and $\Hspace$ is the hypothesis space {\small(if $\Hspace$ is omitted it is clear from the context)} 
-    \item $L:\left(\Yspace\times\mathbb{R}^g\right)\rightarrow\mathbb{R}$ is the loss function which measures the dissimilarity of the model prediction and the true target,
-    \item and we assume that $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ where $\Pxy$ is the distribution of the data generating process (DGP)
-    \item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
+    \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$,
+    so from feature and target space
+    \item $f_{\Hspace}:\Xspace \rightarrow \mathbb{R}^g$, 
+    f is a model from hypothesis space $\Hspace$;
+    maps a feature vector to output score;
+    sometimes or often we omit $\Hspace$ in the index 
+    \item $L:\left(\Yspace\times\mathbb{R}^g\right)\rightarrow\mathbb{R}$ is loss;\\
+    $\Lyf$ measures distance between label and prediction
+    \item We assume that $(\xv,y) \sim \Pxy$ and $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ \\
+    $\Pxy$ is the distribution of the data generating process (DGP)
+    %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
 \end{itemize}
 }
-%\smallskip
-What is the theoretical justification for this procedure?
+Let's define (and minimize) loss in expectation, the theoretical risk:
+
+$$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
+
+
+\end{vbframe}
+
+\begin{vbframe}{Optimal constants for a loss}
+
+\begin{itemize}
+\item Let's assume some RV $Z \in \Yspace$ for a label
+\item Z not $Y$, because we want to fiddle with its distribution
+\item Assume Z has distribution Q, so $Z \sim Q$
+\item We can now consider $\argmin_c \E_{Z \sim Q}[L(Z, c)]$\\
+so the score-constant which loss-minimally approximates Z
+\end{itemize}
+
+\lz
+
+We will consider 3 cases for Q
+\begin{itemize}
+\item $Q = P_Y$, simply our labels and their marginal distribution in $\Pxy$
+\item $Q = P_{Y | X = x}$, conditional label distribution at point $X = x$
+\item $Q = P_n$, the empirical product distribution for data $y_1, \ldots, y_n$
+\end{itemize}
+
+\lz
+
+If we can solve $\argmin_c \E_{Z \sim Q}[L(Z, c)]$ for any $Q$,
+we will get multiple useful results!
+
 
 \end{vbframe}
 
 
+\begin{vbframe}{Optimal Constant Model}
+
+\begin{itemize}
+\item We would like a loss optimal, constant baseline predictor
+\item A "featureless" ML model, which always predicts the same value
+\item Can use it as baseline in experiments, if we don't beat this
+with more complex model, that model is useless
+\item Will also be useful as component in algorithms and derivations
+\end{itemize}
+
+%By restricting $\Hspace$ to constant functions $f_c$ independent of $\xv$, the constant model minimizing the theoretical risk 
+
+
+$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[L(y,c)\right]$$
+
+and 
+
+$\fx = \theta = c$ that optimizes the empirical risk $\risket$ is denoted as as $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$.
+
+\vspace*{-0.5cm}
+
+\begin{center}
+	\includegraphics[width = 0.2\textwidth]{figure/l1_vs_l2.png}
+\end{center}
+\end{vbframe}
+
+
+\begin{vbframe}{Optimal Constant Model}
+
+\begin{itemize}
+\item Let's start with the simplest case, L2 loss
+\item And we want to find and optimal constant model for 
+
+\end{itemize}
+
+$$ \argmin \E [L(Z, c)] = $$
+$$ \argmin \E [(Z - c)^2] = $$
+$$ \argmin \E [Z^2] - 2cE[Z] + c^2 = $$
+$$ E[Z] $$
+
+\begin{itemize}
+\item Using $Q = P_Y$, this means that, given we know the label distribution,
+the best constant is $c = E[Y]$.
+\item If we only have data $y_1, \ldots y_n$
+$\argmin \E_{Z \sim P_n} [(Z - c)^2] = \E_{Z \sim P_n}[Z] = \frac{1}{n} \sumin \yi = \bar{y}$
+
+
+\item And we want to find and optimal constant model for 
+
+\end{itemize}
+
+
+\end{vbframe}
+
+
+
+
 \begin{vbframe}{Risk Minimizer}
 
-Our goal is to minimize the risk
+%Our goal is to minimize the risk
 
-$$ \risk_L\left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. $$
+%$$ \risk_L\left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. $$
 
-for a certain hypothesis $f \in \Hspace$ and a loss $L(y,f)$. 
+%for a certain hypothesis $f \in \Hspace$ and a loss $\Lyf$. 
 
-{\tiny NB: As $\risk_L$ depends on loss $L$, we sometimes 
-make this explicit with a subscript if needed and omit it in other cases.}
+%{\tiny NB: As $\risk_L$ depends on loss $L$, we sometimes 
+%make this explicit with a subscript if needed and omit it in other cases.}
 
 \lz 
 
@@ -92,14 +182,13 @@ is called the \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{
 
 \lz 
 
-The resulting risk is called \textbf{Bayes risk}
+The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{L} = \risk_L(\fbayes)$
 
-\begin{eqnarray*}
-    \riskbayes_{L} = \inf_{f: \Xspace \to \R^g} \risk_L\left(f\right) 
-\end{eqnarray*}
 
 
 \end{vbframe}
+
+
 
 % \begin{frame}[t]{optimal point-wise predictions}  
 
@@ -123,7 +212,7 @@ The resulting risk is called \textbf{Bayes risk}
 
 \begin{frame}[t]{optimal point-wise predictions}  
 
-To derive the risk minimizer, observe that by the law of total expectation 
+To derive the risk minimizer, observe that by law of total expectation 
 $$    \risk_L(f) = \E_{xy} \left[\Lxy\right] 
     = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right].$$
 
@@ -244,28 +333,7 @@ In Stone's famous consistency theorem from 1977, the universal consistency of a 
 
 \end{vbframe}
 
-\begin{vbframe}{Optimal Constant Model}
 
-While the risk minimizer gives us the (theoretical) optimal solution, the \textbf{optimal constant model} (also: featureless predictor) gives us a simple 
-baseline solution in experiments.
-
-\vspace{0.2cm}
-
-By restricting $\Hspace$ to constant functions $f_c$ independenx of $\xv$, the constant model minimizing the theoretical risk $\E_{xy}\left[L(y,f(\xv)\right]$ is defined as:
-
-$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[L(y,c)\right]$$
-
-\vspace{0.3cm}
-
-On the other hand, the constant model $\fx = \theta = c$ that optimizes the empirical risk $\risket$ is denoted as as $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$.
-
-\vspace*{-0.5cm}
-
-\begin{center}
-	\includegraphics[width = 0.6\textwidth]{figure/l1_vs_l2.png}
-\end{center}
-
-\end{vbframe}
 
 % \begin{frame}[t]{Risk Minimizer And Optimal Constant}
 
