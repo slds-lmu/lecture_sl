@@ -16,6 +16,7 @@
 \newcommand{\learninggoals}{
   \item Derive the risk minimizer of the L2-loss
   \item Derive the optimal constant model for the L2-loss
+  \item Know risk minimizer and optimal constant model for L1-loss
 }
 
 \title{Introduction to Machine Learning}
@@ -25,7 +26,7 @@
 
 \begin{document}
 
-\lecturechapter{Regression Losses: L2-loss}
+\lecturechapter{Regression Losses: L2 and L1 loss}
 \lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{L2-Loss}
@@ -178,6 +179,70 @@ to obtain variance.
 
 \end{vbframe}
 
+\begin{vbframe}{L1-Loss}
+
+% Description
+\vspace*{-0.1cm}
+The L1 loss is defined as
+$$
+\Lyf = \left|y-f\right|
+$$
+
+\begin{itemize}
+\setlength{\itemsep}{1.5em}
+\item More robust than $L2$, outliers in $y$ are less problematic.
+\item Analytical properties: convex, not differentiable for $y = f(\bm{x})$ (optimization becomes harder).
+\end{itemize}
+
+\vspace*{0.2cm}
+
+\begin{center}  \includegraphics[width = 9cm]{figure/loss_absolute_2.png} \\
+\end{center}
+
+
+\end{vbframe}
+
+
+\begin{vbframe}{L1-Loss: Risk Minimizer}
+
+We calculate the (true) risk for the $L1$-Loss $\Lyf = \left|y-f\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
+
+\vspace{0.5cm}
+
+\begin{itemize}
+  \setlength{\itemsep}{1.4em}  
+  \item We use the law of total expectation
+  \vspace{0.3cm}
+  $$
+    \riskf = \E_x \left[\E_{y|x}\left[|y-\fx|~|\xv = \xv\right]\right]. 
+  $$
+  \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xv$. The best prediction at $\xv = \xv$ is then 
+  \vspace{0.3cm}  
+  $$
+    f^{\ast}(\xv) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
+  $$
+
+\end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe}{L1-Loss: Optimal constant model}
+
+The optimal constant model in terms of the theoretical risk for the L1 loss is the median over $y$:
+
+\begin{eqnarray*}
+  f_{c}^{\ast} &=& \text{med}_{y|x} \left[y ~|~ \xv \right] \overset{\text{drop } \xv}{=}  \text{med}_{y} \left[y \right]
+  \end{eqnarray*} 
+
+The optimizer $\hat{f}_c$ of the empirical risk is $\text{med}(\yi)$ over $\yi$, which is the empirical estimate for $\text{med}_{y} \left[y \right]$. 
+
+\vspace*{-0.3cm}
+
+\begin{center}
+\includegraphics[width = 0.5\textwidth ]{figure/l1_vs_l2.png} \\
+\end{center}
+
+\end{vbframe}
 
 
 \endlecture
