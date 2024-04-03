@@ -43,6 +43,7 @@ exercises/*/figure/unnamed-chunk*
 *.synctex.gz
 *.synctex(busy)
 **.pax # pdfannotextractor / pax
+*.pax
 
 #----------------------------------------------------------#
 #  Editor-specific stuff that should generally be ignored  #
