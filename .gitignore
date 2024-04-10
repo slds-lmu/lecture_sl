@@ -16,8 +16,9 @@ speakermargin.tex
 #--------------------------------------------#
 
 # The only slide PDF output in this repo should be in slides-pdf
-# include both slides-xyz (i2ml) and slideXY- (iml) formats
-slides/*/slides*.pdf 
+# include both slides-xyz (i2ml) and slideXY- / tXY- (iml) formats
+slides/*/slides*.pdf
+slides/*/t*.pdf
 
 # Similar things apply to exercises and exercises-pdf
 exercises/*/*.pdf
@@ -42,6 +43,8 @@ exercises/*/figure/unnamed-chunk*
 *.vrb
 *.synctex.gz
 *.synctex(busy)
+**.pax # pdfannotextractor / pax
+*.pax
 
 #----------------------------------------------------------#
 #  Editor-specific stuff that should generally be ignored  #
