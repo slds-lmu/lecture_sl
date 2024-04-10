@@ -2,6 +2,8 @@
 TSLIDES = $(shell find . -maxdepth 1 -iname "slides*.tex")
 # Substitute file extension tex -> pdf for output pdf filenames
 TPDFS = $(TSLIDES:%.tex=%.pdf)
+# Substitute file extension tex -> pdf for output pdf filenames
+TPAXS = $(TSLIDES:%.tex=%.pax)
 # output pdf filenames for slides without margin (old 4:3 layout)
 NOMARGINPDFS = $(TSLIDES:%.tex=%-nomargin.pdf)
 
@@ -59,14 +61,15 @@ $(TPDFS): %.pdf: %.tex
 
 $(NOMARGINPDFS): %-nomargin.pdf: %.tex
 	touch nospeakermargin.tex
-	latexmk -pdf -jobname=%A-nomargin $<
+	latexmk -halt-on-error -pdf -jobname=%A-nomargin $<
 
 $(FLSFILES): %.fls: %.tex
 	-rm nospeakermargin.tex
-	latexmk -pdf -g $<
+	latexmk -halt-on-error -pdf -g $<
 
 copy:
-	cp *.pdf ../../slides-pdf
+	cp -u *.pdf ../../slides-pdf
+	cp -u *.pax ../../slides-pdf
 
 # Extract pdf annotations, i.e. hyperlinks, for later reinsertion
 # When combining multiple PDFs into one (for slides/all/)
@@ -107,4 +110,4 @@ texclean:
 	-rm -rf nospeakermargin.tex
 
 clean: texclean
-	-rm $(TPDFS) $(NOMARGINPDFS) 2>/dev/null
+	-rm $(TPDFS) $(NOMARGINPDFS) $(TPAXS) 2>/dev/null
