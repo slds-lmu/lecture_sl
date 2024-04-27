@@ -108,7 +108,7 @@ $$
 \normalsize
 \begin{itemize}
 \item Logarithm of the hyperbolic cosine of the residual.
-\item Approximately equal to $0.5 (\left|y - f\right|)^2$ for small $f$ and to $\left|y - f\right| - \log 2$ for large $f$, meaning it works mostly like $L2$ loss but is less outlier-sensitive.
+\item Approximately equal to $0.5 (\left|y - f\right|)^2$ for small residuals and to $\left|y - f\right| - \log 2$ for large residuals, meaning it works a smoothed out $L1$ loss using $L2$ around the origin. %like $L2$ loss for small residuals, but is less outlier-sensitive due to its $L1$ approximation for larger residuals.
 \item Has all the advantages of Huber loss and is, moreover, twice differentiable everywhere.
 \end{itemize}
 
@@ -117,6 +117,53 @@ $$
 \begin{center}
 % \includegraphics[width = 0.6\textwidth]{figure_man/loss_cauchy_plot1.png}
 \includegraphics[width = 0.6\textwidth]{figure/loss_logcosh.png}
+\end{center}
+
+\framebreak
+
+What is the idea behind the log-cosh loss?
+\vspace{-0.3cm}
+\begin{columns}
+
+\begin{column}{0.4\textwidth}
+%\textbf{Left Column}
+
+{\scriptsize
+Essentially, we  
+\begin{enumerate}\setlength{\itemsep}{0.32em}
+    \item take derivative of $L1$ loss w.r.t.~$y-f$, which is the $\text{sign}(y-f)$ function
+    \item eliminate discontinuity at $0$ by approximating $\text{sign}(y-f)$ using the cont. differentiable $\text{tanh}(y-f)$
+    \item finally integrate the smoothed sign function ``up again'' to obtain smoothed $L1$ loss $\log(\text{cosh}(y-f))=\log(\text{cosh}(|y-f|))$
+\end{enumerate}
+}
+\end{column}
+
+\begin{column}{0.7\textwidth}
+%\textbf{Right Column}
+
+\begin{figure}
+      \centering
+        \scalebox{0.99}{\includegraphics{slides/advriskmin/figure_man/logcosh-derivation.png}}
+        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetab$}
+    \end{figure}
+
+\end{column}
+
+\end{columns}
+
+The log-cosh approach obtain a differentiable approximation of the $L1$ loss can also be extended to  differentiable pinball losses which are used, e.g., for quantile regression. For more details on the log-cosh loss, see  \citebutton{Saleh and Saleh, 2024}{https://arxiv.org/pdf/2208.04564}
+
+\framebreak
+
+\textbf{The cosh($\mu,\sigma$) distribution}:\,
+The reciprocal $\text{cosh}(x)$ function further defines a distribution by its positivity on the whole real line and the fact that $\int_{-\infty}^{\infty} \frac{1}{\pi \text{cosh}(x)} \text{d}x = 1$.\\
+\vspace{0.1cm}
+Generally, we can define a location-scale family of distributions (parameterized by $\mu$ and $\sigma$) resembling a Gaussian with heavier tails:
+
+$$f(x ; \mu, \sigma)=\frac{1}{\pi \sigma \cosh \left(\frac{x-\mu}{\sigma}\right)}, \quad \mathbb{E}[X]=\mu,\,\, \text{Var}[X]=\frac{\pi^2 \sigma^2}{4}$$
+
+\begin{center}
+\includegraphics[width = 0.72\textwidth]{figure_man/cosh-gaussian-densities.png}
 \end{center}
 
 \end{vbframe}

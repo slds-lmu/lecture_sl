@@ -40,7 +40,7 @@ negative gradient
 \thetab^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]}).
 \end{align*}
 The term \(\lambda \thetab^{[old]}\) causes the parameter
-(\textbf{weight}) to \textbf{decay} in proportion to its size. This is a very well-known technique in deep learning - and simply $L2$ regularization in disguise.
+(\textbf{weight}) to \textbf{decay} in proportion to its size. This is a very well-known technique in deep learning - and simply $L2$ regularization in disguise (for gradient descent).
 
 \framebreak
 
@@ -53,7 +53,7 @@ When we use weight decay, we follow the steepest slope of $\riske$ as for gradie
 
 \framebreak
 
-How strongly we are pulled back to the origin for a fixed stepsize $\alpha$ depends only on $\lambda$ (as long as the procedure converges):
+How strongly we are pulled back to the origin (for a fixed stepsize $\alpha$) depends only on $\lambda$ as long as the procedure converges:
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{figure/weightdecay_lambda_plot.png}\\

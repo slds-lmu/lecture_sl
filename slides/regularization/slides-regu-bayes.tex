@@ -128,6 +128,19 @@ prior:
   % $\epsilon \sim \mathcal{N}(0, \sigma^2)$ we set 
   % $\lambda = \frac{\sigma^2}{\tau^2}$).
 \end{itemize}
+
+\framebreak
+
+\begin{itemize}
+    \item Consider a DGP $y = \theta + \varepsilon$ where $\varepsilon \sim \mathcal{N}(0,1)$ and $\theta=1$ together with a Gaussian zero-mean prior on $\theta$, i.e., $\mathcal{N}(0, \tau^2)$ for $\tau \in \{0.25, 0.5, 2\}$
+    \item Given $n=20$ samples, the posterior of $\theta$ and its MAP estimate can be calculated analytically
+    \item Plotting the $L2$ regularized empirical risk $\riskr(\theta) = \sum_{i=1}^{n} (y_i-\theta)^2+\lambda \theta^2$ with $\lambda = 1/\tau^2$ shows that ridge solution is identical with MAP
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \scalebox{1}{\includegraphics[width=0.9\textwidth]{figure_man/bayes-plot-posterior.png}}
+\end{figure}
   
   % \item The conditional distribution of $\ydat$ in linear regression with 
   % Gaussian errors $\epsilon^{(i)} \sim \mathcal{N}(0, \sigma^2) ~ \forall i \in 
