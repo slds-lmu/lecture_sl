@@ -21,7 +21,7 @@
 
 \begin{vbframe}{Weight decay vs. L2 Regularization}
 Let us optimize the $L2$-regularized risk of a model $\fxt$
-
+\vspace{-0.2cm}
 \[
 \min_{\thetab} \riskrt = \min_{\thetab} \risket + \frac{\lambda}{2} \|\thetab\|^2_2
 \]
@@ -34,13 +34,16 @@ by gradient descent. The gradient is
 
 We iteratively update $\thetab$ by step size \(\alpha\) times the
 negative gradient
-
+\vspace{-0.2cm}
 \begin{align*}
 \thetab^{[\text{new}]} &= \thetab^{[\text{old}]} - \alpha \left(\nabla_{\thetab} \riske(\thetab^{[\text{old}]}) + \lambda \thetab^{[\text{old}]}\right) \\&=
 \thetab^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]}).
 \end{align*}
+{\small
 The term \(\lambda \thetab^{[old]}\) causes the parameter
 (\textbf{weight}) to \textbf{decay} in proportion to its size. This is a very well-known technique in deep learning - and simply $L2$ regularization in disguise (for gradient descent).
+
+\textbf{Caveat}: Equivalence of weight decay and $L2$ regularization only holds for vanilla SGD (not e.g. Adam) \citebutton{Loshchilov and Hutter, 2019}{https://arxiv.org/pdf/1711.05101}}
 
 \framebreak
 
@@ -77,7 +80,7 @@ where $\bm{H}$ is the Hessian matrix of $\risket$ evaluated at $\thetah$.
 % Because $\thetah = \argmin_{\thetab}\risket$,
 \begin{itemize}
   \item The first-order term is 0 in the expression above because the gradient is $0$ at the minimizer.
-  \item $\bm{H}$ is positive semidefinite.
+  \item $\bm{H}$ is positive semidefinite, because we are at the minimizer.
 \end{itemize}
 
 \lz
@@ -104,7 +107,6 @@ and solve this approximation of $\riskr$ for the minimizer $\hat{\thetab}_{\text
 This gives us a formula to see how the minimizer of the $L2$-regularized version is a transformation of the minimizer of the unpenalized version.
 \vspace{0.2cm}
 
-\textbf{Caveat}: Equivalence of weight decay and $L2$ regularization only holds for vanilla SGD (not e.g. Adam)
 
 
 \framebreak

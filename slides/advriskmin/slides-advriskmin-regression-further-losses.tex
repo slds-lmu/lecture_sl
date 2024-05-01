@@ -149,7 +149,7 @@ Essentially, we
 
 \end{columns}
 
-The log-cosh approach obtain a differentiable approximation of the $L1$ loss can also be extended to  differentiable pinball losses (later). For more details on the log-cosh loss, see  \citebutton{Saleh and Saleh, 2024}{https://arxiv.org/pdf/2208.04564}.
+The log-cosh approach to obtain a differentiable approximation of the $L1$ loss can also be extended to  differentiable quantile/pinball losses. For more details on the log-cosh loss, see  \citebutton{Saleh and Saleh, 2024}{https://arxiv.org/pdf/2208.04564}.
 
 \framebreak
 
@@ -158,7 +158,7 @@ The (normalized) reciprocal $\text{cosh}(x)$ defines a pdf by its positivity on 
 \vspace{0.1cm}
 We can define a location-scale family of distributions (using $\theta$ and $\sigma$) resembling Gaussians with \textbf{heavier tails}. 
 
-It is easy to see that ERM using the log-cosh loss is equivalent to MLE of the $\text{cosh}(\theta,1)$ distribution.
+It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the $\text{cosh}(\theta,1)$ distribution.
 
 \begin{columns}
 
@@ -216,7 +216,7 @@ $$
 
 \end{vbframe}
 
-
+\begin{comment}
 \begin{vbframe}{Log-Barrier Loss}
 
 \begin{small}
@@ -244,7 +244,7 @@ $$
 \end{vbframe}
 
 
-\begin{comment}
+
 \begin{vbframe}{Log-Barrier loss}
 
 \begin{itemize}

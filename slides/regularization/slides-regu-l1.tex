@@ -101,7 +101,7 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \end{vbframe}
 
 \begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
-\small For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
+\small For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive a closed-form solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
 \vspace{-0.1cm}
 $$\thetah_{\text{lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})\vspace{-0.1cm}$$
 Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
@@ -142,7 +142,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 \begin{small}
 In which cases can the lasso select the true support of $\thetab$? This can be formalized as sign consistency (different from $\ell_2$ consistency!): 
 \begin{align*}
-\mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty
+\mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty \quad (\text{where}\,\text{sign}(0):=0) 
 \end{align*}
 \\
 %\vspace{0.1cm}
