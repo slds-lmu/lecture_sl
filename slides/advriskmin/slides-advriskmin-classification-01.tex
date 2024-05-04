@@ -65,11 +65,11 @@ By the law of total expection we can in general rewrite the risk as\\
 
 \begin{eqnarray*}
   \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ L(y, \fx) ] \right] \\
-          & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv = \xv)\right]\,, 
+          & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right]\,, 
           % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
 \end{eqnarray*}
 
-with $\P(y = k| \xv = \xv)$ the posterior probability for class $k$. For the binary case we denote $\eta(\xv) := \P(y = 1 ~|~ \xv = \xv)$ and the expression becomes 
+with $\P(y = k| \xv)$ the posterior probability for class $k$. For the binary case we denote $\eta(\xv) := \P(y = 1 ~|~ \xv)$ and the expression becomes 
 
 \vspace*{-0.3cm}
 
@@ -111,7 +111,7 @@ Note that sometimes $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xv)$ 
 The Bayes risk for the 0-1-loss (also: Bayes error rate) is 
 
 \begin{eqnarray*}  
-  \riskbayes &=& 1 - \E_x \left[\max_{l \in \Yspace} \P(y = l~|~ \xv = \xv)\right]\,.
+  \riskbayes &=& 1 - \E_{x} \left[\max_{l \in \Yspace} \P(y = l~|~ \xv)\right]\,.
 \end{eqnarray*}
 
 \lz 
