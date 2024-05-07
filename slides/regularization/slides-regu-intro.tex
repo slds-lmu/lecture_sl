@@ -33,28 +33,14 @@ Regularization comprises all methods that add preferences for specific solutions
 
 \end{vbframe}
 
-\begin{vbframe}{Regularization for Invariance}
-Prior knowledge can also be of the form that predictions should remain invariant under certain input transformations.\\
-In image classification, label ``cat'' should hold regardless of position or size of relevant object (translation/scale invariance)
-\begin{enumerate}\setlength\itemsep{1.02em}
-    \item \textbf{Pre-processing}: By computing invariant features under transformations, downstream models too will respect invariances
-    %\item \textbf{Explicit regularization}: Penalty for changes in model output under transformed inputs is added to loss
-    \item \textbf{Data augmentation}: Extend training data by replicating inputs under invariant transformations (e.g., flipping/rotating images)
-    \begin{figure}
-    \includegraphics[width=0.75\textwidth]{figure_man/data-augmentation-cat.png}\\
-    \end{figure}
-    \item \textbf{Network architecture}: Build invariance property directly into network structure, e.g. CNNs \citebutton{Geometric DL (Bronstein et al., 2021)}{https://arxiv.org/pdf/2104.13478.pdf}
-\end{enumerate}
 
-
-\end{vbframe}
 
 \begin{vbframe}{Recap: Overfitting}
 
 Reducing overfitting is an important application of regularization, so let's first motivate it from that perspective.
 
 \begin{itemize}
-  \item Overfitting occurs when the model reflects noise or artifacts in training data which do not generalize (small train error, at cost of test high error)
+  \item Overfitting occurs when the model reflects noise or artifacts in training data which do not generalize (small train error, at cost of high test error)
   \item Hence, predictions of overfitting models cannot be trusted to generalize beyond the training data
 \end{itemize}
 \lz
@@ -143,8 +129,8 @@ Why can \textbf{overfitting} happen in practice? And how to avoid it?
 \begin{enumerate}
 \item Not enough data \\
 $\to$ collect \textbf{more data} 
-\item Data is noisy \\
-$\to$ collect \textbf{better data} (reduce noise) 
+%\item Data is noisy \\
+%$\to$ collect \textbf{better data} (reduce noise) 
 \item Models are too complex \\
 $\to$ use \textbf{less complex models}
 \item Aggressive loss optimization \\
@@ -169,29 +155,20 @@ Good insight, but getting more data is often not feasible in practice.
 
 \framebreak
 
-\textbf{Approach 3: Reduce complexity}
+\textbf{Approach 2: Reduce complexity}
 
-\lz 
+%\lz 
 
-We try the simplest model we can think of: the constant model. For the $L2$ loss, the optimal constant model is the empirical mean
+We try the simplest model we can think of: the constant model. For $L2$ loss, the optimal constant model is the emp. mean {\small $$\fxt = \frac{1}{n}\sum_{i=1}^n \yi$$}
 
-$$
-\fxt = \frac{1}{n}\sumin \yi
-$$
-
-We then increase the complexity of the model step-by-step by adding one feature at a time.
-
-\framebreak 
-
-We can control the complexity of the model by including/excluding features.
-We can try out all feature combinations and investigate the model fit.
+We then increase model complexity step-by-step by adding one feature at a time. We can try out all combinations and investigate the model fit.
 
 
 \begin{figure}
-\includegraphics[width=0.7\textwidth]{figure/avoid_overfitting_02.png}\\
+\includegraphics[width=0.5\textwidth]{figure/avoid_overfitting_02.png}\\
 \end{figure}
 
-\vfill
+%\vfill
 
 \begin{footnotesize}
 Note: For simplicity, we added the features in one specific (clever) order, so we cheated a bit. Also note there are $2^{12} = 4096$ potential feature combinations.
@@ -199,7 +176,7 @@ Note: For simplicity, we added the features in one specific (clever) order, so w
 
 \framebreak
 
-\textbf{Approach 4: Optimize less}
+\textbf{Approach 3: Optimize less}
 
 \lz 
 
@@ -230,28 +207,17 @@ We have contradictory goals
 \item \textbf{minimizing the complexity} of the model.
 \end{itemize}
 
-We need to find the \enquote{sweet spot}.
+We need to find the \enquote{sweet spot}. Until now, we can either include or exclude features in a binary fashsion.
 
 \begin{center}
 \begin{figure}
-\includegraphics[width=0.6\textwidth]{figure_man/complexity-vs-fit.png}
+\includegraphics[width=0.6\textwidth]{figure_man/complexity-vs-fit2.png}
 \end{figure}
 \end{center}
-
-\framebreak 
-
-Until now, we can either include or exclude features in a binary fashsion.
-
-\lz 
 
 Instead of controlling the complexity in a discrete way by specifying the number of features,
 we might prefer to control the complexity  \textbf{on a continuum} from simple to complex.
 
-\begin{center}
-\begin{figure}
-\includegraphics[width=0.6\textwidth]{figure_man/complexity-vs-fit-continuous.png}
-\end{figure}
-\end{center}
 
 \end{vbframe}
 
@@ -259,7 +225,7 @@ we might prefer to control the complexity  \textbf{on a continuum} from simple t
 
 \begin{vbframe}{Regularized Empirical Risk Minimization}
 
-  
+\begin{comment}  
 Recall, empirical risk minimization with a complex hypothesis set tends to overfit. A major tool for handling overfitting is \textbf{regularization}.
   
   \lz
@@ -271,7 +237,8 @@ In the broadest sense, regularization refers to any modification made to a learn
 Explicitly or implicitly, such modifications represent the preferences we have regarding the elements of the hypothesis set. 
 
   \framebreak
-  
+\end{comment}  
+
   Commonly, regularization takes the following form:
   
   $$
@@ -298,18 +265,18 @@ Explicitly or implicitly, such modifications represent the preferences we have r
   \item We decide to combine the two in a weighted sum and to control
   the trade-off via the complexity control parameter $\lambda$.
   \item $\lambda$ is hard to set manually and is usually selected via cross-validation (see later).
-  \item $\lambda = 0$: The regularized risk $\riskrf$ reduces to the simple empirical $\riskef$.
+  \item $\lambda = 0$: The regularized risk $\riskrf$ reduces to the simple empirical risk $\riskef$.
 
   \item If $\lambda$ goes to infinity, we stop caring about the loss/fit and models become as \enquote{simple} as possible.
 \end{itemize}
 
-\framebreak
+%\framebreak
 
 
-\center
-\vspace*{0.5cm}
-\includegraphics[width=0.6\textwidth]{figure_man/biasvariance_scheme.png} \\
-\footnotesize{Hastie, The Elements of Statistical Learning, 2009 (p. 225)}
+%\center
+%\vspace*{0.5cm}
+%\includegraphics[width=0.6\textwidth]{figure_man/biasvariance_scheme.png} \\
+%\footnotesize{Hastie, The Elements of Statistical Learning, 2009 (p. 225)}
 
 
 \end{vbframe}
