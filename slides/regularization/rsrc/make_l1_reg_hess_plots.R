@@ -35,8 +35,9 @@ init_plot_l1 <- plot_r_emp(function(beta) R_emp(beta, features = X_dc, target = 
              linetype = "dashed", alpha= 0.8, size = 1.1) +
   geom_vline(xintercept = 0, colour="lightblue",
              linetype = "dashed", alpha= 0.8, size = 1.1) +
-  geom_line(data=rbind(rep(0, num_features), as.data.frame(theta_hat)),
-            aes(x=V1, y=V2), colour="red", size=1.1, arrow = arrow(ends = "first", length = unit(0.09, "npc"))) +
+  geom_point(data=as.data.frame(theta_hat), aes(x=theta_hat[1], y=theta_hat[2]), color="red", size=2) +
+  #geom_line(data=rbind(rep(0, num_features), as.data.frame(theta_hat)),
+  #          aes(x=V1, y=V2), colour="red", size=1.1, arrow=arrow(ends="first", length=unit(0.09, "npc"))) +
   geom_vline(xintercept = -lambda/hessian[1,1], colour="yellow",
              linetype = "dashed", alpha= 0.8, size = 1.1) +
   annotate("label", x = -2, y = -2.5, label =
@@ -51,12 +52,12 @@ plot_l1_theta1 <- init_plot_l1 +
   # geom_polygon(data = data.frame(x = c(theta_hat[,1], theta_hat[,1], 0, 0), 
   #                               y = c(-Inf, Inf, Inf, -Inf)),
   #         aes(x,y), fill="white", alpha=0.5) + 
-  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=as.data.frame(theta_hat_1)),
+  geom_point(data=as.data.frame(theta_hat_1), aes(x=theta_hat_1[1], y=theta_hat_1[2]), color="green", size=2) +
+  geom_segment(data=cbind(start=as.data.frame(theta_hat), end=as.data.frame(theta_hat_1)),
                aes(x=start.V1, y=start.V2, 
-                   xend = end.V1, yend = end.V2), colour="green", 
-               linetype="dashed",
-               size=1.1, arrow = arrow(ends = "last", type="closed", length = unit(0.09, "npc")),
-               arrow.fill = "green")
+                   xend=end.V1, yend=end.V2), colour="green",
+               size=1.1, arrow=arrow(ends="last", type="closed", length=unit(0.04, "npc")),
+               arrow.fill="green")
 
 p1 <- grid.arrange(init_plot_l1, plot_l1_theta1, ncol=2)
 
@@ -68,26 +69,29 @@ theta_hat_2[,2] <- theta_l1_reg[2]
 
 
 plot_l1_theta2 <- init_plot_l1 +
-  geom_hline(yintercept = lambda/hessian[2,2], colour="yellow",
-             linetype = "dashed", alpha= 0.8, size = 1.1) +
+  geom_hline(yintercept=lambda/hessian[2,2], colour="yellow",
+             linetype="dashed", alpha=0.8, size=1.1) +
   #      geom_polygon(data = data.frame(x = c(-Inf, Inf, Inf, -Inf), 
   #                                     y = c(theta_hat[,2], theta_hat[,2], 0, 0)),
   #               aes(x,y), fill="white", alpha=0.5) + 
-  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=as.data.frame(theta_hat_2)),
+  geom_point(data=as.data.frame(theta_hat_2), aes(x=theta_hat_2[1], y=theta_hat_2[2]), color="green", size=2) +
+  geom_segment(data=cbind(start=as.data.frame(theta_hat), end=as.data.frame(theta_hat_2)),
                aes(x=start.V1, y=start.V2, 
-                   xend = end.V1, yend = end.V2), colour="green", 
-               linetype="dashed",
-               size=1.1, arrow = arrow(ends = "last", type="closed", length = unit(0.09, "npc")),
-               arrow.fill = "green")+
-  annotate("label", x = -3, y = 2, label =
-             "frac(lambda, H[\"2,2\"])",
-           parse = TRUE, color = 'black', size = 4, fill = "yellow") 
+                   xend=end.V1, yend=end.V2), colour="green",
+               size=1.1, arrow = arrow(ends="last", type="closed", length=unit(0.04, "npc")),
+               arrow.fill="green") +
+  annotate("label", x=-3, y=2, label="frac(lambda, H[\"2,2\"])",
+           parse=TRUE, color='black', size=4, fill="yellow") 
 
 plot_l1_theta_lasso <- plot_l1_theta2 +
-  geom_line(data=rbind(rep(0, num_features), as.data.frame(theta_l1_reg)),
-            aes(x=V1, y=V2), colour="orange", size=1.1, arrow = arrow(ends = "last", length = unit(0.09, "npc"))) +
-  annotate("label", x = 1.1, y = 1.5, label = "hat(theta)[\"Lasso\"]",
-           parse = TRUE, color = 'black', size = 4, fill = "orange")
+  geom_point(data=as.data.frame(theta_l1_reg), aes(x=theta_l1_reg[1], y=theta_l1_reg[2]), color="orange", size=2) + 
+  geom_segment(data=cbind(start=as.data.frame(theta_hat_2), end=as.data.frame(theta_l1_reg)),
+               aes(x=start.V1, y=start.V2, 
+                   xend=end.V1, yend=end.V2), colour="orange",
+               size=1.1, arrow = arrow(ends="last", type="closed", length=unit(0.04, "npc")),
+               arrow.fill="orange") +
+  annotate("label", x=1.1, y=1.5, label="hat(theta)[\"Lasso\"]",
+           parse=TRUE, color='black', size=4, fill="orange")
 
 p2 <- grid.arrange(plot_l1_theta2, plot_l1_theta_lasso, ncol=2)
 
