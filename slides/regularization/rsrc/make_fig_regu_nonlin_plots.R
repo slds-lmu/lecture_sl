@@ -128,9 +128,12 @@ gg <- benchmark_grid(tasks = spirals_task, resamplings = rdesc, learners = lrns)
 br <- benchmark(gg)
 a <- br$aggregate(measures = msr("classif.ce"), params = TRUE)
 a <- mlr3misc::unnest(a, "params")
-p <- ggplot(data = a, aes(x = decay, y = classif.ce)) +
+
+a$log_decay <- log(a$decay + 1) #make U-shape more obivious
+p <- ggplot(data = a, aes(x = log_decay, y = classif.ce)) +
   geom_line() + 
-  xlab("lambda") + ylab("classif err")
+  xlab("log(lambda+1)") + ylab("classif err") +
+  xlim(0, 0.01) + ylim(0.13, 0.27)
 #print(p)
 
 ggsave(filename = paste0("../figure/fig-regu-nonlin-srm-1.png"), 
