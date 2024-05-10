@@ -1,4 +1,5 @@
 source("utils.R")
+library(gridExtra)
 
 x1 <- seq(0,1.5,length.out = 100)
 x2 <- seq(0,3.5,length.out = 100)
@@ -20,7 +21,7 @@ remp_l2_plot_1 <-  plot_r_emp(R_emp, x1, x2) +
   labs(fill=expression(R[reg]),
        caption=expression(~Weight~decay~'(small '~lambda~')'~over~R[emp])) +   theme(legend.position="none")
 
-lambda <- 50
+lambda <- 30
 gd_l2_betas <- gradient_descent(beta_start, step_size,
                                 function(beta) R_reg_l2_grad(beta, lambda), num_steps)
 
@@ -36,5 +37,6 @@ remp_l2_plot_2 <-  plot_r_emp(R_emp, x1, x2) +
 
 
 p <- grid.arrange(remp_l2_plot_1 , remp_l2_plot_2 , ncol=2)
+p
 
 ggsave("../figure/weightdecay_lambda_plot.png", plot = p, width = 5.2, height = 3.2, dpi="retina")
