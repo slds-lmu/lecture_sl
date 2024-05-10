@@ -32,7 +32,7 @@
       $$\nabla_{\theta} \mathcal{R}_{\text{reg}}(\thetab) = \lambda \sign(\thetab) + \nabla_{\theta} \risket$$
 
     \item Note that, unlike in the case of L2, the contribution of the L1 penalty to the gradient doesn't scale linearly with each $\theta_j$. 
-    \item Let us now make (again) a quadratic Taylor approximation of $\mathcal{R}_{\text{emp}}(\thetab)$ around its minimizer $\thetah$. To get a clean algebraic expression, we further assume the Hessian of $\mathcal{R}_{\text{emp}}(\thetab)$ is diagonal, i.e. $\bm{H} = \text{diag}([H_{1,1}, \ldots , H_{d,d}])$, where each $H_{j,j} \geq 0$.
+    \item Let's now make (again) a quadratic Taylor approximation of $\mathcal{R}_{\text{emp}}(\thetab)$ around its minimizer $\thetah$. To get a clean algebraic expression, we further assume the Hessian of $\mathcal{R}_{\text{emp}}(\thetab)$ is diagonal, i.e. $\bm{H} = \text{diag}([H_{1,1}, \ldots , H_{d,d}])$, where each $H_{j,j} \geq 0$.
     \item This assumption holds, for example, if the input features for a linear regression task have been decorrelated using PCA.
   \end{itemize}
   
