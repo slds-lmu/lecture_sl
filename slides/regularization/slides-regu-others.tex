@@ -174,30 +174,30 @@ $$
 
 We can visualize the benefits of non-convex regularizers by comparing the regularization paths for lasso, SCAD, and MCP.\\
 \vspace{0.15cm}
-We simulate $n=1000$ samples from the following DGP
+We simulate $n=200$ samples from the following DGP
 {\small
-$$y = \xv^{\top} \thetab + \bm{\varepsilon}\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{1000}$$
+$$y = \xv^{\top} \thetab + \bm{\varepsilon}\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{100}$$
 }
 \vspace{-1cm}
 
   \begin{figure}[h]
     \begin{minipage}{0.32\linewidth}
       \vspace{3pt}
-      \centerline{\includegraphics[width=\textwidth]{figure/other-pen-lasso.png}}
+      \centerline{\includegraphics[width=\textwidth]{figure_man/other-pen-lasso.png}}
       %\caption{lasso}
     \end{minipage}
     \begin{minipage}{0.32\linewidth}
       \vspace{3pt}
-      \centerline{\includegraphics[width=\textwidth]{figure/other-pen-SCAD.png}}
+      \centerline{\includegraphics[width=\textwidth]{figure_man/other-pen-SCAD.png}}
       %\caption{SCAD}
     \end{minipage}
     \begin{minipage}{0.32\linewidth}
       \vspace{3pt}
-      \centerline{\includegraphics[width=\textwidth]{figure/other-pen-MCP.png}}
+      \centerline{\includegraphics[width=\textwidth]{figure_man/other-pen-MCP.png}}
       %\caption{MCP}
     \end{minipage}
   \end{figure}
-
+The vertical bars mark the optimal $\lambda$ obtained from 10-fold CV.
 \textbf{Conclusion}: while lasso underestimates coefficient magnitudes, there is a stable range of unbiased estimation for SCAD/MCP
 
 \end{vbframe}
