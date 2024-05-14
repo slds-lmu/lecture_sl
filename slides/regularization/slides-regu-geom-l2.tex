@@ -13,7 +13,7 @@
 
 \begin{document}
 
-\lecturechapter{Geometric Analysis of L2 Regularization and Weight Decay}
+\lecturechapter{Regularization: Geometric Analysis of L2}
 \lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{Geometric Analysis of $L2$ Regularization}
@@ -113,14 +113,14 @@ If $\lambda > 0$, the component projected on the $j$-th axis gets rescaled by $\
 \framebreak
 
   
-\begin{itemize} 
-  \item Along directions where the eigenvalues of $\bm{H}$ are relatively large, for example, where $\sigma_j >> \lambda$, the effect of regularization is quite small.
-  \item On the other hand, components with $\sigma_j << \lambda$ will be shrunk to have nearly zero magnitude.
-  \item In other words, only directions along which the parameters contribute significantly to reducing the objective function are preserved relatively intact.
-  \item In the other directions, a small eigenvalue of the Hessian means that moving in this direction will not significantly increase the gradient. For such unimportant directions, the corresponding components of $\thetab$ are decayed away.
-  \end{itemize}
+%\begin{itemize} 
+%  \item Along directions where the eigenvalues of $\bm{H}$ are relatively large, for example, where $\sigma_j >> \lambda$, the effect of regularization is quite small.
+%  \item On the other hand, components with $\sigma_j << \lambda$ will be shrunk to have nearly zero magnitude.
+%  \item In other words, only directions along which the parameters contribute significantly to reducing the objective function are preserved relatively intact.
+%  \item In the other directions, a small eigenvalue of the Hessian means that moving in this direction will not significantly increase the gradient. For such unimportant directions, the corresponding components of $\thetab$ are decayed away.
+%  \end{itemize}
   
-  \framebreak
+%  \framebreak
   
   \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -128,9 +128,13 @@ If $\lambda > 0$, the component projected on the $j$-th axis gets rescaled by $\
       
       {\scriptsize
       \begin{itemize}\setlength{\itemsep}{1.0em}
-          \item
-          In the direction corresponding to smaller eigenvalue of Hessian of $\risket$, the objective function does not increase much when moving away from $\thetah$. Therefore, the regularizer has a strong effect on this direction and towards this, $\theta$ is pulled close to the origin.    
-          \item In the second direction, the corresponding eigenvalue is large indicating high curvature. The objective function is very sensitive to movement along this direction and, as a result, the position of $\theta$ towards this is less affected by the regularization.
+          %\item
+          \item Along directions where the eigenvalues of $\bm{H}$ are relatively large, for example, where $\sigma_j >> \lambda$, the effect of regularization is quite small.
+  \item On the other hand, components with $\sigma_j << \lambda$ will be shrunk to have nearly zero magnitude.
+  \item In other words, only directions along which the parameters contribute significantly to reducing the objective function are preserved relatively intact.
+  \item In the other directions, a small eigenvalue of the Hessian means that moving in this direction will not significantly increase the gradient. For such unimportant directions, the corresponding components of $\thetab$ are decayed away.
+          %In the direction corresponding to smaller eigenvalue of Hessian of $\risket$, the objective function does not increase much when moving away from $\thetah$. Therefore, the regularizer has a strong effect on this direction and towards this, $\theta$ is pulled close to the origin.    
+          %\item In the second direction, the corresponding eigenvalue is large indicating high curvature. The objective function is very sensitive to movement along this direction and, as a result, the position of $\theta$ towards this is less affected by the regularization.
         \end{itemize}
       }
       \end{column}
