@@ -13,7 +13,7 @@
 
 \begin{document}
 
-\lecturechapter{Regularization: Soft-thresholding and L1 regularization (Deep-Dive)}
+\lecturechapter{Regularization:\\ Soft-thresholding and lasso (Deep-Dive)}
 \lecture{Introduction to Machine Learning}
 
 
@@ -30,17 +30,17 @@ with $H_{j,j} \geq 0, \lambda > 0$. Note that we can separate the dimensions, i.
 Hence, we can minimize each $z_j$ separately to find the global minimum. \\
 \lz
 
-If $H_{j,j} = 0$, then $z_j$ is clearly minimized by $\hat{\theta}_{\text{Lasso},j} = 0.$ Otherwise, $z_j$ is strictly convex since $\frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2$ is strictly convex and the sum of a strictly convex function and a convex function is strictly convex. \\
+If $H_{j,j} = 0$, then $z_j$ is clearly minimized by $\hat{\theta}_{\text{lasso},j} = 0.$ Otherwise, $z_j$ is strictly convex since $\frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2$ is strictly convex and the sum of a strictly convex function and a convex function is strictly convex. \\
 
 
 \framebreak
 
 For convex functions, every stationary point is a minimum.
-Thus, we analyze the stationary points $\hat{\theta}_{\text{Lasso},j}$ of $z_j$ for $H_{j,j} > 0.$ \\
+Thus, we analyze the stationary points $\hat{\theta}_{\text{lasso},j}$ of $z_j$ for $H_{j,j} > 0.$ \\
 \lz 
 For this, we assume we already know the sign of the minimizer and then derive conditions for which our assumption holds. \\
 \lz 
-So, first we consider the cases $\hat{\theta}_{\text{Lasso},j} > 0, \hat{\theta}_{\text{Lasso},j} < 0.$\\
+So, first we consider the cases $\hat{\theta}_{\text{lasso},j} > 0, \hat{\theta}_{\text{lasso},j} < 0.$\\
 \lz
 NB: 
 \begin{itemize}
@@ -50,7 +50,7 @@ NB:
 
 \framebreak
 
-1) $\hat{\theta}_{\text{Lasso},j} > 0:$ \\
+1) $\hat{\theta}_{\text{lasso},j} > 0:$ \\
 \lz
 \begin{minipage}{0.4\textwidth}
     \includegraphics[width=5cm]{figure/th_l1_pos.pdf}
@@ -59,14 +59,14 @@ NB:
 \begin{minipage}{0.49\textwidth}
 \begin{align*}
     \frac{d}{d \theta_j}z_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
-    &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
+    &\Rightarrow  \hat{\theta}_{\text{lasso},j} = \hat{\theta}_j 
  -\frac{\lambda}{H_{j,j}} > 0 \\
  &\iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}
 \end{align*}
 \end{minipage}
  \newpage
 
-2) $\hat{\theta}_{\text{Lasso},j} < 0:$ \\
+2) $\hat{\theta}_{\text{lasso},j} < 0:$ \\
 \lz
 \begin{minipage}{0.4\textwidth}
     \includegraphics[width=5cm]{figure/th_l1_neg.pdf}
@@ -75,7 +75,7 @@ NB:
 \begin{minipage}{0.49\textwidth}
 \begin{align*}
     \frac{d}{d \theta_j}z_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
-    &\Rightarrow  \hat{\theta}_{\text{Lasso},j} = \hat{\theta}_j 
+    &\Rightarrow  \hat{\theta}_{\text{lasso},j} = \hat{\theta}_j 
  +\frac{\lambda}{H_{j,j}} < 0 \\
  &\iff \hat{\theta}_j < -\frac{\lambda}{H_{j,j}}
 \end{align*}
@@ -88,12 +88,12 @@ NB:
 \end{minipage}
 \hfill
 \begin{minipage}{0.49\textwidth}
-$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $z_j$ has no stationary point with $$\hat{\theta}_{\text{Lasso},j} < 0 \text{ or } \hat{\theta}_{\text{Lasso},j} > 0.$$ 
+$\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $z_j$ has no stationary point with $$\hat{\theta}_{\text{lasso},j} < 0 \text{ or } \hat{\theta}_{\text{lasso},j} > 0.$$ 
 However, a unique stationary point must exist since $z_j$ is strictly convex for $H_{j,j} > 0$. This means, here, $z_j$ is strictly monotonically decreasing (increasing) for $\theta_j < 0 $ ($\theta_j > 0 $). \\
 \end{minipage}
  \\
 
-\begin{align*}\Rightarrow \hat{\theta}_{\text{Lasso},j} &= \begin{cases} 
+\begin{align*}\Rightarrow \hat{\theta}_{\text{lasso},j} &= \begin{cases} 
      \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \text{ and } H_{j,j} > 0\\
        0 &, \text{if}   \;\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}] \text{ or } H_{j,j} = 0\\
      \hat{\theta}_j - \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j > \frac{\lambda}{H_{j,j}} \text{ and } H_{j,j} > 0 \\
