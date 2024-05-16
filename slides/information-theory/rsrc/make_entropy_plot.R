@@ -10,7 +10,7 @@ library(gridExtra)
 p1 <- c(0.1, 0.2, 0.4, 0.2, 0.1)
 
 n <- length(p1)
-logp <- -log(p1)
+logp <- -log2(p1)
 lp <- ifelse(p1 == 0, 0, logp)
 r <- p1 * lp
 H <- sum(r)
@@ -22,14 +22,14 @@ pl1 <- ggplot(data = dd, aes(x = x)) +
 
 pl2 <- ggplot(data = dd, aes(x = x)) +
   geom_bar(aes(y = logp), stat = "identity") +
-  ggtitle("Surprisal") + ylab("-log(p)")
+  ggtitle("Surprisal") + ylab("-log2(p)")
 
 pl3 <- ggplot(data = dd, aes(x = x)) +
   geom_bar(aes(y = r), stat = "identity") +
-  ggtitle("p*Surprisal") + ylab("-p*log(p)")
+  ggtitle("p*Surprisal") + ylab("-p*log2(p)")
 
 p <- grid.arrange(grobs = list(pl1, pl2, pl3), nrow = 1, ncol = 3)
-ggsave(filename = "...figure/entropy_calc.png", plot = p, width = 6, height = 2)
+ggsave(filename = ".../figure/entropy_calc.png", plot = p, width = 6, height = 2)
 
 
 
@@ -44,19 +44,19 @@ p4 <- c(0.2, 0.2, 0.2, 0.2, 0.2)
 
 plot_ent <- function(p) {
   n <- length(p)
-  lp <- -log(p)
+  lp <- -log2(p)
   lp <- ifelse(p == 0, 0, lp)
   r <- p * lp
   H <- sum(r)
   dd <- data.frame(x = 1:n, p = p, lp = lp, r = r)
   pl <- ggplot(data = dd, aes(x = x)) +
     geom_bar(aes(y = p), stat = "identity") +
-    ggtitle(sprintf("Entropy H(p) = %.1f", H)
+    ggtitle(sprintf("Entropy H(p) = %.2f", H)
     )
   return(pl)
 }
 
-p <- grid.arrange(grobs = lapply(list(p1, p2, p3, p4), plot_ent()), nrow = 2, ncol = 2)
+p <- grid.arrange(grobs = lapply(list(p1, p2, p3, p4), plot_ent), nrow = 2, ncol = 2)
 ggsave(filename = ".../figure/max_entropy.png", plot = p, width = 5, height = 3)
 
 
@@ -78,30 +78,30 @@ p1 <- c(0.7, 0.3)
 
 plot_ber <- function(p) {
   n <- length(p)
-  lp <- -log(p)
+  lp <- -log2(p)
   lp <- ifelse(p == 0, 0, lp)
   r <- p * lp
   H <- sum(r)
   dd <- data.frame(x = 0:1, p = p, lp = lp, r = r)
   pl <- ggplot(data = dd, aes(x = x)) +
     geom_bar(aes(y = p), stat = "identity") +
-    ggtitle(sprintf("Entropy H(p) = %.1f", H)
+    ggtitle(sprintf("Entropy H(p) = %.2f", H)
     )
   return(pl)
 }
 
 pl1 = plot_ber(p1)
 
-x <- seq(0, 1, length.out = 100)
-y <- -(x-0.5)^2 +0.7
+x <- seq(0.0001, 0.9999, length.out = 100)
+y <- -x*log2(x)-(1-x)*log2(1-x)
 parabola_data <- data.frame(x = x, y = y)
 
 parabola_plot <- ggplot(data = parabola_data, aes(x, y)) +
-  geom_line() +
+  geom_line(size=1.2) +
   geom_vline(xintercept = 0.3, color = "red") +
   labs(x = "s", y = "H(X)") +
   ggtitle("s = 0.3")
 
   # Display the parabola plot
 p <- grid.arrange(grobs = list(parabola_plot, pl1), nrow = 1, ncol = 2)
-ggsave(filename = "...figure/entropy_bernoulli.png", plot = p, width =6, height = 3)
+ggsave(filename = ".../figure/entropy_bernoulli.png", plot = p, width =6, height = 3)
