@@ -3,20 +3,24 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure_man/l1_l2_hat.png}
-\newcommand{\learninggoals}{
+
+\title{Introduction to Machine Learning}
+
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Regularization 
+  }{% Lecture title  
+    Lasso vs. Ridge
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure_man/l1_l2_hat.png
+  }{
   \item Know the geometry of ridge vs. lasso regularization 
   \item Understand the effects of the methods on model coefficients
   \item Understand that lasso creates sparse solutions
 }
 
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
- 
-\lecturechapter{Regularization:\\ Lasso vs. Ridge}
-\lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{Lasso vs. ridge Geometry}
 $$ 

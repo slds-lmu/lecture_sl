@@ -3,22 +3,25 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure_man/lasso_ridge_hat.png}
-\newcommand{\learninggoals}{
+
+
+\title{Introduction to Machine Learning}
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Regularization 
+  }{% Lecture title  
+    Other Regularizers
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure_man/lasso_ridge_hat.png
+  }{
   \item Know $L1$/$L2$ regularization induces bias
   \item Know Lq (quasi-)norm regularization
   \item Understand that L0 regularization simply counts number of non-zero parameters
   \item Know SCAD and MCP
   %\item Know regularization for invariance properties
 }
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-\lecturechapter{Regularization:\\ Other Regularizers}
-\lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{Ridge and lasso are biased estimators} 
 Although ridge and lasso have many nice properties, they are biased estimators and the bias does not (necessarily) vanish as $n \rightarrow \infty$.\\
