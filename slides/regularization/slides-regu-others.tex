@@ -177,9 +177,9 @@ $$
 
 We can visualize the benefits of non-convex regularizers by comparing the regularization paths for lasso, SCAD, and MCP.\\
 \vspace{0.15cm}
-We simulate $n=200$ samples from the following DGP
+We simulate $n=100$ samples from the following DGP
 {\small
-$$y = \xv^{\top} \thetab + \bm{\varepsilon}\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{100}$$
+$$y = \xv^{\top} \thetab + \bm{\varepsilon}\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{1500}, \quad x_j,\varepsilon \sim \mathcal{N}(0,1)$$
 }
 \vspace{-1cm}
 
@@ -201,7 +201,7 @@ $$y = \xv^{\top} \thetab + \bm{\varepsilon}\,,\quad \thetab =(4,-4,-2,2,0,\ldots
     \end{minipage}
   \end{figure}
 The vertical lines mark the optimal $\lambda$ obtained from 10-fold CV.
-\textbf{Conclusion}: while lasso underestimates coefficient magnitudes, there is a stable range of unbiased estimation for SCAD/MCP
+\textbf{Conclusion}: lasso underestimates true coefficient magnitudes while SCAD/MCP achieve unbiased estimation and better variable selection
 
 \end{vbframe}
 
