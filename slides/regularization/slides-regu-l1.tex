@@ -107,7 +107,7 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \small For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive a closed-form solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
 \vspace{-0.1cm}
 $$\thetah_{\text{lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})\vspace{-0.1cm}$$
-Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
+Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: For $|\theta|\leq\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
 %\vspace{0.05cm}
 Comparing this to $\thetah_{\text{Ridge}}$ under orthonormal design: %we see qualitatively different behavior as $\lambda \uparrow$:
 \vspace{-0.3cm}
@@ -123,7 +123,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 \begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
 \begin{itemize}
     \item Ridge regression results in a smooth solution path with non-sparse parameters
-    \item lasso regression induces sparsity, but only for large enough $\lambda$
+    \item Lasso regression induces sparsity, but only for large enough $\lambda$
 \end{itemize}
  \lz
 \begin{figure}
@@ -143,7 +143,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 
 \begin{vbframe}{Support Recovery of Lasso}
 \begin{small}
-In which cases can the lasso select the true support of $\thetab$? This can be formalized as sign consistency (different from $\ell_2$ consistency!): 
+In which cases can the lasso select the true support of $\thetab$, i.e., only the non-zero parameters? This can be formalized as sign consistency (different from $\ell_2$ consistency!): 
 \begin{align*}
 \mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty \quad (\text{where}\,\text{sign}(0):=0) 
 \end{align*}
@@ -156,7 +156,7 @@ Suppose the true DGP given a partition $\thetab=(\thetab_1,\thetab_2)^{\top}$ is
 %$\bm{Y}=\Xmat\thetab + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ 
 and only $\thetab_1$ is non-zero.
 \vspace{0.1cm}
-Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix of noise features. It can be shown that $\thetah_{lasso}$ is sign consistent under a \textbf{irrepresentable condition} \citebutton{Zhao and Yu, 2006}{https://www.jmlr.org/papers/volume7/zhao06a/zhao06a.pdf}:
+Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix of noise features. It can be shown that $\thetah_{lasso}$ is sign consistent under an \textbf{irrepresentable condition} \citebutton{Zhao and Yu, 2006}{https://www.jmlr.org/papers/volume7/zhao06a/zhao06a.pdf}:
 \begin{align*}
     \vert (\Xmat_2^{\top} \Xmat_1)(\Xmat_1^{\top} \Xmat_1)^{-1} \text{sign}(\thetab_1)\vert < \bm{1} %\,\, (\text{element-wise})
 \end{align*}

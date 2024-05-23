@@ -1,0 +1,249 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+
+
+\title{Introduction to Machine Learning}
+
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Regularization 
+  }{% Lecture title  
+    Intuition for L2 Regularization in Non-Linear Models
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure_man/bias-variance-ridge.png
+  }{
+  \item Understand how regularization and parameter shrinkage can be beneficial to non-linear models
+}
+
+
+
+%-------------------------------------------------------------------------------
+\begin{vbframe}{Summary: Regularized Risk Minimization}
+
+If we should define (supervised) ML in only one line, this might be it:
+
+\[
+\min_{\thetab} \riskrt= \min_{\thetab} \left(\sumin \Lxyit + \lambda \cdot J(\thetab) \right)
+\]
+
+We can choose for a task at hand:
+
+\begin{itemize}
+  \item the \textbf{hypothesis space} of $f$, which determines how features can 
+  influence the predicted $y$
+  \item the \textbf{loss} function $L$, which measures how errors should be treated
+  \item the \textbf{regularization} $J(\thetab)$, which encodes our inductive 
+  bias and preference for certain simpler models
+\end{itemize}
+
+\vfill
+
+By varying these choices one can construct a huge number of different ML models. 
+Many ML models follow this construction principle or can be interpreted through 
+the lens of regularized risk minimization.
+
+\end{vbframe}
+
+\begin{vbframe}{Regularization in Neural Networks}
+For neural networks, the regularized loss function is:
+
+\[
+\riskrt = \frac{1}{n} \sum_{i=1}^{n} \Lxyit + \lambda \cdot J(\thetab)
+\]
+
+where:
+
+\begin{itemize}
+    \item \( L(f(x_i; \thetab), y_i) \) is the loss function.
+    \item \( f(x_i; \thetab) \) is the neural network's prediction.
+    \item \( J(\thetab) \) is the regularization term (e.g., \( \|\thetab\|_2^2 \) for L2 regularization).
+    \item \( \lambda \) is the regularization parameter.
+\end{itemize}
+
+\textbf{Bias:}
+Regularization increases bias because it adds a constraint on the network parameters, preventing them from fitting the training data perfectly.
+
+\textbf{Variance:}
+Regularization decreases variance by limiting the network parameters' magnitudes, reducing sensitivity to the training data's noise.
+
+\end{vbframe}
+
+\begin{vbframe}{Formal Bounds}
+Consider a neural network with parameters \(\thetab\) trained with L2 regularization:
+
+\[
+\|\thetab\|_2^2 = \sum_{j=1}^{p} \theta_j^2
+\]
+
+The regularized loss function becomes:
+
+\[
+\riskrt = \frac{1}{n} \sum_{i=1}^{n} \Lxyit + \lambda \|\thetab\|_2^2
+\]
+
+To bound the variance term, note that the regularization term \( \lambda \|\thetab\|_2^2 \) constrains the parameters:
+
+\begin{itemize}
+    \item Without regularization (\(\lambda = 0\)), the parameters can grow large, leading to high variance.
+    \item With regularization (\(\lambda > 0\)), the parameters are constrained, reducing variance.
+\end{itemize}
+
+Formally, the variance of the model can be bounded as follows:
+
+\[
+\text{Var}(\hat{\thetab}_{\text{Reg}}) \leq \frac{\sigma^2}{\lambda}
+\]
+
+where \(\sigma^2\) is the noise variance. As \(\lambda\) increases, the bound on the variance decreases.
+\end{vbframe}
+
+\begin{vbframe}{Deriving the Bound for Variance of Neural Network Predictions}
+To derive the bound for the variance of the parameter estimates in a neural network with L2 regularization, we follow these steps:
+
+\textbf{Neural Network with L2 Regularization:}
+The regularized loss function is:
+
+\[
+\riskrt = \frac{1}{n} \sum_{i=1}^{n} \Lxyit + \lambda \|\thetab\|_2^2
+\]
+
+\textbf{Bias-Variance Decomposition:}
+The mean squared error (MSE) decomposition is:
+
+\[
+E[(\hat{y} - y)^2] = \text{Bias}^2(\hat{y}) + \text{Var}(\hat{y}) + \sigma^2
+\]
+
+\textbf{Step-by-Step Derivation:}
+\begin{itemize}
+    \item Model the Neural Network Parameters: \( \hat{\thetab} = \thetab^* + \epsilon \)
+    \item Apply Regularization: \( \hat{\thetab}_{\text{Reg}} = \arg \min_{\thetab} \left\{ \frac{1}{n} \sum_{i=1}^{n} \Lxyit + \lambda \|\thetab\|_2^2 \right\} \)
+    \item Analyzing the Variance: \( \text{Var}(\hat{\thetab}_{\text{Reg}}) \approx (I(\thetab) + 2\lambda I)^{-1} \sigma^2 \)
+\end{itemize}
+
+\textbf{Bounding the Variance:}
+Given the properties of the Hessian matrix \(H\):
+
+\[
+\text{Var}(\hat{\thetab}_{\text{Reg}}) \leq \frac{\sigma^2}{2\lambda} I
+\]
+
+The variance of the neural network prediction is bounded by:
+
+\[
+\text{Var}(f(x; \hat{\thetab}_{\text{Reg}})) \leq \frac{\sigma^2}{2\lambda} \|\nabla_{\thetab} f(x; \hat{\thetab}_{\text{Reg}})\|^2
+\]
+
+\textbf{Conclusion:}
+Regularization reduces the variance of the parameter estimates and helps in reducing overfitting by balancing the bias and variance.
+\end{vbframe}
+
+\begin{vbframe}{Bias Analysis in Neural Networks}
+To analyze the bias term:
+
+\textbf{Bias Term:}
+Regularization introduces bias by shrinking the parameter estimates towards zero:
+
+\[
+\text{Bias}(f(x)) = E[f(x; \hat{\thetab}_{\text{Reg}})] - f^*(x)
+\]
+
+Using a linear approximation:
+
+\[
+E[f(x; \hat{\thetab}_{\text{Reg}})] \approx f(x; \thetab^*) - \lambda \nabla_{\thetab} f(x; \thetab^*)^T H^{-1} \thetab^*
+\]
+
+Thus, the bias is:
+
+\[
+\text{Bias}(f(x)) = -\lambda \nabla_{\thetab} f(x; \thetab^*)^T H^{-1} \thetab^*
+\]
+
+\textbf{Combined Bias and Variance Analysis:}
+\begin{itemize}
+    \item \textbf{Bias:} \( \text{Bias}^2(f(x)) = (\lambda \nabla_{\thetab} f(x; \thetab^*)^T H^{-1} \thetab^*)^2 \)
+    \item \textbf{Variance:} \( \text{Var}(f(x; \hat{\thetab}_{\text{Reg}})) \leq \frac{\sigma^2}{2\lambda} \|\nabla_{\thetab} f(x; \hat{\thetab}_{\text{Reg}})\|^2 \)
+\end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Reduction in Variance vs. Increase in Bias}
+To show that the reduction in variance is usually more than the increase in bias, consider:
+
+\textbf{Bias-Variance Trade-off:}
+The MSE is decomposed as:
+
+\[
+\text{MSE} = \text{Bias}^2(f(x)) + \text{Var}(f(x)) + \sigma^2
+\]
+
+\textbf{Change in Bias and Variance:}
+\begin{itemize}
+    \item \textbf{Change in Bias:} \( \Delta \text{Bias}^2 \propto \lambda^2 \)
+    \item \textbf{Change in Variance:} \( \Delta \text{Var} \propto -\frac{1}{\lambda} \)
+\end{itemize}
+
+For small \(\lambda\), the reduction in variance is significant, while the increase in bias is relatively small. The reduction in variance usually outweighs the increase in bias, leading to an overall decrease in MSE.
+
+\textbf{Conclusion:}
+Regularization helps in reducing the overall prediction error by balancing the bias and variance effectively.
+\end{vbframe}
+
+
+\begin{vbframe}{Critique: Bias-Variance Tradeoff and Optimization}
+For linear models, it's well-established that some \(\lambda > 0\) can balance the increase in bias against the reduction in variance, leading to a net decrease in MSE. For non-linear models, the situation is more complex:
+
+\begin{itemize}
+    \item The relationship between model parameters \(\thetab\), the regularization term, and the model output \(f(x; \thetab)\) is non-linear.
+    \item The effects of changing \(\lambda\) on the bias and variance terms are not straightforward and depend heavily on the specific form of the non-linear model and the data distribution.
+\end{itemize}
+Proving analytically that there exists a \(\lambda > 0\) such that the regularized model always outperforms the unregularized model in terms of MSE for general non-linear models involves:
+
+\begin{itemize}
+    \item Detailed understanding of how changes in \(\lambda\) affect the bias and variance for the specific type of non-linear model.
+    \item Possibly making assumptions about the smoothness, continuity, or differentiability of the model function \(f\) with respect to both \(x\) and \(\thetab\).
+\end{itemize}
+
+
+\end{vbframe}
+
+
+\begin{vbframe}{Critique: Conclusion}
+In summary, while it is conceptually feasible to argue that an appropriate \(\lambda > 0\) might improve the MSE by balancing bias and variance, providing a universal, formal proof for all non-linear models would require either restrictive assumptions about the models and data or a very specific setup where the non-linearities are well understood and mathematically tractable.
+
+For practical purposes, empirical validation through techniques such as cross-validation remains a critical method to determine the optimal \(\lambda\) for specific non-linear models and datasets.
+\end{vbframe}
+
+\begin{vbframe}{Counterexample}
+Chris: I think ChatGPT produced a lot of "almost correct" stuff that culminated in a globally useless derivation. A general proof for DNNs can not work by giving a simple counterexample.
+\vspace{0.2cm}
+\begin{itemize}
+    \item A diagonal linear network with a one hidden layer and one output unit can be written as $f(x|\bm{u},\bm{v}) = (\bm{u} \odot \bm{v})^{\top} \bm{x}$
+    \item optimizing the network with $L2$ regularization $\lambda$ and MSE loss is has multiple global minima that coincide with the lasso solution using $2\lambda$
+    \item Since there is no existence theorem (of a $\lambda^*$ that reduces the MSE over OLS) for lasso compared to ridge regression, there can not be one for DNNs in general.
+    \item For fully-connected linear networks using $L$ weight matrices $f(x|W_L,\ldots,W_1)=W_L \cdot \ldots \cdot W_1 x$, adding $L2$ regularization to all $W_l$ produces equivalent minma to Schatten $2/L$-norm regularization of the the collapsed linear predictor $\Bar{W}x:=W_L \cdot \ldots \cdot W_1x$
+    \item I am fairly certain there is also no existence theorem for non-convex Schatten $2/L$-norm regularization, their success depends strongly on the low-rank nature of the problem
+    \item For MLPs beyond linear DNNs there are also some results for the "induced regularizer" in specific cases, which is often a complex or non-analytical expression. For these, there are most likely also no existence theorems
+    \item \citebutton{Neyshabur et al., 2015}{https://arxiv.org/pdf/1412.6614} derive equivalent optimization problems for $L2$ regularized shallow relu-networks:
+    $$
+\underset{\boldsymbol{v} \in \mathbb{R}^H,\left(\boldsymbol{u}_h\right)_{h=1}^H}{\operatorname{argmin}}\left(\sum_{t=1}^n L\left(y_t, \sum_{h=1}^H v_h\left[\left\langle\boldsymbol{u}_h, \boldsymbol{x}_t\right\rangle\right]_{+}\right)+\frac{\lambda}{2} \sum_{h=1}^H\left(\left\|\boldsymbol{u}_h\right\|^2+\left|v_h\right|^2\right)\right),
+$$
+is the same as
+$$
+\begin{gathered}
+\underset{\boldsymbol{v} \in \mathbb{R}^H,\left(\boldsymbol{u}_h\right)_{h=1}^H}{\operatorname{argmin}}\left(\sum_{t=1}^n L\left(y_t, \sum_{h=1}^H v_h\left[\left\langle\boldsymbol{u}_h, \boldsymbol{x}_t\right\rangle\right]_{+}\right)+\lambda \sum_{h=1}^H\left|v_h\right|\right), \\
+\text { subject to }\left\|\boldsymbol{u}_h\right\| \leq 1 \quad(h=1, \ldots, H) .
+\end{gathered}
+$$
+\end{itemize}
+\end{vbframe}
+
+
+\endlecture
+\end{document}
+
