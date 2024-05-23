@@ -224,11 +224,11 @@ Chris: I think ChatGPT produced a lot of "almost correct" stuff that culminated 
 \vspace{0.2cm}
 \begin{itemize}
     \item A diagonal linear network with a one hidden layer and one output unit can be written as $f(x|\bm{u},\bm{v}) = (\bm{u} \odot \bm{v})^{\top} \bm{x}$
-    \item optimizing the network with $L2$ regularization $\lambda$ and MSE loss is has multiple global minima that coincide with the lasso solution using $2\lambda$
+    \item optimizing the network with $L2$ regularization $\lambda$ and MSE loss has multiple global minima that coincide with the lasso solution for the collapsed parameter $\thetab:=\bm{u}\odot \bm{v}$ using $2\lambda$
     \item Since there is no existence theorem (of a $\lambda^*$ that reduces the MSE over OLS) for lasso compared to ridge regression, there can not be one for DNNs in general.
-    \item For fully-connected linear networks using $L$ weight matrices $f(x|W_L,\ldots,W_1)=W_L \cdot \ldots \cdot W_1 x$, adding $L2$ regularization to all $W_l$ produces equivalent minma to Schatten $2/L$-norm regularization of the the collapsed linear predictor $\Bar{W}x:=W_L \cdot \ldots \cdot W_1x$
+    \item For fully-connected linear networks using $L$ weight matrices $f(x|W_L,\ldots,W_1)=W_L \cdot \ldots \cdot W_1 x$, adding $L2$ regularization with $\lambda$ to all $W_l$ produces equivalent minma to Schatten $2/L$-norm regularization of the the collapsed linear predictor $\Bar{W}x:=W_L \cdot \ldots \cdot W_1x$ with strength $L\lambda$
     \item I am fairly certain there is also no existence theorem for non-convex Schatten $2/L$-norm regularization, their success depends strongly on the low-rank nature of the problem
-    \item For MLPs beyond linear DNNs there are also some results for the "induced regularizer" in specific cases, which is often a complex or non-analytical expression. For these, there are most likely also no existence theorems
+    \item For MLPs beyond linear DNNs there are also some results for the "induced regularizer" in specific cases, which is often a complex or non-analytical expression. For these, there are also no existence theorems
     \item \citebutton{Neyshabur et al., 2015}{https://arxiv.org/pdf/1412.6614} derive equivalent optimization problems for $L2$ regularized shallow relu-networks:
     $$
 \underset{\boldsymbol{v} \in \mathbb{R}^H,\left(\boldsymbol{u}_h\right)_{h=1}^H}{\operatorname{argmin}}\left(\sum_{t=1}^n L\left(y_t, \sum_{h=1}^H v_h\left[\left\langle\boldsymbol{u}_h, \boldsymbol{x}_t\right\rangle\right]_{+}\right)+\frac{\lambda}{2} \sum_{h=1}^H\left(\left\|\boldsymbol{u}_h\right\|^2+\left|v_h\right|^2\right)\right),
@@ -240,6 +240,7 @@ $$
 \text { subject to }\left\|\boldsymbol{u}_h\right\| \leq 1 \quad(h=1, \ldots, H) .
 \end{gathered}
 $$
+\item How can we do a general analysis of the effect of $L2$ regularization in DNNs when there are these close connections to other regularized problems for which there is no anaysis of the bias-variance trade-off and no existence theorem of an optimal $\lambda^* > 0$?
 \end{itemize}
 \end{vbframe}
 
