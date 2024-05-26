@@ -15,8 +15,9 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/lin_reg_l1.png
   }{
-  \item Know lasso regression ($L1$ penalty)
-  \item Know the properties of $L1$ regularization
+  \item Lasso regression / $L1$ penalty
+  \item Know that lasso selects features
+  \item Support recovery
 }
 
 
@@ -39,9 +40,8 @@ Optimization is much harder now. $\riskrt$ is still convex, but in general there
 
 \framebreak
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. \\
-\vspace{0.1cm}
-Left plot shows effect of $L1$ regularization, right plot shows corresponding with $L2$ for comparison:
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. 
+LHS = $L1$ regularization; RHS = $L2$
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \lz
@@ -66,7 +66,9 @@ Left plot shows effect of $L1$ regularization, right plot shows corresponding wi
 %\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 %\end{figure}
 
-With increasing regularization, $\hat{\theta}_{\textit{lasso}}$ is pulled back to the origin, but takes a different ``route''.
+\lz
+
+With increasing regularization, $\hat{\theta}_{\textit{lasso}}$ is pulled back to the origin, but takes a different ``route''. $\theta_2$ eventually becomes 0!
 
 %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
@@ -98,7 +100,8 @@ We can also rewrite this as a constrained optimization problem. The penalty resu
 The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
 \vspace{-0.1cm}
 \begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
-\includegraphics[width=0.95\textwidth]{figure/lasso_contours_cases.png}\\
+\includegraphics[width=0.95\textwidth]
+{figure/lasso_contours_cases.png}\\
 \end{figure}
 
 \end{vbframe}
@@ -122,8 +125,8 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 
 \begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
 \begin{itemize}
-    \item Ridge regression results in a smooth solution path with non-sparse parameters
-    \item Lasso regression induces sparsity, but only for large enough $\lambda$
+    \item Ridge results in  smooth solution path with non-sparse params
+    \item Lasso induces sparsity, but only for large enough $\lambda$
 \end{itemize}
  \lz
 \begin{figure}
@@ -141,29 +144,30 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 
 %\end{vbframe}
 
-\begin{vbframe}{Support Recovery of Lasso}
+\begin{vbframe}{Support Recovery of Lasso \citelink{ZHAO2006}}
 \begin{small}
-In which cases can the lasso select the true support of $\thetab$, i.e., only the non-zero parameters? This can be formalized as sign consistency (different from $\ell_2$ consistency!): 
+When can lasso select true support of $\thetab$, i.e., only the non-zero parameters? \\
+Can be formalized as sign-consistency: 
 \begin{align*}
 \mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty \quad (\text{where}\,\text{sign}(0):=0) 
 \end{align*}
 \\
 %\vspace{0.1cm}
-Suppose the true DGP given a partition $\thetab=(\thetab_1,\thetab_2)^{\top}$ is 
+Suppose the true DGP given a partition $\thetab^T=(\thetab_1^T,\thetab_2^T)^T$ is 
 \begin{align*}
     \bm{Y}=\Xmat\thetab + \bm{\varepsilon} = \Xmat_1 \thetab_1 + \Xmat_2 \thetab_2 + \bm{\varepsilon}\,\text{with}\,\bm{\varepsilon}\sim (0,\sigma^2 \id)
 \end{align*}
 %$\bm{Y}=\Xmat\thetab + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ 
 and only $\thetab_1$ is non-zero.
 \vspace{0.1cm}
-Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix of noise features. It can be shown that $\thetah_{lasso}$ is sign consistent under an \textbf{irrepresentable condition} \citebutton{Zhao and Yu, 2006}{https://www.jmlr.org/papers/volume7/zhao06a/zhao06a.pdf}:
+Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix of noise features. It can be shown that $\thetah_{lasso}$ is sign consistent under an \textbf{irrepresentable condition}:
 \begin{align*}
-    \vert (\Xmat_2^{\top} \Xmat_1)(\Xmat_1^{\top} \Xmat_1)^{-1} \text{sign}(\thetab_1)\vert < \bm{1} %\,\, (\text{element-wise})
+    \vert (\Xmat_2^{\top} \Xmat_1)(\Xmat_1^{\top} \Xmat_1)^{-1} \text{sign}(\thetab_1)\vert < \bm{1} \,\, (\text{element-wise})
 \end{align*}
 
-In fact, lasso can only be sign consistent if this condition holds.
+In fact, lasso can only be sign-consistent if this condition holds.
 
-Intuitively, the irrelevant variables in $\Xmat_2$ must not be too correlated with (or \textit{representable} by) the informative features \citebutton{Meinshausen and Yu, 2006}{https://apps.dtic.mil/sti/tr/pdf/ADA472998.pdf}.
+Intuitively, the irrelevant variables in $\Xmat_2$ must not be too correlated with (or \textit{representable} by) the informative features \citelink{MEINSHAUSEN2009}
 \end{small}
 \end{vbframe}
 

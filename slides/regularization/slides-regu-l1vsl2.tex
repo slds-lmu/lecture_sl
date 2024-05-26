@@ -36,7 +36,7 @@ $$
     \item \small{In both cases (and for sufficiently large $\lambda$), the solution which minimizes $\riskrt$ is always a point on the boundary of the feasible region.
     \item As expected, $\hat{\thetab}_{\text{lasso}}$ and $\hat{\thetab}_{\text{ridge}}$ have smaller parameter norms than $\thetah$.}
     \item For lasso, the solution likely touches (higher-dimensional analogues of) the vertices of the constraint region. This induces sparsity and is a form of variable selection.
-    \item In the $p>n$ case, lasso selects at most $n$ features \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}.
+    \item In the $p>n$ case, lasso selects at most $n$ features \citelink{ZOUHASTIE}.
     
   \end{itemize}
   
@@ -172,32 +172,57 @@ $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
 
 \end{vbframe}
 
-\begin{vbframe}{Correlated Features}
+\begin{vbframe}{Correlated Features: $L1$ vs $L2$}
 
 % \textbf{Example:} lasso vs ridge for two highly correlated variables ($X_4, X_5$). 
-
-\includegraphics[width=0.9\textwidth]{figure/regu_example_multicollinearity.png}
 
 Consider $n=100$ simulated observations using $y = 0.2x_1 + 0.2x_2 + 0.2x_3 + 0.2x_4 + 0.2x_5 + \epsilon$.\\
 $x_1$-$x_4$ are independent, but $x_4$ and $x_5$ are strongly correlated.
 
-\vspace{0.1cm}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{figure/regu_example_multicollinearity.png}
+\end{center}
 
-We see that lasso shrinks the coefficient for $x_5$ to zero early on, while ridge assigns similar coefficients to $x_4, x_5$ for larger $\lambda$.
+\vspace{-0.4cm}
+
+We see that lasso shrinks the coefficient for $x_5$ to zero early on, while ridge assigns similar coefficients to $x_4, x_5$ for larger $\lambda$.\\
+Ridge has the so-called grouping property: highly corr. features tend to have equal effects. Lasso however ``decides`` on one of the features.
+\vspace{0.15cm}
+
+But why did lasso select $x_4$ oder $x_5$ ?\\ \textbf{Short answer}: highly corr. features are selected ``randomly''/arbitrarily.
+
+\framebreak
+
+The ``random'' decision is in fact a complex deterministic interaction of data geometry (e.g., corr. structures), the optimization method, and its hyperparamters (e.g., initialization). The theoretical reason for this behavior relates to the convexity of the penalties \citelink{ZOUHASTIE}.
+
+\vspace{0.2cm}
+
+For extreme cases, we can obtain some instructive formal intuition for this phenomenon. Consider perfectly collinear features $x_4=x_5$:
+\vspace{0.15cm}
+\begin{itemize}
+    \item Because $L2$ penalty is \textit{strictly} convex: $x_4=x_5 \implies \thetah_{4, ridge}=\thetah_{5, ridge}$ (grouping prop.)
+    %\item Grouping property = highly corr. features tend to have equal effects
+    \item $L1$ penalty is not \textit{strictly} convex. Hence no unique solution exists if $x_4=x_5$, and sum of both coefficients can be allocated arbitrarily to both features while staying minimizers (no grouping property!):\\
+    For any solution $\thetah_{4,lasso},\thetah_{5,lasso}$, equivalent minimizers are given by 
+    {\small $$\Tilde{\theta}_{4,lasso}=s\cdot(\thetah_{4,lasso}+\thetah_{5,lasso}) \,\,\text{and}\,\,\Tilde{\theta}_{4,lasso}=(1-s)\cdot(\thetah_{4,lasso}+\thetah_{5,lasso})\,\forall s\in[0,1]$$}
+\end{itemize}
+
+\framebreak
+
+
 
 \end{vbframe}
 
 
-\begin{vbframe}{Synopsis}
+\begin{vbframe}{Synopsis \citelink{TIBS1996} \citelink{ZOUHASTIE}}
 
 \begin{itemize}
-\item Neither one can be classified as better overall
+\item Neither ridge nor lasso can be classified as better overall
 \item Lasso can set some coefficients to zero, thus performing variable selection, while ridge regression usually leads to smaller estimated coefficients, but still dense parameter vectors $\thetab$
 \item Lasso is likely better if the true underlying structure is sparse, so if only few features influence $y$. Ridge works well if there are many (weakly) influential features
 \item Lasso has difficulties handling correlated predictors. For high correlation, ridge dominates lasso in performance
-\item For lasso one of the correlated predictors will have a larger coefficient, while the rest are (nearly) zeroed. The respective feature is, however, selected randomly
+\item For lasso one of the correlated predictors will have a larger coefficient, while the rest are (nearly) zeroed. The respective feature is, however, selected ``arbitrarly''
 \item For ridge the coefficients of correlated features are similar
-\item For references, see \citebutton{Tibshirani, 1996}{https://www.jstor.org/stable/2346178} and \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x}
 \end{itemize}
 
 \end{vbframe}

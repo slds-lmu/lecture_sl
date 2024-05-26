@@ -12,11 +12,12 @@
   }{% Lecture title  
     Introduction
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure_man/bias-variance-ridge.png
+  figure_man/complexity-vs-fit2.png
   }{
-  \item Understand why overfitting happens
-  \item Know how overfitting can be avoided
-  \item Understand regularized empirical risk minimization 
+  \item Overfitting
+  \item Motivation of regularization
+  \item First overview of techniques
+  \item Pattern of regularized ERM formula
 }
 
 
@@ -24,13 +25,15 @@
 
 \begin{vbframe}{What is Regularization?}
 
-Regularization comprises all methods that add preferences for specific solutions (\textbf{inductive bias}) to a model, usually in the context of ``low complexity'' priors (shrinkage and sparsity). By controlling complexity we can reduce overfitting and try to achieve an optimal bias-variance tradeoff.
-\vspace{0.1cm}
+Methods that add \textbf{inductive bias} to model, usually some ``low complexity'' priors (shrinkage and sparsity) to reduce overfitting and get better bias-variance tradeoff
+
+\lz \lz
+
 \begin{itemize}
 \setlength{\itemsep}{1.0em}
-    \item \textbf{Explicit regularization} methods define an explicit measure of model complexity and add this as penalty to empirical risk (e.g., $L1/L2$)
-    \item \textbf{Implicit regularization} includes: removing outliers, early stopping, data augmentation, parameter sharing, dropout or ensembling
-    \item \textbf{Structured regularization} methods incorporate structural prior knowledge over groups of parameters or subnetworks (e.g., group lasso \citebutton{Yuan and Lin, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00532.x})
+    \item \textbf{Explicit regularization}: penalize explicit measure of model complexity in ERM (e.g., $L1/L2$)
+    \item \textbf{Implicit regularization}: early stopping, data augmentation, parameter sharing, dropout or ensembling
+    \item \textbf{Structured regularization}: structural prior knowledge over groups of parameters or subnetworks (e.g., group lasso \citelink{YUAN2006}
 \end{itemize}
 
 \end{vbframe}
@@ -39,13 +42,13 @@ Regularization comprises all methods that add preferences for specific solutions
 
 \begin{vbframe}{Recap: Overfitting}
 
-Reducing overfitting is an important application of regularization, so let's first motivate it from that perspective.
 
 \begin{itemize}
-  \item Overfitting occurs when the model reflects noise or artifacts in training data which do not generalize (small train error, at cost of high test error)
-  \item Hence, predictions of overfitting models cannot be trusted to generalize beyond the training data
+  \item Occurs when model reflects noise or artifacts in training data 
+  \item Model often then does not generalize well
+  (small train error, high test error) -- or at least work better on train than on test data
 \end{itemize}
-\lz
+\lz  \lz
 \begin{columns}
 \begin{column}{0.5\textwidth}
   \raggedright
@@ -64,166 +67,151 @@ Reducing overfitting is an important application of regularization, so let's fir
 \begin{vbframe}{Example I: Overfitting}
 
 \begin{itemize}
-\item Assume we want to predict the daily maximum \textbf{ozone level} in LA given a data set containing $50$ observations.
-\item The data set contains $12$ features describing time conditions (e.g., weekday, month),
-the weather (e.g., temperature at different weather stations, humidity, wind speed) or geographic variables (e.g., the pressure gradient).
-\item We fit a linear regression model using \textbf{all} of the features
+\item Data set: daily maximum \textbf{ozone level} in LA; $n = 50$
+\item $12$ features: time (weekday, month); weather (temperature at stations, humidity, wind speed); pressure gradient
+\item Orig. data was subsetted, so it feels \enquote{high-dim.} now \\
+(low $n$ in relation to $p$)
 
-$$
-\fxt = \thetab^T\xv = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + ... + \theta_{12} x_{12}
-$$
+\item LM with all features (L2 loss)
 
-with the $L2$ loss.
+%$$
+%\fxt = \thetab^T\xv = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + ... + %\theta_{12} x_{12}
+%$$
 
-\item We evaluate the performance with $10$ times $10$-fold CV.
+\item MSE evaluation under $10 \times 10$ REP-CV
 
 \end{itemize}
 
-\vfill
-
-\begin{footnotesize} 
-We use a subset of the \texttt{Ozone} data set from the \texttt{mlbench} package. This way, we artificially create a \enquote{high-dimensional} dataset by reducing the number of observations drastically while keeping the number of features fixed. 
-\end{footnotesize}
-
-\framebreak 
-
-
-While our model fits the training data almost perfectly (left), it generalizes poorly
-to new test data (right). We overfitted.
-
-\lz 
-
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/ozone_mse_boxplot.png}\\
+\includegraphics[width=0.5\textwidth]{figure/ozone_mse_boxplot.png}\\
 \end{figure}
+
+Model fits train data well, but generalizes poorly.
 
 \end{vbframe}
 
 \begin{vbframe}{Example II: Overfitting}
 
-We train a shallow neural network with one hidden layer and 100 hidden units as well as an SVM with RBF kernel (and $C=10^6, \gamma=10$) on a small regression task. No form of explicit regularization is imposed on the models. %The target variable is house price.
-\vspace{0.2cm}
+\begin{itemize}
+ \item We train an MLP and a CART on the mtcars data
+\item Both models are not regularized
+\item And configured to make overfitting more likely
+\end{itemize}
+
+\lz \lz
+
 \begin{table}[ht]
 \centering
 \begin{tabular}{rrr}
   \hline
- & Neural Network & SVM \\ 
+ & Train MSE & Test MSE \\ 
   \hline
-Training MSE & 0.00 & 24.88 \\ 
-  Test MSE & 0.72 & 86.15 \\ 
+Neural Network & 3.68 & 19.98 \\ 
+  CART & 0.00 & 10.21 \\ 
    \hline
 \end{tabular}
 \end{table}
-\vspace{0.3cm}
-\begin{itemize}
-    \item Both neural network and SVM perform significantly better on the training set
-    \item The shallow NN even achieves zero training error (interpolating)
-    \item Test error is significantly higher for both models, indicating overfitting
-\end{itemize}
+
+\lz \lz
+
+(And we now switch back to the Ozone example...)
 
 \end{vbframe}
 
-\begin{vbframe}{Avoid Overfitting} 
-
-Why can \textbf{overfitting} happen in practice? And how can it be avoided?
-\lz
-\lz
-\begin{enumerate}
-\item Not enough data \\
-$\to$ collect \textbf{more data} 
-%\item Data is noisy \\
-%$\to$ collect \textbf{better data} (reduce noise) 
-\item Models are too complex \\
-$\to$ use \textbf{less complex models}
-\item Aggressive loss optimization \\
-$\to$ \textbf{optimize less}
-\end{enumerate}
-
-
-\framebreak 
-
-\textbf{Approach 1: Collect more data}
+\begin{vbframe}{Avoiding Overfitting -- Collect more data}
 
 \lz 
 
-We explore our results for increased dataset size, using $10$ times $10$-fold CV.
-The fit worsens slightly, but the test error decreases.
+We explore our results for increased dataset size.
+
 
 \begin{figure}
 \includegraphics[width=0.7\textwidth]{figure/avoid_overfitting_01.png}\\
 \end{figure}
 
-Good insight, but getting more data is often not feasible in practice.
+Fit slightly worsens, but test error decreases.\\
+But: Often not feasible in practice.
 
-\framebreak
+\end{vbframe}
 
-\textbf{Approach 2: Reduce complexity}
+\begin{vbframe}{Avoiding Overfitting -- Reduce complexity}
 
 %\lz 
 
-We try the simplest model we can think of: the constant model. For $L2$ loss, the optimal constant model is the empirical mean {\small $$\fxt = \frac{1}{n}\sum_{i=1}^n \yi$$}
+We try the simplest model: a constant. So for $L2$ loss the mean of $\yi$.
 
-We then increase model complexity step-by-step by adding one feature at a time. We can try out all combinations and investigate the model fit.
+\lz 
+
+We then increase complexity by adding one feature at a time.
 
 
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{figure/avoid_overfitting_02.png}\\
+\includegraphics[width=0.8\textwidth]{figure/avoid_overfitting_02.png}\\
 \end{figure}
 
 %\vfill
 
 \begin{footnotesize}
-Note: For simplicity, we added the features in one specific (clever) order, so we cheated a bit. Also note there are $2^{12} = 4096$ potential feature combinations.
+NB: We added features in a specific (clever) order, so we cheated a bit.
 \end{footnotesize}
-
-\framebreak
-
-\textbf{Approach 3: Optimize less}
-
-\lz 
-
-Now we use polynomial regression with temperature as the only feature to predict the ozone level, i.e.,
-
-$$\fxt = \sum^{d}_{i=0} \theta_i \cdot (x_T)^{i} .$$
-We choose $d = 15$, for which we get a very flexible model, which can be prone to overfitting for small data sets. \\
-\medskip
-In this example, we don't solve for $\hat\theta$ directly, but instead, we use the gradient descent algorithm to find $\hat\theta$ stepwise.
-
-\framebreak
-
-We want to stop the optimization early when the generalization error starts to degrade.
-
-
-\begin{figure}
-\includegraphics[width=0.7\textwidth]{figure/early_stopping.png}\\
-\end{figure}
-
-\footnotesize{Note: Gradient descent for polynomial regression usually needs many iterations before it starts to overfit. Hence a very small training set was chosen to accelerate this effect.}
-
-\framebreak 
-
-We have contradictory goals
-
-\begin{itemize}
-\item \textbf{maximizing the fit} (minimizing the train loss)
-\item \textbf{minimizing the complexity} of the model.
-\end{itemize}
-
-We need to find the \enquote{sweet spot}. In our example for model complexity, we saw how we can include or exclude features in a binary fashsion.
-
-\begin{center}
-\begin{figure}
-\includegraphics[width=0.6\textwidth]{figure_man/complexity-vs-fit2.png}
-\end{figure}
-\end{center}
-
-Instead of controlling the complexity in a discrete way by specifying the number of features,
-we might prefer to control the complexity  \textbf{on a continuum} from simple to complex.
-
 
 \end{vbframe}
 
-%\section{Regularized Empirical Risk Minimization}
+\begin{vbframe}{Avoiding Overfitting -- Optimize less}
+
+Now: polynomial regression with temperature as single feature 
+
+$$\fxt = \sum^{d}_{k=0} \theta_k \cdot (x_T)^{k} $$
+
+We set $d = 15$ to overfit to small data. To investigate early stopping, we don't analytically solve the OLS problem, but run GD stepwise.
+
+
+%We want to stop the optimization early when the generalization error starts to degrade.
+
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{figure}
+\includegraphics[width=1\textwidth]{figure/early_stopping.png}
+\end{figure}
+\end{column}
+\begin{column}{0.4\textwidth}
+\lz \lz
+%\justifying
+
+\footnotesize{NB: GD for poly-regr usually needs many iters before it starts to overfit, so we used a very small training set.}
+\end{column}
+\end{columns}
+    
+
+\end{vbframe}
+
+
+\begin{vbframe}{Regularized Empirical Risk Minimization}
+
+
+We have contradictory goals:
+
+\begin{itemize}
+\item \textbf{maximizing fit} (minimizing the train loss)
+\item \textbf{minimizing complexity} of the model
+\end{itemize}
+
+\lz
+
+\begin{center}
+\begin{figure}
+\includegraphics[width=0.7\textwidth]{figure_man/complexity-vs-fit2.png}
+\end{figure}
+\end{center}
+
+\lz
+
+We saw how we can include features in a binary fashion.\\
+But we would rather control complexity \textbf{on a continuum}. 
+
+\end{vbframe}
+
 
 \begin{vbframe}{Regularized Empirical Risk Minimization}
 
@@ -241,36 +229,37 @@ Explicitly or implicitly, such modifications represent the preferences we have r
   \framebreak
 \end{comment}  
 
-  Commonly, regularization takes the following form:
-  
+  Common pattern:
   $$
   \riskrf = \riskef + \lambda \cdot J(f) = \sumin \Lxyi + \lambda \cdot J(f)
   $$
 \begin{itemize}
 
-  \item $J(f)$ is called \textbf{complexity penalty}, \textbf{roughness penalty} or \textbf{regularizer}.
-  \item $\lambda \geq 0$ is called \textbf{complexity control} parameter. 
-  \item It measures the \enquote{complexity} of a model and penalizes it in the fit.
-  \item As for $\riske$, $\riskr$ and $J$ are often defined in terms of $\thetab$ instead of $f$, so $\riskrt = \risket + \lambda \cdot J(\thetab)$. 
+
+  \item $J(f)$: \textbf{complexity penalty}, \textbf{roughness penalty} or \textbf{regularizer}
+  \item $\lambda \geq 0$: \textbf{complexity control} parameter
+  \item The higher $\lambda$, the more we penalize complexity
+
+  \item $\lambda = 0$: We just do simple ERM; $\lambda \to \infty$: we don't care about loss, models become as \enquote{simple} as possible
+
+\item $\lambda$ is hard to set manually and is usually selected via CV
+
+  \item As for $\riske$, $\riskr$ and $J$ are often defined in terms of $\thetab$: \\
+  
+  $$\riskrt = \risket + \lambda \cdot J(\thetab)$$
+
+
 \end{itemize}
 
-\framebreak
 
-\textbf{Remarks:}
-
-\begin{itemize}
-  \item Note that we now face an optimization problem with two criteria: 
-    \begin{enumerate}
-      \item models should fit well (low empirical risk),
-      \item but not be too complex (low $J(f)$). 
-    \end{enumerate}
-  \item We decide to combine the two in a weighted sum and to control
-  the trade-off via the complexity control parameter $\lambda$.
-  \item $\lambda$ is hard to set manually and is usually selected via cross-validation (see later).
-  \item $\lambda = 0$: The regularized risk $\riskrf$ reduces to the simple empirical risk $\riskef$.
-
-  \item As $\lambda$ goes to infinity, we stop caring about the loss/fit and models become as \enquote{simple} as possible.
-\end{itemize}
+% \begin{itemize}
+%   \item Note that we now face an optimization problem with two criteria: 
+%     \begin{enumerate}
+%       \item models should fit well (low empirical risk)
+%       \item but not be too complex (low $J(f)$) 
+%     \end{enumerate}
+  % \item We decide to combine the two in a weighted sum and to control
+  % the trade-off via the complexity control parameter $\lambda$.
 
 %\framebreak
 

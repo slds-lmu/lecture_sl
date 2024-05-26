@@ -17,20 +17,21 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/ridge_outside.png
   }{
-  \item Know the regularized linear model
-  \item Know ridge regression ($L2$ penalty)
+  \item Regularized linear model
+  \item Ridge regression / $L2$ penalty
+  \item Understand parameter shrinkage
   \item Understand correspondence to constrained optimization
   %\item Know Lasso regression ($L1$ penalty)
 }
 
 
 
-\begin{vbframe}{Regularization in the linear model}
+\begin{vbframe}{Regularization in LM}
 
   \begin{itemize} \setlength{\itemsep}{1.3em}
-  \item Linear models can also overfit if we operate in a high-dimensional space with not that many observations.    
-  \item The OLS estimator requires a full-rank design matrix.
-  \item For highly correlated features, OLS becomes highly sensitive to random errors in the observed response, producing a large variance in the fit. 
+  \item Can also overfit if $p$ large and $n$ small(er)
+  \item OLS estimator requires full-rank design matrix
+  \item For highly correlated features, OLS becomes sensitive to random errors in response, result in large variance in fit
   \item We now add a complexity penalty to the loss:
   $$
   \riskrt = \sumin \left(\yi - \thetab^\top \xi \right)^2 + \lambda \cdot J(\thetab). 
@@ -53,20 +54,19 @@
 
 % \section{ridge Regression}
 
-\begin{vbframe}{Ridge Regression}
-Intuitive measure of model complexity is deviation from 0-origin, as 0-model contains no effects. %Models close to this either have few active features or only weak effects. 
-So we measure $J(\thetab)$ through a vector norm, shrinking coefs closer to 0 (\textbf{shrinkage methods}).\\
+\begin{vbframe}{Ridge Regression / L2 Penalty}
+Intuitive measure of model complexity is deviation from 0-origin; coeffs then have no or a weak effect. 
+So we measure $J(\thetab)$ through a vector norm, shrinking coeffs closer to 0.\\
 \vspace{0.2cm}
-\textbf{ridge regression} uses a simple $L2$ penalty:
 \begin{eqnarray*}  
 \thetah_{\text{ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
 &=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \underbrace{\thetab^\top \thetab}_{\|\thetab\|_2^2}
 \end{eqnarray*}
 
-Optimization is possible (as in the normal LM) in analytical form:
+Can still analytically solve this:
 $$\thetah_{\text{ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
 
-Name comes from the fact that we add positive entries along the diagonal "ridge" $\Xmat^T \Xmat$
+Name: We add pos. entries along the diagonal "ridge" of $\Xmat^T \Xmat$
 
 \framebreak 
 
@@ -187,7 +187,7 @@ Consider $y=f(x)+\epsilon$ where the true (unknown) function is \(f(x) = 5 + 2x 
 
 \lz
 
-We now fit the data using a \(d\)th-order polynomial
+Let's use a \(d\)th-order polynomial
 \[ f(x) = \theta_0 + \theta_1 x + \cdots + \theta_d x^d = \sum_{j = 0}^{d} \theta_j x^j\text{.} \]
 Using model complexity $d = 10$ overfits:
 
