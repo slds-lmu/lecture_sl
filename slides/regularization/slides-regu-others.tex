@@ -3,23 +3,15 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-
-
 \title{Introduction to Machine Learning}
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
-    Regularization 
-  }{% Lecture title  
-    Other Regularizers
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure_man/lasso_ridge_hat.png
-  }{
-  \item Know $L1$/$L2$ regularization induces bias
-  \item Know Lq (quasi-)norm regularization
-  \item Understand that L0 regularization simply counts number of non-zero parameters
-  \item Know SCAD and MCP
+\titlemeta{Regularization}{Other Regularizers}{figure_man/lasso_ridge_hat.png}{
+  \item L1/L2 regularization induces bias
+  \item Lq (quasi-)norm regularization
+  \item L0 regularization 
+  \item SCAD and MCP
   %\item Know regularization for invariance properties
 }
 
@@ -33,15 +25,15 @@ $$
 $$
 \vspace{0.3cm}
 
-The bias of the lasso for noise features is thus about $\lambda$ for large $|\theta|$.\\
+%The bias of the lasso for noise features is thus about $\lambda$ for large $|\theta|$.\\
 \vspace{0.2cm}
 To reduce the bias/shrinkage of regularized estimators various penalties were proposed, a few of which we briefly introduce now.
 
 \end{vbframe}
 
-\begin{vbframe}{$Lq$ regularization}
-Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \thetab \Vert_q^q$ \citebutton{Knight and Fu, 2000}{https://websites.umich.edu/~jizhu/jizhu/KnightFu-AoS00.pdf}.
+\begin{vbframe}{$Lq$ regularization \citelink{FU2000}}
 
+Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \thetab \Vert_q^q$ 
 
 \begin{figure}
   \scalebox{0.5}{\includegraphics{figure_man/lasso_ridge_hat.png}}\\
@@ -53,48 +45,40 @@ Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \the
 {\footnotesize
 \begin{itemize}
     \item For $q<1$ penalty becomes non-convex but for $q>1$ no sparsity is achieved
-    \item Non-convex $Lq$ regularization has some nice properties like \textbf{oracle property} \citebutton{Zou, 2006}{http://users.stat.umn.edu/~zouxx019/Papers/adalasso.pdf}: consistent (+ asy. unbiased) param estimation and var selection
-    \item Downside: non-convexity of penalty makes optimization even harder than $L1$ (no unique global minimum but multiple local minima)
+    \item Non-convex $Lq$ has nice properties like \textbf{oracle property} \citelink{ZOUHASTIE}: consistent (+ asy. unbiased) param estimation and var selection
+    \item Downside: non-convexity makes optimization even harder than $L1$\\
+    (no unique global minimum but multiple local minima)
 \end{itemize}
 }
 \end{vbframe}
 
 
 \begin{vbframe}{L0 regularization}
+\vspace{-0.3cm}
+$$
+\riskrt = \risket + \lambda \|\thetab\|_0 := \risket + \lambda \sum_j |\theta_j|^0.
+$$
+\vspace{-0.3cm}
+\begin{figure}
+\centering
+\scalebox{0.9}{\includegraphics{figure_man/lq-penalty-plots.png}}
+\end{figure}
+ 
 
-  \begin{itemize}
-    \item Consider the $L0$-regularized risk of a model $\fxt$
-  $$
-  \riskrt = \risket + \lambda \|\thetab\|_0 := \risket + \lambda \sum_j |\theta_j|^0.
-  $$
-      \item Unlike the $L1$ and $L2$ norms, the $L0$ "norm" simply counts the number of non-zero parameters in the model.
-      \vspace{0.3cm}
-    \begin{figure}
-      \centering
-        \scalebox{0.99}{\includegraphics{figure_man/lq-penalty-plots.png}}
-        %\tiny{\\ Credit: Christos Louizos}
-        \caption{\footnotesize $Lq$ (quasi-)norm penalties for a scalar parameter $\thetab$ for different values of $q$}
-    \end{figure}
-
-    \end{itemize}
-    
+\begin{itemize}
+\item L0 "norm" simply counts the nr of non-zero params
+%\item $L0$ is zero for $\theta_j = 0$ (defining $0^0 := 0$) and constant on the true support (any $\theta_j \neq 0$)
+\item Induces sparsity more aggressively than $L1$, but does not shrink
+\item AIC and BIC are special cases of $L0$ 
+\item $L0$-regularized risk is not continuous or convex
+\item NP-hard to optimize; for smaller $n$ and $p$ somewhat tractable, efficient approximations are still current research
+\end{itemize}
 \end{vbframe}
 
-\begin{vbframe} {L0 regularization}
+\begin{vbframe}{SCAD \citelink{FAN2001}}
 
-    \begin{itemize}
-    \item For any parameter $\theta_j$, $L0$ is zero for $\theta_j = 0$ (defining $0^0 := 0$) and constant on the true support (any $\theta_j \neq 0$)
-    \item $L0$ regularization induces sparsity in the parameter vector more aggressively than $L1$ regularization, but does not shrink concrete parameter values as L1 and L2 does (unbiased).
-    \item Model selection criteria such as Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) are special cases of $L0$ regularization (corresponding to specific values of $\lambda$).
-    \item $L0$-regularized risk is not continuous, differentiable or convex
-    \item NP-hard to optimize.
-      For smaller $n$ and $p$ somewhat tractable, otherwise efficient approximations are still current research.
-  \end{itemize}
-\end{vbframe}
-
-\begin{vbframe}{SCAD}
-
-The SCAD ({\footnotesize{Smoothly Clipped Absolute Deviations}, \citebutton{Fan and Li, 2007}{https://www.tandfonline.com/doi/full/10.1080/00401706.2020.1801256?casa_token=JhnIrgzTysMAAAAA:Z216Mc0l0qPEBUOW7kL2W0NjHC9TxdU4J6RtVs6ME7MW3_rN7CwqXZMAjKUwZo2Qz5iPd-jzKc4ffA}}) penalty is non-convex regularizer with piece-wise definition using additional hyperparam $\gamma>2$ controlling how fast penalty ``tapers off'':
+Smoothly Clipped Absolute Deviations:\\
+non-convex, $\gamma>2$ controlls how fast penalty ``tapers off''
 {\footnotesize
 $$
 \text{SCAD}(\theta \mid \lambda, \gamma)= \begin{cases}\lambda|\theta| & \text { if }|\theta| \leq \lambda \\ \frac{2 \gamma \lambda|\theta|-\theta^2-\lambda^2}{2(\gamma-1)} & \text { if } \lambda<|\theta|<\gamma \lambda \\ \frac{\lambda^2(\gamma+1)}{2} & \text { if }|\theta| \geq \gamma \lambda\end{cases}
@@ -103,22 +87,21 @@ $$
 
 \begin{columns}
 
-\begin{column}{0.4\textwidth}
+\begin{column}{0.5\textwidth}
 %\textbf{Left Column}
 
-{\scriptsize
-The SCAD penalty 
-\begin{enumerate}
-    \item coincides with the lasso for small values until $|\theta|=\lambda$,
-    \item then (smoothly) transitions to a quadratic up to $|\theta|=\gamma \lambda$,
-    \item remains constant for all $|\theta|>\gamma \lambda$
-\end{enumerate}
+{
+\begin{itemize}
+    \item Lasso, quadratic, then const
+    \item Smooth
+    \item Contrary to lasso/ridge, SCAD continuously relaxes penalization rate as $|\theta|$ increases above $\lambda$
+\end{itemize}
 
-Contrary to lasso/ridge, SCAD continuously relaxes penalization rate as $|\theta|$ increases above $\lambda$. %SCAD is asymptotically unbiased due to the ``clipping'' of the penalty.
+%SCAD is asymptotically unbiased due to the ``clipping'' of the penalty.
 }
 \end{column}
 
-\begin{column}{0.6\textwidth}
+\begin{column}{0.5\textwidth}
 %\textbf{Right Column}
 
 \begin{figure}
@@ -131,14 +114,11 @@ Contrary to lasso/ridge, SCAD continuously relaxes penalization rate as $|\theta
 
 \end{columns}
 
-
-
 \end{vbframe}
 
-\begin{vbframe}{MCP}
-
-MCP ({\footnotesize{Minimax Concave Penalty},\citebutton{Zhang, 2010}{https://arxiv.org/pdf/1002.4734.pdf}}) is another non-convex regularizer with a similar idea to SCAD, defined as (for $\gamma>1$):
-
+\begin{vbframe}{MCP \citelink{ZHANG2010}}
+Minimax Concave Penalty:\\
+also non-convex; similar idea as SCAD with $\gamma>1$
 $$
 MCP(\theta | \lambda, \gamma)= \begin{cases}\lambda|\theta|-\frac{\theta^2}{2 \gamma}, & \text { if }|\theta| \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2, & \text { if }|\theta|>\gamma \lambda\end{cases}
 $$
@@ -175,9 +155,9 @@ $$
 
 \begin{vbframe}{Example: Comparing regularizers}
 
-We can visualize the benefits of non-convex regularizers by comparing the regularization paths for lasso, SCAD, and MCP.\\
+Let's compare coeff paths for lasso, SCAD, and MCP.\\
 \vspace{0.15cm}
-We simulate $n=100$ samples from the following DGP
+We simulate $n=100$ samples from the following DGP:
 {\small
 $$y = \xv^{\top} \thetab + \varepsilon\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{1500}, \quad x_j,\varepsilon \sim \mathcal{N}(0,1)$$
 }
@@ -200,28 +180,26 @@ $$y = \xv^{\top} \thetab + \varepsilon\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{
       %\caption{MCP}
     \end{minipage}
   \end{figure}
-The vertical lines mark the optimal $\lambda$ obtained from 10-fold CV.
-\textbf{Conclusion}: lasso underestimates true coefficient magnitudes while SCAD/MCP achieve unbiased estimation and better variable selection
+Vertical lines mark optimal $\lambda$ from 10CV.\\
+\textbf{Conclusion}: Lasso underestimates true coeffs while SCAD/MCP achieve unbiased estimation and better variable selection
 
 \end{vbframe}
 
 
 
-\begin{vbframe}{Regularization for Invariance}
-Another lens through which to view regularization is invariance, i.e., predictions should remain invariant under certain input transformations.\\
-In image classification, label ``cat'' should hold regardless of position or size of relevant object (translation/scale invariance)
-\begin{enumerate}\setlength\itemsep{1.02em}
-    \item \textbf{Pre-processing}: By computing invariant features under transformations, downstream models, too, will respect invariances
-    %\item \textbf{Explicit regularization}: Penalty for changes in model output under transformed inputs is added to loss
-    \item \textbf{Data augmentation}: Extend training data by replicating inputs under invariant transformations (e.g., flipping/rotating images)
-    \begin{figure}
-    \includegraphics[width=0.75\textwidth]{figure_man/data-augmentation-cat.png}\\
-    \end{figure}
-    \item \textbf{Network architecture}: Build invariance property directly into network structure, e.g. CNNs \citebutton{Geometric DL (Bronstein et al., 2021)}{https://arxiv.org/pdf/2104.13478.pdf}
-\end{enumerate}
-
-
-\end{vbframe}
+% \begin{vbframe}{Regularization for Invariance}
+% Another lens through which to view regularization is invariance, i.e., predictions should remain invariant under certain input transformations.\\
+% In image classification, label ``cat'' should hold regardless of position or size of relevant object (translation/scale invariance)
+% \begin{enumerate}\setlength\itemsep{1.02em}
+%     \item \textbf{Pre-processing}: By computing invariant features under transformations, downstream models, too, will respect invariances
+%     %\item \textbf{Explicit regularization}: Penalty for changes in model output under transformed inputs is added to loss
+%     \item \textbf{Data augmentation}: Extend training data by replicating inputs under invariant transformations (e.g., flipping/rotating images)
+%     \begin{figure}
+%     \includegraphics[width=0.75\textwidth]{figure_man/data-augmentation-cat.png}\\
+%     \end{figure}
+%     \item \textbf{Network architecture}: Build invariance property directly into network structure, e.g. CNNs \citebutton{Geometric DL (Bronstein et al., 2021)}{https://arxiv.org/pdf/2104.13478.pdf}
+% \end{enumerate}
+%\end{vbframe}
 
 \endlecture
 \end{document}

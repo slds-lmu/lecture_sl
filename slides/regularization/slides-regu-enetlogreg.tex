@@ -7,65 +7,56 @@
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
-    Regularization 
-  }{% Lecture title  
-    Elastic Net and regularized GLMs
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/lasso_ridge_enet_2d.png
-  }{
-  \item Know the elastic net as compromise between ridge and lasso regression
-  \item Know regularized logistic regression
+\titlemeta{Regularization}{Elastic Net and regularized GLMs}{figure/lasso_ridge_enet_2d.png}{
+  \item Compromise between L1 and L2
+  \item Regularized logistic regression
 }
 
-
-
-% \section{Elastic Net}
-
-\begin{vbframe} {Elastic Net}
-
-
-Elastic Net \citebutton{Zou and Hastie, 2005}{https://rss.onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9868.2005.00503.x} combines the $L1$ and $L2$ penalties:
+\begin{vbframe}{Elastic Net as L1/L2 combo \citelink{ZOUHASTIE}}
+\vspace{-0.7cm}
 \small{
 \begin{align*}
 \mathcal{R}_{\text{elnet}}(\thetab) &=  \sumin (\yi - \thetab^\top \xi)^2 + \lambda_1 \|\thetab\|_1 + \lambda_2 \|\thetab\|_2^2 \\
 &= \sumin (\yi - \thetab^\top \xi)^2 + \lambda \left( (1-\alpha) \|\thetab\|_1 + \alpha \|\thetab\|_2^2\right),\, \alpha=\frac{\lambda_2}{\lambda_1+\lambda_2}, \lambda=\lambda_1+\lambda_2
 \end{align*}}
 \begin{figure}
-\includegraphics[width=0.55\textwidth]{figure/lasso_ridge_enet_2d.png}\\
-\end{figure}
-\vspace{-0.2cm}
-\begin{itemize}
-\item Correlated features tend to be either selected or zeroed out together.
-\item Selection of more than $n$ features possible for $p>n$.
-\end{itemize}
-
-
-\framebreak
-\footnotesize
-Simulating 50 data sets with 100 observations each for two coefficient settings: \\
 \vspace{-0.3cm}
-$$\yv =\Xmat \boldsymbol{\theta}+ \epsilon, \quad \epsilon \sim N(0,1)$$
+\includegraphics[width=0.5\textwidth]{figure/lasso_ridge_enet_2d.png}\\
+\end{figure}
+\vspace{-0.3cm}
+\begin{itemize}
+\item 2nd formula is simply a more convenient convex combo of the hyperpars;
+    $\lambda$ controls how much we penalize, $\alpha$ sets the ``L2-portion''
+\item Correlated features tend to be either selected or zeroed out together
+\item Selection of more than $n$ features possible for $p>n$
+\end{itemize}
+\end{vbframe}
+
+\begin{vbframe} {Simulated Example}
+
+\footnotesize
+50 data sets with $n=100$ for setups: $y =\xv^T \thetab + \epsilon; \quad \epsilon \sim N(0,1);
+  \quad \xv \sim N(0, \Sigma)$: 
 \vspace{-0.3cm}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{center}
-{\footnotesize \textbf{Ridge} performs better for correlated features}: \\ 
-$\boldsymbol{\theta}=(\underbrace{2,\ldots,2}_{5},\underbrace{0,\ldots,0}_{5})$\\
-$ \operatorname{corr}(\Xmat_{i},\Xmat_{j})=0.8^{|i-j|}$ for all $i$ and $j$
+{\footnotesize \textbf{Ridge} better for corr. features}: \\ 
+$\thetab=(\underbrace{2,\ldots,2}_{5},\underbrace{0,\ldots,0}_{5})$\\
+$ \Sigma_{k,l}=0.8^{|k-l|}$ 
   \end{center}
 \end{column}
 \begin{column}{0.5\textwidth} 
 \begin{center}
-{\footnotesize \textbf{Lasso} performs better for sparse truth/no correlation:} \\
-$\boldsymbol{\theta}=(2, 2, 2,\underbrace{0,\ldots,0}_{7})$ \\
-$\operatorname{corr}(\Xmat_{i},\Xmat_{j})= 0$ for all $i \neq j$, otherwise 1
+{\footnotesize \textbf{Lasso} better for sparse without corr.:} \\
+$\thetab=(2, 2, 2,\underbrace{0,\ldots,0}_{7})$ \\
+$ \Sigma = I_p$ 
 \end{center}
 \end{column}
 \end{columns}
 
 \begin{figure}
-\includegraphics[width=0.7\textwidth]{figure/enet_lasso_ridge_mse.png}\\
+\includegraphics[width=\textwidth]{figure/enet_lasso_ridge_mse.png}\\
 \end{figure}
 {\normalsize $\implies$ Elastic Net handles both cases well}
 \framebreak
@@ -88,52 +79,33 @@ RHS: ridge estimates of noise features hover around $0$ while lasso/E-Net produc
 
 \begin{vbframe}{Regularized Logistic Regression}
 
-Regularizers can be added very flexibly to basically any model which is based on ERM.
-
-\lz 
-
-Hence, we can construct, e.g., $L1$- or $L2$-penalized logistic regression to enable coefficient shrinkage and variable selection in this model class. 
-
-% \lz 
-% We can add a regularizer to the risk of logistic regression
-
-\begin{align*}
-\riskrt &= \risket + \lambda \cdot J(\thetab) \\
-%&= \sumin \mathsf{log} \left[1 + \exp \left(-\yi f\left(\left.\xi~\right|~ \thetab\right)\right)\right] + \lambda \cdot J(\thetab) \\
-&= \sumin \mathsf{log}\left[1 + \mathsf{exp}\left(-2\yi f\left(\left.\xi~\right|~ \thetab\right)\right)\right] + \lambda \cdot J(\thetab)
-\end{align*}
-
-% The other parts of the logistic regression remain exactly the same,
-% except for the fitting algorithm to find \(\hat{\thetab}_{\text{reg}}\) (no closed-form solution, numerical optimization methods are necessary).
-
-\end{vbframe}
-
-\begin{vbframe}{Regularized Logistic Regression}
-
-
-We fit a logistic regression model using polynomial features for \(x_1\)
-and \(x_2\) with maximum degree of \(7\). We add an $L2$ penalty. We
-see for
-
 \begin{itemize}
 
-\item
-  \(\lambda = 0\): The unregularized model seems to overfit.
-\item
-  \(\lambda = 0.0001\): Regularization helps to learn the underlying
-  mechanism.
-\item
-  \(\lambda = 1\): The real data-generating process is captured very well.
-\end{itemize}
+\item Penalties can be added very flexibly to any model based on ERM
 
-\scriptsize
+\item E.g.: $L1$- or $L2$-penalized logistic regression for high-dim. spaces and feature selection
+
+
+%\begin{align*}
+%\riskrt &= \risket + \lambda \cdot J(\thetab) \\
+%&= \sumin \mathsf{log} \left[1 + \exp \left(-\yi f\left(\left.\xi~\right|~ \thetab\right)\right)\right] + \lambda \cdot J(\thetab) \\
+%&= \sumin \mathsf{log}\left[1 + \mathsf{exp}\left(-2\yi f\left(\left.\xi~\right|~ \thetab\right)\right)\right] + \lambda \cdot J(\thetab)
+%\end{align*}
+
+\item Now: LR with polynomial features for $x_1, x_2$ up to degree 7 and L2 penalty on 2D ``circle data'' below
+
+\end{itemize}
 
 \begin{figure}
 \includegraphics[width=0.9\textwidth]{figure/reg_logreg.png}\\
 \end{figure}
 
+\begin{itemize}
+\item $\lambda = 0$: LR without penalty seems to overfit
+\item $\lambda = 0.0001$: We get better
+\item $\lambda = 1$: Fit looks pretty good
+\end{itemize}
 
-\normalsize 
 
 \end{vbframe}
 
