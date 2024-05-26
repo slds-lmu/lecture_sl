@@ -129,7 +129,7 @@ ridge Rescaled  & 0.8021802 & 1.942568 & 2.675207 & 3.569190 & \textbf{0.0513469
 }
 
 \begin{itemize}
-    \item This also implies that for very correlated features in lasso, we could arbitrarily force a feature out of the model through a unit change.
+    \item For the lasso, this also implies that for very correlated features, we could arbitrarily force a feature out of the model through a unit change.
 \end{itemize}
 
 \framebreak
@@ -186,23 +186,24 @@ $x_1$-$x_4$ are independent, but $x_4$ and $x_5$ are strongly correlated.
 \vspace{-0.4cm}
 
 We see that lasso shrinks the coefficient for $x_5$ to zero early on, while ridge assigns similar coefficients to $x_4, x_5$ for larger $\lambda$.\\
+\vspace{0.1cm}
 Ridge has the so-called grouping property: highly corr. features tend to have equal effects. Lasso however ``decides`` on one of the features.
-\vspace{0.15cm}
+\vspace{0.1cm}
 
-But why did lasso select $x_4$ oder $x_5$ ?\\ \textbf{Short answer}: highly corr. features are selected ``randomly''/arbitrarily.
+But why did lasso select $x_4$ over $x_5$ ?\\ \textbf{Short answer}: highly corr. features are selected ``randomly''/arbitrarily
 
 \framebreak
 
-The ``random'' decision is in fact a complex deterministic interaction of data geometry (e.g., corr. structures), the optimization method, and its hyperparamters (e.g., initialization). The theoretical reason for this behavior relates to the convexity of the penalties \citelink{ZOUHASTIE}.
+\textbf{More detailed answer}: The ``random'' decision is in fact a complex deterministic interaction of data geometry (e.g., corr. structures), the optimization method, and its hyperparamters (e.g., initialization). The theoretical reason for this behavior relates to the convexity of the penalties \citelink{ZOUHASTIE}.
 
-\vspace{0.2cm}
+\vspace{0.1cm}
 
-For extreme cases, we can obtain some instructive formal intuition for this phenomenon. Consider perfectly collinear features $x_4=x_5$:
+Considering perfectly collinear features $x_4=x_5$ in the last example, we can obtain some more formal intuition for this phenomenon:
 \vspace{0.15cm}
 \begin{itemize}
     \item Because $L2$ penalty is \textit{strictly} convex: $x_4=x_5 \implies \thetah_{4, ridge}=\thetah_{5, ridge}$ (grouping prop.)
     %\item Grouping property = highly corr. features tend to have equal effects
-    \item $L1$ penalty is not \textit{strictly} convex. Hence no unique solution exists if $x_4=x_5$, and sum of both coefficients can be allocated arbitrarily to both features while staying minimizers (no grouping property!):\\
+    \item $L1$ penalty is not \textit{strictly} convex. Hence no unique solution exists if $x_4=x_5$, and sum of coefficients can be allocated arbitrarily to both features while remaining minimizers (no grouping property!):\\
     For any solution $\thetah_{4,lasso},\thetah_{5,lasso}$, equivalent minimizers are given by 
     {\small $$\Tilde{\theta}_{4,lasso}=s\cdot(\thetah_{4,lasso}+\thetah_{5,lasso}) \,\,\text{and}\,\,\Tilde{\theta}_{4,lasso}=(1-s)\cdot(\thetah_{4,lasso}+\thetah_{5,lasso})\,\forall s\in[0,1]$$}
 \end{itemize}
