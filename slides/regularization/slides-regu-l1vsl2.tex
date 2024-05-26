@@ -16,9 +16,10 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure_man/l1_l2_hat.png
   }{
-  \item Know the properties of ridge vs. lasso regularization 
-  \item Understand the effects of the methods on model coefficients
-  \item Understand the importance of standardization in regularization due to lack of rescaling equivariance
+  \item Properties of ridge vs. lasso
+  \item Coefficient paths
+  \item What happens under correlated features
+  \item Why we need feature scaling
 }
 
 
@@ -35,7 +36,7 @@ $$
   \begin{itemize}
     \item \small{In both cases (and for sufficiently large $\lambda$), the solution which minimizes $\riskrt$ is always a point on the boundary of the feasible region.
     \item As expected, $\hat{\thetab}_{\text{lasso}}$ and $\hat{\thetab}_{\text{ridge}}$ have smaller parameter norms than $\thetah$.}
-    \item For lasso, the solution likely touches (higher-dimensional analogues of) the vertices of the constraint region. This induces sparsity and is a form of variable selection.
+    \item For lasso, solution likely touches a corner  constraint region. This induces sparsity and is a form of variable selection.
     \item In the $p>n$ case, lasso selects at most $n$ features \citelink{ZOUHASTIE}.
     
   \end{itemize}
