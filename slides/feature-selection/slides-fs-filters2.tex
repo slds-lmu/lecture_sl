@@ -5,18 +5,20 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-feature-sel}
 
-\newcommand{\titlefigure}{figure/guyon_example_correlation.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Feature Selection
+  }{% Lecture title  
+    Feature Selection: Filter Methods (Examples and Caveats)
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/guyon_example_correlation.png
+  }{
   \item Understand how filter methods can be misleading
   \item Understand how filters can be applied and tuned
 }
-
-\title{Introduction to Machine Learning}
-\date{}
-\begin{document}
-
-  \lecturechapter{Feature Selection: Filter Methods (Examples and Caveats)}
-  \lecture{Introduction to Machine Learning}
 
 %  \begin{vbframe}{Introduction}
 %  \vspace{0.3cm}
@@ -132,7 +134,7 @@
     \end{figure}
 \vspace{0.3cm}
 \footnotesize{\textbf{Information gain from presumably redundant variables}. 2 class problem with indep features. Each class has Gaussian distribution with no covariance. While filter methods suggest redundancy, combination of both vars yields improvement, showing indep vars are not truly redundant. %Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. 
-For further details, see \citebutton{Guyon and Elisseeff, 2003}{https://www.jmlr.org/papers/volume3/guyon03a/guyon03a.pdf}.}
+For further details, see \citelink{guyon2003introduction}.}
 %\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
 
