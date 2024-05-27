@@ -12,25 +12,21 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/residuals_plot_L1_title.png}
-\newcommand{\learninggoals}{
-	\item Correspondence between Laplace errors and L1 loss
-
-	\item Correspondence between Bernoulli targets and the Bernoulli / log loss 
-
-}
-
 \title{Introduction to Machine Learning}
-% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
-\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
-\date{}
 
 \begin{document}
-
-\lecturechapter{Maximum Likelihood Estimation vs.
-Empirical Risk Minimization}
-\lecture{Introduction to Machine Learning}
-
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Maximum Likelihood Estimation vs.
+    Empirical Risk Minimization
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/residuals_plot_L1_title.png
+  }{
+  \item Correspondence between Laplace errors and L1 loss
+	\item Correspondence between Bernoulli targets and the Bernoulli / log loss 
+}
 
 \begin{vbframe}{Laplace Errors - L1-Loss}
 
@@ -66,7 +62,7 @@ $$
 MLE for Laplacian errors = ERM with L1-loss. 
 
 \begin{itemize}
-\item Some losses correspond to more complex or less known error densities, like the Huber loss \citebutton{Meyer, 2021}{https://openaccess.thecvf.com/content/CVPR2021/papers/Meyer_An_Alternative_Probabilistic_Interpretation_of_the_Huber_Loss_CVPR_2021_paper.pdf}
+\item Some losses correspond to more complex or less known error densities, like the Huber loss \citelink{meyer2021alternative}
 
 \item Huber density is (unsurprisingly) a hybrid of Gaussian and Laplace
 

@@ -14,25 +14,22 @@
 \input{../../latex-math/ml-eval}
 \input{../../latex-math/ml-trees} % For the comparison of Brier and Gini index
 
+\title{Introduction to Machine Learning}
 
-\newcommand{\titlefigure}{figure/plot_loss_overview_classif.png}
-\newcommand{\learninggoals}{
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Advanced Classification Losses
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/plot_loss_overview_classif.png
+  }{
   \item Know the (squared) hinge loss
   \item Know the $L2$ loss defined on scores
   \item Know the exponential loss
   \item Know the AUC loss 
 }
-
-\title{Introduction to Machine Learning}
-% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
-\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
-\date{}
-
-
-\begin{document}
-
-\lecturechapter{Advanced Classification Losses}
-\lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{Hinge Loss}
 

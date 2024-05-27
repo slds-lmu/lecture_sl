@@ -5,22 +5,21 @@
 \input{../../latex-math/ml-ensembles.tex}
 \input{../../latex-math/ml-trees.tex}
 
-\newcommand{\titlefigure}{figure_man/adaboost_example_adjusted.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Boosting
+  }{% Lecture title  
+    Gradient Boosting: Introduction and AdaBoost
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure_man/adaboost_example_adjusted.png
+  }{
   \item Understand general idea of boosting
   \item Learn AdaBoost algorithm 
   \item Understand difference between bagging and boosting
 }
-
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-\lecturechapter{Gradient Boosting: Introduction and AdaBoost}
-\lecture{Introduction to Machine Learning}
-
 % ------------------------------------------------------------------------------
 
 \begin{vbframe}{Introduction to boosting}
@@ -58,13 +57,13 @@ The first boosting algorithm ever was in fact no algorithm for practical purpose
 \lz
 
 \enquote{Does the existence of a weak learner for a certain problem imply
-the existence of a strong learner?} \citebutton{Kearns, 1988}{https://www.cis.upenn.edu/~mkearns/papers/boostnote.pdf}
+the existence of a strong learner?} \citelink{kearnsour}
 
 \lz
 
 \begin{itemize}
 \item \textbf{Weak learners} are defined as a prediction rule with a correct classification rate that is at least slightly better than random guessing (> 50\% accuracy on a balanced binary problem).
-\item We call a learner a \textbf{strong learner} \enquote{if there exists a polynomial-time algorithm that achieves low error with high confidence for all concepts in the class} \citebutton{Schapire, 1990}{https://link.springer.com/content/pdf/10.1007/BF00116037.pdf}.
+\item We call a learner a \textbf{strong learner} \enquote{if there exists a polynomial-time algorithm that achieves low error with high confidence for all concepts in the class} \citelink{schapire1990strength}.
 
 \end{itemize}
 
@@ -84,7 +83,7 @@ The proof of this ground-breaking idea generated the first boosting algorithm.
 
 \begin{itemize}
   \item The \textbf{AdaBoost} (Adaptive Boosting) algorithm is a \textbf{boosting} method
-    for binary classification by \citebutton{Freund and Schapire (1996)}{https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=d186abec952c4348870a73640bf849af9727f5a4}.
+    for binary classification by \citelink{freund1996experiments}.
   \item The base learner is sequentially applied to weighted training observations.
   \item After each base learner fit, currently misclassified observations receive a higher weight for
     the next iteration, so we focus more on instances that are harder to classify.
