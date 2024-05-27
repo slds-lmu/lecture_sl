@@ -13,24 +13,23 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-hpo}
 
-\newcommand{\titlefigure}{figure_man/optimization_steps.jpeg}
-\newcommand{\learninggoals}{
-	\item Bayes optimal model (also: risk minimizer, population minimizer)
-	\item Bayes risk
-    \item Bayes regret, estimation and approximation error    
-	\item Optimal constant model
-    \item Consistent learners
-}
-
 \title{Introduction to Machine Learning}
-\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
-\date{}
-
 
 \begin{document}
-
-\lecturechapter{Risk Minimizers}
-\lecture{Introduction to Machine Learning}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+  	Risk Minimizers
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure_man/optimization_steps.jpeg
+  }{
+  \item Bayes optimal model (also: risk minimizer, population minimizer)
+  \item Bayes risk
+  \item Bayes regret, estimation and approximation error    
+  \item Optimal constant model
+  \item Consistent learners
+}
 
 \begin{vbframe}{Empirical Risk Minimization}
 Very often, in ML, we minimize the empirical risk

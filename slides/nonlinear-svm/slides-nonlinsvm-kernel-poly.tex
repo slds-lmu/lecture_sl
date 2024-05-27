@@ -4,21 +4,20 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-svm}
 
-\newcommand{\titlefigure}{figure/svm_poly_kernel_deg_9_coef0_1.png}
-\newcommand{\learninggoals}{
-  \item Know the homogeneous and non-homogeneous polynomial kernel 
-  \item Understand the influence of the choice of the degree on the decision boundary
-}
-
 \title{Introduction to Machine Learning}
-\date{}
 
 \begin{document}
 
-\lecturechapter{The Polynomial Kernel}
-\lecture{Introduction to Machine Learning}
-
-
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Nonlinear Support Vector Machines
+  }{% Lecture title  
+    The Polynomial Kernel
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/svm_poly_kernel_deg_9_coef0_1.png
+  }{
+  \item Know the homogeneous and non-homogeneous polynomial kernel 
+  \item Understand the influence of the choice of the degree on the decision boundary
+}
 
 \begin{vbframe}{Homogeneous Polynomial Kernel}
 $$ k(\xv, \xtil) = (\xv^T \xtil)^d, \text{ for } d \in \N$$

@@ -12,8 +12,17 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/plot_loss_overview.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Advanced Regression Losses
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/plot_loss_overview.png
+  }{
   \item Know the Huber loss
   \item Know the log-cosh loss
   \item Know the Cauchy loss
@@ -21,17 +30,6 @@
   \item Know the $\eps$-insensitive loss
   \item Know the quantile loss
 }
-
-\title{Introduction to Machine Learning}
-% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
-\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
-\date{}
-
-
-\begin{document}
-
-\lecturechapter{Advanced Regression Losses}
-\lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{Advanced Loss Functions}
 Special loss functions can be used to estimate non-standard posterior components, 
@@ -96,7 +94,7 @@ $$
 
 \end{vbframe}
 
-\begin{vbframe}{Log-cosh Loss}
+\begin{vbframe}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
 
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
@@ -149,7 +147,7 @@ Essentially, we
 
 \end{columns}
 
-The log-cosh approach to obtain a differentiable approximation of the $L1$ loss can also be extended to  differentiable quantile/pinball losses. For more details on the log-cosh loss, see  \citebutton{Saleh and Saleh, 2024}{https://arxiv.org/pdf/2208.04564}.
+The log-cosh approach to obtain a differentiable approximation of the $L1$ loss can also be extended to  differentiable quantile/pinball losses.
 
 \framebreak
 

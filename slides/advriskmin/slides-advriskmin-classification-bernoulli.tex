@@ -14,27 +14,22 @@
 \input{../../latex-math/ml-eval}
 \input{../../latex-math/ml-trees} % For the comparison of Brier and Gini index
 
-\newcommand{\titlefigure}{figure/plot_bernoulli_prob}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Bernoulli Loss
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/plot_bernoulli_prob.png
+  }{
   \item Know the Bernoulli loss and related losses (log-loss, logistic loss, Binomial loss)
   \item Derive the risk minimizer
   \item Derive the optimal constant model 
   \item Understand the connection between log-loss and entropy splitting 
 }
-
-\title{Introduction to Machine Learning}
-% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
-\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
-\date{}
-
-
-
-\begin{document}
-
-\lecturechapter{Bernoulli Loss}
-\lecture{Introduction to Machine Learning}
-
-
 
 \begin{vbframe}{Bernoulli Loss}
 
