@@ -3,20 +3,21 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/entropy_bernoulli.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Information Theory
+  }{% Lecture title  
+    Entropy II
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/entropy_bernoulli.png
+  }{
   \item Further properties of entropy and joint entropy
   \item Understand that uniqueness theorem justifies choice of entropy formula
   \item Maximum entropy principle
 }
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-\lecturechapter{Entropy II}
-\lecture{Introduction to Machine Learning}
 
 \begin{vbframe}{Entropy of Bernoulli distribution}
 
@@ -75,7 +76,7 @@ Let $X$ and $Y$ be two independent RVs. Then:
 
 \begin{vbframe}{The Uniqueness Theorem}
 
-\citebutton{Khinchin, 1957}{https://books.google.de/books/about/Mathematical_Foundations_of_Information.html?id=0uvKF-LT_tMC&redir_esc=y} showed that the only family of functions satisfying
+\citelink{KHINCHIN1957MATHEMATICAL} showed that the only family of functions satisfying
 \begin{itemize}
   \item $H(p)$ is continuous in probabilities $p(x)$
   \item adding or removing an event with $p(x)=0$ does not change it
@@ -96,7 +97,7 @@ Assume we know $M$ properties about a discrete distribution $p(x)$ on $\Xspace$,
 \normalsize{$$\mathbb{E}[g_m(X)]=\sum_{x \in \Xspace}g_m(x)p(x) = \alpha_m\,\,\text{for}\,\, m=0,\ldots,M$$}
 \vspace{-0.4cm}
 
-\textbf{Maximum entropy principle} \citebutton{Jaynes, 2003}{https://www.cambridge.org/core/books/probability-theory/9CA08E224FF30123304E6D8935CF1A99}: Among all feasible distributions satisfying the constraints, choose the one with maximum entropy!
+\textbf{Maximum entropy principle} \citelink{JAYNES_2003}: Among all feasible distributions satisfying the constraints, choose the one with maximum entropy!
 \begin{itemize}
     \item Motivation: ensure no unwarranted assumptions on $p(x)$ are made beyond what we know. 
     \item MEP follows similar logic to Occam's razor and principle of insufficient reason
