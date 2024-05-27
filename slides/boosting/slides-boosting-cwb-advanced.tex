@@ -5,21 +5,22 @@
 \input{../../latex-math/ml-ensembles.tex}
 \input{../../latex-math/ml-trees.tex}
 
-\newcommand{\titlefigure}{figure/compboost-illustration-2.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Boosting
+  }{% Lecture title  
+    Gradient Boosting: Advanced CWB
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/compboost-illustration-2.png
+  }{
   \item Details of nonlinear BLs and splines
   \item Decomposition for splines
   \item Fair base learner selection
   \item Feature importance and PDPs
 }
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-\lecturechapter{Gradient Boosting: Advanced CWB}
-\lecture{Introduction to Machine Learning}
 
 % ------------------------------------------------------------------------------
 
@@ -91,7 +92,7 @@ their additive structure, which is the case for splines).
 
 %\lz
 
-\citebutton{Kneib~et~al., 2009}{https://epub.ub.uni-muenchen.de/2063/1/tr003.pdf} %Kneib~et~al. (2009) 
+\citelink{KNEIB2009VARIABLE} %Kneib~et~al. (2009) 
 proposed a decomposition of each base learner into a
 constant, a linear and a nonlinear part.
 The boosting algorithm will automatically decide which feature to include --
@@ -237,7 +238,7 @@ Careful: We usually also apply an orthogonalization procedure on top of this but
 % It is possible to calculate $\lambda_j$ by applying the Demmler-Reinsch
 % orthogonalization (see
 % \citebutton{Hofer et al. (2011)}{https://www.tandfonline.com/doi/abs/10.1198/jcgs.2011.0922}).
-
+% % link invalid
 % % (see Hofer et. al. (2011).\textit{\enquote{A framework for unbiased model selection based on boosting.}}).
 
 % Consider the following example of a GAM using splines with 24 B-Spline basis functions:

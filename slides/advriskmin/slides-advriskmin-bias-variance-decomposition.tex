@@ -4,27 +4,25 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-eval}
 
-\newcommand{\titlefigure}{figure/bias_variance_decomposition-linear_model_bias.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Advanced Risk Minimization:\\
+    Bias-Variance Decomposition
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/bias_variance_decomposition-linear_model_bias.png
+  }{
   \item Understand how to decompose the generalization error of a learner into 
   \begin{itemize}
     \item \footnotesize bias of the learner
     \item \footnotesize variance of the learner
     \item \footnotesize inherent noise in the data
   \end{itemize} 
-  }
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-\lecturechapter{Advanced Risk Minimization:\\
-Bias-Variance Decomposition}
-\lecture{Introduction to Machine Learning}
-
-
-
+}
 
 \begin{vbframe} {Bias-Variance decomposition}
 

@@ -12,22 +12,21 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/residuals_plot_L2_title.png}
-\newcommand{\learninggoals}{
-\item Understand the connection between maximum likelihood and risk minimization
-\item Learn the correspondence between a Gaussian error distribution and the L2 loss
-}
-
 \title{Introduction to Machine Learning}
-% \author{Bernd Bischl, Christoph Molnar, Daniel Schalk, Fabian Scheipl}
-\institute{\href{https://compstat-lmu.github.io/lecture_i2ml/}{compstat-lmu.github.io/lecture\_i2ml}}
-\date{}
 
 \begin{document}
-
-\lecturechapter{Maximum Likelihood Estimation vs.
-Empirical Risk Minimization}
-\lecture{Introduction to Machine Learning}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Maximum Likelihood Estimation vs.
+    Empirical Risk Minimization
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/residuals_plot_L2_title.png
+  }{
+  \item Understand the connection between maximum likelihood and risk minimization
+  \item Learn the correspondence between a Gaussian error distribution and the L2 loss
+}
 
 \begin{vbframe}{Maximum Likelihood}
 
@@ -155,7 +154,7 @@ Easy to see: minimizing neg. negative log-likelihood with Gaussian errors is the
     %\item $\thetah \in \argmax_{\thetab} \log\left(\LL(\thetab)\right) \implies $
 \end{itemize}
 %\lz
-\item \textbf{But}: The other way around does not always work: We cannot derive a corresponding pdf or error distribution for every loss function -- the Hinge loss is one prominent example, for which some probabilistic interpretation is still possible however, see \citebutton{Sollich, 1999}{https://ieeexplore.ieee.org/abstract/document/819547}.
+\item \textbf{But}: The other way around does not always work: We cannot derive a corresponding pdf or error distribution for every loss function -- the Hinge loss is one prominent example, for which some probabilistic interpretation is still possible however, see \citelink{SOLLICH1999NINTH}.
 
 \framebreak
 

@@ -4,21 +4,21 @@
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-svm}
 
-\newcommand{\titlefigure}{figure/circles_ds.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Nonlinear Support Vector Machines
+  }{% Lecture title  
+    Reproducing Kernel Hilbert Space and Representer Theorem
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/circles_ds.png
+  }{
   \item Know that for every kernel there is an associated feature map and space (Mercer's Theorem)
   \item Know that this feature map is not unique, and the reproducing kernel Hilbert space (RKHS) is a reference space  
   \item Know the representation of the solution of a SVM is given by the representer theorem
 }
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-\lecturechapter{Reproducing Kernel Hilbert Space and Representer Theorem}
-\lecture{Introduction to Machine Learning}
-
 
 \begin{vbframe}{Kernels: Mercer's Theorem}
   \begin{itemize}
