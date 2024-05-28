@@ -25,7 +25,7 @@ Methods that add \textbf{inductive bias} to model, usually some ``low complexity
 \setlength{\itemsep}{1.0em}
     \item \textbf{Explicit regularization}: penalize explicit measure of model complexity in ERM (e.g., $L1/L2$)
     \item \textbf{Implicit regularization}: early stopping, data augmentation, parameter sharing, dropout or ensembling
-    \item \textbf{Structured regularization}: structural prior knowledge over groups of parameters or subnetworks (e.g., group lasso \citelink{YUAN2006}
+    \item \textbf{Structured regularization}: structural prior knowledge over groups of parameters or subnetworks (e.g., group lasso \citelink{YUAN2006})
 \end{itemize}
 
 \end{vbframe}
@@ -38,7 +38,7 @@ Methods that add \textbf{inductive bias} to model, usually some ``low complexity
 \begin{itemize}
   \item Occurs when model reflects noise or artifacts in training data 
   \item Model often then does not generalize well
-  (small train error, high test error) -- or at least work better on train than on test data
+  (small train error, high test error) -- or at least works better on train than on test data
 \end{itemize}
 \lz  \lz
 \begin{columns}
@@ -170,6 +170,10 @@ We set $d = 15$ to overfit to small data. To investigate early stopping, we don'
 \begin{column}{0.4\textwidth}
 \lz \lz
 %\justifying
+
+We see: Early stopping GD can improve results.
+
+\lz
 
 \footnotesize{NB: GD for poly-regr usually needs many iters before it starts to overfit, so we used a very small training set.}
 \end{column}

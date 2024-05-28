@@ -192,7 +192,7 @@ Considering perfectly collinear features $x_4=x_5$ in the last example, we can o
 \begin{itemize}
     \item Because $L2$ penalty is \textit{strictly} convex: $x_4=x_5 \implies \thetah_{4, ridge}=\thetah_{5, ridge}$ (grouping prop.)
     %\item Grouping property = highly corr. features tend to have equal effects
-    \item $L1$ penalty is not \textit{strictly} convex. Hence no unique solution exists if $x_4=x_5$, and sum of coefficients can be arbitrarily allocated to both features while remaining minimizers (no grouping property!):\\
+    \item $L1$ penalty is not \textit{strictly} convex. Hence, no unique solution exists if $x_4=x_5$, and sum of coefficients can be arbitrarily allocated to both features while remaining minimizers (no grouping property!):\\
     For any solution $\thetah_{4,lasso},\thetah_{5,lasso}$, equivalent minimizers are given by 
     {\small $$\Tilde{\theta}_{4,lasso}=s\cdot(\thetah_{4,lasso}+\thetah_{5,lasso}) \,\,\text{and}\,\,\Tilde{\theta}_{5,lasso}=(1-s)\cdot(\thetah_{4,lasso}+\thetah_{5,lasso})\,\forall s\in[0,1]$$}
 \end{itemize}
@@ -214,8 +214,7 @@ ridge usually leads to dense solutions, with smaller coeffs
 ridge works well if there are many (weakly) influential features
 \item Lasso has difficulties handling correlated predictors; \\
 for high correlation, ridge dominates lasso in performance
-\item Lasso: for (highly) correlated predictors, usually an `arbitrary'' one is selected, with large 
-coeff, while the other are (nearly) zeroed
+\item Lasso: for (highly) correlated predictors, usually an ``arbitrary'' one is selected, with large coeff, while the others are (nearly) zeroed
 \item Ridge: coeffs of correlated features are similar
 \end{itemize}
 

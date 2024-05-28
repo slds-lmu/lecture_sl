@@ -25,7 +25,7 @@
 \end{figure}
 \vspace{-0.3cm}
 \begin{itemize}
-\item 2nd formula is simply a more convenient convex combo of the hyperpars;
+\item 2nd formula is simply more convenient to interprete hyperpars;\\
     $\lambda$ controls how much we penalize, $\alpha$ sets the ``L2-portion''
 \item Correlated features tend to be either selected or zeroed out together
 \item Selection of more than $n$ features possible for $p>n$
@@ -58,7 +58,7 @@ $ \Sigma = I_p$
 \begin{figure}
 \includegraphics[width=\textwidth]{figure/enet_lasso_ridge_mse.png}\\
 \end{figure}
-{\normalsize $\implies$ Elastic Net handles both cases well}
+{\normalsize $\implies$ elastic net handles both cases well}
 \framebreak
 
 \begin{figure}
@@ -67,9 +67,9 @@ $ \Sigma = I_p$
 
 
 \footnotesize
-LHS: ridge cannot perform variable selection compared to lasso/E-Net. \\
-Lasso more frequently ignores relevant features than E-Net (longer tails in violin plot).\\
-RHS: ridge estimates of noise features hover around $0$ while lasso/E-Net produce $0$s.
+LHS: ridge cannot perform variable selection compared to lasso/e-net. \\
+Lasso more frequently ignores relevant features than e-net (longer tails in violin plot).\\
+RHS: ridge estimates of noise features hover around $0$ while lasso/e-net produce $0$s.
 %Since Elastic Net offers a compromise between Ridge and lasso, it is suitable for both data situations.
 
 \end{vbframe}

@@ -31,7 +31,7 @@
   \begin{itemize} \setlength{\itemsep}{1.3em}
   \item Can also overfit if $p$ large and $n$ small(er)
   \item OLS estimator requires full-rank design matrix
-  \item For highly correlated features, OLS becomes sensitive to random errors in response, result in large variance in fit
+  \item For highly correlated features, OLS becomes sensitive to random errors in response, results in large variance in fit
   \item We now add a complexity penalty to the loss:
   $$
   \riskrt = \sumin \left(\yi - \thetab^\top \xi \right)^2 + \lambda \cdot J(\thetab). 
@@ -60,7 +60,8 @@ So we measure $J(\thetab)$ through a vector norm, shrinking coeffs closer to 0.\
 \vspace{0.2cm}
 \begin{eqnarray*}  
 \thetah_{\text{ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
-&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \underbrace{\thetab^\top \thetab}_{\|\thetab\|_2^2}
+%&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab \\
+&=& \argmin_{\thetab} \| \yv - \Xmat \thetab \|_2^2  + \lambda \|\thetab\|_2^2
 \end{eqnarray*}
 
 Can still analytically solve this:
@@ -121,6 +122,7 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 
 \begin{column}{0.5\textwidth}
 \begin{footnotesize} 
+\lz \lz
 \begin{itemize}
   \item Inside constraints perspective: From origin, jump from contour line to contour line (better) until you become infeasible, stop before.
   \item We still optimize the $\risket$, but cannot leave a ball around the origin.
@@ -144,8 +146,8 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 
 \begin{column}{0.5\textwidth}
 \begin{footnotesize} 
+\lz \lz
 \begin{itemize}
-
 	\item Outside constraints perspective: From $\thetah$, jump from contour line to contour line (worse) until you become feasible, stop then.
   \item So our new optimum will lie on the boundary of that ball.
   \item Solution path moves from unregularized estimate to feasible region of regularized objective with minimal $L_2$ distance.
@@ -165,8 +167,8 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \end{column}
 
 \begin{column}{0.5\textwidth}
-\lz
 \begin{footnotesize} 
+\lz \lz
 \begin{itemize}
     \item Here we can see entire solution path for ridge regression
     \item Cyan contours indicate feasible regions induced by different $\lambda$s
