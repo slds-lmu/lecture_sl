@@ -3,22 +3,21 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 
-\newcommand{\titlefigure}{figure/kl_log_diff_plot.png}
-\newcommand{\learninggoals}{
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Information Theory
+  }{% Lecture title  
+    KL and Maximum Entropy
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/kl_log_diff_plot.png
+  }{
   \item Know the defining properties of the KL
   \item Understand the relationship between the maximum entropy principle and minimum discrimination information
   \item Understand the relationship between Shannon entropy and relative entropy
 }
-
-\title{Introduction to Machine Learning}
-\date{}
-
-\begin{document}
-
-
-
-\lecturechapter{KL and Maximum Entropy}
-\lecture{Introduction to Machine Learning}
 
 \begin{vbframe} {Problems with Differential Entropy}
 Differential entropy compared to the Shannon entropy:
@@ -28,7 +27,7 @@ Differential entropy compared to the Shannon entropy:
 \end{itemize}
 $\Rightarrow$ Differential entropy is not an uncertainty measure and can not be meaningfully used in a maximum entropy framework. \\
 \lz 
-In the following, we derive an alternative measure, namely the KL divergence (relative entropy), that fixes these shortcomings by taking an inductive inference viewpoint.  \citebutton{Caticha, 2003}{https://arxiv.org/pdf/physics/0311093.pdf}
+In the following, we derive an alternative measure, namely the KL divergence (relative entropy), that fixes these shortcomings by taking an inductive inference viewpoint.  \citelink{CATICHA2004RELATIVE}
 \end{vbframe}
 \begin{vbframe}{Inductive inference}
     We construct a "new" entropy measure $S(p)$ just by desired properties.\\

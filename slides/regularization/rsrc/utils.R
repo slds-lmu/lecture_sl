@@ -28,13 +28,13 @@ R_reg_l2 <- function(beta, lambda = 0.1, features = X, target = y){
   return(R_emp(beta, features, target) + (0.5*lambda * sum(beta^2)))
 }
 
-plot_r_emp <- function(r_emp, x1, x2){
+plot_r_emp <- function(r_emp, x1, x2, bins=NULL, breaks=NULL){
   eval_grid <- expand.grid(x1,x2)
   eval_grid$r_emp <- apply(eval_grid, 1, r_emp)
 
   ggplot(eval_grid) +
     geom_raster(aes(x=Var1, y=Var2, fill=r_emp)) +
-    geom_contour(aes(x=Var1, y=Var2, z=r_emp), colour="white") +
+    geom_contour(aes(x=Var1, y=Var2, z=r_emp), colour="white", bins=bins, breaks=breaks) +
     xlab(expression(theta[1])) +
     ylab(expression(theta[2])) +
     scale_fill_viridis(end = 0.9)
