@@ -13,7 +13,10 @@ d = do.call(rbind, d)
 d$v = as.factor(d$v)
 p1 = ggplot(data = d, aes(x = x, y = q, col = v)) +
   geom_line() + 
-  labs(col = expression(tau^2), y = "")
+  labs(col = expression(tau^2), x=expression(theta), y = "") + 
+  theme_bw() +
+  theme(axis.title.x = element_text(size = 15),
+        panel.border = element_blank())
 
 bs = sqrt(0.5*vars)
 bs = round(bs, 2)
@@ -22,8 +25,10 @@ d = do.call(rbind, d)
 d$b = as.factor(d$b)
 p2 = ggplot(data = d, aes(x = x, y = q, col = b)) +
   geom_line() +
-  labs(y = "")
-
+  labs(x=expression(theta), y = "") + 
+  theme_bw() +
+  theme(axis.title.x = element_text(size = 15),
+        panel.border = element_blank())
 
 p = grid.arrange(p1, p2, nrow = 1)
 # print(p)
