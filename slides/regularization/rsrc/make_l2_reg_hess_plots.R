@@ -110,7 +110,7 @@ scale_rot_plot <- rot_plot +
                colour = "yellow")
 
 scale_plot <- init_cond_plot +
-  annotate("label", x = 1.3, y = 1.5, label = "hat(theta)[Ridge]",
+  annotate("label", x = 0.8, y = 1.5, label = "hat(theta)[Ridge]",
            parse = TRUE, color = 'black', size = 3, fill = "yellow") +
   geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=
                             theta_proj1_data*rs[1] +
@@ -160,15 +160,50 @@ p_ridge <- p_elli +
 beta_true <- data.frame(x=beta_true[1], y=beta_true[2])
 theta_hat <- data.frame(x=theta_hat[1][[1]], y=theta_hat[2][[1]])
 
-p4 <- p_ridge + 
+p_poi <- p_ridge + 
   geom_point(data=beta_true, aes(x=x, y=y), color="red", size=3) +
   geom_point(data=theta_hat, aes(x=x, y=y), color="yellow", size=3) +
-  annotate("label", x=1.2, y=0.8, label="hat(theta)[Ridge]",
+  annotate("label", x=0.8, y=1.5, label="hat(theta)[Ridge]",
            parse=TRUE, color='black', size=3, fill="yellow") +
   annotate("label", x = 0.75, y=3, label="hat(theta)",
            parse=TRUE, color='black', size=3, fill="red") +
   geom_hline(yintercept=0, colour="darkgrey", size=1.2) +
   geom_vline(xintercept=0, colour="darkgrey", size=1.2)
+
+p4 <- p_poi + 
+  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=beta_true ), size=0.9,
+               arrow=arrow(length = unit(0.06, "npc")),
+               linetype="solid", aes(x=start.V1, y=start.V2,
+                                     xend = end.x, yend = end.y),
+               colour = "red") +
+  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=
+                            theta_proj1_data*rs[1] +
+                            theta_proj2_data*rs[2] ), size=0.9,
+               arrow=arrow(length = unit(0.06, "npc")),
+               linetype="solid", aes(x=start.V1, y=start.V2,
+                                     xend = end.V1, yend = end.V2),
+               colour = "yellow") +
+  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=theta_proj1_data ), size=0.9,
+               arrow=arrow(type="closed", length = unit(0.06, "npc")),
+               linetype="dashed", aes(x=start.V1, y=start.V2, xend = end.V1, yend = end.V2),
+               colour = "green", arrow.fill = "green") +
+  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=theta_proj2_data ), size=0.9,
+               arrow=arrow(type="closed", length = unit(0.06, "npc")),
+               linetype="dashed", aes(x=start.V1, y=start.V2, xend = end.V1, yend = end.V2),
+               colour = "green", arrow.fill = "green") +
+  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=
+                            theta_proj1_data*rs[1] ), size=0.9,
+               arrow=arrow(type="closed", length = unit(0.06, "npc")),
+               linetype="dashed", aes(x=start.V1, y=start.V2,
+                                      xend = end.V1, yend = end.V2),
+               colour = "orange", arrow.fill = "orange") +
+  geom_segment(data=cbind(start=as.data.frame(t(c(0,0))), end=
+                            theta_proj2_data*rs[2] ), size=0.9,
+               arrow=arrow(type="closed", length = unit(0.06, "npc")),
+               linetype="dashed", aes(x=start.V1, y=start.V2,
+                                      xend = end.V1, yend = end.V2),
+               colour = "orange", arrow.fill = "orange")
+  
 
 
 ggsave("../figure/l2_reg_hess_01_plot.png", plot = p1, width = 5.5, height = 3.5, dpi="retina")

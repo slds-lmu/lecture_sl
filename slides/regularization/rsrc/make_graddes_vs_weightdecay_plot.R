@@ -18,7 +18,6 @@ gd_betas <- gradient_descent(beta_start, step_size, grad, num_steps)
 remp_plot <- plot_r_emp(R_emp, x1, x2) +
   geom_path(data = gd_betas, aes(x=V1, y=V2), colour = "red", size=1.1) +
   geom_point(data = gd_betas, aes(x=V1, y=V2), colour = "white") +
-  labs(fill=expression(R[emp]), caption=expression(~Gradient~descent~over~R[emp]))  +
   theme(legend.position="none")
 
 # R_reg plot
@@ -34,9 +33,9 @@ remp_l2_plot <-  plot_r_emp(R_emp, x1, x2) +
   geom_path(data = ret$betas_gd, aes(x=V1, y=V2), colour = "red", size=1.1) +
   geom_path(data = ret$betas_wd, aes(x=V1, y=V2), colour = "yellow", size=1.1) +
   geom_point(data = gd_l2_betas, aes(x=V1, y=V2), colour = "white") +
-  labs(fill=expression(R[reg]), caption=expression(~Weight~decay~over~R[emp])) +
   theme(legend.position="none")
 
-p <- grid.arrange(remp_plot, remp_l2_plot, ncol=2)
+#p <- grid.arrange(remp_plot, remp_l2_plot, ncol=2)
 
-ggsave("../figure/graddes_vs_weightdecay.png", plot = p, width = 5.2, height = 3.2, dpi="retina")
+ggsave("../figure/graddes_vs_weightdecay_01.png", plot = remp_plot, width = 2.6, height = 3.1, dpi="retina")
+ggsave("../figure/graddes_vs_weightdecay_02.png", plot = remp_l2_plot, width = 2.6, height = 3.1, dpi="retina")

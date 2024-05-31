@@ -18,8 +18,7 @@ remp_l2_plot_1 <-  plot_r_emp(R_emp, x1, x2) +
   geom_path(data = ret$betas_gd, aes(x=V1, y=V2), colour = "red", size=1.1) +
   geom_path(data = ret$betas_wd, aes(x=V1, y=V2), colour = "yellow", size=1.1) +
   geom_point(data = gd_l2_betas, aes(x=V1, y=V2), colour = "white") +
-  labs(fill=expression(R[reg]),
-       caption=expression(~Weight~decay~'(small '~lambda~')'~over~R[emp])) +   theme(legend.position="none")
+  theme(legend.position="none")
 
 lambda <- 30
 gd_l2_betas <- gradient_descent(beta_start, step_size,
@@ -31,12 +30,9 @@ remp_l2_plot_2 <-  plot_r_emp(R_emp, x1, x2) +
   geom_path(data = ret$betas_gd, aes(x=V1, y=V2), colour = "red", size=1.1) +
   geom_path(data = ret$betas_wd, aes(x=V1, y=V2), colour = "yellow", size=1.1) +
   geom_point(data = gd_l2_betas, aes(x=V1, y=V2), colour = "white") +
-  labs(fill=expression(R[reg]),
-       caption=expression(~Weight~decay~'(large '~lambda~')'~over~R[emp])) +
   theme(legend.position="none")
 
+#p <- grid.arrange(remp_l2_plot_1 , remp_l2_plot_2 , ncol=2)
 
-p <- grid.arrange(remp_l2_plot_1 , remp_l2_plot_2 , ncol=2)
-p
-
-ggsave("../figure/weightdecay_lambda_plot.png", plot = p, width = 5.2, height = 3.2, dpi="retina")
+ggsave("../figure/weightdecay_lambda_plot_01.png", plot = remp_l2_plot_1, width = 2.6, height = 3.1, dpi="retina")
+ggsave("../figure/weightdecay_lambda_plot_02.png", plot = remp_l2_plot_2, width = 2.6, height = 3.1, dpi="retina")

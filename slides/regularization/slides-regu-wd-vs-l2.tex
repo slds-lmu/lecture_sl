@@ -2,7 +2,7 @@
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
-
+\captionsetup[subfloat]{labelformat=empty}
 
 \title{Introduction to Machine Learning}
 
@@ -70,9 +70,10 @@ The term \(\lambda \thetab^{[old]}\) causes the parameter
 \framebreak
 
 When we use weight decay, we follow the steepest slope of $\riske$ as for gradient descent, but in every step, we are pulled back to the origin.
-
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/graddes_vs_weightdecay.png}\\
+  \subfloat[Gradeint descent over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/graddes_vs_weightdecay_01.png}}
+  \subfloat[Weight decay over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/graddes_vs_weightdecay_02.png}}\\
+  \caption*{}
 \end{figure}
 
 
@@ -81,7 +82,8 @@ When we use weight decay, we follow the steepest slope of $\riske$ as for gradie
 How strongly we are pulled back to the origin (for a fixed stepsize $\alpha$) depends only on $\lambda$ as long as the procedure converges:
 
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/weightdecay_lambda_plot.png}\\
+  \subfloat[Weight decay (small $\lambda$) over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/weightdecay_lambda_plot_01.png}}
+  \subfloat[Weight decay (large $\lambda$) over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/weightdecay_lambda_plot_02.png}}\\
 \end{figure}
 
 
