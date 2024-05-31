@@ -14,8 +14,8 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure_man/bayes_reg.png
   }{
-  \item Know how regularized risk minimization is same as MAP in Bayesian perspective
-  \item Know correspondence of Gaussian/Laplace priors and $L2$/$L1$ regularization
+  \item RRM is same as MAP in Bayes
+  \item Gaussian/Laplace prior corresponds to $L2/L1$ penalty
 }
 
 
@@ -34,11 +34,11 @@ Now we will generalize this for RRM.
 \lz
 
 Assume we have a parameterized distribution $p(y | \thetab, \xv)$ for our data and 
-a prior $q(\thetab)$ over our parameter space, all in the Bayesian framework.
+a prior $q(\thetab)$ over our param space, all in Bayesian framework.
 
-\lz 
+\lz \lz
 
-From the Bayes theorem we know:
+From Bayes theorem:
 
 $$
 p(\thetab | \xv, y) = \frac{p(y | \thetab, \xv) q(\thetab) }{p(y | \xv)} \propto 
@@ -79,9 +79,8 @@ $$
   $\theta_j \sim \mathit{Laplace}(0,b)$.
   $\mathit{Laplace}(\mu, b)$ has density $\frac{1}{2b}\exp(-\frac{|\mu-x|}{b})$, 
   with scale parameter $b$, mean $\mu$ and variance $2b^2$.
-  \item In both cases, regularization strength increases as the 
-  variance of the prior decreases: a prior probability mass more narrowly 
-  concentrated around 0 encourages shrinkage.
+  \item In both cases, regularization strength increases as  
+  variance of prior decreases: more prior mass concentrated around 0 encourages shrinkage.
   \item Elastic-net regularization corresponds to a compromise between Gaussian and Laplacian priors \citelink{ZOUHASTIE}
   \citelink{HANS2011}
 \end{itemize}
@@ -98,14 +97,13 @@ prior:
 
 \begin{itemize}
   \small
-  \item We define a Gaussian prior with uncorrelated components for $\thetab$:
+  \item Gaussian prior $\mathcal{N}_d(\bm{0}, \mathit{diag}(\tau^2))$ with uncorrelated components for $\thetab$:
   \begin{footnotesize}
-    $$q(\thetab) = \mathcal{N}_d(\bm{0}, \mathit{diag}(\tau^2)) 
-    = \prod_{j = 1}^d  \mathcal{N}(0, \tau^2)  
+    $$q(\thetab) = \prod_{j = 1}^d  \phi_{0,\tau^2}(\theta_j) 
     = (2\pi\tau^2)^{-\frac{d}{2}} \exp \left( - \frac{1}{2\tau^2} \sum_{j = 1}^d 
-    \theta_j^2 \right).$$
+    \theta_j^2 \right)$$
   \end{footnotesize} 
-  \item With this, the MAP estimator becomes
+  \item MAP:
   \begin{footnotesize}
   \begin{eqnarray*}
     \thetah^{\text{MAP}} &=& \argmin_{\thetab} \left(
@@ -120,12 +118,12 @@ prior:
     % \right) \\
     &=& \argmin_{\thetab} \left(
     - \log p\left(y ~|~ \thetab, \xv \right) + \frac{1}{2\tau^2} \| \thetab \|_2^2
-    \right).
+    \right)
   \end{eqnarray*}
   \end{footnotesize} 
   % \item $\frac{1}{\tau^2}$ controls prior precision, i.e., inverse variance, 
   % and thus the amount of shrinkage.
-  \item We see how the inverse variance (precision) $1/\tau^2$ controls shrinkage.
+  \item We see how the inverse variance (precision) $1/\tau^2$ controls shrinkage
   % (e.g., for linear Ridge regression with 
   % $\epsilon \sim \mathcal{N}(0, \sigma^2)$ we set 
   % $\lambda = \frac{\sigma^2}{\tau^2}$).
@@ -134,8 +132,9 @@ prior:
 \framebreak
 
 \begin{itemize}
-    \item Consider a DGP $y = \theta + \varepsilon$ where $\varepsilon \sim \mathcal{N}(0,1)$ and $\theta=1$ together with a Gaussian zero-mean prior on $\theta$, i.e., $\mathcal{N}(0, \tau^2)$ for $\tau \in \{0.25, 0.5, 2\}$
-    \item Given $n=20$ samples, the posterior of $\theta$ and its MAP estimate can be calculated analytically
+    \item DGP $y = \theta + \varepsilon$ where $\varepsilon \sim \mathcal{N}(0,1)$ and $\theta=1$;\\
+    with Gaussian prior on $\theta$, so $\mathcal{N}(0, \tau^2)$ for $\tau \in \{0.25, 0.5, 2\}$
+    \item For $n=20$, posterior of $\theta$ and MAP can be calculated analytically
     \item Plotting the $L2$ regularized empirical risk $\riskr(\theta) = \sum_{i=1}^{n} (y_i-\theta)^2+\lambda \theta^2$ with $\lambda = 1/\tau^2$ shows that ridge solution is identical with MAP
 \end{itemize}
 

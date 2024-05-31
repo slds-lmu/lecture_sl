@@ -9,7 +9,7 @@
 \begin{document}
 
 \titlemeta{Regularization}{Weight Decay and L2}{figure/graddes_vs_weightdecay.png}{
-  \item Understand why $L2$ regularization in combination with gradient descent is equivalent to weight decay
+  \item $L2$ regularization with GD is equivalent to weight decay
   \item Understand how weight decay changes the optimization trajectory
 }
 
@@ -17,16 +17,16 @@
 
 
 \begin{vbframe}{Weight decay vs. L2 Regularization}
-Let us optimize the $L2$-regularized risk of a model $\fxt$
+Let's optimize $L2$-regularized risk of a model $\fxt$
 \vspace{-0.2cm}
 \[
 \min_{\thetab} \riskrt = \min_{\thetab} \risket + \frac{\lambda}{2} \|\thetab\|^2_2
 \]
 
-by gradient descent. The gradient is
+by GD. The gradient is
 
 \[
-\nabla_{\thetab} \riskrt = \nabla_{\thetab} \risket + \lambda \thetab.
+\nabla_{\thetab} \riskrt = \nabla_{\thetab} \risket + \lambda \thetab
 \]
 
 We iteratively update $\thetab$ by step size \(\alpha\) times the
@@ -34,17 +34,36 @@ negative gradient
 \vspace{-0.2cm}
 \begin{align*}
 \thetab^{[\text{new}]} &= \thetab^{[\text{old}]} - \alpha \left(\nabla_{\thetab} \riske(\thetab^{[\text{old}]}) + \lambda \thetab^{[\text{old}]}\right) \\&=
-\thetab^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]}).
+\thetab^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]})
 \end{align*}
 {\small
-The term \(\lambda \thetab^{[old]}\) causes the parameter
-(\textbf{weight}) to \textbf{decay} in proportion to its size. This is a very well-known technique in deep learning - and simply $L2$ regularization in disguise (for gradient descent).
+We see how $\thetab^{[old]}$ decays in magnitude -- for small $\alpha$ and $\lambda$ -- before we do the gradient step. Performing the decay directly, under this name, is a very well-known technique in DL - and simply $L2$ regularization in disguise (for GD).
 }
 \framebreak
 
-\textbf{Caveat}: Equivalence of weight decay and $L2$ only holds for (S)GD!
 
-\vspace{0.1cm}
+In GD With WD, we slide down neg. gradients of $\riske$, \\
+but in every step, we are pulled back to origin.
+\begin{figure}
+  \subfloat[Without WD]{\includegraphics[width=0.4\textwidth]{figure/graddes_vs_weightdecay_01.png}}
+  \subfloat[With GD]{\includegraphics[width=0.4\textwidth]{figure/graddes_vs_weightdecay_02.png}}\\
+\end{figure}
+
+
+\framebreak
+
+How strongly we are pulled back (for fixed $\alpha$) depends on $\lambda$:
+
+\begin{figure}
+  \subfloat[Small $\lambda$]{\includegraphics[width=0.4\textwidth]{figure/weightdecay_lambda_plot_01.png}}
+  \subfloat[Large $\lambda$]{\includegraphics[width=0.4\textwidth]{figure/weightdecay_lambda_plot_02.png}}\\
+\end{figure}
+\end{vbframe}
+
+
+\begin{vbframe}{Caveat and other optimizers}
+
+\textbf{Caveat}: Equivalence of weight decay and $L2$ only holds for (S)GD!
 
 \begin{itemize}\setlength{\itemsep}{0.5em}
     \item \citelink{HANSON1988} originally define WD ``decoupled'' from gradient-updates {\footnotesize $\alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]})$} as
@@ -60,25 +79,6 @@ The term \(\lambda \thetab^{[old]}\) causes the parameter
 \end{itemize}
 
 
-
-\framebreak
-
-When we use weight decay, we follow the steepest slope of $\riske$ as for gradient descent, but in every step, we are pulled back to the origin.
-\begin{figure}
-  \subfloat[Gradeint descent over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/graddes_vs_weightdecay_01.png}}
-  \subfloat[Weight decay over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/graddes_vs_weightdecay_02.png}}\\
-  \caption*{}
-\end{figure}
-
-
-\framebreak
-
-How strongly we are pulled back to the origin (for a fixed stepsize $\alpha$) depends only on $\lambda$ as long as the procedure converges:
-
-\begin{figure}
-  \subfloat[Weight decay (small $\lambda$) over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/weightdecay_lambda_plot_01.png}}
-  \subfloat[Weight decay (large $\lambda$) over $R_{emp}$]{\includegraphics[width=0.45\textwidth]{figure/weightdecay_lambda_plot_02.png}}\\
-\end{figure}
 
 
 \end{vbframe}
