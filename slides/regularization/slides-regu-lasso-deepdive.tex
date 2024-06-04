@@ -38,15 +38,15 @@ If $H_{j,j} = 0$, then $z_j$ is clearly minimized by $\hat{\theta}_{\text{lasso}
 
 
 \framebreak
-For strictly convex functions, there exists only one unique minimum and for convex function a stationary point (if it exists) is a minimum. \\
+For strictly convex functions, there exists only one unique minimum and for convex functions a stationary point (if it exists) is a minimum. \\
 %For convex functions, every stationary point is a minimum.
 %Thus, we analyze the stationary points $\hat{\theta}_{\text{lasso},j}$ of $z_j$ for $H_{j,j} > 0.$ \\
 \lz 
 %For this, we assume we already know the sign of the minimizer and then derive conditions for which our assumption holds. \\
 %\lz 
-To find this minimum, we will first investigate $z_j$ when $\theta_j > 0, \theta_j < 0.$\\
+We now separately investigate $z_j$ for $\theta_j > 0 and \theta_j < 0.$\\
 \lz
-Note that in these cases $z_j$ is differentiable (with possible stationary point) since
+NB: on these halflines $z_j$ is differentiable (with possible stationary point) since
 \begin{itemize}
     \item for $\theta_j > 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\theta_j = 1,$
     \item for $\theta_j < 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\left(-\theta_j\right) = -1$.
