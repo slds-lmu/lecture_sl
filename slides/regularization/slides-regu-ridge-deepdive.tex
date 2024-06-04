@@ -25,53 +25,59 @@
 
 \begin{vbframe}{Perspectives on $L2$ regularization}
 We already saw two interpretations of $L2$ regularization. 
-\begin{itemize}
-    \item We know that it is equivalent to a constrained optimization problem:
+{\small
+\begin{itemize}\setlength\itemsep{0.8em}
+\item We know that it is equivalent to a constrained optimization problem:
   \begin{eqnarray*}  
   \thetah_{\text{ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2 = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv\\
+ \end{eqnarray*}
+  For some $t$ depending on $\lambda$ this is equivalent to:
+  \begin{eqnarray*}
   %&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab \\
-  &=& \argmin_{\thetab} \sumin \left(\yi - \fxit\right)^2 \,
+  \thetah_{\text{ridge}}&=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi\right)^2 \,
   \text{s.t. } \|\thetab\|_2^2  \leq t
   \end{eqnarray*}
-  \item Bayesian interpretation of ridge regression: For normal likelihood contributions $\mathcal{N}(\thetab^{\top}\xi,\sigma^2)$ and i.i.d. normal priors $\theta_j \sim \mathcal{N}(0,\tau^{2})$, the resulting MAP estimate is $\thetah_{\text{ridge}}$ with $\lambda=\frac{\sigma^2}{\tau^2}$:
+  \item Bayesian interpretation of ridge regression: For additive Gaussian errors $\mathcal{N}(0,\sigma^2)$ and i.i.d. normal priors $\theta_j \sim \mathcal{N}(0,\tau^{2})$, the resulting MAP estimate is $\thetah_{\text{ridge}}$ with $\lambda=\frac{\sigma^2}{\tau^2}$:
   $$\thetah_{\text{MAP}}=\argmax_{\theta} \log[p(\yv|\Xmat,\thetab)p(\thetab)] = \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \frac{\sigma^2}{\tau^2} \|\thetab\|_2^2$$
 \end{itemize}
-
+}
 \end{vbframe}
 
 \begin{vbframe}{$L2$ and row-augmentation}
 We can also recover the ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let $\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
     \yv \\ \bm{0}_{p}
 \end{pmatrix}$. Using the augmented data, the unregularized least-squares solution $\tilde{\thetab}$ can be written as
+{\small
 \begin{eqnarray*}
 \tilde{\thetab} &=& \argmin_{\thetab} 
 \sum_{i=1}^{n+p} \left(\tilde{\yi} - \thetab^T \tilde{\xi} \right)^2 \\ &=& \argmin_{\thetab} 
 \sum_{i=1}^{n} \left(\yi - \thetab^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 \\ %= \thetah_{\text{ridge}}
 &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \|\thetab\|_2^2
 \end{eqnarray*}
-
+}
 $\Longrightarrow$ $\thetah_{\text{ridge}}$ is the least-squares solution $\tilde{\thetab}$ but using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!
 %$$\thetah_{\text{ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+This is sometimes useful as we can cast the regularized problem as an unregularized one using augmented data
 \end{vbframe}
 
 \begin{vbframe}{$L2$ and noisy features}
 Now consider perturbed features $ \tilde{\xi}:= \xi + \bm{\delta}^{(i)}$ where $\bm{\delta}^{(i)} \overset{iid}{\sim} (\bm{0},\lambda \id_p)$. Note that no parametric family is assumed. We want to minimize the expected squared error taken w.r.t. the perturbations $\bm{\delta}$:
-$$\riskt:= \mathbb{E}_{\bm{\delta}}\Big[\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}\tilde{\xi})^2\big)\Big] = \mathbb{E}_{\bm{\delta}}\Big[\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}(\xi+\bm{\delta}^{(i)}))^2\big)\Big]\,\,\Big|\, \text{expand}$$
+$$\mathcal{P}(\thetab):= \mathbb{E}_{\bm{\delta}}\Big[\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}\tilde{\xi})^2\big)\Big] = \mathbb{E}_{\bm{\delta}}\Big[\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}(\xi+\bm{\delta}^{(i)}))^2\big)\Big]\,\,\Big|\, \text{expand}$$
 \vspace{-0.2cm}
 %Expanding, we obtain
-$$\riskt = \mathbb{E}_{\bm{\delta}}\Big[\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}\xi)^2 - 2 \thetab^{\top}\bm{\delta}^{(i)}(\yi-\thetab^{\top}\xi) + \thetab^{\top}\bm{\delta}^{(i)}\bm{{\delta}}^{(i) \top}\thetab\big)\Big]$$
+$$\mathcal{P}(\thetab) = \mathbb{E}_{\bm{\delta}}\Big[\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}\xi)^2 - 2 \thetab^{\top}\bm{\delta}^{(i)}(\yi-\thetab^{\top}\xi) + \thetab^{\top}\bm{\delta}^{(i)}\bm{{\delta}}^{(i) \top}\thetab\big)\Big]$$
 
 By linearity of expectation, $\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}]=\bm{0}_p$ and $\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}\bm{\delta}^{(i)\top}]=\lambda \id_p$, this is
 \vspace{-0.2cm}
 %
-\begin{align*}\riskt&=\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}\xi)^2 - 2 \thetab^{\top}\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}](\yi-\thetab^{\top}\xi) + \thetab^{\top}\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}\bm{\delta}^{(i)\top}]\thetab \big) \\
+\begin{align*}\mathcal{P}(\thetab)&=\frac{1}{n}{\textstyle \sumin}\big((\yi-\thetab^{\top}\xi)^2 - 2 \thetab^{\top}\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}](\yi-\thetab^{\top}\xi) + \thetab^{\top}\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}\bm{\delta}^{(i)\top}]\thetab \big) \\
 &= \frac{1}{n}{\textstyle \sumin}(\yi-\thetab^{\top}\xi)^2+\lambda \Vert \thetab \Vert_2^2
 \end{align*}
 $\Longrightarrow$ Ridge regression on unperturbed features {\small $\xi$} turns out to be minimizing squared loss averaged over feature noise distribution!
 \end{vbframe}
 
 \begin{vbframe}{Bias-Variance Decomposition for Ridge}
-For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with $\Xmat \in \mathbb{R}^{n \times p},\,\bm{\varepsilon} \sim (\bm{0},\sigma^2 \bm{I}_n)$, bias of ridge estimator $\thetah_{\text{ridge}}$ is given by 
+For linear model $\yv = \Xmat \thetab + \bm{\varepsilon}$ with fixed $\Xmat \in \mathbb{R}^{n \times p}\,\text{and}\,\bm{\varepsilon} \sim (\bm{0},\sigma^2 \bm{I}_n)$, bias of ridge estimator $\thetah_{\text{ridge}}$ is given by 
 \begin{equation*}
     \begin{aligned}
         \text{Bias}(\thetah_{\text{ridge}}) := \mathbb{E}[\thetah_{\text{ridge}}-\bm{\theta}] &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}] - \bm{\theta}\\
@@ -115,6 +121,30 @@ $$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}}) = \underbr
 Since both terms are positive, sign of their diff is \textit{a priori} undetermined. \citelink{THEOBALD1974} and \citelink{FAREBROTHER1976} prove there always exists some $\lambda^{\ast}>0$ so that
 $$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}})>0$$
 \textbf{Important theoretical result}: While Gauss-Markov guarantuees $\thetah_{\text{OLS}}$ is best linear unbiased estimator (BLUE), there are biased estimators with lower MSE.
+
+\end{vbframe}
+
+\begin{vbframe}{Bias-Variance in Predictions for ridge}
+
+In supervised learning, our goal is typically not to learn an unknown parameter $\thetab$, but to learn a function $f(\xv)$ that can predict $y$ given $\xv$.
+
+%Assume that our targets are generated by $y=f(\xv)+\varepsilon$ where $\varepsilon \sim (0,\sigma^2)$ and $f(\xv)=\thetab^{\top}\xv$.
+\vspace{0.2cm}
+
+The bias/variance of predictions $\hat{f}:=\fh(\xv)=\thetah_{\text{ridge}}^{\top} \xv$ can be obtained as:
+
+\begin{align*}
+\text{Bias}(\fh)&=\E[\hat{f}-f]=\E[\thetah_{\text{ridge}}^{\top} \xv - \thetab^{\top} \xv]=\E[\thetah_{\text{ridge}}-\thetab]^{\top} \xv\\ 
+&= \text{Bias}(\thetah_{\text{ridge}})^{\top} \xv \\
+\text{Var}(\fh)&=\text{Var}(\thetah_{\text{ridge}}^{\top} \xv) = \xv^{\top} \text{Var}(\thetah_{\text{ridge}}) \xv
+\end{align*}
+
+We can now decompose the MSE of $\fh$ given a fresh sample $(y,\xv)$ as
+
+$$\text{MSE}(\fh)=\E[(y-\fh(\xv))^2]=\text{Bias}^{2}(\fh) + \text{Var}(\fh) + \sigma^2$$
+
+This decomposition is similar to the statistical inference setting before, however, the irreducible error $\sigma^2$ only appears for predictions, as it is an artifact
+of the noise in the test sample.
 
 \end{vbframe}
 
