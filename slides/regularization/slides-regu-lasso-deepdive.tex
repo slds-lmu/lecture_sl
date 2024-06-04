@@ -83,9 +83,13 @@ Note that in these cases $z_j$ is differentiable (with possible stationary point
 \begin{align*}
     \frac{d}{d \theta_j}z_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j - \lambda \overset{!}{=} 0 \\
     &\Rightarrow  \hat{\theta}_{\text{lasso},j} = \hat{\theta}_j 
- +\frac{\lambda}{H_{j,j}} < 0 \\
- &\iff \hat{\theta}_j < -\frac{\lambda}{H_{j,j}}
-\end{align*}
+ +\frac{\lambda}{H_{j,j}} < 0
+ \end{align*}
+ This minimum is only valid if $\hat{\theta}_{\text{lasso},j} < 0$ and so it must hold that
+ \begin{equation*}
+     \hat{\theta}_j < -\frac{\lambda}{H_{j,j}}.
+ \end{equation*}
+
 \end{minipage}
  \newpage
 
@@ -96,7 +100,7 @@ Note that in these cases $z_j$ is differentiable (with possible stationary point
 \hfill
 \begin{minipage}{0.49\textwidth}
 $\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $z_j$ has no stationary point with $$\hat{\theta}_{\text{lasso},j} < 0 \text{ or } \hat{\theta}_{\text{lasso},j} > 0.$$ 
-However, a unique stationary point must exist since $z_j$ is strictly convex for $H_{j,j} > 0$. This means the only possible minimizer of $z_j$ is $\hat{\theta}_{\text{lasso},j} = 0$. %This means, here, $z_j$ is strictly monotonically decreasing (increasing) for $\theta_j < 0 $ ($\theta_j > 0 $). 
+However, a unique minimum must exist since $z_j$ is strictly convex for $H_{j,j} > 0$. This means the only possible minimizer of $z_j$ is $\hat{\theta}_{\text{lasso},j} = 0$. %This means, here, $z_j$ is strictly monotonically decreasing (increasing) for $\theta_j < 0 $ ($\theta_j > 0 $). 
 \\
 \end{minipage}
  \\
