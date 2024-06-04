@@ -38,23 +38,23 @@ If $H_{j,j} = 0$, then $z_j$ is clearly minimized by $\hat{\theta}_{\text{lasso}
 
 
 \framebreak
-For strictly convex functions, there exists only one unique minimum. \\
+For strictly convex functions, there exists only one unique minimum and for convex function a stationary point (if it exists) is a minimum. \\
 %For convex functions, every stationary point is a minimum.
 %Thus, we analyze the stationary points $\hat{\theta}_{\text{lasso},j}$ of $z_j$ for $H_{j,j} > 0.$ \\
 \lz 
-For this, we assume we already know the sign of the minimizer and then derive conditions for which our assumption holds. \\
-\lz 
-So, first we consider the cases $\hat{\theta}_{\text{lasso},j} > 0, \hat{\theta}_{\text{lasso},j} < 0.$\\
+%For this, we assume we already know the sign of the minimizer and then derive conditions for which our assumption holds. \\
+%\lz 
+To find this minimum, we will first investigate $z_j$ when $\theta_j > 0, \theta_j < 0.$\\
 \lz
-NB: 
+Note that in these cases $z_j$ is differentiable (with possible stationary point) since
 \begin{itemize}
-    \item For $\theta_j > 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\theta_j = 1.$
-    \item For $\theta_j < 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\left(-\theta_j\right) = -1$.
+    \item for $\theta_j > 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\theta_j = 1,$
+    \item for $\theta_j < 0: \frac{d}{d\theta_j}\vert \theta_j\vert = \frac{d}{d\theta_j}\left(-\theta_j\right) = -1$.
 \end{itemize}
 
 \framebreak
 
-1) $\hat{\theta}_{\text{lasso},j} > 0:$ \\
+1) $\theta_j > 0:$ \\
 \lz
 \begin{minipage}{0.4\textwidth}
     \includegraphics[width=5cm]{figure/th_l1_pos.pdf}
@@ -65,8 +65,11 @@ NB:
     \frac{d}{d \theta_j}z_j(\theta_j) &= H_{j,j}\theta_j - H_{j,j} \hat{\theta}_j + \lambda \overset{!}{=} 0 \\
     &\Rightarrow  \hat{\theta}_{\text{lasso},j} = \hat{\theta}_j 
  -\frac{\lambda}{H_{j,j}} > 0 \\
- &\iff \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}
-\end{align*}
+ \end{align*}
+ This minimum is only valid if $\hat{\theta}_{\text{lasso},j} > 0$ and so it must hold that
+ \begin{equation*}
+     \hat{\theta}_j >  \frac{\lambda}{H_{j,j}}.
+ \end{equation*}
 \end{minipage}
  \newpage
 
@@ -93,7 +96,8 @@ NB:
 \hfill
 \begin{minipage}{0.49\textwidth}
 $\Rightarrow$ If $\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}]$ then $z_j$ has no stationary point with $$\hat{\theta}_{\text{lasso},j} < 0 \text{ or } \hat{\theta}_{\text{lasso},j} > 0.$$ 
-However, a unique stationary point must exist since $z_j$ is strictly convex for $H_{j,j} > 0$. This means, here, $z_j$ is strictly monotonically decreasing (increasing) for $\theta_j < 0 $ ($\theta_j > 0 $). \\
+However, a unique stationary point must exist since $z_j$ is strictly convex for $H_{j,j} > 0$. This means the only possible minimizer of $z_j$ is $\hat{\theta}_{\text{lasso},j} = 0$. %This means, here, $z_j$ is strictly monotonically decreasing (increasing) for $\theta_j < 0 $ ($\theta_j > 0 $). 
+\\
 \end{minipage}
  \\
 
