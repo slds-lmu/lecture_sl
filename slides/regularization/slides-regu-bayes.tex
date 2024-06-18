@@ -136,11 +136,12 @@ prior:
     with Gaussian prior on $\theta$, so $\mathcal{N}(0, \tau^2)$ for $\tau \in \{0.25, 0.5, 2\}$
     \item For $n=20$, posterior of $\theta$ and MAP can be calculated analytically
     \item Plotting the $L2$ regularized empirical risk $\riskr(\theta) = \sum_{i=1}^{n} (y_i-\theta)^2+\lambda \theta^2$ with $\lambda = 1/\tau^2$ shows that ridge solution is identical with MAP
+    \item In our simulation, the empirical mean is $\Bar{y}=0.94$, with shrinkage toward $0$ induced in the MAP
 \end{itemize}
 
 \begin{figure}
   \centering
-  \scalebox{1}{\includegraphics[width=0.9\textwidth]{figure_man/bayes-plot-posterior.png}}
+  \scalebox{1}{\includegraphics[width=0.95\textwidth]{figure/bayes-plot-posterior.png}}
 \end{figure}
   
   % \item The conditional distribution of $\ydat$ in linear regression with 
