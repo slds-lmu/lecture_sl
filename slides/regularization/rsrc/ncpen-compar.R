@@ -1,3 +1,6 @@
+# This script simulates a high-dimensional data set and compares the regu paths of lasso, SCAD, and MCP
+# The package ncvreg and its plot method are used to create the three individual plots
+
 library(ggplot2)
 library(ncvreg)
 library(gridExtra)
@@ -10,7 +13,6 @@ ncoef <- 1500
 true_coefs <- c(-4,4,-2,2)
 beta <- c(true_coefs, rep(0, ncoef-4))
 numsignals = sum(beta != 0)
-stdev = 1
 lam_min = 2e-2
 set.seed(42)
 X =  matrix(rnorm(ndata*ncoef), ncol=ncoef)
@@ -29,7 +31,7 @@ plot(fit_lasso, main=expression("Lasso"), ylab=expression(theta),
      lwd=linewidth, log.l=TRUE, vertical.line=FALSE, selected=FALSE) 
 abline(h = true_coefs, col = "grey", lty = 8)
 abline(v = log(cv_lasso$lambda.min))
-dev.copy(png, ".../figure/other-pen-lasso.png")
+dev.copy(png, "../figure/ncpen-compar-lasso.png")
 dev.off()
 
 ### MCP
@@ -40,7 +42,7 @@ plot(fit_mcp, main=expression("MCP"~~(gamma~"=3")), ylab=expression(theta),
      lwd=linewidth, log.l=TRUE, vertical.line=FALSE, selected=FALSE) 
 abline(h = true_coefs, col = "grey", lty = 8)
 abline(v = log(cv_mcp$lambda.min))
-dev.copy(png, ".../figure/other-pen-MCP.png")
+dev.copy(png, "../figure/ncpen-compar-MCP.png")
 dev.off()
 
 ### SCAD
@@ -51,5 +53,5 @@ plot(fit_scad, main=expression("SCAD"~~(gamma~"=3.7")), ylab=expression(theta),
      lwd=linewidth, log.l=TRUE, vertical.line=FALSE, selected=FALSE) 
 abline(h = true_coefs, col = "grey", lty = 8)
 abline(v = log(cv_scad$lambda.min))
-dev.copy(png, ".../figure/other-pen-SCAD.png")
+dev.copy(png, "../figure/ncpen-compar-SCAD.png")
 dev.off()

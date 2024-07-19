@@ -1,16 +1,18 @@
+# Plot of the penalty functions for lasso, SCAD and MCP
+# First manually define penalty functions, then plot using ggplot2
+
 library(ggplot2)
 
 # Set the regularization parameters for demonstration
 lambda <- 1
 a <- 3.7  # For SCAD, typically > 2
-gamma <- 3  # For MCP
+gamma <- 3
 
-# Lasso Penalty Function
+# Define penalty functions
 lasso_penalty <- function(theta) {
   lambda * abs(theta)
 }
 
-# SCAD Penalty Function
 scad_penalty <- function(theta) {
   ifelse(abs(theta) <= lambda, 
          lambda * abs(theta), 
@@ -19,17 +21,16 @@ scad_penalty <- function(theta) {
                 (a + 1) * lambda^2 / 2))
 }
 
-# MCP Penalty Function
 mcp_penalty <- function(theta) {
   ifelse(abs(theta) <= gamma * lambda, 
          lambda * abs(theta) - theta^2 / (2 * gamma), 
          0.5 * gamma * lambda^2)
 }
 
-# Create a sequence of theta values
+# Create sequence of theta values
 theta_vals <- seq(-4, 4, by = 0.1)
 
-# Create a data frame for plotting
+# Create df for plotting
 penalties <- data.frame(
   theta = theta_vals,
   Lasso = sapply(theta_vals, lasso_penalty),
@@ -38,7 +39,7 @@ penalties <- data.frame(
 )
 
 # Plot using ggplot2
-ggplot(penalties, aes(x = theta)) + 
+p <- ggplot(penalties, aes(x = theta)) + 
   geom_line(aes(y = Lasso, color = "Lasso"), linewidth=1.2) +
   geom_line(aes(y = SCAD, color = "SCAD"), linewidth=1.2) +
   geom_line(aes(y = MCP, color = "MCP"), linewidth=1.2) +
@@ -48,9 +49,12 @@ ggplot(penalties, aes(x = theta)) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, size = 18),
-    axis.title = element_text(size = 16),
-    axis.text = element_text(size = 13),
+    axis.title = element_text(size = 20),
+    axis.text = element_text(size = 18),
     legend.title = element_blank(),
-    legend.text = element_text(size=13)
+    legend.text = element_text(size=18)
   ) +
   scale_color_manual(values = c("Lasso" = "blue", "SCAD" = "red", "MCP" = "green"))
+
+# Save figure
+ggsave(filename = paste0("../figure/nc_penalties_comparison.png"), plot = p)
