@@ -1,3 +1,8 @@
+# Plot univariate lasso objectives with single observation (shifted by +1)
+# fun1 plots lasso with (x,y)=(1,0) and lambda=3
+# fun2 plots lasso with (x,y)=(1,-4) and lambda=2
+# fun3 plots lasso with (x,y)=(1,4) and lambda=2
+
 library(ggplot2)
 
 lambda = 2
