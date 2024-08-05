@@ -8,7 +8,7 @@
 
 \begin{document}
 
-\titlemeta{Regularization}{Lasso Regression}{figure/lin_model_regu_01.png}{
+\titlemeta{Regularization}{Lasso Regression}{figure/lin_reg_l1.png}{
     \item Lasso regression / $L1$ penalty
     \item Know that lasso selects features
     \item Support recovery
@@ -40,24 +40,24 @@ LHS = $L1$ regularization; RHS = $L2$
 \begin{column}{0.5\textwidth}
 \lz
 \begin{figure}
-\includegraphics[width=0.99\textwidth]{figure/lin_model_regu_01.png}
+\includegraphics[width=0.99\textwidth]{figure/lin_reg_l1.png}
 \end{figure}
 \end{column}
 
 \begin{column}{0.5\textwidth}
 \lz
 \begin{figure}
-\includegraphics[width=0.99\textwidth]{figure/lin_model_regu_02.png}
+\includegraphics[width=0.99\textwidth]{figure/lin_reg_l2.png}
 \end{figure}
 \end{column}
 \end{columns}
 
 %\begin{figure}
-%\includegraphics[width=0.8\textwidth]{figure/lin_model_regu_01.png}
+%\includegraphics[width=0.8\textwidth]{figure/lin_reg_l1.png}
 %\end{figure}
 
 %\begin{figure}
-%\includegraphics[width=0.8\textwidth]{figure/lin_model_regu_02.png}
+%\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 %\end{figure}
 
 \lz
@@ -70,7 +70,7 @@ With increasing regularization, $\hat{\theta}_{\textit{lasso}}$ is pulled back t
 
 Contours of regularized objective for different $\lambda$ values.
 \begin{figure}
-\includegraphics[width=0.85\textwidth]{figure/reg_contours_01.png}
+\includegraphics[width=0.85\textwidth]{figure/lasso_contours.png}
 \end{figure}
 
 Green  = true minimizer of the unreg.objective and red = lasso solution.
@@ -80,23 +80,9 @@ Green  = true minimizer of the unreg.objective and red = lasso solution.
 Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
  
 \begin{figure}
-    \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_lam0.png}}
-        \centerline{\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l2_lam0.png}}
-    \end{minipage}
-   \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_lam1.png}}
-        \centerline{\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l2_lam1.png}}
-    \end{minipage}
-    \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_lam10.png}}
-        \centerline{\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l2_lam10.png}}
-   \end{minipage}
+\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
 \end{figure}
 
-%\begin{figure}
-%\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
-%\end{figure}
 \framebreak
 
 We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
@@ -109,7 +95,7 @@ The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit
 \vspace{-0.1cm}
 \begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
 \includegraphics[width=0.95\textwidth]
-{figure/lasso_contour_cases.png}\\
+{figure_man/lasso_contours_cases.png}\\
 \end{figure}
 
 \end{vbframe}
@@ -126,7 +112,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 %Soft threshold ensures exact zeros, while $L2$ penalty shrinks uniformly.
 \vspace{-0.16cm}
 \begin{figure}
-\includegraphics[width=0.5\textwidth]{figure/soft_thresholding.png}\\
+\includegraphics[width=0.5\textwidth]{figure_man/soft-thresholding.pdf}\\
 \end{figure}
 
 \end{vbframe}
@@ -138,7 +124,7 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 \end{itemize}
  \lz
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/solution_paths_01.png}\\
+\includegraphics[width=0.9\textwidth]{figure_man/solution_paths_l1_l2.png}\\
 \end{figure}
 
 \end{vbframe}

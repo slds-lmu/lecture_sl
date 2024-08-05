@@ -44,7 +44,7 @@
 %Assume the data generating process $y=3x_{1} -2x_{2} +\epsilon $, where $\displaystyle \epsilon \sim N( 0,1)$. The true minimizer is given by $\theta ^{*} =( 3,-2)^{T}$.
 
 %\begin{figure}
-%\includegraphics[width=0.8\textwidth]{figure/lin_model_regu_02.png}
+%\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 %\end{figure}
 
 %With increasing regularization, $\theta_{\textit{reg}}$ is pulled back to the origin.
@@ -74,7 +74,7 @@ Name: We add pos. entries along the diagonal "ridge" of $\Xmat^T \Xmat$
 Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$, with $ \thetah_{\text{ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
 
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/lin_model_regu_02.png}
+\includegraphics[width=0.8\textwidth]{figure/lin_reg_l2.png}
 \end{figure}
 \vspace{-0.2cm}
 {\small With increasing regularization, $\hat{\theta}_{\textit{ridge}}$ is pulled back to the origin\\ (contour lines show unregularized objective).}
@@ -84,7 +84,7 @@ Contours of regularized objective for different $\lambda$ values.\\
 $ \thetah_{\text{ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
 
 \begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/reg_contours_02.png}
+\includegraphics[width=0.8\textwidth]{figure/ridge_contours.png}
 \end{figure}
 \vspace{-0.2cm}
 Green  = true coefs of the DGP and red = ridge solution.
@@ -162,7 +162,7 @@ NB: There is a bijective relationship between $\lambda$ and $t$: $\, \lambda \up
 \begin{column}{0.5\textwidth}
 \lz
 \begin{figure}
-\includegraphics[width=\textwidth]{figure/solution_paths_02.png}
+\includegraphics[width=\textwidth]{figure_man/solution-path-ridge-only.png}
 \end{figure}
 \end{column}
 
@@ -194,7 +194,7 @@ Let's use a \(d\)th-order polynomial
 Using model complexity $d = 10$ overfits:
 
 \begin{center}
-\includegraphics[width = 10cm ]{figure/poly_ridge_01.png} \\
+\includegraphics[width = 10cm ]{figure/poly_ridge_1.png} \\
 \end{center}
 
 \framebreak
@@ -204,7 +204,7 @@ With an $L2$ penalty we can now select $d$ "too large" but regularize our model 
 \vfill
 
 \begin{center}
-\includegraphics[width = 11cm ]{figure/poly_ridge_02.png} \\
+\includegraphics[width = 11cm ]{figure/poly_ridge_2.png} \\
 \end{center}
 
 
@@ -241,7 +241,7 @@ Optimization is much harder now. $\riskrt$ is still convex, but in general there
 Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.01, 0.5, 1, 1.5, 2, 2.5, 10.
 
 \begin{figure}
-\includegraphics[width=0.7\textwidth]{figure/lin_model_regu_01.png}
+\includegraphics[width=0.7\textwidth]{figure/lin_reg_l1.png}
 \end{figure}
 
 With increasing regularization, $\theta_{\textit{ridge}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
@@ -252,7 +252,7 @@ With increasing regularization, $\theta_{\textit{ridge}}$ is pulled back to the 
 
 Contours of regularized objective for different $\lambda$ values.
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/reg_contours_01.png}
+\includegraphics[width=0.9\textwidth]{figure/lasso_contours.png}
 \end{figure}
 
 \framebreak
@@ -266,7 +266,7 @@ We can also rewrite this as a constrained optimization problem. The penalty resu
 The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
 \vspace{-0.1cm}
 \begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
-\includegraphics[width=0.95\textwidth]{figure/lasso_contour_cases.png}\\
+\includegraphics[width=0.95\textwidth]{figure/lasso_contours_cases.png}\\
 \end{figure}
 
 \end{vbframe}
@@ -289,32 +289,17 @@ $$\thetah_{\text{ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 \end{itemize}
  \lz
 \begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/solution_paths_01.png}\\
+\includegraphics[width=0.9\textwidth]{figure_man/solution_paths_l1_l2.png}\\
 \end{figure}
 
 \end{vbframe}
 
 \begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
 Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
-
+ 
 \begin{figure}
-    \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l1_lam0.png}}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam0.png}}
-    \end{minipage}
-   \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l1_lam1.png}}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam1.png}}
-    \end{minipage}
-    \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l1_lam10.png}}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam10.png}}
-   \end{minipage}
+\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
 \end{figure}
-
-%\begin{figure}
-%\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
-%\end{figure}
 
 \end{vbframe}
 \end{comment}
