@@ -15,7 +15,7 @@
   }{% Lecture title  
     Non-Linear Models and Structural Risk Minimization
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/fig-regu-nonlin-2.png
+  figure/classifi_nn_w_size_2.png
   }{
   \item Regularization even more important in non-linear models
   \item Norm penalties applied similarly 
@@ -88,13 +88,13 @@ NN with single hidden layer, size 10, $L2$ penalty:}
 \vspace{-0.8cm}
 %\vfill
 
-\only<1>{\begin{center}\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-1.png}\end{center}}
-\only<2>{\begin{center}\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-2.png}\end{center}}
-\only<3>{\begin{center}\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-3.png}\end{center}}
-\only<4>{\begin{center}\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-4.png}\end{center}}
+\only<1>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_1.png}\end{center}}
+\only<2>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_2.png}\end{center}}
+\only<3>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_3.png}\end{center}}
+\only<4>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_4.png}\end{center}}
 
-%\only<5>{\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-5.png}}
-%\only<6>{\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-6.png}}
+%\only<5>{\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_5.png}}
+%\only<6>{\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_6.png}}
 
 $\lambda$ affects smoothness of decision boundary and magnitude of weights
 
@@ -106,7 +106,7 @@ Prevention of overfitting can also be seen in CV.\\
 Same settings as before, but each $\lambda$ is evaluated with
 5x10 REP-CV
 
-\begin{center}\includegraphics[width=1\textwidth]{figure/fig-regu-nonlin-srm-1.png}\end{center}
+\begin{center}\includegraphics[width=1\textwidth]{figure/classifi_nn_err_decay.png}\end{center}
 
 Typical U-shape with sweet spot between overfitting and underfitting
 \end{frame}
@@ -163,7 +163,7 @@ NN with 1 hidden layer, and fixed (small) L2 penalty.
 \only<1>{
 \begin{center}
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/fig-regu-nonlin-size-1.png}
+\includegraphics[width=\linewidth]{figure/classifi_nn_size_1.png}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}
 \includegraphics[width=\linewidth]{figure/nn_size_1.png}
@@ -173,7 +173,7 @@ NN with 1 hidden layer, and fixed (small) L2 penalty.
 \only<2>{
 \begin{center}
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/fig-regu-nonlin-size-2.png}
+\includegraphics[width=\linewidth]{figure/classifi_nn_size_2.png}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}
 \includegraphics[width=\linewidth]{figure/nn_size_2.png}
@@ -183,7 +183,7 @@ NN with 1 hidden layer, and fixed (small) L2 penalty.
 \only<3>{
 \begin{center}
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/fig-regu-nonlin-size-3.png}
+\includegraphics[width=\linewidth]{figure/classifi_nn_size_3.png}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}
 \includegraphics[width=\linewidth]{figure/nn_size_3.png}
@@ -193,7 +193,7 @@ NN with 1 hidden layer, and fixed (small) L2 penalty.
 \only<4>{
 \begin{center}
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/fig-regu-nonlin-size-4.png}
+\includegraphics[width=\linewidth]{figure/classifi_nn_size_4.png}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}
 \includegraphics[width=\linewidth]{figure/nn_size_5.png}
@@ -203,7 +203,7 @@ NN with 1 hidden layer, and fixed (small) L2 penalty.
 \only<5>{
 \begin{center}
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/fig-regu-nonlin-size-5.png}
+\includegraphics[width=\linewidth]{figure/classifi_nn_size_5.png}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}
 \includegraphics[width=\linewidth]{figure/nn_size_10.png}
@@ -214,7 +214,7 @@ NN with 1 hidden layer, and fixed (small) L2 penalty.
 \only<6>{
 \begin{center}
 \begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/fig-regu-nonlin-size-6.png}
+\includegraphics[width=\linewidth]{figure/classifi_nn_size_6.png}
 \end{minipage}%
 \begin{minipage}{0.5\textwidth}
 \includegraphics[width=\linewidth]{figure/nn_size_100.png}
@@ -230,7 +230,7 @@ Size affects complexity and smoothness of decision boundary
 \begin{frame} {Structural Risk Minimization}
 Again, complexity vs CV score. 
 
-\begin{center}\includegraphics[width=\textwidth]{figure/fig-regu-nonlin-srm-2.png}\end{center}
+\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_err_size.png}\end{center}
 
 Minimal model with good generalization seems to size=10 
 
@@ -251,7 +251,7 @@ if we rewrite it in constrained form:
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{figure}
-\includegraphics[width=0.6\textwidth]{figure/ridge_hat.png}
+\includegraphics[width=0.6\textwidth]{figure/ridge_perspectives_04.png}
 \end{figure}
 \end{column}
 \end{columns}
