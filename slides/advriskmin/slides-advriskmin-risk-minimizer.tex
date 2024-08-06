@@ -89,11 +89,13 @@ we will get multiple useful results!
 \begin{vbframe}{Optimal Constant Model}
 
 \begin{itemize}
+{\footnotesize
 \item We would like a loss optimal, constant baseline predictor
 \item A "featureless" ML model, which always predicts the same value
 \item Can use it as baseline in experiments, if we don't beat this
 with more complex model, that model is useless
 \item Will also be useful as component in algorithms and derivations
+}
 \end{itemize}
 
 %By restricting $\Hspace$ to constant functions $f_c$ independent of $\xv$, the constant model minimizing the theoretical risk 
@@ -101,14 +103,12 @@ with more complex model, that model is useless
 
 $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[L(y,c)\right]$$
 
-and 
+{\footnotesize and $\fx = \theta = c$ that optimizes the empirical risk $\risket$ is denoted as as $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$.}
 
-$\fx = \theta = c$ that optimizes the empirical risk $\risket$ is denoted as as $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$.
-
-\vspace*{-0.5cm}
+\vspace*{-0.2cm}
 
 \begin{center}
-	\includegraphics[width = 0.2\textwidth]{figure/l1_vs_l2.png}
+	\includegraphics[width = 0.38\textwidth]{figure/l1_vs_l2.png}
 \end{center}
 \end{vbframe}
 
