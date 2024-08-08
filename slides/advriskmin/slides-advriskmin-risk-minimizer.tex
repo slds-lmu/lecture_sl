@@ -54,8 +54,26 @@ $$\riskef = \sumin \Lxyi$$
 Let's define (and minimize) loss in expectation, the theoretical risk:
 
 $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
+\end{vbframe}
 
+\begin{vbframe}{Two short examples}
+\textbf{Linear Model with squared loss:}\\
+\begin{itemize}
+    \item Model: $f(\xi) = \thetab^\top \xi + \theta_0$
+    \item Loss:  
+    $L(\yi, f(\xi)) = \left(\yi - \thetab^\top \xi - \theta_0\right)^2$
+    \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xi \mapsto \thetab^\top \xi + \theta_0 : \thetab \in \mathbb{R}^d, \theta_0 \in \mathbb{R} \right\}$$
+\end{itemize}
 
+\vspace{0.3cm}
+
+\textbf{Shallow MLP with binary CE loss:}\\
+\begin{itemize}
+    \item Model: $f(\xi) = \bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xi + \bm{b}_1) + b_2$
+    \item Loss: $L(\yi, f(\xi)) = -(\yi\log(p^{(i)})+(1-\yi)\log(1-p^{(i)}))$ where $p^{(i)} = \sigma(f(\xi))$
+    \item Hypothesis space: $$\Hspace_{\text{MLP}} = \left\{ \xi \mapsto \bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xi + \bm{b}_1) + b_2: \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$
+\end{itemize}
+  
 \end{vbframe}
 
 \begin{vbframe}{Optimal constants for a loss}
