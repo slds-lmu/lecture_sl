@@ -59,19 +59,19 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \begin{vbframe}{Two short examples}
 \textbf{Regression with linear model:}\\
 \begin{itemize}
-    \item Model: $f(\xi) = \thetab^\top \xi + \theta_0$
+    \item Model: $f(\xv) = \thetab^\top \xv + \theta_0$
     \item Squared loss:  
-    $L(\yi, f(\xi)) = \left(\yi - f(\xi)\right)^2$
-    \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xi \mapsto \thetab^\top \xi + \theta_0 : \thetab \in \mathbb{R}^d, \theta_0 \in \mathbb{R} \right\}$$
+    $\Lyf = \left(y-f\right)^2$
+    \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetab^\top \xv + \theta_0 : \thetab \in \mathbb{R}^d, \theta_0 \in \mathbb{R} \right\}$$
 \end{itemize}
 
 \vspace{0.3cm}
 
 \textbf{Binary classification with shallow MLP:}\\
 \begin{itemize}
-    \item Model: $f(\xi) = \bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xi + \bm{b}_1) + b_2$
-    \item Binary cross-entropy loss: $L(\yi, f(\xi)) = -(\yi\log(p^{(i)})+(1-\yi)\log(1-p^{(i)}))$\\ where $p^{(i)} = \sigma(f(\xi))$ (logistic sigmoid)
-    \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xi \mapsto \bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xi + \bm{b}_1) + b_2: \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$}
+    \item Model: $f(\xv) = \pi(\xv)= \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2)$
+    \item Binary cross-entropy loss: $\Lpiv = -(y\log(\pi)+(1-y)\log(1-\pi))$\\ 
+    \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$}
 \end{itemize}
   
 \end{vbframe}
@@ -79,25 +79,25 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \begin{vbframe}{Optimal constants for a loss}
 
 \begin{itemize}
-\item Let's assume some RV $Z \in \Yspace$ for a label
-\item Z not $Y$, because we want to fiddle with its distribution
-\item Assume Z has distribution Q, so $Z \sim Q$
-\item We can now consider $\argmin_c \E_{Z \sim Q}[L(Z, c)]$\\
-so the score-constant which loss-minimally approximates Z
+\item Let's assume some RV $z \in \Yspace$ for a label
+\item z not RV $y$, because we want to fiddle with its distribution
+\item Assume z has distribution Q, so $z \sim Q$
+\item We can now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
+so the score-constant which loss-minimally approximates z
 \end{itemize}
 
 \lz
 
 We will consider 3 cases for Q
 \begin{itemize}
-\item $Q = P_Y$, simply our labels and their marginal distribution in $\Pxy$
-\item $Q = P_{Y | X = x}$, conditional label distribution at point $X = x$
+\item $Q = P_y$, simply our labels and their marginal distribution in $\Pxy$
+\item $Q = P_{y | x = x}$, conditional label distribution at point $x = x$
 \item $Q = P_n$, the empirical product distribution for data $y_1, \ldots, y_n$
 \end{itemize}
 
 \lz
 
-If we can solve $\argmin_c \E_{Z \sim Q}[L(Z, c)]$ for any $Q$,
+If we can solve $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$,
 we will get multiple useful results!
 
 
@@ -139,16 +139,16 @@ $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmi
 
 \end{itemize}
 
-$$ \argmin \E [L(Z, c)] = $$
-$$ \argmin \E [(Z - c)^2] = $$
-$$ \argmin \E [Z^2] - 2cE[Z] + c^2 = $$
-$$ E[Z] $$
+$$ \argmin \E [L(z, c)] = $$
+$$ \argmin \E [(z - c)^2] = $$
+$$ \argmin \E [z^2] - 2cE[z] + c^2 = $$
+$$ E[z] $$
 
 \begin{itemize}
-\item Using $Q = P_Y$, this means that, given we know the label distribution,
-the best constant is $c = E[Y]$.
+\item Using $Q = P_y$, this means that, given we know the label distribution,
+the best constant is $c = E[y]$.
 \item If we only have data $y_1, \ldots y_n$
-$\argmin \E_{Z \sim P_n} [(Z - c)^2] = \E_{Z \sim P_n}[Z] = \frac{1}{n} \sumin \yi = \bar{y}$
+$\argmin \E_{z \sim P_n} [(z - c)^2] = \E_{z \sim P_n}[z] = \frac{1}{n} \sumin \yi = \bar{y}$
 
 
 \item And we want to find and optimal constant model for 
@@ -177,7 +177,7 @@ $\argmin \E_{Z \sim P_n} [(Z - c)^2] = \E_{Z \sim P_n}[Z] = \frac{1}{n} \sumin \
 Let us assume we are in an \enquote{ideal world}: 
 
 \begin{itemize}
-	\item The hypothesis space $\Hspace$ is unrestricted. We can choose any $f: \Xspace \to \R^g$. 
+	\item The hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted. We can choose any measurable $f: \Xspace \to \R^g$. 
 	\item We also assume an ideal optimizer; the risk minimization can always be 
         solved perfectly and efficiently.
 	\item We know $\Pxy$. 
@@ -192,14 +192,23 @@ The $f$ with minimal risk across all (measurable) functions
 is called the \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}. 
 
 \begin{eqnarray*}
-	\fbayes &=& \argmin_{f: \Xspace \to \R^g} \risk_L\left(f\right) = \argmin_{f: \Xspace \to \R^g}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f: \Xspace \to \R^g}\int \Lxy \text{d}\Pxy. 
+	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk\left(f\right) = \argmin_{f: \Xspace \to \R^g}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f: \Xspace \to \R^g}\int \Lxy \text{d}\Pxy. 
 \end{eqnarray*}
 
+The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes)$
+
+\lz
+
+Note that if we leave out the hypothesis space in the subscript it becomes clear from the context!\\
+
+Similarly, we define the risk minimizer over some $\Hspace \subset \Hspace_{all}$ as
+
+\begin{eqnarray*}
+	\fbayes_{\Hspace} &=& \argmin_{f \in \Hspace} \risk\left(f\right)
+\end{eqnarray*}
+
+
 % Note that we search over an unrestricted hypothesis space (that is over all possible functions $f: \Xspace \to \R^g$)!
-
-\lz 
-
-The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{L} = \risk_L(\fbayes)$
 
 
 
@@ -230,7 +239,7 @@ The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{L} = \risk_L(\fb
 \begin{frame}[t]{optimal point-wise predictions}  
 
 To derive the risk minimizer, observe that by law of total expectation 
-$$    \risk_L(f) = \E_{xy} \left[\Lxy\right] 
+$$    \risk(f) = \E_{xy} \left[\Lxy\right] 
     = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right].$$
 
 \begin{itemize}
@@ -275,11 +284,11 @@ Note that according to the \textbf{law of large numbers} (LLN), the empirical ri
 
 \begin{vbframe}{Estimation and Approximation Error} 
 
-\textbf{Goal of learning: } Train a model $\hat f$ for which the true risk $\risk_L\left(\hat f\right)$ is close to the Bayes risk $\riskbayes_L$. In other words, we want the \textbf{Bayes regret}
+\textbf{Goal of learning: } Train a model $\hat f$ for which the true risk $\risk\left(\hat f\right)$ is close to the Bayes risk $\riskbayes$. In other words, we want the \textbf{Bayes regret}
 
 
 $$
-	\risk_L\left(\hat f\right) - \riskbayes_{L}
+	\risk\left(\hat f\right) - \riskbayes
 $$ 
 
 to be as low as possible. 
@@ -289,7 +298,7 @@ to be as low as possible.
 The Bayes regret can be decomposed as follows: 
 
 \begin{eqnarray*}
-	\risk_L\left(\hat f\right) - \riskbayes_{L} &=& \underbrace{\left[\risk_L\left(\hat f\right) - \inf_{f \in \Hspace} \risk_L(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk_L(f) - \riskbayes_{L}\right]}_{\text{approximation error}}
+	\risk\left(\hat f\right) - \riskbayes &=& \underbrace{\left[\risk\left(\hat f\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}
 \end{eqnarray*}
 
 \framebreak 
@@ -301,8 +310,8 @@ The Bayes regret can be decomposed as follows:
 \end{center}
 
 \begin{itemize}
-	\item $\risk_L\left(\hat f\right) - \inf_{f \in \Hspace} \risk(f)$ is the \textbf{estimation error}. We fit $\hat f$ via empirical risk minimization and (usually) use approximate optimization, so we usually do not find the optimal $f \in \Hspace$.
-	\item $\inf_{f \in \Hspace} \risk_L(f) - \riskbayes_{L}$ is the \textbf{approximation error}. We need to restrict to a hypothesis space $\Hspace$ which might not even contain the Bayes optimal model $\fbayes$. 
+	\item $\risk\left(\hat f\right) - \inf_{f \in \Hspace} \risk(f)$ is the \textbf{estimation error}. We fit $\hat f$ via empirical risk minimization and (usually) use approximate optimization, so we usually do not find the optimal $f \in \Hspace$.
+	\item $\inf_{f \in \Hspace} \risk(f) - \riskbayes$ is the \textbf{approximation error}. We need to restrict to a hypothesis space $\Hspace$ which might not even contain the Bayes optimal model $\fbayes$. 
 \end{itemize}
 
 \end{vbframe}
@@ -322,7 +331,7 @@ Let $\ind:\mathbb{D} \to \Hspace$ be a learning algorithm that takes a training 
 The learning method $\ind$ is said to be \textbf{consistent} w.r.t. a certain distribution $\Pxy$ if the risk of the estimated model $\hat f$ converges in probability ( \enquote{$\overset{p}{\longrightarrow}$}) to the Bayes risk $\riskbayes$ when $n_\text{train}$ goes to $\infty$: 
 
 $$
-	\risk\left(\ind\left(\Dtrain\right)\right) \overset{p}{\longrightarrow} \riskbayes_L \quad \text{for } n_\text{train} \to \infty.
+	\risk\left(\ind\left(\Dtrain\right)\right) \overset{p}{\longrightarrow} \riskbayes \quad \text{for } n_\text{train} \to \infty.
 $$
 
 \vfill
