@@ -284,11 +284,11 @@ Note that according to the \textbf{law of large numbers} (LLN), the empirical ri
 
 \begin{vbframe}{Estimation and Approximation Error} 
 
-\textbf{Goal of learning: } Train a model $\hat f$ for which the true risk $\risk\left(\hat f\right)$ is close to the Bayes risk $\riskbayes$. In other words, we want the \textbf{Bayes regret}
+\textbf{Goal of learning: } Train a model $\hat f_{\Hspace}$ for which the true risk $\risk\left(\hat f_{\Hspace}\right)$ is close to the Bayes risk $\riskbayes$. In other words, we want the \textbf{Bayes regret} or \textbf{excess risk}
 
 
 $$
-	\risk\left(\hat f\right) - \riskbayes
+	\risk\left(\hat f_{\Hspace}\right) - \riskbayes
 $$ 
 
 to be as low as possible. 
@@ -298,7 +298,8 @@ to be as low as possible.
 The Bayes regret can be decomposed as follows: 
 
 \begin{eqnarray*}
-	\risk\left(\hat f\right) - \riskbayes &=& \underbrace{\left[\risk\left(\hat f\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}
+	\risk\left(\hat f_{\Hspace}\right) - \riskbayes &=& \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
+    &=& \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}}) \right] 
 \end{eqnarray*}
 
 \framebreak 
