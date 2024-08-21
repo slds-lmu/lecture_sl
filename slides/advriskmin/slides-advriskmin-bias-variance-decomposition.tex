@@ -11,7 +11,6 @@
 \titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
     Advanced Risk Minimization
   }{% Lecture title  
-    Advanced Risk Minimization:\\
     Bias-Variance Decomposition
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/bias_variance_decomposition-linear_model_bias.png
@@ -40,7 +39,7 @@ $$
 with zero-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$ independent of $\xv$.
 \vspace{0.1cm}
 
-{\scriptsize ${\ast}$ Similar decomp also exist for other losses expressible as Bregman divergences (e.g. cross-entropy). The $0/1$ loss e.g. has no such decomposition (\cite{BROWN2024BIAS})}
+{\scriptsize ${\ast}$ Similar decomps also exist for other losses expressible as Bregman divergences (e.g. cross-entropy). One exception is the $0/1$ loss (\cite{BROWN2024BIAS})}
 
 \framebreak 
 
@@ -255,24 +254,27 @@ $$GE_n\left(\ind_{L}\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
 \end{vbframe}
 
 
-\begin{vbframe}{Approximation an Estimation \citelink{BROWN2024BIAS} }
-The Bias-Variance decomposition is often confused or equated with the related (but different) decompo of \textbf{excess risk} into \textbf{estimation} and \textbf{approximation} error.
+\begin{vbframe}{Approximation and Estimation \citelink{BROWN2024BIAS} }
+The Bias-Variance decomp is often confused or equated with the related (but different) decomp of \textbf{excess risk} into \textbf{estimation} and \textbf{approximation} error.
 
 \begin{eqnarray*}
     \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
 \end{eqnarray*}
 
+Both are commonly described using the same figure and analogies
+\vspace{-0.1cm}
 \begin{figure}
     \centering
-    \includegraphics[width = 0.75\textwidth]{figure_man/biasvar-vs-estapprox-tradeoff.png}
+    \includegraphics[width = 0.78\textwidth]{figure_man/biasvar-vs-estapprox-tradeoff.png}
     \tiny{\\ Credit: \cite{BROWN2024BIAS}}
   \end{figure}
+
 
 \end{vbframe}
 
 \framebreak
 
-\begin{vbframe}{Approximation/Estimation Error}
+\begin{vbframe}{Approx./Estimation Error \citelink{BROWN2024BIAS}}
     
 \begin{itemize}
     \item The approx. error is a structural property of $\Hspace$.
@@ -280,16 +282,52 @@ The Bias-Variance decomposition is often confused or equated with the related (b
     \item Estimation error arises because we choose $f \in \Hspace$ with limited training data using $\riske$ instead of $\risk$
 \end{itemize}
 
-$\fh_{\Hspace}$ assumes we found a global minimizer of $\riske$, which is often impossible. 
+Knowing $\fh_{\Hspace} \in \arg\inf_{f \in \Hspace} \riske(f)$ assumes we found a global minimizer of $\riske$, which is often impossible (e.g. DNNs). 
 \vspace{0.2cm}
 
-In practice, optimizing $\riske$ gives us our 'best guess' $\tilde{f}_{\Hspace} \in \Hspace$ of $\fh_{\Hspace}$. We can now decompose its excess risk as
+In practice, optimizing $\riske$ gives us our 'best guess' $\tilde{f}_{\Hspace} \in \Hspace$ of $\fh_{\Hspace}$. We can now decompose its excess risk finer as
 
 \begin{eqnarray*}
     \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
 \end{eqnarray*}
 
 Note that the optimization error can be negative, even though $\riske(\tilde{f}_{\Hspace}) \geq \riske(\fh_{\Hspace})$ always holds.
+
+\framebreak
+
+We can further decompose estimation error more finely by defining the \textit{centroid} model or 'systematic' model part.\\
+\vspace{0.15cm}
+
+Given $\fh_{\Hspace} \in  \arg\min_{f \in \Hspace} \riske(f)$ the centroid model under squared loss is the mean prediction at each $x$ over all $\D_n$, $f^{\circ}_{\Hspace} := \E_{\D_n \sim \Pxy^n}[\fh_{\Hspace}] $,.
+\vspace{0.15cm}
+
+With $f^{\circ}_{\Hspace}$ we can decompose the expected estimation error as
+
+\begin{eqnarray*}
+ \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f ^{\ast}_{\Hspace})\right]}_{\text{expected estimation error}} &=& \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f^{\circ}_{\Hspace}) \right]}_{\text{estimation variance}} + \underbrace{\risk(f^{\circ}_{\Hspace})-\risk(f^{\ast}_{\Hspace})}_{\text{estimation bias}}   
+\end{eqnarray*}
+
+\begin{itemize}
+    \item estimation bias measures distance of centroid model to risk minimizer over $\Hspace$
+    \item estimation variance measures spread of ERM around centroid model induced by randomness due to $\D_n$
+\end{itemize}
+
+\framebreak
+
+{\small We can now connect the derived quantities back to bias and variance and see how they differ. As we see, bias is not only approx. error and variance is not estimation error.}
+\vspace{-0.2cm}
+
+$$ \text{bias} = \text{approximation error} + \text{estimation bias} $$
+$$\text{variance} = \text{optimization error} + \text{estimation variance}$$
+% variance = estimation variance + optimization error
+\vspace{-0.4cm}
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.5\textwidth]{slides/advriskmin/figure_man/expected-risk-decomp.png}
+    \tiny{\\ Credit: \cite{BROWN2024BIAS}}
+  \end{figure}
+
+{\scriptsize \textbf{NB}: For special case of LM and squared loss (OLS), we have zero optim. error and estimation bias. Hence both decompositions agree there.}
 
 
 \end{vbframe}

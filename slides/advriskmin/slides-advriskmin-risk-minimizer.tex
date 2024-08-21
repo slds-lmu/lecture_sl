@@ -91,7 +91,7 @@ so the score-constant which loss-minimally approximates z
 We will consider 3 cases for Q
 \begin{itemize}
 \item $Q = P_y$, simply our labels and their marginal distribution in $\Pxy$
-\item $Q = P_{y | x = x}$, conditional label distribution at point $x = x$
+\item $Q = P_{y | x = x}$, conditional label distribution at point $x = \tilde{x}$
 \item $Q = P_n$, the empirical product distribution for data $y_1, \ldots, y_n$
 \end{itemize}
 
@@ -192,10 +192,10 @@ The $f$ with minimal risk across all (measurable) functions
 is called the \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}. 
 
 \begin{eqnarray*}
-	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk\left(f\right) = \argmin_{f: \Xspace \to \R^g}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f: \Xspace \to \R^g}\int \Lxy \text{d}\Pxy. 
+	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk\left(f\right) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy. 
 \end{eqnarray*}
 
-The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes)$
+The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hspace_{all}})$
 
 \lz
 
@@ -240,14 +240,14 @@ Similarly, we define the risk minimizer over some $\Hspace \subset \Hspace_{all}
 
 To derive the risk minimizer, observe that by law of total expectation 
 $$    \risk(f) = \E_{xy} \left[\Lxy\right] 
-    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right].$$
+    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right].$$
 
 \begin{itemize}
 	\item We can choose $\fx$ as we want (unrestricted hypothesis space, no assumed functional form)
 	\item Hence, for a fixed value $\xv \in \Xspace$ we can select \textbf{any} value $c$ we want to predict. So we construct the \textbf{point-wise optimizer} 
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
- $$\fxbayes = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \xv \right] \quad \forall \xv \in \Xspace.$$
+ $$\fbayes(\tilde{\xv}) = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \tilde{\xv} \right] $$
 \end{itemize}
 
 \begin{center}

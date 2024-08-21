@@ -214,6 +214,18 @@ $$
 
 \end{vbframe}
 
+\begin{vbframe}{Telephone data}
+
+{\small We now illustrate the effect of using robust loss functions. The telephone data set contains the number of calls (in 10mio units) made in Belgium between 1950 and 1973 ($n=24$). Outliers are due to a change in measurement without re-calibration for 6 years.}
+
+\vspace{0.2cm}
+
+\begin{center}
+\includegraphics[width = 0.6\textwidth]{figure/telephone-data.pdf}
+\end{center}
+
+\end{vbframe}
+
 \begin{comment}
 \begin{vbframe}{Log-Barrier Loss}
 
@@ -368,6 +380,18 @@ $$
 % \end{eqnarray*}
 
 % where $Q_\alpha(\cdot)$ computes the empirical $\alpha$-quantile of $\{\yi\}, i = 1, ..., n$.
+
+\framebreak
+
+We simulate $n=200$ samples from a heteroskedastic LM using the DGP $y = 1+0.2x+\varepsilon$, where $\varepsilon \sim \mathcal{N}(0, 0.5+0.5x)$ and $x \sim \mathcal{U}[0,10]$.\\
+
+Using the quantile loss, we estimate the conditional $\alpha$-quantiles for $\alpha \in \{0.05, 0.5, 0.95\}$.
+
+\vspace{-0.2cm}
+
+\begin{center}
+\includegraphics[width = 0.62\textwidth]{slides/advriskmin/figure/quantile-regression.pdf}
+\end{center}
 
 \end{vbframe}
 
