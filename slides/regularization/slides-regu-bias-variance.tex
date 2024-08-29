@@ -13,7 +13,7 @@
   }{% Lecture title  
     Bias-variance Tradeoff
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure_man/biasvariance_scheme.png
+  slides/regularization/figure_man/bv_anim_1.pdf
   }{
   \item Understand the bias-variance trade-off
   \item Know the definition of model bias, estimation bias, and estimation variance
@@ -27,30 +27,29 @@
 In this slide set, we will visualize the bias-variance trade-off. \\
 \lz 
 
-First, we start with a DGP $\Pxy$ and a suitable loss function $L:\mathbb{R}^g\times\mathbb{R}^g\rightarrow\mathbb{R}$ where $\mathbb{R}^g$ is numerical encoding of $\Yspace$. We measure the distance between models $f:\Xspace\rightarrow\mathbb{R}^g$ via $$d(f, f^\prime) = \E_{\xv\sim\mathbb{P}_{\xv}}\left[L(f(\xv), f^\prime(\xv)\right].$$
-We restrict our attention to losses for which $d$ becomes a metric, e.g., L1-loss, L2-loss, etc. \\
+We consider a DGP $\Pxy$ with $\Yspace \subset \R$ and the L2 loss $L$. We measure the distance between models $f:\Xspace\rightarrow\mathbb{R}^g$ via $$d(f, f^\prime) = \E_{\xv\sim\mathbb{P}_{\xv}}\left[L(f(\xv), f^\prime(\xv)\right].$$ \\
 \lz
-We define $\ftrue$ as the risk minimizer such that $$\ftrue \in \argmin_{f \in \Hspace_0} \E_{\xy \sim \Pxy}\left[L(y, f(\xv))\right]$$
+We define $\fbayes_0$ as the risk minimizer such that $$\fbayes_0 \in \argmin_{f \in \Hspace_0} \E_{\xy \sim \Pxy}\left[L(y, f(\xv))\right]$$
 
-where $\Hspace_0 = \left\{f:\Xspace\rightarrow\mathbb{R}^g\vert\; d(\underline{0}, f) < \infty \right\}$ and $\underline{0}:\Xspace\rightarrow\{0\}$.
+where $\Hspace_0 = \left\{f:\Xspace\rightarrow\mathbb{R}\vert\; d(\underline{0}, f) < \infty \right\}$ and $\underline{0}:\Xspace\rightarrow\{0\}$.
 
 \framebreak
 
-In practice, our model space $\Hspace$ usually is a proper subset of $\Hspace_0$ and in general $\ftrue \notin \Hspace.$\\
+Our model space $\Hspace$ usually is a proper subset of $\Hspace_0$ and in general $\fbayes_0 \notin \Hspace.$\\
 We define $\fbayes$ as the risk minimizer in $\Hspace,$ i.e.,
 $$\fbayes \in \argmin_{f \in \Hspace} \E_{\xy \sim \Pxy}\left[L(f(\xv, y)\right].$$
-It is the function in $\Hspace$ closest to $\ftrue$, and we call $d(\ftrue, \fbayes)$ the model bias.
+$\fbayes \in \Hspace$ is closest to $\fbayes_0$, and we call $d(\fbayes_0, \fbayes)$ the model bias.
 
 \begin{center}
-\includegraphics[width=0.5\textwidth]{figure_man/to_replace_model_bias.png}
+\includegraphics[width=0.5\textwidth]{slides/regularization/figure_man/bv_anim_6.pdf}
 \end{center}
 \framebreak 
-We can further restrict the model space such that $\Hspace_R$ is a proper subset of $\Hspace.$
+By regularizing our model, we further restrict the model space so that $\Hspace_R$ is a proper subset of $\Hspace.$
 We define $\fbayes_R$ as the risk minimizer in $\Hspace_R,$ i.e.,
 $$\fbayes_R \in \argmin_{f \in \Hspace_R} \E_{\xy \sim \Pxy}\left[L(f(\xv, y)\right].$$
-It is the function in $\Hspace_R$ closest to $\ftrue$, and we call $d(\fbayes_R, \fbayes)$ the estimation bias.
+$\fbayes_R \in \Hspace_R$ is closest to $\ftrue$, and we call $d(\fbayes_R, \fbayes)$ the estimation bias.
 \begin{center}
-\includegraphics[width=0.49\textwidth]{figure_man/to_replace_estimation_bias.png}
+\includegraphics[width=0.49\textwidth]{slides/regularization/figure_man/bv_anim_5.pdf}
 \end{center}
 \framebreak
 
@@ -60,15 +59,12 @@ $$\fh \in \argmin_{f\in\Hspace} \sumin L\left(\yi, \fh (\xi)\right).$$
 \begin{columns}[onlytextwidth,T]
       \column{0.5\linewidth}
 
-  \includegraphics[width=1.0\textwidth]{figure_man/to_replace_sampling.png}
+  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/bv_anim_4.pdf}
 
-      \column{0.5\linewidth}
+      \column{0.45\linewidth}
       \lz
-      Note: \\
-      \begin{itemize}
-          \item $L:\Yspace\times\R^g\rightarrow\R$ is overloaded.
-          \item The samples are only shown in the visualization for didactic purposes but are not an element of $\Hspace.$
-      \end{itemize}
+      Note that the realization is only shown in the visualization for didactic purposes but is not an element of $\Hspace_0.$
+    
     \end{columns}
 
 \framebreak
@@ -78,7 +74,7 @@ Let's assume that $\fh$ is an unbiased estimate of $\fbayes$ (e.g., valid for li
 \begin{columns}[onlytextwidth,T]
       \column{0.5\linewidth}
 
-  \includegraphics[width=1.0\textwidth]{figure_man/to_replace_estimation_variance.png}
+  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/bv_anim_3.pdf}
 
       \column{0.5\linewidth}
       \lz 
@@ -95,12 +91,12 @@ $$\fh_R \in \argmin_{f\in\Hspace_R} \sumin L\left(\yi, \fh (\xi)\right).$$
 \begin{columns}[onlytextwidth,T]
       \column{0.48\linewidth}
 
-  \includegraphics[width=1.0\textwidth]{figure_man/to_replace_estimation_variance_res.png}
+  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/bv_anim_2.pdf}
 
       \column{0.5\linewidth}
       \lz 
       \begin{itemize}
-          \item We can measure the spread of sampled $\fh_R$ around $\fbayes_R$ via $\delta = \var_\D\left[d(\fbayes, \fh_R)\right]$ which we also call estimation variance.
+          \item We can measure the spread of sampled $\fh_R$ around $\fbayes_R$ via $\delta = \var_\D\left[d(\fbayes_R, \fh_R)\right]$ which we also call estimation variance.
           \item We observe that the increased bias results in a smaller estimation variance in $\Hspace_R$ compared to $\Hspace.$
       \end{itemize}
     \end{columns}
