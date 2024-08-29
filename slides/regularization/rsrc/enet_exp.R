@@ -1,3 +1,12 @@
+# ------------------------------------------------------------------------------
+# enetlogreg
+
+# DATA: generate regression data y = X(n*q ~Normal)*beta(q=500) + eps(n ~Normal)
+#   (1) beta is sparse, only 5 is non-zero out of 500
+#   (2) beta is non-sparse
+#       then calculate R-squared with enet, lasso and ridge regression
+# ------------------------------------------------------------------------------
+
 library(mlr3)
 library(glmnet)
 library(mlr3learners)
@@ -5,6 +14,11 @@ library(mlr3tuning)
 library(mlr3misc)
 library(pracma)
 library(mvtnorm)
+library(future)
+
+set.seed(123)
+
+# DATA -------------------------------------------------------------------------
 
 n_train = 100
 n_test = 10000
@@ -17,30 +31,41 @@ p = 500
 q_seq = c(5, 500)
 x_corr = 0.8
 
-tuner1 = tnr("grid_search", resolution = gs1_grid)
-tuner2 = tnr("grid_search", 
-  param_resolutions = c(alpha = gs2_grid[1], lambda = gs2_grid[2]))
-inner = rsmp ("cv", folds = n_folds)
+# Initialize grid search tuners
+tuner1 = tnr("grid_search", resolution = gs1_grid) # Tuner for lambda only
+tuner2 = tnr("grid_search",                       # Tuner for both alpha and lambda
+             param_resolutions = c(alpha = gs2_grid[1], lambda = gs2_grid[2])
+)
+
+inner = rsmp("cv", folds = n_folds)
 mm = msr("regr.mse")
 
 l1 = lrn("regr.glmnet", alpha = 0, id = "ridge")
 l2 = lrn("regr.glmnet", alpha = 1, id = "lasso")
 l3 = lrn("regr.glmnet", id = "enet")
+
 ss1 = ps(
-  lambda = p_dbl(1e-3, 1e2, logscale = TRUE)        
-)        
+  lambda = p_dbl(1e-3, 1e2, logscale = TRUE) # Log-scaled lambda search space
+)
+
 l1 = auto_tuner(tuner1, l1, inner, mm, search_space = ss1)
 l2 = auto_tuner(tuner1, l2, inner, mm, search_space = ss1)
+
 ss2 = ps(
-  alpha = p_dbl(0, 1), 
-  lambda = p_dbl(1e-3, 1e2, logscale = TRUE)        
-)        
+  alpha = p_dbl(0, 1),
+  lambda = p_dbl(1e-3, 1e2, logscale = TRUE)
+) # Search space
+
 l3 = auto_tuner(tuner2, l3, inner, mm, search_space = ss2)
 
 mylearners = list(l1, l2, l3)
-myrsmp = rsmp("holdout", ratio = n_train / n)
-# lrn_order = c("LM", "ridge", "lasso") 
 
+myrsmp = rsmp("holdout", ratio = n_train / n)
+# lrn_order = c("LM", "ridge", "lasso")
+
+# FUNC -------------------------------------------------------------------------
+
+# Simulate data based on the given parameters and return regression task
 make_simul_data = function(rep_i, q) {
   sigma = x_corr^(0:(p-1))
   sigma = Toeplitz(sigma)
@@ -50,34 +75,39 @@ make_simul_data = function(rep_i, q) {
   y = X %*% theta + eps
   d = as.data.frame(X)
   colnames(d) = sprintf("x%03i", 1:p)
-  d$y = y
+  d$y = y               
   tt = as_task_regr(d, target = "y", id = sprintf("q:%i", q))
   return(tt)
 }
 
+# Function to run benchmarking
 run_bm = function(n_reps) {
   simul_grid = expand.grid(q = q_seq, rep_i = 1:n_reps)
   mytasks = lapply(1:nrow(simul_grid), function(i) {
-    row = simul_grid[i,]                 
+    row = simul_grid[i,]           
     make_simul_data(rep_i = row$rep_i, q = row$q)
   })
   bg = benchmark_grid(mytasks, mylearners, myrsmp)
   bmr = benchmark(bg, store_models = TRUE)
   ba = bmr$aggregate(msr("regr.rsq"))
-  list(bmr = bmr, ba = ba)
+  list(bmr = bmr, ba = ba)# detailed and aggregated benchmark result
 }
 
-future::plan("multicore")
+# DATA -------------------------------------------------------------------------
+
+# Execute benchmarking in parallel using multiple cores
+plan("multicore")
 z = run_bm(n_reps)
 ba = z$ba
 bmr = z$bmr
 
+# Extract and save model coefficients (betas)
 nn = length(bmr$uhashes)
-betas = lapply(1:nn, function(i) {
+betas = lapply(1:nn, function(i){
   at = bmr$resample_results$resample_result[[i]]$learners[[1]]
-  gmod = at$learner$model
-  as.numeric(gmod$beta)
+  gmod = at$learner$model                                 
+  as.numeric(gmod$beta)               
 })
-ba$betas = betas
+ba$betas = betas      
 ba$resample_result = NULL
 save(file = "enet_exp.RData", bmr_aggr = ba)
