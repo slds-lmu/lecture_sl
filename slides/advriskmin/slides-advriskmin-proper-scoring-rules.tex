@@ -41,16 +41,20 @@ A scoring rule is \textbf{proper} if the forecaster maximizes the expected score
 
 $$S(Q,Q) \geq S(P,Q) \,\, \text{for all} \, P,Q $$
 
-\vspace{0.3cm}
+\vspace{0.2cm}
 
-$S$ is \textbf{strictly proper} equality holds iff $P=Q$. (Strictly) proper scores ensure the forecaster has an incentive to predict $Q$ and is encouraged to report his or her true belief.
+$S$ is \textbf{strictly proper} when equality holds iff $P=Q$. (Strictly) proper scores ensure the forecaster has an incentive to predict $Q$ and is encouraged to report his or her true belief.
+
+\vspace{0.2cm}
+
+{\footnotesize \textbf{NB}: scores are typically positively oriented (maximization) while losses are negatively oriented (minimization). Scores could also be defined negatively oriented.}
 
 \end{vbframe}
 
 \begin{vbframe}{Binary classification scores}
 
 For simplicity, we will only look at binary targets $y \sim \text{Bern}(p)$.\\ %Scoring rules are often related to loss functions $L$ by taking their negative value (maximization vs. minimization).
-We want to find out if using a loss $L(y, \pi)$ (negative score) incentivizes honest forecasts $\pi=p$ for any $p \in (0,1)$.
+We want to find out if using a loss $L(y, \pi)$ (negative score) incentivizes honest forecasts $\pi=p$ for any $p \in [0,1]$.
 
 \lz
 
@@ -105,13 +109,13 @@ To find strictly proper scores, we can ask: Which functions have the property su
 
 $$\E_{y}[S(\pi, y)]=p \cdot S(\pi, 1) + (1-p) \cdot S(\pi, 0)$$
 
-Let's further assume a special symmetry so that $S(\pi,1)=S(\pi)$ and $S(\pi, 0)=S(1-\pi)$:
+Let's further restrict our search to scores $S(\pi,y)$ for which $S(\pi,1)=S(\pi)$ and $S(\pi, 0)=S(1-\pi)$:
 
 $$\E_{y}[S(\pi, y)]=p \cdot S(\pi) + (1-p) \cdot S(1-\pi)$$
 
 \vspace{0.2cm}
 
-Setting the derivative w.r.t. $\pi$ to $0$ and $\pi^{\ast}=p$, we get the following optimality condition:
+Setting the derivative w.r.t. $\pi$ to $0$ and requiring $\pi=p$ at the optimum, we get the following first-order condition:
 
 \vspace{0.3cm}
 
@@ -119,12 +123,20 @@ $$p \cdot S'(p) \overset{!}{=} (1-p) \cdot S'(1-p)$$
 
 \framebreak
 
-\begin{itemize}
-    \item One natural solution is $S'(p)=1/p$, resulting in $p/p=(1-p)/(1-p)=1$ and $S(p)=\log(p)$. This is the \textbf{logarithmic scoring rule} $S(\pi,y)=y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi)$
+\begin{itemize}\setlength\itemsep{1.9em}
+    \item F.O.C.:\quad $p \cdot S'(p) \overset{!}{=} (1-p) \cdot S'(1-p)$
+    \item One natural solution is $S'(p)=1/p$, resulting in $p/p=(1-p)/(1-p)=1$ and $S(p)=\log(p)$. 
+    \item This is the \textbf{logarithmic scoring rule} $S(\pi,y)=y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi)$
     \item Under (loss) minimization this corresponds to the \textbf{log loss} $L(y,\pi)=-(y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi))$
+\end{itemize}
+
+\framebreak
+
+\begin{itemize} \setlength\itemsep{1.9em}
+    \item F.O.C.:\quad $p \cdot S'(p) \overset{!}{=} (1-p) \cdot S'(1-p)$
     \item A second solution is $S'(p)=2(1-p)$, resulting in $2p(1-p)=2(1-p)p$ and $S(p)=-(1-p)^2=-\frac{1}{2}((1-p)^2+(0-(1-p))^2)$
-    \item This gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pi,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i)^2$\\ {\small (with $y_1=y, y_2=1-y$ and likewise for $\pi_i$)}
-    \item Its positive counterpart is also called the \textbf{Brier score} and effectively the \textbf{MSE loss} for probabilities
+    \item This gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pi,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i)^2$\\ {\small (with $y_1=y, y_2=1-y$ and likewise $\pi_1=\pi, \pi_2=1-\pi$)}
+    \item Its positive counterpart is also called the \textbf{Brier score} (minimization) and is effectively the \textbf{MSE loss} for probabilities
 \end{itemize}
 
 \end{vbframe}
