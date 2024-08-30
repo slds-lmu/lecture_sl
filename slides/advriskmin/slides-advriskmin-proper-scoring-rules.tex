@@ -105,38 +105,42 @@ The \textbf{0/1 score} (negative 0/1 loss) is therefore proper but not strictly 
 
 \begin{vbframe}{Binary classification scores}
 
-To find strictly proper scores, we can ask: Which functions have the property such that $\E_y[S(\pi,y)]$ is maximized at $\pi=p$? We have
+To find strictly proper scores/losses, we can ask: Which functions have the property such that $\E_y[L(y,\pi)]$ is minimized at $\pi=p$? We have
 
-$$\E_{y}[S(\pi, y)]=p \cdot S(\pi, 1) + (1-p) \cdot S(\pi, 0)$$
+$$\E_{y}[L(y,\pi)]=p \cdot L(1,\pi) + (1-p) \cdot L(0,\pi)$$
 
-Let's further restrict our search to scores $S(\pi,y)$ for which $S(\pi,1)=S(\pi)$ and $S(\pi, 0)=S(1-\pi)$:
+Let's further %restrict our search to scores 
+assume that $L(1,\pi)$ and $L(0, \pi)$ can not be arbitrary, but are the same function evaluated at $\pi$ and $1-\pi$:
+%$S(\pi,y)$ for which 
+$L(1,\pi)=L(\pi)$ and $L(0,\pi)=L(1-\pi)$. Then
 
-$$\E_{y}[S(\pi, y)]=p \cdot S(\pi) + (1-p) \cdot S(1-\pi)$$
+$$\E_{y}[L(y,\pi)]=p \cdot L(\pi) + (1-p) \cdot L(1-\pi)$$
 
 \vspace{0.2cm}
 
-Setting the derivative w.r.t. $\pi$ to $0$ and requiring $\pi=p$ at the optimum, we get the following first-order condition:
+Setting the derivative w.r.t. $\pi$ to $0$ and requiring $\pi=p$ at the optimum (\textbf{propriety}), we get the following first-order condition (F.O.C.):
 
 \vspace{0.3cm}
 
-$$p \cdot S'(p) \overset{!}{=} (1-p) \cdot S'(1-p)$$
+$$p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$$
 
 \framebreak
 
 \begin{itemize}\setlength\itemsep{1.9em}
-    \item F.O.C.:\quad $p \cdot S'(p) \overset{!}{=} (1-p) \cdot S'(1-p)$
-    \item One natural solution is $S'(p)=1/p$, resulting in $p/p=(1-p)/(1-p)=1$ and $S(p)=\log(p)$. 
-    \item This is the \textbf{logarithmic scoring rule} $S(\pi,y)=y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi)$
-    \item Under (loss) minimization this corresponds to the \textbf{log loss} $L(y,\pi)=-(y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi))$
+    \item F.O.C.:\quad $p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$
+    \item One natural solution is $L'(p)=-1/p$, resulting in $-p/p=-(1-p)/(1-p)=-1$ and the antiderivative $L(p)=-\log(p)$. 
+    \item This is the \textbf{log loss} $$L(y,\pi)=-(y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi))$$
+    \item The corresponding scoring rule (maximization) is the strictly proper \textbf{logarithmic scoring rule} $$S(\pi,y)=y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi)$$
 \end{itemize}
 
 \framebreak
 
-\begin{itemize} \setlength\itemsep{1.9em}
-    \item F.O.C.:\quad $p \cdot S'(p) \overset{!}{=} (1-p) \cdot S'(1-p)$
-    \item A second solution is $S'(p)=2(1-p)$, resulting in $2p(1-p)=2(1-p)p$ and $S(p)=-(1-p)^2=-\frac{1}{2}((1-p)^2+(0-(1-p))^2)$
-    \item This gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pi,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i)^2$\\ {\small (with $y_1=y, y_2=1-y$ and likewise $\pi_1=\pi, \pi_2=1-\pi$)}
-    \item Its positive counterpart is also called the \textbf{Brier score} (minimization) and is effectively the \textbf{MSE loss} for probabilities
+\begin{itemize} \setlength\itemsep{1.2em}
+    \item F.O.C.:\quad $p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$
+    \item A second solution is $L'(p)=-2(1-p)$, resulting in $-2p(1-p)=-2(1-p)p$ and the antiderivative $L(p)=(1-p)^2=\frac{1}{2}((1-p)^2+(0-(1-p))^2)$
+    \item This is also called the \textbf{Brier score} and is effectively the \textbf{MSE loss} for probabilities $$L(y,\pi)=\frac{1}{2}\sum_{i=1}^{2}(y_i-\pi_i)^2$$
+     {\small (with $y_1=y, y_2=1-y$ and likewise $\pi_1=\pi, \pi_2=1-\pi$)}
+    \item Using positive orientation (maximization), this gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pi,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i)^2$
 \end{itemize}
 
 \end{vbframe}

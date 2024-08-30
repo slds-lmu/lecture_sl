@@ -74,7 +74,7 @@ res.tel$pred_logcosh <- preds.logcosh
 p <- ggplot(res.tel, aes(x = year)) +
   geom_line(aes(y = pred_l2, color = "L2 (OLS)"), size = 1.6, alpha=1) +   
   #geom_line(aes(y = pred_l1, color = "L1"), size = 1.4) +
-  geom_line(aes(y = pred_l1_manual, color = "L1 (man)"), size = 1.6, alpha=1) +
+  geom_line(aes(y = pred_l1_manual, color = "L1"), size = 1.6, alpha=1) +
   geom_line(aes(y = pred_huber, color = "Huber"), size = 1.6, alpha=1) +
   geom_line(aes(y = pred_logcosh, color = "Log-Cosh"), size = 1.6, alpha=1) +
   geom_point(aes(y = calls), color = "black", size = 4, alpha=1) +  

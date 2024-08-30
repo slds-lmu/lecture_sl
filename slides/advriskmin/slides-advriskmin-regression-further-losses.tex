@@ -33,7 +33,7 @@
 
 \begin{vbframe}{Advanced Loss Functions}
 Special loss functions can be used to estimate non-standard posterior components, 
-    to measure errors in a custom way or are designed to have special properties like robustness.
+    to measure errors customarily or which are designed to have special properties like robustness.
 
 \vspace{1cm}
 
@@ -226,7 +226,7 @@ $$
 
 \end{vbframe}
 
-\begin{comment}
+%\begin{comment}
 \begin{vbframe}{Log-Barrier Loss}
 
 \begin{small}
@@ -239,9 +239,9 @@ $$
 \end{small}
 
 \begin{itemize}
-\item Behaves like $L2$ loss for small residuals.
-\item We use this if we don't want residuals larger than $\epsilon$ at all.
-\item No guarantee that the risk minimization problem has a solution.
+\item Behaves like $L2$ loss for small residuals
+\item We use this if we don't want residuals larger than $\epsilon$ at all
+\item No guarantee that the risk minimization problem has a solution
 \item Plot shows log-barrier loss for $\epsilon=2$:
 \end{itemize}
 
@@ -250,38 +250,6 @@ $$
 \includegraphics[width = 0.8\textwidth]{figure/loss_logbarrier_1.png}
 \end{center}
 
-
-\end{vbframe}
-
-
-
-\begin{vbframe}{Log-Barrier loss}
-
-\begin{itemize}
- % \item Similarly to the Huber loss, there is no closed-form solution for the optimal constant model $f = \thetab$ w.r.t. the log-barrier loss. Numerical optimization is necessary.
- \item Note that the optimization problem has no (finite) solution if there is no way to fit a constant where all residuals are smaller than $\epsilon$.  
-\end{itemize}
-
-\vspace{0.2cm}
-
-\begin{center}
-% \includegraphics[width = 9cm ]{figure_man/log_barrier2.png} 
-\includegraphics[width = \textwidth]{figure/loss_logbarrier_2.png}
-\end{center}
-
-% \framebreak 
-% 
-% 
-% Note that the optimization problem has no (finite) solution if there is no way to fit a constant where all residuals are smaller than $a$. 
-% 
-% \vspace{- 0.2cm}
-% 
-% 
-% \begin{center}
-% \includegraphics[width = 0.8\textwidth]{figure_man/log_barrier_2_1.png} \\
-% \end{center}
-
-% We see that the constant model fitted w.r.t. Huber loss in fact lies between L1- and L2-Loss.
 
 \end{vbframe}
 
@@ -295,9 +263,9 @@ $$
   \end{cases}, \quad \epsilon \in \R_{+}
 $$
 \begin{itemize}
-\item Modification of $L1$ loss, errors below $\epsilon$ accepted without penalty.
-\item Used in SVM regression.
-\item Properties: convex and not differentiable for $ y - f \in \{-\epsilon, \epsilon\}$.
+\item Modification of $L1$ loss, errors below $\epsilon$ accepted without penalty
+\item Used in SVM regression
+\item Properties: convex and not differentiable for $ y - f \in \{-\epsilon, \epsilon\}$
 \end{itemize}
 
 \vfill
@@ -308,7 +276,7 @@ $$
 \end{center}
 
 \end{vbframe}
-\end{comment}
+%\end{comment}
 
 %% BB: der beweis hier sieht falsch aus...!
 %% \begin{vbframe}{$\epsilon$-insensitive Loss: Optimal Constant}
@@ -354,10 +322,10 @@ $$
 \normalsize
 \begin{itemize}
 \item Extension of $L1$ loss (equal to $L1$ for $\alpha = 0.5$).
-\item Weights either positive or negative residuals more strongly. 
+\item Weighs either positive or negative residuals more strongly
 \item $\alpha<0.5$ $(\alpha>0.5)$ penalty to over-estimation (under-estimation)
 \item Risk minimizer is (conditional) 
-    $\alpha$-quantile (median for $\alpha=0.5$).
+    $\alpha$-quantile (median for $\alpha=0.5$)
 \end{itemize}
 
 \vfill
