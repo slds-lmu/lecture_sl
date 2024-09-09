@@ -29,12 +29,12 @@ p1 <- ggplot(data = df_5, aes(x = regr.rsq, y = learner_id)) +
   ylab("") +
   labs(title="sparse") +
   xlab("R-squared")+
-  xlim(0.5,1)+
+  xlim(0.95,1)+
   theme_minimal(base_size = 10) +
   theme(legend.position="none",
         axis.title.x=element_blank())
 
-# linear model with non-sparse features
+# linear model with dense features
 df_500 <- performance_df[performance_df['q']==500,]
 
 p2 <- ggplot(data = df_500, aes(x = regr.rsq, y = learner_id)) +
@@ -42,7 +42,7 @@ p2 <- ggplot(data = df_500, aes(x = regr.rsq, y = learner_id)) +
   coord_flip() +
   ylab("") +
   xlab("R-squared")+
-  labs(title="non-sparse") +
+  labs(title="dense") +
   xlim(0.5,1)+
   theme_minimal(base_size = 10) +
   theme(legend.position="none",

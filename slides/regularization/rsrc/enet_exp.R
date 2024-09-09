@@ -1,9 +1,9 @@
 # ------------------------------------------------------------------------------
 # enetlogreg
 
-# DATA: generate regression data y = X(n*q ~Normal)*beta(q=500) + eps(n ~Normal)
-#   (1) beta is sparse, only 5 is non-zero out of 500
-#   (2) beta is non-sparse
+# DATA: generate regression data y = X(n*q ~Normal)*theta(q=500) + eps(n ~Normal)
+#   (1) theta is sparse, only 5 is non-zero out of 500
+#   (2) theta is dense
 #       then calculate R-squared with enet, lasso and ridge regression
 # ------------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ make_simul_data = function(rep_i, q) {
   y = X %*% theta + eps
   d = as.data.frame(X)
   colnames(d) = sprintf("x%03i", 1:p)
-  d$y = y               
+  d$y = y
   tt = as_task_regr(d, target = "y", id = sprintf("q:%i", q))
   return(tt)
 }
@@ -106,7 +106,7 @@ nn = length(bmr$uhashes)
 betas = lapply(1:nn, function(i){
   at = bmr$resample_results$resample_result[[i]]$learners[[1]]
   gmod = at$learner$model                                 
-  as.numeric(gmod$beta)               
+  as.numeric(gmod$beta)           
 })
 ba$betas = betas      
 ba$resample_result = NULL

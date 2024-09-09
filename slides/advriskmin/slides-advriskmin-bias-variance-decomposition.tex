@@ -256,6 +256,7 @@ $$GE_n\left(\ind_{L}\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
 
 \begin{vbframe}{Approximation and Estimation \citelink{BROWN2024BIAS} }
 The Bias-Variance decomp is often confused or equated with the related (but different) decomp of \textbf{excess risk} into \textbf{estimation} and \textbf{approximation} error.
+\vspace{-0.3cm}
 
 \begin{eqnarray*}
     \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
@@ -265,14 +266,15 @@ Both are commonly described using the same figure and analogies
 \vspace{-0.1cm}
 \begin{figure}
     \centering
-    \includegraphics[width = 0.78\textwidth]{figure_man/biasvar-vs-estapprox-tradeoff.png}
+    \includegraphics[width = 0.7\textwidth]{figure_man/biasvar-vs-estapprox-tradeoff.png}
     \tiny{\\ Credit: \cite{BROWN2024BIAS}}
   \end{figure}
 
+{\footnotesize \textbf{NB}: It should be noted that the bias-variance decomp. only holds for certain losses, while the above decomposition is universal.}
 
-+end{vbframe}
+\end{vbframe}
 
-\framebreak
+%\framebreak
 
 \begin{vbframe}{Approx./Estimation Error \citelink{BROWN2024BIAS}}
     

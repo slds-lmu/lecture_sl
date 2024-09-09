@@ -48,10 +48,10 @@ p1 <- ggplot(data = df_5, aes(x=as.numeric(betas), y = as.numeric(index), group=
   labs(title="sparse") +
   facet_grid(learner_id~.)+
   xlab("value") +
-  ylab(expression('index of'~betas)) +
+  ylab(expression('index of'~theta)) +
   scale_y_continuous(breaks=1:10)
 
-# linear model with non-sparse features
+# linear model with dense features
 df_500 <- performance_df[performance_df['q']==500,]
 df_500 <- df_500 %>% select(learner_id, betas)
 
@@ -70,9 +70,9 @@ p2 <- ggplot(data = df_500, aes(x=as.numeric(betas), y = as.numeric(index), grou
   geom_boxplot(width = 0.4, color = "gray50", alpha = 0.5) +
   coord_flip()+
   facet_grid(learner_id~.) +
-  labs(title="non-sparse") +
+  labs(title="dense") +
   xlab("value") +
-  ylab(expression('index of'~betas)) +
+  ylab(expression('index of'~theta)) +
   scale_y_continuous(breaks=1:10)
 
 p <- grid.arrange(p1, p2, nrow=1)

@@ -35,22 +35,20 @@
 \begin{vbframe} {Simulated Example}
 
 \footnotesize
-50 data sets with $n=100$ for setups: $y =\xv^T \thetab + \epsilon; \quad \epsilon \sim N(0,1);
-  \quad \xv \sim N(0, \Sigma)$: 
+5-fold CV with $n_{train}=100$ and 20 repetitions with $n_{test}=10000$ for setups: $y =\xv^T \thetab + \epsilon; \quad \epsilon \sim N(0,0.1^2);
+  \quad \xv \sim N(0, \Sigma); \quad\Sigma_{k,l}=0.8^{|k-l|}$: 
 \vspace{-0.3cm}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{center}
-{\footnotesize \textbf{Ridge} better for corr. features}: \\ 
-$\thetab=(\underbrace{2,\ldots,2}_{5},\underbrace{0,\ldots,0}_{5})$\\
-$ \Sigma_{k,l}=0.8^{|k-l|}$ 
+{\footnotesize \textbf{Lasso} better for sparse features:} \\ 
+$\thetab=(\underbrace{1,\ldots,1}_{5},\underbrace{0,\ldots,0}_{495})$\\
   \end{center}
 \end{column}
 \begin{column}{0.5\textwidth} 
 \begin{center}
-{\footnotesize \textbf{Lasso} better for sparse without corr.:} \\
-$\thetab=(2, 2, 2,\underbrace{0,\ldots,0}_{7})$ \\
-$ \Sigma = I_p$ 
+{\footnotesize \textbf{Ridge} better for dense features:} \\
+$\thetab=(\underbrace{1,\ldots,1,1,\ldots,1}_{500})$ \\
 \end{center}
 \end{column}
 \end{columns}
@@ -67,9 +65,9 @@ $ \Sigma = I_p$
 
 
 \footnotesize
-LHS: ridge cannot perform variable selection compared to lasso/e-net. \\
+LHS: ridge estimates of noise features hover around $0$ while lasso/e-net produce $0$s. \\
+RHS: ridge cannot perform variable selection compared to lasso/e-net. \\
 Lasso more frequently ignores relevant features than e-net (longer tails in violin plot).\\
-RHS: ridge estimates of noise features hover around $0$ while lasso/e-net produce $0$s.
 %Since Elastic Net offers a compromise between Ridge and lasso, it is suitable for both data situations.
 
 \end{vbframe}
