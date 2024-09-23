@@ -77,7 +77,9 @@ The binary Brier score is defined on probabilities $\pix \in [0, 1]$ and 0-1-enc
 L\left(y, \pix\right) &=& (\pix - y)^2
 \end{eqnarray*}
 
-\vspace{0.2cm}
+As the Brier score is a proper scoring rule, it can be used for calibration. Note that is is not convex on probabilities anymore.
+
+%\vspace{0.2cm}
 \begin{center}
 \includegraphics[width = 0.8\textwidth]{figure/plot_brier.png}
 \end{center}

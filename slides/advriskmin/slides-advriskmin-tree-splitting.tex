@@ -1,0 +1,156 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+%<<setup-child, include = FALSE>>=
+%library(knitr)
+%library(qrmix)
+%library(mlr)
+%library(quantreg)
+%library(reshape2)
+%set_parent("../style/preamble.Rnw")
+%@
+
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+\input{../../latex-math/ml-trees} % For the comparison of Brier and Gini index
+
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Advanced Risk Minimization
+  }{% Lecture title  
+    Loss functions and tree splitting
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/plot_brier.png
+  }{
+  \item Know how tree splitting is 'nothing new' related to loss functions 
+  \item Brier score minimization corresponds to gini splitting
+  \item Bernoulli loss minimization corresponds to entropy splitting
+}
+
+\begin{vbframe}{Bernoulli loss min = Entropy splitting}
+
+When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another approach that is common in literature is to minimize the average node impurity $\text{Imp}(\Np)$. 
+
+\vspace*{0.2cm}
+
+\textbf{Claim:} Entropy splitting $\text{Imp}(\Np) = -\sum_{k = 1}^g \pikN \log \pikN$ is equivalent to minimize risk measured by the Bernoulli loss. 
+
+\begin{footnotesize}
+Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$. 
+\end{footnotesize}
+
+\vspace*{0.2cm}
+
+\textbf{Proof: } To prove this we show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
+
+\vspace*{- 0.2cm}
+
+
+$$
+  \risk(\Np) = n_\Np \text{Imp}(\Np),
+$$
+  
+  where 
+  %$I$ is the entropy criterion $\text{Imp}(\Np)$ and 
+  $\risk(\Np)$ is calculated w.r.t. the (multiclass) Bernoulli loss  
+
+$$
+  L(y, \pix) = -\sum_{k = 1}^g [y = k] \log \left(\pi_k(\xv)\right).
+$$
+
+\framebreak 
+\begin{footnotesize}
+\begin{eqnarray*}
+\risk(\Np) &=& \sum_{\xy \in \Np} \left(- \sum_{k = 1}^g [y = k] \log \pi_k(\xv) \right) \\
+&\overset{(*)}{=}& -\sum_{k = 1}^g \sum_{\xy \in \Np} [y = k]\log \pikN \\
+&=& -\sum_{k = 1}^g \log \pikN \underbrace{\sum_{\xy \in \Np} [y = k]}_{n_{\Np}\cdot \pikN } \\
+ &=& -n_{\Np} \sum_{k = 1}^g \pikN \log \pikN = n_\Np \text{Imp}(\Np), 
+\end{eqnarray*} 
+
+where in $^{(*)}$ the optimal constant per node $\pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$ was plugged in. 
+\end{footnotesize}
+% \framebreak
+
+% \textbf{Conclusion}: 
+% \begin{itemize}
+%   \item Stumps/trees with entropy splitting use the same loss function as logistic regression (binary) / softmax regression (multiclass).
+%   \item    While logistic regression is based on the hypothesis space of \textbf{linear functions}, stumps/trees use \textbf{step functions} as hypothesis spaces. 
+
+% \end{itemize}  
+
+\end{vbframe}
+
+
+
+
+\begin{vbframe}{Brier score minimization = Gini splitting}
+
+When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another approach that is common in literature is to minimize the average node impurity $\text{Imp}(\Np)$. 
+
+\vspace*{0.2cm}
+
+\textbf{Claim:} Gini splitting $\text{Imp}(\Np) = \sum_{k=1}^g \pikN \left(1-\pikN \right)$ is equivalent to the Brier score minimization. 
+
+\begin{footnotesize}
+Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$ 
+\end{footnotesize}
+
+\vspace*{0.2cm}
+
+\begin{footnotesize}
+
+\textbf{Proof: } We show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
+
+
+$$
+  \risk(\Np) = n_\Np \text{Imp}(\Np),
+$$
+  
+  where $\text{Imp}$ is the Gini impurity and $\risk(\Np)$ is calculated w.r.t. the (multiclass) Brier score
+
+
+$$
+  L(y, \pix) = \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2.
+$$
+
+\framebreak
+
+\vspace*{-0.5cm}
+\begin{eqnarray*}
+\risk(\Np) &=& \sum_{\xy \in \Np}  \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2 
+= \sum_{k = 1}^g \sum_{\xy \in \Np} \left([y = k] - \frac{n_{\Np,k}}{n_{\Np }}\right)^2,
+\end{eqnarray*}
+
+by plugging in the optimal constant prediction w.r.t. the Brier score ($n_{\Np,k}$ is defined as the number of class $k$ observations in node $\Np$): 
+$$\hat \pi_k(\xv)= \pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k] = \frac{n_{\Np,k}}{n_{\Np }}. $$ 
+
+ We split the inner sum and further simplify the expression
+
+\begin{eqnarray*}
+&=& \sum_{k = 1}^{g} \left(\sum_{\xy \in \Np: ~ y = k} \left(1 - \frac{n_{\Np,k}}{n_{\Np }}\right)^2 + \sum_{\xy \in \Np: ~ y \ne k} \left(0 - \frac{n_{\Np,k}}{n_{\Np }}\right)^2\right) \\
+&=& \sum_{k = 1}^g n_{\Np,k}\left(1 - \frac{n_{\Np,k}}{n_{\Np }}\right)^2 + (n_{\Np } - n_{\Np,k})\left(\frac{n_{\Np,k}}{n_{\Np }}\right)^2, 
+\end{eqnarray*}
+
+since for $n_{\Np,k}$ observations the condition $y = k$ is met, and for the remaining $(n_\Np - n_{\Np,k})$ observations it is not. 
+
+
+We further simplify the expression to
+
+% \begin{footnotesize}
+\begin{eqnarray*}
+\risk(\Np) &=&  \sum_{k = 1}^g n_{\Np,k}\left(\frac{n_{\Np } - n_{\Np,k}}{n_{\Np }}\right)^2 + (n_{\Np } - n_{\Np,k})\left(\frac{n_{\Np,k}}{n_{\Np }}\right)^2 \\
+&=& \sum_{k = 1}^g \frac{n_{\Np,k}}{n_{\Np }} \frac{n_{\Np } - n_{\Np,k}}{n_{\Np }} \left(n_{\Np } - n_{\Np,k } + n_{\Np,k}\right) \\
+&=& n_{\Np } \sum_{k = 1}^g \pikN \cdot \left(1 - \pikN \right) = n_\Np \text{Imp}(\Np).
+\end{eqnarray*}
+% \end{footnotesize}
+
+\end{footnotesize}
+
+\end{vbframe}
+
+
+\endlecture
+
+\end{document}

@@ -28,7 +28,7 @@
   \item Know the Bernoulli loss and related losses (log-loss, logistic loss, Binomial loss)
   \item Derive the risk minimizer
   \item Derive the optimal constant model 
-  \item Understand the connection between log-loss and entropy splitting 
+  %\item Understand the connection between log-loss and entropy splitting 
 }
 
 \begin{vbframe}{Bernoulli Loss}
@@ -38,6 +38,15 @@
   L(y, \fx) &=& \log(1+\exp(-y \cdot \fx)) \quad \text{for } y \in \setmp\\
   L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
 \end{eqnarray*}
+
+%Note that the expression $L(y, \fx) = \log(1 + \exp(-y \cdot \fx))$ for $y \in \setmp$ can be derived from the typical log-loss for $y \in \setzo$ %:
+%\[
+%L(y, \fx) = - y \cdot \fx + \log(1 + \exp(\fx))
+%\]
+%by recognizing that the labels can be transformed from $y \in \setzo$ to $y' \in \setmp$ using the mapping $y' = 2y - 1$. Substituting $y'$ into the typical formulation gives:
+%\[
+%L(y', \fx) = \log(1 + \exp(-y' \cdot \fx))
+%\]
 
 \begin{itemize}
   % \item Two equivalent formulations: labels $y \in \setmp$ or $y \in \setzo$
@@ -107,7 +116,7 @@ $$
   \riskf &=& \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right],
 \end{eqnarray*}
 
-with $\eta(\xv) = \P(y = 1 ~|~ \xv)$ (see chapter on the 0-1-loss for more details). 
+with $\eta(\xv) = \P(y = 1 ~|~ \xv)$ (see section on the 0-1-loss for more details). 
 
 For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the derivative to $0$: 
 
@@ -165,18 +174,14 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 
 \begin{vbframe}{Bernoulli: Optimal constant Model}
 
-The optimal constant probability model $\pix = \theta$ w.r.t. the Bernoulli loss for labels from $\Yspace = \setzo$ is:
+{\small The optimal constant probability model $\pix = \theta$ w.r.t. the Bernoulli loss for labels from $\Yspace = \setzo$ is:
 
 \begin{eqnarray*}
   \thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi
 \end{eqnarray*}
 
 Again, this is the fraction of class-1 observations in the observed data.
-We can simply prove this again by setting the derivative of the risk to 0 and solving for $\theta$.
-
-\framebreak
-
-The optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is:
+We can simply prove this again by setting the derivative of the risk to 0 and solving for $\theta$. The optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is:
 
 \begin{eqnarray*}
   \thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n} 
@@ -184,13 +189,10 @@ The optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels
 
 where $\nn$ and $\np$ are the numbers of negative and positive observations, respectively.
 
-\lz
-
 This again shows a tight (and unsurprising) connection of this loss to log-odds.
 
-\lz
-
 Proving this is also a (quite simple) exercise.
+}
 
 \end{vbframe}
 
@@ -198,79 +200,33 @@ Proving this is also a (quite simple) exercise.
 
 We have seen three loss functions that are closely related. In the literature, there are different names for the losses: 
 
-\begin{eqnarray*}
-  L(y, \fx) &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
-  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
-\end{eqnarray*}
+%\begin{eqnarray*}
+%  L(y, \fx) &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
+%  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
+%\end{eqnarray*}
 
-are referred to as Bernoulli, Binomial or logistic loss. 
+\begin{eqnarray*} L(y, \fx) &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
+\ L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo \\
+L(y, \pix) &=& - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo \\
+L(y, \pix) &=& - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) \quad \text{for } y \in \setmp \end{eqnarray*}
 
-  $$
-    L(y, \pix) = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo
-  $$
+\lz
 
-is referred to as cross-entropy or log-loss. 
+are equally referred to as Bernoulli, Binomial, logistic, log loss, or cross-entropy (showing equivalence is a simple exercise).
 
-\lz 
+%  $$
+%    L(y, \pix) = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo
+%  $$
 
-We usually refer to all of them as \textbf{Bernoulli loss}, and rather make clear whether they are defined on labels $y \in \setzo$ or $y \in \setmp$ and on scores $\fx$ or probabilities $\pix$. 
+%is referred to as cross-entropy or log-loss. 
 
-\end{vbframe}
+%\lz 
 
-
-
-\begin{vbframe}{Bernoulli loss min = Entropy splitting}
-
-When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another approach that is common in literature is to minimize the average node impurity $\text{Imp}(\Np)$. 
-
-\vspace*{0.2cm}
-
-\textbf{Claim:} Entropy splitting $\text{Imp}(\Np) = -\sum_{k = 1}^g \pikN \log \pikN$ is equivalent to minimize risk measured by the Bernoulli loss. 
-
-\begin{footnotesize}
-Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$. 
-\end{footnotesize}
-
-\vspace*{0.2cm}
-
-\textbf{Proof: } To prove this we show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
-
-\vspace*{- 0.2cm}
-
-
-$$
-  \risk(\Np) = n_\Np \text{Imp}(\Np),
-$$
-  
-  where 
-  %$I$ is the entropy criterion $\text{Imp}(\Np)$ and 
-  $\risk(\Np)$ is calculated w.r.t. the (multiclass) Bernoulli loss  
-
-$$
-  L(y, \pix) = -\sum_{k = 1}^g [y = k] \log \left(\pi_k(\xv)\right).
-$$
-
-\framebreak 
-\begin{footnotesize}
-\begin{eqnarray*}
-\risk(\Np) &=& \sum_{\xy \in \Np} \left(- \sum_{k = 1}^g [y = k] \log \pi_k(\xv) \right) \\
-&\overset{(*)}{=}& -\sum_{k = 1}^g \sum_{\xy \in \Np} [y = k]\log \pikN \\
-&=& -\sum_{k = 1}^g \log \pikN \underbrace{\sum_{\xy \in \Np} [y = k]}_{n_{\Np}\cdot \pikN } \\
- &=& -n_{\Np} \sum_{k = 1}^g \pikN \log \pikN = n_\Np \text{Imp}(\Np), 
-\end{eqnarray*} 
-
-where in $^{(*)}$ the optimal constant per node $\pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$ was plugged in. 
-\end{footnotesize}
-% \framebreak
-
-% \textbf{Conclusion}: 
-% \begin{itemize}
-%   \item Stumps/trees with entropy splitting use the same loss function as logistic regression (binary) / softmax regression (multiclass).
-%   \item    While logistic regression is based on the hypothesis space of \textbf{linear functions}, stumps/trees use \textbf{step functions} as hypothesis spaces. 
-
-% \end{itemize}  
+%We usually refer to all of them as \textbf{Bernoulli loss}, and rather make clear whether they are defined on labels $y \in \setzo$ or $y \in \setmp$ and on scores $\fx$ or probabilities $\pix$. 
 
 \end{vbframe}
+
+
 
 
 
