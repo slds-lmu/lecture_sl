@@ -23,7 +23,7 @@
   }{% Lecture title  
     Bernoulli Loss
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/plot_bernoulli_prob.png
+  figure/bernoulli_prob.png
   }{
   \item Know the Bernoulli loss and related losses (log-loss, logistic loss, Binomial loss)
   \item Derive the risk minimizer
@@ -35,8 +35,8 @@
 
 \vspace*{-0.5cm}
 \begin{eqnarray*}
-  L(y, \fx) &=& \log(1+\exp(-y \cdot \fx)) \quad \text{for } y \in \setmp\\
-  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
+  \Lyf &=& \log(1+\exp(-y \cdot f)) \quad \text{for } y \in \setmp\\
+  \Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo 
 \end{eqnarray*}
 
 %Note that the expression $L(y, \fx) = \log(1 + \exp(-y \cdot \fx))$ for $y \in \setmp$ can be derived from the typical log-loss for $y \in \setzo$ %:
@@ -60,7 +60,7 @@
 \vspace{0.2cm}
 \begin{center}
 % \includegraphics[width = 9cm ]{figure_man/bernoulli.png} \\
-\includegraphics[width = 8cm ]{figure/plot_bernoulli_plusmin_encoding.png}
+\includegraphics[width = 8cm]{figure/bernoulli_margin.png}
 \end{center}
 
 \end{vbframe}
@@ -70,15 +70,18 @@
 
 \begin{vbframe}{Bernoulli loss on probabilities}
 
-If scores are transformed into probabilities by the logistic function  $\pix = \left(1 + \exp(- \fx)\right)^{-1}$ (or equivalently if $f(x) = \log\left(\frac{\pix}{1 - \pix}\right)$ are the log-odds of $\pix$), we arrive at another equivalent formulation of the loss, where $y$ is again encoded as $\setzo$:
+If scores are transformed into probabilities by the logistic function  $\pi = \left(1 + \exp(-f)\right)^{-1}$ (or equivalently if $f = \log\left(\frac{\pi}{1 - \pi}\right)$ are the log-odds of $\pi$), we arrive at another equivalent formulation of the loss, where $y$ is again encoded as $\setzo$:
 
   $$
-    L(y, \pix) = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right). 
+    L(y, \pi) = - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right). 
   $$
   
 \begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
-\includegraphics[width = 10cm ]{figure/plot_bernoulli_prob.png}
+\begin{figure}
+  \subfloat{\includegraphics[width=0.5\textwidth]{figure/bernoulli_prob.png}}
+  \subfloat{\includegraphics[width=0.5\textwidth]{figure/logistic.png}}\\
+\end{figure}
 \end{center}
 
 \end{vbframe}
@@ -134,36 +137,39 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 
 \framebreak 
 
-The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds:
+The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds, i.e. the logit function (inverse of logistic function) of $p(\xv) = \P(y~|~\xv = \xv)$:
 
-\begin{eqnarray*}
-\fxbayes &=&  \log \biggl(\frac{\P(y~|~\xv = \xv)}{1-\P(y~|~\xv = \xv)}\biggr).
-\end{eqnarray*}
+\begin{minipage}{0.3\textwidth} 
+	\centering
+	{$\fxbayes =  \log (\frac{p(\xv)}{1-p(\xv)})$}
+\end{minipage}
+\hspace{-.03\textwidth}
+\begin{minipage}{0.7\textwidth}
+	\centering	
+	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
+\end{minipage}
 
 The function is undefined when $P(y~|~\xv = \xv) = 1$ or $P(y~|~\xv = \xv) = 0$, but predicts a smooth curve which grows when $P(y~|~\xv = \xv)$ increases and equals $0$ when $P(y~|~\xv = \xv) = 0.5$.
 
-\lz 
+\framebreak 
 
 \textbf{Proof: } As before we minimize 
-
 \begin{eqnarray*}
   \riskf &=& \E_x \left[L(1, \fx) \cdot \eta(\xv) + L(-1, \fx) \cdot (1 - \eta(\xv)) \right] \\
   &=& \E_x \left[ \log(1 + \exp(- \fx)) \eta(\xv)+ \log(1 + \exp(\fx)) (1 - \eta(\xv)) \right] 
 \end{eqnarray*}
 
-\framebreak 
-
 For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the derivative to $0$: 
-
 
 \begin{footnotesize}
   \begin{eqnarray*}
   \frac{\partial }{\partial c} \log(1 + \exp(-c)) \eta(\xv)+ \log(1 + \exp(c)) (1 - \eta(\xv)) &=& 0 \\
   - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{\exp(c)}{1 + \exp(c)} (1 - \eta(\xv)) &=& 0 \\ 
-   - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{1}{1 + \exp(- c)} S(1 - \eta(\xv)) &=& 0\\ 
+  % - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{1}{1 + \exp(- c)} (1 - \eta(\xv)) &=& 0\\ 
   % &=& -  \frac{\exp(-c)}{1 + \exp(-c)} p + \frac{1}{1 + \exp(-c)} - \frac{1}{1 + \exp(-c)} p \\
+  - \frac{\exp(-c) \eta(\xv) - 1 + \eta(\xv)}{1 + \exp(-c)} &=& 0 \\
   - \eta(\xv) + \frac{1}{1 + \exp(-c)} &=& 0\\
-  \eta(\xv) &=& \frac{1}{1 + \exp(-c)} \\
+  % \eta(\xv) &=& \frac{1}{1 + \exp(-c)} \\
    c &=& \log\left(\frac{\eta(\xv)}{1 - \eta(\xv)}\right)
   \end{eqnarray*}
 \end{footnotesize}
@@ -205,10 +211,10 @@ We have seen three loss functions that are closely related. In the literature, t
 %  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
 %\end{eqnarray*}
 
-\begin{eqnarray*} L(y, \fx) &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
-\ L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo \\
-L(y, \pix) &=& - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo \\
-L(y, \pix) &=& - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) \quad \text{for } y \in \setmp \end{eqnarray*}
+\begin{eqnarray*} \Lyf &=& \log(1+\exp(-yf)) \quad \text{for } y \in \setmp \\
+\Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo \\
+\Lpiy &=& - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right) \quad \text{for } y \in \setzo \\
+\Lpiy &=& - \frac{1 + y}{2} \log\left(\pi\right) - \frac{1 - y}{2} \log\left(1 - \pi\right) \quad \text{for } y \in \setmp \end{eqnarray*}
 
 \lz
 

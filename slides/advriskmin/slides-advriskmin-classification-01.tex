@@ -20,7 +20,7 @@
   }{% Lecture title  
     0-1-Loss
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/plot_loss_01.png
+  figure/zero_one.png
   }{
   \item Derive the risk minimizer of the 0-1-loss
   \item Derive the optimal constant model for the 0-1-loss
@@ -29,17 +29,17 @@
 \begin{vbframe}{0-1-Loss}
 
 \begin{itemize}
-  \item Let us first consider a discrete classifier $\hx: \Xspace \to \Yspace$. 
-  \item The most natural choice for $\Lhxy$ is the 0-1-loss 
+  \item Let us first consider a discrete classifier $h: \Xspace \to \Yspace$. 
+  \item The most natural choice for $\Lhy$ is the 0-1-loss 
   \vspace*{-0.2cm}
   $$
-  \Lhxy = \mathds{1}_{\{y \ne \hx\}} =
-     \footnotesize \begin{cases} 1 \quad \text{ if } y \ne \hx \\ 0 \quad    \text{ if } y = \hx  \end{cases}
+  \Lhy = \mathds{1}_{\{y \ne h\}} =
+     \footnotesize \begin{cases} 1 \quad \text{ if } y \ne h \\ 0 \quad    \text{ if } y = h  \end{cases}
   $$
-  \item For the binary case ($g = 2$) we can express the 0-1-loss for a scoring classifier $\fx$ based on the margin $\nu := y\fx$
+  \item For the binary case ($g = 2$) we can express the 0-1-loss for a scoring classifier $f$ based on the margin $\nu := yf$
   \vspace*{-0.2cm}
   $$
-  \Lxy = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{y\fx < 0\}}. 
+  \Lyf = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{yf < 0\}}. 
   $$
   % and for a probabilistic classifier $\Lxy = \mathds{1}_{\{\pix \ge 0.5 \}}$. 
   \item Analytic properties:  Not continuous, even for linear $f$ the optimization problem is NP-hard and close to intractable.
@@ -47,7 +47,7 @@
 
 \begin{center}
 % \includegraphics[width = 11cm ]{figure_man/0-1-loss.png} \\
-\includegraphics[width = 0.5\textwidth]{figure/plot_loss_01.png}
+\includegraphics[width = 0.5\textwidth]{figure/zero_one.png}
 \end{center}
 
 \end{vbframe}
@@ -61,7 +61,7 @@ By the law of total expection we can in general rewrite the risk as\\
 \vspace*{-0.5cm}
 
 \begin{eqnarray*}
-  \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ L(y, \fx) ] \right] \\
+  \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ] \right] \\
           & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right]\,, 
           % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
 \end{eqnarray*}

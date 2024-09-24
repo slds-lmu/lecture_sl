@@ -22,12 +22,12 @@
   }{% Lecture title  
     Brier Score
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/plot_brier.png
+  figure/brier.png
   }{
   \item Know the Brier score 
   \item Derive the risk minimizer
   \item Derive the optimal constant model 
-  \item Understand the connection between Brier score and Gini splitting 
+  % \item Understand the connection between Brier score and Gini splitting 
 }
 
 % \begin{vbframe}{Classification Losses: (Naive) L2-Loss}
@@ -71,17 +71,17 @@
 
 \begin{vbframe}{Brier Score}
 
-The binary Brier score is defined on probabilities $\pix \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ and measures their squared distance ($L2$ loss on probabilities).
+The binary Brier score is defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ and measures their squared distance ($L2$ loss on probabilities).
 
 \begin{eqnarray*}
-L\left(y, \pix\right) &=& (\pix - y)^2
+\Lpiy &=& (\pi - y)^2
 \end{eqnarray*}
 
 As the Brier score is a proper scoring rule, it can be used for calibration. Note that is is not convex on probabilities anymore.
 
 %\vspace{0.2cm}
 \begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/plot_brier.png}
+\includegraphics[width = 0.55\textwidth]{figure/brier.png}
 \end{center}
 
 
@@ -92,7 +92,7 @@ As the Brier score is a proper scoring rule, it can be used for calibration. Not
 The risk minimizer for the (binary) Brier score is 
 
 \begin{eqnarray*}
-\pixbayes &=& \eta(\xv) = \P(y~|~\xv = \xv),
+\pixbayes = \eta(\xv) = \P(y~|~\xv = \xv),
 \end{eqnarray*}
 
 which means that the Brier score will reach its minimum if the prediction equals the \enquote{true} probability of the outcome. 
@@ -114,8 +114,9 @@ which we do point-wise for every $\xv$. We plug in the Brier score
 \vspace*{-0.3cm}
 
 \begin{eqnarray*}
-	&& \argmin_c L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
+	&& \argmin_c \quad L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
 	&=&  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))\\
+  &=&  \argmin_c \quad (c^2 -2c\eta(\xv) + \eta(\xv)^2)- \eta(\xv)^2 + \eta(\xv) \\
 	&=&  \argmin_c \quad (c - \eta(\xv))^2.
 \end{eqnarray*}
 
