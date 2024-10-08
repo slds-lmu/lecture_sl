@@ -95,7 +95,7 @@ The risk minimizer for the (binary) Brier score is
 \pixbayes = \eta(\xv) = \P(y~|~\xv = \xv),
 \end{eqnarray*}
 
-which means that the Brier score will reach its minimum if the prediction equals the \enquote{true} probability of the outcome. 
+which means that the Brier score attains its minimum if the prediction equals the \enquote{true} probability of the outcome. 
 
 \lz 
 
@@ -115,7 +115,7 @@ which we do point-wise for every $\xv$. We plug in the Brier score
 
 \begin{eqnarray*}
 	&& \argmin_c \quad L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
-	&=&  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))\\
+	&=&  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))  \quad |{+\eta(\xv)^2-\eta(\xv)^2}\\
   &=&  \argmin_c \quad (c^2 -2c\eta(\xv) + \eta(\xv)^2)- \eta(\xv)^2 + \eta(\xv) \\
 	&=&  \argmin_c \quad (c - \eta(\xv))^2.
 \end{eqnarray*}

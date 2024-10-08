@@ -22,20 +22,22 @@
   }{% Lecture title  
     Loss functions and tree splitting
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/plot_brier.png
+  figure_man/cart_tree_i2ml.png
   }{
-  \item Know how tree splitting is 'nothing new' related to loss functions 
+  \item Know how tree splitting is 'nothing new' and related to loss functions 
   \item Brier score minimization corresponds to gini splitting
   \item Bernoulli loss minimization corresponds to entropy splitting
 }
 
 \begin{vbframe}{Bernoulli loss min = Entropy splitting}
 
-When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another approach that is common in literature is to minimize the average node impurity $\text{Imp}(\Np)$. 
+For an introduction on trees and splitting criteria we refer our \textbf{I2ML} lecture (Chapter 6, \citelink{BISCHL22I2ML})\\
+\vspace{0.2cm}
+When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another common approach is to minimize the average node impurity $\text{Imp}(\Np)$. 
 
 \vspace*{0.2cm}
 
-\textbf{Claim:} Entropy splitting $\text{Imp}(\Np) = -\sum_{k = 1}^g \pikN \log \pikN$ is equivalent to minimize risk measured by the Bernoulli loss. 
+\textbf{Claim:} Entropy splitting $\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN$ is equivalent to minimize risk measured by the Bernoulli loss. 
 
 \begin{footnotesize}
 Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$. 
@@ -43,18 +45,12 @@ Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$.
 
 \vspace*{0.2cm}
 
-\textbf{Proof: } To prove this we show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
-
-\vspace*{- 0.2cm}
-
-
-$$
-  \risk(\Np) = n_\Np \text{Imp}(\Np),
-$$
+\textbf{Proof: } To prove this we show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills $\risk(\Np) = n_\Np \text{Imp}(\Np),
+$
   
-  where 
-  %$I$ is the entropy criterion $\text{Imp}(\Np)$ and 
-  $\risk(\Np)$ is calculated w.r.t. the (multiclass) Bernoulli loss  
+where 
+%$I$ is the entropy criterion $\text{Imp}(\Np)$ and 
+$\risk(\Np)$ is calculated w.r.t. the (multiclass) Bernoulli loss  
 
 $$
   L(y, \pix) = -\sum_{k = 1}^g [y = k] \log \left(\pi_k(\xv)\right).
