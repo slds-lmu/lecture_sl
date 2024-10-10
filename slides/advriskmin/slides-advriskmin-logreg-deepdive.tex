@@ -62,24 +62,25 @@ We find the gradient of logistic regression with the chain rule, s.t.,
 
 \vspace*{-0.5cm}
 
+{\small
 \begin{align*}
-  \frac{\partial}{\partial\thetab}\riske  & = & 
+  \frac{\partial}{\partial\thetab}\riske  & =  
  -\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetab} +  \\
- &&  \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetab}\\
- & = & 
+ & \qquad \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetab}\\
+ & =  
  -\sumin \frac{\yi}{\pixit}\frac{\partial\pixit}{\partial \thetab} -  \frac{1-\yi}{1-\pixit}\frac{\partial\pixit}{\partial \thetab}\\
- &=&  
+ &=  
   -\sumin \left(\frac{\yi}{\pixit} -  \frac{1-\yi}{1-\pixit}\right)\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetab}\\
-  &=&  
+  &=  
   -\sum^n_{i=1} \left(\yi(1-\pixit)  -  (1-\yi)\pixit \right)\left(\xi\right)^\top.\\
 \end{align*}
-
+}
 
 
 \framebreak
 \begin{align*}
   \quad &=& 
-  \sumin \left(\pixit - \yi\right)\left(\xi\right)^\top.\\
+  \sumin \left(\pixit - \yi\right)\left(\xi\right)^\top\\
     \quad &=& 
   \left(\pi(\mathbf{X}\vert\;\thetab) - \mathbf{y}\right)^\top\mathbf{X}\\
 \end{align*}
@@ -96,7 +97,7 @@ where  $\mathbf{X} = \left(
 
 \vspace*{1cm}
 
-$\Rightarrow$ The gradient $\nabla_{\thetab}\riske = \left(\frac{\partial}{\partial\thetab}\riske\right)^\top =  \mathbf{X}^\top\left(\pi(\mathbf{X}\vert\;\thetab) - \mathbf{y}\right)$ 
+$\implies$ The gradient $\nabla_{\thetab}\riske = \left(\frac{\partial}{\partial\thetab}\riske\right)^\top =  \mathbf{X}^\top\left(\pi(\mathbf{X}\vert\;\thetab) - \mathbf{y}\right)$ 
 
 \vspace*{1cm}
 
@@ -109,17 +110,19 @@ This formula can now be used in gradient descent and its friends.
 
 We find the Hessian via differentiation, s.t.,
 
+{\small
 \begin{align*}
-  \nabla^2_{\thetab}\riske  = \frac{\partial^2}{\partial{\thetab^\top}\partial\thetab}\riske  & = & 
+  \nabla^2_{\thetab}\riske  = \frac{\partial^2}{\partial{\thetab^\top}\partial\thetab}\riske  & =  
  \frac{\partial}{\partial{\thetab^\top}} \sumin \left(\pixit - \yi\right)\left(\xi\right)^\top\\
- & = & 
+ & =  
   \sum^n_{i=1}\xi \left(\pixit\left(1-\pixit\right)\right)\left(\xi\right)^\top\\
-  & = & 
+  & =  
 \mathbf{X}^\top \mathbf{D} \mathbf{X}\\
 \end{align*}
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
 $$\left(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]\right).$$
+}
 
 Can now be used in Newton-Raphson and other 2nd order optimizers.
 
