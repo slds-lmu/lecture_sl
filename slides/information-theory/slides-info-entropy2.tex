@@ -108,12 +108,15 @@ Assume we know $M$ properties about a discrete distribution $p(x)$ on $\Xspace$,
 
 \begin{vbframe}{The Maximum Entropy Principle}
 Can be solved via Lagrangian multipliers (here with base $e$)
-\small{$$L(p(x),(\lambda_m)_{m=0}^{M}) = - \sum_{x \in \Xspace} p(x) \log(p(x)) + \lambda_0 \big( \sum_{x \in \Xspace} p(x) - 1 \big) + \sum_{m=1}^{M} \lambda_m \big( \sum_{x \in \Xspace} g_m(x)p(x)-\alpha_m \big)$$}
+\footnotesize{$$L(p(x),(\lambda_m)_{m=0}^{M}) = - \sum_{x \in \Xspace} p(x) \log(p(x)) + \lambda_0 \big( \sum_{x \in \Xspace} p(x) - 1 \big) + \sum_{m=1}^{M} \lambda_m \big( \sum_{x \in \Xspace} g_m(x)p(x)-\alpha_m \big)$$
+}
 Finding critical points $p^{\ast}(x)$ :
 $$\frac{\partial L}{\partial p(x)} = -\log(p(x)) -1 + \lambda_0 + \sum_{m=1}^{M} \lambda_m g_m(x) \overset{!}{=} 0 \iff p^{\ast}(x)=\textcolor{blue}{\exp(\lambda_0-1)}\textcolor{red}{
 \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)}$$
 This is a maximum as $-1/p(x)<0$. Since probs must sum to 1 we get
+{\footnotesize
 $$1\overset{!}{=}\sum_{x \in \Xspace} p^{\ast}(x)=\textcolor{blue}{\frac{1}{\exp(1-\lambda_0)}} \sum_{x \in \Xspace} \textcolor{red}{\exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)} \Rightarrow \textcolor{blue}{\exp(1-\lambda_0)}=\textcolor{blue}{\sum_{x \in \Xspace} \exp\big(\sum_{m=1}^{M} \lambda_m g_m(x)\big)}$$
+}
 Plugging $\textcolor{blue}{\exp(1-\lambda_0)}$ into $p^{\ast}(x)$ we obtain the constrained maxent distribution:
 
 $$p^{\ast}(x)=\frac{\textcolor{red}{\exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}}{\textcolor{blue}{\sum_{x \in \Xspace} \exp{\sum_{m=1}^{M}\lambda_m g_m(x)}}}$$
