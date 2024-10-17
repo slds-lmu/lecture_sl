@@ -13,7 +13,7 @@
   }{% Lecture title  
     Bias-variance Tradeoff
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  slides/regularization/figure_man/bv_anim_1.pdf
+  figure_man/bv_anim_1.pdf
   }{
   \item Understand the bias-variance trade-off
   \item Know the definition of model bias, estimation bias, and estimation variance
@@ -41,7 +41,7 @@ $$\fbayes \in \argmin_{f \in \Hspace} \E_{\xy \sim \Pxy}\left[L(f(\xv, y)\right]
 $\fbayes \in \Hspace$ is closest to $\fbayes_0$, and we call $d(\fbayes_0, \fbayes)$ the model bias.
 
 \begin{center}
-\includegraphics[width=0.5\textwidth]{slides/regularization/figure_man/bv_anim_6.pdf}
+\includegraphics[width=0.5\textwidth]{figure_man/bv_anim_6.pdf}
 \end{center}
 \framebreak 
 By regularizing our model, we further restrict the model space so that $\Hspace_R$ is a proper subset of $\Hspace.$
@@ -49,7 +49,7 @@ We define $\fbayes_R$ as the risk minimizer in $\Hspace_R,$ i.e.,
 $$\fbayes_R \in \argmin_{f \in \Hspace_R} \E_{\xy \sim \Pxy}\left[L(f(\xv, y)\right].$$
 $\fbayes_R \in \Hspace_R$ is closest to $\ftrue$, and we call $d(\fbayes_R, \fbayes)$ the estimation bias.
 \begin{center}
-\includegraphics[width=0.49\textwidth]{slides/regularization/figure_man/bv_anim_5.pdf}
+\includegraphics[width=0.49\textwidth]{figure_man/bv_anim_5.pdf}
 \end{center}
 \framebreak
 
@@ -59,7 +59,7 @@ $$\fh \in \argmin_{f\in\Hspace} \sumin L\left(\yi, \fh (\xi)\right).$$
 \begin{columns}[onlytextwidth,T]
       \column{0.5\linewidth}
 
-  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/bv_anim_4.pdf}
+  \includegraphics[width=1.0\textwidth]{figure_man/bv_anim_4.pdf}
 
       \column{0.45\linewidth}
       \lz
@@ -74,7 +74,7 @@ Let's assume that $\fh$ is an unbiased estimate of $\fbayes$ (e.g., valid for li
 \begin{columns}[onlytextwidth,T]
       \column{0.5\linewidth}
 
-  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/bv_anim_3.pdf}
+  \includegraphics[width=1.0\textwidth]{figure_man/bv_anim_3.pdf}
 
       \column{0.5\linewidth}
       \lz 
@@ -91,7 +91,7 @@ $$\fh_R \in \argmin_{f\in\Hspace_R} \sumin L\left(\yi, \fh (\xi)\right).$$
 \begin{columns}[onlytextwidth,T]
       \column{0.48\linewidth}
 
-  \includegraphics[width=1.0\textwidth]{slides/regularization/figure_man/bv_anim_2.pdf}
+  \includegraphics[width=1.0\textwidth]{figure_man/bv_anim_2.pdf}
 
       \column{0.5\linewidth}
       \lz 
