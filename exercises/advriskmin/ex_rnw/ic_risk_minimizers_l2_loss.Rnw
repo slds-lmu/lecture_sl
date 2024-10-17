@@ -29,7 +29,7 @@
 			\lz 
 			\lz
 		\item
-			What is $\bar f$ (the optimal constant model in terms of the theoretical risk)?
+			What is $\fbayes_c$ (the optimal constant model in terms of the theoretical risk)?
 			\lz
 			\lz 
 			\lz 
