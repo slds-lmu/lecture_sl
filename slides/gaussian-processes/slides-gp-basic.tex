@@ -53,11 +53,11 @@
 
 \begin{itemize}
   \item Until now we considered a hypothesis space $\Hspace$ of parameterized functions $\fxt$ (in particular, the space of linear functions). 
-  \item Using Bayesian inference, we derived distributions for $\thetab$ after having observed data $\D$. 
-  \item Prior believes about the parameter are expressed via a prior distribution $q(\thetab)$, which is updated according to Bayes' rule 
+  \item Using Bayesian inference, we derived distributions for $\thetav$ after having observed data $\D$. 
+  \item Prior believes about the parameter are expressed via a prior distribution $q(\thetav)$, which is updated according to Bayes' rule 
 
   $$
-  \underbrace{p(\thetab | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetab)}^{\text{likelihood}}\overbrace{q(\thetab)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
+  \underbrace{p(\thetav | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetav)}^{\text{likelihood}}\overbrace{q(\thetav)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
   $$
 \end{itemize}
 
@@ -69,7 +69,7 @@
 Let us change our point of view: 
 
 \begin{itemize}
-  \item Instead of \enquote{searching} for a parameter  $\thetab$ in the parameter space, we directly search in a space of \enquote{allowed} functions $\Hspace$.  
+  \item Instead of \enquote{searching} for a parameter  $\thetav$ in the parameter space, we directly search in a space of \enquote{allowed} functions $\Hspace$.  
   \item We still use Bayesian inference, but instead specifying a prior distribution over a parameter, we specify a prior distribution \textbf{over functions} and update it according to the data points we have observed. 
 \end{itemize}
 
@@ -119,8 +119,8 @@ Inutitively, there is something like \enquote{mean} and a \enquote{variance} of 
   \begin{tabular}{cc}
   \textbf{Weight-Space View} & \textbf{Function-Space View} \vspace{4mm}\\ 
   Parameterize functions & \vspace{1mm}\\
-  \footnotesize Example: $\fxt = \thetab^\top \xv$ & \vspace{3mm}\\
-  Define distributions on $\thetab$ & Define distributions on $f$ \vspace{4mm}\\
+  \footnotesize Example: $\fxt = \thetav^\top \xv$ & \vspace{3mm}\\
+  Define distributions on $\thetav$ & Define distributions on $f$ \vspace{4mm}\\
   Inference in parameter space $\Theta$ & Inference in function space $\Hspace$
   \end{tabular}
 \end{table}  

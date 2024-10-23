@@ -5,36 +5,36 @@
 %
 \item  We can show
 % 
-$$\argmin_{\thetab} \riskrt  = 	\argmin_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda \mathds{1}_{|\theta_i| \neq 0}$$
+$$\argmin_{\thetav} \riskrt  = 	\argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda \mathds{1}_{|\theta_i| \neq 0}$$
 %
 as follows:
 %
 \begin{align*}
 %	
-	\argmin_{\thetab} \riskrt  
+	\argmin_{\thetav} \riskrt  
 	%
-	&= \argmin_{\thetab} \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \xi \right)^2 + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
+	&= \argmin_{\thetav} \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \xi \right)^2 + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
 %	
-	&= \argmin_{\thetab} \frac12 \| \yv - \Xmat \thetab \|_2^2 + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
+	&= \argmin_{\thetav} \frac12 \| \yv - \Xmat \thetav \|_2^2 + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
 %	
-	&= \argmin_{\thetab} \frac12  (\yv - \Xmat \thetab)^\top(\yv - \Xmat \thetab) + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
+	&= \argmin_{\thetav} \frac12  (\yv - \Xmat \thetav)^\top(\yv - \Xmat \thetav) + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
 %	
-	&= \argmin_{\thetab} \frac12  \yv^\top \yv -\yv^\top \Xmat \thetab +  \frac12 \thetab^\top \Xmat^\top \Xmat \thetab  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
+	&= \argmin_{\thetav} \frac12  \yv^\top \yv -\yv^\top \Xmat \thetav +  \frac12 \thetav^\top \Xmat^\top \Xmat \thetav  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \\
 %	
-	&= \argmin_{\thetab}  -\yv^\top \Xmat \thetab +  \frac12 \thetab^\top \Xmat^\top \Xmat \thetab  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \tag{ $ \yv^\top \yv$ does not depend on $\thetab$  }\\
+	&= \argmin_{\thetav}  -\yv^\top \Xmat \thetav +  \frac12 \thetav^\top \Xmat^\top \Xmat \thetav  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \tag{ $ \yv^\top \yv$ does not depend on $\thetav$  }\\
 %	
-	&= \argmin_{\thetab}  -\yv^\top \Xmat \thetab +  \frac12 \thetab^\top\thetab  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \tag{By assumption  $  \Xmat^\top \Xmat = \id$  }\\
+	&= \argmin_{\thetav}  -\yv^\top \Xmat \thetav +  \frac12 \thetav^\top\thetav  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \tag{By assumption  $  \Xmat^\top \Xmat = \id$  }\\
 	%	
-	&= \argmin_{\thetab}  -\thetabh^\top \thetab +  \frac12 \thetab^\top\thetab  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \tag{By assumption  $  \Xmat^\top \Xmat = \id$ so that $ \thetabh = ({\Xmat}^T \Xmat)^{-1} \Xmat^T\yv = \Xmat^T\yv$ }\\	
+	&= \argmin_{\thetav}  -\thetavh^\top \thetav +  \frac12 \thetav^\top\thetav  + \lambda \sum_{i=1}^p \mathds{1}_{|\theta_i| \neq 0} \tag{By assumption  $  \Xmat^\top \Xmat = \id$ so that $ \thetavh = ({\Xmat}^T \Xmat)^{-1} \Xmat^T\yv = \Xmat^T\yv$ }\\	
 	%	
-	&= \argmin_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda \mathds{1}_{|\theta_i| \neq 0} \tag{Writing out the inner products}\\
+	&= \argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda \mathds{1}_{|\theta_i| \neq 0} \tag{Writing out the inner products}\\
 %	
 \end{align*}
 %
 \item Note that the minimization problem on the right-hand side of the previous math display can be written as $\sum_{i=1}^p g_i(\theta_i),$ where 
 $$ g_i(\theta) =   - \thetah_{i}\theta + \frac{\theta^2}{2} + \lambda \mathds{1}_{|\theta| \neq 0}. $$ 
 %
-The advantage of this representation, if we are interested in finding the $\thetab$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt,$ is that we can minimize each $g_i$ separately to obtain the optimal entries.
+The advantage of this representation, if we are interested in finding the $\thetav$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt,$ is that we can minimize each $g_i$ separately to obtain the optimal entries.
 %
 \item Consider first the case that $|\thetah_i|>\sqrt{2\lambda}.$ 
 %
@@ -135,7 +135,7 @@ Hence, the minimizer $\theta^*_i$ of $g_i$ is $\theta^*_i=0,$ which can be writt
 %
 Since 
 %
-$$\min_{\thetab} \riskrt  = 	\min_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda \mathds{1}_{|\theta_i| \neq 0} = \min_{\thetab} \sum_{i=1}^p g_i(\theta_i),$$
+$$\min_{\thetav} \riskrt  = 	\min_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda \mathds{1}_{|\theta_i| \neq 0} = \min_{\thetav} \sum_{i=1}^p g_i(\theta_i),$$
 %
 we conclude that 
 %

@@ -18,7 +18,7 @@
 Quadratic Taylor approx of the unregularized objective $\risket$ \\
 around its minimizer $\thetah$:
 
-$$ \mathcal{\tilde R}_{\text{emp}}(\thetab)= \mathcal{R}_{\text{emp}}(\thetah) + \nabla_{\thetab} \mathcal{R}_{\text{emp}}(\thetah)\cdot(\thetab - \thetah) + \ \frac{1}{2} (\thetab - \thetah)^T \bm{H} (\thetab - \thetah) $$
+$$ \mathcal{\tilde R}_{\text{emp}}(\thetav)= \mathcal{R}_{\text{emp}}(\thetah) + \nabla_{\thetav} \mathcal{R}_{\text{emp}}(\thetah)\cdot(\thetav - \thetah) + \ \frac{1}{2} (\thetav - \thetah)^T \bm{H} (\thetav - \thetah) $$
 
 where $\bm{H}$ is the Hessian of $\risket$ at $\thetah$
 
@@ -26,14 +26,14 @@ where $\bm{H}$ is the Hessian of $\risket$ at $\thetah$
 
 We notice:
 
-% Because $\thetah = \argmin_{\thetab}\risket$,
+% Because $\thetah = \argmin_{\thetav}\risket$,
 \begin{itemize}
   \item First-order term is 0, because gradient must be $0$ at minimizer
   \item $\bm{H}$ is positive semidefinite, because we are at the minimizer
 \end{itemize}
 
 
-$$ \mathcal{\tilde R}_{\text{emp}}(\thetab)= \mathcal{R}_{\text{emp}}(\thetah) + \ \frac{1}{2} (\thetab - \thetah)^T \bm{H} (\thetab - \thetah) $$
+$$ \mathcal{\tilde R}_{\text{emp}}(\thetav)= \mathcal{R}_{\text{emp}}(\thetah) + \ \frac{1}{2} (\thetav - \thetah)^T \bm{H} (\thetav - \thetah) $$
 
 
 \lz
@@ -42,18 +42,18 @@ $$ \mathcal{\tilde R}_{\text{emp}}(\thetab)= \mathcal{R}_{\text{emp}}(\thetah) +
 
 \normalsize
 
-The minimum of $\mathcal{\tilde R}_{\text{emp}}(\thetab)$ occurs where $\nabla_{\thetab}\mathcal{\tilde R}_{\text{emp}}(\thetab) = \bm{H}(\thetab - \thetah)$ is $0$.
+The minimum of $\mathcal{\tilde R}_{\text{emp}}(\thetav)$ occurs where $\nabla_{\thetav}\mathcal{\tilde R}_{\text{emp}}(\thetav) = \bm{H}(\thetav - \thetah)$ is $0$.
 
-Now we $L2$-regularize $\mathcal{\tilde R}_{\text{emp}}(\thetab)$, such that 
+Now we $L2$-regularize $\mathcal{\tilde R}_{\text{emp}}(\thetav)$, such that 
 \[
-\mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{\tilde R}_{\text{emp}}(\thetab) + \frac{\lambda}{2} \|\thetab\|^2_2\]
-and solve this approximation of $\riskr$ for the minimizer $\hat{\thetab}_{\text{ridge}}$:
+\mathcal{\tilde R}_{\text{reg}}(\thetav) = \mathcal{\tilde R}_{\text{emp}}(\thetav) + \frac{\lambda}{2} \|\thetav\|^2_2\]
+and solve this approximation of $\riskr$ for the minimizer $\hat{\thetav}_{\text{ridge}}$:
 \begin{align*}
- \nabla_{\thetab}\mathcal{\tilde R}_{\text{reg}}(\thetab) = 0\\
-%  \lambda \thetab + \nabla_{\thetab}\mathcal{\tilde R}_{\text{emp}}(\thetab) = 0\\
-  \lambda \thetab + \bm{H}(\thetab - \thetah) = 0\\
-      (\bm{H} + \lambda \id) \thetab = \bm{H} \thetah\\
-      \hat{\thetab}_{\text{ridge}} = (\bm{H} + \lambda \id)^{-1}\bm{H} \thetah
+ \nabla_{\thetav}\mathcal{\tilde R}_{\text{reg}}(\thetav) = 0\\
+%  \lambda \thetav + \nabla_{\thetav}\mathcal{\tilde R}_{\text{emp}}(\thetav) = 0\\
+  \lambda \thetav + \bm{H}(\thetav - \thetah) = 0\\
+      (\bm{H} + \lambda \id) \thetav = \bm{H} \thetah\\
+      \hat{\thetav}_{\text{ridge}} = (\bm{H} + \lambda \id)^{-1}\bm{H} \thetah
 \end{align*}
 
 % where $\id$ is the identity matrix.
@@ -66,12 +66,12 @@ Doesn't matter whether the model is an LM -- or something else!
 \framebreak
 
   \begin{itemize}
-    \item As $\lambda$ approaches $0$, the regularized solution $\hat{\thetab}_{\text{ridge}}$ approaches $\thetah$. What happens as $\lambda$ grows?
+    \item As $\lambda$ approaches $0$, the regularized solution $\hat{\thetav}_{\text{ridge}}$ approaches $\thetah$. What happens as $\lambda$ grows?
     \item Because $\bm{H}$ is a real symmetric matrix, it can be decomposed as $\bm{H} = \bm{Q} \bm{\Sigma} \bm{Q}^\top$, where $\bm{\Sigma}$ is a diagonal matrix of eigenvalues and $\bm{Q}$ is an orthonormal basis of eigenvectors.
     \item Rewriting the transformation formula with this:
   \begin{equation*}
     \begin{aligned} 
-    \hat{\thetab}_{\text{ridge}} &=\left(\bm{Q} \bm{\Sigma} \bm{Q}^{\top}+\lambda \id\right)^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
+    \hat{\thetav}_{\text{ridge}} &=\left(\bm{Q} \bm{\Sigma} \bm{Q}^{\top}+\lambda \id\right)^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
               &=\left[\bm{Q}(\bm{\Sigma}+\lambda \id) \bm{Q}^{\top}\right]^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
               &=\bm{Q}(\bm{\Sigma} + \lambda \id)^{-1} \bm{\Sigma} \bm{Q}^{\top} \thetah 
     \end{aligned}
@@ -117,7 +117,7 @@ $j$-th (new) axis is rescaled by $\frac{\sigma_j}{\sigma_j + \lambda}$ before we
 %  \item Along directions where the eigenvalues of $\bm{H}$ are relatively large, for example, where $\sigma_j >> \lambda$, the effect of regularization is quite small.
 %  \item On the other hand, components with $\sigma_j << \lambda$ will be shrunk to have nearly zero magnitude.
 %  \item In other words, only directions along which the parameters contribute significantly to reducing the objective function are preserved relatively intact.
-%  \item In the other directions, a small eigenvalue of the Hessian means that moving in this direction will not significantly increase the gradient. For such unimportant directions, the corresponding components of $\thetab$ are decayed away.
+%  \item In the other directions, a small eigenvalue of the Hessian means that moving in this direction will not significantly increase the gradient. For such unimportant directions, the corresponding components of $\thetav$ are decayed away.
 %  \end{itemize}
   
 %  \framebreak
@@ -132,7 +132,7 @@ $j$-th (new) axis is rescaled by $\frac{\sigma_j}{\sigma_j + \lambda}$ before we
           \item Along directions where eigenvals of $\bm{H}$ are relatively large, e.g.,  $\sigma_j >> \lambda$, effect of regularization is small.
   \item Components / directions with $\sigma_j << \lambda$ are strongly shrunken.
   \item So: Directions along which parameters contribute strongly to objective are preserved relatively intact.
-  \item In other directions, small eigenvalue of Hessian means that moving in this direction will not decrease objective much. For such unimportant directions, corresponding components of $\thetab$ are decayed away.
+  \item In other directions, small eigenvalue of Hessian means that moving in this direction will not decrease objective much. For such unimportant directions, corresponding components of $\thetav$ are decayed away.
           %In the direction corresponding to smaller eigenvalue of Hessian of $\risket$, the objective function does not increase much when moving away from $\thetah$. Therefore, the regularizer has a strong effect on this direction and towards this, $\theta$ is pulled close to the origin.    
           %\item In the second direction, the corresponding eigenvalue is large indicating high curvature. The objective function is very sensitive to movement along this direction and, as a result, the position of $\theta$ towards this is less affected by the regularization.
         \end{itemize}
@@ -145,7 +145,7 @@ $j$-th (new) axis is rescaled by $\frac{\sigma_j}{\sigma_j + \lambda}$ before we
       \begin{figure}
             \centering
               \scalebox{0.8}{\includegraphics{figure/l2_reg_hess_04.png}}
-              %\caption{\tiny The solid ellipses represent the contours of the unregularized objective and the dashed circles represent the contours of the $L2$ penalty. At $\hat{\thetab}_{\text{ridge}}$, the competing objectives reach an equilibrium.}
+              %\caption{\tiny The solid ellipses represent the contours of the unregularized objective and the dashed circles represent the contours of the $L2$ penalty. At $\hat{\thetav}_{\text{ridge}}$, the competing objectives reach an equilibrium.}
           \end{figure}
       
       \end{column}

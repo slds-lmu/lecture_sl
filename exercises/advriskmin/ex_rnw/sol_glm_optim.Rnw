@@ -5,10 +5,10 @@
   \item The normal and gamma distribution assume a continuous target variable, however, we do have a discrete target variable.
   Since the target variable (number of cars) represents a count variable, Bernoulli (taking only the values 0 and 1) is not a suitable choice in this context. It follows that the only reasonable choice of the given distributions is the Poisson distribution.
   The Poisson distribution depends on the parameter $\lambda$, where the expected value is given by $E(Y|\xv) = \lambda ( \xv)$.
-  The log link function is given by $\log(\lambda(\xv)) = \thetab^T \xv$.
+  The log link function is given by $\log(\lambda(\xv)) = \thetav^T \xv$.
   Following from that the probability function is given by
   $$
-  P(Y = y) = \frac{\exp{(-\lambda(\xv))} \cdot (\lambda(\xv))^{y}}{y!} = \frac{\exp{(-\exp{(\thetab^T \xv)})} \cdot \exp({\thetab^T \xv})^{y}}{y!}
+  P(Y = y) = \frac{\exp{(-\lambda(\xv))} \cdot (\lambda(\xv))^{y}}{y!} = \frac{\exp{(-\exp{(\thetav^T \xv)})} \cdot \exp({\thetav^T \xv})^{y}}{y!}
   $$
   for $y \in \N_0$.
   
@@ -16,11 +16,11 @@
   \item We can write the hypothesis space as:
   
   \begin{flalign*}
-    \Hspace = \{\fxt = \exp(\thetab^T \xv) ~|~ \thetab \in \R^3 \}
+    \Hspace = \{\fxt = \exp(\thetav^T \xv) ~|~ \thetav \in \R^3 \}
     =  \{\fxt = \exp(\theta_0 + \theta_1 x_1 + \theta_2 x_2) ~|~ 
     (\theta_0, \theta_1, \theta_2) \in \R^3 \}.
     % \Hspace &= \{ f: (\R_{0}^{+})^2 \rightarrow \R ~|~ 
-    % \fx = \theta_0 + \thetab^T \xv, ~ (\theta_0, \thetab) \in \R^3 \} \\
+    % \fx = \theta_0 + \thetav^T \xv, ~ (\theta_0, \thetav) \in \R^3 \} \\
     % &=  \{ f: (\R_{0}^{+})^2 \rightarrow \R ~|~ 
     % \fx = \theta_0 + \theta_{\text{age}} x_{\text{age}} + 
     % \theta_{\text{mileage}} x_{\text{mileage}}, ~ (\theta_0, 
@@ -28,7 +28,7 @@
   \end{flalign*}
   
   Note the \textbf{slight abuse of notation} here: in the lecture, we first 
-  define $\thetab$ to only consist of the feature coefficients, with $\xv$ 
+  define $\thetav$ to only consist of the feature coefficients, with $\xv$ 
   likewise being the plain feature vector. For the sake of simplicity, however, 
   it is more convenient to append the intercept coefficient to the vector of 
   feature coefficients. This does not change our model formulation, but we have 
@@ -44,8 +44,8 @@
   \item 
   The likelihood for the Poisson distribution is defined by:
    \begin{flalign*}
-  \LL(\thetab | \xv) &= 
-  \prodin \frac{\exp{(-\exp{(\thetab^T \xi)})} \cdot (\exp{(\thetab^T \xi)})^{\yi}}{\yi!}
+  \LL(\thetav | \xv) &= 
+  \prodin \frac{\exp{(-\exp{(\thetav^T \xi)})} \cdot (\exp{(\thetav^T \xi)})^{\yi}}{\yi!}
   \end{flalign*}
   
   
@@ -66,22 +66,22 @@
   Let's put these reflections to practice:
   
   \begin{flalign*}
-    L_{NLL}\left (\yi, f\left( \xi | \thetab \right) \right) 
-    &= - \log \LL(\thetab | \xi) \\
-    &= - \ell(\thetab | \xi) \\
-    &= - \log \frac{\exp{(-\exp{(\thetab^T \xi)})} \cdot (\exp{(\thetab^T \xi)})^{\yi}}{\yi!} \\
-    &= \exp{(\thetab^T \xi)} - \yi (\thetab^T \xi) + \log(\yi!)
+    L_{NLL}\left (\yi, f\left( \xi | \thetav \right) \right) 
+    &= - \log \LL(\thetav | \xi) \\
+    &= - \ell(\thetav | \xi) \\
+    &= - \log \frac{\exp{(-\exp{(\thetav^T \xi)})} \cdot (\exp{(\thetav^T \xi)})^{\yi}}{\yi!} \\
+    &= \exp{(\thetav^T \xi)} - \yi (\thetav^T \xi) + \log(\yi!)
   \end{flalign*}
   
   \begin{flalign*}
-    \risket &= \sumin - \ell(\thetab | \xi) \\
-    &= \sumin L_{NLL}\left (\yi, f\left( \xi | \thetab \right) \right)  \\
-    &= \sumin \exp{(\thetab^T \xi)} - \yi (\thetab^T \xi) + \log(\yi!) \\
-    &\propto \sumin \exp{(\thetab^T \xi)} - \yi (\thetab^T \xi) \\
+    \risket &= \sumin - \ell(\thetav | \xi) \\
+    &= \sumin L_{NLL}\left (\yi, f\left( \xi | \thetav \right) \right)  \\
+    &= \sumin \exp{(\thetav^T \xi)} - \yi (\thetav^T \xi) + \log(\yi!) \\
+    &\propto \sumin \exp{(\thetav^T \xi)} - \yi (\thetav^T \xi) \\
   \end{flalign*}  
   
   As we are only interested in the feature coefficients here, we neglect all 
-  irrelevant terms that do not depend on $\thetab$ as they have no effect on
+  irrelevant terms that do not depend on $\thetav$ as they have no effect on
   the solution (i.e., the $\argmin$ of $\risket$).
   This is what the proportional sign $\propto$, often used in 
   contexts of optimization and Bayesian statistics, means: we keep 

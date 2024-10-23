@@ -33,7 +33,7 @@ To reduce the bias/shrinkage of regularized estimators various penalties were pr
 
 \begin{vbframe}{$Lq$ regularization \citelink{FU2000}}
 
-Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \thetab \Vert_q^q$ 
+Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \thetav \Vert_q^q$ 
 
 \begin{figure}
   \scalebox{0.5}{\includegraphics{figure_man/lasso_ridge_hat.png}}\\
@@ -56,7 +56,7 @@ Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \the
 \begin{vbframe}{L0 regularization}
 \vspace{-0.3cm}
 $$
-\riskrt = \risket + \lambda \|\thetab\|_0 := \risket + \lambda \sum_j |\theta_j|^0.
+\riskrt = \risket + \lambda \|\thetav\|_0 := \risket + \lambda \sum_j |\theta_j|^0.
 $$
 \vspace{-0.3cm}
 \begin{figure}
@@ -107,7 +107,7 @@ $$
 \begin{figure}
       \centering
         \scalebox{0.99}{\includegraphics{figure/nc_penalties_comparison.png}}
-        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetab$}
+        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
     \end{figure}
 
 \end{column}
@@ -143,7 +143,7 @@ $$
 \begin{figure}
       \centering
         \scalebox{0.99}{\includegraphics{figure/nc_penalties_comparison.png}}
-        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetab$}
+        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
     \end{figure}
 
 \end{column}
@@ -159,7 +159,7 @@ Let's compare coeff paths for lasso, SCAD, and MCP.\\
 \vspace{0.15cm}
 We simulate $n=100$ samples from the following DGP:
 {\small
-$$y = \xv^{\top} \thetab + \varepsilon\,,\quad \thetab =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{1500}, \quad x_j,\varepsilon \sim \mathcal{N}(0,1)$$
+$$y = \xv^{\top} \thetav + \varepsilon\,,\quad \thetav =(4,-4,-2,2,0,\ldots,0)^{\top} \in \mathbb{R}^{1500}, \quad x_j,\varepsilon \sim \mathcal{N}(0,1)$$
 }
 \vspace{-1cm}
 

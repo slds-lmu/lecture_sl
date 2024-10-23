@@ -33,8 +33,8 @@ Feature $x_j$ with $G$ categories. Two options for encoding:
 \begin{itemize}
     \item 
         One base learner to simultaneously estimate all categories: 
-        $$b_j(x_j | \thetab_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetab_j$$
-        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetab\in\R^G$ as estimators. 
+        $$b_j(x_j | \thetav_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetav_j$$
+        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetav\in\R^G$ as estimators. 
     
     \item 
         One binary base learner per category:
@@ -52,9 +52,9 @@ Advantages of simultaneously handling all categories in CWB:
         Much faster estimation compared to using individual binary BLs
 
     \item 
-        Explicit solution of $\thetabh = \argmin_{\thetab\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetab))^2$:
+        Explicit solution of $\thetavh = \argmin_{\thetav\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetav))^2$:
         $$
-        %\thetabh = (\thetah_1, \dots, \thetah_G)^T,\
+        %\thetavh = (\thetah_1, \dots, \thetah_G)^T,\
         \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}
         $$
 

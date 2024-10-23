@@ -125,7 +125,7 @@ Hence, we minimize the empirical risk:
 
 $$
 \riskef = \sum_{i=1}^n L\left(\yi,\fxi \right) =
-\sum_{i=1}^n L\left(\yi, \sum_{m=1}^M \alpha^{[m]} b(\xi, \thetab^{[m]}) %\blxt
+\sum_{i=1}^n L\left(\yi, \sum_{m=1}^M \alpha^{[m]} b(\xi, \thetav^{[m]}) %\blxt
 \right)
 $$
 
@@ -427,7 +427,7 @@ This base learner is then added to the current state of the ensemble weighted by
 %%
 %% The pseudo-residuals are calculated exactly as stated above,
 %% then we fit a regression model $b(\bm{x}, \thetam)$ to them:
-%% $$ \thetamh = \argmin_{\thetab} \sum_{i=1}^n (\rmi - b(\xi, \thetab))^2 $$
+%% $$ \thetamh = \argmin_{\thetav} \sum_{i=1}^n (\rmi - b(\xi, \thetav))^2 $$
 %% So, evaluated on the training data,
 %% our $b(x, \thetam)$ corresponds as closely as possible to the negative
 %% loss function gradient and generalizes to the whole space.

@@ -10,26 +10,26 @@
 	The likelihood for  $(\xv^{(1)},z^{(1)}),\ldots,(\xv^{(n)},z^{(n)})$  is  
 %	
 	\begin{eqnarray*}
-		\LL(\thetab) &=& \prod_{i=1}^n \pdf\left(z^{(i)} ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \exp\left(-\frac{1}{2\sigma^2}\sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2\right)\,.
+		\LL(\thetav) &=& \prod_{i=1}^n \pdf\left(z^{(i)} ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \exp\left(-\frac{1}{2\sigma^2}\sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2\right)\,.
 	\end{eqnarray*}
 %
 	So, the negative log-likelihood for  $(\xv^{(1)},z^{(1)}),\ldots,(\xv^{(n)},z^{(n)})$  is  
 %	
 	\begin{eqnarray*}
-		- \loglt &=& - \log\left(\LL(\thetab)\right) \\
+		- \loglt &=& - \log\left(\LL(\thetav)\right) \\
 		&=& - \log\left(  \exp\left(-\frac{1}{2\sigma^2} \sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2\right)  \right) \\
 		&\propto& \sumin \left[z^{(i)} - m\left(\fxit\right)\right]^2 \\
 		&=& \sumin \left[ m(\yi) - m\left(\fxit\right)\right]^2.
 	\end{eqnarray*}
 %
-	Thus, the negative log-likelihood for a parameter $\thetab$ is proportional to the empirical risk of a hypothesis $f(\cdot ~|~ \thetab)$ w.r.t. the generalized L2-loss function of Exercise sheet 1, i.e., $\Lxy= \big(m(y)-m(\fx)\big)^2.$ 
+	Thus, the negative log-likelihood for a parameter $\thetav$ is proportional to the empirical risk of a hypothesis $f(\cdot ~|~ \thetav)$ w.r.t. the generalized L2-loss function of Exercise sheet 1, i.e., $\Lxy= \big(m(y)-m(\fx)\big)^2.$ 
 %
 
 \item First, we specify the feature space: $\Xspace = \{1\} \times \R,$ i.e., any feature $\xv \in \Xspace$ is of the form $\xv=(x_1,x_2)^\top = (1,x_2)^\top$ for some $x_2\in \R.$
 %
 According to the exercise we use $m(x)=\log(x),$ whose inverse is $m^{-1}(x)=\exp(x).$ 
 %
-Let us rewrite Forbes' conjectured model $  y = \theta_1 \exp(\theta_2 x + \eps)$ into $y = m^{-1} \left( m(f(\xv~|~ \thetab)) + \eps \right),$ for some suitable hypothesis $f(\xv~|~ \thetab):$
+Let us rewrite Forbes' conjectured model $  y = \theta_1 \exp(\theta_2 x + \eps)$ into $y = m^{-1} \left( m(f(\xv~|~ \thetav)) + \eps \right),$ for some suitable hypothesis $f(\xv~|~ \thetav):$
 %
 \begin{align*}
 %	
@@ -47,13 +47,13 @@ Let us rewrite Forbes' conjectured model $  y = \theta_1 \exp(\theta_2 x + \eps)
 %	
 \end{align*}
 %
-With this, we see that $f(\xv~|~ \thetab) = \theta_1 x_1 \exp(\theta_2 x_2) = \theta_1 \exp(\theta_2 x_2)$ is a suitable functional form for the hypotheses.
+With this, we see that $f(\xv~|~ \thetav) = \theta_1 x_1 \exp(\theta_2 x_2) = \theta_1 \exp(\theta_2 x_2)$ is a suitable functional form for the hypotheses.
 %
 Thus, we use as our parameter space $\Theta = \R_+ \times \R$ which gives rise to the hypothesis space
 %
 \begin{equation*}
 	\begin{split}
-		\Hspace = \{f(\xv~|~ \thetab) = \theta_1 x_1 \exp(\theta_2 x_2) ~|~   \thetab \in \Theta \}.
+		\Hspace = \{f(\xv~|~ \thetav) = \theta_1 x_1 \exp(\theta_2 x_2) ~|~   \thetav \in \Theta \}.
 	\end{split}
 \end{equation*}
 %
@@ -76,15 +76,15 @@ A suitable hypothesis space is then
 %
 \begin{equation*}
 	\begin{split}
-		\Hspace = \{f(\xv~|~ \thetab) = \log(\theta_1) x_1 + \theta_2 x_2 ~|~   \thetab \in \Theta \},
+		\Hspace = \{f(\xv~|~ \thetav) = \log(\theta_1) x_1 + \theta_2 x_2 ~|~   \thetav \in \Theta \},
 	\end{split}
 \end{equation*}
 %
-which are the linear functions\footnote{Note that $\log(\theta_1)$ can be any value in $\R.$} $\xv^\top \thetab$ of features in $\Xspace.$
+which are the linear functions\footnote{Note that $\log(\theta_1)$ can be any value in $\R.$} $\xv^\top \thetav$ of features in $\Xspace.$
 %
 The empirical risk minimizer in this case is specified by the parameter 
 %
-$$(\log(\hat{\theta}_1),\hat{\theta}_2)^\top = \thetabh=\left(\Xmat^T \Xmat\right)^{-1}\Xmat^T \bm{z}, \qquad  \bm{z} = (\log y^{(1)},\ldots,\log y^{(n)})^\top,$$
+$$(\log(\hat{\theta}_1),\hat{\theta}_2)^\top = \thetavh=\left(\Xmat^T \Xmat\right)^{-1}\Xmat^T \bm{z}, \qquad  \bm{z} = (\log y^{(1)},\ldots,\log y^{(n)})^\top,$$
 %
 (see \href{https://slds-lmu.github.io/i2ml/chapters/02_supervised_regression/02-02-linearmodel/}{Chapter 02.02 of I2ML}) which for this simple case is:
 %		

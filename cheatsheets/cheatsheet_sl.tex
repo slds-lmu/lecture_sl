@@ -236,8 +236,8 @@
 												\begin{tabular}{c|cc}
 													& Logistic Regression & Softmax Regression \\ \hline
 													$\Yspace$ & $\{0, 1\}$ & $\{1, 2, ..., g\}$ \\[0.5cm]
-													Discriminant fun. & $f(\xv) = \thetab^\top \xv$ & $f_k(\xv) = \thetab_{k}^{\top} \xv, k = 1, \ldots, g$ \\[0.5cm]
-													Probabilities & $\pi(\xv) = \frac{1}{1 + \exp\left(-\thetab^\top \xv\right)}$ & $\pi_k(\xv) = \frac{\exp(\thetab_k^\top \xv)}{\sum_{j = 1}^g \exp(\thetab_j^\top \xv) }$ \\[0.5cm]
+													Discriminant fun. & $f(\xv) = \thetav^\top \xv$ & $f_k(\xv) = \thetav_{k}^{\top} \xv, k = 1, \ldots, g$ \\[0.5cm]
+													Probabilities & $\pi(\xv) = \frac{1}{1 + \exp\left(-\thetav^\top \xv\right)}$ & $\pi_k(\xv) = \frac{\exp(\thetav_k^\top \xv)}{\sum_{j = 1}^g \exp(\thetav_j^\top \xv) }$ \\[0.5cm]
 													$L(y, \pix)$ & Bernoulli / logarithmic loss & Multiclass logarithmic loss\\[-0.3cm]
 													& $-y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)$  & $ - \sum_{k = 1}^g [y = k] \log\left(\pi_k(\xv)\right)$ \\
 												\end{tabular}
@@ -444,12 +444,12 @@
 %\begin{myblock}{Components of Learning}
 
 %\textbf{Learning = Hypothesis space + Risk + Optimization} \\
-%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetab \in \Theta} 
+%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetav \in \Theta} 
 %\risket$
 
 % 
 % \textbf{Learning &= Hypothesis space &+ Risk  &+ Optimization} \\
-% &= $\Hspace &+ \risket &+ \argmin_{\thetab \in \Theta} \risket$
+% &= $\Hspace &+ \risket &+ \argmin_{\thetav \in \Theta} \risket$
 % 
 % \textbf{Hypothesis space: } Defines (and restricts!) what kind of model $f$
 % can be learned from the data.

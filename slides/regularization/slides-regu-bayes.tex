@@ -33,31 +33,31 @@ Now we will generalize this for RRM.
 
 \lz
 
-Assume we have a parameterized distribution $p(y | \thetab, \xv)$ for our data and 
-a prior $q(\thetab)$ over our param space, all in Bayesian framework.
+Assume we have a parameterized distribution $p(y | \thetav, \xv)$ for our data and 
+a prior $q(\thetav)$ over our param space, all in Bayesian framework.
 
 \lz \lz
 
 From Bayes theorem:
 
 $$
-p(\thetab | \xv, y) = \frac{p(y | \thetab, \xv) q(\thetab) }{p(y | \xv)} \propto 
-p(y | \thetab, \xv) q(\thetab)
+p(\thetav | \xv, y) = \frac{p(y | \thetav, \xv) q(\thetav) }{p(y | \xv)} \propto 
+p(y | \thetav, \xv) q(\thetav)
 $$
 
 \framebreak
 
-The maximum a posteriori (MAP) estimator of $\thetab$ is now the minimizer of
+The maximum a posteriori (MAP) estimator of $\thetav$ is now the minimizer of
 
 $$
-- \log p\left(y ~|~ \thetab, \xv\right) - \log q(\thetab).
+- \log p\left(y ~|~ \thetav, \xv\right) - \log q(\thetav).
 $$
 
 \begin{itemize}
-  \item Again, we identify the loss $\Lxyt$ with $-\log(p(y | \thetab, \xv))$.
-  \item If $q(\thetab)$ is constant (i.e., we used a uniform, non-informative 
+  \item Again, we identify the loss $\Lxyt$ with $-\log(p(y | \thetav, \xv))$.
+  \item If $q(\thetav)$ is constant (i.e., we used a uniform, non-informative 
   prior), the second term is irrelevant and we arrive at ERM.
-  \item If not, we can identify $J(\thetab) \propto -\log(q(\thetab))$, i.e., 
+  \item If not, we can identify $J(\thetav) \propto -\log(q(\thetav))$, i.e., 
   the log-prior corresponds to the regularizer, and the additional $\lambda$, which controls the strength of our
   penalty, usually influences the peakedness / inverse variance / strength of our prior.
 \end{itemize}
@@ -97,27 +97,27 @@ prior:
 
 \begin{itemize}
   \small
-  \item Gaussian prior $\mathcal{N}_d(\bm{0}, \mathit{diag}(\tau^2))$ with uncorrelated components for $\thetab$:
+  \item Gaussian prior $\mathcal{N}_d(\bm{0}, \mathit{diag}(\tau^2))$ with uncorrelated components for $\thetav$:
   \begin{footnotesize}
-    $$q(\thetab) = \prod_{j = 1}^d  \phi_{0,\tau^2}(\theta_j) 
+    $$q(\thetav) = \prod_{j = 1}^d  \phi_{0,\tau^2}(\theta_j) 
     = (2\pi\tau^2)^{-\frac{d}{2}} \exp \left( - \frac{1}{2\tau^2} \sum_{j = 1}^d 
     \theta_j^2 \right)$$
   \end{footnotesize} 
   \item MAP:
   \begin{footnotesize}
   \begin{eqnarray*}
-    \thetah^{\text{MAP}} &=& \argmin_{\thetab} \left(
-    - \log p\left(y ~|~ \thetab, \xv \right) - \log q(\thetab)
+    \thetah^{\text{MAP}} &=& \argmin_{\thetav} \left(
+    - \log p\left(y ~|~ \thetav, \xv \right) - \log q(\thetav)
     \right) \\
-    &=& \argmin_{\thetab} \left(
-    - \log p\left(y ~|~ \thetab, \xv \right) + \tfrac{d}{2} \log(2\pi \tau^2) +
+    &=& \argmin_{\thetav} \left(
+    - \log p\left(y ~|~ \thetav, \xv \right) + \tfrac{d}{2} \log(2\pi \tau^2) +
     \frac{1}{2\tau^2} \sum_{j = 1}^d \theta_j^2
     \right) \\
-    % &=& \argmin_{\thetab} \left(
-    % - \log p\left(\xv ~|~ \thetab\right) + \frac{1}{2\tau^2} {\thetab}^T\thetab 
+    % &=& \argmin_{\thetav} \left(
+    % - \log p\left(\xv ~|~ \thetav\right) + \frac{1}{2\tau^2} {\thetav}^T\thetav 
     % \right) \\
-    &=& \argmin_{\thetab} \left(
-    - \log p\left(y ~|~ \thetab, \xv \right) + \frac{1}{2\tau^2} \| \thetab \|_2^2
+    &=& \argmin_{\thetav} \left(
+    - \log p\left(y ~|~ \thetav, \xv \right) + \frac{1}{2\tau^2} \| \thetav \|_2^2
     \right)
   \end{eqnarray*}
   \end{footnotesize} 
@@ -148,49 +148,49 @@ prior:
   % Gaussian errors $\epsilon^{(i)} \sim \mathcal{N}(0, \sigma^2) ~ \forall i \in 
   % \setn$, $\sigma > 0$, is also Gaussian: 
   % \begin{footnotesize}
-  % $$- \log p\left(\ydat ~|~ \xv, \thetab\right) = \frac{n}{2} \log (2\pi 
+  % $$- \log p\left(\ydat ~|~ \xv, \thetav\right) = \frac{n}{2} \log (2\pi 
   % \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi - \fxit \right)^2.$$
   % \end{footnotesize}
 
-% &=& \argmin_{\thetab} \left(
+% &=& \argmin_{\thetav} \left(
 % \tfrac{n}{2} \log (2\pi \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi -
 % \fxit \right)^2 + \tfrac{p}{2} \log(2\pi \tau^2) +
 % \frac{1}{2\tau^2} \sumjp \theta_j^2
 % \right) \\
-% &=& \argmin_{\thetab} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
+% &=& \argmin_{\thetav} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
 % \fxit \right)^2 + \frac{1}{\tau^2} \sumjp \theta_j^2 \right) \\
-% &=& \argmin_{\thetab} \left(
-% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetab\right)^\top \left(\ydat - \Xmat
-% \thetab\right) + \frac{1}{\tau^2} {\thetab}^T\thetab
+% &=& \argmin_{\thetav} \left(
+% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetav\right)^\top \left(\ydat - \Xmat
+% \thetav\right) + \frac{1}{\tau^2} {\thetav}^T\thetav
 % \right)
 
 % \begin{eqnarray*}
-% \thetah^{\text{MAP}} &=& argmin_{\thetab} \left(
-% - \log p\left(\ydat ~|~ \xv, \thetab\right) - \log q(\thetab)
+% \thetah^{\text{MAP}} &=& argmin_{\thetav} \left(
+% - \log p\left(\ydat ~|~ \xv, \thetav\right) - \log q(\thetav)
 % \right) \\
 % 
-% &=& \argmin_{\thetab} \left(
+% &=& \argmin_{\thetav} \left(
 % \tfrac{n}{2} \log (2\pi \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi -
 % \fxit \right)^2 + \tfrac{p}{2} \log(2\pi \tau^2) +
 % \frac{1}{2\tau^2} \sumjp \theta_j^2
 % \right) \\
-% &=& \argmin_{\thetab} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
+% &=& \argmin_{\thetav} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
 % \fxit \right)^2 + \frac{1}{\tau^2} \sumjp \theta_j^2 \right) \\
-% &=& \argmin_{\thetab} \left(
-% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetab\right)^\top \left(\ydat - \Xmat
-% \thetab\right) + \frac{1}{\tau^2} {\thetab}^T\thetab
+% &=& \argmin_{\thetav} \left(
+% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetav\right)^\top \left(\ydat - \Xmat
+% \thetav\right) + \frac{1}{\tau^2} {\thetav}^T\thetav
 % \right)
 % 
-% &=& \argmin_{\thetab} \left(
+% &=& \argmin_{\thetav} \left(
 % \tfrac{n}{2} \log (2\pi \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi -
 % \fxit \right)^2 + \tfrac{p}{2} \log(2\pi \tau^2) +
 % \frac{1}{2\tau^2} \sumjp \theta_j^2
 % \right) \\
-% &=& \argmin_{\thetab} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
+% &=& \argmin_{\thetav} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
 % \fxit \right)^2 + \frac{1}{\tau^2} \sumjp \theta_j^2 \right) \\
-% &=& \argmin_{\thetab} \left(
-% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetab\right)^\top \left(\ydat - \Xmat
-% \thetab\right) + \frac{1}{\tau^2} {\thetab}^T\thetab
+% &=& \argmin_{\thetav} \left(
+% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetav\right)^\top \left(\ydat - \Xmat
+% \thetav\right) + \frac{1}{\tau^2} {\thetav}^T\thetav
 % \right)
 % \end{eqnarray*}
 
@@ -201,13 +201,13 @@ prior:
 % 
 % \begin{scriptsize}
 % \begin{eqnarray*}
-% 0 &=& \frac{1}{\lambda \tau^2} \left( - {\Xmat}^T \ydat + \thetab {\Xmat}^T \Xmat
-% \right) + \frac{\lambda}{\sigma^2} \thetab
+% 0 &=& \frac{1}{\lambda \tau^2} \left( - {\Xmat}^T \ydat + \thetav {\Xmat}^T \Xmat
+% \right) + \frac{\lambda}{\sigma^2} \thetav
 % \quad \Leftrightarrow \quad 0 = \frac{\sigma^2}{\tau^2} \left( - {\Xmat}^T \ydat 
-% + \thetab {\Xmat}^T \Xmat \right) + \lambda^2 \thetab \\
-% 0 &=&  - {\Xmat}^T \ydat + \thetab {\Xmat}^T \Xmat + \lambda \thetab 
+% + \thetav {\Xmat}^T \Xmat \right) + \lambda^2 \thetav \\
+% 0 &=&  - {\Xmat}^T \ydat + \thetav {\Xmat}^T \Xmat + \lambda \thetav 
 % \quad \Leftrightarrow \quad 
-% \thetab(\Xmat^T \Xmat  + \lambda \id) = {\Xmat}^T \ydat
+% \thetav(\Xmat^T \Xmat  + \lambda \id) = {\Xmat}^T \ydat
 % \end{eqnarray*}
 % \end{scriptsize}
 % 

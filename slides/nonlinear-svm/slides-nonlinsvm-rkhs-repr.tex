@@ -139,8 +139,8 @@ The \textbf{representer theorem} tells us that the solution of a support vector 
 \vspace*{-0.5cm}
 
 \begin{eqnarray*}
-  & \min\limits_{\thetab, \theta_0,\sli} & \frac{1}{2} \thetab^\top \thetab + C   \sum_{i=1}^n \sli \\
-  & \text{s.t.} & \,\, \yi  \left( \scp{\thetab}{\phi\left(\xi\right)} + \theta_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+  & \min\limits_{\thetav, \theta_0,\sli} & \frac{1}{2} \thetav^\top \thetav + C   \sum_{i=1}^n \sli \\
+  & \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\phi\left(\xi\right)} + \theta_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
   & \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset\\
 \end{eqnarray*}
 
@@ -149,7 +149,7 @@ The \textbf{representer theorem} tells us that the solution of a support vector 
 can be written as 
 
 \begin{eqnarray*}
-  \thetab &=& \sum_{j = 1}^n \beta_j \phi\left(\xv^{(j)}\right)
+  \thetav &=& \sum_{j = 1}^n \beta_j \phi\left(\xv^{(j)}\right)
   \end{eqnarray*}
 
 for $\beta_j \in \R$. 
@@ -159,29 +159,29 @@ for $\beta_j \in \R$.
 \begin{vbframe}{Representer Theorem}
 
   \textbf{Theorem} (Representer Theorem):\\
-  The solution $\thetab, \theta_0$ of the support vector machine optimization problem fulfills $\thetab \in V = \spn\big\{\phi\left(\xv^{(1)}\right), \dots, \phi\left(\xv^{(n)}\right)\big\}$.\\
+  The solution $\thetav, \theta_0$ of the support vector machine optimization problem fulfills $\thetav \in V = \spn\big\{\phi\left(\xv^{(1)}\right), \dots, \phi\left(\xv^{(n)}\right)\big\}$.\\
 
   \vspace*{0.2cm}
 
   \begin{footnotesize}
   \textbf{Proof:} Let $V^\perp$ denote the space orthogonal to $V$,
-  so that $\HS = V \oplus V^\perp$. The vector $\thetab$ has a
+  so that $\HS = V \oplus V^\perp$. The vector $\thetav$ has a
   unique decomposition into components $\bm{v} \in V$ and $\bm{v} ^\perp \in V^\perp$,
-  so that $\bm{v}  + \bm{v} ^\perp = \thetab$.\\[0.5em]
+  so that $\bm{v}  + \bm{v} ^\perp = \thetav$.\\[0.5em]
 
-  The regularizer becomes $\|\thetab\|^2 = \|\bm{v} \|^2 + \|\bm{v} ^\perp\|^2$.
-  The constraints $\yi  \left( \scp{\thetab}{\phi\left(\xi\right)} + \theta_0\right) \geq 1 - \sli$
+  The regularizer becomes $\|\thetav\|^2 = \|\bm{v} \|^2 + \|\bm{v} ^\perp\|^2$.
+  The constraints $\yi  \left( \scp{\thetav}{\phi\left(\xi\right)} + \theta_0\right) \geq 1 - \sli$
   do not depend on $\bm{v} ^\perp$ at all:
   %, since $v^\perp$ is orthogonal to all $k\left(\xi, \cdot\right)$:
   $$
-    \scp{\thetab}{\phi\left(\xi\right)} = \scp{\bm{v} }{\phi\left(\xi\right)} + \underbrace{\scp{\bm{v}^\perp}{\phi\left(\xi \right)}}_{= 0}
+    \scp{\thetav}{\phi\left(\xi\right)} = \scp{\bm{v} }{\phi\left(\xi\right)} + \underbrace{\scp{\bm{v}^\perp}{\phi\left(\xi \right)}}_{= 0}
     \enspace ~ \forall i \in \{1, 2, ..., n\}.
   $$
 
   Thus, we have two independent optimization problems, namely the
   standard SVM problem for $v$ and the unconstrained minimization
   problem of $\|v^\perp\|^2$ for $v^\perp$, with obvious solution
-  $v^\perp = 0$. Thus, $\thetab = v \in V$.
+  $v^\perp = 0$. Thus, $\thetav = v \in V$.
   \end{footnotesize}
 
   \framebreak
@@ -194,9 +194,9 @@ for $\beta_j \in \R$.
     training set.
     \item More explicitly, we can assume the form
     \begin{footnotesize}
-    $$ \thetab = \sum_{j=1}^n \beta_j \cdot \phi\left(\xv^{(j)}\right) $$
+    $$ \thetav = \sum_{j=1}^n \beta_j \cdot \phi\left(\xv^{(j)}\right) $$
     \end{footnotesize}
-    for the weight vector $\thetab\in \HS$.
+    for the weight vector $\thetav\in \HS$.
       \item The SVM prediction on $\xv \in \Xspace$ can be computed as
     \begin{footnotesize}
     $$

@@ -52,7 +52,7 @@ also follows Laplace distrib. with mean $\fxit$ and scale  $\sigma$.
 The likelihood is then 
 
 \begin{eqnarray*}
-\LL(\thetab) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,.
+\LL(\thetav) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,.
 \end{eqnarray*}
 The negative log-likelihood is
 $$
@@ -127,7 +127,7 @@ which we introduced as \textbf{Bernoulli} loss.
 % \vspace*{-0.3cm}
 
 % \begin{eqnarray*}
-%   \Hspace = \left\{f: \Xspace \to \R ~|~\fx = \thetab^\top \xv\right\}
+%   \Hspace = \left\{f: \Xspace \to \R ~|~\fx = \thetav^\top \xv\right\}
 % \end{eqnarray*}
 
 % Scores are afterwards transformed into probabilities by the logistic function $\pix = \left(1 + \exp(- \fx)\right)^{-1}$  
@@ -256,20 +256,20 @@ which we introduced as \textbf{Bernoulli} loss.
 % by \emph{squared error} as our \emph{loss function} in \emph{risk minimization}:
 
 % $$
-% \riske(\thetab) = SSE(\thetab) = \sumin \Lxyit = \sumin \left(\yi - \theta^T \xi\right)^2
+% \riske(\thetav) = SSE(\thetav) = \sumin \Lxyit = \sumin \left(\yi - \theta^T \xi\right)^2
 % $$
 
 % NB: We assume here and from now on that $\theta_0$ is included in $\theta$.
 
 % Using matrix notation the empirical risk can be written as
 % $$
-% SSE(\thetab) = (\ydat - \Xmat\thetab)^T(\ydat - \Xmat\thetab).
+% SSE(\thetav) = (\ydat - \Xmat\thetav)^T(\ydat - \Xmat\thetav).
 % $$
 
 
 % Differentiating w.r.t $\theta$ yields the so-called \emph{normal equations}:
 % $$
-% \Xmat^T(\ydat - \Xmat\thetab) = 0
+% \Xmat^T(\ydat - \Xmat\thetav) = 0
 % $$
 % The optimal $\theta$ is
 % $$

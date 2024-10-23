@@ -21,21 +21,21 @@
     \item The L1-regularized risk of a model $\fxt$ is
 
       \[
-     \mathcal{R}_{\text{reg}}(\thetab) = \mathcal{R}_{\text{emp}}(\thetab) + \sum_j \lambda |\theta_j|
+     \mathcal{R}_{\text{reg}}(\thetav) = \mathcal{R}_{\text{emp}}(\thetav) + \sum_j \lambda |\theta_j|
       \] 
       
       and the (sub-)gradient is:
       
-      %$$\nabla_{\theta} \mathcal{R}_{\text{reg}}(\thetab) = 
+      %$$\nabla_{\theta} \mathcal{R}_{\text{reg}}(\thetav) = 
       
-      $$ \nabla_{\theta} \risket + \lambda \sign(\thetab) $$
+      $$ \nabla_{\theta} \risket + \lambda \sign(\thetav) $$
 
     \item Unlike in $L2$, contribution to grad. doesn't scale with $\theta_j$ elements. 
-    \item Again: quadratic Taylor approximation of $\mathcal{R}_{\text{emp}}(\thetab)$ around its minimizer $\thetah$, then regularize:
+    \item Again: quadratic Taylor approximation of $\mathcal{R}_{\text{emp}}(\thetav)$ around its minimizer $\thetah$, then regularize:
     %\item Again, this is an orthonormal design. r example, if the input features for a linear regression task have been decorrelated using PCA.
   \end{itemize}
 
- $$\mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{R}_{\text{emp}}(\thetah) +\ \frac{1}{2} (\thetab - \thetah)^T \bm{H} (\thetab - \thetah)  + \sum_j \lambda |\theta_j|$$
+ $$\mathcal{\tilde R}_{\text{reg}}(\thetav) = \mathcal{R}_{\text{emp}}(\thetah) +\ \frac{1}{2} (\thetav - \thetah)^T \bm{H} (\thetav - \thetah)  + \sum_j \lambda |\theta_j|$$
   
   \framebreak
   
@@ -43,8 +43,8 @@
 
 \item To cheat and simplify, we assume the $\bm{H}$ is diagonal, with $H_{j,j} \geq 0$
   
-    \item Now $\mathcal{\tilde R}_{\text{reg}}(\thetab)$ decomposes into sum over params $\theta_j$ (separable!):
-  $$\mathcal{\tilde R}_{\text{reg}}(\thetab) = \mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|$$
+    \item Now $\mathcal{\tilde R}_{\text{reg}}(\thetav)$ decomposes into sum over params $\theta_j$ (separable!):
+  $$\mathcal{\tilde R}_{\text{reg}}(\thetav) = \mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|$$
   % where $\thetah$ is the minimizer of the unregularized risk $\risket$.
     \item We can minimize analytically:
      \begin{align*}\hat{\theta}_{\text{lasso},j} &= \sign(\hat{\theta}_j) \max \left\{ |\hat{\theta}_j| - \frac{\lambda}{H_{j,j}},0 \right\} \\

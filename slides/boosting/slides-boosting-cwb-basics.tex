@@ -142,8 +142,8 @@ More advanced base learners could also be  Markov random fields, random effects,
 Two BLs of the same type can simply be added by adding up their parameter vectors:
 
 $$
- b_j(\xv, \thetab^{[1]}) + b_j(\xv, \thetab^{[2]}) =
- b_j(\xv, \thetab^{[1]} + \thetab^{[2]}).
+ b_j(\xv, \thetav^{[1]}) + b_j(\xv, \thetav^{[2]}) =
+ b_j(\xv, \thetav^{[1]} + \thetav^{[2]}).
 $$
 %% Figure: rsrc/fig-compboost-add.R
 \begin{center}
@@ -167,7 +167,7 @@ $\bm{=}$
 \end{center}
 \vspace*{0.1cm}
 
-Thus, if $\{ b_j(\xv, \thetab^{[1]}), b_j(\xv, \thetab^{[2]}) \} \in \mathcal{B}_j$, then $b_j(\xv, \thetab^{[1]} + \thetab^{[2]}) \in \mathcal{B}_j$.
+Thus, if $\{ b_j(\xv, \thetav^{[1]}), b_j(\xv, \thetav^{[2]}) \} \in \mathcal{B}_j$, then $b_j(\xv, \thetav^{[1]} + \thetav^{[2]}) \in \mathcal{B}_j$.
 
 \end{vbframe}
 

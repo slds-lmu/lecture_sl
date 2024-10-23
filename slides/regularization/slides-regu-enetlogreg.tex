@@ -16,8 +16,8 @@
 \vspace{-0.7cm}
 \small{
 \begin{align*}
-\mathcal{R}_{\text{elnet}}(\thetab) &=  \sumin (\yi - \thetab^\top \xi)^2 + \lambda_1 \|\thetab\|_1 + \lambda_2 \|\thetab\|_2^2 \\
-&= \sumin (\yi - \thetab^\top \xi)^2 + \lambda \left( (1-\alpha) \|\thetab\|_1 + \alpha \|\thetab\|_2^2\right),\, \alpha=\frac{\lambda_2}{\lambda_1+\lambda_2}, \lambda=\lambda_1+\lambda_2
+\mathcal{R}_{\text{elnet}}(\thetav) &=  \sumin (\yi - \thetav^\top \xi)^2 + \lambda_1 \|\thetav\|_1 + \lambda_2 \|\thetav\|_2^2 \\
+&= \sumin (\yi - \thetav^\top \xi)^2 + \lambda \left( (1-\alpha) \|\thetav\|_1 + \alpha \|\thetav\|_2^2\right),\, \alpha=\frac{\lambda_2}{\lambda_1+\lambda_2}, \lambda=\lambda_1+\lambda_2
 \end{align*}}
 \begin{figure}
 \vspace{-0.3cm}
@@ -35,20 +35,20 @@
 \begin{vbframe} {Simulated Example}
 
 \footnotesize
-5-fold CV with $n_{train}=100$ and 20 repetitions with $n_{test}=10000$ for setups: $y =\xv^T \thetab + \epsilon; \quad \epsilon \sim N(0,0.1^2);
+5-fold CV with $n_{train}=100$ and 20 repetitions with $n_{test}=10000$ for setups: $y =\xv^T \thetav + \epsilon; \quad \epsilon \sim N(0,0.1^2);
   \quad \xv \sim N(0, \Sigma); \quad\Sigma_{k,l}=0.8^{|k-l|}$: 
 \vspace{-0.3cm}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{center}
 {\footnotesize \textbf{Lasso} better for sparse features:} \\ 
-$\thetab=(\underbrace{1,\ldots,1}_{5},\underbrace{0,\ldots,0}_{495})$\\
+$\thetav=(\underbrace{1,\ldots,1}_{5},\underbrace{0,\ldots,0}_{495})$\\
   \end{center}
 \end{column}
 \begin{column}{0.5\textwidth} 
 \begin{center}
 {\footnotesize \textbf{Ridge} better for dense features:} \\
-$\thetab=(\underbrace{1,\ldots,1,1,\ldots,1}_{500})$ \\
+$\thetav=(\underbrace{1,\ldots,1,1,\ldots,1}_{500})$ \\
 \end{center}
 \end{column}
 \end{columns}
@@ -85,9 +85,9 @@ Lasso more frequently ignores relevant features than e-net (longer tails in viol
 
 
 %\begin{align*}
-%\riskrt &= \risket + \lambda \cdot J(\thetab) \\
-%&= \sumin \mathsf{log} \left[1 + \exp \left(-\yi f\left(\left.\xi~\right|~ \thetab\right)\right)\right] + \lambda \cdot J(\thetab) \\
-%&= \sumin \mathsf{log}\left[1 + \mathsf{exp}\left(-2\yi f\left(\left.\xi~\right|~ \thetab\right)\right)\right] + \lambda \cdot J(\thetab)
+%\riskrt &= \risket + \lambda \cdot J(\thetav) \\
+%&= \sumin \mathsf{log} \left[1 + \exp \left(-\yi f\left(\left.\xi~\right|~ \thetav\right)\right)\right] + \lambda \cdot J(\thetav) \\
+%&= \sumin \mathsf{log}\left[1 + \mathsf{exp}\left(-2\yi f\left(\left.\xi~\right|~ \thetav\right)\right)\right] + \lambda \cdot J(\thetav)
 %\end{align*}
 
 \item Now: LR with polynomial features for $x_1, x_2$ up to degree 7 and L2 penalty on 2D ``circle data'' below

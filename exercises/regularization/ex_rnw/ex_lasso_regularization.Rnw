@@ -3,11 +3,11 @@ Consider the regression learning setting, i.e., $\mathcal{Y} = \R,$ and feature 
 Let the hypothesis space be the linear models:
 
 $$
-  \Hspace = \{ \fx = \thetab^\top \Xmat ~|~  \thetab \in \R^p  \}. 
+  \Hspace = \{ \fx = \thetav^\top \Xmat ~|~  \thetav \in \R^p  \}. 
 $$
 Suppose your loss function of interest is the L2 loss $\Lxy= \frac12 \big(y-\fx\big)^2.$ Consider the $L_1$-regularized empirical risk of a model $\fxt$ (i.e., Lasso regression):
 $$
-	\riskrt = \risket + \lambda \|\thetab\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
+	\riskrt = \risket + \lambda \|\thetav\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
 $$
 Assume that ${\Xmat}^T \Xmat = \id,$ which holds if $\Xmat$ has orthonormal columns. Show that the minimizer $\thetah_{\text{Lasso}} = (\thetah_{\text{Lasso},1},\ldots,\thetah_{\text{Lasso},p})^\top$ is given by
 
@@ -15,13 +15,13 @@ $$
 	\thetah_{\text{Lasso},i} = sgn(\thetah_{i}) \max\{|\thetah_{i}| - \lambda,0 \}, \quad i=1,\ldots,p,	
 $$
 
-where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1} \Xmat^T\yv$ is the minimizer of the unregularized empirical risk (w.r.t.\ the L2 loss). For this purpose, use the following steps:
+where $\thetavh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1} \Xmat^T\yv$ is the minimizer of the unregularized empirical risk (w.r.t.\ the L2 loss). For this purpose, use the following steps:
 \begin{enumerate}	
 	\item
 		Derive that 
 	
 		$$	
-			\argmin_{\thetab} \riskrt  = 	\argmin_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
+			\argmin_{\thetav} \riskrt  = 	\argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
 		$$
 	
 	\item 
@@ -31,7 +31,7 @@ where $\thetabh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 			g_i(\theta_i) =  - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda |\theta_i|. 
 		$$ 
 
-		What is the advantage of this representation if we seek to find the $\thetab$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt?$
+		What is the advantage of this representation if we seek to find the $\thetav$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt?$
 		
 
 	

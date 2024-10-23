@@ -13,10 +13,10 @@
                 The maximum margin is achieved when the hyperplane lies exactly between these two points,
                  with a value of $\gamma =1$.
             \item 
-                The norm of $\thetab$ can be calculated as :
+                The norm of $\thetav$ can be calculated as :
 
                 $$
-                    \| \thetab \| = \frac{1}{\gamma} = \frac{1}{1} = 1
+                    \| \thetav \| = \frac{1}{\gamma} = \frac{1}{1} = 1
                 $$
             \item
 
@@ -26,7 +26,7 @@
                 x_1 = 5
             $$
 
-            Using the formula $ \thetab^T \xv + \theta_0  = 0 $, we obtain that $\theta_1$ = 1, $\theta_2 = 0$ and $\theta_0=-5$
+            Using the formula $ \thetav^T \xv + \theta_0  = 0 $, we obtain that $\theta_1$ = 1, $\theta_2 = 0$ and $\theta_0=-5$
             \item 
               The support vectors are the ones that determine the margins, in this case:  $(4,1)^T$ and $(6,1)^T$
             
@@ -92,8 +92,8 @@
           text(4, 4.25, expression(theta), pos = 1, cex = 1.5,col='chartreuse4')
           @
           
-          The safety margin $\gamma$ and thus the norm of $\thetab$ remain the same. 
-          However, the direction of $\thetab$ changed because of the rotation.
+          The safety margin $\gamma$ and thus the norm of $\thetav$ remain the same. 
+          However, the direction of $\thetav$ changed because of the rotation.
           The support vectors are still the same as before, but rotated.
           
           \item
@@ -153,8 +153,8 @@
             text(5.1, 3.5, expression(theta), pos = 1, cex = 1.5,col='chartreuse4')
             @
               
-            The margin $\gamma$ is now smaller, and thus $\| \thetab \|$ is bigger. 
-            The direction of $\thetab$ and $\theta_0$ remain the same. 
+            The margin $\gamma$ is now smaller, and thus $\| \thetav \|$ is bigger. 
+            The direction of $\thetav$ and $\theta_0$ remain the same. 
             The support vectors are now $(4,1)^T$ and $(5.5,1)^T$.
 
         \item 
@@ -181,8 +181,8 @@
             text(5.1, 3.5, expression(theta), pos = 1, cex = 1.5,col='chartreuse4')
             @
 
-            The margin $\gamma$ increases, and thus $\| \thetab \|$ will decrease. 
-            The direction of $\thetab$ remains the same but $\theta_0$ changes.
+            The margin $\gamma$ increases, and thus $\| \thetav \|$ will decrease. 
+            The direction of $\thetav$ remains the same but $\theta_0$ changes.
             The new Support vectors are $(4,1)^T$ and $(6.5,1)^T$.
     \end{itemize}
     
@@ -195,7 +195,7 @@
     \begin{table}[h!]
 \centering
 \begin{tabular}{c|c|c|c|c}
-$\gamma$ & $ \| \thetab \| $ & $ \thetab $                  & $\theta_0$ & SV                   \\ \hline
+$\gamma$ & $ \| \thetav \| $ & $ \thetav $                  & $\theta_0$ & SV                   \\ \hline
 1        & 1                 & $\frac{1}{\sqrt{2}} (1,1)^T$ & -5         & Rotation ($(4,1)^T, (6,1)^T$)                 \\
 1        & 1                 & $(1,0)^T$                    & -7         & $(6,1)^T, (8,1)^T  $               \\
 0.75     & 4/3              & $ (4/3,0)^T$                & -6.33      & $(4,1)^T, (5.5,1)^T   $             \\

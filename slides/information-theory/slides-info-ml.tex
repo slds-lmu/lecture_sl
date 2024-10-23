@@ -20,20 +20,20 @@
 }
 
 \begin{vbframe}{KL vs Maximum Likelihood}
-Minimizing KL between the true distribution $p(x)$ and approximating model $q(x|\thetab)$ is equivalent to maximizing the log-likelihood.
+Minimizing KL between the true distribution $p(x)$ and approximating model $q(x|\thetav)$ is equivalent to maximizing the log-likelihood.
   \begin{align*}
-    D_{KL}(p \| q_{\thetab}) &= \E_{X \sim p} \left[ \log \frac{p(x)}{q(x|\thetab)}\right] \\
-     &= \E_{X \sim p} \log p(x) - \E_{X \sim p} \log q(x|\thetab)
+    D_{KL}(p \| q_{\thetav}) &= \E_{X \sim p} \left[ \log \frac{p(x)}{q(x|\thetav)}\right] \\
+     &= \E_{X \sim p} \log p(x) - \E_{X \sim p} \log q(x|\thetav)
   \end{align*}
-  as first term above does not depend on $\thetab$.
+  as first term above does not depend on $\thetav$.
   %and the second term we could also as a def for CE! 
   Therefore,
   \begin{align*}
-    \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) &= \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab)\\ 
-                                           &= \argmax_{\thetab} \E_{X \sim p} \log q(x|\thetab)
+    \argmin_{\thetav} D_{KL}(p \| q_{\thetav}) &= \argmin_{\thetav} -\E_{X \sim p} \log q(x|\thetav)\\ 
+                                           &= \argmax_{\thetav} \E_{X \sim p} \log q(x|\thetav)
   \end{align*}
   For a finite dataset of $n$ samples from $p$, this is approximated as 
-  $$\argmax_{\thetab} \E_{X \sim p} \log q(x|\thetab) \approx \argmax_{\thetab} \frac{1}{n} \sumin \log q(\xi|\thetab)\,.$$
+  $$\argmax_{\thetav} \E_{X \sim p} \log q(x|\thetav) \approx \argmax_{\thetav} \frac{1}{n} \sumin \log q(\xi|\thetav)\,.$$
 
   This also directly implies an equivalence to risk minimization!
 
@@ -42,7 +42,7 @@ Minimizing KL between the true distribution $p(x)$ and approximating model $q(x|
 
 \begin{vbframe}{KL vs Cross-Entropy}
 From this here we can see much more:
-$$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab) = \argmin_{\thetab} H(p \| q_{\thetab}) $$
+$$ \argmin_{\thetav} D_{KL}(p \| q_{\thetav}) = \argmin_{\thetav} -\E_{X \sim p} \log q(x|\thetav) = \argmin_{\thetav} H(p \| q_{\thetav}) $$
   \begin{itemize}
     \item So minimizing KL is the same as minimizing CE, is the same as maximum likelihood!
     \item We could now motivate CE as the "relevant" term that you have to minimize when you minimize KL - after you drop $\E_p \log p(x)$, which is simply the neg. entropy H(p)!
@@ -52,7 +52,7 @@ $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p}
 
 \begin{vbframe}{KL vs Cross-Entropy Example}
 Let $p(x)=N(0,1)$ and $q(x)=LP(0,\sigma)$ and consider again
-$$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p} \log q(x|\thetab) = \argmin_{\thetab} H(p \| q_{\thetab}) $$
+$$ \argmin_{\thetav} D_{KL}(p \| q_{\thetav}) = \argmin_{\thetav} -\E_{X \sim p} \log q(x|\thetav) = \argmin_{\thetav} H(p \| q_{\thetav}) $$
 
 \begin{center}
 	\includegraphics[width=1\textwidth]{figure/kl_ce_comparison.png}
@@ -66,7 +66,7 @@ $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p}
     \item Consider a multi-class classification task with dataset $\D = \Dset$.
 %    \item More concretely, let us assume this is an image classification task where each $\xi$ is an image and $\yi$ is the corresponding label.
     \item For $g$ classes, each $\yi$ can be one-hot-encoded as a vector $d^{(i)}$ of length $g$. $d^{(i)}$ can be interpreted as a categorical distribution which puts all its probability mass on the true label $\yi$ of $\xi$.
-    \item $\pi(\xv^{(i)}|\thetab)$ is the probability output vector of the model, and also a categorical distribution over the classes.
+    \item $\pi(\xv^{(i)}|\thetav)$ is the probability output vector of the model, and also a categorical distribution over the classes.
 
   \end{itemize}
 \lz
@@ -78,18 +78,18 @@ $$ \argmin_{\thetab} D_{KL}(p \| q_{\thetab}) = \argmin_{\thetab} -\E_{X \sim p}
     \framebreak
 
     
-To train the model, we minimize KL between $d^{(i)}$ and $\pi(\xv^{(i)}|\thetab)$ :
-$$ \argmin_{\thetab} \sum_{i=1}^n D_{KL} (d^{(i)} \| \pi(\xv^{(i)}|\thetab)) = \argmin_{\thetab} \sum_{i=1}^n  H(d^{(i)} \| \pi(\xv^{(i)}|\thetab)) $$
-    % where the entropy $H(d^{(i)})$ was dropped because it is not a function of $\thetab$.
+To train the model, we minimize KL between $d^{(i)}$ and $\pi(\xv^{(i)}|\thetav)$ :
+$$ \argmin_{\thetav} \sum_{i=1}^n D_{KL} (d^{(i)} \| \pi(\xv^{(i)}|\thetav)) = \argmin_{\thetav} \sum_{i=1}^n  H(d^{(i)} \| \pi(\xv^{(i)}|\thetav)) $$
+    % where the entropy $H(d^{(i)})$ was dropped because it is not a function of $\thetav$.
   
 We see that this is equivalent to log-loss risk minimization!
   \begin{footnotesize}
     \begin{equation*}
       \begin{split}
-               R &= \sumin  H(d^{(i)} \| \pi_k(\xv^{(i)}|\thetab)) \\
-                 &= \sumin \left( - \sum_k d^{(i)}_k \log\pi_k(\xv^{(i)}|\thetab) \right) \\
-                 & = \sumin \underbrace{ \left( -\sum_{k = 1}^g [\yi = k]\log \pi_{k}(\xv^{(i)}|\thetab) \right) }_{\text{log loss}} \\
-                 & = \sumin (-\log\pi_{y^{(i)}}(\xv^{(i)}|\thetab)) 
+               R &= \sumin  H(d^{(i)} \| \pi_k(\xv^{(i)}|\thetav)) \\
+                 &= \sumin \left( - \sum_k d^{(i)}_k \log\pi_k(\xv^{(i)}|\thetav) \right) \\
+                 & = \sumin \underbrace{ \left( -\sum_{k = 1}^g [\yi = k]\log \pi_{k}(\xv^{(i)}|\thetav) \right) }_{\text{log loss}} \\
+                 & = \sumin (-\log\pi_{y^{(i)}}(\xv^{(i)}|\thetav)) 
       \end{split}
     \end{equation*}
   \end{footnotesize}

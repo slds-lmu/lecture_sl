@@ -20,24 +20,24 @@
 Let's optimize $L2$-regularized risk of a model $\fxt$
 \vspace{-0.2cm}
 \[
-\min_{\thetab} \riskrt = \min_{\thetab} \risket + \frac{\lambda}{2} \|\thetab\|^2_2
+\min_{\thetav} \riskrt = \min_{\thetav} \risket + \frac{\lambda}{2} \|\thetav\|^2_2
 \]
 
 by GD. The gradient is
 
 \[
-\nabla_{\thetab} \riskrt = \nabla_{\thetab} \risket + \lambda \thetab
+\nabla_{\thetav} \riskrt = \nabla_{\thetav} \risket + \lambda \thetav
 \]
 
-We iteratively update $\thetab$ by step size \(\alpha\) times the
+We iteratively update $\thetav$ by step size \(\alpha\) times the
 negative gradient
 \vspace{-0.2cm}
 \begin{align*}
-\thetab^{[\text{new}]} &= \thetab^{[\text{old}]} - \alpha \left(\nabla_{\thetab} \riske(\thetab^{[\text{old}]}) + \lambda \thetab^{[\text{old}]}\right) \\&=
-\thetab^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]})
+\thetav^{[\text{new}]} &= \thetav^{[\text{old}]} - \alpha \left(\nabla_{\thetav} \riske(\thetav^{[\text{old}]}) + \lambda \thetav^{[\text{old}]}\right) \\&=
+\thetav^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})
 \end{align*}
 {\small
-We see how $\thetab^{[old]}$ decays in magnitude -- for small $\alpha$ and $\lambda$ -- before we do the gradient step. Performing the decay directly, under this name, is a very well-known technique in DL - and simply $L2$ regularization in disguise (for GD).
+We see how $\thetav^{[old]}$ decays in magnitude -- for small $\alpha$ and $\lambda$ -- before we do the gradient step. Performing the decay directly, under this name, is a very well-known technique in DL - and simply $L2$ regularization in disguise (for GD).
 }
 \framebreak
 
@@ -66,9 +66,9 @@ How strongly we are pulled back (for fixed $\alpha$) depends on $\lambda$:
 \textbf{Caveat}: Equivalence of weight decay and $L2$ only holds for (S)GD!
 
 \begin{itemize}\setlength{\itemsep}{0.5em}
-    \item \citelink{HANSON1988} originally define WD ``decoupled'' from gradient-updates {\footnotesize $\alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]})$} as
-    {\footnotesize $\thetab^{[\text{new}]} =
-    \thetab^{[\text{old}]} (1 - \lambda') - \alpha \nabla_{\thetab} \riske(\thetab^{[\text{old}]})$}
+    \item \citelink{HANSON1988} originally define WD ``decoupled'' from gradient-updates {\footnotesize $\alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})$} as
+    {\footnotesize $\thetav^{[\text{new}]} =
+    \thetav^{[\text{old}]} (1 - \lambda') - \alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})$}
     \item This is equivalent to modern WD/$L2$ (last slide) using reparameterization $\lambda'=\alpha \lambda$
    % \item Using this we see the WD is decoupled from the gradient updates
     \item Consequence: if there is optimal $\lambda'$, then optimal $L2$ penalty is tightly coupled to $\alpha$ as $\lambda=\lambda'/ \alpha$ (and vice versa)

@@ -61,17 +61,17 @@ Let us assume
 $$
 	y = \fx + \eps, ~ \eps \sim \mathcal{N}\left(0, \sigma^2\right),
 $$
-where $\fx \sim \mathcal{GP}\left(\bm{0}, k\left(\xv, \xv^\prime | \thetab \right)\right)$. 
+where $\fx \sim \mathcal{GP}\left(\bm{0}, k\left(\xv, \xv^\prime | \thetav \right)\right)$. 
 
 \lz 
 
 Observing $\bm{y} \sim \mathcal{N}\left(\bm{0}, \bm{K} + \sigma^2 \id\right)$, the marginal log-likelihood (or evidence) is
 \begin{eqnarray*}
-\log p(\bm{y} ~|~ \bm{X}, \thetab) &=& \log \left[\left(2 \pi\right)^{-n / 2} |\bm{K}_y|^{-1 / 2} \exp\left(- \frac{1}{2} \bm{y}^\top \bm{K}_y^{-1} \bm{y}\right) \right]\\
+\log p(\bm{y} ~|~ \bm{X}, \thetav) &=& \log \left[\left(2 \pi\right)^{-n / 2} |\bm{K}_y|^{-1 / 2} \exp\left(- \frac{1}{2} \bm{y}^\top \bm{K}_y^{-1} \bm{y}\right) \right]\\
 &=& -\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y} - \frac{1}{2} \log \left| \bm{K}_y \right| - \frac{n}{2} \log 2\pi. 
 \end{eqnarray*}
 
-with $\bm{K}_y:=\bm{K} + \sigma^2 \id$ and $\thetab$ denoting the hyperparameters (the parameters of the covariance function). 
+with $\bm{K}_y:=\bm{K} + \sigma^2 \id$ and $\thetav$ denoting the hyperparameters (the parameters of the covariance function). 
 
 \framebreak
 
@@ -102,7 +102,7 @@ $$
 	\begin{itemize}
 		\item data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, 
 		\item the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$, and 
-		\item the overall value of the marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetab)$ 
+		\item the overall value of the marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ 
 	\end{itemize}
 	behave for increasing value of $\ls$.
 \end{itemize}
@@ -114,7 +114,7 @@ $$
 \end{figure}
 
 \begin{footnotesize}
-	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetab)$ behave for increasing values of $\ls$.
+	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.
 \end{footnotesize}
 
 
@@ -125,7 +125,7 @@ $$
 \end{figure}
 
 \begin{footnotesize}
-		The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetab)$ behave for increasing values of $\ls$.\\ 
+		The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.\\ 
 		A small $\ls$ results in a good fit, but a high complexity penalty (low $- \frac{1}{2} \log \left| \bm{K}_y \right|$).
 \end{footnotesize}
 
@@ -136,7 +136,7 @@ $$
 \end{figure}
 
 \begin{footnotesize}
-	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetab)$ behave for increasing values of $\ls$.\\ 
+	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.\\ 
 	A large $\ls$ results in a poor fit. 
 \end{footnotesize}
 
@@ -147,7 +147,7 @@ $$
 \end{figure}
 
 \begin{footnotesize}
-	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetab)$ behave for increasing values of $\ls$.\\ 
+	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.\\ 
 	The maximizer of the log-likelihood, $\ls = 0.5$, balances complexity and fit. 
 \end{footnotesize}
 
@@ -160,13 +160,13 @@ To set the hyperparameters by maximizing the marginal likelihood, we seek the pa
 
 \begin{footnotesize}
 \begin{eqnarray*}
-\frac{\partial}{\partial\theta_j} \log p(\bm{y} ~|~ \bm{X}, \thetab) &=& \frac{\partial}{\partial\theta_j}  \left(-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y} - \frac{1}{2} \log \left| \bm{K}_y \right| - \frac{n}{2} \log 2\pi\right) \\ 
-&=&\frac{1}{2} \yv^\top \bm{K}^{-1} \frac{\partial \bm{K}}{\partial \theta_j}\bm{K}^{-1} \yv - \frac{1}{2} \text{tr}\left(\bm{K}^{-1} \frac{\partial \bm{K}}{\partial \thetab} \right) \\
+\frac{\partial}{\partial\theta_j} \log p(\bm{y} ~|~ \bm{X}, \thetav) &=& \frac{\partial}{\partial\theta_j}  \left(-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y} - \frac{1}{2} \log \left| \bm{K}_y \right| - \frac{n}{2} \log 2\pi\right) \\ 
+&=&\frac{1}{2} \yv^\top \bm{K}^{-1} \frac{\partial \bm{K}}{\partial \theta_j}\bm{K}^{-1} \yv - \frac{1}{2} \text{tr}\left(\bm{K}^{-1} \frac{\partial \bm{K}}{\partial \thetav} \right) \\
 &=& \frac{1}{2} \text{tr}\left((\bm{K}^{-1}\bm{y}\bm{y}^T\bm{K}^{-1} - \bm{K}^{-1})\frac{\partial\bm{K}}{\partial\theta_j}\right)
 \end{eqnarray*}
 \end{footnotesize}
 
-using $\frac{\partial}{\partial \theta_j} \bm{K}^{-1} = - \bm{K}^{-1} \frac{\partial \bm{K}}{\partial \theta_j}\bm{K}^{-1}$ and $\frac{\partial}{\partial \thetab} \log  |\bm{K}| = \text{tr}\left(\bm{K}^{-1} \frac{\partial \bm{K}}{\partial \thetab} \right)$. 
+using $\frac{\partial}{\partial \theta_j} \bm{K}^{-1} = - \bm{K}^{-1} \frac{\partial \bm{K}}{\partial \theta_j}\bm{K}^{-1}$ and $\frac{\partial}{\partial \thetav} \log  |\bm{K}| = \text{tr}\left(\bm{K}^{-1} \frac{\partial \bm{K}}{\partial \thetav} \right)$. 
 
 \framebreak
 

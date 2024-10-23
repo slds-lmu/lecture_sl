@@ -169,21 +169,21 @@
 								%	
 									\item $J(f)$ is the \textbf{complexity/roughness penalty} or \textbf{regularizer}.
 									\item $\lambda > 0$ is the \textbf{complexity control} parameter. 
-									\item For parameterized hypotheses: $\riskrt = \risket + \lambda \cdot J(\thetab)$. 
+									\item For parameterized hypotheses: $\riskrt = \risket + \lambda \cdot J(\thetav)$. 
 								\end{itemize}
 								%
 								Tackles the trade-off: \emph{maximizing} the fit (minimizing the train loss) vs.\ \emph{minimizing} the complexity of the model. \\
 								
 								%
-								Regularization in the linear model ($\fx = \thetab^\top \xv$):
+								Regularization in the linear model ($\fx = \thetav^\top \xv$):
 								%
 								\begin{itemize}
 									\setlength{\itemindent}{+.3in}
 									%	
-									\item Ridge regression: $J(\thetab) =  \|\thetab\|_2^2 = \thetab^\top \thetab.$
-									\item Lasso regression: $J(\thetab) =  \|\thetab\|_1 = \sum_{j=1}^p |\theta_j|.$
-									\item Elastic net regression: $J(\thetab) =  (\|\thetab\|_2^2,  \|\thetab\|_1)^\top$ and $\lambda=(\lambda_1,\lambda_2).$
-									\item L0 regression: $J(\thetab) = \|\thetab\|_0 = \sum_{j=1}^p |\theta_j|^0.$
+									\item Ridge regression: $J(\thetav) =  \|\thetav\|_2^2 = \thetav^\top \thetav.$
+									\item Lasso regression: $J(\thetav) =  \|\thetav\|_1 = \sum_{j=1}^p |\theta_j|.$
+									\item Elastic net regression: $J(\thetav) =  (\|\thetav\|_2^2,  \|\thetav\|_1)^\top$ and $\lambda=(\lambda_1,\lambda_2).$
+									\item L0 regression: $J(\thetav) = \|\thetav\|_0 = \sum_{j=1}^p |\theta_j|^0.$
 								%	
 								\end{itemize}
 								%
@@ -204,7 +204,7 @@
 								%	
 								Signed distance to the separating hyperplane:
 								$$
-								d \left(f, \xi \right) = \frac{\yi \fxi}{\|\thetab\|} = \yi \frac{\thetab^T \xi + \theta_0}{\|\thetab\|}
+								d \left(f, \xi \right) = \frac{\yi \fxi}{\|\thetav\|} = \yi \frac{\thetav^T \xi + \theta_0}{\|\thetav\|}
 								$$ 
 								Distance of $f$ to the whole dataset $\D:$ 
 								$
@@ -214,13 +214,13 @@
 								\textbf{Primal linear hard-margin SVM:}
 								%
 								\begin{eqnarray*}
-									& \min\limits_{\thetab, \theta_0} \quad & \frac{1}{2} \|\thetab\|^2 \\
-									& \text{s.t.} & \,\,\yi  \left( \scp{\thetab}{\xi} + \theta_0 \right) \geq 1 \quad \forall\, i \in \nset
+									& \min\limits_{\thetav, \theta_0} \quad & \frac{1}{2} \|\thetav\|^2 \\
+									& \text{s.t.} & \,\,\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) \geq 1 \quad \forall\, i \in \nset
 								\end{eqnarray*}
 								%
 								Support vectors: All instances $(\xi, \yi)$ with minimal margin
 								$\yi  \fxi = 1$, fulfilling the inequality constraints with equality. 
-								All have distance of $\gamma = 1 / \|\thetab\|$ from the separating hyperplane.
+								All have distance of $\gamma = 1 / \|\thetav\|$ from the separating hyperplane.
 								
 								\textbf{Dual linear hard-margin SVM:}
 								%
@@ -233,7 +233,7 @@
 								Solution (if existing):
 								%
 								$$
-								\thetah = \sum\nolimits_{i=1}^n \hat \alpha_i \yi \xi, \quad \theta_0 = \yi - \scp{\thetab}{\xi}.
+								\thetah = \sum\nolimits_{i=1}^n \hat \alpha_i \yi \xi, \quad \theta_0 = \yi - \scp{\thetav}{\xi}.
 								$$
 								%
 							\end{myblock}
@@ -256,8 +256,8 @@
 						%	
 							\textbf{Primal linear soft-margin SVM:} 	
 							\begin{eqnarray*}
-								& \min\limits_{\thetab, \thetab_0,\sli} & \frac{1}{2} \|\thetab\|^2 + C   \sum_{i=1}^n \sli \\
-								& \text{s.t.} & \,\, \yi  \left( \scp{\thetab}{\xi} + \thetab_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+								& \min\limits_{\thetav, \thetav_0,\sli} & \frac{1}{2} \|\thetav\|^2 + C   \sum_{i=1}^n \sli \\
+								& \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
 								& \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset,\\
 							\end{eqnarray*}
 						%
@@ -285,7 +285,7 @@
 						%
 						Regularized empirical risk minimization representation:
 						%
-						$$ \risket = \frac{1}{2} \|\thetab\|^2 + C \sumin \Lxyi ;\; \Lyf = \max(1-yf, 0)$$
+						$$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lyf = \max(1-yf, 0)$$
 						%
 
 						\end{myblock}
@@ -366,12 +366,12 @@
 						%\begin{myblock}{Components of Learning}
 
 						%\textbf{Learning = Hypothesis space + Risk + Optimization} \\
-						%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetab \in \Theta} 
+						%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetav \in \Theta} 
 						%\risket$
 
 						% 
 						% \textbf{Learning &= Hypothesis space &+ Risk  &+ Optimization} \\
-						% &= $\Hspace &+ \risket &+ \argmin_{\thetab \in \Theta} \risket$
+						% &= $\Hspace &+ \risket &+ \argmin_{\thetav \in \Theta} \risket$
 						% 
 						% \textbf{Hypothesis space: } Defines (and restricts!) what kind of model $f$
 						% can be learned from the data.

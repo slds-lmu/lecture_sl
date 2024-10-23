@@ -102,7 +102,7 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 \begin{itemize}
 	\item In GD, we move in the direction of the negative gradient by updating the parameters: 
 	$$
-	 \thetab^{[t + 1]} = \thetab^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetab} \left.\risket\right|_{\thetab = \thetab^{[t]}}	
+	 \thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	
 	$$
 	% with step size $\alpha^{[t]}$. 
 	\item This can be seen as approximating the unexplained information (measured by the loss) through a model update. 
@@ -110,10 +110,10 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 	\item Using the chain rule:
         % mwe see that the pseudo-residuals are input to the update direction
 	\begin{eqnarray*}
-	\nabla_{\thetab} \risket &=&\sumin \left.\frac{\partial L\left(\yi, f\right)}{\partial f} \right|_{f = \fxit} 
+	\nabla_{\thetav} \risket &=&\sumin \left.\frac{\partial L\left(\yi, f\right)}{\partial f} \right|_{f = \fxit} 
         % _{= - \tilde r^{(i)}}
-	\cdot \nabla_{\thetab} \fxit \\ 
-	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetab} \fxit.
+	\cdot \nabla_{\thetav} \fxit \\ 
+	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
 	\end{eqnarray*}
 	\item Hence the update is determined by a loss-optimal directional change of the model output 
         and a loss-independent derivate of $f$.
@@ -121,11 +121,11 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
         % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
 \end{itemize}	
 
-% For risk minimization, the update rule for the parameter $\thetab$ is 
+% For risk minimization, the update rule for the parameter $\thetav$ is 
 % \begin{footnotesize}
 % \begin{eqnarray*}
-% \thetab^{[t+1]} &\leftarrow & \thetab^{[t]} - \alpha^{[t]}  \sumin \nabla_{\thetab} \left. \Lxyit \right|_{\thetab = \thetab^{[t]}} \\
-% \thetab^{[t+1]} &\leftarrow & \thetab^{[t]} + \alpha^{[t]} \sumin \tilde r^{(i)} \cdot \left. \nabla_{\thetab} \fxit \right|_{\thetab = \thetab^{[t]}} 
+% \thetav^{[t+1]} &\leftarrow & \thetav^{[t]} - \alpha^{[t]}  \sumin \nabla_{\thetav} \left. \Lxyit \right|_{\thetav = \thetav^{[t]}} \\
+% \thetav^{[t+1]} &\leftarrow & \thetav^{[t]} + \alpha^{[t]} \sumin \tilde r^{(i)} \cdot \left. \nabla_{\thetav} \fxit \right|_{\thetav = \thetav^{[t]}} 
 % \end{eqnarray*}
 % \end{footnotesize}
 % $\alpha^{[t]} \in [0,1]$ is called \enquote{learning rate} in this context.

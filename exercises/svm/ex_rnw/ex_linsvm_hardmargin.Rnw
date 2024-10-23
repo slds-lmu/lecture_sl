@@ -4,8 +4,8 @@
     \begin{equation*}
     \label{eq:softmargin}
     \begin{aligned}
-    & \min_{\mathbf{\thetab}, \theta_0}
-    & &\frac{1}{2} ||\mathbf{\thetab}||^2 \\
+    & \min_{\mathbf{\thetav}, \theta_0}
+    & &\frac{1}{2} ||\mathbf{\thetav}||^2 \\
     & \text{s.t. :}
     & & \svmhplane \geq 1 
     \end{aligned}
@@ -38,8 +38,8 @@
         
         \begin{itemize}
             \item $\gamma$ 
-            \item $ \| \thetab \|$
-            \item $  \thetab  $
+            \item $ \| \thetav \|$
+            \item $  \thetav  $
             \item $ \theta_0  $
             \item Determine which points are support vectors. 
         \end{itemize}

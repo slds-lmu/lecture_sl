@@ -34,7 +34,7 @@
   \item For highly correlated features, OLS becomes sensitive to random errors in response, results in large variance in fit
   \item We now add a complexity penalty to the loss:
   $$
-  \riskrt = \sumin \left(\yi - \thetab^\top \xi \right)^2 + \lambda \cdot J(\thetab). 
+  \riskrt = \sumin \left(\yi - \thetav^\top \xi \right)^2 + \lambda \cdot J(\thetav). 
   $$ 
   \end{itemize}
 
@@ -56,12 +56,12 @@
 
 \begin{vbframe}{Ridge Regression / L2 Penalty}
 Intuitive measure of model complexity is deviation from 0-origin; coeffs then have no or a weak effect. 
-So we measure $J(\thetab)$ through a vector norm, shrinking coeffs closer to 0.\\
+So we measure $J(\thetav)$ through a vector norm, shrinking coeffs closer to 0.\\
 \vspace{0.2cm}
 \begin{eqnarray*}  
-\thetah_{\text{ridge}} &=& \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
-%&=& \argmin_{\thetab} \left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \thetab^\top \thetab \\
-&=& \argmin_{\thetab} \| \yv - \Xmat \thetab \|_2^2  + \lambda \|\thetab\|_2^2
+\thetah_{\text{ridge}} &=& \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
+%&=& \argmin_{\thetav} \left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right) + \lambda \thetav^\top \thetav \\
+&=& \argmin_{\thetav} \| \yv - \Xmat \thetav \|_2^2  + \lambda \|\thetav\|_2^2
 \end{eqnarray*}
 
 Can still analytically solve this:
@@ -71,7 +71,7 @@ Name: We add pos. entries along the diagonal "ridge" of $\Xmat^T \Xmat$
 
 \framebreak 
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$, with $ \thetah_{\text{ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
+Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$, with $ \thetah_{\text{ridge}} = \argmin_{\thetav} \|\yv - \Xmat \thetav\|^2 + \lambda \|\thetav\|^2 $.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/lin_model_regu_02.png}
@@ -81,7 +81,7 @@ Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer 
 
 \framebreak 
 Contours of regularized objective for different $\lambda$ values.\\
-$ \thetah_{\text{ridge}} = \argmin_{\thetab} \|\yv - \Xmat \thetab\|^2 + \lambda \|\thetab\|^2 $.
+$ \thetah_{\text{ridge}} = \argmin_{\thetav} \|\yv - \Xmat \thetav\|^2 + \lambda \|\thetav\|^2 $.
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{figure/reg_contours_02.png}
@@ -96,8 +96,8 @@ We understand the geometry of these 2 mixed components in our regularized risk o
 \vspace{-0.5cm}
 
 \begin{eqnarray*}
-\min_{\thetab} && \sumin \left(\yi - \fxit\right)^2 \\
-  \text{s.t. } && \|\thetab\|_2^2  \leq t \\
+\min_{\thetav} && \sumin \left(\yi - \fxit\right)^2 \\
+  \text{s.t. } && \|\thetav\|_2^2  \leq t \\
 \end{eqnarray*}
 
 \vspace{-1.0cm}
@@ -227,10 +227,10 @@ With an $L2$ penalty we can now select $d$ "too large" but regularize our model 
 \begin{comment}
 \begin{vbframe}{Lasso Regression}
 
-Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
+Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetav$:
 \vspace{-0.2cm}
 \begin{eqnarray*}
-\thetah_{\text{Lasso}}= \argmin_{\thetab} \underbrace{\sumin \left(\yi - \thetab^T \xi\right)^2}_{\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right)} + \lambda \|\thetab\|_1
+\thetah_{\text{Lasso}}= \argmin_{\thetav} \underbrace{\sumin \left(\yi - \thetav^T \xi\right)^2}_{\left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right)} + \lambda \|\thetav\|_1
 \end{eqnarray*}
 Optimization is much harder now. $\riskrt$ is still convex, but in general there is no analytical solution and it is non-differentiable.\\
 \vspace{0.2cm}
@@ -260,8 +260,8 @@ Contours of regularized objective for different $\lambda$ values.
 We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
 \vspace{-0.2cm}
 \begin{eqnarray*}
-\min_{\thetab} \sumin \left(\yi - \fxit\right)^2\,
-\text{subject to: } \|\thetab\|_1 \leq t
+\min_{\thetav} \sumin \left(\yi - \fxit\right)^2\,
+\text{subject to: } \|\thetav\|_1 \leq t
 \end{eqnarray*}
 The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
 \vspace{-0.1cm}

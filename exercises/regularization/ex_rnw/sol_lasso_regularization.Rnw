@@ -6,26 +6,26 @@
 
         \begin{equation}\label{eq:solve_b}
             \begin{aligned}
-                \thetabh &= \left(\underbrace{{\Xmat}^T \Xmat}_{\id}\right)^{-1} \Xmat^T\yv \\
-                \thetabh &= \Xmat^T \yv  
+                \thetavh &= \left(\underbrace{{\Xmat}^T \Xmat}_{\id}\right)^{-1} \Xmat^T\yv \\
+                \thetavh &= \Xmat^T \yv  
             \end{aligned}
         \end{equation}
 
         We will now use the result of eq. \ref{eq:solve_b} to show that:
         \begin{equation}
             \begin{aligned}
-                \argmin_{\thetab}  \riskrt &= \argmin_{\thetab} \frac12 \sum_{i=1}^n \left( \yi - \thetab^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i| \\
-                &= \argmin_{\thetab}  \frac12  \| \yv - \Xmat \thetab  \|_2^2 + \lambda \|\thetab\|_1 \\
-                &= \argmin_{\thetab} \frac12 ( \yv - \Xmat \thetab)^T ( \yv - \Xmat \thetab) + \lambda \|\thetab\|_1 \\ 
-                &= \argmin_{\thetab}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetab} - 2 \underbrace{\yv^T \Xmat}_{\thetab^T} \thetab + \thetab^T \underbrace{\Xmat^T \Xmat}_{\id} \thetab \right) + \lambda \|\thetab\|_1 \\
-                &= \argmin_{\thetab} - \thetabh^T \thetab  + \frac{\thetab^T \thetab}{2} + \lambda \|\thetab\|_1 \\
-                &= \argmin_{\thetab} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
+                \argmin_{\thetav}  \riskrt &= \argmin_{\thetav} \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i| \\
+                &= \argmin_{\thetav}  \frac12  \| \yv - \Xmat \thetav  \|_2^2 + \lambda \|\thetav\|_1 \\
+                &= \argmin_{\thetav} \frac12 ( \yv - \Xmat \thetav)^T ( \yv - \Xmat \thetav) + \lambda \|\thetav\|_1 \\ 
+                &= \argmin_{\thetav}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetav} - 2 \underbrace{\yv^T \Xmat}_{\thetav^T} \thetav + \thetav^T \underbrace{\Xmat^T \Xmat}_{\id} \thetav \right) + \lambda \|\thetav\|_1 \\
+                &= \argmin_{\thetav} - \thetavh^T \thetav  + \frac{\thetav^T \thetav}{2} + \lambda \|\thetav\|_1 \\
+                &= \argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
             \end{aligned}
         \end{equation}
 
     \item
 
-        The advantage of this representation if we are interested in finding $\thetab$ is that we can optimize each $g_i(\theta_i)$ separately to get optimal entries for $\theta_1,\dots,\theta_p$.
+        The advantage of this representation if we are interested in finding $\thetav$ is that we can optimize each $g_i(\theta_i)$ separately to get optimal entries for $\theta_1,\dots,\theta_p$.
 
     \item 
 

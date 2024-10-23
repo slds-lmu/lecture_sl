@@ -42,7 +42,7 @@
     \item We still want a large margin for most of the examples.
     \item We allow violations of the margin constraints via slack vars $\sli \geq 0$
     $$
-    \yi \left( \scp{\thetab}{\xi} + \thetab_0 \right) \geq 1 - \sli
+    \yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli
     $$
     \item Even for separable data, a decision boundary with a few violations and a large average margin may be preferable to one without any violations and a small average margin.
 \end{itemize}
@@ -75,7 +75,7 @@
     \end{enumerate}
     \item Let's minimize a weighted sum of them: 
     $
-    \frac{1}{2} \|\thetab\|^2 + C   \sum_{i=1}^n \sli
+    \frac{1}{2} \|\thetav\|^2 + C   \sum_{i=1}^n \sli
     $
     \item Constant $C > 0$ controls the relative importance of the two parts.
     % \item It represents the relative weight assigned to either having a large
@@ -94,8 +94,8 @@
 The linear \textbf{soft-margin} SVM is the convex quadratic program:
 
   \begin{eqnarray*}
-    & \min\limits_{\thetab, \thetab_0,\sli} & \frac{1}{2} \|\thetab\|^2 + C   \sum_{i=1}^n \sli \\
-    & \text{s.t.} & \,\, \yi  \left( \scp{\thetab}{\xi} + \thetab_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+    & \min\limits_{\thetav, \thetav_0,\sli} & \frac{1}{2} \|\thetav\|^2 + C   \sum_{i=1}^n \sli \\
+    & \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
     & \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset.\\
   \end{eqnarray*}
 
@@ -116,17 +116,17 @@ The linear \textbf{soft-margin} SVM is the convex quadratic program:
 \small
 The Lagrange function of the soft-margin SVM is given by:
 \begin{align*}
-    \mathcal{L}(\thetab, \theta_0, \bm{\sl}, \bm{\alpha}, \bm{\mu}) &= \frac{1}{2}\left\Vert\thetab\right\Vert^2_2 + C\sumin\sli - \sumin \alpha_i\left(\yi \left( \scp{\thetab}{\xi} + \thetab_0 \right) -1 + \sli\right) \\
+    \mathcal{L}(\thetav, \theta_0, \bm{\sl}, \bm{\alpha}, \bm{\mu}) &= \frac{1}{2}\left\Vert\thetav\right\Vert^2_2 + C\sumin\sli - \sumin \alpha_i\left(\yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) -1 + \sli\right) \\
     & \quad - \sumin \mu_i\sli \quad\text{ with Lagrange multipliers $\bm{\alpha}$ and $\bm{\mu}.$}
 \end{align*}
 The KKT conditions for $i=1,\dots, n$ are:
 \begin{eqnarray*}
     \alpha_i \geq 0, &\quad\quad&\mu_i \geq 0, \\
-    \yi \left( \scp{\thetab}{\xi} + \thetab_0 \right) -1 + \sli \geq 0, && \sli \geq 0, \\
-    \alpha_i\left(\yi \left( \scp{\thetab}{\xi} + \thetab_0 \right) -1 + \sli\right)  = 0, && \sli\mu_i = 0.
+    \yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) -1 + \sli \geq 0, && \sli \geq 0, \\
+    \alpha_i\left(\yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) -1 + \sli\right)  = 0, && \sli\mu_i = 0.
 \end{eqnarray*} 
 With these, we derive (see our optimization course) that \\
-$\thetab = \sumin \alpha_i\yi\xi, \quad 0 = \sumin\alpha_i\yi, \quad \alpha_i = C - \mu_i\quad \forall i=1,\dots, n.$
+$\thetav = \sumin \alpha_i\yi\xi, \quad 0 = \sumin\alpha_i\yi, \quad \alpha_i = C - \mu_i\quad \forall i=1,\dots, n.$
 \end{vbframe}
 
 \begin{vbframe}{Soft-margin SVM dual form}

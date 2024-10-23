@@ -18,7 +18,7 @@
 
 \begin{vbframe}{Lasso vs. ridge Geometry}
 $$ 
-  \min_{\thetab} \sumin \left(\yi - \fxit\right)^2 \qquad \text{ s.t. } \|\thetab\|_p^p  \leq t 
+  \min_{\thetav} \sumin \left(\yi - \fxit\right)^2 \qquad \text{ s.t. } \|\thetav\|_p^p  \leq t 
 $$ 
   \vspace{-0.5cm}
   \begin{figure}
@@ -28,7 +28,7 @@ $$
 
   \begin{itemize}
     \item \small{In both cases (and for sufficiently large $\lambda$), the solution which minimizes $\riskrt$ is always a point on the boundary of the feasible region.
-    \item As expected, $\hat{\thetab}_{\text{lasso}}$ and $\hat{\thetab}_{\text{ridge}}$ have smaller parameter norms than $\thetah$.}
+    \item As expected, $\hat{\thetav}_{\text{lasso}}$ and $\hat{\thetav}_{\text{ridge}}$ have smaller parameter norms than $\thetah$.}
     \item For lasso, solution likely touches a vertex of constraint region. \\
         Induces sparsity and is a form of variable selection.
     \item For $p>n$: lasso selects at most $n$ features \citelink{ZOUHASTIE}.
@@ -69,13 +69,13 @@ $\Sigma_{k,l}=0.7^{|k-l|}$
 \begin{vbframe}{Regularization and Feature Scaling}
 
   \begin{itemize}
-    \item Typically we omit $\theta_0$ in penalty $J(\thetab)$ so that the ``infinitely'' regularized model is the constant model (but can be implementation-dependent).
+    \item Typically we omit $\theta_0$ in penalty $J(\thetav)$ so that the ``infinitely'' regularized model is the constant model (but can be implementation-dependent).
     \item Unregularized LM has \textbf{rescaling equivariance}, if you scale some features, can simply "anti-scale" coefs and risk does not change.
-    \item Not true for Reg-LM: if you down-scale features, coeffs become larger to counteract. They are then penalized stronger in $J(\thetab)$, making them less attractive without any relevenat reason.
+    \item Not true for Reg-LM: if you down-scale features, coeffs become larger to counteract. They are then penalized stronger in $J(\thetav)$, making them less attractive without any relevenat reason.
     \item \textbf{So: usually standardize features in regularized models, whether linear or non-linear!}  
       
-    % \item While ridge regression usually leads to smaller estimated coefficients, but still dense $\thetab$ vectors,
-    %   the lasso will usually create a sparse $\thetab$ vector and can therefore be used for variable selection.
+    % \item While ridge regression usually leads to smaller estimated coefficients, but still dense $\thetav$ vectors,
+    %   the lasso will usually create a sparse $\thetav$ vector and can therefore be used for variable selection.
     %\item SVMs combine (usually) hinge loss with L2-regularization. But also for SMVs this concept is generalized to different losses and different penalties.
   \end{itemize}
 
@@ -85,7 +85,7 @@ $\Sigma_{k,l}=0.7^{|k-l|}$
 
 \footnotesize{
 \begin{itemize}
-    \item Let the DGP be $y = \sum_{j=1}^{5} \theta_j x_{j} +\varepsilon$ for $\thetab=(1,2,3,4,5)^\top$, $\varepsilon \sim \mathcal{N}(0,1)$ %and $n=100$
+    \item Let the DGP be $y = \sum_{j=1}^{5} \theta_j x_{j} +\varepsilon$ for $\thetav=(1,2,3,4,5)^\top$, $\varepsilon \sim \mathcal{N}(0,1)$ %and $n=100$
     \item Suppose $x_5$ was measured in $m$ but we change the unit to $cm$ ($\Tilde{x}_5=100 \cdot x_5$):
 \end{itemize}
 \vspace{-0.4cm}

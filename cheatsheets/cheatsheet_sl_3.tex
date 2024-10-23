@@ -109,23 +109,23 @@
 								Bayesian Linear Model:
 							%
 								\begin{eqnarray*}
-									\yi &=& \fxi + \epsi = \thetab^T \xi + \epsi, \quad \text{for } i \in \{1, \ldots, n\}
+									\yi &=& \fxi + \epsi = \thetav^T \xi + \epsi, \quad \text{for } i \in \{1, \ldots, n\}
 								\end{eqnarray*}
 								%
 								where $\epsi \sim \mathcal{N}(0, \sigma^2).$
 							%
-								Parameter vector $\thetab$ is stochastic and follows a distribution.\\
+								Parameter vector $\thetav$ is stochastic and follows a distribution.\\
 							%	
 								
 								Gaussian variant: 
 							%	
 								\begin{itemize}
 									\setlength{\itemindent}{+.3in}
-									\item Prior distribution: $\thetab \sim \mathcal{N}(\zero, \tau^2 \id_p)$ 
+									\item Prior distribution: $\thetav \sim \mathcal{N}(\zero, \tau^2 \id_p)$ 
 									\item Posterior distribution:	$
-									\thetab ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^\top\yv, \bm{A}^{-1})
+									\thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^\top\yv, \bm{A}^{-1})
 									$ with $\bm{A}:= \sigma^{-2}\Xmat^\top\Xmat + \frac{1}{\tau^2} \id_p$
-									\item Predictive distribution of $y_* = 	\thetab^\top \xv_*$ for a new observations $\xv_*$: 
+									\item Predictive distribution of $y_* = 	\thetav^\top \xv_*$ for a new observations $\xv_*$: 
 									$$
 									y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^\top \Xmat \Amat^{-1}\xv_*, \xv_*^\top\Amat^{-1}\xv_*)
 									$$
@@ -141,8 +141,8 @@
 											\begin{tabular}{cc}
 												\textbf{Weight-Space View} & \textbf{Function-Space View} \vspace{4mm}\\ 
 												Parameterize functions & \vspace{1mm}\\
-												\footnotesize Example: $\fxt = \thetab^\top \xv$ & \vspace{3mm}\\
-												Define distributions on $\thetab$ & Define distributions on $f$ \vspace{4mm}\\
+												\footnotesize Example: $\fxt = \thetav^\top \xv$ & \vspace{3mm}\\
+												Define distributions on $\thetav$ & Define distributions on $f$ \vspace{4mm}\\
 												Inference in parameter space $\Theta$ & Inference in function space $\Hspace$
 											\end{tabular}
 										\end{table}  
@@ -393,12 +393,12 @@
 		%\begin{myblock}{Components of Learning}
 
 		%\textbf{Learning = Hypothesis space + Risk + Optimization} \\
-		%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetab \in \Theta} 
+		%\phantom{\textbf{Learning}} \textbf{= }$ \Hspace + \risket + \argmin_{\thetav \in \Theta} 
 		%\risket$
 
 		% 
 		% \textbf{Learning &= Hypothesis space &+ Risk  &+ Optimization} \\
-		% &= $\Hspace &+ \risket &+ \argmin_{\thetab \in \Theta} \risket$
+		% &= $\Hspace &+ \risket &+ \argmin_{\thetav \in \Theta} \risket$
 		% 
 		% \textbf{Hypothesis space: } Defines (and restricts!) what kind of model $f$
 		% can be learned from the data.

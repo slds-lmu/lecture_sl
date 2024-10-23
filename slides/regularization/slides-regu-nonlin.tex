@@ -31,7 +31,7 @@
 If we define (supervised) ML in one line, this might be it:
 
 $$
-\min_{\thetab} \riskrt= \min_{\thetab} \left(\sumin \Lxyit + \lambda \cdot J(\thetab) \right)
+\min_{\thetav} \riskrt= \min_{\thetav} \left(\sumin \Lxyit + \lambda \cdot J(\thetav) \right)
 $$
 
 Can choose for task at hand:
@@ -39,7 +39,7 @@ Can choose for task at hand:
 \begin{itemize}
   \item \textbf{hypothesis space} of $f$, controls how features influence prediction
   \item \textbf{loss} function $L$, measures how errors are treated
-  \item \textbf{regularizer} $J(\thetab)$, encodes inductive 
+  \item \textbf{regularizer} $J(\thetav)$, encodes inductive 
   bias 
 \end{itemize}
 
@@ -245,8 +245,8 @@ if we rewrite it in constrained form:
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{eqnarray*}
-\min_{\thetab} && \sumin \Lxyit  \\
-  \text{s.t. } && \|\thetab\|_2^2  \leq t \\
+\min_{\thetav} && \sumin \Lxyit  \\
+  \text{s.t. } && \|\thetav\|_2^2  \leq t \\
 \end{eqnarray*}
 \end{column}
 \begin{column}{0.5\textwidth}
@@ -260,7 +260,7 @@ if we rewrite it in constrained form:
 
 Can interpret going through $\lambda$ from large to small as through $t$ from small to large.
 Constructs series of ERM problems with hypothesis spaces $\Hspace_\lambda$, 
-where we constrain norm of $\thetab$ to unit balls of growing sizes.
+where we constrain norm of $\thetav$ to unit balls of growing sizes.
 \end{frame}
 
 

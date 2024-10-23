@@ -39,9 +39,9 @@
 Unconstrained formulation of soft-margin SVM:
 % \begin{eqnarray*}
 $$
-\min\limits_{\thetab, \theta_0} \quad \frac{\lambda}{2} \|\thetab\|^2 + \sumin \Lxyit
+\min\limits_{\thetav, \theta_0} \quad \frac{\lambda}{2} \|\thetav\|^2 + \sumin \Lxyit
 $$
-where $\Lyf = \max(0, 1 -  y f)$ and $\fxt = \thetab^T \xv + \theta_0$.\\ 
+where $\Lyf = \max(0, 1 -  y f)$ and $\fxt = \thetav^T \xv + \theta_0$.\\ 
 (We inconsequentially changed the regularization constant.)
 
 \vspace*{2mm}
@@ -84,9 +84,9 @@ We cannot directly use GD, as the above is not differentiable.
 
 Approximate the risk by a stochastic 1-sample version: 
 \vspace{-0.3cm}
-$$ \frac{\lambda}{2} \|\thetab\|^2 + \Lxyit $$
-With: $\fxt = \thetab^T \xv + \theta_0$ and $\Lyf = \max(0, 1 -  y f)$\\
-The subgradient for $\thetab$ is $\lambda \thetab - \yi \xi \I_{yf < 1}$
+$$ \frac{\lambda}{2} \|\thetav\|^2 + \Lxyit $$
+With: $\fxt = \thetav^T \xv + \theta_0$ and $\Lyf = \max(0, 1 -  y f)$\\
+The subgradient for $\thetav$ is $\lambda \thetav - \yi \xi \I_{yf < 1}$
 
 \vspace{-0.1cm}
 

@@ -41,7 +41,7 @@ Given $n \in \mathbb{N}$ observations $\left(\xi, \yi\right) \in \Xspace \times 
   -\sum^n_{i=1} \yi\log\left(\pixit\right) + \left(1-\yi\log(1-\pixit\right)
 \end{eqnarray*}
 
-with respect to $\thetab$ where the probabilistic classifier
+with respect to $\thetav$ where the probabilistic classifier
 
 \begin{eqnarray*}
   \pixit  & = & 
@@ -52,7 +52,7 @@ the sigmoid function $s(f) = \frac{1}{1 + \exp(-f)}$ and the score $\fxit = \thx
 
 \vspace*{0.5cm} 
 
-NB: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetab} = \left(\xi\right)^\top.$
+NB: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = \left(\xi\right)^\top.$
 
 \end{vbframe}
 
@@ -64,13 +64,13 @@ We find the gradient of logistic regression with the chain rule, s.t.,
 
 {\small
 \begin{align*}
-  \frac{\partial}{\partial\thetab}\riske  & =  
- -\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetab} +  \\
- & \qquad \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetab}\\
+  \frac{\partial}{\partial\thetav}\riske  & =  
+ -\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetav} +  \\
+ & \qquad \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetav}\\
  & =  
- -\sumin \frac{\yi}{\pixit}\frac{\partial\pixit}{\partial \thetab} -  \frac{1-\yi}{1-\pixit}\frac{\partial\pixit}{\partial \thetab}\\
+ -\sumin \frac{\yi}{\pixit}\frac{\partial\pixit}{\partial \thetav} -  \frac{1-\yi}{1-\pixit}\frac{\partial\pixit}{\partial \thetav}\\
  &=  
-  -\sumin \left(\frac{\yi}{\pixit} -  \frac{1-\yi}{1-\pixit}\right)\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetab}\\
+  -\sumin \left(\frac{\yi}{\pixit} -  \frac{1-\yi}{1-\pixit}\right)\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetav}\\
   &=  
   -\sum^n_{i=1} \left(\yi(1-\pixit)  -  (1-\yi)\pixit \right)\left(\xi\right)^\top.\\
 \end{align*}
@@ -82,7 +82,7 @@ We find the gradient of logistic regression with the chain rule, s.t.,
   \quad &=& 
   \sumin \left(\pixit - \yi\right)\left(\xi\right)^\top\\
     \quad &=& 
-  \left(\pi(\mathbf{X}\vert\;\thetab) - \mathbf{y}\right)^\top\mathbf{X}\\
+  \left(\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y}\right)^\top\mathbf{X}\\
 \end{align*}
 
 where  $\mathbf{X} = \left(
@@ -90,14 +90,14 @@ where  $\mathbf{X} = \left(
     \xi[n]\right)^\top \in \R^{n\times d}, \mathbf{y} = \left(
     \yi[1], \dots,
     \yi[n]
-\right)^\top,$ \\ $\pi(\mathbf{X}\vert\;\thetab) = \left(
+\right)^\top,$ \\ $\pi(\mathbf{X}\vert\;\thetav) = \left(
     \pixit[1], \dots,
     \pixit[n]
 \right)^\top \in \R^{n}$.
 
 \vspace*{1cm}
 
-$\implies$ The gradient $\nabla_{\thetab}\riske = \left(\frac{\partial}{\partial\thetab}\riske\right)^\top =  \mathbf{X}^\top\left(\pi(\mathbf{X}\vert\;\thetab) - \mathbf{y}\right)$ 
+$\implies$ The gradient $\nabla_{\thetav}\riske = \left(\frac{\partial}{\partial\thetav}\riske\right)^\top =  \mathbf{X}^\top\left(\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y}\right)$ 
 
 \vspace*{1cm}
 
@@ -112,8 +112,8 @@ We find the Hessian via differentiation, s.t.,
 
 {\small
 \begin{align*}
-  \nabla^2_{\thetab}\riske  = \frac{\partial^2}{\partial{\thetab^\top}\partial\thetab}\riske  & =  
- \frac{\partial}{\partial{\thetab^\top}} \sumin \left(\pixit - \yi\right)\left(\xi\right)^\top\\
+  \nabla^2_{\thetav}\riske  = \frac{\partial^2}{\partial{\thetav^\top}\partial\thetav}\riske  & =  
+ \frac{\partial}{\partial{\thetav^\top}} \sumin \left(\pixit - \yi\right)\left(\xi\right)^\top\\
  & =  
   \sum^n_{i=1}\xi \left(\pixit\left(1-\pixit\right)\right)\left(\xi\right)^\top\\
   & =  
@@ -139,11 +139,11 @@ which is possible since $\pi$ maps into (0, 1). \\
 \vspace*{0.3cm}
 With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that
 
-$$\mathbf{w}^\top  \nabla^2_{\thetab}\riske \mathbf{w} =   \mathbf{w}^\top  \mathbf{X}^\top \bar{\mathbf{D}}^\top \bar{\mathbf{D}}\mathbf{X} \mathbf{w} = (\bar{\mathbf{D}}\mathbf{X} \mathbf{w})^\top\bar{\mathbf{D}}\mathbf{X} \mathbf{w} = \Vert \bar{\mathbf{D}}\mathbf{X} \mathbf{w} \Vert^2_2 \geq 0$$
+$$\mathbf{w}^\top  \nabla^2_{\thetav}\riske \mathbf{w} =   \mathbf{w}^\top  \mathbf{X}^\top \bar{\mathbf{D}}^\top \bar{\mathbf{D}}\mathbf{X} \mathbf{w} = (\bar{\mathbf{D}}\mathbf{X} \mathbf{w})^\top\bar{\mathbf{D}}\mathbf{X} \mathbf{w} = \Vert \bar{\mathbf{D}}\mathbf{X} \mathbf{w} \Vert^2_2 \geq 0$$
 
 since obviously $\mathbf{D} = \bar{\mathbf{D}}^\top \bar{\mathbf{D}}.$ \\
 \vspace*{0.3cm}
-$\Rightarrow \nabla^2_{\thetab}\riske$ is positive semi-definite $\Rightarrow \riske$ is convex.
+$\Rightarrow \nabla^2_{\thetav}\riske$ is positive semi-definite $\Rightarrow \riske$ is convex.
 
 \end{vbframe}
 

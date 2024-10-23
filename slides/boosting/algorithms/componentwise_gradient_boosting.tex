@@ -10,8 +10,8 @@
         \color{algocol}
         \For {$j= 1\to J$}
           \State Fit regression base learner $b_j \in \mathcal{B}_j$ to the vector of pseudo-residuals $\rmm$:
-          \State $\thetamh_j = \argmin_{\thetab \in \bm{\Theta_j}} \sum  \limits_{i=1}^n
-          (\rmi - b_j(\xi, \thetab))^2$
+          \State $\thetamh_j = \argmin_{\thetav \in \bm{\Theta_j}} \sum  \limits_{i=1}^n
+          (\rmi - b_j(\xi, \thetav))^2$
         \EndFor
         \State $j^{[m]} = \argmin_{j} \sum  \limits_{i=1}^n (\rmi - \hat{b}_j(\xi, \thetamh_j))^2$
         \color{lightgray}

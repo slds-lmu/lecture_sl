@@ -140,7 +140,7 @@ Essentially, we
 \begin{figure}
       \centering
         \scalebox{0.99}{\includegraphics{figure_man/logcosh-derivation.png}}
-        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetab$}
+        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
     \end{figure}
 
 \end{column}
@@ -179,7 +179,7 @@ It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the
 \begin{figure}
       \centering
         \scalebox{1}{\includegraphics{figure_man/cosh-gaussian-densities.png}}
-        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetab$}
+        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
     \end{figure}
 
 \end{column}
@@ -282,13 +282,13 @@ $$
 %% \begin{vbframe}{$\epsilon$-insensitive Loss: Optimal Constant}
 
 %% % Derive Constant model and eps-insens loss
-%What is the optimal constant model $f = \thetab$ w.r.t. the $\epsilon$-insensitive loss $\Lyf =  |y - f| ~ \mathds{1}_{ \left\{|y - f| > \epsilon \right\}}$?
+%What is the optimal constant model $f = \thetav$ w.r.t. the $\epsilon$-insensitive loss $\Lyf =  |y - f| ~ \mathds{1}_{ \left\{|y - f| > \epsilon \right\}}$?
 
 %\vspace{-0.2cm}
 %\begin{eqnarray*}
-%\hat \thetab&=& \argmin_{\thetab\in \R}\sumin \Lyfi \\
-%&=& \argmin_{\thetab\in \R} \sum_{i \in I_\eps} \left| \yi - \thetab \right| - \eps  \\
-%&=& \argmin_{\thetab\in \R} \sum_{i \in I_\eps} \left| \yi - \thetab \right| - \sum_{i \in I_\eps} \eps \\
+%\hat \thetav&=& \argmin_{\thetav\in \R}\sumin \Lyfi \\
+%&=& \argmin_{\thetav\in \R} \sum_{i \in I_\eps} \left| \yi - \thetav \right| - \eps  \\
+%&=& \argmin_{\thetav\in \R} \sum_{i \in I_\eps} \left| \yi - \thetav \right| - \sum_{i \in I_\eps} \eps \\
 %&=& \text{median}\left(\left\{\yi ~|~ i \in I_\eps\right\}\right) - |I_\eps| \cdot \eps \\
 %\end{eqnarray*}
 
@@ -338,12 +338,12 @@ $$
 % \framebreak
 
 % BB: this proof cannot be true, it simply states what it claimed???
-% What is the optimal constant model $f = \thetab$ w.r.t.\ the quantile loss?
+% What is the optimal constant model $f = \thetav$ w.r.t.\ the quantile loss?
 % \vspace{-0.2cm}
 % \begin{eqnarray*}
-% \thetah&=& \argmin_{\thetab\in \R}\sumin \Lxyi \\
+% \thetah&=& \argmin_{\thetav\in \R}\sumin \Lxyi \\
 % \Leftrightarrow\quad 
-% \thetah &=& \argmin_{\thetab \in \R}\left\{ (1 - \alpha) \sum_{\yi<\thetab}  \left|\yi-\thetab\right| + \alpha \sum_{\yi \geq\thetab}  \left|\yi-\thetab\right|\right\} \\
+% \thetah &=& \argmin_{\thetav \in \R}\left\{ (1 - \alpha) \sum_{\yi<\thetav}  \left|\yi-\thetav\right| + \alpha \sum_{\yi \geq\thetav}  \left|\yi-\thetav\right|\right\} \\
 % \Leftrightarrow\quad \thetah &=& Q_\alpha(\{\yi\})
 % \end{eqnarray*}
 

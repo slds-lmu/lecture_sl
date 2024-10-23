@@ -4,8 +4,8 @@
     \begin{equation*}
     \label{eq:softmargin}
     \begin{aligned}
-    & \min_{\mathbf{\thetab}, \theta_0}
-    & &\frac{1}{2} ||\mathbf{\thetab}||^2 \\
+    & \min_{\mathbf{\thetav}, \theta_0}
+    & &\frac{1}{2} ||\mathbf{\thetav}||^2 \\
     & \text{s.t. :}
     & & \svmhplane \geq 1 
     \end{aligned}
@@ -42,12 +42,12 @@
                 \lz
                 \lz
                 \lz
-            \item $ \| \thetab \|$
+            \item $ \| \thetav \|$
                 \lz
                 \lz
                 \lz
                 \lz
-            \item $  \thetab  $
+            \item $  \thetav  $
                 \lz 
                 \lz
                 \lz

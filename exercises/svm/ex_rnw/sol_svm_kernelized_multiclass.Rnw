@@ -1,23 +1,23 @@
 \newcommand{\betab}{\bm{\beta}}
-\renewcommand{\fxt}{f(\xv ~|~ \theta_0,\thetab)}
+\renewcommand{\fxt}{f(\xv ~|~ \theta_0,\thetav)}
 %
 \begin{enumerate}
 	%
 	\item 	We consider the following constrained optimization problem:
 %	
 	\begin{eqnarray*}
-		& \min\limits_{\thetab, \theta_0,\sli} & \frac{1}{2} \thetab^\top \thetab + C   \sum_{i=1}^n \sli \\
-		& \text{s.t.} & \,\, \yi  \left( \scp{\thetab}{\phi\left(\xi\right)} + \theta_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+		& \min\limits_{\thetav, \theta_0,\sli} & \frac{1}{2} \thetav^\top \thetav + C   \sum_{i=1}^n \sli \\
+		& \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\phi\left(\xi\right)} + \theta_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
 		& \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset.
 	\end{eqnarray*}
 %
-	In the optimum, the inequalities will hold with equality (as we minimize the slacks), so $\sli = 1 - \yi  \left( \scp{\thetab}{\phi\left(\xi\right)} + \theta_0 \right)$, but the lowest value $\sli$ can take is 0 (we do no get a bonus for points beyond the margin on the correct side).
+	In the optimum, the inequalities will hold with equality (as we minimize the slacks), so $\sli = 1 - \yi  \left( \scp{\thetav}{\phi\left(\xi\right)} + \theta_0 \right)$, but the lowest value $\sli$ can take is 0 (we do no get a bonus for points beyond the margin on the correct side).
 %	
 	So we can rewrite the above: 
 %	
 	\begin{align*} 
 %		
-		\frac{1}{2} \|\thetab\|^2 + C \sumin \max(1-\yi (\thetab^\top \phi(\xi) + \theta_0), 0).
+		\frac{1}{2} \|\thetav\|^2 + C \sumin \max(1-\yi (\thetav^\top \phi(\xi) + \theta_0), 0).
 %	
 	\end{align*}  
 %
@@ -25,26 +25,26 @@
 %
 	\item 
 %	
-	Let $\psi(\xv,y) = \frac12y\tilde{\phi}(x),$ with $\tilde{\phi}(x):=(1,\phi(x))^{\top}$, where $\phi$ is the feature map of the regularized binary ERM problem in (a). Further, define $\tilde{\thetab}:=(\theta_0,\thetab)^{\top}$, i.e. we absorb the intercept into the feature map and parameter vector for convenience.
+	Let $\psi(\xv,y) = \frac12y\tilde{\phi}(x),$ with $\tilde{\phi}(x):=(1,\phi(x))^{\top}$, where $\phi$ is the feature map of the regularized binary ERM problem in (a). Further, define $\tilde{\thetav}:=(\theta_0,\thetav)^{\top}$, i.e. we absorb the intercept into the feature map and parameter vector for convenience.
 %	
 	Now, if $y \neq \yi$ it holds that $y = - \yi,$ so that
 %	
 	\begin{align*}
 %		
-		1 + \tilde{\thetab}^\top \psi(\xi,y) &- \tilde{\thetab}^\top \psi (\xi,\yi)   \\
+		1 + \tilde{\thetav}^\top \psi(\xi,y) &- \tilde{\thetav}^\top \psi (\xi,\yi)   \\
 %		
-		&= 1 +  \frac12 y  \tilde{\thetab}^\top\tilde{\phi}(\xi) -  \frac12 \yi \tilde{\thetab}^\top\tilde{\phi}(\xi) \tag{Definition of $\psi$}\\
+		&= 1 +  \frac12 y  \tilde{\thetav}^\top\tilde{\phi}(\xi) -  \frac12 \yi \tilde{\thetav}^\top\tilde{\phi}(\xi) \tag{Definition of $\psi$}\\
 %		
-		&= 1 +  \frac12 \left(   y   -   \yi    \right)  \tilde{\thetab}^\top \tilde{\phi}(\xi) \tag{Distributivity}\\
+		&= 1 +  \frac12 \left(   y   -   \yi    \right)  \tilde{\thetav}^\top \tilde{\phi}(\xi) \tag{Distributivity}\\
 %		
 		&= \begin{cases}
 %			
-			1 +   \tilde{\thetab}^\top \tilde{\phi}(\xi), & \mbox{if } \yi=-1  \\
-			1 -   \tilde{\thetab}^\top \tilde{\phi}(\xi), & \mbox{if } \yi=+1 \\
+			1 +   \tilde{\thetav}^\top \tilde{\phi}(\xi), & \mbox{if } \yi=-1  \\
+			1 -   \tilde{\thetav}^\top \tilde{\phi}(\xi), & \mbox{if } \yi=+1 \\
 %			
 		\end{cases} \tag{Since $y = - \yi$}\\
 %	
-		&= 	1 -   \yi \tilde{\thetab}^\top \tilde{\phi}(\xi).
+		&= 	1 -   \yi \tilde{\thetav}^\top \tilde{\phi}(\xi).
 %		
 	\end{align*}
 %
@@ -54,19 +54,19 @@
 %		
 		 \risket 
 %		 
-		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \tilde{\thetab}^\top\psi(\xi,y) - \tilde{\thetab}^\top\psi(\xi,\yi)    , 0) \\
+		 &= \frac{1}{2} \|\thetav\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \tilde{\thetav}^\top\psi(\xi,y) - \tilde{\thetav}^\top\psi(\xi,\yi)    , 0) \\
 %		 
- 		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin  \max(1 + \tilde{\thetab}^\top\psi(\xi,-\yi) - \tilde{\thetab}^\top\psi(\xi,\yi)    , 0) \tag{$y \neq \yi$ implies $y = - \yi$} \\
+ 		 &= \frac{1}{2} \|\thetav\|^2 + C \sumin  \max(1 + \tilde{\thetav}^\top\psi(\xi,-\yi) - \tilde{\thetav}^\top\psi(\xi,\yi)    , 0) \tag{$y \neq \yi$ implies $y = - \yi$} \\
 %		 
-		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \max(1 -   \yi \tilde{\thetab}^\top \tilde{\phi}(\xi)  , 0) \\
+		 &= \frac{1}{2} \|\thetav\|^2 + C \sumin \max(1 -   \yi \tilde{\thetav}^\top \tilde{\phi}(\xi)  , 0) \\
 %		
-		 &= \frac{1}{2} \|\thetab\|^2 + C \sumin \max(1 -   \yi (\thetab^\top \phi(\xi)+\theta_0)  , 0) .
+		 &= \frac{1}{2} \|\thetav\|^2 + C \sumin \max(1 -   \yi (\thetav^\top \phi(\xi)+\theta_0)  , 0) .
 %	
 	\end{align*}
 	%	
-	\item  The representer theorem tells us that for the solution $\thetab^*$ (if it exists) of $\risket$ it holds that  $\thetab^* \in \spn\{ (\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g} \}.$
+	\item  The representer theorem tells us that for the solution $\thetav^*$ (if it exists) of $\risket$ it holds that  $\thetav^* \in \spn\{ (\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g} \}.$
 %	
-	This means that $\thetab$ has to be a linear combination of $(\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g},$ so that we can write $\thetab = \Xmat^\top \betab$ for $\betab \in \R^{ng}$ and 
+	This means that $\thetav$ has to be a linear combination of $(\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g},$ so that we can write $\thetav = \Xmat^\top \betab$ for $\betab \in \R^{ng}$ and 
 %	
 		$$	\Xmat = \begin{pmatrix}
 		\psi(\xv^{(1)},1)^\top \\
@@ -80,13 +80,13 @@
 %
 	For $\bm{K} = \Xmat \Xmat^\top$ we obtain that
 %	
-	$$	\|\thetab\|^2  = \thetab^\top \thetab = (\Xmat^\top \betab)^\top \Xmat^\top \betab =  	\betab^\top \Xmat \Xmat^\top \betab = \betab^\top \bm{K} \betab.	$$
+	$$	\|\thetav\|^2  = \thetav^\top \thetav = (\Xmat^\top \betab)^\top \Xmat^\top \betab =  	\betab^\top \Xmat \Xmat^\top \betab = \betab^\top \bm{K} \betab.	$$
 %	
 	Further, it holds that 
 %	
 	\begin{align*}
 %		
-		\thetab^\top\psi(\xi,y) - \thetab^\top\psi(\xi,\yi)  
+		\thetav^\top\psi(\xi,y) - \thetav^\top\psi(\xi,\yi)  
 %		
 		&=  	\betab^\top \Xmat \psi(\xi,y) - 	\betab^\top \Xmat \psi(\xi,\yi) \\
 %		
@@ -107,7 +107,7 @@
 		%		
 		\risket 
 		%		 
-		&= \frac{1}{2} \|\thetab\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \thetab^\top\psi(\xi,y) - \thetab^\top\psi(\xi,\yi)    , 0) \\
+		&= \frac{1}{2} \|\thetav\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \thetav^\top\psi(\xi,y) - \thetav^\top\psi(\xi,\yi)    , 0) \\
 		%		
 		&= \frac{1}{2} \betab^\top \bm{K} \betab  + \sumin \sum_{y\neq \yi} \max\left(1 + (\bm{K}\betab)_{(i-1)g+y} - (\bm{K}\betab)_{(i-1)g+\yi} ) ~ , ~ 0\right).
 		%		

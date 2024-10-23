@@ -33,7 +33,7 @@
 Let's consider regression from a maximum likelihood perspective. Assume: 
 
 $$
-	y~|~ \xv \sim p(y~|~\xv, \thetab) 
+	y~|~ \xv \sim p(y~|~\xv, \thetav) 
 $$
 
 \vspace{0.5cm}
@@ -52,12 +52,12 @@ $$
 \includegraphics[width = 0.75\textwidth]{figure/ftrue.pdf}
 \end{minipage}
 
-where $\ftrue$ has params $\thetab$ and $\eps$ a RV that follows some distribution $\P_\eps$, with $\E[\eps] = 0$. Also, assume $\epsilon \perp \!\!\! \perp \xv$. 
+where $\ftrue$ has params $\thetav$ and $\eps$ a RV that follows some distribution $\P_\eps$, with $\E[\eps] = 0$. Also, assume $\epsilon \perp \!\!\! \perp \xv$. 
 
 
 \framebreak 
 
-From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution $p(y~|~\xv, \thetab)$. 
+From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution $p(y~|~\xv, \thetav)$. 
 
 \begin{itemize}
 \item Then, given i.i.d data $
@@ -116,7 +116,7 @@ $$y~|~\xv \sim N\left(\ftrue(\xv), \sigma^2\right)$$
 The likelihood is then 
 
 \begin{eqnarray*}
-\LL(\thetab) &=& \prodin \pdf\left(\yi ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)
+\LL(\thetav) &=& \prodin \pdf\left(\yi ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)
 \end{eqnarray*}
 
 \framebreak 
@@ -124,7 +124,7 @@ The likelihood is then
 Easy to see: minimizing neg. negative log-likelihood with Gaussian errors is the same as ERM with $L2$-loss:
 
 \begin{eqnarray*}
-- \loglt &=& - \log\left(\LL(\thetab)\right) \\
+- \loglt &=& - \log\left(\LL(\thetav)\right) \\
 &=& - \log\left(\prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)\right) \\
 &\propto& \sumin \left(\yi - \fxit\right)^2
 \end{eqnarray*}
@@ -148,10 +148,10 @@ Easy to see: minimizing neg. negative log-likelihood with Gaussian errors is the
 \begin{vbframe}{Distributions and losses}
 
 \begin{itemize} 
-\item For every error distribution $\P_\eps$ we can derive an equivalent loss function, which leads to the same point estimator for the parameter vector $\thetab$ as maximum-likelihood. Formally,
+\item For every error distribution $\P_\eps$ we can derive an equivalent loss function, which leads to the same point estimator for the parameter vector $\thetav$ as maximum-likelihood. Formally,
 \begin{itemize}
-    \item $\thetah \in \argmax_{\thetab} \LL(\thetab) \implies \thetah \in \argmin_{\thetab}-\log(\LL(\thetab))$  %\implies \thetah \in \argmin_{\thetab}-\log(\LL(\thetab))$ 
-    %\item $\thetah \in \argmax_{\thetab} \log\left(\LL(\thetab)\right) \implies $
+    \item $\thetah \in \argmax_{\thetav} \LL(\thetav) \implies \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$  %\implies \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$ 
+    %\item $\thetah \in \argmax_{\thetav} \log\left(\LL(\thetav)\right) \implies $
 \end{itemize}
 %\lz
 \item \textbf{But}: The other way around does not always work: We cannot derive a corresponding pdf or error distribution for every loss function -- the Hinge loss is one prominent example, for which some probabilistic interpretation is still possible however, see \citelink{SOLLICH1999NINTH}.
@@ -159,7 +159,7 @@ Easy to see: minimizing neg. negative log-likelihood with Gaussian errors is the
 \framebreak
 
 When does the reverse direction hold?
-\item If we can write the loss as $L(y,\fx)=L(y-\fx)=L(r)$ for $r \in \mathbb{R}$, then minimizing $L(y-\fx)$ is equivalent to maximizing a conditional log-likelihood $\log(p(y-f(\xv|\thetab))$ if
+\item If we can write the loss as $L(y,\fx)=L(y-\fx)=L(r)$ for $r \in \mathbb{R}$, then minimizing $L(y-\fx)$ is equivalent to maximizing a conditional log-likelihood $\log(p(y-f(\xv|\thetav))$ if
 \begin{itemize}
  \setlength{\itemsep}{1.2em}
     \item $\log(p(r))$ is affine trafo of $L$ (undoing the $\propto$):

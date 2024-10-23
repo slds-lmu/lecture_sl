@@ -67,7 +67,7 @@ Methods that add \textbf{inductive bias} to model, usually some ``low complexity
 \item LM with all features (L2 loss)
 
 %$$
-%\fxt = \thetab^T\xv = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + ... + %\theta_{12} x_{12}
+%\fxt = \thetav^T\xv = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + ... + %\theta_{12} x_{12}
 %$$
 
 \item MSE evaluation under $10 \times 10$ REP-CV
@@ -230,9 +230,9 @@ Explicitly or implicitly, such modifications represent the preferences we have r
 
 \item $\lambda$ is hard to set manually and is usually selected via CV
 
-  \item As for $\riske$, $\riskr$ and $J$ are often defined in terms of $\thetab$: \\
+  \item As for $\riske$, $\riskr$ and $J$ are often defined in terms of $\thetav$: \\
   
-  $$\riskrt = \risket + \lambda \cdot J(\thetab)$$
+  $$\riskrt = \risket + \lambda \cdot J(\thetav)$$
 
 
 \end{itemize}

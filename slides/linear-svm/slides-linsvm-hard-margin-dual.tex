@@ -32,30 +32,30 @@
 %\vspace*{-0.5cm}
 %
 %  \begin{align*}
-%     \min\limits_{\thetab} &\, f(\thetab)  \\
-%    \text{s.t. } & \quad g_i(\thetab)  \le 0 \quad\forall\, i \in \{1, ..., k \} &\quad(\text{inequality constraints}) \\
-%    h_j(\thetab) & = 0 \quad\forall\, j \in \{1, ..., l \} &\quad(\text{equality constraints})
+%     \min\limits_{\thetav} &\, f(\thetav)  \\
+%    \text{s.t. } & \quad g_i(\thetav)  \le 0 \quad\forall\, i \in \{1, ..., k \} &\quad(\text{inequality constraints}) \\
+%    h_j(\thetav) & = 0 \quad\forall\, j \in \{1, ..., l \} &\quad(\text{equality constraints})
 %  \end{align*}
 %
 %This is called the \textbf{primal form}. \\
-%Let $\fh_P$ be the minimal value of $f(\thetab)$ satisfying all of the constraints.
+%Let $\fh_P$ be the minimal value of $f(\thetav)$ satisfying all of the constraints.
 %
 %\framebreak
 %
 %The corresponding \textbf{Lagrangian} is
 %
 %$$
-%L(\thetab, \alpha, \beta) = f(\thetab) + \sum_{i=1}^k \alpha_i g_i(\thetab) + \sum_{j=1}^l \beta_j h_j(\thetab)
+%L(\thetav, \alpha, \beta) = f(\thetav) + \sum_{i=1}^k \alpha_i g_i(\thetav) + \sum_{j=1}^l \beta_j h_j(\thetav)
 %$$
 
 %with the \textbf{Lagrange Multipliers} $\alpha_i, \beta_j \ge 0$.
 
 %\lz 
 
-%Minimizing the Lagrangian is minimizing $f(\thetab)$ under the constraints:\\ 
-%Since $\frac{\partial L(\thetab, \alpha, \beta)}{\partial \beta_j}= h_j(\thetab)$,
-%setting the partial derivative of $L(\thetab, \beta)$ w.r.t. $\beta_j$ to 0 just restates the constraints.\\
-%Since $\frac{\partial L(\thetab, \alpha, \beta)}{\partial \thetab} = \nabla f(\thetab) + \sum_{i=1}^k \alpha_i \nabla g_i(\thetab) + \sum_{j=1}^l \beta_j \nabla h_j(\thetab)$, setting the partial derivative of $L(\%theta, \beta)$ w.r.t. $\thetab$ to 0 also aligns the gradients of the objective and constraint functions (see following slides).\\
+%Minimizing the Lagrangian is minimizing $f(\thetav)$ under the constraints:\\ 
+%Since $\frac{\partial L(\thetav, \alpha, \beta)}{\partial \beta_j}= h_j(\thetav)$,
+%setting the partial derivative of $L(\thetav, \beta)$ w.r.t. $\beta_j$ to 0 just restates the constraints.\\
+%Since $\frac{\partial L(\thetav, \alpha, \beta)}{\partial \thetav} = \nabla f(\thetav) + \sum_{i=1}^k \alpha_i \nabla g_i(\thetav) + \sum_{j=1}^l \beta_j \nabla h_j(\thetav)$, setting the partial derivative of $L(\%theta, \beta)$ w.r.t. $\thetav$ to 0 also aligns the gradients of the objective and constraint functions (see following slides).\\
 
 
 %\end{vbframe}
@@ -69,18 +69,18 @@
 %\vspace*{-0.5cm}
 %
 %  \begin{eqnarray*}
-%    \min\limits_{\thetab_1, \thetab_2} &  \thetab_1 + \thetab_2 & \\
-%    \text{s.t.} & \thetab_1^2 + \thetab_2^2 & = 1
+%    \min\limits_{\thetav_1, \thetav_2} &  \thetav_1 + \thetav_2 & \\
+%    \text{s.t.} & \thetav_1^2 + \thetav_2^2 & = 1
 %  \end{eqnarray*}
 %
 %\lz
 %
 %The Lagrangian function is
 %$$
-%L(\thetab, \beta) = f(\thetab) + \beta h(\thetab) = (\thetab_1 + \thetab_2) + \beta(\thetab_1^2 + \thetab_2^2 - 1)
+%L(\thetav, \beta) = f(\thetav) + \beta h(\thetav) = (\thetav_1 + \thetav_2) + \beta(\thetav_1^2 + \thetav_2^2 - 1)
 %$$
 %
-%You can think of the optimization problem $L(\thetab, \beta) \to \min$ as moving the (linear) contours of the objective forward and backward until you find a point $(\thetab_1, \thetab_2)$ that fulfills the %constraint \emph{and} minimizes the objective function or as moving around the feasible region given by the constraint until you are at the minimum of the objective function.
+%You can think of the optimization problem $L(\thetav, \beta) \to \min$ as moving the (linear) contours of the objective forward and backward until you find a point $(\thetav_1, \thetav_2)$ that fulfills the %constraint \emph{and} minimizes the objective function or as moving around the feasible region given by the constraint until you are at the minimum of the objective function.
 % 
 % \center
 %   \includegraphics{figure_man/optimization/constraints_violated.pdf}
@@ -128,17 +128,17 @@
 % \framebreak
 %  
 % \flushleft
-% At the optima, the contour lines of the objective function $f(\thetab)$ are tangential to the constraint $h(\thetab)$.
+% At the optima, the contour lines of the objective function $f(\thetav)$ are tangential to the constraint $h(\thetav)$.
 % 
 % \lz
 % 
-% This means that the gradients of $f(\thetab)$ and $h(\thetab)$ are parallel (since the gradient is orthogonal to the contour line), so $\nabla f(\thetab) \propto \nabla h(\thetab)$, so:
+% This means that the gradients of $f(\thetav)$ and $h(\thetav)$ are parallel (since the gradient is orthogonal to the contour line), so $\nabla f(\thetav) \propto \nabla h(\thetav)$, so:
 % 
 % \begin{align*}
-% \exists \beta:  \nabla f(\thetab) &= - \beta \nabla h(\thetab) \text{ for optimal $\thetab$}\\
+% \exists \beta:  \nabla f(\thetav) &= - \beta \nabla h(\thetav) \text{ for optimal $\thetav$}\\
 % \intertext{which is equivalent to}
-%   \nabla f(\thetab) + \beta \nabla h(\thetab) &= 0 \\
-%   \text{i.e., }\qquad \frac{\partial}{\partial \thetab} L(\thetab, \beta) &= 0,
+%   \nabla f(\thetav) + \beta \nabla h(\thetav) &= 0 \\
+%   \text{i.e., }\qquad \frac{\partial}{\partial \thetav} L(\thetav, \beta) &= 0,
 % \end{align*}
 % so finding a minimum of the Lagrangian solves the constrained optimization problem.\\
 % This idea is extended to more complex objective functions and constraints.
@@ -150,11 +150,11 @@
 % 
 % Using the Lagrangian, we can write the primal problem equivalently as
 % $$
-% \min\limits_{\thetab} \max\limits_{\alpha, \beta} L(\thetab, \alpha, \beta).
+% \min\limits_{\thetav} \max\limits_{\alpha, \beta} L(\thetav, \alpha, \beta).
 % $$
-% For any given  $\thetab$:\\
-% If $\thetab$ satisfies the constraints, $L(\thetab, \alpha, \beta) \equiv f(\thetab)$ so $\alpha, \beta$ are irrelevant.\linebreak 
-% If $\thetab$ doesn't, we want $L(\thetab, \alpha, \beta) \to \infty$, because the constraints \emph{need} to be satisfied.
+% For any given  $\thetav$:\\
+% If $\thetav$ satisfies the constraints, $L(\thetav, \alpha, \beta) \equiv f(\thetav)$ so $\alpha, \beta$ are irrelevant.\linebreak 
+% If $\thetav$ doesn't, we want $L(\thetav, \alpha, \beta) \to \infty$, because the constraints \emph{need} to be satisfied.
 % 
 % \framebreak
 % 
@@ -162,9 +162,9 @@
 % We obtain the \textbf{dual} optimization problem by switching $\max$ and $\min$, i. e.
 % 
 % $$
-% \max\limits_{\alpha, \beta} \min\limits_{\thetab} L(\thetab, \alpha, \beta).
+% \max\limits_{\alpha, \beta} \min\limits_{\thetav} L(\thetav, \alpha, \beta).
 % $$
-% Since $L(\thetab, \alpha, \beta)$ is a simple sum over $\alpha, \beta$ for fixed $\thetab$, the
+% Since $L(\thetav, \alpha, \beta)$ is a simple sum over $\alpha, \beta$ for fixed $\thetav$, the
 % optimzation here is much easier.
 % 
 % Let $\fh_D$ be the optimal value of the dual problem.
@@ -180,14 +180,14 @@
 % 
 % \framebreak
 % 
-% In case of strong duality, a necessary and sufficient condition for a solution to the primal and dual problem $\thetabh, \hat \alpha, \hat \beta$ are the \textbf{Karush-Kuhn-Tucker-Conditions}
+% In case of strong duality, a necessary and sufficient condition for a solution to the primal and dual problem $\thetavh, \hat \alpha, \hat \beta$ are the \textbf{Karush-Kuhn-Tucker-Conditions}
 % 
 % \begin{align*}
-% \left.\fp{L(\thetab, \alpha, \beta)}{\thetab}\right|_{(\thetabh, \hat\alpha, \hat\beta)} &= 0  &\text{(Stationarity)}\\
-% g_i(\thetabh) &\le 0 \quad \forall ~ i \in \{1, ..., k \} &\text{(Primal feasibility I)}\\
-% h_j(\thetabh) &= 0 \quad \forall ~ j \in \{1, ..., l \} & \text{(Primal feasibility II)}\\
+% \left.\fp{L(\thetav, \alpha, \beta)}{\thetav}\right|_{(\thetavh, \hat\alpha, \hat\beta)} &= 0  &\text{(Stationarity)}\\
+% g_i(\thetavh) &\le 0 \quad \forall ~ i \in \{1, ..., k \} &\text{(Primal feasibility I)}\\
+% h_j(\thetavh) &= 0 \quad \forall ~ j \in \{1, ..., l \} & \text{(Primal feasibility II)}\\
 % \hat \alpha_i &\ge 0 \quad \forall ~ i \in \{1, ..., k \} &\text{(Dual feasibility)}\\
-% \hat \alpha_i g_i(\thetabh) &= 0 \quad \forall ~ i \in \{1, ..., k \} &\text{(Complementarity)}
+% \hat \alpha_i g_i(\thetavh) &= 0 \quad \forall ~ i \in \{1, ..., k \} &\text{(Complementarity)}
 % \end{align*}
 % 
 % Particularly for SVMs, the KKT conditions are necessary and sufficient for a solution.
@@ -198,8 +198,8 @@
 
 We before derived the primal quadratic program for the hard margin SVM. We could directly solve this, but traditionally the SVM is solved in the dual and this has some advantages. In any case, many algorithms and derivations are based on it, so we need to know it.
   \begin{eqnarray*}
-  & \min\limits_{\thetab, \theta_0} \quad & \frac{1}{2} \|\thetab\|^2 \\
-  & \text{s.t.} & \,\,\yi  \left( \scp{\thetab}{\xi} + \theta_0 \right) \geq 1 \quad \forall\, i \in \nset.
+  & \min\limits_{\thetav, \theta_0} \quad & \frac{1}{2} \|\thetav\|^2 \\
+  & \text{s.t.} & \,\,\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) \geq 1 \quad \forall\, i \in \nset.
 \end{eqnarray*}
 
 
@@ -220,25 +220,25 @@ The Lagrange function of the SVM optimization problem is
 
 \small
 \begin{eqnarray*}
-&L(\thetab, \theta_0, \alphav) = & \frac{1}{2}\|\thetab\|^2  -  \sum_{i=1}^n \alpha_i \left[\yi  \left( \scp{\thetab}{\xi} + \theta_0 \right) - 1\right]\\
+&L(\thetav, \theta_0, \alphav) = & \frac{1}{2}\|\thetav\|^2  -  \sum_{i=1}^n \alpha_i \left[\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) - 1\right]\\
  & \text{s.t.} & \,\, \alpha_i \ge 0 \quad \forall\, i \in \nset.
 \end{eqnarray*}
 \small
 
 The \textbf{dual} form of this problem is
-$$\max\limits_{\alpha} \min\limits_{\thetab, \theta_0}  L(\thetab, \theta_0,\alphav).$$
+$$\max\limits_{\alpha} \min\limits_{\thetav, \theta_0}  L(\thetav, \theta_0,\alphav).$$
 
 \framebreak 
 
-Notice how the (p+1) decision variables $(\thetab,\theta_0)$ have become $n$ decisions variables $\alphav$, as constraints turned into variables and vice versa.
+Notice how the (p+1) decision variables $(\thetav,\theta_0)$ have become $n$ decisions variables $\alphav$, as constraints turned into variables and vice versa.
 Now every data point has an associated non-negative weight.
 \begin{eqnarray*}
-&L(\thetab, \theta_0, \alphav) = & \frac{1}{2}\|\thetab\|^2  -  \sum_{i=1}^n \alpha_i \left[\yi  \left( \scp{\thetab}{\xi} + \theta_0 \right) - 1\right]\\
+&L(\thetav, \theta_0, \alphav) = & \frac{1}{2}\|\thetav\|^2  -  \sum_{i=1}^n \alpha_i \left[\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) - 1\right]\\
  & \text{s.t.} & \,\, \alpha_i \ge 0 \quad \forall\, i \in \nset.
 \end{eqnarray*}
-We find the stationary point of $L(\thetab, \theta_0,\alphav)$ w.r.t. $\thetab, \theta_0$ and obtain
+We find the stationary point of $L(\thetav, \theta_0,\alphav)$ w.r.t. $\thetav, \theta_0$ and obtain
 \begin{eqnarray*}
-    \thetab & = & \sum_{i=1}^n \alpha_i \yi \xi, \\
+    \thetav & = & \sum_{i=1}^n \alpha_i \yi \xi, \\
     0 & = & \sum_{i=1}^n \alpha_i \yi \quad \forall\, i \in \nset.\\
 \end{eqnarray*}
 
@@ -246,7 +246,7 @@ We find the stationary point of $L(\thetab, \theta_0,\alphav)$ w.r.t. $\thetab, 
 \framebreak 
 
 By inserting these expressions 
-% 1/2 \sum_{i,j}\alpha_i\alpha_j y_i y_j <x_i, x_j> - \sum_{i,j}\alpha_i\alpha_j y_i y_j <x_i, x_j> - \sum_i alpha_i y_i \thetab0 + \sum_i \alpha_i
+% 1/2 \sum_{i,j}\alpha_i\alpha_j y_i y_j <x_i, x_j> - \sum_{i,j}\alpha_i\alpha_j y_i y_j <x_i, x_j> - \sum_i alpha_i y_i \thetav0 + \sum_i \alpha_i
 \& simplifying we obtain the dual problem
 
 \vspace*{-0.5cm}
@@ -269,10 +269,10 @@ with $\bm{K}:= \Xmat \Xmat^T$.
 
 \framebreak
 
-If $(\thetab, \theta_0, \alphav)$ fulfills the KKT conditions (stationarity, primal/dual feasibility, complementary slackness), it solves both the primal and dual problem (strong duality). 
+If $(\thetav, \theta_0, \alphav)$ fulfills the KKT conditions (stationarity, primal/dual feasibility, complementary slackness), it solves both the primal and dual problem (strong duality). 
 
 
-Under these conditions, and if we solve the dual problem and obtain $\alphavh$, we know that $\thetab$ is a linear combination of our data points:
+Under these conditions, and if we solve the dual problem and obtain $\alphavh$, we know that $\thetav$ is a linear combination of our data points:
   
 $$
    \thetah = \sumin \alphah_i \yi \xi 
@@ -281,7 +281,7 @@ $$
 Complementary slackness means:
 
 $$
-\alphah_i \left[\yi  \left( \scp{\thetab}{\xi} + \theta_0 \right) - 1\right] = 0 \quad \forall ~ i \in \{1, ..., n \}.
+\alphah_i \left[\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) - 1\right] = 0 \quad \forall ~ i \in \{1, ..., n \}.
 $$
 
 \framebreak
@@ -290,16 +290,16 @@ $$
    \thetah = \sumin \alphah_i \yi \xi 
 $$
 $$
-\alphah_i \left[\yi  \left( \scp{\thetab}{\xi} + \theta_0 \right) - 1\right] = 0 \quad \forall ~ i \in \{1, ..., n \}.
+\alphah_i \left[\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) - 1\right] = 0 \quad \forall ~ i \in \{1, ..., n \}.
 $$
 
 \begin{itemize}
   \item So either $\alphah_i = 0$, and is not active in the linear combination,
-    or $\alphah_i > 0$, then $\yi \left( \scp{\thetab}{\xi} + \theta_0 \right) = 1$, and $(\xi, \yi)$ has minimal margin and is a support vector!
-  \item We see that we can directly extract the support vectors from the dual variables and the $\thetab$ solution only depends on them.
+    or $\alphah_i > 0$, then $\yi \left( \scp{\thetav}{\xi} + \theta_0 \right) = 1$, and $(\xi, \yi)$ has minimal margin and is a support vector!
+  \item We see that we can directly extract the support vectors from the dual variables and the $\thetav$ solution only depends on them.
   \item We can reconstruct the bias term $\theta_0$ from any support vector:
   $$
-  \theta_0 = \yi - \scp{\thetab}{\xi}.
+  \theta_0 = \yi - \scp{\thetav}{\xi}.
   $$
 \end{itemize}
 
@@ -309,7 +309,7 @@ $$
   \begin{itemize}
       \item SVs are defined to be points with $\alphah_i > 0$. In the case of hard margin linear SVM, the SVs are on the edge of margin.
       \item However, not all points on edge of margin are necessarily SVs.
-      \item In other words, it is possible that both $\alphah_i = 0$ and $\yi \left(\langle\thetab, \xi \rangle \right) - 1 = 0$ hold.
+      \item In other words, it is possible that both $\alphah_i = 0$ and $\yi \left(\langle\thetav, \xi \rangle \right) - 1 = 0$ hold.
   \end{itemize}
 
   \begin{minipage}[t]{0.4\columnwidth}

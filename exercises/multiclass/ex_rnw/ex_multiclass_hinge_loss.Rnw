@@ -47,7 +47,7 @@ Show that the upper bound in (b) coincides with the binary hinge loss $L(y,\fx)=
 Can we say something similar for the alternative multiclass hinge loss in (b)?
 %
 %
-\item Now consider the case in which the score functions are linear, i.e., $f_k(\xv)=\thetab_k^\top \xv$ for each $k \in \Yspace.$
+\item Now consider the case in which the score functions are linear, i.e., $f_k(\xv)=\thetav_k^\top \xv$ for each $k \in \Yspace.$
 %
 What is the difference between
 %
@@ -60,9 +60,9 @@ What is the difference between
 \end{itemize}
 %
 %
-%\item Denote by $\thetab= (\thetab_1^\top, \ldots, \thetab_g^\top)^\top \in \R^{g\cdot p}$ the ``stacked'' parameter vector of the score functions obtained by stacking the parameters of the score functions. 
+%\item Denote by $\thetav= (\thetav_1^\top, \ldots, \thetav_g^\top)^\top \in \R^{g\cdot p}$ the ``stacked'' parameter vector of the score functions obtained by stacking the parameters of the score functions. 
 %%
-%Show that the multiclass hinge loss is convex with respect to $\thetab,$ i.e., $\thetab \mapsto \max\limits_{k} \left( \thetab_k^\top \xv - \thetab_y^\top \xv + \mathds{1}_{\{ y \ne k \}} \right)$ is convex.
+%Show that the multiclass hinge loss is convex with respect to $\thetav,$ i.e., $\thetav \mapsto \max\limits_{k} \left( \thetav_k^\top \xv - \thetav_y^\top \xv + \mathds{1}_{\{ y \ne k \}} \right)$ is convex.
 %
 %\emph{Hint:} Use the following two facts:
 %\begin{itemize}

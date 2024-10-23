@@ -25,11 +25,11 @@
 \begin{vbframe}{Soft-thresholding and L1 regularization}
 In the lecture, we wanted to solve
      \[
-      \min_{\thetab} \mathcal{\tilde R}_{\text{reg}}(\thetab) =  \min_{\thetab}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|
+      \min_{\thetav} \mathcal{\tilde R}_{\text{reg}}(\thetav) =  \min_{\thetav}\mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|
       \]
 with $H_{j,j} \geq 0, \lambda > 0$. Note that we can separate the dimensions, i.e.,
 
-\[\mathcal{\tilde R}_{\text{reg}}(\thetab) = \sum_j z_j(\theta_j) \text{ with } z_j(\theta_j) = \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 + \lambda |\theta_j|.\]
+\[\mathcal{\tilde R}_{\text{reg}}(\thetav) = \sum_j z_j(\theta_j) \text{ with } z_j(\theta_j) = \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 + \lambda |\theta_j|.\]
       
 Hence, we can minimize each $z_j$ separately to find the global minimum. \\
 \lz

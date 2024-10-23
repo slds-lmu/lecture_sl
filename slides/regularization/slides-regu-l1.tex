@@ -19,11 +19,11 @@
 
 \begin{vbframe}{Lasso Regression}
 
-Another shrinkage method is the so-called \textbf{lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetab$:
+Another shrinkage method is the so-called \textbf{lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetav$:
 \vspace{0.4cm}
 \begin{align*}
-\thetah_{\text{lasso}}&= \argmin_{\thetab} \sumin \left(\yi - \thetab^T \xi\right)^2 + \lambda \sum_{j=1}^{p} \vert\theta_j\vert\\
-&= \argmin_{\thetab}\left(\yv - \Xmat \thetab\right)^\top \left(\yv - \Xmat \thetab\right) + \lambda \|\thetab\|_1
+\thetah_{\text{lasso}}&= \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi\right)^2 + \lambda \sum_{j=1}^{p} \vert\theta_j\vert\\
+&= \argmin_{\thetav}\left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right) + \lambda \|\thetav\|_1
 \end{align*}
 
 \vspace{0.4cm}
@@ -102,8 +102,8 @@ Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\
 We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
 \vspace{-0.2cm}
 \begin{eqnarray*}
-\min_{\thetab} \sumin \left(\yi - \fxit\right)^2\,
-\text{subject to: } \|\thetab\|_1 \leq t
+\min_{\thetav} \sumin \left(\yi - \fxit\right)^2\,
+\text{subject to: } \|\thetav\|_1 \leq t
 \end{eqnarray*}
 The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
 \vspace{-0.1cm}
@@ -154,23 +154,23 @@ $$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\
 
 \begin{vbframe}{Support Recovery of Lasso \citelink{ZHAO2006}}
 \begin{small}
-When can lasso select true support of $\thetab$, i.e., only the non-zero parameters? \\
+When can lasso select true support of $\thetav$, i.e., only the non-zero parameters? \\
 Can be formalized as sign-consistency: 
 \begin{align*}
-\mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetab)\big) \to 1 \, \text{as} \, n \to \infty \quad (\text{where}\,\text{sign}(0):=0) 
+\mathbb{P}\big(\text{sign}(\thetah)=\text{sign}(\thetav)\big) \to 1 \, \text{as} \, n \to \infty \quad (\text{where}\,\text{sign}(0):=0) 
 \end{align*}
 \\
 %\vspace{0.1cm}
-Suppose the true DGP given a partition into subvectors $\thetab=(\thetab_1, \thetab_2)$ is 
+Suppose the true DGP given a partition into subvectors $\thetav=(\thetav_1, \thetav_2)$ is 
 \begin{align*}
-    \bm{Y}=\Xmat\thetab + \bm{\varepsilon} = \Xmat_1 \thetab_1 + \Xmat_2 \thetab_2 + \bm{\varepsilon}\,\text{with}\,\bm{\varepsilon}\sim (0,\sigma^2 \id)
+    \bm{Y}=\Xmat\thetav + \bm{\varepsilon} = \Xmat_1 \thetav_1 + \Xmat_2 \thetav_2 + \bm{\varepsilon}\,\text{with}\,\bm{\varepsilon}\sim (0,\sigma^2 \id)
 \end{align*}
-%$\bm{Y}=\Xmat\thetab + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ 
-and only $\thetab_1$ is non-zero.
+%$\bm{Y}=\Xmat\thetav + \bm{\varepsilon}$ with $\bm{\varepsilon}\sim (0,\sigma^2 \id)$ 
+and only $\thetav_1$ is non-zero.
 \vspace{0.1cm}
 Let $\Xmat_1$ denote the $n \times q$ matrix with the relevant features and $\Xmat_2$ the matrix of noise features. It can be shown that $\thetah_{lasso}$ is sign consistent under an \textbf{irrepresentable condition}:
 \begin{align*}
-    \vert (\Xmat_2^{\top} \Xmat_1)(\Xmat_1^{\top} \Xmat_1)^{-1} \text{sign}(\thetab_1)\vert < \bm{1} \,\, (\text{element-wise})
+    \vert (\Xmat_2^{\top} \Xmat_1)(\Xmat_1^{\top} \Xmat_1)^{-1} \text{sign}(\thetav_1)\vert < \bm{1} \,\, (\text{element-wise})
 \end{align*}
 
 In fact, lasso can only be sign-consistent if this condition holds.

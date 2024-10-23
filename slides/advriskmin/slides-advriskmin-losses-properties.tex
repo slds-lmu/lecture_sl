@@ -228,8 +228,8 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 % \begin{itemize}
 %   \small
 %   \item Problem: Lasso has a non-differentiable 
-%   objective function $$\riskrt = \| \yv - \Xmat \thetab \|^2_2
-%   + \lambda \| \thetab \|_1 ~ \in \mathcal{C}^0,$$
+%   objective function $$\riskrt = \| \yv - \Xmat \thetav \|^2_2
+%   + \lambda \| \thetav \|_1 ~ \in \mathcal{C}^0,$$
 %   but many optimization methods are derivative-based, e.g.,
 %   \begin{itemize}
 %     \small
@@ -260,7 +260,7 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 
 % \tiny Example: $y = x_1 + 1.2 x_2 + \epsilon$. \textit{Left:} unpenalized 
 % objective, \textit{middle:} $L1$ penalty, \textit{right:} penalized objective 
-% (all as functions of $\thetab$). We see how the $L1$ penalty nudges the optimum 
+% (all as functions of $\thetav$). We see how the $L1$ penalty nudges the optimum 
 % towards (0, 0) and compromises the original objective's smoothness.
 
 \end{vbframe}
@@ -274,10 +274,10 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
   \setlength\itemsep{1.2em}
   \item A function $\risket$ is convex if
   $$
-  \riske\left(t \cdot \thetab + (1 - t) \cdot \tilde \thetab\right) \le t \cdot
-  \riske\left(\thetab\right) + (1 - t) \cdot \riske\left(\tilde \thetab \right)
+  \riske\left(t \cdot \thetav + (1 - t) \cdot \tilde \thetav\right) \le t \cdot
+  \riske\left(\thetav\right) + (1 - t) \cdot \riske\left(\tilde \thetav \right)
   $$
-  $\forall$ $t \in [0, 1], ~\thetab, \tilde \thetab \in \Theta$\\
+  $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
   (strictly convex if the above holds with strict inequality).
   \item In optimization, convex problems have a number of convenient properties. E.g., all local minima are 
   global. \vspace{0.2cm }\\
@@ -298,7 +298,7 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
   \item If we model our data using an exponential family distribution, we always get convex losses
   \begin{itemize} 
     %\footnotesize
-    \item For $\fxt$ linear in $\thetab$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
+    \item For $\fxt$ linear in $\thetav$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
   \end{itemize}  
 \end{itemize} 
 
@@ -354,12 +354,12 @@ fail entirely, e.g.:
 \end{minipage}%
 
 \begin{itemize}
-  \item $f$ linear in $\thetab$, e.g.,
+  \item $f$ linear in $\thetav$, e.g.,
   \textbf{logistic regression} with $\fxt = \thx$
   %\begin{itemize}
     %\small
-  \item Data perfectly separable by our learner, so we can find $\thetab$:
-   $$ \yi \fxit = \yi \thetab^T \xi > 0 ~~ \forall \xi$$
+  \item Data perfectly separable by our learner, so we can find $\thetav$:
+   $$ \yi \fxit = \yi \thetav^T \xi > 0 ~~ \forall \xi$$
 %    \\ \vspace{0.1cm} \scriptsize 
     %as every $\xi$ is correctly classified: $\fxit < 0$ for
     %$\yi = -1$, $> 0$ for $\yi = 1$ \small
@@ -369,7 +369,7 @@ fail entirely, e.g.:
  % \vspace{0.1cm}
   %   \begin{itemize}
   %   \small
-  %   \item[$\Rightarrow$] $f \left( \xv ~|~ a \cdot \thetab \right) = 
+  %   \item[$\Rightarrow$] $f \left( \xv ~|~ a \cdot \thetav \right) = 
   %   a \cdot \fxt$ for $a > 1$
   % \end{itemize}
 %\end{itemize}
@@ -377,41 +377,41 @@ fail entirely, e.g.:
 % \vfill
 
 % With optimization, e.g., gradient descent, we can always find a set of 
-% parameters $\thetab^\prime$ that fully separates the data.
+% parameters $\thetav^\prime$ that fully separates the data.
 
 %\framebreak
 
 %\begin{itemize} 
   %\small
  % \item In optimization, e.g., with gradient descent, we can always find a set 
-  %of parameters $\thetab^\prime$ that classifies all samples perfectly.
+  %of parameters $\thetav^\prime$ that classifies all samples perfectly.
    
   %But taking a closer look at $\risket$, we find that the same can be 
-  %achieved with $2 \cdot \thetab^\prime$ -- and at lower risk:
+  %achieved with $2 \cdot \thetav^\prime$ -- and at lower risk:
   
-\item Can now a construct a strictly better $\thetab$
+\item Can now a construct a strictly better $\thetav$
 
-$$    \riske(2 \cdot \thetab) = \sumin  
-    % \log \left( 1 + \exp \left( - |2 \thetab^T \xi| \right)\right) \\
-    L \left( 2 \yi \thetab^T \xi  
+$$    \riske(2 \cdot \thetav) = \sumin  
+    % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
+    L \left( 2 \yi \thetav^T \xi  
     \right) < \risket
 $$
 
-\item As ||$\thetab$|| increases, sum strictly decreases, as argument of L is strictly larger
+\item As ||$\thetav$|| increases, sum strictly decreases, as argument of L is strictly larger
 
   %  \begin{flalign*
-    %\riske(2 \cdot \thetab) &= \sumin  
-    % \log \left( 1 + \exp \left( - |2 \thetab^T \xi| \right)\right) \\
-   % L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetab \right) \right \rvert  
+    %\riske(2 \cdot \thetav) &= \sumin  
+    % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
+   % L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetav \right) \right \rvert  
    % \right)
    %5 = \sumin L \left(2 \cdot \left \rvert %\fxit \right \rvert \right) \\
    %5 &< \sumin L \left( \left \rvert \fxit \right \rvert \right) = \risket
  % \end{flalign*}
 \item We can iterate that, so there is no local (or global) optimum, and no numerical procedure can converge
-%  \item This actually holds true for every $a \cdot \thetab$ with $a > 1$.
+%  \item This actually holds true for every $a \cdot \thetav$ with $a > 1$.
 %  \begin{itemize}
 %    \small
-%    \item[$\Rightarrow$] By increasing $\| \thetab \|$, our loss becomes smaller 
+%    \item[$\Rightarrow$] By increasing $\| \thetav \|$, our loss becomes smaller 
 %    and smaller, and optimization runs infinitely.
     % \item[$\Rightarrow$] This is a consequence of the above assumptions and 
     % sometimes encountered in logistic regression and linear support vector 
@@ -477,23 +477,23 @@ $$
 %   \item In the case of complete separation, we have
 %   \footnotesize
 %   \begin{flalign*}
-%     \risket &= \sumin \log \left( 1 + \exp \left( - \yi \thetab^T \xi \right)
+%     \risket &= \sumin \log \left( 1 + \exp \left( - \yi \thetav^T \xi \right)
 %     \right) \\ &=
-%     \sumin \log \left( 1 + \exp \left( - | \thetab^T \xi| \right)
+%     \sumin \log \left( 1 + \exp \left( - | \thetav^T \xi| \right)
 %     \right),
 %   \end{flalign*}
 %   \small
-%   as every observation is correctly classified (i.e., $\thetab^T \xi < 0$ \\for
-%   $\yi = -1$ and $\thetab^T \xi > 0$ for $\yi = 1$).
+%   as every observation is correctly classified (i.e., $\thetav^T \xi < 0$ \\for
+%   $\yi = -1$ and $\thetav^T \xi > 0$ for $\yi = 1$).
 % \end{itemize} 
 % 
 % \framebreak
 % 
 % \begin{itemize} 
 %   \small
-%   \item $\risket$ thus monotonically decreases in $\thetab$: if a parameter 
-%   vector $\thetab^\prime$ is able to classify the samples perfectly, then 
-%   $2\thetab^\prime$ also classifies the samples perfectly, and at lower risk.
+%   \item $\risket$ thus monotonically decreases in $\thetav$: if a parameter 
+%   vector $\thetav^\prime$ is able to classify the samples perfectly, then 
+%   $2\thetav^\prime$ also classifies the samples perfectly, and at lower risk.
 %   \item Geometrically, this translates to an ever steeper slope of the 
 %   logistic/softmax function, leading to increasingly sharp discrimination and 
 %   infinitely running optimization.

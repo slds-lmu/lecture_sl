@@ -1,5 +1,5 @@
 	\newcommand{\betab}{\bm{\beta}}
-	\renewcommand{\fxt}{f(\xv ~|~ \theta_0,\thetab)}
+	\renewcommand{\fxt}{f(\xv ~|~ \theta_0,\thetav)}
 	%
 	For the data set $\D = \Dset$ with $\yi \in \Yspace=\{-1,1\},$ assume we are provided with a suitable feature map $\phi:\Xspace \to \Phi,$ where $\Phi \subset \R^d.$
 %	
@@ -8,8 +8,8 @@
 	\vspace*{-0.5cm}
 	
 	\begin{eqnarray*}
-		& \min\limits_{\thetab, \theta_0,\sli} & \frac{1}{2} \thetab^\top \thetab + C   \sum_{i=1}^n \sli \\
-		& \text{s.t.} & \,\, \yi  \left( \scp{\thetab}{\phi\left(\xi\right)} + \theta_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+		& \min\limits_{\thetav, \theta_0,\sli} & \frac{1}{2} \thetav^\top \thetav + C   \sum_{i=1}^n \sli \\
+		& \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\phi\left(\xi\right)} + \theta_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
 		& \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset,
 	\end{eqnarray*}
 %
@@ -19,15 +19,15 @@
 		%
 		\item Argue that this is equivalent to the following ERM problem:
 %		
-		$$ \risket = \frac{1}{2} \|\thetab\|^2 + C \sumin \max(1-\yi (\thetab^\top \phi(\xi) + \theta_0), 0),$$
+		$$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \max(1-\yi (\thetav^\top \phi(\xi) + \theta_0), 0),$$
 		%  
 		i.e., the regularized ERM problem for the hinge loss for the hypothesis space
 %		
-		$$  \Hspace = \{  f:\Phi \to \R ~|~ f(\mathbf{z}) = \thetab^\top \mathbf{z} + \theta_0 \quad \thetab \in \R^d,\theta_0\in\R  \}. $$
+		$$  \Hspace = \{  f:\Phi \to \R ~|~ f(\mathbf{z}) = \thetav^\top \mathbf{z} + \theta_0 \quad \thetav \in \R^d,\theta_0\in\R  \}. $$
 		%
 		\item 	Now  assume we deal with a multiclass classification problem with a data set $\D = \Dset$ such that $\yi \in \Yspace=\{1,\ldots,g\}$ for each $i \in \nset.$ In this case, we can derive a similar regularized ERM problem by using the multiclass hinge loss (see Exercise Sheet 4 (b)):
 		%  
-		$$ \risket = \frac{1}{2} \|\thetab\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \thetab^\top\psi(\xi,y) - \thetab^\top\psi(\xi,\yi)    , 0),$$
+		$$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \thetav^\top\psi(\xi,y) - \thetav^\top\psi(\xi,\yi)    , 0),$$
 		%
 		where $\psi: \Xspace \times \Yspace \to \R^d$ is suitable (multiclass) feature map.	
 %		
@@ -53,5 +53,5 @@
 		%	
 		Here, $(\bm{K}\betab)_{(i-1)g+y}$ denotes the  $\big((i-1)g+y\big)$-th entry of the vector $\bm{K}\betab.$
 		
-		\emph{Hint:} The representer theorem tells us that for the solution $\thetab^*$ (if it exists) of $\risket$ it holds that  $\thetab^* \in \spn\{ (\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g} \}.$
+		\emph{Hint:} The representer theorem tells us that for the solution $\thetav^*$ (if it exists) of $\risket$ it holds that  $\thetav^* \in \spn\{ (\psi(\xv^{(i)},y))_{i=1,\ldots,n,y=1,\ldots,g} \}.$
 \end{enumerate}
