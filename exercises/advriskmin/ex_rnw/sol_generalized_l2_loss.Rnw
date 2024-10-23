@@ -29,7 +29,34 @@ $$\fxh = m^{-1}\left(  \frac1n \sum_{i=1}^n m(\yi)  \right)$$
 is the optimal constant model for $L$.
  %
  
-\item First, note that
+\item \textbf{Recommended solution:}
+We need to use the fact that $y,y^{(1)},\ldots,y^{(n)}$ are i.i.d. and the arithmetric mean is an unbiased estimator. That being said, 
+\begin{align*}
+	\E_{xy}[m(y)] - \E_{xy}\left[\frac{1}{n} \sum_{i=1}^n m(\yi)\right] = 0.
+\end{align*}
+
+Therefore, 
+
+\begin{align*}
+%
+  \risk_L\left(\fh \right) 
+  &=  \E_{xy} [\Lxy]      \\
+  &=   \E_{xy} [ \big(m(y)-m(\fxh)\big)^2 ]      \\
+  &=   \E_{xy} \left[ \left(   m(y) -  \frac1n \sum_{i=1}^n m(\yi)    \right)^2 \right]  \\
+  &= \E_{xy} \left[ \left( m(y) -  \frac{1}{n} \sum_{i=1}^n m(\yi)  - \left( \E_{xy}[m(y)] - \E_{xy}\left[\frac{1}{n} \sum_{i=1}^n m(\yi)\right] \right) \right)^2 \right] \\
+  &= \E_{xy} \left[ \left( m(y) -  \frac{1}{n} \sum_{i=1}^n m(\yi)  - \E_{xy}\left[m(y) - \frac{1}{n} \sum_{i=1}^n m(\yi)\right] \right)^2 \right] \\
+  &= \var\left( m(y) - \frac{1}{n} \sum_{i=1}^n m(\yi) \right) \\
+  &= \var(m(y)) + \var\left(\frac{1}{n} \sum_{i=1}^n m(\yi) \right) \\
+  &= \var(m(y)) + \frac{1}{n^2}\var(\sum_{i=1}^n m(\yi)) \\
+  &= \var(m(y)) + \frac{1}{n^2} \cdot n \var(m(\yi)) \\
+  &= \var(m(y)) + \frac{1}{n^2} \cdot n \var(m(y)) \\
+  &= \left(1 + \frac{1}{n} \right) \var(m(y)) \\
+\end{align*}
+
+
+\textbf{Alternative solution:}
+
+Here we provide an alternative solution to (b). First, note that
 %
 \begin{align*}
 %
