@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="runner" />
+
+
+<title>Lecture Slide Status Overview</title>
+
+<script src="slide_status_files/header-attrs-2.28/header-attrs.js"></script>
+<script src="slide_status_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="slide_status_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="slide_status_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="slide_status_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="slide_status_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="slide_status_files/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="slide_status_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="slide_status_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="slide_status_files/navigation-1.1/tabsets.js"></script>
+<link href="slide_status_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="slide_status_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="slide_status_files/kePrint-0.0.1/kePrint.js"></script>
+<link href="slide_status_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lecture Slide Status Overview</h1>
+<h4 class="author">runner</h4>
+<h4 class="date">2024-10-24 16:39:18 CEST</h4>
+
+</div>
+
+
+<style type="text/css">
+/*
+Apply some custom CSS to add breathing room between sub-tables
+and we don't bother creating a separate .css file for just this bit
+*/
+h3 {
+  /*text-align: center;*/
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+</style>
+<p>This document tabulates the state of the slides in
+<code>lecture*/slides/&lt;topic&gt;/</code> in terms of a) compilability
+and b) comparison with presumably “known good” versions of the slides
+located in <code>lecture_*/slides-pdf/</code>.</p>
+<div id="latest-commits" class="section level1">
+<h1>Latest Commits</h1>
+<p>Displaying the latest commits of the lecture service repository and
+each of the currently included lectures (for debugging and race
+condition mitigation (kind of)).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Status of the lecture_service repo (time in UTC)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Branch
+</th>
+<th style="text-align:left;">
+Last Commit
+</th>
+<th style="text-align:left;">
+By
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/slds-lmu/lecture_service/tree/main">main</a>
+</td>
+<td style="text-align:left;">
+2024-10-23 16:05:21
+</td>
+<td style="text-align:left;">
+Lukas Burk
+</td>
+<td style="text-align:left;">
+Update NEWS, bump version
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Latest commits per lecture (times in UTC)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Lecture
+</th>
+<th style="text-align:left;">
+Branch
+</th>
+<th style="text-align:left;">
+Last Commit
+</th>
+<th style="text-align:left;">
+By
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://slds-lmu.github.io/lecture_sl">lecture_sl</a>
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/slds-lmu/lecture_sl/tree/main">main</a>
+</td>
+<td style="text-align:left;">
+2024-10-24 14:29:16
+</td>
+<td style="text-align:left;">
+Ludwig Bothmann
+</td>
+<td style="text-align:left;width: 40%; ">
+update math refresher
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you’re missing a lecture here, you might have to add them to or
+ensure they are downloaded correctly.</p>
+</div>
+<div id="slide-status" class="section level1">
+<h1>Slide status</h1>
+<p><img src="slide_status_files/figure-html/slide-status-plot-1.png" width="100%" /></p>
+<details>
+<summary>
+Click to expand explanation of table columns
+</summary>
+<pre><code>lecture_advml/slides/gaussian-processes/slides-gp-bayes-lm.tex
+\___________/        \________________/ \________________/
+   lecture                 topic            &lt;slide-name&gt;
+
+lecture_advml/slides-pdf/slides-gp-bayes-lm.pdf
+                        \___________________/
+                       pdf_static / &quot;Reference PDF&quot;</code></pre>
+<p>Tables are organized by lecture (first level) and lecture topics
+corresponding to folders in <code>slides/&lt;topic&gt;</code> (second
+level), with a table per topic. Topics ignore certain folders like
+<code>attic</code> and <code>all</code>.</p>
+<ul>
+<li><strong>Slide</strong>: The <code>&lt;slide-name&gt;</code> with a
+link to the compiled .tex file (if it compiles).</li>
+<li><strong>Compiles?</strong>: Whether the .tex file compiles without
+error using <code>latexmk -pdf</code>. This can depend on the
+availability of specific LaTeX dependencies, but assuming they are not
+the issue, this usually indicates syntax issues or things like
+<code>\includegraphics</code> calls using relative paths that work on
+Overleaf but not locally.</li>
+<li><strong>Comparison</strong>: Checking the compiled
+<code>&lt;slide-name&gt;.tex</code> against
+<code>slides-pdf/&lt;slide-name&gt;.pdf</code> using
+<code>diff-pdf-visually</code>:
+<ul>
+<li>❌: The check failed surely, either due to differing page counts or
+because there is no reference PDF.</li>
+<li>❓: The check indicates differences on at least one slide, but they
+may be minor and need manual checking.</li>
+<li>✅: The check seems to be fine, the PDF files match.</li>
+</ul></li>
+<li><strong>Note</strong>: A comment on the previous column listing the
+specific reason for a failing check. Also enumerates the slide pages
+where differences are found, and links to a PDF containing a diff of the
+two files generated with <code>diff-pdf</code> (at a lower resolution
+than the originals).</li>
+</ul>
+</details>
+<div id="lecture_sl" class="section level2">
+<h2>lecture_sl</h2>
+<p>12 topics with a total of 95 slides</p>
+<div id="advriskmin" class="section level3">
+<h3>advriskmin</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+chapter-order-slides-all
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:center;width: 10%; ">
+</td>
+<td style="text-align:left;width: 40%; ">
+8: ! Undefined control sequence. 8: l.20 \subsection 8: {Risk
+Minimizers}
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-bias-variance-decomposition-deepdive.pdf">slides-advriskmin-bias-variance-decomposition-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-bias-variance-decomposition-deepdive.pdf">Dissimilar
+pages: 1, 2, 4, 5</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-bias-variance-decomposition.pdf">slides-advriskmin-bias-variance-decomposition</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-bias-variance-decomposition.pdf">Differing
+page count: 19 vs 15</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-01.pdf">slides-advriskmin-classification-01</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-classification-01.pdf">Dissimilar
+pages: 1, 2, 3</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-bernoulli.pdf">slides-advriskmin-classification-bernoulli</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-classification-bernoulli.pdf">Differing
+page count: 8 vs 11</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-brier.pdf">slides-advriskmin-classification-brier</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-classification-brier.pdf">Differing
+page count: 5 vs 8</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-deepdive.pdf">slides-advriskmin-classification-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-classification-deepdive.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-furtherlosses.pdf">slides-advriskmin-classification-furtherlosses</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-classification-furtherlosses.pdf">Dissimilar
+pages: 1, 3, 4, 5, 6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-logreg-deepdive.pdf">slides-advriskmin-logreg-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-losses-properties.pdf">slides-advriskmin-losses-properties</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-losses-properties.pdf">Dissimilar
+pages: 1, 3, 6, 7, 9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-max-likelihood-l2.pdf">slides-advriskmin-max-likelihood-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-max-likelihood-l2.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-max-likelihood-other.pdf">slides-advriskmin-max-likelihood-other</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-max-likelihood-other.pdf">Differing
+page count: 7 vs 6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-proper-scoring-rules.pdf">slides-advriskmin-proper-scoring-rules</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-pseudo-residuals.pdf">slides-advriskmin-pseudo-residuals</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-pseudo-residuals.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-regression-further-losses.pdf">slides-advriskmin-regression-further-losses</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-regression-further-losses.pdf">Differing
+page count: 12 vs 9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-regression-l1-deepdive.pdf">slides-advriskmin-regression-l1-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-regression-l1-deepdive.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-regression-l2-l1.pdf">slides-advriskmin-regression-l2-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-regression-l2-l1.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-risk-minimizer.pdf">slides-advriskmin-risk-minimizer</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-advriskmin-risk-minimizer.pdf">Differing page
+count: 14 vs 11</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-tree-splitting.pdf">slides-advriskmin-tree-splitting</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="boosting" class="section level3">
+<h3>boosting</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-advanced.pdf">slides-boosting-cwb-advanced</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-cwb-advanced.pdf">Dissimilar pages:
+1, 22</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-basics.pdf">slides-boosting-cwb-basics</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-cwb-basics.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-basics2.pdf">slides-boosting-cwb-basics2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-cwb-basics2.pdf">Dissimilar pages:
+1, 5, 6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-glm.pdf">slides-boosting-cwb-glm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-cwb-glm.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+slides-boosting-gbm-classification
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:center;width: 10%; ">
+</td>
+<td style="text-align:left;width: 40%; ">
+<p>706: Package biblatex Info: … file ‘authoryear.dbx’ not found. 706:
+Package biblatex Info: Trying to load biblatex custom data model… 706:
+Package biblatex Info: … file ‘biblatex-dm.cfg’ not found.</p>
+<p>708: Package biblatex Info: … file ‘biblatex-dm.cfg’ not found. 708:
+\<a href="mailto:c@afterword" class="email">c@afterword</a>=\count404
+708: \<a href="mailto:c@savedafterword"
+class="email">c@savedafterword</a>=\count405</p>
+<p>1228: Package biblatex Info: … file
+‘slides-boosting-gbm-classification.bbl’ not found. 1228: No file
+slides-boosting-gbm-classification.bbl. 1228: Package biblatex Info:
+Reference section=0 on input line 10.</p>
+<p>1253: LaTeX Warning: File ‘figure/boosting_classif_title.png’ not
+found on input line 22. 1253: ! Package pdftex.def Error: File
+‘figure/boosting_classif_title.png’ not found: using draft setting.
+1253: See the pdftex.def package documentation for explanation.</p>
+1254: ! Package pdftex.def Error: File
+‘figure/boosting_classif_title.png’ not found: using draft setting.
+1254: See the pdftex.def package documentation for explanation. 1254:
+Type H <return> for immediate help. </return>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gbm-regularization.pdf">slides-boosting-gbm-regularization</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-gbm-regularization.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gbm-with-trees-1.pdf">slides-boosting-gbm-with-trees-1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-gbm-with-trees-1.pdf">Dissimilar
+pages: 1, 4, 11, 12, 13</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+slides-boosting-gbm-with-trees-2
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:center;width: 10%; ">
+</td>
+<td style="text-align:left;width: 40%; ">
+<p>706: Package biblatex Info: … file ‘authoryear.dbx’ not found. 706:
+Package biblatex Info: Trying to load biblatex custom data model… 706:
+Package biblatex Info: … file ‘biblatex-dm.cfg’ not found.</p>
+<p>708: Package biblatex Info: … file ‘biblatex-dm.cfg’ not found. 708:
+\<a href="mailto:c@afterword" class="email">c@afterword</a>=\count404
+708: \<a href="mailto:c@savedafterword"
+class="email">c@savedafterword</a>=\count405</p>
+<p>1228: Package biblatex Info: … file
+‘slides-boosting-gbm-with-trees-2.bbl’ not found. 1228: No file
+slides-boosting-gbm-with-trees-2.bbl. 1228: Package biblatex Info:
+Reference section=0 on input line 10.</p>
+<p>1253: LaTeX Warning: File ‘figure/gbm_leaf_adjustment.pdf’ not found
+on input line 21. 1253: ! Package pdftex.def Error: File
+‘figure/gbm_leaf_adjustment.pdf’ not found: using draft setting. 1253:
+See the pdftex.def package documentation for explanation.</p>
+1254: ! Package pdftex.def Error: File ‘figure/gbm_leaf_adjustment.pdf’
+not found: using draft setting. 1254: See the pdftex.def package
+documentation for explanation. 1254: Type H <return> for immediate help.
+</return>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gradient-boosting-concept.pdf">slides-boosting-gradient-boosting-concept</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-gradient-boosting-concept.pdf">Dissimilar
+pages: 1, 4, 11, 15, 16</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-intro-adaboost.pdf">slides-boosting-intro-adaboost</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-intro-adaboost.pdf">Dissimilar
+pages: 1, 4, 12</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-lgm-ctbm.pdf">slides-boosting-lgm-ctbm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-lgm-ctbm.pdf">Dissimilar pages: 1,
+3</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-regression-illustrations.pdf">slides-boosting-regression-illustrations</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-regression-illustrations.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-xgboost-deepdive.pdf">slides-boosting-xgboost-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-xgboost-deepdive.pdf">Dissimilar
+pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-xgboost.pdf">slides-boosting-xgboost</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-boosting-xgboost.pdf">Dissimilar pages: 1,
+5</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cod" class="section level3">
+<h3>cod</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/cod/slides-cod-examples.pdf">slides-cod-examples</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-cod-examples.pdf">Dissimilar pages: 3, 6, 8,
+9, 10</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/cod/slides-cod.pdf">slides-cod</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-cod.pdf">Dissimilar pages: 16</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="feature-selection" class="section level3">
+<h3>feature-selection</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-filters1.pdf">slides-fs-filters1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-fs-filters1.pdf">Dissimilar pages: 1, 2,
+9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-filters2.pdf">slides-fs-filters2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-fs-filters2.pdf">Dissimilar pages: 1, 2, 3,
+5</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-introduction.pdf">slides-fs-introduction</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-fs-introduction.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-motivating-examples.pdf">slides-fs-motivating-examples</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-fs-motivating-examples.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-wrapper.pdf">slides-fs-wrapper</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-fs-wrapper.pdf">Dissimilar pages: 1, 3,
+11</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gaussian-processes" class="section level3">
+<h3>gaussian-processes</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-basic.pdf">slides-gp-basic</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-gp-basic.pdf">Differing page count: 52 vs
+51</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-bayes-lm.pdf">slides-gp-bayes-lm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-gp-bayes-lm.pdf">Dissimilar pages: 4, 10, 11,
+13, 15</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-covariance.pdf">slides-gp-covariance</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-gp-covariance.pdf">Dissimilar pages: 2,
+12</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-mean.pdf">slides-gp-mean</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-gp-mean.pdf">Dissimilar pages: 2</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-prediction.pdf">slides-gp-prediction</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-gp-prediction.pdf">Dissimilar pages: 4, 5, 6,
+14, 23</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-training.pdf">slides-gp-training</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-gp-training.pdf">Dissimilar pages: 3, 6, 7,
+8, 10</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="information-theory" class="section level3">
+<h3>information-theory</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-cross-entropy-kld.pdf">slides-info-cross-entropy-kld</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-cross-entropy-kld.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-diffent.pdf">slides-info-diffent</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-diffent.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-entropy.pdf">slides-info-entropy</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-entropy.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-entropy2.pdf">slides-info-entropy2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-kl-ment.pdf">slides-info-kl-ment</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-kl-ment.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-kl-ml.pdf">slides-info-kl-ml</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-kl-ml.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-kl.pdf">slides-info-kl</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-kl.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-mi-deepdive.pdf">slides-info-mi-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-mi-deepdive.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-ml.pdf">slides-info-ml</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-ml.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-mutual-info.pdf">slides-info-mutual-info</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-mutual-info.pdf">Dissimilar pages: 1,
+5</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-mutual-info2.pdf">slides-info-mutual-info2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-mutual-info2.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-sourcecoding.pdf">slides-info-sourcecoding</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-sourcecoding.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-sourcecoding2.pdf">slides-info-sourcecoding2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-info-sourcecoding2.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="linear-svm" class="section level3">
+<h3>linear-svm</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-erm.pdf">slides-linsvm-erm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-linsvm-erm.pdf">Differing page count: 7 vs
+6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-hard-margin-dual.pdf">slides-linsvm-hard-margin-dual</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-linsvm-hard-margin-dual.pdf">Dissimilar
+pages: 1, 6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-hard-margin.pdf">slides-linsvm-hard-margin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-linsvm-hard-margin.pdf">Dissimilar pages:
+1</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-optimization.pdf">slides-linsvm-optimization</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-linsvm-optimization.pdf">Dissimilar pages: 1,
+7</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-soft-margin.pdf">slides-linsvm-soft-margin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-linsvm-soft-margin.pdf">Differing page count:
+10 vs 9</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="lookup-slides" class="section level3">
+<h3>lookup-slides</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/lookup-slides/riskmin_optconst.pdf">riskmin_optconst</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+</td>
+<td style="text-align:left;width: 40%; ">
+No reference PDF
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="mathrefresher" class="section level3">
+<h3>mathrefresher</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/mathrefresher/slides-probability-theory.pdf">slides-probability-theory</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-probability-theory.pdf">Dissimilar pages: 1,
+14, 16, 21, 23</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="multiclass" class="section level3">
+<h3>multiclass</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-binary-reduction.pdf">slides-mc-binary-reduction</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-codebooks.pdf">slides-mc-codebooks</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-losses.pdf">slides-mc-losses</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-mc-losses.pdf">Dissimilar pages: 1, 3, 7</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-softmax-regression.pdf">slides-mc-softmax-regression</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="nonlinear-svm" class="section level3">
+<h3>nonlinear-svm</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-featuregen.pdf">slides-nonlinsvm-featuregen</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-nonlinsvm-featuregen.pdf">Differing page
+count: 9 vs 8</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-kernel-poly.pdf">slides-nonlinsvm-kernel-poly</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-nonlinsvm-kernel-poly.pdf">Dissimilar pages:
+1, 2, 3</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-kernel-rbf.pdf">slides-nonlinsvm-kernel-rbf</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-nonlinsvm-kernel-rbf.pdf">Dissimilar pages:
+1, 3, 12</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-kernel-trick.pdf">slides-nonlinsvm-kernel-trick</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-nonlinsvm-kernel-trick.pdf">Dissimilar pages:
+1, 2, 9, 12, 13</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+slides-nonlinsvm-modelsel
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:center;width: 10%; ">
+</td>
+<td style="text-align:left;width: 40%; ">
+<p>1017: LaTeX Warning: File ‘figure/rbf_sigma.png’ not found on input
+line 20. 1017: ! Package pdftex.def Error: File ‘figure/rbf_sigma.png’
+not found: using draft setting. 1017: See the pdftex.def package
+documentation for explanation.</p>
+1018: ! Package pdftex.def Error: File ‘figure/rbf_sigma.png’ not found:
+using draft setting. 1018: See the pdftex.def package documentation for
+explanation. 1018: Type H <return> for immediate help. </return>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-rkhs-repr.pdf">slides-nonlinsvm-rkhs-repr</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-nonlinsvm-rkhs-repr.pdf">Dissimilar pages: 1,
+3, 5, 6, 9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-uniapprox.pdf">slides-nonlinsvm-uniapprox</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-nonlinsvm-uniapprox.pdf">Differing page
+count: 10 vs 8</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="regularization" class="section level3">
+<h3>regularization</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Comparison
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-bias-var-ridge.pdf">slides-bias-var-ridge</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+</td>
+<td style="text-align:left;width: 40%; ">
+No reference PDF
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-bagging-deepdive.pdf">slides-regu-bagging-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-bayes.pdf">slides-regu-bayes</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-bayes.pdf">Dissimilar pages: 1, 4, 5</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-bias-variance.pdf">slides-regu-bias-variance</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-bias-variance.pdf">Differing page count:
+7 vs 9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-early-stopping.pdf">slides-regu-early-stopping</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-early-stopping.pdf">Dissimilar pages:
+6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-enetlogreg.pdf">slides-regu-enetlogreg</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-geom-l1.pdf">slides-regu-geom-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-geom-l1.pdf">Dissimilar pages: 2, 3</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-geom-l2.pdf">slides-regu-geom-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-geom-l2.pdf">Dissimilar pages: 2, 3, 4,
+5</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-intro.pdf">slides-regu-intro</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-intro.pdf">Dissimilar pages: 3, 5, 7,
+8</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l1.pdf">slides-regu-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-l1.pdf">Dissimilar pages: 2, 7, 9</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l1vsl2.pdf">slides-regu-l1vsl2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-l1vsl2.pdf">Dissimilar pages: 8</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l2-nonlin.pdf">slides-regu-l2-nonlin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-l2-nonlin.pdf">Dissimilar pages: 1, 13,
+15</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l2.pdf">slides-regu-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-l2.pdf">Dissimilar pages: 3, 4, 5, 7,
+8</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-lasso-deepdive.pdf">slides-regu-lasso-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-lasso-deepdive.pdf">Dissimilar pages: 2,
+3, 4, 5, 6</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-nonlin.pdf">slides-regu-nonlin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-others.pdf">slides-regu-others</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-ridge-deepdive.pdf">slides-regu-ridge-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-ridge-deepdive.pdf">Dissimilar pages: 1,
+2, 3</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-wd-vs-l2.pdf">slides-regu-wd-vs-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:center;width: 10%; ">
+❓
+</td>
+<td style="text-align:left;width: 40%; ">
+<a href="comparison/slides-regu-wd-vs-l2.pdf">Dissimilar pages: 1</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+
+</body>
+</html>
