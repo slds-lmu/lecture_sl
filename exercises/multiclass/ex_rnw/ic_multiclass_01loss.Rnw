@@ -38,7 +38,7 @@
 	    
 	    
 	  \item
-	    What is $\bar h,$ i.e., the optimal constant model in terms of the theoretical risk we derived on Exercise Sheet 02?
+	    What is $\hbayes_c,$ i.e., the optimal constant model in terms of the theoretical risk we derived on Exercise Sheet 02?
 	    \lz
 	    \lz 
 	    \lz 
