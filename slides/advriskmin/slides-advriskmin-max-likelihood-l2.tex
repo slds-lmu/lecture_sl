@@ -121,11 +121,11 @@ The likelihood is then
 
 \framebreak 
 
-Easy to see: minimizing neg. negative log-likelihood with Gaussian errors is the same as ERM with $L2$-loss:
+Easy to see: minimizing neg. log-likelihood with Gaussian errors is the same as ERM with $L2$-loss:
 
 \begin{eqnarray*}
 - \loglt &=& - \log\left(\LL(\thetab)\right) \\
-&=& - \log\left(\prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)\right) \\
+&\propto& - \log\left(\prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)\right) \\
 &\propto& \sumin \left(\yi - \fxit\right)^2
 \end{eqnarray*}
 
