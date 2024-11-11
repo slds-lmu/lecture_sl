@@ -11,12 +11,18 @@
 nospeakermargin.tex
 speakermargin.tex
 
+# latex-math subcomponents we don't need here
+latex-math/latex-math.pdf
+latex-math/latex-math.Rmd
+latex-math/.github
+
 #--------------------------------------------#
 #  Intermediate output (slides, exercises)   #
 #--------------------------------------------#
 
 # The only slide PDF output in this repo should be in slides-pdf
 # include both slides-xyz (i2ml) and slideXY- / tXY- (iml) formats
+slides/*/*slides*.pdf
 slides/*/slides*.pdf
 slides/*/t*.pdf
 
