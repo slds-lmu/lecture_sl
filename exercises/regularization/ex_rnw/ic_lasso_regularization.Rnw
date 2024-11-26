@@ -112,7 +112,7 @@ where $\thetavh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1}
 	
 	\item 
 	
-		Make sure that both minimizers in the two case can indeed be written as $sgn(\thetah_{i}) \max\{|\thetah_{i}| - \lambda,0 \}.$
+		Make sure that both minimizers in the two cases can indeed be written as $sgn(\thetah_{i}) \max\{|\thetah_{i}| - \lambda,0 \}.$
 	
 	
 		
