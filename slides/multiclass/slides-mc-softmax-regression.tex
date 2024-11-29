@@ -52,7 +52,7 @@ There is a straightforward generalization to the multiclass case:
       f_k(\xv) = \thetav_k^\top \xv, \quad k = 1, 2, ..., g,
     $$
   each indicating the confidence in class $k$.
-  \item The $g$ score functions are transformed into $g$ probability functions by the \textbf{softmax} function $s:\R^g \to \R^g$ 
+  \item The $g$ score functions are transformed into $g$ probability functions by the \textbf{softmax} function $s:\R^g \to [0,1]^g$ 
 
   $$
     \pi_k(\xv) = s(\fx)_k = \frac{\exp(\thetav_k^\top \xv)}{\sum_{j = 1}^g \exp(\thetav_j^\top \xv) }\,,

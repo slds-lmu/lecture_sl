@@ -8,7 +8,7 @@ $$
 
 \begin{enumerate}
     \item 
-        What is $\E[\|X\|_1]?$ (Hint: $\E|X|=\sqrt{\frac{2}{\pi}}.$)
+        What is $\E[\|X\|_1]?$ (Hint: $\E|X_i|=\sqrt{\frac{2}{\pi}}.$)
         \lz
         \lz
         \lz
@@ -18,7 +18,7 @@ $$
         \lz
 
     \item 
-        What is $\var[\|X\|_1]?$ (Hint: $\var|X|=1-\frac{2}{\pi}.$)
+        What is $\var[\|X\|_1]?$ (Hint: $\var|X_i|=1-\frac{2}{\pi}.$)
         \lz
         \lz
         \lz

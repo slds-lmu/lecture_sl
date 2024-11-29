@@ -17,7 +17,7 @@
                 \argmin_{\thetav}  \riskrt &= \argmin_{\thetav} \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i| \\
                 &= \argmin_{\thetav}  \frac12  \| \yv - \Xmat \thetav  \|_2^2 + \lambda \|\thetav\|_1 \\
                 &= \argmin_{\thetav} \frac12 ( \yv - \Xmat \thetav)^T ( \yv - \Xmat \thetav) + \lambda \|\thetav\|_1 \\ 
-                &= \argmin_{\thetav}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetav} - 2 \underbrace{\yv^T \Xmat}_{\thetav^T} \thetav + \thetav^T \underbrace{\Xmat^T \Xmat}_{\id} \thetav \right) + \lambda \|\thetav\|_1 \\
+                &= \argmin_{\thetav}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetav} - 2 \underbrace{\yv^T \Xmat}_{\thetavh^T} \thetav + \thetav^T \underbrace{\Xmat^T \Xmat}_{\id} \thetav \right) + \lambda \|\thetav\|_1 \\
                 &= \argmin_{\thetav} - \thetavh^T \thetav  + \frac{\thetav^T \thetav}{2} + \lambda \|\thetav\|_1 \\
                 &= \argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
             \end{aligned}
@@ -109,8 +109,8 @@
         \begin{equation}
             \begin{aligned}
                 \begin{cases}
-                    \theta_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot \  max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
-                    \theta_i \leq 0 \longrightarrow \theta_i^* = min(0, \thetah_i + \lambda) 
+                    \thetah_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot \  max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
+                    \thetah_i \leq 0 \longrightarrow \theta_i^* = min(0, \thetah_i + \lambda) 
                         = \underbrace{-1}_{\sign (\thetah_i)} \cdot \  max(0, \overbrace{-\thetah_i}^{ = |\thetah_i|}-\lambda)
                 \end{cases}
             \end{aligned}
