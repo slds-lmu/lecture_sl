@@ -1,22 +1,16 @@
 # ------------------------------------------------------------------------------
 # enetlogreg
-
-# FIG: binary classification task visualization with different values of lambda
+# FIG: REGULARIZED LOGISTIC REGRESSION PLOT
 # ------------------------------------------------------------------------------
 
-library(mlr3)
-library(mlr3learners)
-library(mlr3pipelines)
+library(mlr)
 library(ggplot2)
 library(gridExtra)
 library(viridis)
-library(LiblineaR)
 
 theme_set(theme_minimal())
 
 set.seed(314159)
-
-# DATA -------------------------------------------------------------------------
 
 # Create feature map by taking polynomial feature map for x1 and x2:
 polyDf <- function (mydf, y = NULL, degree = 7)
@@ -44,8 +38,8 @@ polyDf <- function (mydf, y = NULL, degree = 7)
 
 n <- 100
 
-# Simulate data frame, y is choosed by grouping after the euklidean norm. 
-# This leads to a structure which isn't seperateable by linear hyperplanes:
+# Simulate data frame, y is choosed by grouping after the euklidean norm. This
+# leads to a structure which isn't seperateable by linear hyperplanes:
 mydf <- data.frame(
   x1 = runif(n, -1, 1),
   x2 = runif(n, -1, 1)
@@ -60,23 +54,28 @@ mydf$y <- as.factor(ifelse(y == 0, "Group1", "Group2"))
 # Create the new data frame with feature map:
 mydf.poly <- polyDf(mydf, mydf$y)
 
-# PLOT -------------------------------------------------------------------------
-
-# visualize result of classification task
-plotRegLogReg <- function(lambda) {
-  task <- TaskClassif$new(id = "poly_task", backend = mydf.poly, target = "y")
-  if (lambda != 0){
-    lrn <- lrn("classif.glmnet", alpha = 0, lambda = lambda)
-  }else{
-    lrn <- lrn("classif.log_reg")
+plotRegLogReg <- function (lambda) {
+  
+  task <- makeClassifTask(data = mydf.poly, target = "y")
+  
+  # With LiblineaR it is not possible to specify an ordinary logistic regression
+  # with lambda parameter of zero. Therefore, if lambda equals zero the 
+  # base glm is used to fit non-regularized logistic regression. Otherwise
+  # LiblineaR is used:
+  if (lambda != 0) {
+    lrn <- makeLearner("classif.LiblineaRL2LogReg", par.vals = list(type = 0, cost = 1 / lambda))
+  } else {
+    lrn <- "classif.logreg"
   }
-  model <- lrn$train(task)
+  model <- train(task = task, learner = lrn)
   
   test <- expand.grid(x1 = seq(-1, 1, 0.05), x2 = seq(-1, 1, 0.03))
   poly.test <- polyDf(test)
-
-  test$Group <- model$predict_newdata(newdata = poly.test)$response
   
+  # Predict on test grid:
+  test$Group <- predict(model, newdata = poly.test)$data$response
+  
+  # Plot points of test grid and train set:
   gg <- ggplot(test, aes(x = x1, y = x2, color = Group)) +
     geom_point(alpha = 0.3, stroke = 0, shape = 15) + 
     geom_point(data = mydf, aes(x = x1, y = x2, color = y)) +
@@ -86,10 +85,12 @@ plotRegLogReg <- function(lambda) {
   return (gg)
 }
 
+# Run function for different lambda values:
 gg1 <- plotRegLogReg(0) + theme(legend.position="none")
 gg2 <- plotRegLogReg(0.0001) + theme(legend.position="none")
 gg3 <- plotRegLogReg(1)
 
+# Extract legend:
 g_legend <- function (a.gplot) {
   tmp <- ggplot_gtable(ggplot_build(a.gplot))
   leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
@@ -99,7 +100,8 @@ g_legend <- function (a.gplot) {
 
 mylegend <- g_legend(gg3)
 
+# Plot all three images:
 p <- grid.arrange(arrangeGrob(gg1, gg2, gg3 + theme(legend.position = "none"), ncol = 3),
-  mylegend, layout_matrix = matrix(c(1,1,1,2), nrow = 1))
+                  mylegend, layout_matrix = matrix(c(1,1,1,2), nrow = 1))
 
 ggsave("../figure/reg_logreg.png", plot = p, width = 8, height = 2.5)
