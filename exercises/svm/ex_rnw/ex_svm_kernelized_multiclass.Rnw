@@ -29,7 +29,7 @@
 		%  
 		$$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \sum_{y\neq \yi} \max(1 + \tilde{\thetav}^\top\psi(\xi,y) - \tilde{\thetav}^\top\psi(\xi,\yi)    , 0),$$
 		%
-		where $\tilde{\thetav} := (\theta_0, \thetav^\top)^\top \in \R^{d+1}$, and \psi: \Xspace \times \Yspace \to \R^{d+1}$ is suitable (multiclass) feature map.	
+		where $\tilde{\thetav} := (\theta_0, \thetav^\top)^\top \in \R^{d+1}$, and $\psi: \Xspace \times \Yspace \to \R^{d+1}$ is suitable (multiclass) feature map.	
 %		
 		Specify a $\psi$ such that this regularized multiclass ERM problem coincides with the regularized binary ERM problem in (a).
 		%	
