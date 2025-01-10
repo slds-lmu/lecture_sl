@@ -22,8 +22,8 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \begin{sidewaystable}[ht]
 \centering
-\renewcommand{\arraystretch}{8} % Adjust row height
-\setlength{\tabcolsep}{8pt} % Adjust column spacing
+\renewcommand{\arraystretch}{8}
+\setlength{\tabcolsep}{8pt}
 \begin{tabular}{|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|}
 \hline
 \textbf{\Large Loss} & 
@@ -32,10 +32,29 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 \textbf{\Large Optimal \newline Constant Model} & 
 \textbf{\Large Bayes Risk \newline (Optimal Model)} \\ \hline
 
-\textbf{\Large{L2}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
-\textbf{\Large{0/1}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
-\textbf{\Large{Log}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
-\textbf{\Large{Brier}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+\textbf{\Large{L2}} & 
+\Large{$\E_{y|\xv}\left(y|\xv\right) = \fxbayes$} & 
+\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} & 
+\Large{$\mathbb{E}[y] = \mu_Y$} & 
+\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} \\ \hline
+
+\textbf{\Large{0/1}} & 
+\Large{$\hxbayes = \argmax_{C \in \Yspace} \P(y = C | \xv = \xv)$} & 
+\Large{$1 - \mathbb{E}_x[P(y=y^*|x)]$} & 
+\Large{$\text{argmax}_y P(y)$} & 
+\Large{$1 - P(y=y^*)$} \\ \hline
+
+\textbf{\Large{Log}} & 
+\Large{$\pixbayes = \P(y = 1 | \xv = \xv)$} & 
+\Large{$-\mathbb{E}_x[\mathbb{E}_y[\log P(y|x)]]$} & 
+\Large{$\pi^* = P(y=1)$} & 
+\Large{$-\mathbb{E}_x[\mathbb{E}_y[\log P(y|x)]]$} \\ \hline
+
+\textbf{\Large{Brier}} & 
+\Large{$\pixbayes = \P(y = 1 | \xv = \xv)$} & 
+\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} & 
+\Large{$\pi^* = P(y=1)$} & 
+\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} \\ \hline
 
 \end{tabular}
 \end{sidewaystable}
