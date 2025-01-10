@@ -22,7 +22,7 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \begin{sidewaystable}[ht]
 \centering
-\renewcommand{\arraystretch}{8}
+\renewcommand{\arraystretch}{7}
 \setlength{\tabcolsep}{8pt}
 \begin{tabular}{|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|}
 \hline
@@ -34,27 +34,27 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \textbf{\Large{L2}} & 
 \Large{$\E_{y|\xv}\left(y|\xv\right) = \fxbayes$} & 
-\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} & 
-\Large{$\mathbb{E}[y] = \mu_Y$} & 
-\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} \\ \hline
+\Large{$\E_x[\var_{y|x}(y|x)] = \riskbayes_{L2}$} & 
+\Large{$\E_y[y] = \fbayes_C$} & 
+\Large{$\var_y(y) = \risk_{L2}(\fbayes_C)$} \\ \hline
 
 \textbf{\Large{0/1}} & 
 \Large{$\hxbayes = \argmax_{C \in \Yspace} \P(y = C | \xv = \xv)$} & 
-\Large{$1 - \mathbb{E}_x[P(y=y^*|x)]$} & 
-\Large{$\text{argmax}_y P(y)$} & 
-\Large{$1 - P(y=y^*)$} \\ \hline
+\Large{$\riskbayes_{0/1} = 1 - \E_x[\mathop{\mathrm{max}}_{C \in \Yspace}\P(y=C|\xv = \xv)]$} & 
+\Large{Exercise 2} & 
+\Large{Exercise 2} \\ \hline
 
 \textbf{\Large{Log}} & 
 \Large{$\pixbayes = \P(y = 1 | \xv = \xv)$} & 
-\Large{$-\mathbb{E}_x[\mathbb{E}_y[\log P(y|x)]]$} & 
-\Large{$\pi^* = P(y=1)$} & 
-\Large{$-\mathbb{E}_x[\mathbb{E}_y[\log P(y|x)]]$} \\ \hline
+\Large{$\riskbayes_{l} = \E_x[\text{H}_{y|x}(y|x)]$} \newline exp. cond. entropy (chapter 13) & 
+\Large{$\pibayes_C = \P(y = 1)$} & 
+\Large{$\text{H}_y(y) = \risk_{l}(\pibayes_C)$} \\ \hline
 
 \textbf{\Large{Brier}} & 
 \Large{$\pixbayes = \P(y = 1 | \xv = \xv)$} & 
-\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} & 
-\Large{$\pi^* = P(y=1)$} & 
-\Large{$\mathbb{E}_x[\text{Var}_Y(y|x)]$} \\ \hline
+\Large{$\riskbayes_{B} = \E_x[\var_{y|x}(y|x)]$} \newline $\left(= \riskbayes_{L2}\right)$ & 
+\Large{$\pibayes_C = \P(y = 1)$} & 
+\Large{$\var_y(y) = \risk_B(\pibayes_C)$} \\ \hline
 
 \end{tabular}
 \end{sidewaystable}
