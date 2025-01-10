@@ -1,0 +1,35 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb.Rnw")
+@
+
+
+\kopficsl{}{Risk Minimization - Classification}
+
+\aufgabe{Risk Minimizers for the Log-Loss}{
+	<<child="ex_rnw/sol_risk_minimizers_log_loss.Rnw">>=
+	@
+}
+
+\aufgabe{Risk Minimizers for the Brier Score}{
+	<<child="ex_rnw/sol_risk_minimizers_brier_score.Rnw">>=
+	@
+}
+
+\newpage
+
+\begin{sidewaystable}[ht]
+\centering
+\renewcommand{\arraystretch}{8}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{\Large Loss} & \textbf{\Large Risk Minimizer} & \textbf{\Large Bayes Risk} & \textbf{\Large Optimal Constant Model} & \textbf{\Large Bayes Risk (Optimal Model)} \\ \hline
+L2 & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+0/1 & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+Log & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+Brier & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+\end{tabular}
+\end{sidewaystable}
