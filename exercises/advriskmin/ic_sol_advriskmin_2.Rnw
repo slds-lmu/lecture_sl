@@ -22,14 +22,20 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \begin{sidewaystable}[ht]
 \centering
-\renewcommand{\arraystretch}{8}
-\setlength{\tabcolsep}{10pt}
-\begin{tabular}{|c|c|c|c|c|}
+\renewcommand{\arraystretch}{8} % Adjust row height
+\setlength{\tabcolsep}{8pt} % Adjust column spacing
+\begin{tabular}{|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{4.5cm}|}
 \hline
-\textbf{\Large Loss} & \textbf{\Large Risk Minimizer} & \textbf{\Large Bayes Risk} & \textbf{\Large Optimal Constant Model} & \textbf{\Large Bayes Risk (Optimal Model)} \\ \hline
-L2 & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
-0/1 & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
-Log & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
-Brier & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+\textbf{\Large Loss} & 
+\textbf{\Large Risk Minimizer} & 
+\textbf{\Large Bayes Risk} & 
+\textbf{\Large Optimal \newline Constant Model} & 
+\textbf{\Large Bayes Risk \newline (Optimal Model)} \\ \hline
+
+\textbf{\Large{L2}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+\textbf{\Large{0/1}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+\textbf{\Large{Log}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+\textbf{\Large{Brier}} & [Fill Data] & [Fill Data] & [Fill Data] & [Fill Data] \\ \hline
+
 \end{tabular}
 \end{sidewaystable}

@@ -24,6 +24,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{rotating}
+\usepackage{array}
 
 
 \input{../../style/common}
