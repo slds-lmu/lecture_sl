@@ -8,12 +8,57 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{}{Risk Minimization - Classification}
 
+Consider the binary classification learning setting, where $\mathcal{Y}=\setzo$, some feature space $\Xspace$, and the hypothesis space $\Hspace = \{ \pi:\Xspace \to \unitint | \pix = s(\thetav^T\xv), \thetav \in \Theta \}$ of logistic regression.
+
+\lz
+
 \aufgabe{Risk Minimizers for the Log-Loss}{
 	<<child="ex_rnw/ic_risk_minimizers_log_loss.Rnw">>=
 	@
 }
 
 \aufgabe{Risk Minimizers for the Brier Score}{
-	<<child="ex_rnw/ic_risk_minimizers_brier_score">>=
+	<<child="ex_rnw/ic_risk_minimizers_brier_score.Rnw">>=
 	@
 }
+
+\newpage
+
+\begin{sidewaystable}[ht]
+\centering
+\renewcommand{\arraystretch}{6}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|}
+\hline
+\textbf{\large Loss} & 
+\textbf{\large Risk Minimizer} & 
+\textbf{\large Bayes Risk} & 
+\textbf{\large Optimal \newline Constant Model} & 
+\textbf{\large Bayes Risk \newline (Optimal Model)} \\ \hline
+
+\textbf{\Large{L2}} & 
+ & 
+ & 
+ & 
+ \\ \hline
+
+\textbf{\Large{0/1}} & 
+& 
+& 
+& 
+\\ \hline
+
+\textbf{\Large{Log}} & 
+& 
+& 
+& 
+\\ \hline
+
+\textbf{\Large{Brier}} & 
+& 
+& 
+& 
+\\ \hline
+
+\end{tabular}
+\end{sidewaystable}
