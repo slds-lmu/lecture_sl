@@ -67,7 +67,7 @@ This is a sometimes useful ``recasting'' or ``rewriting'' for ridge.
 \begin{vbframe}{$L2$ and noisy features}
 \begin{footnotesize}
 Now consider perturbed features $ \tilde{x}^{(i)}:= \xi + \bm{\delta}^{(i)}$ where $\bm{\delta}^{(i)} \overset{iid}{\sim} (\bm{0},\lambda \id_p)$. \\
-We assume no specifc distribution. Now minimize risk with L2 loss, we define it slightly different than usual, as here our data $\xi$, $\yi$ are fixed, but we integrate over the random permutations $\bm{\delta}$:
+We assume no specific distribution. Now minimize risk with L2 loss, we define it slightly different than usual, as here our data $\xi$, $\yi$ are fixed, but we integrate over the random permutations $\bm{\delta}$:
 
 
 $$\riskt:= \mathbb{E}_{\bm{\delta}}\Big[{\textstyle \sumin}(\yi-\thetav^{\top}\tilde{\xv}^{(i)})^2\Big] = \mathbb{E}_{\bm{\delta}}\Big[{\textstyle \sumin}(\yi-\thetav^{\top}(\xi+\bm{\delta}^{(i)}))^2\Big]\,\,\Big|\, \text{expand}$$
