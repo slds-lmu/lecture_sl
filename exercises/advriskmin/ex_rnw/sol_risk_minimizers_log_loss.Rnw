@@ -1,0 +1,35 @@
+\begin{enumerate}
+	\item
+  \begin{align*}
+    \pibayes_{c}  &= \argmin_{c \in \unitint} \E_{xy} \left[ L\left(y, c\right) \right] = \argmin_{c} \E_{y} \left[ L\left(y, c\right) \right]\\
+    &= \argmin_{c} \E_{y} \left[ -y \log \left(c\right) - \left(1-y\right) \log \left(1-c\right) \right] \\
+    &= \argmin_{c} - \log \left(c\right) \underbrace{\E_{y} \left[y\right]}_{=\P(y=1)=\pi} -\log \left(1-c\right)  \underbrace{\E_{y} \left[1-y\right]}_{=1-\pi} \\
+    &= \argmin_{c} - \left[\pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right]
+  \end{align*}
+  Taking the derivative and setting it to $0$:
+  \begin{align*}
+    &\Rightarrow \frac{d}{dc} - \left[\pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right] \overset{!}{=} 0 \\
+    &\begin{alignedat}{2}
+      &\Rightarrow -\frac{\pi}{c} + \frac{1 - \pi}{1 - c} &&= 0 \\
+      &\Rightarrow c (1 - \pi) &&= (1 - c) \pi \\
+      &\Rightarrow c &&= \pi \\
+      &\Rightarrow \pi_c^\ast &&= \mathbb{P}(y = 1)
+    \end{alignedat}
+  \end{align*}
+
+\item
+  \begin{align*}
+    \risk_{l}(\pibayes_{c}) &= \E_{xy} \left[ L\left(y, \pi \right) \right]\\
+    &= \E_{xy} \left[  -y \log \left( \pi \right) - \left(1-y\right) \log \left(1 - \pi \right)  \right] \\
+    &= - \pi \log(\pi) - (1-\pi) log(1-\pi) \\
+    &= H(y) \text{ (= Entropy!)}
+  \end{align*}
+
+\item
+	What is $\thetavh$ (the optimal constant model in terms of the \textit{empirical} risk)?
+	\lz
+	\lz 
+	\lz
+	\lz
+	\lz
+\end{enumerate}

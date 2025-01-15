@@ -1,0 +1,11 @@
+\begin{enumerate}
+	\item
+	What is $\pibayes_c$ (the optimal constant model in terms of the theoretical risk)?
+	\lz
+	\lz 
+	\lz
+	\lz
+	\lz
+\item
+	What is its risk?
+\end{enumerate}

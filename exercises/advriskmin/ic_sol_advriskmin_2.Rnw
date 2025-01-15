@@ -8,12 +8,12 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 \kopficsl{}{Risk Minimization - Classification}
 
-\aufgabe{Risk Minimizers for the Log-Loss}{
+\loesung{Risk Minimizers for the Log-Loss}{
 	<<child="ex_rnw/sol_risk_minimizers_log_loss.Rnw">>=
 	@
 }
 
-\aufgabe{Risk Minimizers for the Brier Score}{
+\loesung{Risk Minimizers for the Brier Score}{
 	<<child="ex_rnw/sol_risk_minimizers_brier_score.Rnw">>=
 	@
 }
