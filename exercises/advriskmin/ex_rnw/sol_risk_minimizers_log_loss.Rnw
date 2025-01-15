@@ -8,7 +8,7 @@
   \end{align*}
   Taking the derivative and setting it to $0$:
   \begin{align*}
-    &\Rightarrow \frac{d}{dc} - \left[\pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right] \overset{!}{=} 0 \\
+    &\Rightarrow \pd{}{c} - \left[\pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right] \overset{!}{=} 0 \\
     &\begin{alignedat}{2}
       &\Rightarrow -\frac{\pi}{c} + \frac{1 - \pi}{1 - c} &&= 0 \\
       &\Rightarrow c (1 - \pi) &&= (1 - c) \pi \\
@@ -26,10 +26,26 @@
   \end{align*}
 
 \item
-	What is $\thetavh$ (the optimal constant model in terms of the \textit{empirical} risk)?
-	\lz
-	\lz 
-	\lz
-	\lz
-	\lz
+	The optimal constant model in terms of the \textit{empirical} risk $\thetavh$ is given by $\thetavh = \argmin_{\thetav \in \Theta} \risk_{emp}(\thetav)$.
+  \begin{align*}
+    \risk_{emp}(\thetav) &= \sumin L\left(\yi, \fxi\right)\\
+    &= \sumin \log \left(1 + \exp(-\yi \thetav) \right)
+  \end{align*}
+  As $L(y, \thetav) = log\left(1 + \exp(-\yi\thetav)\right)$.
+  Taking the derivative:
+  \begin{align*}
+    \pd{}{\thetav} \risk_{emp}(\thetav) &= \sumin \frac{1}{1+\exp(-\yi\thetav)} \left(+\exp(-\yi\thetav) \right) (-\yi)\\
+    &= - \sumin \yi \frac{\exp(c)}{1 + \exp(c)}\\
+    &= - \sum\limits_{\yi=1}^n 1 \frac{\exp(-\thetav)}{1+\exp(-\thetav)} - \sum\limits_{\yi=-1}^n -1 \frac{\exp(\thetav)}{1+\exp(\thetav)}\\
+    &\overset{!}{=} 0
+  \end{align*}
+  This is equivalent to:
+  \begin{align*}
+    \sum\limits_{\yi=-1}^n \frac{\exp(\thetav)}{1+\exp(\thetav)} &= \sum\limits_{\yi=1}^n \frac{\exp(-\thetav)}{1+\exp(-\thetav)}\\
+    n_{-} \frac{\exp(\thetav)}{1+\exp(\thetav)} &= n_{+} \frac{1}{1+\exp(\thetav)}\\
+    \frac{n_{+}}{n_{-}} &= \exp(\thetav)\\
+    \thetav &= \log(\frac{n_{+}}{n_{-}})
+  \end{align*}
+
+
 \end{enumerate}
