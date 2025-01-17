@@ -13,7 +13,7 @@
       &\Rightarrow -\frac{\pi}{c} + \frac{1 - \pi}{1 - c} &&= 0 \\
       &\Rightarrow c (1 - \pi) &&= (1 - c) \pi \\
       &\Rightarrow c &&= \pi \\
-      &\Rightarrow \pi_c^\ast &&= \mathbb{P}(y = 1)
+      &\Rightarrow \pibayes_{c} &&= \mathbb{P}(y = 1)
     \end{alignedat}
   \end{align*}
 
