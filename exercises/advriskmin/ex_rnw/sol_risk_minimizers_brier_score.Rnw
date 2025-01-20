@@ -15,7 +15,7 @@
 	Taking the deriviative with respect to $c$ and setting it to $0$:
   \begin{align*}
     &\Rightarrow 
-		\pd{}{c} -2c\pi + c^{2} \overset{!}{=} 0\\
+		\pd{}{c} \left[-2c\pi + c^{2}\right] \overset{!}{=} 0\\
     &\begin{alignedat}{2}
       &\Rightarrow -2\pi + 2c &&= 0 \\
       &\Rightarrow \pi &&= c \\

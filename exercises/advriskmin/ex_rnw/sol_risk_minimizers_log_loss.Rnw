@@ -6,9 +6,9 @@
     &= \argmin_{c} - \log \left(c\right) \underbrace{\E_{y} \left[y\right]}_{=\P(y=1)=\pi} -\log \left(1-c\right)  \underbrace{\E_{y} \left[1-y\right]}_{=1-\pi} \\
     &= \argmin_{c} - \left[\pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right]
   \end{align*}
-  Taking the derivative and setting it to $0$:
+  Taking the derivative with respect to $c$ and setting it to $0$:
   \begin{align*}
-    &\Rightarrow \pd{}{c} - \left[\pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right] \overset{!}{=} 0 \\
+    &\Rightarrow \pd{}{c} \left[- \pi \log \left(c\right) + \left(1-\pi\right) \log \left(1-c\right) \right] \overset{!}{=} 0 \\
     &\begin{alignedat}{2}
       &\Rightarrow -\frac{\pi}{c} + \frac{1 - \pi}{1 - c} &&= 0 \\
       &\Rightarrow c (1 - \pi) &&= (1 - c) \pi \\
@@ -20,13 +20,13 @@
 \item
   \begin{align*}
     \risk_{l}(\pibayes_{c}) &= \E_{xy} \left[ L\left(y, \pi \right) \right]\\
-    &= \E_{xy} \left[  -y \log \left( \pi \right) - \left(1-y\right) \log \left(1 - \pi \right)  \right] \\
+    &= \E_{y} \left[  -y \log \left( \pi \right) - \left(1-y\right) \log \left(1 - \pi \right)  \right] \\
     &= - \pi \log(\pi) - (1-\pi) log(1-\pi) \\
     &= H(y) \text{ (= Entropy!)}
   \end{align*}
 
 \item
-	The optimal constant model in terms of the \textit{empirical} risk $\thetavh$ is given by $\thetavh = \argmin_{\thetav \in \Theta} \risk_{emp}(\thetav)$.
+	$\thetavh$, the optimal constant model in terms of the \textit{empirical} risk, is given by $\thetavh = \argmin_{\thetav \in \Theta} \risk_{emp}(\thetav)$.
   \begin{align*}
     \risk_{emp}(\thetav) &= \sumin L\left(\yi, \fxi\right)\\
     &= \sumin \log \left(1 + \exp(-\yi \thetav) \right)
@@ -36,7 +36,7 @@
   \begin{align*}
     \pd{}{\thetav} \risk_{emp}(\thetav) &= \sumin \frac{1}{1+\exp(-\yi\thetav)} \left(+\exp(-\yi\thetav) \right) (-\yi)\\
     &= - \sumin \yi \frac{\exp(c)}{1 + \exp(c)}\\
-    &= - \sum\limits_{\yi=1}^n 1 \frac{\exp(-\thetav)}{1+\exp(-\thetav)} - \sum\limits_{\yi=-1}^n -1 \frac{\exp(\thetav)}{1+\exp(\thetav)}\\
+    &= - \sum\limits_{\yi=1}^n (1) \frac{\exp(-\thetav)}{1+\exp(-\thetav)} - \sum\limits_{\yi=-1}^n (-1) \frac{\exp(\thetav)}{1+\exp(\thetav)}\\
     &\overset{!}{=} 0
   \end{align*}
   This is equivalent to:
