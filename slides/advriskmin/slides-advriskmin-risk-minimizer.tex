@@ -80,19 +80,19 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 
 \begin{itemize}
 \item Let's assume some RV $z \in \Yspace$ for a label
-\item z not RV $y$, because we want to fiddle with its distribution
+\item z not the same as $y$, as we want to fiddle with its distribution
 \item Assume z has distribution Q, so $z \sim Q$
-\item We can now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
-so the score-constant which loss-minimally approximates z
+\item We now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
+What is the score-constant which approximates z with minimal loss?
 \end{itemize}
 
 \lz
 
 We will consider 3 cases for Q
 \begin{itemize}
-\item $Q = P_y$, simply our labels and their marginal distribution in $\Pxy$
-\item $Q = P_{y | x = x}$, conditional label distribution at point $x = \tilde{x}$
+\item $Q = P_y$, (uncond.) distribution of labels y, marginal of $\Pxy$
 \item $Q = P_n$, the empirical product distribution for data $y_1, \ldots, y_n$
+\item $Q = P_{y | x = \tilde{x}}$, conditional label distribution at point $x = \tilde{x}$
 \end{itemize}
 
 \lz
@@ -104,7 +104,7 @@ we will get multiple useful results!
 \end{vbframe}
 
 
-\begin{vbframe}{Optimal Constant Model}
+\begin{vbframe}{Unconditional: Optimal Constant Model}
 
 \begin{itemize}
 {\footnotesize
@@ -131,7 +131,7 @@ $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmi
 \end{vbframe}
 
 
-\begin{vbframe}{Optimal Constant Model}
+\begin{vbframe}{Unconditional: Optimal Constant Model}
 
 \begin{itemize}
 \item Let's start with the simplest case, L2 loss
