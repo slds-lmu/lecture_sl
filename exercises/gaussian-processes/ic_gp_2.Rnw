@@ -1,0 +1,14 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb.Rnw")
+@
+
+\kopficsl{}{Gaussian Processes}
+
+
+\aufgabe{Gaussian Processes - Prediction}{
+	<<child="ex_rnw/ic_gp_2.Rnw">>=
+	@
+}

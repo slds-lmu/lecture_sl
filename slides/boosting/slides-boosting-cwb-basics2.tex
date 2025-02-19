@@ -116,7 +116,7 @@ There are two options to handle the intercept in CWB. In both, the loss-optimal 
   \item  {\footnotesize Assume linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$. %with 
   %one intercept $\theta_{j1}$ %per base learner
   %and slope $\theta_{j2}$.
-  If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.}
+  If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j2}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.}
     \item {\footnotesize During training, intercept is adjusted $M$ times to yield $\fm[0](\xv) + \sum\limits_{m=1}^M %\hat{\theta}^{[m]}_{j^{[m]}1}
     \hat{\theta}^{[m]}_{j1}$}
     \end{itemize}
