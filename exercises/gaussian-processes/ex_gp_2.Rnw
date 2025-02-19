@@ -5,10 +5,10 @@ library('knitr')
 knitr::set_parent("../../style/preamble_ueb.Rnw")
 @
 
-\kopficsl{}{Gaussian Processes}
+\kopfsl{}{Gaussian Processes}
 
 
-\aufgabe{Gaussian Processes - Covariance Function}{
-	<<child="ex_rnw/ic_gp_covariance.Rnw">>=
+\aufgabe{Gaussian Posterior Process}{
+	<<child="ex_rnw/ex_gp_posteriorprocess.Rnw">>=
 	@
 }
