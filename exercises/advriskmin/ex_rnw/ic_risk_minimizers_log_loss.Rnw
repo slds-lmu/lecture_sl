@@ -19,7 +19,7 @@ $$
 	\lz
 	\lz
 \item
-	What is $\thetavh$ (the optimal constant model in terms of the \textit{empirical} risk)?
+	What is $\thetah$ (the optimal constant model in terms of the \textit{empirical} risk)?
 	\lz
 	\lz 
 	\lz

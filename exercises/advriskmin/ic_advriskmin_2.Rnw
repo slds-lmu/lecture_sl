@@ -23,42 +23,45 @@ Consider the binary classification learning setting, where $\mathcal{Y}=\setzo$,
 }
 
 \newpage
-
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=1cm}
 \begin{sidewaystable}[ht]
 \centering
-\renewcommand{\arraystretch}{6}
-\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{5}
+\setlength{\tabcolsep}{8pt}
+\resizebox{\textwidth}{!}{
 \begin{tabular}{|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|}
 \hline
 \textbf{\large Loss} & 
-\textbf{\large Risk Minimizer} & 
-\textbf{\large Bayes Risk} & 
-\textbf{\large Optimal \newline Constant Model} & 
-\textbf{\large Bayes Risk \newline (Optimal Model)} \\ \hline
+\textbf{\large Risk minimizer} & 
+\textbf{\large Bayes risk} & 
+\textbf{\large Optimal \newline constant model} & 
+\textbf{\large Risk of optimal \newline constant model} \\ \hline
 
-\textbf{\Large{L2}} & 
+\rule{0pt}{2cm}\textbf{\Large{L2}} & 
  & 
  & 
  & 
  \\ \hline
 
-\textbf{\Large{0/1}} & 
+\rule{0pt}{2cm}\textbf{\Large{0/1}} & 
 & 
 & 
 & 
 \\ \hline
 
-\textbf{\Large{Log}} & 
+\rule{0pt}{2cm}\textbf{\Large{Log}} & 
 & 
 & 
 & 
 \\ \hline
 
-\textbf{\Large{Brier}} & 
+\rule{0pt}{2cm}\textbf{\Large{Brier}} & 
 & 
 & 
 & 
 \\ \hline
 
 \end{tabular}
+}
 \end{sidewaystable}
+\restoregeometry

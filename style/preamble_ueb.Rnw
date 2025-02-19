@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 %\usepackage[ngerman]{babel}
 \usepackage{a4wide,paralist}
+\usepackage{geometry}
 \usepackage{amsmath, amssymb, xfrac, amsthm}
 \usepackage{dsfont}
 %\usepackage[usenames,dvipsnames]{xcolor}

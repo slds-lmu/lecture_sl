@@ -26,25 +26,25 @@
   \end{align*}
 
 \item
-	$\thetavh$, the optimal constant model in terms of the \textit{empirical} risk, is given by $\thetavh = \argmin_{\thetav \in \Theta} \risk_{emp}(\thetav)$.
+	$\thetah$, the optimal constant model in terms of the \textit{empirical} risk, is given by $\thetah = \argmin_{\theta \in \Theta} \risk_{emp}(\theta)$.
   \begin{align*}
-    \risk_{emp}(\thetav) &= \sumin L\left(\yi, \fxi\right)\\
-    &= \sumin \log \left(1 + \exp(-\yi \thetav) \right)
+    \risk_{emp}(\theta) &= \sumin L\left(\yi, \fxi\right)\\
+    &= \sumin \log \left(1 + \exp(-\yi \theta) \right)
   \end{align*}
-  As $L(y, \thetav) = log\left(1 + \exp(-\yi\thetav)\right)$.
+  As $L(y, \theta) = log\left(1 + \exp(-\yi\theta)\right)$.
   Taking the derivative:
   \begin{align*}
-    \pd{}{\thetav} \risk_{emp}(\thetav) &= \sumin \frac{1}{1+\exp(-\yi\thetav)} \left(+\exp(-\yi\thetav) \right) (-\yi)\\
+    \pd{}{\theta} \risk_{emp}(\theta) &= \sumin \frac{1}{1+\exp(-\yi\theta)} \left(+\exp(-\yi\theta) \right) (-\yi)\\
     &= - \sumin \yi \frac{\exp(c)}{1 + \exp(c)}\\
-    &= - \sum\limits_{\yi=1}^n (1) \frac{\exp(-\thetav)}{1+\exp(-\thetav)} - \sum\limits_{\yi=-1}^n (-1) \frac{\exp(\thetav)}{1+\exp(\thetav)}\\
+    &= - \sum\limits_{\yi=1}^n (1) \frac{\exp(-\theta)}{1+\exp(-\theta)} - \sum\limits_{\yi=-1}^n (-1) \frac{\exp(\theta)}{1+\exp(\theta)}\\
     &\overset{!}{=} 0
   \end{align*}
   This is equivalent to:
   \begin{align*}
-    \sum\limits_{\yi=-1}^n \frac{\exp(\thetav)}{1+\exp(\thetav)} &= \sum\limits_{\yi=1}^n \frac{\exp(-\thetav)}{1+\exp(-\thetav)}\\
-    n_{-} \frac{\exp(\thetav)}{1+\exp(\thetav)} &= n_{+} \frac{1}{1+\exp(\thetav)}\\
-    \frac{n_{+}}{n_{-}} &= \exp(\thetav)\\
-    \thetav &= \log(\frac{n_{+}}{n_{-}})
+    \sum\limits_{\yi=-1}^n \frac{\exp(\theta)}{1+\exp(\theta)} &= \sum\limits_{\yi=1}^n \frac{\exp(-\theta)}{1+\exp(-\theta)}\\
+    n_{-} \frac{\exp(\theta)}{1+\exp(\theta)} &= n_{+} \frac{1}{1+\exp(\theta)}\\
+    \frac{n_{+}}{n_{-}} &= \exp(\theta)\\
+    \theta &= \log(\frac{n_{+}}{n_{-}})
   \end{align*}
 
 
