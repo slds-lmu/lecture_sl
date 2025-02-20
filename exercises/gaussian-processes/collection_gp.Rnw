@@ -1,0 +1,52 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE, echo=FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
+@
+
+\kopf{Gaussian Processes}
+
+\tableofcontents
+
+% ------------------------------------------------------------------------------
+% LECTURE EXERCISES
+% ------------------------------------------------------------------------------
+
+\dlz
+\exlect
+\lz
+
+\aufgabe{Bayesian Linear Model}{
+	<<child="ex_rnw/ex_gp_bayesianLM.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Covariance Functions}{
+	<<child="ex_rnw/ex_gp_covariance.Rnw">>=
+	@
+}
+
+\dlz
+
+\aufgabe{Gaussian Posterior Process}{
+	<<child="ex_rnw/ex_gp_posteriorprocess.Rnw">>=
+	@
+}
+
+% % ------------------------------------------------------------------------------
+% % PAST EXAMS
+% % ------------------------------------------------------------------------------
+% 
+% \dlz
+% \exexams
+% \lz
+% 
+% % ------------------------------------------------------------------------------
+% % INSPO
+% % ------------------------------------------------------------------------------
+% 
+% \dlz
+% \exinspo

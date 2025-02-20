@@ -1,0 +1,20 @@
+%
+\begin{enumerate}
+%
+  \item Proofs:
+  \begin{enumerate}
+    \item $k(\xv, \xvp) = \sigma_0^2$ is a valid covariance function since the kernel matrix $\Kmat = \sigma_0^2 \cdot \one \one^T$ is a positive semi-definite matrix. This can be proved as follows: first, $\Kmat = \Kmat^T$ is symmetric; second, for all $\vv = (v_1, \ldots, v_n)^T \in \R^n$, $\vv^T \Kmat \vv = \sigma_0^2 \cdot (\sumin v_i, \ldots, \sumin v_i) \cdot (v_1, \ldots, v_n)^T = \sigma_0^2 \cdot [v_1 \sumin v_i + \ldots + v_n \sumin v_n] = \sigma_0^2 \cdot [(\sumin v_i) \cdot (\sumin v_i)] \geq 0$.
+    \item To prove that $k(\xv, \xvp) = \sigma_0^2 + \xv^T \xvp$ is a valid covariance function, we need to notice that $\sigma_0^2$ and $\xv^T \xvp$ are both valid covariance function, and sum operation also yield a valid covariance function.
+    \item $k(\xv, \xvp) = (\sigma_0^2 + \xv^T \xvp)^p$ is a valid covariance function since the linear function is a covariance function, and the only polynomial coefficient $1$ is positive.
+    \item The squared exponential can be written as $k(\xv, \xvp) = \exp(-\frac{\xv^T \xv}{2 \ls^2}) \cdot \exp(\frac{\xv^T \xvp}{\ls^2}) \cdot \exp(-\frac{{\xvp}^T \xvp}{2\ls^2})$. Note that $\exp(\frac{\xv^T \xvp}{\ls^2})$ is a valid covariance function and can be easily proved using the composition rules. We further define $t(\xv) = \exp(-\frac{\xv^T \xv}{2 \ls^2})$. Therefore, $k(\xv, \xvp) = t(\xv) \cdot \exp(\frac{\xv^T \xvp}{\ls^2}) \cdot t(\xvp)$ is a valid covariance function.
+    \end{enumerate}
+  \item $k(\cdot, \cdot)$ is called stationary if $k(\xv, \xv + \dv) = k(\zero, \dv)$; $k(\cdot, \cdot)$ is called isotropic if it is a function of $||\xv - \xvp||$.
+  \begin{enumerate}
+    \item $k(\xv, \xvp) = \sigma_0^2$ is stationary since $k(\xv, \xv + \dv) = k(\zero, \dv) = \sigma_0^2$. It can be written as $k(\xv, \xvp) = \sigma_0^2 ||\xv - \xvp||^0$, so it is isotropic.
+    \item $k(\xv, \xvp) = \sigma_0^2 + \xv^T \xvp$ is not stationary since $k(\xv, \xv + \dv) = \sigma_0^2 + \xv^T \xv + \xv^T \dv$, while $k(\zero, \xv + \dv) = \sigma_0^2$. Furthermore, it can not be written as $k(|| \xv - \xvp||)$, so it is not isotropic.
+    \item Similar to linear covariance function, the polynomial covariance function is neither stationary nor isotropic.
+    \item The squared exponential covariance function is stationary as $k(\xv, \xv + \dv) = k(\zero, \dv) = \exp(-\frac{||d||^2}{2\ls^2})$. It is a function of $||\xv - \xvp||$, so it is isotropic.
+    \item Similar to the argument of squared exponential covariance function, the Mat\'ern covariance function is stationary and isotropic.
+    \item Similar to the argument of squared exponential covariance function, the exponential covariance function is stationary and isotropic.
+  \end{enumerate}
+\end{enumerate}
