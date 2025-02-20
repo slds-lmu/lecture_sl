@@ -117,15 +117,15 @@ Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lyf = \l
 \item By the law of total expectation
   \begin{eqnarray*}
     \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
-    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xv\right]\right] \\
+    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xtil\right]\right] \\
   &=& \E_x
-  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xv\right]\right]. 
+  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xtil\right]\right]. 
   \end{eqnarray*}
 % \item As our hypothesis space is not restricted at all, we can proceed quite \enquote{arbitrarily} when constructing our model $\hat f$.  
 
-\item Since $\Hspace$ is unrestricted, at any point $\xv = \xv$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
+\item Since $\Hspace$ is unrestricted, at any point $\xv = \xtil$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
 $$
-  \fxbayes = \argmin_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xv \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
+  \fxbayes = \argmin_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xtil \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
 $$
 
 \begin{footnotesize}
@@ -213,9 +213,9 @@ We calculate the (true) risk for the $L1$-Loss $\Lyf = \left|y-f\right|$ with un
   \item We use the law of total expectation
   \vspace{0.3cm}
   $$
-    \riskf = \E_x \left[\E_{y|x}\left[|y-\fx|~|\xv = \xv\right]\right]. 
+    \riskf = \E_x \left[\E_{y|x}\left[|y-\fx|~|\xv = \xtil\right]\right]. 
   $$
-  \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xv$. The best prediction at $\xv = \xv$ is then 
+  \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xtil$. The best prediction at $\xv = \xtil$ is then 
   \vspace{0.3cm}  
   $$
     f^{\ast}(\xv) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 

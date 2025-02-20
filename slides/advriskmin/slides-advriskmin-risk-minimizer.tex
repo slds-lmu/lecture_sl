@@ -44,7 +44,7 @@ $$\riskef = \sumin \Lxyi$$
     f is a model from hypothesis space $\Hspace$;
     maps a feature vector to output score;
     sometimes or often we omit $\Hspace$ in the index 
-    \item $L:\left(\Yspace\times\mathbb{R}^g\right)\rightarrow\mathbb{R}$ is loss;\\
+    \item $L:\Yspace\times\mathbb{R}^g\rightarrow\mathbb{R}$ is loss;\\
     $\Lyf$ measures distance between label and prediction
     \item We assume that $(\xv,y) \sim \Pxy$ and $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ \\
     $\Pxy$ is the distribution of the data generating process (DGP)
@@ -74,6 +74,22 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
     \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$}
 \end{itemize}
   
+\end{vbframe}
+
+\begin{vbframe}{Hypothesis Spaces and Parametrization}
+We often write $\risk \left(f\right)$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a set of parametrized curves:
+
+$$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{belongs to certain functional family parametrized by}\,\thetav\}$$
+
+\begin{itemize}
+    \item The params are our means of fixing a specific function from the family. Once set, our model is fully determined.
+    \item This means: finding the optimal model is perfectly equivalent to finding the optimal set of parameter values.
+    \item The relation between optimization over $f \in \Hspace$ and optimization
+over $\thetav \in \Theta$ allows us to operationalize our search for the best model (function) via searching for an optimal $\thetav$
+\item Remark: For some model classes, some parameters encode the same function. So the
+parameter-to-model mapping could be non-injective (non-identifiability)
+\end{itemize}
+
 \end{vbframe}
 
 \begin{vbframe}{Optimal constants for a loss}
@@ -147,11 +163,24 @@ $$ E[z] $$
 \begin{itemize}
 \item Using $Q = P_y$, this means that, given we know the label distribution,
 the best constant is $c = E[y]$.
-\item If we only have data $y_1, \ldots y_n$
-$\argmin \E_{z \sim P_n} [(z - c)^2] = \E_{z \sim P_n}[z] = \frac{1}{n} \sumin \yi = \bar{y}$
+%\item If we only have data $y_1, \ldots y_n$
+%$\argmin \E_{z \sim P_n} [(z - c)^2] = \E_{z \sim P_n}[z] = \frac{1}{n} \sumin \yi = \bar{y}$
+\item If we only have data \(y_1, \ldots, y_n\), then the empirical product distribution is defined as $P_n = \frac{1}{n}\sum_{i=1}^n \delta_{y^{(i)}}$, so that for any measurable function \(g\),
+$\mathbb{E}_{z\sim P_n}[g(z)] = \frac{1}{n}\sum_{i=1}^n g\bigl(y^{(i)}\bigr).$
+Thus, for the minimization problem
+\[
+ \argmin_{c \in \mathbb{R}} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c \in \mathbb{R}} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \mathbb{R}} \frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2,
+\]
+%taking the derivative with respect to \(c\) yields
+%\[
+%\frac{d}{dc}\left(\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2\right) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2\left(c-\frac{1}{n}\sum_{i=1}^n y^{(i)}\right)=0.
+%\]
+the optimal constant is the sample mean
+\[
+c = \frac{1}{n}\sum_{i=1}^n y^{(i)} = \bar{y}.
+\]
 
-
-\item And we want to find and optimal constant model for 
+%\item And we want to find and optimal constant model for 
 
 \end{itemize}
 
@@ -199,9 +228,8 @@ The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbaye
 
 \lz
 
-Note that if we leave out the hypothesis space in the subscript it becomes clear from the context!\\
 
-Similarly, we define the risk minimizer over some $\Hspace \subset \Hspace_{all}$ as
+Similarly, we define the risk minimizer over some restricted $\Hspace \subset \Hspace_{all}$ as
 
 \begin{eqnarray*}
 	\fbayes_{\Hspace} &=& \argmin_{f \in \Hspace} \risk\left(f\right)
@@ -244,10 +272,10 @@ $$    \risk(f) = \E_{xy} \left[\Lxy\right]
 
 \begin{itemize}
 	\item We can choose $\fx$ as we want (unrestricted hypothesis space, no assumed functional form)
-	\item Hence, for a fixed value $\xv \in \Xspace$ we can select \textbf{any} value $c$ we want to predict. So we construct the \textbf{point-wise optimizer} 
+	\item Hence, for a fixed value $\xtil \in \Xspace$ we can select \textbf{any} value $c$ we want to predict. So we construct the \textbf{point-wise optimizer} 
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
- $$\fbayes(\tilde{\xv}) = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \tilde{\xv} \right] $$
+ $$\fbayes(\xtil) = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
 \end{itemize}
 
 \begin{center}

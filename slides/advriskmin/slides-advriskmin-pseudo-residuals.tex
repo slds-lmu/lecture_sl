@@ -60,7 +60,7 @@
 
 \lz 
 
-Assume we could update $\fx$ point-wise as we like. For a fixed $\xv \in \Xspace$, the best point-wise update is the direction of the residual $r = y - \fx$
+Assume we could update $\fx$ point-wise as we like. Under squared loss, for a fixed $\xv \in \Xspace$, the best point-wise update is the direction of the residual $r = y - \fx$
 
 $$
 	\fx \leftarrow \fx + r
@@ -71,8 +71,10 @@ $$
 \only<2>{\vfill The point-wise error at this specific $\xv$ becomes $0$. \vfill}
 \begin{center}
 	\only<1>{\vfill \includegraphics[width=0.5\textwidth]{figure/pseudo_residual_1.png}}
-	\only<2>{\includegraphics[width=0.5\textwidth]{figure/pseudo_residual_2.png}}
+	\only<2>{\includegraphics[width=0.4\textwidth]{figure/pseudo_residual_2.png}}
 \end{center}
+\vspace{-0.5cm}
+\footnotesize{\textbf{Caveat}: We don't do point-wise updates but rather want to ``smoothly distort'' $f$ so that it can generalize}
 \end{overlayarea} 
 
 \end{frame}
@@ -130,6 +132,31 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 % \end{footnotesize}
 % $\alpha^{[t]} \in [0,1]$ is called \enquote{learning rate} in this context.
 \end{vbframe}
+
+\begin{vbframe}{Pseudo-residuals for common losses}
+
+For the most common loss functions, the pseudo-residuals can be easily derived as:
+
+\lz
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Loss} & \textbf{Domain of $y$} & \textbf{Pseudo Residual $\tilde r$} \\ \hline
+Squared Loss & $y \in \mathbb{R}$ & $y - f(\xv)$ \\ \hline
+Bernoulli Loss & $y \in \{0,1\}$ & $y - s(f(\xv))=y-\pi(\xv)$ \\ \hline
+Multinomial Loss & $y \in \{1,\dots,g\}$ & $\mathds{1}_{\{y=k\}} - \pi_k(\xv)$ \\ \hline
+Exponential Loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
+\end{tabular}
+\end{table}
+
+\lz
+
+Note that $\pi(\xv)=s(f(\xv))$ is the sigmoid function $s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$, and $\pi_k(\xv)$ is generalization to multi-class problems through the softmax function.
+
+\end{vbframe}
+
 
 
 \endlecture
