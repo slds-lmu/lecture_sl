@@ -74,7 +74,7 @@ $$
 	\only<2>{\includegraphics[width=0.4\textwidth]{figure/pseudo_residual_2.png}}
 \end{center}
 \vspace{-0.5cm}
-\footnotesize{\textbf{Caveat}: We don't do point-wise updates but rather want to ``smoothly distort'' $f$ so that it can generalize}
+\footnotesize{\textbf{Caveat}: In GB, we don't do point-wise updates but ``smoothly distort'' $f$ so we generalize}
 \end{overlayarea} 
 
 \end{frame}
@@ -135,8 +135,6 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 
 \begin{vbframe}{Pseudo-residuals for common losses}
 
-For the most common loss functions, the pseudo-residuals can be easily derived as:
-
 \lz
 
 \begin{table}[ht]
@@ -144,16 +142,17 @@ For the most common loss functions, the pseudo-residuals can be easily derived a
 \begin{tabular}{|l|c|l|}
 \hline
 \textbf{Loss} & \textbf{Domain of $y$} & \textbf{Pseudo Residual $\tilde r$} \\ \hline
-Squared Loss & $y \in \mathbb{R}$ & $y - f(\xv)$ \\ \hline
-Bernoulli Loss & $y \in \{0,1\}$ & $y - s(f(\xv))=y-\pi(\xv)$ \\ \hline
-Multinomial Loss & $y \in \{1,\dots,g\}$ & $\mathds{1}_{\{y=k\}} - \pi_k(\xv)$ \\ \hline
-Exponential Loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
+Squared loss & $y \in \mathbb{R}$ & $y - f(\xv)$ \\ \hline
+Bernoulli loss & $y \in \{0,1\}$ & $y - s(f(\xv))=y-\pi(\xv)$ \\ \hline
+Multinomial loss & $y \in \{1,\dots,g\}$ & $\mathds{1}_{\{y=k\}} - \pi_k(\xv)$ \\ \hline
+Exponential loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
 \end{tabular}
 \end{table}
 
 \lz
 
-Note that $\pi(\xv)=s(f(\xv))$ is the sigmoid function $s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$, and $\pi_k(\xv)$ is generalization to multi-class problems through the softmax function.
+NB: $\pi(\xv)=s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$ is the (sigmoidal) logistic function,
+and $\pi_k(\xv)$ is its multi-class generalization, the softmax.
 
 \end{vbframe}
 

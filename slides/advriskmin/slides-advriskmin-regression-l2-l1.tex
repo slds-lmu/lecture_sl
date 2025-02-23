@@ -64,47 +64,48 @@ $$
 
 
 \begin{vbframe}{L2-loss: Optimal Constant Model}
-Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lyf = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
+Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lyf = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. %The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
+As derived previously, for the squared loss, the optimal constant model is given by 
+\vspace{-0.2cm}
+$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right]=\E_{y}[y]$$
 
-\medskip
-
-  \begin{eqnarray*}
-    f_{c}^{\ast} &=& \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right] %= \E_{y~|~\xv}\left[y~|~\xv\right] \overset{\text{drop } \xv}{=} \E_y \left[y\right] 
-    \\
+  %\begin{eqnarray*}
+  %  f_{c}^{\ast} &=& \argmin_{c \in \mathbb{R}} \E_{xy} %\left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} %\left[(y-c)^2\right] %= \E_{y~|~\xv}\left[y~|~\xv\right] \overset{\text{drop } \xv}{=} \E_y \left[y\right] 
+  %  \\
     %&=& \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right] \\
-    &=& \argmin_{c \in \mathbb{R}} \underbrace{\E_{y}\left[(y - c)^2\right] - \left(\E_{y}[y] - c\right)^2}_{= \var_{y}[y - c] = \var_{y}[y]} + \left(\E_{y}[y] - c\right)^2 \\
-    &=& \argmin_{c \in \mathbb{R}} \var_{y}[y] + \left(\E_{y}[y] - c\right)^2  \\
-    &=& \E_{y}[y]
-  \end{eqnarray*} 
+   % &=& \argmin_{c \in \mathbb{R}} \underbrace{\E_{y}\left[(y - c)^2\right] - \left(\E_{y}[y] - c\right)^2}_{= \var_{y}[y - c] = \var_{y}[y]} + \left(\E_{y}[y] - c\right)^2 \\
+   % &=& \argmin_{c \in \mathbb{R}} \var_{y}[y] + \left(\E_{y}[y] - c\right)^2  \\
+   % &=& \E_{y}[y]
+  %\end{eqnarray*} 
 
-\framebreak 
+%\framebreak 
 
-The optimizer $\hat{f}_{c}$ of the empirical risk is $\bar y$ (the empirical mean over $\yi$), which is the empirical estimate for $\E_y \left[y\right]$. 
-
+Using same argument and empirical product distribution instead of label distribution, the optimizer $\hat{f}_{c}$ of the empirical risk is $\bar y$ (the empirical mean over $\yi$). 
+\vspace{-0.5cm}
 \begin{center}
-\includegraphics[width = 0.6\textwidth ]{figure/L2-loss.png} \\
+\includegraphics[width = 0.5\textwidth ]{figure/L2-loss.png} \\
 \end{center}
 
-\framebreak
+%\framebreak
 
-\textbf{Proof: }
+%\textbf{Proof: }
 
-\vspace{0.2cm}
+%\vspace{0.2cm}
 
-For the optimal constant model $f_{c}^{\ast}$ for the L2-loss $\Lyf = \left(y - f\right)^2$ we solve the optimization problem 
-$$
-\argmin_{f \in \Hspace} \riskef = \argmin_{\theta \in \R} \sumin (\yi - \theta)^2. 
-$$
-
-
-We calculate the first derivative of $\riske$ w.r.t. $\theta$ and set it to $0$: 
+%For the optimal constant model $f_{c}^{\ast}$ for the L2-%loss $\Lyf = \left(y - f\right)^2$ we solve the %optimization problem 
+%$$
+%\argmin_{f \in \Hspace} \riskef = \argmin_{\theta \in \R} \sumin (\yi - \theta)^2. 
+%$$
 
 
-\begin{eqnarray*}
-\frac{\partial \risket}{\partial \theta} = -2 \sumin \left(\yi - \theta\right) &\overset{!}{=}& 0 \\
-\sumin \yi - n \theta&=& 0 \\
-\hat \theta&=& \frac{1}{n} \sumin \yi =: \bar y.
-\end{eqnarray*}
+%We calculate the first derivative of $\riske$ w.r.t. $\theta$ and set it to $0$: 
+
+
+%\begin{eqnarray*}
+%\frac{\partial \risket}{\partial \theta} = -2 \sumin %\left(\yi - \theta\right) &\overset{!}{=}& 0 \\
+%\sumin \yi - n \theta&=& 0 \\
+%\hat \theta&=& \frac{1}{n} \sumin \yi =: \bar y.
+%\end{eqnarray*}
 
 
 \end{vbframe}
