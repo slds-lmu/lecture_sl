@@ -1,0 +1,35 @@
+\begin{enumerate}
+	\item
+	The loss using Brier score is given by $L\left(y, \pix\right) = \left(y-\pix\right)^{2}$.
+	\begin{align*}
+		\pibayes_{c} &= \argmin_{c} \E_{xy}\left[L\left(y, c\right)\right]\\
+		&= \argmin_{c} \E_{y}\left[\left(y - c\right)^{2}\right]\\
+		&= \argmin_{c} \E_{y}\left[y^{2} - 2yc + c^{2}\right]\\
+		&= \argmin_{c} \var_{y}(y) + \pi^{2} - 2c\pi + c^{2}\\
+		&= \argmin_{c} \pi (1-\pi^{2}) + \pi^{2} - 2c\pi + c^{2}\\
+		&= \argmin_{c} \pi - \pi^{2} + \pi^{2} - 2c\pi + c^{2}\\
+		&= \argmin_{c} \pi - 2c\pi + c^{2}\\
+		&= \argmin_{c} -2c\pi + c^{2}
+	\end{align*}
+  Where we used $\var(y) = \E(y^2) - \left[\E(y)\right]^2$.\\
+	Taking the deriviative with respect to $c$ and setting it to $0$:
+  \begin{align*}
+    &\Rightarrow 
+		\pd{}{c} \left[-2c\pi + c^{2}\right] \overset{!}{=} 0\\
+    &\begin{alignedat}{2}
+      &\Rightarrow -2\pi + 2c &&= 0 \\
+      &\Rightarrow \pi &&= c \\
+      &\Rightarrow \pibayes_{c} &&= \mathbb{P}(y = 1)
+    \end{alignedat}
+  \end{align*}
+\item
+  \begin{align*}
+    \risk_{l}(\pibayes_{c}) &= \E_{xy} \left[ L\left(y, \pi \right) \right]\\
+    &= \E_{y} \left[  \left(y-\pi\right) \right] \\
+		&=  \E_{y} \left[y^{2} - 2y\pi + \pi^{2}\right] \\
+		&= \pi - 2\pi^{2}+\pi^{2} \\
+		&= \pi - \pi^2 \\
+		&= \pi(1-\pi) \\
+		&= \var_{y}(y)
+  \end{align*}
+\end{enumerate}
