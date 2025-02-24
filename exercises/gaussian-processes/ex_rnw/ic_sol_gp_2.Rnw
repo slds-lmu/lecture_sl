@@ -37,7 +37,30 @@
     \end{pmatrix}\\
     &= 1 - \left(\frac{0.36}{1+\sigma^2}\frac{0.09}{1+\sigma^2}\right) = 1 - \frac{0.45}{1+\sigma^2}
   \end{align*}
-	\item Repeat the calculations from (a) and (b) by using as the test input $x_* = \xi$ for each $i=1,2,3,4,$ respectively. 
+	\item
+  \begin{align*}
+    m_{\text{post}} &= \begin{pmatrix}1\\0\\0\\0\end{pmatrix}^T
+    \begin{pmatrix}
+      (1+\sigma^2)^{-1} & 0 & 0 & 0 \\
+      0 & (1+\sigma^2)^{-1} & 0 & 0 \\
+      0 & 0 & (1+\sigma^2)^{-1} & 0 \\
+      0 & 0 & 0 & (1+\sigma^2)^{-1}
+    \end{pmatrix}
+    \bm{y}\\
+    &= \begin{pmatrix}(1+\sigma^2)^{-1}&0&0&0\end{pmatrix}
+    \bm{y}\\
+    &= \frac{\yi}{1+\sigma^2}
+  \end{align*}
+  \begin{align*}
+    k_\text{post} &= 1 - \begin{pmatrix}1\\0\\0\\0\end{pmatrix}^T
+    \begin{pmatrix}
+      (1+\sigma^2)^{-1} & 0 & 0 & 0 \\
+      0 & (1+\sigma^2)^{-1} & 0 & 0 \\
+      0 & 0 & (1+\sigma^2)^{-1} & 0 \\
+      0 & 0 & 0 & (1+\sigma^2)^{-1}
+    \end{pmatrix} \begin{pmatrix}1\\0\\0\\0\end{pmatrix}^T\\
+    &= 1 - \frac{1}{1+\sigma^2} = \frac{\sigma^2}{1+\sigma^2}
+  \end{align*}
 	\item Based on your calculations so far, try to sketch the posterior Gaussian process. 
 	\item If the nugget $\sigma^2$ would be zero, how would the posterior Gaussian process (roughly) look like?
 \end{enumerate}
