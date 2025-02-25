@@ -36,13 +36,13 @@ spline_fit <- smooth.spline(x = df$x, y = df$res)
 # Create a grid for x to plot the updated prediction function.
 grid <- data.frame(x = seq(min(df$x), max(df$x), length.out = 100))
 grid$pred_res <- predict(spline_fit, grid$x)$y
-grid$f_new <- 2 * grid$x + 0.1 * grid$pred_res  # f_new(x) = 2x + 0.1 * s(x)
+grid$f_new <- 2 * grid$x + 0.4 * grid$pred_res  # f_new(x) = 2x + 0.1 * s(x)
 
 p_3 <- p + 
   geom_abline(aes(slope = 2, intercept = 0, linetype = "linear"), colour = "blue", size = 1.1) +
   geom_line(data = grid, aes(x = x, y = f_new, linetype = "linear + 0.1 * spline"), colour = "red", size = 1.1) +
   scale_linetype_manual(values = c("linear" = "solid", "linear + 0.1 * spline" = "solid")) +
-  labs(linetype = "Model") +
+  labs(linetype = "") +
   theme(
     legend.position = c(0.8, 0.15), 
     legend.background = element_rect(fill = "transparent", color = NA),

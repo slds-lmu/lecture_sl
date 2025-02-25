@@ -23,28 +23,37 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/plot_loss_overview.png
   }{
-  \item Know the Huber loss
-  \item Know the log-cosh loss
-  \item Know the Cauchy loss
-  \item Know the log-barrier loss
-  \item Know the $\eps$-insensitive loss
-  \item Know the quantile loss
+  \item Huber loss
+  \item Log-cosh loss
+  \item Cauchy loss
+  \item $\eps$-insensitive loss
+  \item Quantile loss
 }
 
 \begin{vbframe}{Advanced Loss Functions \citelink{WANG2020COMPRE}}
-Special loss functions can be used to estimate non-standard posterior components, to measure errors customarily or which are designed to have special properties like robustness.
+\lz
+\begin{itemize}\setlength\itemsep{1.5em} 
+
+\item Can use other losses for other posteriors
+\item Handle errors in a custom fashions
+\item Achieve properties like robustness
+\item Handle new predictive tasks
+
+\end{itemize}
+
+
 
 \vspace{1cm}
 
-Examples:
-\begin{itemize}
-\item Quantile loss: Overestimating a clinical parameter might not be as bad as underestimating it.
-\item Log-barrier loss: Extremely under- or overestimating demand in production would put company profit at risk.
-\item $\eps$-insensitive loss: A certain amount of deviation in production does no harm, larger deviations do.
-\end{itemize}
-% \item Sometimes a custom loss must be designed specifically for the given application.
-% \item Some learning algorithms use specific loss functions, e.g., the hinge loss for SVMs.
+% Examples:
+% \begin{itemize}
+% \item Quantile loss: Overestimating a clinical parameter might not be as bad as underestimating it.
+% \item Log-barrier loss: Extremely under- or overestimating demand in production would put company profit at risk.
+% \item $\eps$-insensitive loss: A certain amount of deviation in production does no harm, larger deviations do.
 % \end{itemize}
+% % \item Sometimes a custom loss must be designed specifically for the given application.
+% % \item Some learning algorithms use specific loss functions, e.g., the hinge loss for SVMs.
+% % \end{itemize}
 \end{vbframe}
 
 \begin{vbframe}{Huber Loss}
@@ -78,7 +87,7 @@ $$
 \vspace*{-0.2cm}
 
 \begin{itemize}
-\item Risk minimizer and optimal constant do not have a closed-form solution. To fit a model numerical optimization is necessary. 
+\item No closed-form solution even for constant or linear model. 
 \item Solution behaves like \textbf{trimmed mean}: a (conditional) mean of two (conditional) quantiles. % (the location depends on the distribution and the value of $\epsilon$).  
 \end{itemize}
 
@@ -151,7 +160,8 @@ The log-cosh approach to obtain a differentiable approximation of the $L1$ loss 
 \framebreak
 
 \textbf{The cosh($\theta,\sigma$) distribution}:\\
-The (normalized) reciprocal $\text{cosh}(x)$ defines a pdf by its positivity on $\mathbb{R}$ and since $\int_{-\infty}^{\infty} \frac{1}{\pi \text{cosh}(x)} \text{d}x = 1$.\\
+The (normalized) reciprocal $\text{cosh}(x)$ defines a pdf: \\
+it is positive and $\int_{-\infty}^{\infty} \frac{1}{\pi \text{cosh}(x)} \text{d}x = 1$.\\
 \vspace{0.1cm}
 We can define a location-scale family of distributions (using $\theta$ and $\sigma$) resembling Gaussians with \textbf{heavier tails}. 
 
@@ -167,7 +177,7 @@ It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the
     \item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh \left(\frac{x-\theta}{\sigma}\right)}$
     \item $\mathbb{E}_{X\sim p}[X]=\theta$
     \item $\text{Var}_{X \sim p}[X]=\frac{1}{4}(\pi^2 \sigma^2)$
-    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prod_{i=1}^n \frac{1}{\pi \cosh \left(x_i-\theta\right)} \equiv$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(x_i-\theta))$}
+    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prod_{i=1}^n \frac{1}{\pi \cosh \left(x_i-\theta\right)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(x_i-\theta))$}
 \end{itemize}
 }
 \end{column}
@@ -226,31 +236,33 @@ $$
 \end{vbframe}
 
 %\begin{comment}
-\begin{vbframe}{Log-Barrier Loss}
+%% BB: i have removed this, there are not a lot of referenences and examples
+%% so this might simply be to exotic
+% \begin{vbframe}{Log-Barrier Loss}
 
-\begin{small}
-\[
-  \Lyf = \left\{\begin{array}{lr}
-        -\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - f\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-f\right| \leq \epsilon \\
-        \infty & \text{if } \left|y-f\right|  > \epsilon
-        \end{array}\right.
-  \]
-\end{small}
+% \begin{small}
+% \[
+%   \Lyf = \left\{\begin{array}{lr}
+%         -\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - f\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-f\right| \leq \epsilon \\
+%         \infty & \text{if } \left|y-f\right|  > \epsilon
+%         \end{array}\right.
+%   \]
+% \end{small}
 
-\begin{itemize}
-\item Behaves like $L2$ loss for small residuals
-\item We use this if we don't want residuals larger than $\epsilon$ at all
-\item No guarantee that the risk minimization problem has a solution
-\item Plot shows log-barrier loss for $\epsilon=2$:
-\end{itemize}
+% \begin{itemize}
+% \item Behaves like $L2$ loss for small residuals
+% \item We use this if we don't want residuals larger than $\epsilon$ at all
+% \item No guarantee that the risk minimization problem has a solution
+% \item Plot shows log-barrier loss for $\epsilon=2$:
+% \end{itemize}
 
-\begin{center}
-% \includegraphics[width = 0.8\textwidth]{figure_man/log-barrier01.png}
-\includegraphics[width = 0.8\textwidth]{figure/loss_logbarrier_1.png}
-\end{center}
+% \begin{center}
+% % \includegraphics[width = 0.8\textwidth]{figure_man/log-barrier01.png}
+% \includegraphics[width = 0.8\textwidth]{figure/loss_logbarrier_1.png}
+% \end{center}
 
 
-\end{vbframe}
+% \end{vbframe}
 
 \begin{vbframe}{$\eps$-Insensitive loss}
 

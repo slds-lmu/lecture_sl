@@ -67,7 +67,7 @@ $$
 Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lyf = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. %The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
 As derived previously, for the squared loss, the optimal constant model is given by 
 \vspace{-0.2cm}
-$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right]=\E_{y}[y]$$
+$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] =\E_{y}[y]$$
 
   %\begin{eqnarray*}
   %  f_{c}^{\ast} &=& \argmin_{c \in \mathbb{R}} \E_{xy} %\left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} %\left[(y-c)^2\right] %= \E_{y~|~\xv}\left[y~|~\xv\right] \overset{\text{drop } \xv}{=} \E_y \left[y\right] 
@@ -80,8 +80,8 @@ $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] = \argm
 
 %\framebreak 
 
-Using same argument and empirical product distribution instead of label distribution, the optimizer $\hat{f}_{c}$ of the empirical risk is $\bar y$ (the empirical mean over $\yi$). 
-\vspace{-0.5cm}
+We also derived: the empirical constant minimizer is $\hat{f}_{c} = \bar y$.  
+\vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.5\textwidth ]{figure/L2-loss.png} \\
 \end{center}
@@ -112,31 +112,41 @@ Using same argument and empirical product distribution instead of label distribu
 
 \begin{vbframe}{L2-Loss: Risk Minimizer}
 
-Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lyf = \left(y-f\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$. 
+Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lyf = \left(y-f\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$.
 
-\begin{itemize}
-\item By the law of total expectation
-  \begin{eqnarray*}
-    \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
-    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xtil\right]\right] \\
-  &=& \E_x
-  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xtil\right]\right]. 
-  \end{eqnarray*}
+\lz
+
+Since $\Hspace$ is unrestricted, at any point $\xv = \xtil$, we can predict any value $c$ we want. To find 
+
+$$\fbayes(\xtil) = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right]\,,$$ 
+
+we can apply the previous derivation of $f_{c}^{\ast}$ under $L2$ loss using the conditional label distribution. The best point-wise prediction is then given by the cond. mean
+
+$$\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]. $$
+
+%\begin{itemize}
+%\item By the law of total expectation
+%  \begin{eqnarray*}
+%    \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
+%    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xtil\right]\right] \\
+%  &=& \E_x
+%  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xtil\right]\right]. 
+%  \end{eqnarray*}
 % \item As our hypothesis space is not restricted at all, we can proceed quite \enquote{arbitrarily} when constructing our model $\hat f$.  
 
-\item Since $\Hspace$ is unrestricted, at any point $\xv = \xtil$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
-$$
-  \fxbayes = \argmin_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xtil \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
-$$
+%\item Since $\Hspace$ is unrestricted, at any point $\xv = \xtil$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
+%$$
+%  \fxbayes = \argmin_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xtil \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
+%$$
 
-\begin{footnotesize}
-$^{(*)}$ follows from the drivation of $f_{c}^{\ast}$
+%\begin{footnotesize}
+%$^{(*)}$ follows from the drivation of $f_{c}^{\ast}$
 %  \begin{eqnarray*}
 %  && \mbox{argmin}_c \E\left[(y - c)^2\right] = \mbox{argmin}_c \underbrace{\E\left[(y - c)^2\right] - \left(\E[y] - c\right)^2}_{= \var[y - c] = \var[y]} + \left(\E[y] - c\right)^2 \\ &=& \mbox{argmin}_c \var[y] + \left(\E[y] - c\right)^2 = \E[y]. 
 %  \end{eqnarray*}
-\end{footnotesize}
+%\end{footnotesize}
 
-\end{itemize}
+%\end{itemize}
 
 
 \end{vbframe}
