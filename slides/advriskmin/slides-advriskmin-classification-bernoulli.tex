@@ -31,13 +31,34 @@
   %\item Understand the connection between log-loss and entropy splitting 
 }
 
-\begin{vbframe}{Bernoulli Loss}
+\begin{vbframe}{Bernoulli loss on probabilities}
 
-\vspace*{-0.5cm}
-\begin{eqnarray*}
-  \Lyf &=& \log(1+\exp(-y \cdot f)) \quad \text{for } y \in \setmp\\
-  \Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo 
-\end{eqnarray*}
+The negative log-likelihood of the Bernoulli distribution is
+
+  $$
+    L(y, \pi) = - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right)\,\,, \, y \in \setzo 
+  $$
+  
+If probs are transformed into scores as $f = \log\left(\frac{\pi}{1 - \pi}\right)$ (log-odds of $\pi$), we arrive at another equivalent formulation of the loss:
+
+$$\Lyf = - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo$$
+
+\begin{center}
+% \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
+\begin{figure}
+  \subfloat{\includegraphics[width=0.4\textwidth]{figure/bernoulli_prob.png}}
+  \subfloat{\includegraphics[width=0.4\textwidth]{figure/logistic.png}}\\
+\end{figure}
+\end{center}
+
+\end{vbframe}
+
+\begin{vbframe}{Bernoulli Loss Label Encoding}
+For different label encoding $y' \in \setmp$, recognize that $y'=2y-1$. Substituting $y'$ into $\Lyf$ yields
+\begin{equation*}
+  \Lyf = \log(1+\exp(-y \cdot f)) \quad \text{for } y \in \setmp
+  %\Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo 
+\end{equation*}
 
 %Note that the expression $L(y, \fx) = \log(1 + \exp(-y \cdot \fx))$ for $y \in \setmp$ can be derived from the typical log-loss for $y \in \setzo$ %:
 %\[
@@ -51,8 +72,8 @@
 \begin{itemize}
   % \item Two equivalent formulations: labels $y \in \setmp$ or $y \in \setzo$
   \item Two equivalent formulations for different label encodings
-  \item Negative log-likelihood of Bernoulli model, e.g., logistic regression
-  \item Convex, differentiable
+  %\item Negative log-likelihood of Bernoulli model, e.g., logistic regression
+  \item All variants convex, differentiable
   %\item Pseudo-residuals (0/1 case): $\tilde{r} = y - \frac{1}{1+\exp(-\fx)}$\\   
   % Interpretation: $L1$ distance between 0/1-labels and posterior prob!
 \end{itemize}
@@ -68,23 +89,23 @@
 
 
 
-\begin{vbframe}{Bernoulli loss on probabilities}
+%\begin{vbframe}{Bernoulli loss on probabilities}
 
-If scores are transformed into probabilities by the logistic function  $\pi = \left(1 + \exp(-f)\right)^{-1}$ (or equivalently if $f = \log\left(\frac{\pi}{1 - \pi}\right)$ are the log-odds of $\pi$), we arrive at another equivalent formulation of the loss, where $y$ is again encoded as $\setzo$:
+%If scores are transformed into probabilities by the logistic function  $\pi = \left(1 + \exp(-f)\right)^{-1}$ (or equivalently if $f = \log\left(\frac{\pi}{1 - \pi}\right)$ are the log-odds of $\pi$), we arrive at another equivalent formulation of the loss, where $y$ is again encoded as $\setzo$:
 
-  $$
-    L(y, \pi) = - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right). 
-  $$
+%  $$
+%    L(y, \pi) = - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right). 
+%  $$
   
-\begin{center}
+%\begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
-\begin{figure}
-  \subfloat{\includegraphics[width=0.5\textwidth]{figure/bernoulli_prob.png}}
-  \subfloat{\includegraphics[width=0.5\textwidth]{figure/logistic.png}}\\
-\end{figure}
-\end{center}
+%\begin{figure}
+%  \subfloat{\includegraphics[width=0.5\textwidth]{figure/bernoulli_prob.png}}
+%  \subfloat{\includegraphics[width=0.5\textwidth]{figure/logistic.png}}\\
+%\end{figure}
+%\end{center}
 
-\end{vbframe}
+%\end{vbframe}
 
 
 
