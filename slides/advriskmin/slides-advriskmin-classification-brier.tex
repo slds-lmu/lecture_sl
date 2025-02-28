@@ -71,17 +71,15 @@
 
 \begin{vbframe}{Brier Score}
 
-The binary Brier score is defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ and measures their squared distance ($L2$ loss on probabilities).
-
-\begin{eqnarray*}
-\Lpiy &=& (\pi - y)^2
-\end{eqnarray*}
-
-As the Brier score is a proper scoring rule, it can be used for calibration. Note that is is not convex on probabilities anymore.
-
-%\vspace{0.2cm}
+The binary Brier score is defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ and is the $L2$ loss on probabilities.
+\begin{equation*}
+\Lpiy = (\pi - y)^2
+\end{equation*}
+As the Brier score is a proper scoring rule (cf. section on proper scoring rules), it can be used for calibration. %Note that it is not convex on probabilities anymore.
+Despite convex in $\pi$, $$L(y,\pi(f))=((1+\exp{(-f)})^{-1}-y)^2$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
+\vspace{-0.2cm}
 \begin{center}
-\includegraphics[width = 0.55\textwidth]{figure/brier.png}
+\includegraphics[width = 0.6\textwidth]{figure/brier.png}
 \end{center}
 
 
@@ -92,10 +90,10 @@ As the Brier score is a proper scoring rule, it can be used for calibration. Not
 The risk minimizer for the (binary) Brier score is 
 
 \begin{eqnarray*}
-\pixbayes = \eta(\xv) = \P(y~|~\xv = \xv),
+\pixbayes = \eta(\xv) := \P(y=1~|~\xv = \xv),
 \end{eqnarray*}
 
-which means that the Brier score attains its minimum if the prediction equals the \enquote{true} probability of the outcome. 
+which means that the Brier score attains its minimum if the prediction equals the \enquote{true} probability $\eta(\xv)$ of the outcome. 
 
 \lz 
 
@@ -130,20 +128,41 @@ The optimal constant probability model $\pix = \theta$ w.r.t. the Brier score fo
 
 \vspace*{-0.2cm}
 
-\begin{eqnarray*}
-  \min_{\theta} \riske(\theta) &=& \min_{\theta} \sumin \left(\yi - \theta\right)^2 \\
-  \Leftrightarrow \frac{\partial \riske(\theta)}{\partial \theta} &=& - 2 \cdot \sumin (\yi - \theta) = 0 \\
-  \hat \theta &=& \frac{1}{n} \sumin \yi.   
-\end{eqnarray*}
+\begin{equation*}
+  \argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin \left(\yi - \theta\right)^2 = \frac{1}{n} \sumin \yi
+  %\Leftrightarrow \frac{\partial \riske(\theta)}{\partial \theta} &=& - 2 \cdot \sumin (\yi - \theta) = 0 \\
+  %\hat \theta &=& \frac{1}{n} \sumin \yi.   
+\end{equation*}
 
 This is the fraction of class-1 observations in the observed data.\\
-(This also directly follows from our $L2$ proof for regression).
+(This directly follows from our $L2$ proof for regression).
 
 \vspace*{0.2cm}
 
-Similarly, for the multiclass brier score the optimal constant is $\thetah_k = \frac{1}{n}\sumin [y = k]$. 
+Similarly, for the multiclass brier score the optimal constant is $$\thetah_k = \frac{1}{n}\sumin [y = k]$$. 
 
 \end{vbframe}
+
+\begin{vbframe}{Calibration and the Brier Score}
+A predictor \(\pi(\mathbf{x})\in[0,1]\) is \emph{calibrated} if 
+\[
+\P\bigl(y=1 \mid \pi(\mathbf{x})=p\bigr)=p \quad \forall\, p\in[0,1].
+\]
+Intuitively, this means if we predict $p$, then in $100p\%$ of cases we observe $y=1$ (neither over- or underconfident). Recall the risk minimizer for the Brier score is
+\[
+\pi^*(\mathbf{x}) = \eta(\mathbf{x}) = \P(y=1 \mid \mathbf{x}).
+\]
+Since \(\pi^*(\mathbf{x})=\eta(\mathbf{x})\) exactly, it follows that the optimal predictor satisfies
+\[
+\P\bigl(y=1 \mid \pi^*(\mathbf{x})=p\bigr)=p,
+\]
+i.e., is perfectly calibrated.
+\end{vbframe}
+
+
+
+
+
 
 
 \endlecture

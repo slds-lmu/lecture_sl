@@ -32,18 +32,18 @@
 
 \begin{vbframe}{Probabilistic Forecasts \citelink{GNEITING2007}}
 
-Scoring rules $S(P,y)$ assess the quality of probabilistic forecasts by assigning a score based on the predictive distribution $P$ and the realized event $y$. The expected score w.r.t. the RV $y \sim Q$ is denoted as 
+Scoring rules $S(P,y)$ assess the quality of probabilistic forecasts by assigning a score based on the predictive distribution $P$ and the realized event $y$. The expected score w.r.t. the RV $y \sim Q$ is
 $$ S(P,Q) = \E_{y \sim Q}[S(P,y)]$$
 
 
 
-A scoring rule is \textbf{proper} if the forecaster maximizes the expected score for an observation drawn from $Q$ if he or she issues the forecast $Q$ rather than $P \neq Q$:
+A scoring rule is \textbf{proper} if forecaster maximizes expected score for an observation drawn from $Q$ if the forecast is $Q$ rather than $P \neq Q$:
 
 $$S(Q,Q) \geq S(P,Q) \,\, \text{for all} \, P,Q $$
 
 \vspace{0.2cm}
 
-$S$ is \textbf{strictly proper} when equality holds iff $P=Q$. (Strictly) proper scores ensure the forecaster has an incentive to predict $Q$ and is encouraged to report his or her true belief.
+$S$ is \textbf{strictly proper} when equality holds iff $P=Q$. (Strictly) proper scores ensure forecaster has an incentive to predict $Q$ and is encouraged to report true beliefs.
 
 \vspace{0.2cm}
 
