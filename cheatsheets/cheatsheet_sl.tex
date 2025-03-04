@@ -176,12 +176,12 @@
 											\renewcommand{\arraystretch}{1.25} %<- modify value to suit your needs
 											\begin{tabular}{c|lll}
 												Loss Function & Risk Minimizer & Optimal Constant Model\\ \hline
-												L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fx = \frac{1}{n} \sumin \yi$ \\
-												L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fx = \text{med}(\yi)$\\
-												0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hx = \text{mode} \left\{\yi\right\}$ \\
-												Brier & $\pi^*_k(\xv) = \P(y = k~|~\xv)$ & $\pikx =  \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}}$\\
-												Bernoulli (on probs) & $\pi^*_k(\xv) = \P(y = k~|~\xv)$ & $\pikx =  \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}}$ \\
-												Bernoulli (on scores) & $f^*_k(\xv) = \log\left(\frac{\P(y = k ~|~\xv)}{1 - \P(y = k ~|~\xv)}\right)$ & $\fkx = \log \frac{n_{k}}{n - n_{k}}$  
+												L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \frac{1}{n} \sumin \yi$ \\
+												L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fxh = \text{med}(\yi)$\\
+												0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hxh = \text{mode} \left\{\yi\right\}$ \\
+												Brier & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh =  \frac{1}{n} \sumin \yi$\\
+												Bernoulli (on probs) & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh =  \frac{1}{n} \sumin \yi$ \\
+												Bernoulli (on scores) & $\fxbayes = \log\left(\frac{\P(y = 1 ~|~\xv)}{1 - \P(y = 1 ~|~\xv)}\right)$ & $\fxh = \log \frac{n_{+1}}{n_{-1}}$  
 											\end{tabular}
 										\end{table}
 									}
