@@ -85,17 +85,6 @@ Here, $\Kmat = \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}$, $\bm{K}_* = \le
 	\lz
 	\lz
 	\item If the nugget $\sigma^2$ would be zero, how would the posterior Gaussian process (roughly) look like?
-	\lz
-	\lz
-	\lz
-	\lz
-	\lz	
-	\lz
-	\lz
-	\lz
-	\lz
-	\lz
-	\item Quiz time: Log in to Particify (\url{https://partici.fi/63221686}) and try to answer the questions for \textbf{Week 13}.	
 %	
 %	
 \end{enumerate}
