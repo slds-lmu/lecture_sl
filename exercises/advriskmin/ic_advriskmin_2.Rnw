@@ -1,0 +1,67 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb.Rnw")
+@
+
+
+\kopficsl{}{Risk Minimization - Classification}
+
+Consider the binary classification learning setting, where $\mathcal{Y}=\setzo$, some feature space $\Xspace$, and the hypothesis space $\Hspace = \{ \pi:\Xspace \to \unitint | \pix = s(\thetav^T\xv), \thetav \in \Theta \}$ of logistic regression.
+
+\lz
+
+\aufgabe{Risk Minimizers for the Log-Loss}{
+	<<child="ex_rnw/ic_risk_minimizers_log_loss.Rnw">>=
+	@
+}
+
+\aufgabe{Risk Minimizers for the Brier Score}{
+	<<child="ex_rnw/ic_risk_minimizers_brier_score.Rnw">>=
+	@
+}
+
+\newpage
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=1cm}
+\begin{sidewaystable}[ht]
+\centering
+\renewcommand{\arraystretch}{5}
+\setlength{\tabcolsep}{8pt}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|}
+\hline
+\textbf{\large Loss} & 
+\textbf{\large Risk minimizer} & 
+\textbf{\large Bayes risk} & 
+\textbf{\large Optimal \newline constant model} & 
+\textbf{\large Risk of optimal \newline constant model} \\ \hline
+
+\rule{0pt}{2cm}\textbf{\Large{L2}} & 
+ & 
+ & 
+ & 
+ \\ \hline
+
+\rule{0pt}{2cm}\textbf{\Large{0/1}} & 
+& 
+& 
+& 
+\\ \hline
+
+\rule{0pt}{2cm}\textbf{\Large{Log}} & 
+& 
+& 
+& 
+\\ \hline
+
+\rule{0pt}{2cm}\textbf{\Large{Brier}} & 
+& 
+& 
+& 
+\\ \hline
+
+\end{tabular}
+}
+\end{sidewaystable}
+\restoregeometry
