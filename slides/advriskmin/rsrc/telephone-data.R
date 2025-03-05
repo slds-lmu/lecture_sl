@@ -1,6 +1,6 @@
 ### This script produces a plot comparing various loss functions for robust regression
 ### Dataset: telephone data (number of calls per year in Belgium)
-### Losses: L2, L1, log-cosh, Huber loss
+### Losses: L2, L1, log-cosh, Huber loss, Cauchy loss
 
 rm(list=ls())
 
@@ -31,12 +31,6 @@ res.logcosh <- res.optim$par
 resids.logcosh <- with(tel.dat, calls - X %*% res.logcosh)
 preds.logcosh <- as.numeric(with(tel.dat, X %*% res.logcosh))
 
-# L1 loss robust regression
-#mod.l1 <- rq(formula = as.formula("calls ~ year"), tau=0.5, data=tel.dat)
-#res.l1 <- mod.l1$coefficients
-#resids.l1 <- mod.l1$residuals
-#preds.l1 <- predict(mod.l1)
-
 # L1 loss robust regression (manual optimization)
 f.l1 <- function(b) with(tel.dat, sum(abs(calls - X %*% b)))
 res.optim.l1 <- optim(coef(fm0), f.l1, method = "Nelder-Mead", control=list(alpha=1.0, beta=0.5, gamma=2.0))
@@ -54,30 +48,35 @@ names(res.huber) <- names(res.l2)
 resids.huber <- with(tel.dat, calls - X %*% res.huber)
 preds.huber <- as.numeric(with(tel.dat, X %*% res.huber))
 
-# aggregate results data
+# Cauchy loss robust regression
+# Cauchy loss: ρ(r) = log(1 + r^2) with γ = 1
+f.cauchy <- function(b) with(tel.dat, sum(log(1 + (calls - X %*% b)^2)))
+res.optim.cauchy <- optim(coef(fm0), f.cauchy, method = "Nelder-Mead", control=list(alpha=1.0, beta=0.5, gamma=2.0))
+res.cauchy <- res.optim.cauchy$par
+resids.cauchy <- with(tel.dat, calls - X %*% res.cauchy)
+preds.cauchy <- as.numeric(with(tel.dat, X %*% res.cauchy))
+
+# Aggregate results data
 res.tel <- tel.dat
 res.tel$resid_l2 <- resids.l2
-#res.tel$resid_l1 <- resids.l1
 res.tel$resid_l1_manual <- resids.l1.manual
 res.tel$resid_huber <- resids.huber
 res.tel$resid_logcosh <- resids.logcosh
+res.tel$resid_cauchy <- resids.cauchy
 res.tel$pred_l2 <- preds.l2
-#res.tel$pred_l1 <- preds.l1
 res.tel$pred_l1_manual <- preds.l1.manual
 res.tel$pred_huber <- preds.huber
 res.tel$pred_logcosh <- preds.logcosh
-
-#coef.b0 <- c(res.l2[1], res.l1[1], res.huber[1], res.logcosh[1])
-#coef.b1 <- c(res.l2[2], res.l1[2], res.huber[2], res.logcosh[2])
+res.tel$pred_cauchy <- preds.cauchy
 
 # Plot results for telephone data
 p <- ggplot(res.tel, aes(x = year)) +
-  geom_line(aes(y = pred_l2, color = "L2 (OLS)"), size = 1.6, alpha=1) +   
-  #geom_line(aes(y = pred_l1, color = "L1"), size = 1.4) +
-  geom_line(aes(y = pred_l1_manual, color = "L1"), size = 1.6, alpha=1) +
-  geom_line(aes(y = pred_huber, color = "Huber"), size = 1.6, alpha=1) +
-  geom_line(aes(y = pred_logcosh, color = "Log-Cosh"), size = 1.6, alpha=1) +
-  geom_point(aes(y = calls), color = "black", size = 4, alpha=1) +  
+  geom_line(aes(y = pred_l2, color = "L2 (OLS)"), size = 1.6, alpha = 1) +   
+  geom_line(aes(y = pred_l1_manual, color = "L1"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_huber, color = "Huber"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_logcosh, color = "Log-Cosh"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_cauchy, color = "Cauchy"), size = 1.6, alpha = 1) +
+  geom_point(aes(y = calls), color = "black", size = 4, alpha = 1) +  
   labs(y = "Calls (in mio.)", x = "Year", color = "Loss") +
   theme_minimal() +
   theme(text = element_text(size = 12), 

@@ -57,10 +57,10 @@ where $\ftrue$ has params $\thetav$ and $\eps$ a RV that follows some distributi
 
 \framebreak 
 
-From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution $p(y~|~\xv, \thetav)$.
+From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution family $p(y~|~\xv, \thetav)$.
 
 \begin{itemize}
-\item Then, given i.i.d data $
+\item Given i.i.d data $
 \D = \Dset
 $
  from $\Pxy$ 
@@ -74,7 +74,7 @@ $$ \LLt = \prod_{i=1}^n \pdfyigxit $$
 \includegraphics[width = 0.75\textwidth]{figure/log_reg_ml.pdf}
 \end{minipage}
 
-or equivalently to minimize the \textbf{negative log-likelihood}
+or equivalently minimize the \textbf{negative log-likelihood (NLL)}
 
 \begin{minipage}{0.5\textwidth}
 $$ -\loglt = -\sumin \lpdfyigxit. $$
@@ -108,28 +108,24 @@ $$\risket = \sumin \Lxyit$$
 
 \begin{vbframe}{Gaussian Errors - L2-Loss} 
 
-Assume $y = \ftrue(\xv) + \eps$ with additive Gaussian errors, i.e. $\epsi \sim \mathcal{N}(0, \sigma^2)$. Then
+Assume $y = \ftrue(\xv) + \eps$ with additive Gaussian errors, i.e. $\epsi \sim \mathcal{N}(0, \sigma^2)$. Then $y~|~\xv \sim N\left(\ftrue(\xv), \sigma^2\right)$. The likelihood is then 
 
-$$y~|~\xv \sim N\left(\ftrue(\xv), \sigma^2\right)$$
-
-
-The likelihood is then 
-
+{\small
 \begin{eqnarray*}
 \LL(\thetav) &=& \prodin \pdf\left(\yi ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)
 \end{eqnarray*}
+}
 
-\framebreak 
+%\framebreak 
 
-Easy to see: minimizing neg. log-likelihood with Gaussian errors is the same as ERM with $L2$-loss:
-
+Easy to see: minimizing Gaussian NLL s is ERM with $L2$-loss:
+{\small
 \begin{eqnarray*}
 - \loglt &=& - \log\left(\LL(\thetav)\right) \\
-&\propto& - \log\left(\prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)\right) \\
+&\propto& - \log\big(\prodin \exp\big(-\frac{1}{2\sigma^2} \big(\yi - \fxit\big)^2\big)\big) \\
 &\propto& \sumin \left(\yi - \fxit\right)^2
 \end{eqnarray*}
-
-
+}
 
 \framebreak 
 
@@ -141,37 +137,35 @@ Easy to see: minimizing neg. log-likelihood with Gaussian errors is the same as 
 \end{itemize}
 \end{footnotesize}
 
+\begin{center}
 \includegraphics[width = 0.8\textwidth]{figure/residuals_plot_L2.pdf}
-
+\end{center}
 \end{vbframe}
 
+
+
 \begin{vbframe}{Distributions and losses}
-
-\begin{itemize} 
-\item For every error distribution $\P_\eps$ we can derive an equivalent loss function, which leads to the same point estimator for the parameter vector $\thetav$ as maximum-likelihood. Formally,
-\begin{itemize}
-    \item $\thetah \in \argmax_{\thetav} \LL(\thetav) \implies \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$  %\implies \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$
+For \textbf{every} error distribution $\P_\eps$ we can derive an equivalent loss function, which leads to the same point estimator for the parameter vector $\thetav$ as maximum-likelihood. Formally, $\thetah \in \argmax_{\thetav} \LL(\thetav) \Leftrightarrow \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$.  %\implies \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$
     %\item $\thetah \in \argmax_{\thetav} \log\left(\LL(\thetav)\right) \implies $
-\end{itemize}
-%\lz
-\item \textbf{But}: The other way around does not always work: We cannot derive a corresponding pdf or error distribution for every loss function -- the Hinge loss is one prominent example, for which some probabilistic interpretation is still possible however, see \citelink{SOLLICH1999NINTH}.
-
-\framebreak
-
-When does the reverse direction hold?
-\item If we can write the loss as $L(y,\fx)=L(y-\fx)=L(r)$ for $r \in \mathbb{R}$, then minimizing $L(y-\fx)$ is equivalent to maximizing a conditional log-likelihood $\log(p(y-f(\xv|\thetav))$ if
-\begin{itemize}
- \setlength{\itemsep}{1.2em}
-    \item $\log(p(r))$ is affine trafo of $L$ (undoing the $\propto$):
-% minus due to sign chance when we go from loss to loglik
-    $$\log(p(r)) = a - bL(r),\,\,a \in \mathbb{R}, b>0$$
-    \item  $p$ is a pdf (non-negative and integrates to one)
-\end{itemize}
-\lz
-Thus, a loss $L$ corresponds to MLE under \textit{some} distribution if there exist $a \in \mathbb{R},\, b>0$ such that
-$$ \int_{\mathbb{R}} \exp(a-bL(r))\text{d}r = 1$$
-\end{itemize}
     
+\vspace{0.2cm}    
+\textbf{But}: Other way does not always work: We cannot derive a pdf/error distrib. for every loss -- the Hinge loss is one prominent example (some prob. interpretation is still possible \citelink{SOLLICH1999NINTH}).
+%\framebreak
+
+\vspace{0.2cm}
+\textbf{When} does the reverse direction hold?
+
+If we can write loss as $L(y,\fx)=L_{\mathbb{P}}(y-\fx)=L_{\mathbb{P}}(r)$ for $r \in \mathbb{R}$, then minimizing $L_{\mathbb{P}}(y-\fx)$ is equiv. to maximizing a conditional log-likelihood $\log(p(y-f(\xv|\thetav))$ if
+\begin{enumerate}
+ \setlength{\itemsep}{1.0em}
+    \item $\log(p(r))$ is affine trafo of $L_{\mathbb{P}}$ (undoing the $\propto$):
+% minus due to sign chance when we go from loss to loglik
+    $\log(p(r)) = a - bL_{\mathbb{P}}(r),\,\,a \in \mathbb{R}, b>0$
+    \item  $p$ is a pdf (non-negative and integrates to one)
+\end{enumerate}
+
+%Thus, a loss $L_{\mathbb{P}}$ corresponds to MLE under \textit{some} distribution if there exist $a \in \mathbb{R},\, b>0$ such that
+%$$ \int_{\mathbb{R}} \exp(a-bL_{\mathbb{P}}(r))\text{d}r = 1$$
 \end{vbframe}
 
 
