@@ -4,6 +4,7 @@
 library('knitr')
 knitr::set_parent("../../style/preamble_ueb_coll.Rnw")
 @
+\newcommand{\xvp}{\mathbf{x}^\prime}
 
 \kopf{Gaussian Processes}
 
