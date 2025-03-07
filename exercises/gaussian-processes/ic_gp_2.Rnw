@@ -9,6 +9,6 @@ knitr::set_parent("../../style/preamble_ueb.Rnw")
 
 
 \aufgabe{Gaussian Processes - Prediction}{
-	<<child="ex_rnw/ic_gp_2.Rnw">>=
+	<<child="ex_rnw/ic_gp_prediction.Rnw">>=
 	@
 }

@@ -1,0 +1,21 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb.Rnw")
+@
+\newcommand{\xvp}{\mathbf{x}^\prime}
+
+
+
+\kopfsl{}{Gaussian Processes}
+
+\aufgabe{Bayesian Linear Model}{
+	<<child="ex_rnw/ex_gp_bayesianLM.Rnw">>=
+	@
+}
+
+\aufgabe{Covariance Functions}{
+	<<child="ex_rnw/ex_gp_covariance.Rnw">>=
+	@
+}

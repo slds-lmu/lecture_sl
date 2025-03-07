@@ -1,0 +1,136 @@
+
+%
+The posterior distribution is obtained by Bayes' rule 
+%
+$$
+\underbrace{p(\thetav | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetav)}^{\text{likelihood}}\overbrace{q(\thetav)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
+$$
+% 
+In the Bayesian linear model we have a Gaussian likelihood: $\yv ~|~ \Xmat, \thetav \sim \mathcal{N}(\Xmat \thetav, \sigma^2 \id_n),$ i.e.,
+%
+\begin{align*}
+%	
+	p(\yv | \Xmat, \thetav) 
+%	
+	&\propto	\exp\biggl[-\frac{1}{2\sigma^2}(\yv - \Xmat\thetav)^\top(\yv - \Xmat\thetav)\biggr] \\
+%	
+	&= \exp\biggl[-\frac{\| \yv - \Xmat\thetav \|_2^2}{2\sigma^2}\biggr] \\
+%	
+	&= \exp\biggl[-\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2}\biggr].
+%	
+\end{align*}
+%
+Moreover, note that the maximum a posteriori estimate of $\thetav,$ which is defined by
+%
+$$		\thetavh = \argmax_{\thetav} p(\thetav | \Xmat, \yv)	$$
+%
+can also be defined by 
+%
+%
+$$		\thetavh = \argmax_{\thetav} \log \left( p(\thetav | \Xmat, \yv) \right),	$$
+%
+since $\log$ is a monotonically increasing function, so the maximizer is the same.
+%
+\begin{enumerate}
+%	
+  \item  If the prior distribution is  a uniform distribution over the parameter vectors $\thetav$, i.e.,
+%  
+	$$  q(\thetav)  \propto 1, $$
+%	
+	then 
+%	
+	\begin{eqnarray*}
+		p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \\
+%		
+		&\propto& \exp\biggl[-\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2}\biggr].
+%		
+	\end{eqnarray*}
+%  
+	With this, 
+%	
+	\begin{align*}
+%				
+		\thetavh 
+%		
+		&= \argmax_{\thetav} \log \left( p(\thetav | \Xmat, \yv) \right) \\
+%		
+		&= \argmax_{\thetav} -\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} \\
+%		
+		&= \argmin_{\thetav}  \frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} \\
+%		
+		&= \argmin_{\thetav}  \sum_{i=1}^n (\yi - \thetav^\top \xi)^2, \tag{$2\sigma^2$ is just a constant scaling}
+%		
+	\end{align*}
+%
+	so the  maximum a posteriori estimate coincides with the empirical risk minimizer for the L2-loss (over the linear models).
+%
+  \item If we choose a Gaussian distribution over the parameter vectors $\thetav$ as the prior belief, i.e.,
+  %  
+  $$  q(\thetav)  \propto  \exp\biggl[ -\frac{1}{2\tau^2}\thetav^\top\thetav  \biggr], \qquad \tau>0, $$
+  %  
+  	then 
+%  
+  \begin{eqnarray*}
+%  	
+  	p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \\
+  	%		
+  	&\propto& \exp\biggl[-\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} -\frac{1}{2\tau^2}\thetav^\top\thetav \biggr] \\
+%  	
+	&=& \exp\biggl[-\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} -\frac{\|\thetav\|_2^2}{2\tau^2}  \biggr]
+  	%		
+  \end{eqnarray*}
+  %  
+  With this, 
+  %	
+  \begin{align*}
+  	%				
+  	\thetavh 
+  	%		
+  	&= \argmax_{\thetav} \log \left( p(\thetav | \Xmat, \yv) \right) \\
+  	%		
+  	&= \argmax_{\thetav} -\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} -\frac{\|\thetav\|_2^2}{2\tau^2}   \\
+  	%		
+  	&= \argmin_{\thetav}  \frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} + \frac{\|\thetav\|_2^2}{2\tau^2}   \\
+%  	
+  	&= \argmin_{\thetav}   \sum_{i=1}^n (\yi - \thetav^\top \xi)^2  + \frac{\sigma^2}{ \tau^2}  \|\thetav\|_2^2   ,
+  	%		
+  \end{align*}
+  %
+  so the  maximum a posteriori estimate coincides for the choice of $\lambda = \frac{\sigma^2}{ \tau^2}>0$ with the regularized empirical risk minimizer for the L2-loss with L2 penalty (over the linear models), i.e., the Ridge regression.
+%  
+  \item If we choose a Laplace distribution over the parameter vectors $\thetav$ as the prior belief, i.e.,
+%  
+	$$  q(\thetav)  \propto  \exp\biggl[-\frac{\sum_{i=1}^p |\thetav_i|}{\tau} \biggr], \qquad \tau>0, $$
+	%  
+	  	then 
+%	
+	\begin{eqnarray*}
+		%  	
+		p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \\
+		%		
+		&\propto& \exp\biggl[-\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} -\frac{\sum_{i=1}^p |\thetav_i|}{\tau}  \biggr] \\
+		%  	
+		&=& \exp\biggl[-\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} -\frac{\|\thetav\|_1}{\tau}  \biggr]
+		%		
+	\end{eqnarray*}
+	%  
+	With this, 
+	%	
+	\begin{align*}
+		%				
+		\thetavh 
+		%		
+		&= \argmax_{\thetav} \log \left( p(\thetav | \Xmat, \yv) \right) \\
+		%		
+		&= \argmax_{\thetav} -\frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} -\frac{\|\thetav\|_1}{\tau}   \\
+		%		
+		&= \argmin_{\thetav}  \frac{ \sum_{i=1}^n (\yi - \thetav^\top \xi)^2}{2\sigma^2} + \frac{\|\thetav\|_1}{\tau}  \\
+		%  	
+		&= \argmin_{\thetav}   \sum_{i=1}^n (\yi - \thetav^\top \xi)^2  + \frac{2\sigma^2}{ \tau}  \|\thetav\|_1   ,
+		%		
+	\end{align*}
+	%
+	so the  maximum a posteriori estimate coincides for the specific choice of $\lambda = \frac{2\sigma^2}{ \tau}$ with the regularized empirical risk minimizer for the L2-loss with L1 penalty (over the linear models), i.e., the Lasso regression.
+%	
+\end{enumerate}
+%

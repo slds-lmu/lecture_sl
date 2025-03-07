@@ -1,0 +1,19 @@
+Consider the commonly used covariance functions mentioned in the lecture slides: constant, linear, polynomial, squared exponential, Mat\'ern, exponential covariance functions. 
+%
+\begin{enumerate}
+%
+  \item Show that they are valid covariance functions. Note that the proofs for the Mat\'ern and exponential covariance functions are out of scope for this exercise. Additionally, you may use the following composition rules. In these rules we assume that $k_0(\cdot, \cdot)$ and $k_1(\cdot, \cdot)$ are valid covariance functions:
+%
+  \begin{enumerate}
+    \item $k(\xv, \xvp) = \xv^T \xvp$ is a valid covariance function;
+    \item $k(\xv, \xvp) = c \cdot k_0(\xv, \xvp)$ is a valid covariance function if $c \geq 0$ is constant;
+    \item $k(\xv, \xvp) = k_0(\xv, \xvp) + k_1(\xv, \xvp)$ is a valid covariance function;
+    \item $k(\xv, \xvp) = k_0(\xv, \xvp) \cdot k_1(\xv, \xvp)$ is a valid covariance function;
+    \item $k(\xv, \xvp) = g(k_0(\xv, \xvp))$ is a valid covariance function if $g$ is a polynomial function with positive coefficients;
+    \item $k(\xv, \xvp) = t(\xv) \cdot k_0(\xv, \xvp) \cdot t(\xvp)$ is a valid covariance function, where $t$ is any function;
+    \item $k(\xv, \xvp) = \exp(k_1(\xv, \xvp))$ is a valid covariance function;
+    \item $k(\xv, \xvp) = \xv^T\mathbf{A}\xvp$ is a valid covariance function if $\mathbf{A} \succeq 0$.
+  \end{enumerate}
+  \item Are these covariance functions stationary or isotropic? Justify your answer.
+\end{enumerate}
+%    
