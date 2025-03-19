@@ -103,7 +103,7 @@ p_kernel
       0.3\\
       0
     \end{pmatrix}\\
-    &= 1 - \left(\frac{0.36}{1+\sigma^2}\frac{0.09}{1+\sigma^2}\right)\\
+    &= 1 - \left(\frac{0.36}{1+\sigma^2}+\frac{0.09}{1+\sigma^2}\right)\\
     &= 1 - \frac{0.45}{1+\sigma^2}
   \end{align*}
 	\item
@@ -127,7 +127,7 @@ p_kernel
       0 & (1+\sigma^2)^{-1} & 0 & 0 \\
       0 & 0 & (1+\sigma^2)^{-1} & 0 \\
       0 & 0 & 0 & (1+\sigma^2)^{-1}
-    \end{pmatrix} \begin{pmatrix}1\\0\\0\\0\end{pmatrix}^T\\
+    \end{pmatrix} \begin{pmatrix}1\\0\\0\\0\end{pmatrix}\\
     &= 1 - \frac{1}{1+\sigma^2} = \frac{\sigma^2}{1+\sigma^2}
   \end{align*}
 	\item E.g., for $\sigma^2 = 0.2$:\\
