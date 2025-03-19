@@ -1,0 +1,28 @@
+The first loss function of interest is the log-loss: 
+$$
+\Lpixy = \lcrossent
+$$
+
+\begin{enumerate}
+	\item
+	What is $\pibayes_c$ (the optimal constant model in terms of the theoretical risk)?
+	\lz
+	\lz 
+	\lz
+	\lz
+	\lz
+\item
+	What is its risk?
+	\lz
+	\lz 
+	\lz
+	\lz
+	\lz
+\item
+	What is $\thetah$ (the optimal constant model in terms of the \textit{empirical} risk)?
+	\lz
+	\lz 
+	\lz
+	\lz
+	\lz
+\end{enumerate}

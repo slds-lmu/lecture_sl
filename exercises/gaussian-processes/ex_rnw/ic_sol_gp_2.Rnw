@@ -1,0 +1,167 @@
+<<preamble, echo=FALSE, results='hide', warning=FALSE >>=
+library(ggplot2)
+
+# data points
+x_train <- c(1.6, 2.8, 0.5, 3.9)
+y_train <- c(3.0, 3.3, 2.0, 2.7)
+
+# k(x,x') = 1 - |x - x'| if |x-x'| < 1, else 0.
+kernel <- function(x, xprime) {
+  d <- abs(x - xprime)
+  ifelse(d < 1, 1 - d, 0)
+}
+
+K_train <- outer(x_train, x_train, kernel)
+
+# sigma^2
+sigma2_noisy <- 0.2
+sigma2_noiseless <- 0
+
+x_grid <- seq(min(x_train) - 2, max(x_train) + 2, length.out = 400)
+
+gp_predict <- function(x_new, x_train, y_train, K_train, sigma2) {
+  # compute the cross-covariance vector between x_new and training points
+  K_star <- sapply(x_train, function(xi) kernel(x_new, xi))
+  # prior variance at x_new (k(x_new,x_new)) is 1 since |x_new - x_new| = 0
+  K_star_star <- kernel(x_new, x_new)
+  
+  # inverse of the training covariance with nugget
+  invK <- solve(K_train + sigma2 * diag(length(x_train)))
+  
+  m_post <- as.numeric(t(K_star) %*% invK %*% y_train)
+  var_post <- as.numeric(K_star_star - t(K_star) %*% invK %*% K_star)
+  return(c(m_post = m_post, var_post = var_post))
+}
+
+# compute predictions over the grid for both cases
+predictions <- function(sigma2) {
+  pred <- t(sapply(x_grid, function(x) gp_predict(x, x_train, y_train, K_train, sigma2)))
+  pred <- as.data.frame(pred)
+  pred$x <- x_grid
+  pred$lower <- pred$m_post - 1.96 * sqrt(pmax(pred$var_post, 0))
+  pred$upper <- pred$m_post + 1.96 * sqrt(pmax(pred$var_post, 0))
+  return(pred)
+}
+
+@
+
+It may help to visualize the kernel function:\\
+\begin{center}
+<<kernel, echo=FALSE, fig.width=2, fig.height=2, results='markup'>>=
+# define a grid for u = x - x'
+u_grid <- seq(-2, 2, length.out = 400)
+
+# compute kernel values: K = 1 - |u| if |u| < 1, else 0
+kernel_values <- ifelse(abs(u_grid) < 1, 1 - abs(u_grid), 0)
+df_kernel <- data.frame(u = u_grid, K = kernel_values)
+
+p_kernel <- ggplot(df_kernel, aes(x = u, y = K)) +
+  geom_line(color = "black", linewidth = 1) +
+  labs(x = expression(x - x*"'"), y = "K", title = NULL) +
+  scale_y_continuous(limits = c(0, 2)) +
+  theme_bw()
+
+p_kernel
+@
+\end{center}
+
+\begin{enumerate}
+	\item
+  \begin{align*}
+    \Kmat &= 
+    \begin{pmatrix}
+      1 & 0 & 0 & 0 \\
+      0 & 1 & 0 & 0 \\
+      0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 1
+    \end{pmatrix} \text{(none of the training points are within 1 of each other)}\\
+    \bm{K}_*^T &= \begin{pmatrix}0.6\\0\\0.3\\0\end{pmatrix}^T\\
+    m_{\text{post}} &= \begin{pmatrix}0.6\\0\\0.3\\0\end{pmatrix}^T
+    \begin{pmatrix}
+      (1+\sigma^2)^{-1} & 0 & 0 & 0 \\
+      0 & (1+\sigma^2)^{-1} & 0 & 0 \\
+      0 & 0 & (1+\sigma^2)^{-1} & 0 \\
+      0 & 0 & 0 & (1+\sigma^2)^{-1}
+    \end{pmatrix}
+    \bm{y}\\
+    &= \begin{pmatrix}\frac{0.6}{1+\sigma^2}&0&\frac{0.3}{1+\sigma^2}&0\end{pmatrix} 
+    \begin{pmatrix}
+      3\\
+      3.3\\
+      2.0\\
+      2.7
+    \end{pmatrix}\\
+    &= \frac{1.8}{1+\sigma^2} + \frac{0.6}{1+\sigma^2}\\
+    &= \frac{2.4}{1+\sigma^2}
+  \end{align*}
+	\item 
+  \begin{align*}
+    k_\text{post} &= 1 - \begin{pmatrix}\frac{0.6}{1+\sigma^2}&0&\frac{0.3}{1+\sigma^2}&0\end{pmatrix}
+    \begin{pmatrix}
+      0.6\\
+      0\\
+      0.3\\
+      0
+    \end{pmatrix}\\
+    &= 1 - \left(\frac{0.36}{1+\sigma^2}+\frac{0.09}{1+\sigma^2}\right)\\
+    &= 1 - \frac{0.45}{1+\sigma^2}
+  \end{align*}
+	\item
+  \begin{align*}
+    m_{\text{post}} &= \begin{pmatrix}1\\0\\0\\0\end{pmatrix}^T
+    \begin{pmatrix}
+      (1+\sigma^2)^{-1} & 0 & 0 & 0 \\
+      0 & (1+\sigma^2)^{-1} & 0 & 0 \\
+      0 & 0 & (1+\sigma^2)^{-1} & 0 \\
+      0 & 0 & 0 & (1+\sigma^2)^{-1}
+    \end{pmatrix}
+    \bm{y}\\
+    &= \begin{pmatrix}(1+\sigma^2)^{-1}&0&0&0\end{pmatrix}
+    \bm{y}\\
+    &= \frac{\yi}{1+\sigma^2}
+  \end{align*}
+  \begin{align*}
+    k_\text{post} &= 1 - \begin{pmatrix}1\\0\\0\\0\end{pmatrix}^T
+    \begin{pmatrix}
+      (1+\sigma^2)^{-1} & 0 & 0 & 0 \\
+      0 & (1+\sigma^2)^{-1} & 0 & 0 \\
+      0 & 0 & (1+\sigma^2)^{-1} & 0 \\
+      0 & 0 & 0 & (1+\sigma^2)^{-1}
+    \end{pmatrix} \begin{pmatrix}1\\0\\0\\0\end{pmatrix}\\
+    &= 1 - \frac{1}{1+\sigma^2} = \frac{\sigma^2}{1+\sigma^2}
+  \end{align*}
+	\item E.g., for $\sigma^2 = 0.2$:\\
+  \begin{center}
+<<noisy, echo=FALSE, fig.width=3, fig.height=3, results='markup' >>=
+pred_noisy <- predictions(sigma2_noisy)
+p_noisy <- ggplot() +
+  geom_ribbon(data = pred_noisy, aes(x = x, ymin = lower, ymax = upper),
+              fill = "grey70", alpha = 0.5) +
+  geom_line(data = pred_noisy, aes(x = x, y = m_post), color = "black", linewidth = 1) +
+  geom_point(data = data.frame(x = x_train, y = y_train),
+              aes(x = x, y = y), color = "red", size = 3) +
+  labs(title = NULL,
+        x = "x", y = "f(x)") +
+  theme_bw()
+p_noisy
+@
+  \end{center}
+
+	\item For $\sigma^2 = 0$, the "band" around the observed training points is smaller (the GP is noise-free):
+  \begin{center}
+<<noiseless, echo=FALSE, fig.width=3, fig.height=3, results='markup' >>=
+
+pred_noiseless <- predictions(sigma2_noiseless)
+p_noiseless <- ggplot() +
+  geom_ribbon(data = pred_noiseless, aes(x = x, ymin = lower, ymax = upper),
+              fill = "grey70", alpha = 0.5) +
+  geom_line(data = pred_noiseless, aes(x = x, y = m_post), color = "black", linewidth = 1) +
+  geom_point(data = data.frame(x = x_train, y = y_train),
+              aes(x = x, y = y), color = "red", size = 3) +
+  labs(title = NULL,
+        x = "x", y = "f(x)") +
+  theme_bw()
+p_noiseless
+@
+  \end{center}
+\end{enumerate}

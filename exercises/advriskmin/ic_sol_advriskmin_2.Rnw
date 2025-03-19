@@ -1,0 +1,58 @@
+% !Rnw weave = knitr
+
+<<setup-child, include = FALSE>>=
+library('knitr')
+knitr::set_parent("../../style/preamble_ueb.Rnw")
+@
+
+
+\kopficsl{}{Risk Minimization - Classification}
+
+\loesung{Risk Minimizers for the Log-Loss}{
+	<<child="ex_rnw/sol_risk_minimizers_log_loss.Rnw">>=
+	@
+}
+
+\loesung{Risk Minimizers for the Brier Score}{
+	<<child="ex_rnw/sol_risk_minimizers_brier_score.Rnw">>=
+	@
+}
+
+\newpage
+\newgeometry{left=1cm, right=1cm, top=1cm, bottom=1cm}
+\begin{sidewaystable}[ht]
+\centering
+\renewcommand{\arraystretch}{5}
+\setlength{\tabcolsep}{8pt}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|>{\centering\arraybackslash}m{1.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|}
+\hline
+\textbf{\Large Loss} & 
+\textbf{\Large Risk minimizer} & 
+\textbf{\Large Bayes risk} & 
+\textbf{\Large Optimal \newline constant model} & 
+\textbf{\large Risk of optimal \newline constant model} \\ \hline
+\rule{0pt}{2cm}\textbf{\Large{L2}} & 
+\normalsize{$\E_{y|\xv}\left(y|\xv\right) = \fxbayes$} & 
+\normalsize{$\riskbayes_{L2} = \E_x[\var_{y|x}(y|x)]$} & 
+\normalsize{$\E_y[y] = \fbayes_c$} & 
+\normalsize{$\var_y(y) = \risk_{L2}(\fbayes_c)$} \\ \hline
+\rule{0pt}{2cm}\textbf{\Large{0/1}} & 
+\normalsize{$\hxbayes = \argmax_{C \in \Yspace} \P(y = C | \xv = \xv)$} & 
+\normalsize{$\riskbayes_{0/1} = 1 - \E_x[\mathop{\mathrm{max}}_{C \in \Yspace}\P(y=C|\xv = \xv)]$} & 
+\normalsize{Exercise 2} & 
+\normalsize{Exercise 2} \\ \hline
+\rule{0pt}{2cm}\textbf{\Large{Log}} & 
+\normalsize{$\pixbayes = \P(y = 1 | \xv = \xv)$} & 
+\normalsize{$\riskbayes_{l} = \E_x[\text{H}_{y|x}(y|x)]$} \newline exp. cond. entropy (ch. 13) & 
+\normalsize{$\pibayes_c = \P(y = 1)$} & 
+\normalsize{$\text{H}_y(y) = \risk_{l}(\pibayes_c)$} \\ \hline
+\rule{0pt}{2cm}\textbf{\Large{Brier}} & 
+\normalsize{$\pixbayes = \P(y = 1 | \xv = \xv)$} & 
+\normalsize{$\riskbayes_{B} = \E_x[\var_{y|x}(y|x)]$} \newline $\left(= \riskbayes_{L2}\right)$ & 
+\normalsize{$\pibayes_c = \P(y = 1)$} & 
+\normalsize{$\var_y(y) = \risk_B(\pibayes_c)$} \\ \hline
+\end{tabular}
+}
+\end{sidewaystable}
+\restoregeometry
