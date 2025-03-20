@@ -41,6 +41,7 @@
   $$\Lyf = \max \{ 0, 1 - yf \}.$$
   \item Note that the hinge loss only equals zero for a margin $yf\geq 1$, 
   encouraging confident (correct) predictions.
+  \item Hinge loss is often used in SVMs (cf. chapters on SVMs)
   % \item A squared version exists for putting a sharper penalty on 
   % misclassifications:
   % $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
@@ -83,7 +84,7 @@
   \Lyf = &(y - f)^2 = y^2 - 2yf + f^2 =\\
   = &1 - 2yf + (yf)^2 = (1 - yf)^2
   \end{eqnarray*}
-  \item This loss behaves just like the squared hinge loss for $yf < 1$, but is not clipped to $0$ for $yf>1$ (zero only for $yf = 1$ andincreases again in $yf$ which is in general not desirable!)
+  \item This loss behaves just like the squared hinge loss for $yf < 1$, but is not clipped to $0$ for $yf>1$ (zero only for $yf = 1$ and increases again in $yf$ which is in general not desirable!)
 \end{itemize}
 
 \begin{center}
@@ -102,7 +103,7 @@ approximation to the 0-1-loss is the \textbf{exponential loss}:
 \item $\Lyf = \exp(-yf)$, used in AdaBoost.
 \item Convex, differentiable (thus easier to optimize than 0-1-loss).
 \item Loss increases exponentially for wrong predictions with high confidence; if prediction is correct but with low confidence only, the loss is still positive.
-\item No closed-form analytic solution to (empirical) risk minimization.
+%\item No closed-form analytic solution to (empirical) risk minimization.
 \end{itemize}
 
 

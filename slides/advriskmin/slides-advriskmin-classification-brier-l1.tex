@@ -20,7 +20,7 @@
 \titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
     Advanced Risk Minimization
   }{% Lecture title  
-    Brier Score
+    L2/L1 Loss on Probabilities
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/brier.png
   }{
@@ -159,7 +159,21 @@ Since \(\pi^*(\mathbf{x})=\eta(\mathbf{x})\) exactly, it follows that the optima
 i.e., is perfectly calibrated.
 \end{vbframe}
 
+\begin{vbframe}{L1 loss on probabilities}
 
+The binary L1 loss defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ is given by
+\begin{equation*}
+\Lpiy = |\pi - y|
+\end{equation*}
+As the L1 loss is not a \textit{strictly} proper scoring rule (cf. section on proper scoring rules), it should not necessarily be used for calibration. %Note that it is not convex on probabilities anymore.
+Despite convex in $\pi$, $$L(y,\pi(f))=|(1+\exp{(-f)})^{-1}-y|$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
+\vspace{-0.2cm}
+\begin{center}
+\includegraphics[width = 0.6\textwidth]{figure/l1_loss.png}
+\end{center}
+
+
+\end{vbframe}
 
 
 
