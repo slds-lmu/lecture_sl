@@ -101,7 +101,7 @@ $$\risket = \sumin \Lxyit$$
 % \item Then the maximum-likelihood estimator $\thetah$, which we obtain by optimizing $\LLt$ is identical
 % to the loss-minimal $\thetah$ we obtain by minimizing $\risket$.
 \item NB: When we are only interested in the minimizer, we can ignore multiplicative or additive constants.
-\item We use $\propto$ as \enquote{proportional up to multiplicative and additive constants}
+\item We use $\propto$ as \enquote{proportional up to positive multiplicative and additive constants}
 
 \end{itemize}
 
@@ -133,7 +133,7 @@ Easy to see: minimizing Gaussian NLL s is ERM with $L2$-loss:
 
 \begin{footnotesize}
 \begin{itemize}
-	\item We simulate data $y ~|~\xv \sim \mathcal{N}\left(\ftrue(\xv), 1\right)$ with $\ftrue = 0.2 \cdot \xv$ 
+	\item We simulate data $y ~|~x \sim \mathcal{N}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$ 
 \item Let's plot empirical errors as histogram, after fitting our model with $L2$-loss
 \item Q-Q-plot compares empirical residuals vs. theoretical quantiles of Gaussian 
 \end{itemize}
@@ -188,7 +188,7 @@ MLE for Laplacian errors = ERM with L1-loss.
 
 \begin{footnotesize}
 \begin{itemize}
-	\item We simulate data $y ~|~\xv \sim \text{Laplacian}\left(\ftrue(\xv), 1\right)$ with $\ftrue = 0.2 \cdot \xv$. 
+	\item We simulate data $y ~|~x \sim \text{Laplacian}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$. 
 \item We can plot the empirical error distribution, i.e. the distribution of the residuals after fitting a regression model w.r.t. $L1$-loss.
 \item With the help of a Q-Q-plot we can compare the empirical residuals vs. the theoretical quantiles of a Laplacian distribution.  
 \end{itemize}

@@ -80,7 +80,7 @@ with $\P(y = k| \xv)$ the posterior probability for class $k$. For the binary ca
 % \vspace*{-0.3cm}
 
 % \begin{eqnarray*}
-%   \fxbayes &=& \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xv)\right]\,.  \\
+%   \fxbayes &=& \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xtil)\right]\,.  \\
 % \end{eqnarray*}
 
 
@@ -91,17 +91,17 @@ with $\P(y = k| \xv)$ the posterior probability for class $k$. For the binary ca
 We compute the point-wise optimizer of the above term for the 0-1-loss (defined on a discrete classifier $\hx$): 
 
   \begin{eqnarray*}  
-  \hxbayes &=& \argmin_{l \in \Yspace} \sum_{k \in \Yspace} L(k, l) \cdot \P(y = k~|~\xv = \xv) \\
-  &=& \argmin_{l \in \Yspace} \sum_{k \ne l} \P(y = k~|~\xv = \xv) \\ 
-  &=& \argmin_{l \in \Yspace} 1 - \P(y = l~|~\xv = \xv) \\
-  &=& \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xv),
+  \hxbayes &=& \argmin_{l \in \Yspace} \sum_{k \in \Yspace} L(k, l) \cdot \P(y = k~|~\xv = \xtil) \\
+  &=& \argmin_{l \in \Yspace} \sum_{k \ne l} \P(y = k~|~\xv = \xtil) \\ 
+  &=& \argmin_{l \in \Yspace} 1 - \P(y = l~|~\xv = \xtil) \\
+  &=& \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xtil),
   \end{eqnarray*}
 
 which corresponds to predicting the most probable class. 
 
 \vspace*{0.2cm} 
 
-Note that sometimes $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xv)$ is referred to as the \textbf{Bayes optimal classifier} (without closer specification of the the loss function used). 
+Note that sometimes $h^{\ast}(\xtil) = \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xtil)$ is referred to as the \textbf{Bayes optimal classifier} (without closer specification of the the loss function used). 
 
 \lz 
 
