@@ -114,7 +114,7 @@ For different label encoding $y' \in \setmp$, recognize that $y=(y'+1)/2$. Subst
 The risk minimizer for the Bernoulli loss defined for probabilistic classifiers $\pix$ and on $y \in \{0, 1\}$ is
 
 $$
-  \pixbayes = \eta(\xv) = \P(y = 1 ~|~ \xv = \xv). 
+  \piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil). 
 $$
 
 \vspace*{0.2cm}
@@ -158,7 +158,7 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 
 \framebreak 
 
-The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds, i.e. the logit function (inverse of logistic function) of $p(\xv) = \P(y~|~\xv = \xv)$:
+The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds, i.e. the logit function (inverse of logistic function) of $p(\xtil) = \P(y~|~\xv = \xtil)$:
 
 \begin{minipage}{0.3\textwidth} 
 	\centering
@@ -170,7 +170,7 @@ The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and score
 	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
 \end{minipage}
 
-The function is undefined when $P(y~|~\xv = \xv) = 1$ or $P(y~|~\xv = \xv) = 0$, but predicts a smooth curve which grows when $P(y~|~\xv = \xv)$ increases and equals $0$ when $P(y~|~\xv = \xv) = 0.5$.
+The function is undefined when $\P(y~|~\xv = \xtil) = 1$ or $\P(y~|~\xv = \xtil) = 0$, but predicts a smooth curve which grows when $\P(y~|~\xv = \xv)$ increases and equals $0$ when $\P(y~|~\xv = \xtil) = 0.5$.
 
 \framebreak 
 
@@ -254,6 +254,120 @@ are equally referred to as Bernoulli, Binomial, logistic, log loss, or cross-ent
 \end{vbframe}
 
 
+\begin{vbframe}{Optimization Properties: Convergence}
+
+\footnotesize
+%The choice of the loss function may also impact convergence behavior.
+
+In case of \textbf{complete separation}, optimization might even 
+fail entirely, e.g.:
+%Consider the following scenario:
+
+\vspace{0.5cm}
+
+\begin{minipage}{0.7\textwidth}
+  \begin{itemize}
+    \item \textbf{Bernoulli loss} is margin-based and strictly monotonicly decreasing in
+    $y \cdot f$: 
+    % \scriptsize
+    $$\Lxy = \log \left( 1 + \exp \left( - y  \fx \right)\right)$$
+  \end{itemize}
+\end{minipage}%
+\begin{minipage}{0.05\textwidth}
+  \phantom{foo}
+\end{minipage}%
+\begin{minipage}{0.25\textwidth}
+  \includegraphics[width=\textwidth]{figure/bernoulli.png}
+\end{minipage}%
+
+\begin{itemize}
+  \item $f$ linear in $\thetav$, e.g.,
+  \textbf{logistic regression} with $\fxt = \thx$
+  %\begin{itemize}
+    %\small
+  \item Data perfectly separable by our learner, so we can find $\thetav$:
+   $$ \yi \fxit = \yi \thetav^T \xi > 0 ~~ \forall \xi$$
+%    \\ \vspace{0.1cm} \scriptsize 
+    %as every $\xi$ is correctly classified: $\fxit < 0$ for
+    %$\yi = -1$, $> 0$ for $\yi = 1$ \small
+   % \vspace{0.1cm}
+ %   \item[$\Rightarrow$] $y \fxt = $ 
+  %\end{itemize}
+ % \vspace{0.1cm}
+  %   \begin{itemize}
+  %   \small
+  %   \item[$\Rightarrow$] $f \left( \xv ~|~ a \cdot \thetav \right) = 
+  %   a \cdot \fxt$ for $a > 1$
+  % \end{itemize}
+%\end{itemize}
+
+% \vfill
+
+% With optimization, e.g., gradient descent, we can always find a set of 
+% parameters $\thetav^\prime$ that fully separates the data.
+
+%\framebreak
+
+%\begin{itemize} 
+  %\small
+ % \item In optimization, e.g., with gradient descent, we can always find a set 
+  %of parameters $\thetav^\prime$ that classifies all samples perfectly.
+   
+  %But taking a closer look at $\risket$, we find that the same can be 
+  %achieved with $2 \cdot \thetav^\prime$ -- and at lower risk:
+  
+\item Can now a construct a strictly better $\thetav$
+
+$$    \riske(2 \cdot \thetav) = \sumin  
+    % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
+    L \left( 2 \yi \thetav^T \xi  
+    \right) < \risket
+$$
+
+\item As ||$\thetav$|| increases, sum strictly decreases, as argument of L is strictly larger
+
+  %  \begin{flalign*
+    %\riske(2 \cdot \thetav) &= \sumin  
+    % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
+   % L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetav \right) \right \rvert  
+   % \right)
+   %5 = \sumin L \left(2 \cdot \left \rvert %\fxit \right \rvert \right) \\
+   %5 &< \sumin L \left( \left \rvert \fxit \right \rvert \right) = \risket
+ % \end{flalign*}
+\item We can iterate that, so there is no local (or global) optimum, and no numerical procedure can converge
+%  \item This actually holds true for every $a \cdot \thetav$ with $a > 1$.
+%  \begin{itemize}
+%    \small
+%    \item[$\Rightarrow$] By increasing $\| \thetav \|$, our loss becomes smaller 
+%    and smaller, and optimization runs infinitely.
+    % \item[$\Rightarrow$] This is a consequence of the above assumptions and 
+    % sometimes encountered in logistic regression and linear support vector 
+    % machines.
+  \end{itemize}
+%\end{itemize}  
+
+\framebreak
+
+\begin{itemize}
+  \small
+  \item
+  Geometrically, this translates to an ever steeper slope of the 
+  logistic/softmax function, i.e., increasingly sharp discrimination:
+  
+  \vspace{0.3cm}
+  \begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=0.8\textwidth]{figure/softmax_1}
+  \end{minipage}%
+  \begin{minipage}[b]{0.5\textwidth}
+    \includegraphics[width=0.8\textwidth]{figure/softmax_2}
+  \end{minipage}%
+  \item In practice, data are seldomly linearly separable and misclassified 
+  examples act as counterweights to increasing parameter values.
+  \item Besides, we can use \textbf{regularization} to encourage convergence 
+  to robust solutions.
+\end{itemize}
+
+\end{vbframe}
 
 
 

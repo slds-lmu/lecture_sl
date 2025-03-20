@@ -24,9 +24,10 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/brier.png
   }{
-  \item Know the Brier score 
-  \item Derive the risk minimizer
-  \item Derive the optimal constant model 
+  \item Brier score / L2-Loss on probabilities
+  \item Derivation of risk minimizer
+  \item Optimal constant model 
+  \item L1 loss on probabilities
   % \item Understand the connection between Brier score and Gini splitting 
 }
 
@@ -76,7 +77,7 @@ The binary Brier score is defined on probabilities $\pi \in [0, 1]$ and 0-1-enco
 \Lpiy = (\pi - y)^2
 \end{equation*}
 As the Brier score is a proper scoring rule (cf. section on proper scoring rules), it can be used for calibration. %Note that it is not convex on probabilities anymore.
-Despite convex in $\pi$, $$L(y,\pi(f))=((1+\exp{(-f)})^{-1}-y)^2$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
+Despite convex in $\pi$, $$\Lyf=((1+\exp{(-f)})^{-1}-y)^2$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
 \vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/brier.png}
@@ -90,7 +91,7 @@ Despite convex in $\pi$, $$L(y,\pi(f))=((1+\exp{(-f)})^{-1}-y)^2$$ as a composit
 The risk minimizer for the (binary) Brier score is 
 
 \begin{eqnarray*}
-\pixbayes = \eta(\xv) := \P(y=1~|~\xv = \xv),
+\piastxtil = \eta(\xtil) = \P(y=1~|~\xv = \xtil),
 \end{eqnarray*}
 
 which means that the Brier score attains its minimum if the prediction equals the \enquote{true} probability $\eta(\xv)$ of the outcome. 
@@ -98,7 +99,7 @@ which means that the Brier score attains its minimum if the prediction equals th
 \lz 
 
 The risk minimizer for the multiclass Brier score is 
-$$\pi^\ast(\xv) = \P(y = k ~|~ \xv = \xv). $$
+$$\piastxtil = \P(y = k ~|~ \xv = \xtil). $$
  
 
 \textbf{Proof: } We only show the proof for the binary case. We need to minimize 
@@ -166,7 +167,7 @@ The binary L1 loss defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded lab
 \Lpiy = |\pi - y|
 \end{equation*}
 As the L1 loss is not a \textit{strictly} proper scoring rule (cf. section on proper scoring rules), it should not necessarily be used for calibration. %Note that it is not convex on probabilities anymore.
-Despite convex in $\pi$, $$L(y,\pi(f))=|(1+\exp{(-f)})^{-1}-y|$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
+Despite convex in $\pi$, $$\Lyf=|(1+\exp{(-f)})^{-1}-y|$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
 \vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/l1_loss.png}
