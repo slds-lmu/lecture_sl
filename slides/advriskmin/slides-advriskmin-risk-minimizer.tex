@@ -41,11 +41,11 @@ $$\riskef = \sumin \Lxyi$$
     \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$,
     so from feature and target space
     \item $f_{\Hspace}:\Xspace \rightarrow \mathbb{R}^g$, 
-    f is a model from hypothesis space $\Hspace$;
+    $\fx$ is a model from hypothesis space $\Hspace$;
     maps a feature vector to output score;
     sometimes or often we omit $\Hspace$ in the index 
     \item $L:\Yspace\times\mathbb{R}^g\rightarrow\mathbb{R}$ is loss;\\
-    $\Lyf$ measures distance between label and prediction
+    $\Lxy$ measures distance between label and prediction
     \item We assume that $(\xv,y) \sim \Pxy$ and $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ \\
     $\Pxy$ is the distribution of the data generating process (DGP)
     %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
@@ -61,7 +61,7 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \begin{itemize}
     \item Model: $f(\xv) = \thetav^\top \xv + \theta_0$
     \item Squared loss:  
-    $\Lyf = \left(y-f\right)^2$
+    $\Lxy = \left(y-\fx\right)^2$
     \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetav^\top \xv + \theta_0 : \thetav \in \mathbb{R}^d, \theta_0 \in \mathbb{R} \right\}$$
 \end{itemize}
 
@@ -70,7 +70,7 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \textbf{Binary classification with shallow MLP:}\\
 \begin{itemize}
     \item Model: $f(\xv) = \pi(\xv)= \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2)$
-    \item Binary cross-entropy loss: $\Lpiv = -(y\log(\pi)+(1-y)\log(1-\pi))$\\ 
+    \item Binary cross-entropy loss: $\Lpixy = -(y\log(\pix)+(1-y)\log(1-\pix))$\\ 
     \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$}
 \end{itemize}
   

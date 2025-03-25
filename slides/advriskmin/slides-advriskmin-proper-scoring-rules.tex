@@ -54,46 +54,46 @@ $S$ is \textbf{strictly proper} when equality holds iff $P=Q$. (Strictly) proper
 \begin{vbframe}{Binary classification scores}
 
 For simplicity, we will only look at binary targets $y \sim \text{Bern}(p)$.\\ %Scoring rules are often related to loss functions $L$ by taking their negative value (maximization vs. minimization).
-We want to find out if using a loss $L(y, \pi)$ (negative score) incentivizes honest forecasts $\pi=p$ for any $p \in [0,1]$.
+We want to find out if using a loss $\Lpixy$ (negative score) incentivizes honest forecasts $\pix=p$ for any $p \in [0,1]$.
 
 \lz
 
 For any loss $L$, its expectation w.r.t. $y$ is
-$$\E_{y}[L(y, \pi)]=p \cdot L(1, \pi) + (1-p) \cdot L(0, \pi)$$
+$$\E_{y}[\Lpixy]=p \cdot L(1, \pix) + (1-p) \cdot L(0, \pix)$$
 
 \vspace{0.2cm}
 
-Let's first look at a negative example. Assuming the \textbf{L1 loss} $L(y,\pi)=|y-\pi|$, we obtain
+Let's first look at a negative example. Assuming the \textbf{L1 loss} $\Lpixy=|y-\pix|$, we obtain
 
-$$\E_y[L(y, \pi)]=p |1-\pi| + (1-p) \pi = p+\pi(1-2p)$$
-
-\vspace{0.2cm}
-
-The expected loss is linear in $\pi$, hence we minimize it by setting $\pi = 1$ for $p>0.5$ and $\pi = 0$ for $p<0.5$. 
+$$\E_y[\Lpixy]=p |1-\pix| + (1-p) \pix = p+\pix(1-2p)$$
 
 \vspace{0.2cm}
 
-The score $S(\pi,y)=-L(y,\pi)$ is therefore not proper.
+The expected loss is linear in $\pix$, hence we minimize it by setting $\pix = 1$ for $p>0.5$ and $\pix = 0$ for $p<0.5$. 
+
+\vspace{0.2cm}
+
+The score $S(\pix,y)=-\Lpixy$ is therefore not proper.
 
 \end{vbframe}
 
 \begin{vbframe}{Binary classification scores}
 
-The \textbf{0/1 loss} $L(y,\pi)=\mathds{1}_{\{y \neq h_\pi\}}$ using the discrete classifier $h_{\pi}=\mathds{1}_{\{\pi>0.5\}}$ yields in expectation over $y$:
+The \textbf{0/1 loss} $\Lpixy=\mathds{1}_{\{y \neq h_\pix\}}$ using the discrete classifier $h_{\pix}=\mathds{1}_{\{\pix>0.5\}}$ yields in expectation over $y$:
 
 \begin{eqnarray*}
-\E_y[L(y, \pi)] &=& p \cdot L(1,\pi) + (1-p) \cdot L(0,\pi)\\
+\E_y[\Lpixy] &=& p \cdot L(1,\pix) + (1-p) \cdot L(0,\pix)\\
 &=& \left\{
 \begin{array}{ll}
-p & \text{if } h_{\pi} = 0 \\
-1-p & \text{if } h_{\pi} = 1
+p & \text{if } h_{\pix} = 0 \\
+1-p & \text{if } h_{\pix} = 1
 \end{array}
 \right.
 \end{eqnarray*}
 
 \begin{itemize}
-    \item For $p>0.5$ we minimize the expected loss by choosing $h_{\pi}=1$, which holds true for any $\pi \in (0.5,1)$
-    \item Likewise for $p\leq 0.5$, any $\pi \in (0, 0.5]$ minimizes the expected loss
+    \item For $p>0.5$ we minimize the expected loss by choosing $h_{\pix}=1$, which holds true for any $\pix \in (0.5,1)$
+    \item Likewise for $p\leq 0.5$, any $\pix \in (0, 0.5]$ minimizes the expected loss
 \end{itemize}
 
 \lz
@@ -105,20 +105,20 @@ The \textbf{0/1 score} (negative 0/1 loss) is therefore proper but not strictly 
 
 \begin{vbframe}{Binary classification scores}
 
-To find strictly proper scores/losses, we can ask: Which functions have the property such that $\E_y[L(y,\pi)]$ is minimized at $\pi=p$? We have
+To find strictly proper scores/losses, we can ask: Which functions have the property such that $\E_y[\Lpixy]$ is minimized at $\pix=p$? We have
 
-$$\E_{y}[L(y,\pi)]=p \cdot L(1,\pi) + (1-p) \cdot L(0,\pi)$$
+$$\E_{y}[\Lpixy]=p \cdot L(1,\pix) + (1-p) \cdot L(0,\pix)$$
 
 Let's further %restrict our search to scores 
-assume that $L(1,\pi)$ and $L(0, \pi)$ can not be arbitrary, but are the same function evaluated at $\pi$ and $1-\pi$:
+assume that $L(1,\pix)$ and $L(0, \pix)$ can not be arbitrary, but are the same function evaluated at $\pix$ and $1-\pix$:
 %$S(\pi,y)$ for which 
-$L(1,\pi)=L(\pi)$ and $L(0,\pi)=L(1-\pi)$. Then
+$L(1,\pix)=L(\pix)$ and $L(0,\pix)=L(1-\pix)$. Then
 
-$$\E_{y}[L(y,\pi)]=p \cdot L(\pi) + (1-p) \cdot L(1-\pi)$$
+$$\E_{y}[\Lpixy]=p \cdot L(\pix) + (1-p) \cdot L(1-\pix)$$
 
 \vspace{0.2cm}
 
-Setting the derivative w.r.t. $\pi$ to $0$ and requiring $\pi=p$ at the optimum (\textbf{propriety}), we get the following first-order condition (F.O.C.):
+Setting the derivative w.r.t. $\pix$ to $0$ and requiring $\pix=p$ at the optimum (\textbf{propriety}), we get the following first-order condition (F.O.C.):
 
 \vspace{0.3cm}
 
@@ -129,8 +129,8 @@ $$p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$$
 \begin{itemize}\setlength\itemsep{1.9em}
     \item F.O.C.:\quad $p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$
     \item One natural solution is $L'(p)=-1/p$, resulting in $-p/p=-(1-p)/(1-p)=-1$ and the antiderivative $L(p)=-\log(p)$. 
-    \item This is the \textbf{log loss} $$L(y,\pi)=-(y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi))$$
-    \item The corresponding scoring rule (maximization) is the strictly proper \textbf{logarithmic scoring rule} $$S(\pi,y)=y \cdot \log(\pi) + (1-y) \cdot \log(1-\pi)$$
+    \item This is the \textbf{log loss} $$\Lpixy=-(y \cdot \log(\pix) + (1-y) \cdot \log(1-\pix))$$
+    \item The corresponding scoring rule (maximization) is the strictly proper \textbf{logarithmic scoring rule} $$S(\pix,y)=y \cdot \log(\pix) + (1-y) \cdot \log(1-\pix)$$
 \end{itemize}
 
 \framebreak
@@ -138,9 +138,9 @@ $$p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$$
 \begin{itemize} \setlength\itemsep{1.2em}
     \item F.O.C.:\quad $p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$
     \item A second solution is $L'(p)=-2(1-p)$, resulting in $-2p(1-p)=-2(1-p)p$ and the antiderivative $L(p)=(1-p)^2=\frac{1}{2}((1-p)^2+(0-(1-p))^2)$
-    \item This is also called the \textbf{Brier score} and is effectively the \textbf{MSE loss} for probabilities $$L(y,\pi)=\frac{1}{2}\sum_{i=1}^{2}(y_i-\pi_i)^2$$
-     {\small (with $y_1=y, y_2=1-y$ and likewise $\pi_1=\pi, \pi_2=1-\pi$)}
-    \item Using positive orientation (maximization), this gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pi,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i)^2$
+    \item This is also called the \textbf{Brier score} and is effectively the \textbf{MSE loss} for probabilities $$\Lpixy=\frac{1}{2}\sum_{i=1}^{2}(y_i-\pi_i(\xv))^2$$
+     {\small (with $y_1=y, y_2=1-y$ and likewise $\pi_1(\xv)=\pix, \pi_2(\xv)=1-\pix$)}
+    \item Using positive orientation (maximization), this gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pix,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i(\xv))^2$
 \end{itemize}
 
 \end{vbframe}

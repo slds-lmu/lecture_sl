@@ -38,8 +38,8 @@
   properties ill-suited to direct optimization.
   \item The \textbf{hinge loss} is a continuous relaxation that acts as a convex 
   upper bound on the 0-1-loss (for $y \in \setmp$): 
-  $$\Lyf = \max \{ 0, 1 - yf \}.$$
-  \item Note that the hinge loss only equals zero for a margin $yf\geq 1$, 
+  $$\Lxy = \max \{ 0, 1 - y\fx \}.$$
+  \item Note that the hinge loss only equals zero for a margin $y\fx\geq 1$, 
   encouraging confident (correct) predictions.
   \item Hinge loss is often used in SVMs (cf. chapters on SVMs)
   % \item A squared version exists for putting a sharper penalty on 
@@ -59,8 +59,8 @@
 
 \begin{itemize}
   \item We can also specify a \textbf{squared} version for the hinge loss:
-  $$\Lyf = \max \{ 0, (1 - yf)\}^2.$$
-  \item The $L2$ form punishes margins $yf \in (0, 1)$ less severely but puts 
+  $$\Lxy = \max \{ 0, (1 - y\fx)\}^2.$$
+  \item The $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts 
   a high penalty on more confidently wrong predictions. 
   \item Therefore, it is continuously differentiable yet more outlier-sensitive than the hinge loss.
 \end{itemize}
@@ -81,10 +81,10 @@
   \textbf{squared loss on classification scores} (with labels $y \in \setmp$, using 
   that $y^2 = 1$):
   \begin{eqnarray*}
-  \Lyf = &(y - f)^2 = y^2 - 2yf + f^2 =\\
-  = &1 - 2yf + (yf)^2 = (1 - yf)^2
+  \Lxy = &(y - \fx)^2 = y^2 - 2y\fx + \fx^2 =\\
+  = &1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
   \end{eqnarray*}
-  \item This loss behaves just like the squared hinge loss for $yf < 1$, but is not clipped to $0$ for $yf>1$ (zero only for $yf = 1$ and increases again in $yf$ which is in general not desirable!)
+  \item This loss behaves just like the squared hinge loss for $y\fx < 1$, but is not clipped to $0$ for $y\fx>1$ (zero only for $y\fx = 1$ and increases again in $y\fx$ which is in general not desirable!)
 \end{itemize}
 
 \begin{center}
@@ -100,7 +100,7 @@
 Another smooth 
 approximation to the 0-1-loss is the \textbf{exponential loss}:
 \begin{itemize}
-\item $\Lyf = \exp(-yf)$, used in AdaBoost.
+\item $\Lxy = \exp(-y\fx)$, used in AdaBoost.
 \item Convex, differentiable (thus easier to optimize than 0-1-loss).
 \item Loss increases exponentially for wrong predictions with high confidence; if prediction is correct but with low confidence only, the loss is still positive.
 %\item No closed-form analytic solution to (empirical) risk minimization.

@@ -72,12 +72,12 @@
 
 \begin{vbframe}{Brier Score}
 
-The binary Brier score is defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ and is the $L2$ loss on probabilities.
+The binary Brier score is defined on probabilities $\pix \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ and is the $L2$ loss on probabilities.
 \begin{equation*}
-\Lpiy = (\pi - y)^2
+\Lpixy = (\pix - y)^2
 \end{equation*}
 As the Brier score is a proper scoring rule (cf. section on proper scoring rules), it can be used for calibration. %Note that it is not convex on probabilities anymore.
-Despite convex in $\pi$, $$\Lyf=((1+\exp{(-f)})^{-1}-y)^2$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
+Despite convex in $\pix$, $$\Lxy=((1+\exp{(-\fx)})^{-1}-y)^2$$ as a composite function is not convex in $\fx$ anymore (log. sigmoid for $\pix$).
 \vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/brier.png}
@@ -162,12 +162,10 @@ i.e., is perfectly calibrated.
 
 \begin{vbframe}{L1 loss on probabilities}
 
-The binary L1 loss defined on probabilities $\pi \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ is given by
-\begin{equation*}
-\Lpiy = |\pi - y|
-\end{equation*}
+The binary L1 loss defined on probabilities $\pix \in [0, 1]$ and 0-1-encoded labels $y \in \{0, 1\}$ is given by $\Lpixy = |\pix - y|$.
+
 As the L1 loss is not a \textit{strictly} proper scoring rule (cf. section on proper scoring rules), it should not necessarily be used for calibration. %Note that it is not convex on probabilities anymore.
-Despite convex in $\pi$, $$\Lyf=|(1+\exp{(-f)})^{-1}-y|$$ as a composite function is not convex in $f$ anymore (log. sigmoid for $\pi$).
+Despite convex in $\pix$, $$\Lxy=|(1+\exp{(-\fx)})^{-1}-y|$$ as a composite function is not convex in $\fx$ anymore (log. sigmoid for $\pix$).
 \vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/l1_loss.png}

@@ -33,7 +33,7 @@
 \vspace*{-0.5cm}
 
 $$
-\Lyf = \left(y-f\right)^2 \quad \text{or} \quad \Lyf = 0.5 \left(y-f\right)^2
+\Lxy = \left(y-\fx\right)^2 \quad \text{or} \quad \Lxy = 0.5 \left(y-\fx\right)^2
 $$
 
 \vspace*{-2mm}
@@ -64,7 +64,7 @@ $$
 
 
 \begin{vbframe}{L2-loss: Optimal Constant Model}
-Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lyf = \left(y-f\right)^2$ with $\Hspace$ restricted to constants. %The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
+Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lxy = \left(y-\fx\right)^2$ with $\Hspace$ restricted to constants. %The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
 As derived previously, for the squared loss, the optimal constant model is given by 
 \vspace{-0.2cm}
 $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] =\E_{y}[y]$$
@@ -112,7 +112,7 @@ We also derived: the empirical constant minimizer is $\hat{f}_{c} = \bar y$.
 
 \begin{vbframe}{L2-Loss: Risk Minimizer}
 
-Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lyf = \left(y-f\right)^2$ with unrestricted $\Hspace = \{f: \Xspace \to \R^g\}$.
+Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lxy = \left(y-\fx\right)^2$ with unrestricted $\Hspace = \{\fx: \Xspace \to \R^g\}$.
 
 \lz
 
@@ -195,7 +195,7 @@ to obtain variance.
 \vspace*{-0.1cm}
 The L1 loss is defined as
 $$
-\Lyf = \left|y-f\right|
+\Lxy = \left|y-\fx\right|
 $$
 
 \begin{itemize}
@@ -215,7 +215,7 @@ $$
 
 \begin{vbframe}{L1-Loss: Risk Minimizer}
 
-We calculate the (true) risk for the $L1$-Loss $\Lyf = \left|y-f\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
+We calculate the (true) risk for the $L1$-Loss $\Lxy = \left|y-\fx\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
 
 \vspace{0.5cm}
 

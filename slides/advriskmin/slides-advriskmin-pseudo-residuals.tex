@@ -113,13 +113,13 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 	\item Using the chain rule:
         % mwe see that the pseudo-residuals are input to the update direction
 	\begin{eqnarray*}
-	\nabla_{\thetav} \risket &=&\sumin \left.\frac{\partial L\left(\yi, f\right)}{\partial f} \right|_{f = \fxit} 
+	\nabla_{\thetav} \risket &=&\sumin \left.\frac{\partial L\left(\yi, \fx\right)}{\partial \fx} \right|_{f = \fxit} 
         % _{= - \tilde r^{(i)}}
 	\cdot \nabla_{\thetav} \fxit \\ 
 	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
 	\end{eqnarray*}
 	\item Hence the update is determined by a loss-optimal directional change of the model output 
-        and a loss-independent derivate of $f$.
+        and a loss-independent derivate of $\fx$.
         This is a very flexible, nearly loss-independent formulation of GD.
         % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
 \end{itemize}	

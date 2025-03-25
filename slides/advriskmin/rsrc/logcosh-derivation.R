@@ -22,34 +22,32 @@ theme_enlarged <- function() {
 # Create plot sequence (L1 => sign => tanh => log-cosh) with updated line width
 p1 <- ggplot(data.frame(x = x_range), aes(x)) +
   geom_line(aes(y = abs(x)), size = line_width, color = "skyblue") +
-  labs(subtitle = "Step 0) discont. L1 loss", title = expression(abs(y-f)), x = "y-f", y = expression(abs(y-f))) +
+  labs(subtitle = "Step 0) discont. L1 loss", title = expression(abs(y-f(x))), x = "y-f(x)", y = expression(abs(y-f(x)))) +
   theme_enlarged()
 
 p2 <- ggplot(data.frame(x = x_range), aes(x)) +
   geom_line(aes(y = log(cosh(x))), size = line_width, color = "skyblue") +
-  labs(subtitle = "Step 3) integrate tanh", title = expression(log(cosh(abs(y-f)))), x = "y-f", y = expression(log(cosh(abs(y-f))))) +
+  labs(subtitle = "Step 3) integrate tanh", title = expression(log(cosh(abs(y-f(x))))), x = "y-f(x)", y = expression(log(cosh(abs(y-f(x)))))) +
   theme_enlarged()
 
 x_sgn <- c(-40, -1e-6, 1e-6, 40)
 y_sgn <- sign(x_sgn)
 p3 <- ggplot(data.frame(x = x_sgn, y = y_sgn), aes(x, y)) +
   geom_step(size = line_width, color = "orange") +
-  labs(subtitle = "Step 1) take derivative of L1", title = expression(sgn(y-f)), x = "y-f", y = expression(sgn(y-f))) +
+  labs(subtitle = "Step 1) take derivative of L1", title = expression(sgn(y-f(x))), x = "y-f(x)", y = expression(sgn(y-f(x)))) +
   theme_enlarged()
 
 x_tanh <- seq(-40, 40, by = 0.1)
 p4 <- ggplot(data.frame(x = x_tanh), aes(x)) +
   geom_line(aes(y = tanh(x)), size = line_width, color="orange") +
-  labs(subtitle = "Step 2) cont. approximation of sign", title = expression(tanh(y-f)), x = "y-f", y = expression(tanh(y-f))) +
+  labs(subtitle = "Step 2) cont. approximation of sign", title = expression(tanh(y-f(x))), x = "y-f(x)", y = expression(tanh(y-f(x)))) +
   theme_enlarged()
 
 # Combine the plots
-ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
-
-
+p <- ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2)
+p
+ggsave("../figure/logcosh-derivation.png", p, width = 7L, height = 5L)
 ##### plot gaussian and cosh densities together
-
-library(ggplot2)
 
 # Define the range for x
 x_range <- seq(-6, 6, length.out = 1000)
@@ -64,7 +62,7 @@ cosh_density <- 1 / (pi * cosh(x_range))
 data_to_plot <- data.frame(x = x_range, Gaussian = gaussian_density, Cosh = cosh_density)
 
 # Create the ggplot
-p <- ggplot(data_to_plot, aes(x)) +
+p1 <- ggplot(data_to_plot, aes(x)) +
   geom_line(aes(y = Gaussian, color = "N(0,1)"), size=line_width) +
   geom_line(aes(y = Cosh, color = "Cosh"), size=line_width) +
   labs(x = "x", y = "Density") +
@@ -73,5 +71,5 @@ p <- ggplot(data_to_plot, aes(x)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size=16))
 
-# Print the plot
-print(p)
+p1
+ggsave("../figure/cosh-gaussian-densities.png", p1, width = 6L, height = 3L)

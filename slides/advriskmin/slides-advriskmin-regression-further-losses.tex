@@ -62,9 +62,9 @@
 \vspace*{-0.5cm}
 
 $$
-\Lyf = \begin{cases}
-  \frac{1}{2}(y - f)^2  & \text{ if } |y - f| \le \epsilon \\
-  \epsilon |y - f|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
+\Lxy = \begin{cases}
+  \frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
+  \epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
   \end{cases}, \quad \epsilon > 0
 $$
 
@@ -107,14 +107,14 @@ $$
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
 $$
-\Lyf = \log \left( \cosh(\left|y - f\right|) \right) \quad \text{where}\,\text{cosh}(x):=\frac{e^x+e^{-x}}{2}
+\Lxy = \log \left( \cosh(\left|y - \fx\right|) \right) \quad \text{where}\,\text{cosh}(x):=\frac{e^x+e^{-x}}{2}
 % \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
 
 \normalsize
 \begin{itemize}
 \item Logarithm of the hyperbolic cosine of the residual.
-\item Approximately equal to $0.5 (\left|y - f\right|)^2$ for small residuals and to $\left|y - f\right| - \log 2$ for large residuals, meaning it works a smoothed out $L1$ loss using $L2$ around the origin. %like $L2$ loss for small residuals, but is less outlier-sensitive due to its $L1$ approximation for larger residuals.
+\item Approximately equal to $0.5 (\left|y - \fx\right|)^2$ for small residuals and to $\left|y - \fx\right| - \log 2$ for large residuals, meaning it works a smoothed out $L1$ loss using $L2$ around the origin. %like $L2$ loss for small residuals, but is less outlier-sensitive due to its $L1$ approximation for larger residuals.
 \item Has all the advantages of Huber loss and is, moreover, twice differentiable everywhere.
 \end{itemize}
 
@@ -135,9 +135,9 @@ What is the idea behind the log-cosh loss?
 {\scriptsize
 Essentially, we  
 \begin{enumerate}\setlength{\itemsep}{0.32em}
-    \item take derivative of $L1$ loss w.r.t.~$y-f$, which is the $\text{sign}(y-f)$ function
-    \item eliminate discontinuity at $0$ by approximating $\text{sign}(y-f)$ using the cont. differentiable $\text{tanh}(y-f)$
-    \item finally integrate the smoothed sign function ``up again'' to obtain smoothed $L1$ loss $\log(\text{cosh}(y-f))=\log(\text{cosh}(|y-f|))$
+    \item take derivative of $L1$ loss w.r.t.~$y-\fx$, which is the $\text{sign}(y-\fx)$ function
+    \item eliminate discontinuity at $0$ by approximating $\text{sign}(y-\fx)$ using the cont. differentiable $\text{tanh}(y-\fx)$
+    \item finally integrate the smoothed sign function ``up again'' to obtain smoothed $L1$ loss $\log(\text{cosh}(y-\fx))=\log(\text{cosh}(|y-\fx|))$
 \end{enumerate}
 }
 \end{column}
@@ -147,7 +147,7 @@ Essentially, we
 
 \begin{figure}
       \centering
-        \scalebox{0.99}{\includegraphics{figure_man/logcosh-derivation.png}}
+        \scalebox{0.99}{\includegraphics{figure/logcosh-derivation.png}}
         %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
     \end{figure}
 
@@ -187,7 +187,7 @@ It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the
 
 \begin{figure}
       \centering
-        \scalebox{1}{\includegraphics{figure_man/cosh-gaussian-densities.png}}
+        \scalebox{1}{\includegraphics{figure/cosh-gaussian-densities.png}}
         %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
     \end{figure}
 
@@ -203,7 +203,7 @@ It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the
 % Confirmed with Bernd: use def from https://www.user.tu-berlin.de/mtoussai/teaching/15-MachineLearning/15-MachineLearning-script.pdf, p. 24 
 
 $$
-\Lyf = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - f\right|}{c}\right)^2 \right), 
+\Lxy = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - \fx\right|}{c}\right)^2 \right), 
 \quad c \in \R
 % \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
@@ -268,15 +268,15 @@ $$
 
 \vspace*{-0.3cm}
 $$
-\Lyf =  \begin{cases}
-  0  & \text{if } |y - f| \le \epsilon \\
-  |y - f|-\epsilon & \text{otherwise }
+\Lxy =  \begin{cases}
+  0  & \text{if } |y - \fx| \le \epsilon \\
+  |y - \fx|-\epsilon & \text{otherwise }
   \end{cases}, \quad \epsilon \in \R_{+}
 $$
 \begin{itemize}
 \item Modification of $L1$ loss, errors below $\epsilon$ accepted without penalty
 \item Used in SVM regression
-\item Properties: convex and not differentiable for $ y - f \in \{-\epsilon, \epsilon\}$
+\item Properties: convex and not differentiable for $ y - \fx \in \{-\epsilon, \epsilon\}$
 \end{itemize}
 
 \vfill
@@ -324,8 +324,8 @@ $$
 
 \small
 $$
-\Lyf = \begin{cases} (1 - \alpha) (f - y) & \text{ if } y < f\\
-\alpha (y - f) & \text{ if } y \ge f
+\Lxy = \begin{cases} (1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
+\alpha (y - \fx) & \text{ if } y \ge \fx
 \end{cases}, \quad \alpha \in (0, 1)
 $$
 

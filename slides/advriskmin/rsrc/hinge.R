@@ -33,11 +33,11 @@ p_1 <- ggplot(
     name = "Loss",
     labels = c("0-1", "hinge"),
     direction = -1L) + 
-  xlab(expression(yf)) +
-  ylab(expression(L(y, f))) +
+  xlab(expression(yf(x))) +
+  ylab(expression(L(y, f(x)))) +
   theme_minimal() + 
   theme(text = element_text(size = 30))
-
+p_1
 ggsave("../figure/hinge.png", p_1, height = 4, width = 12)
 
 p_2 <- ggplot(
@@ -49,9 +49,9 @@ p_2 <- ggplot(
     name = "Loss",
     labels = c("0-1", "hinge", "squared hinge"),
     direction = -1L) + 
-  xlab(expression(r = yf)) +
-  ylab(expression(L(y, f))) +
+  xlab(expression(r = yf(x))) +
+  ylab(expression(L(y, f(x)))) +
   theme_minimal() + 
   theme(text = element_text(size = 30))
-
+p_2
 ggsave("../figure/hinge_squared.png", p_2, height = 6, width = 12)
