@@ -16,10 +16,10 @@ y <- (1 - x)^2
 p <- ggplot(data.frame(x, y), aes(x = x, y = y)) + 
   geom_line(size = 1.2) +
   scale_x_continuous(breaks = seq(-4, 4)) +
-  xlab(expression(yf)) +
-  ylab(expression(L(y, f))) + 
+  xlab(expression(yf(x))) +
+  ylab(expression(L(y, f(x)))) + 
   theme_minimal() +
   theme(text = element_text(size = 30))
-
+p
 ggsave("../figure/squared_scores.png", p, height = 4, width = 12)
 

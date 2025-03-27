@@ -30,19 +30,19 @@
 
 \begin{itemize}
   \item Let us first consider a discrete classifier $h: \Xspace \to \Yspace$. 
-  \item The most natural choice for $\Lhy$ is the 0-1-loss 
+  \item The most natural choice for $\Lhxy$ is the 0-1-loss 
   \vspace*{-0.2cm}
   $$
-  \Lhy = \mathds{1}_{\{y \ne h\}} =
-     \footnotesize \begin{cases} 1 \quad \text{ if } y \ne h \\ 0 \quad    \text{ if } y = h  \end{cases}
+  \Lhxy = \mathds{1}_{\{y \ne \hx\}} =
+     \footnotesize \begin{cases} 1 \quad \text{ if } y \ne \hx \\ 0 \quad    \text{ if } y = \hx  \end{cases}
   $$
-  \item For the binary case ($g = 2$) we can express the 0-1-loss for a scoring classifier $f$ based on the margin $\nu := yf$
+  \item For the binary case ($g = 2$) we can express the 0-1-loss for a scoring classifier $\fx$ based on the margin $\nu := y\fx$
   \vspace*{-0.2cm}
   $$
-  \Lyf = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{yf < 0\}}. 
+  \Lxy = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{y\fx < 0\}}. 
   $$
   % and for a probabilistic classifier $\Lxy = \mathds{1}_{\{\pix \ge 0.5 \}}$. 
-  \item Analytic properties:  Not continuous, even for linear $f$ the optimization problem is NP-hard and close to intractable \citelink{FELDMAN2012AGNOSTIC}.
+  \item Analytic properties:  Not continuous, even for linear $\fx$ the optimization problem is NP-hard and close to intractable \citelink{FELDMAN2012AGNOSTIC}.
 \end{itemize}
 
 \begin{center}

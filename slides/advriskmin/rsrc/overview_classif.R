@@ -41,11 +41,11 @@ p <- ggplot(df, aes(x = x, y = value, color = loss, linetype = aux)) +
   guides(color = guide_legend(ncol = 2), linetype = FALSE) +
   ylim(c(0, 4)) +
   scale_x_continuous(breaks = seq(-4, 4)) +
-  xlab(expression(yf)) +
-  ylab(expression(L(y, f))) +
+  xlab(expression(yf(x))) +
+  ylab(expression(L(y, f(x)))) +
   theme_minimal() +
   theme(
     text = element_text(size = 20),
     legend.position = "bottom")
-
+p
 ggsave("../figure/overview_classif.png", p, width = 6, height = 4)
