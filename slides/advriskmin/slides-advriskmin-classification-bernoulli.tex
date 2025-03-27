@@ -33,19 +33,35 @@
 
 \begin{vbframe}{Bernoulli loss on probabilities}
 
-The negative log-likelihood of the Bernoulli distribution is
+The likelihood function for $n$ samples of a Bernoulli RV with probability $\pi$ parametrized by $\thetav$ is
+
+%$$\mathcal{L}(\pix) = \prodin \pix^{\yi} \left(1-\pix\right)^{1-\yi}$$
+
+%$$\mathcal{L}(\pi) = \pix^{y} \left(1-\pix\right)^{1-y}, \,, \, y \in \setzo $$
+
+$$
+\LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \,\,, \, y \in \setzo
+$$
+
+Taking the negative log to turn products in into sums and maximization into minimization, we obtain the NLL:
+$$- \loglt = \sumin - \yi \log\left(\pixit\right) - \left(1-\yi\right)\log\left(1-\pixit\right)$$
+
+The Bernoulli loss is then defined as the NLL of a single sample
   $$
     \Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo 
   $$
+
+\framebreak 
+
 If probs are transformed into scores as $\pix = \left(1 + \exp(-\fx)\right)^{-1}$ (or if $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$ are the log-odds), we get at an equiv. loss formulation:
 
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
-
+\lz
 \begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
 \begin{figure}
-  \subfloat{\includegraphics[width=0.4\textwidth]{figure/bernoulli_prob.png}}
-  \subfloat{\includegraphics[width=0.4\textwidth]{figure/logistic.png}}\\
+  \subfloat{\includegraphics[width=0.45\textwidth]{figure/bernoulli_prob.png}}
+  \subfloat{\includegraphics[width=0.45\textwidth]{figure/logistic.png}}\\
 \end{figure}
 \end{center}
 
@@ -168,7 +184,7 @@ The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and score
 	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
 \end{minipage}
 
-The function is undefined when $\P(y~|~\xv = \xtil) = 1$ or $\P(y~|~\xv = \xtil) = 0$, but predicts a smooth curve which grows when $\P(y~|~\xv = \xtil)$ increases and equals $0$ when $\P(y~|~\xv = \xtil) = 0.5$.
+The function is undefined when $\P(y=1~|~\xv = \xtil) = 1$ or $\P(y=1~|~\xv = \xtil) = 0$, but predicts a smooth curve which grows when $\P(y=1~|~\xv = \xtil)$ increases and equals $0$ when $\P(y=1~|~\xv = \xtil) = 0.5$.
 
 \framebreak 
 
