@@ -156,11 +156,11 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 
 \framebreak 
 
-The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds, i.e. the logit function (inverse of logistic function) of $p(\xtil) = \P(y~|~\xv = \xtil)$:
+The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds, i.e. the logit function (inverse of logistic function) of $\eta(\xv) = \P(y=1|~\xv)$:
 
 \begin{minipage}{0.3\textwidth} 
 	\centering
-	{$\fxbayes =  \log (\frac{p(\xv)}{1-p(\xv)})$}
+	{$\fxbayes =  \log (\frac{\eta(\xv) }{1-\eta(\xv) })$}
 \end{minipage}
 \hspace{-.03\textwidth}
 \begin{minipage}{0.7\textwidth}
@@ -168,7 +168,7 @@ The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and score
 	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
 \end{minipage}
 
-The function is undefined when $\P(y~|~\xv = \xtil) = 1$ or $\P(y~|~\xv = \xtil) = 0$, but predicts a smooth curve which grows when $\P(y~|~\xv = \xv)$ increases and equals $0$ when $\P(y~|~\xv = \xtil) = 0.5$.
+The function is undefined when $\P(y~|~\xv = \xtil) = 1$ or $\P(y~|~\xv = \xtil) = 0$, but predicts a smooth curve which grows when $\P(y~|~\xv = \xtil)$ increases and equals $0$ when $\P(y~|~\xv = \xtil) = 0.5$.
 
 \framebreak 
 

@@ -49,7 +49,7 @@ $$
 is influenced by the choice of the loss function. 
 \end{itemize}
 \vspace{0.5cm}
-\textbf{NB}: Here we use some losses that are introduced later in this chapter.
+\textbf{NB}: We use some losses as examples which are only introduced later in the chapter.
 
 \end{vbframe}
 
@@ -274,7 +274,7 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 \begin{itemize}
   %\footnotesize
   \setlength\itemsep{1.2em}
-  \item A function $\risket$ is convex if
+  \item Our risk $\risket$ is convex if
   $$
   \riske\left(t \cdot \thetav + (1 - t) \cdot \tilde \thetav\right) \le t \cdot
   \riske\left(\thetav\right) + (1 - t) \cdot \riske\left(\tilde \thetav \right)
@@ -285,7 +285,10 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
   global. \vspace{0.2cm }\\
   $\rightarrow$ strictly convex function has at most 
   \textbf{one} global min (uniqueness).
-  \item For $\riske \in \mathcal{C}^{2}$, $\riske$ is convex iff Hessian $\nabla^2 \risket$ is psd.
+  \item For $\riske \in \mathcal{C}^{2}$, $\riske$ is convex iff Hessian $\nabla^2 \risket$ is PSD.
+
+   \item Above are general definitions for arbitrary functions.  
+  
 \end{itemize}
 
 \end{vbframe}
