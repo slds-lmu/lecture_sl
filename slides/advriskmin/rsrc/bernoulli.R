@@ -25,33 +25,33 @@ df$y <- as.factor(df$y)
 
 p_1 <- ggplot(data.frame(x_1, y), aes(x = x_1, y = y)) + 
   geom_line(size = 1.2) +
-  xlab(expression(yf)) +
-  ylab(expression(L(y, f)))
+  xlab(expression(yf(x))) +
+  ylab(expression(L(y, f(x))))
 
 p_1 <- p_1 + 
   annotate(
     "text",
     x = 2,
     y = 2,
-    label = expression(L(y, f) == ln(1 + exp(-y * f))),
+    label = expression(L(y, f(x)) == ln(1 + exp(-y * f(x)))),
     size = 7)
 
 p_1 <- p_1 + theme(text = element_text(size = 20))
-
+p_1
 ggsave("../figure/bernoulli_margin.png", p_1, height = 4, width = 9)
 
 p_2 <- ggplot(data = df, aes(x = x, y = pi, color = y)) + 
   geom_line(size = 1.2) + 
-  xlab(expression(pi)) + 
-  ylab(expression(L(y, pi))) + 
+  xlab(expression(pi(x))) + 
+  ylab(expression(L(y, pi(x)))) + 
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
-
+p_2
 ggsave("../figure/bernoulli_prob.png", p_2, height = 4, width = 6)
 
 p_3 <- ggplot(data.frame(x_1, y), aes(x = x_1, y = y)) + 
   geom_line(size = 1.6) +
-  xlab(expression(yf)) +
-  ylab(expression(L(y, f)))
-
+  xlab(expression(yf(x))) +
+  ylab(expression(L(y, f(x))))
+p_3
 ggsave("../figure/bernoulli.png", p_3, height = 2.85, width = 5)

@@ -24,12 +24,12 @@ df$y <- as.factor(df$y)
 # PLOT: Brier Score ------------------------------------------------------------
 p <- ggplot(data = df, aes(x = x, y = pi, color = y)) + 
   geom_line(size = 1.2) + 
-  xlab(expression(pi)) + 
-  ylab(expression(L[2](y, pi))) + 
+  xlab(expression(pi(x))) + 
+  ylab(expression(L[2](y, pi(x)))) + 
   theme_minimal() +
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
-
+p
 ggsave("../figure/brier.png", p, height = 4, width = 9)
 
 # DATA FOR L1 LOSS ON PROBABILITIES --------------------------------------------
@@ -43,10 +43,10 @@ df_l1$y <- as.factor(df_l1$y)
 # PLOT: L1 Loss ---------------------------------------------------------------
 p_l1 <- ggplot(data = df_l1, aes(x = p, y = loss, color = y)) + 
   geom_line(size = 1.2) + 
-  xlab(expression(pi)) + 
-  ylab(expression(L[1](y, pi))) + 
+  xlab(expression(pi(x))) + 
+  ylab(expression(L[1](y, pi(x)))) + 
   theme_minimal() +
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
-
+p_l1
 ggsave("../figure/l1_loss.png", p_l1, height = 4, width = 9)

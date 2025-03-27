@@ -34,14 +34,12 @@
 \begin{vbframe}{Bernoulli loss on probabilities}
 
 The negative log-likelihood of the Bernoulli distribution is
-
   $$
-    L(y, \pi) = - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right)\,\,, \, y \in \setzo 
+    \Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo 
   $$
-  
-If probs are transformed into scores as $\pi = \left(1 + \exp(-f)\right)^{-1}$ (or if $f = \log\left(\frac{\pi}{1 - \pi}\right)$ are the log-odds), we get at an equiv. loss formulation:
+If probs are transformed into scores as $\pix = \left(1 + \exp(-\fx)\right)^{-1}$ (or if $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$ are the log-odds), we get at an equiv. loss formulation:
 
-$$\Lyf = - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo$$
+$$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 
 \begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
@@ -54,9 +52,9 @@ $$\Lyf = - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo$$
 \end{vbframe}
 
 \begin{vbframe}{Bernoulli Loss Label Encoding}
-For different label encoding $y' \in \setmp$, recognize that $y=(y'+1)/2$. Substituting $y$ into $\Lyf$ yields
+For different label encoding $y' \in \setmp$, recognize that $y=(y'+1)/2$. Substituting $y$ into $\Lxy$ yields
 \begin{equation*}
-  \Lyf = \log(1+\exp(-y \cdot f)) \quad \text{for } y \in \setmp
+  \Lxy = \log(1+\exp(-y \cdot \fx)) \quad \text{for } y \in \setmp
   %\Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo 
 \end{equation*}
 
@@ -232,10 +230,10 @@ We have seen three loss functions that are closely related. In the literature, t
 %  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
 %\end{eqnarray*}
 
-\begin{eqnarray*} \Lyf &=& \log(1+\exp(-yf)) \quad \text{for } y \in \setmp \\
-\Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo \\
-\Lpiy &=& - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right) \quad \text{for } y \in \setzo \\
-\Lpiy &=& - \frac{1 + y}{2} \log\left(\pi\right) - \frac{1 - y}{2} \log\left(1 - \pi\right) \quad \text{for } y \in \setmp \end{eqnarray*}
+\begin{eqnarray*} \Lxy &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
+\Lxy &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo \\
+\Lpixy &=& - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo \\
+\Lpixy &=& - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) \quad \text{for } y \in \setmp \end{eqnarray*}
 
 \lz
 
@@ -268,7 +266,7 @@ fail entirely, e.g.:
 \begin{minipage}{0.7\textwidth}
   \begin{itemize}
     \item \textbf{Bernoulli loss} is margin-based and strictly monotonicly decreasing in
-    $y \cdot f$: 
+    $y \cdot \fx$: 
     % \scriptsize
     $$\Lxy = \log \left( 1 + \exp \left( - y  \fx \right)\right)$$
   \end{itemize}
