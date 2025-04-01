@@ -1,6 +1,6 @@
 ## Slides folder
 
-**This is still WIP** but aims to explain the most important components and workflows. Also consider https://github.com/slds-lmu/lecture_service, e.g., for compiling the large `lecture_sl.pdf`.
+**This is still WIP** but aims to explain the most important components and workflows.
 
 ## General structure
 
