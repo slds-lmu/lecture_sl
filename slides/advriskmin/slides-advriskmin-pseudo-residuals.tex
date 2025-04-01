@@ -42,7 +42,7 @@
     % \tilde r^{(i)} := - \frac{\partial \Lxyi}{\partial f} 
   \end{eqnarray*}
 \item This definition also holds for score / probability based classifiers.
-\item Note that $\tilde{r}$ depends on $y$ and $\fx$ and $L$. % To keep notation short we write $\tilde r = \tilde r\left(x, \fx\right)$ and $\tilde r^{(i)} := \tilde r\left(\yi, \fxi\right)$. 
+\item Note that $\tilde{r}$ depends on $y$, $\fx$ and $L$. % To keep notation short we write $\tilde r = \tilde r\left(x, \fx\right)$ and $\tilde r^{(i)} := \tilde r\left(\yi, \fxi\right)$. 
 
 \vfill
 
@@ -119,8 +119,8 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
 	\end{eqnarray*}
 	\item Hence the update is determined by a loss-optimal directional change of the model output 
-        and a loss-independent derivate of $\fx$.
-        This is a very flexible, nearly loss-independent formulation of GD.
+        and a loss-independent derivative of $\fx$.
+        This is a flexible, nearly loss-independent variant of GD.
         % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
 \end{itemize}	
 
@@ -137,12 +137,13 @@ Iteratively stepping towards the direction of the pseudo-residuals is the underl
 \begin{vbframe}{Pseudo-residuals for common losses}
 
 \lz
+\lz
 
 \begin{table}[ht]
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
-\textbf{Loss} & \textbf{Domain of $y$} & \textbf{Pseudo Residual $\tilde r$} \\ \hline
+\textbf{Loss} & \textbf{Domain of $y$} & \textbf{Pseudo residual $\tilde r$} \\ \hline
 Squared loss & $y \in \mathbb{R}$ & $y - f(\xv)$ \\ \hline
 Bernoulli loss & $y \in \{0,1\}$ & $y - s(f(\xv))=y-\pi(\xv)$ \\ \hline
 Multinomial loss & $y \in \{1,\dots,g\}$ & $\mathds{1}_{\{y=k\}} - \pi_k(\xv)$ \\ \hline
@@ -153,7 +154,7 @@ Exponential loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
 \lz
 
 NB: $\pi(\xv)=s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$ is the (sigmoidal) logistic function,
-and $\pi_k(\xv)$ is its multi-class generalization, the softmax.
+and $\pi_k(\xv)$ its multi-class generalization, the softmax.
 
 \end{vbframe}
 

@@ -43,15 +43,15 @@ $$\riskef = \sumin \Lxyi$$
     \item $f_{\Hspace}:\Xspace \rightarrow \mathbb{R}^g$, 
     $\fx$ is a model from hypothesis space $\Hspace$;
     maps a feature vector to output score;
-    sometimes or often we omit $\Hspace$ in the index 
+    often we omit $\Hspace$ in index 
     \item $L:\Yspace\times\mathbb{R}^g\rightarrow\mathbb{R}$ is loss;\\
-    $\Lxy$ measures distance between label and prediction
-    \item We assume that $(\xv,y) \sim \Pxy$ and $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ \\
-    $\Pxy$ is the distribution of the data generating process (DGP)
+    $\Lxy$ measures error between label and prediction
+    \item Assume that $(\xv,y) \sim \Pxy$ and $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ \\
+    $\Pxy$ is data generating process (DGP)
     %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
 \end{itemize}
 }
-Let's define (and minimize) loss in expectation, the theoretical risk:
+Minimize theoretical risk, so expected loss over DGP is major goal:
 
 $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \end{vbframe}
@@ -70,24 +70,26 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \textbf{Binary classification with shallow MLP:}\\
 \begin{itemize}
     \item Model: $f(\xv) = \pi(\xv)= \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2)$
-    \item Binary cross-entropy loss: $\Lpixy = -(y\log(\pix)+(1-y)\log(1-\pix))$\\ 
+    \item Bernoulli / Log / Cross-Entropy loss: $\Lpixy = -(y\log(\pix)+(1-y)\log(1-\pix))$\\ 
     \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$}
 \end{itemize}
   
 \end{vbframe}
 
 \begin{vbframe}{Hypothesis Spaces and Parametrization}
-We often write $\risk \left(f\right)$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a set of parametrized curves:
+We often write $\riskf$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a family of parametrized curves:
 
 $$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{belongs to certain functional family parametrized by}\,\thetav\}$$
 
 \begin{itemize}
-    \item The params are our means of fixing a specific function from the family. Once set, our model is fully determined.
-    \item This means: finding the optimal model is perfectly equivalent to finding the optimal set of parameter values.
-    \item The relation between optimization over $f \in \Hspace$ and optimization
-over $\thetav \in \Theta$ allows us to operationalize our search for the best model (function) via searching for an optimal $\thetav$
-\item Remark: For some model classes, some parameters encode the same function. So the
-parameter-to-model mapping could be non-injective (non-identifiability)
+    \item We can now operate (usually) on numeric vectors
+    during optimization, more convenient than functions
+    %\item The params are our means of fixing a specific function from the family. Once set, our model is fully determined.
+    %\item This means finding the optimal model is equivalent to finding the optimal parameter values.
+    %\item The relation between optimization over $f \in \Hspace$ %and optimization
+%over $\thetav \in \Theta$ allows us to operationalize our search for best model (function) via searching an optimal $\thetav$
+\item For some model classes, some parameters encode the same function (non-injective mapping, non-identifiability). \\
+We don't care here, now. 
 \end{itemize}
 
 \end{vbframe}
@@ -99,12 +101,12 @@ parameter-to-model mapping could be non-injective (non-identifiability)
 \item z not the same as $y$, as we want to fiddle with its distribution
 \item Assume z has distribution Q, so $z \sim Q$
 \item We now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
-What is the score-constant which approximates z with minimal loss?
+What is the constant that approximates z with minimal loss?
 \end{itemize}
 
 \lz
 
-We will consider 3 cases for Q
+3 cases for Q
 \begin{itemize}
 \item $Q = P_y$, (uncond.) distribution of labels y, marginal of $\Pxy$
 \item $Q = P_n$, the empirical product distribution for data $y_1, \ldots, y_n$
@@ -113,8 +115,8 @@ We will consider 3 cases for Q
 
 \lz
 
-If we can solve $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$,
-we will get multiple useful results!
+Solving $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$ provides 
+multiple results.
 
 
 \end{vbframe}
@@ -129,15 +131,17 @@ we will get multiple useful results!
 \item Can use it as baseline in experiments, if we don't beat this
 with more complex model, that model is useless
 \item Will also be useful as component in algorithms and derivations
-}
-\end{itemize}
 
 %By restricting $\Hspace$ to constant functions $f_c$ independent of $\xv$, the constant model minimizing the theoretical risk 
 
 
 $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[L(y,c)\right]$$
 
-{\footnotesize and $\fx = \theta = c$ that optimizes the empirical risk $\risket$ is denoted as as $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$.}
+\item Constant for ERM: $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$
+
+}
+
+\end{itemize}
 
 \vspace*{-0.2cm}
 
@@ -151,7 +155,7 @@ $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmi
 
 \begin{itemize}
 \item Let's start with the simplest case, L2 loss
-\item And we want to find and optimal constant model for 
+\item And we want to find an optimal constant model for 
 
 \end{itemize}
 
@@ -161,7 +165,7 @@ $$ \argmin \E [z^2] - 2cE[z] + c^2 = $$
 $$ E[z] $$
 
 \begin{itemize}
-\item Using $Q = P_y$, this means that, given we know the label distribution,
+\item Using $Q = P_y$, this means that, given the label distribution we know,
 the best constant is $c = E[y]$.
 %\item If we only have data $y_1, \ldots y_n$
 %$\argmin \E_{z \sim P_n} [(z - c)^2] = \E_{z \sim P_n}[z] = \frac{1}{n} \sumin \yi = \bar{y}$
@@ -203,13 +207,13 @@ c = \frac{1}{n}\sum_{i=1}^n y^{(i)} = \bar{y}.
 
 \lz 
 
-Let us assume we are in an \enquote{ideal world}: 
+Assume we are in an \enquote{ideal world}: 
 
 \begin{itemize}
-	\item The hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted. We can choose any measurable $f: \Xspace \to \R^g$. 
+	\item The hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted. We can choose any measurable $f: \Xspace \to \R^g$ 
 	\item We also assume an ideal optimizer; the risk minimization can always be 
-        solved perfectly and efficiently.
-	\item We know $\Pxy$. 
+        solved perfectly and efficiently
+	\item We know $\Pxy$
 \end{itemize}
 
 How should $f$ be chosen? 
@@ -291,8 +295,8 @@ $$    \risk(f) = \E_{xy} \left[\Lxy\right]
 The risk minimizer is mainly a theoretical tool: 
 
 \begin{itemize}
-	\item In practice we need to restrict the hypothesis space $\Hspace$ such that we can efficiently search over it. 
-	\item In practice we (usually) do not know $\Pxy$. Instead of $\riskf$, we are optimizing the empirical risk
+	\item In practice, need to restrict $\Hspace$ so we efficiently search over it. 
+	\item We (usually) don't know $\Pxy$. Instead, optimize optimizing \textbf{empirical} risk minimizer
 
 	\begin{eqnarray*}
 		{\hat f}_{\Hspace} = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
@@ -312,18 +316,14 @@ Note that according to the \textbf{law of large numbers} (LLN), the empirical ri
 
 \begin{vbframe}{Estimation and Approximation Error} 
 
-\textbf{Goal of learning: } Train a model $\hat f_{\Hspace}$ for which the true risk $\risk\left(\hat f_{\Hspace}\right)$ is close to the Bayes risk $\riskbayes$. In other words, we want the \textbf{Bayes regret} or \textbf{excess risk}
-
-
+\textbf{Goal: } Train model $\hat f_{\Hspace}$ which has true risk $\risk\left(\hat f_{\Hspace}\right)$ close Bayes risk $\riskbayes$. \\
+So, minimize \textbf{Bayes regret} or \textbf{excess risk}
 $$
 	\risk\left(\hat f_{\Hspace}\right) - \riskbayes
 $$ 
-
-to be as low as possible. 
-
 \lz 
 
-The Bayes regret can be decomposed as follows: 
+Can decompose: 
 
 \begin{eqnarray*}
 	\risk\left(\hat f_{\Hspace}\right) - \riskbayes &=& \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
@@ -335,18 +335,29 @@ The Bayes regret can be decomposed as follows:
 % https://docs.google.com/presentation/d/1vXuX8P6p7TFlXnpVcInQM6PR3qHk9LqC2Z75_I4u4Lo/edit#slide=id.p
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{figure_man/risk_minimization_diagram.png}
+\includegraphics[width=0.5\textwidth]{figure_man/risk_minimization_diagram.png}
 \end{center}
 
+\vspace{-0.4cm}
+
+$$
+	\risk\left(\hat f_{\Hspace}\right) - \riskbayes = \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} 
+    
+$$
+
+\vspace{-0.4cm}
+
 \begin{itemize}
-	\item $\risk\left(\hat f\right) - \inf_{f \in \Hspace} \risk(f)$ is the \textbf{estimation error}. We fit $\hat f$ via empirical risk minimization and (usually) use approximate optimization, so we usually do not find the optimal $f \in \Hspace$.
-	\item $\inf_{f \in \Hspace} \risk(f) - \riskbayes$ is the \textbf{approximation error}. We need to restrict to a hypothesis space $\Hspace$ which might not even contain the Bayes optimal model $\fbayes$. 
+\item \textbf{Estimation error}:
+We fit $\hat f_{\Hspace}$ via ERM, so on finite data, so we usually don't find best $f \in \Hspace$.
+\item \textbf{Approximation error}: 
+$\Hspace$ will often not contain Bayes optimal $\fbayes$. 
 \end{itemize}
 
 \end{vbframe}
 
 
-\begin{vbframe}{(Universally) Consistent Learners}
+\begin{vbframe}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
 % https://mlweb.loria.fr/book/en/consistency.html
 
 \textbf{Consistency} is an asymptotic property of a learning algorithm, which ensures the algorithm returns \textbf{the correct model} when given \textbf{unlimited data}.
@@ -371,8 +382,8 @@ $$
 \framebreak 
 
 Consistency is defined w.r.t. a particular distribution $\Pxy$.
-But since we usually do not know $\Pxy$, consistency
-does not offer much help to choose an algorithm for a particular task. 
+But since we usually don't know $\Pxy$, consistency
+does not offer much help to choose an algorithm for a specific task. 
 
 \lz 
 
@@ -380,11 +391,11 @@ More interesting is the stronger concept of \textbf{universal consistency}: An a
 
 \lz 
 
-In Stone's famous consistency theorem from 1977, the universal consistency of a weighted average estimator as KNN was proven. Many other ML models have since then been proven to be universally consistent (SVMs, ANNs, etc.).
+In Stone's famous consistency theorem (1977), the universal consistency of a weighted average estimator such as KNN was proven. Many other ML models have since then been proven to be universally consistent (SVMs, ANNs, etc.).
 
-\lz
+%\lz
 
-\textbf{Note} that universal consistency is obviously a desirable property - however, (universal) consistency does not tell us anything about convergence rates ...
+%\textbf{Note}: universal consistency is a desirable property - however, it does not tell us anything about convergence rates ...
 
 \end{vbframe}
 
