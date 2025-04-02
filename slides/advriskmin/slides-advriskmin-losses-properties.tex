@@ -19,14 +19,13 @@
 
 \begin{document}
     
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
+  }{
     Properties of Loss Functions
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+  }{
   figure_man/vgg_example.png
   }{
-  % \item Understand why you should care about properties of loss functions
   \item Statistical properties 
   \item Robustness 
   \item Optimization properties
@@ -35,33 +34,45 @@
 
 \begin{vbframe}{The role of Loss Functions}
 
-Why should we care about the choice of the loss function $\Lxy$?
+\vfill
 
-\begin{itemize}
-% \item For regression, the loss usually only depends on residual $\Lxy = L\fleft(y - \fx\right) = L(\eps)$, this is a \emph{translation invariant} loss
-\item \textbf{Statistical} properties: choice of loss implies statistical assumptions about the distribution of $y ~|~ \xv = \xtil$ (see \emph{maximum likelihood estimation vs.\
-empirical risk minimization}). 
-\item \textbf{Robustness} properties: some loss functions are more robust towards outliers than others. 
-\item \textbf{Optimization} properties: the computational complexity of
+\begin{itemizeL}
+
+\item Should be designed to measure errors appropriately
+
+\item \textbf{Statistical} properties: choice of loss implies statistical assumptions about the distribution of $y ~|~ \xv = \xtil$ \\
+(see \emph{maximum likelihood vs. empirical risk minimization})
+\item \textbf{Robustness} properties: \\
+some losses more robust towards outliers than others
+\item \textbf{Optimization} properties: computational complexity of
 $$
 \argmint \risket
 $$
-is influenced by the choice of the loss function. 
-\end{itemize}
-\vspace{0.5cm}
-\textbf{NB}: We use some losses as examples which are only introduced later in the chapter.
+is influenced by choice of the loss 
+\end{itemizeL}
+
+%\vspace{0.5cm}
+%\textbf{NB}: We use some losses as examples which are only introduced later in the chapter.
 
 \end{vbframe}
 
 % ------------------------------------------------------------------------------
 
 
-\begin{vbframe}{Some basic terminology}
+\begin{vbframe}{Losses with one argument}
 
 % https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
 
-Classification losses are usually expressed in terms of the 
-  \textbf{margin}: $\nu := y \cdot \fx.$
+\begin{itemize}
+
+\item Regr. losses often only depend on  \textbf{residuals} 
+$\rx := y - \fx$
+
+\item Classif. losses usually expressed in terms of 
+  \textbf{margin}: $\nu := y \cdot \fx$
+
+
+\end{itemize}
 
 \vfill
 
@@ -75,27 +86,19 @@ Classification losses are usually expressed in terms of the
 \end{vbframe}
 
 
-\begin{vbframe}{Some basic terminology}
+\begin{vbframe}{Some basic properties}
 
 % https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
-
+A loss is  
 \begin{itemize}
-  \small
-  \item Regression losses often only depend on the \textbf{residuals}
-  $\rx := y - \fx.$
-%  \item Classification losses are usually expressed in terms of the 
-%  \textbf{margin} $\nu := y \cdot \fx.$
-  \item Losses are called \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$. 
-  \item A loss is \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
+  \item \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$
+  \item \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
   $a \in \R$.
-  \item A loss is called \textbf{distance-based} if
-  \begin{itemize}
-    \small
-    \item it can be written in terms of the residual, i.e., 
-    $\Lxy = \psi (r)$ \\for some $\psi: \R \to \R, ~ \text{and}$
-    \item $\psi(r) = 0 \Leftrightarrow r = 0$.
-  \end{itemize}
-\end{itemize}
+  \item \textbf{distance-based} if it can be written in terms of residual 
+    $\Lxy = \psi (r)$ for some $\psi: \R \to \R$, and 
+    $\psi(r) = 0 \Leftrightarrow r = 0$
+ \end{itemize}
+
 
 \vfill
 
@@ -194,17 +197,10 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 % \textcolor{blue}{LW: points 1-3 together w/ plot on subsequent slide; scnd slide w/ concrete examples (e.g., gd failing w/ lasso}
 
 \begin{itemize}
-  \small
-  \item \textbf{Smoothness} of a function is a property measured by 
-  the number of continuous derivatives. 
- % \item A function is said to be $\mathcal{C}^k$ if it is $k$ times continuously differentiable. A function is $\mathcal{C}^\infty$ if it is continuously differentiable for all orders $k$. 
-  \item Derivative-based optimization requires smoothness of the 
-  risk $\risket$ 
-  \begin{itemize}
-    \small
-    \item If loss is unsmooth, we might have to use derivative-free optimization (or worse, in case of 0-1)
-    \item Smoothness of $\risket$ not only depends on $L$, but also requires smoothness of $\fx$! 
-  \end{itemize}
+\item Measured by number of continuous derivatives
+\item Usually want to have at least gradients in optimization of $\risket$
+\item If loss is not differentiable, might have to use derivative-free optimization (or worse, in case of 0-1)
+\item Smoothness of $\risket$ not only depends on $L$, but also requires smoothness of $\fx$! 
 \end{itemize}
 
 \vfill
@@ -271,25 +267,24 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 
 \begin{vbframe}{Optimization Properties: Convexity}
 
-\begin{itemize}
-  %\footnotesize
-  \setlength\itemsep{1.2em}
-  \item Our risk $\risket$ is convex if
-  $$
-  \riske\left(t \cdot \thetav + (1 - t) \cdot \tilde \thetav\right) \le t \cdot
-  \riske\left(\thetav\right) + (1 - t) \cdot \riske\left(\tilde \thetav \right)
-  $$
-  $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
-  (strictly convex if above holds with strict inequality).
-  \item In optimization, convex problems have a number of convenient properties. E.g., all local minima are 
-  global. \vspace{0.2cm }\\
-  $\rightarrow$ strictly convex function has at most 
-  \textbf{one} global min (uniqueness).
-  \item For $\riske \in \mathcal{C}^{2}$, $\riske$ is convex iff Hessian $\nabla^2 \risket$ is PSD.
+\begin{itemizeL}
 
-   \item Above are general definitions for arbitrary functions.  
+\item $\risket$ is convex if
+$$
+\riske\left(t \cdot \thetav + (1 - t) \cdot \tilde \thetav\right) \le t \cdot
+\riske\left(\thetav\right) + (1 - t) \cdot \riske\left(\tilde \thetav \right)
+$$
+$\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
+(strictly convex if above holds with strict inequality)
+
+\item In optimization, convex problems have several convenient properties, e.g. all local minima are global. 
+\item Strictly convex function has at most \textbf{one} global min (uniqueness)
+
+\item For $\riske \in \mathcal{C}^{2}$, $\riske$ is convex iff Hessian $\nabla^2 \risket$ is psd
+
+\item Above holds for arbitrary functions, not only risks
   
-\end{itemize}
+\end{itemizeL}
 
 \end{vbframe}
 
@@ -297,15 +292,11 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 
 \begin{vbframe}{Optimization properties: Convexity}
 
-\begin{itemize}
-  \setlength\itemsep{1em}
-  \item Convexity of $\risket$ depends both on convexity of $L(\cdot)$ (given in most cases) and $\fxt$ (often problematic).
-  \item If we model our data using an exponential family distribution, we always get convex losses
-  \begin{itemize} 
-    %\footnotesize
-    \item For $\fxt$ linear in $\thetav$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
-  \end{itemize}  
-\end{itemize} 
+\begin{itemizeL}
+\item Convexity of $\risket$ depends both on convexity of $L(\cdot)$ (given in most cases) and $\fxt$ (often problematic)
+\item If we model our data using an exponential family distribution, we always get convex losses
+\item For $\fxt$ linear in $\thetav$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
+\end{itemizeL} 
 
 \vfill
 

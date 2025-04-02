@@ -17,41 +17,43 @@
 
 \begin{document}
     
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
-  	Risk Minimizers
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+  }{
+  	Risk Minimization Basics
+  }{
   figure_man/optimization_steps.jpeg
   }{
-  \item Bayes optimal model (also: risk minimizer, population minimizer)
-  \item Bayes risk
+  \item Risk minimization and ERM recap
+  \item Bayes optimal model, Bayes risk
   \item Bayes regret, estimation and approximation error    
   \item Optimal constant model
-  \item Consistent learners
+  \item Consistency
 }
 
 \begin{vbframe}{Empirical Risk Minimization}
-Very often, in ML, we minimize the empirical risk
+To learn a model, we usually do ERM:
 \vspace{-0.3cm}
 $$\riskef = \sumin \Lxyi$$
 \vspace{-0.2cm}
 {\small
 \begin{itemize}\setlength\itemsep{0.5pt} 
-    \item each observation $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$,
-    so from feature and target space
-    \item $f_{\Hspace}:\Xspace \rightarrow \mathbb{R}^g$, 
-    $\fx$ is a model from hypothesis space $\Hspace$;
+    \item observations $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$
+%    so from feature and target space
+    \item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
+    %$\fx$ is a model 
+    from hypothesis space $\Hspace$;
     maps a feature vector to output score;
     often we omit $\Hspace$ in index 
-    \item $L:\Yspace\times\mathbb{R}^g\rightarrow\mathbb{R}$ is loss;\\
-    $\Lxy$ measures error between label and prediction
-    \item Assume that $(\xv,y) \sim \Pxy$ and $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$ \\
-    $\Pxy$ is data generating process (DGP)
+    \item loss $L:\Yspace\times\R^g\rightarrow\R$ ,
+    %$\Lxy$ 
+    measures error between label and prediction
+    \item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
+    $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$    
     %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
 \end{itemize}
 }
-Minimize theoretical risk, so expected loss over DGP is major goal:
+Minimizing theoretical risk, so expected loss over DGP, is major goal:
 
 $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \end{vbframe}
@@ -62,7 +64,7 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
     \item Model: $f(\xv) = \thetav^\top \xv + \theta_0$
     \item Squared loss:  
     $\Lxy = \left(y-\fx\right)^2$
-    \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetav^\top \xv + \theta_0 : \thetav \in \mathbb{R}^d, \theta_0 \in \mathbb{R} \right\}$$
+    \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetav^\top \xv + \theta_0 : \thetav \in \R^d, \theta_0 \in \R \right\}$$
 \end{itemize}
 
 \vspace{0.3cm}
@@ -71,7 +73,7 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \begin{itemize}
     \item Model: $f(\xv) = \pi(\xv)= \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2)$
     \item Bernoulli / Log / Cross-Entropy loss: $\Lpixy = -(y\log(\pix)+(1-y)\log(1-\pix))$\\ 
-    \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \mathbb{R}^{h \times d}, \mathbf{b}_1 \in \mathbb{R}^h, \mathbf{w}_2 \in \mathbb{R}^h, b_2 \in \mathbb{R} \right\}$$}
+    \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \R^{h \times d}, \mathbf{b}_1 \in \R^h, \mathbf{w}_2 \in \R^h, b_2 \in \R \right\}$$}
 \end{itemize}
   
 \end{vbframe}
@@ -79,29 +81,26 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \begin{vbframe}{Hypothesis Spaces and Parametrization}
 We often write $\riskf$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a family of parametrized curves:
 
-$$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{belongs to certain functional family parametrized by}\,\thetav\}$$
+$$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{from functional family parametrized by}\,\thetav\}$$
 
-\begin{itemize}
-    \item We can now operate (usually) on numeric vectors
-    during optimization, more convenient than functions
-    %\item The params are our means of fixing a specific function from the family. Once set, our model is fully determined.
-    %\item This means finding the optimal model is equivalent to finding the optimal parameter values.
-    %\item The relation between optimization over $f \in \Hspace$ %and optimization
-%over $\thetav \in \Theta$ allows us to operationalize our search for best model (function) via searching an optimal $\thetav$
+\vfill
+
+
+\begin{itemizeL}
+    \item Optimizing numeric vectors is more convenient than functions
 \item For some model classes, some parameters encode the same function (non-injective mapping, non-identifiability). \\
 We don't care here, now. 
-\end{itemize}
+\end{itemizeL}
 
 \end{vbframe}
 
 \begin{vbframe}{Optimal constants for a loss}
 
 \begin{itemize}
-\item Let's assume some RV $z \in \Yspace$ for a label
-\item z not the same as $y$, as we want to fiddle with its distribution
-\item Assume z has distribution Q, so $z \sim Q$
+\item Assume some RV $z \sim Q, Z \in \Yspace$ as target
+\item $z$ not the same as $y$, as we want to fiddle with its distribution
 \item We now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
-What is the constant that approximates z with minimal loss?
+What is the constant that approximates $z$ with minimal loss?
 \end{itemize}
 
 \lz
@@ -125,21 +124,17 @@ multiple results.
 \begin{vbframe}{Unconditional: Optimal Constant Model}
 
 \begin{itemize}
-{\footnotesize
-\item We would like a loss optimal, constant baseline predictor
-\item A "featureless" ML model, which always predicts the same value
-\item Can use it as baseline in experiments, if we don't beat this
-with more complex model, that model is useless
-\item Will also be useful as component in algorithms and derivations
-
-%By restricting $\Hspace$ to constant functions $f_c$ independent of $\xv$, the constant model minimizing the theoretical risk 
+\item Goal: loss optimal, constant baseline predictor
+\item ``constant'': featureless ML model, always predicts same value
+\item ``baseline'': more complex model has to be better 
+%Can use it as baseline in experiments, if we don't beat this
+%with more complex model, that model is useless
+\item Also useful as optimal intercept
 
 
-$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \mathbb{R}} \E_{y} \left[L(y,c)\right]$$
+$$f_{c}^{\ast} = \argmin_{c \in \R} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in \R} \E_{y} \left[L(y,c)\right]$$
 
-\item Constant for ERM: $\hat{f}_c = \argmin_{c \in \mathbb{R}} \risket$
-
-}
+\item Estimation via ERM: $\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$
 
 \end{itemize}
 
@@ -151,37 +146,55 @@ $$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[L(y,c)\right] = \argmi
 \end{vbframe}
 
 
-\begin{vbframe}{Unconditional: Optimal Constant Model}
+\begin{vbframe}{L2: Opt. Constants and Opt. Unconditional}
+
+\begin{itemizeM}
+\item Let's consider L2 here as simplest case
+\item Can derive a general result now for any $z ~ \sim Q$
+\item Consider 
+$$ 
+\argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] 
+$$
+$$
+\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   
+$$
+
+\item The RHS is obviously minimized by $c = \E[z]$\\
+(simple quadratic, or take derivative and set to 0)
+
+
+\item For $Q = P_y$: the best constant is $c = \E[y]$, \\
+so expectation of label distribution
+
+\end{itemizeM}
+\end{vbframe}
+
+
+
+
+\begin{vbframe}{L2: Empirical Optimal Constant Model}
 
 \begin{itemize}
-\item Let's start with the simplest case, L2 loss
-\item And we want to find an optimal constant model for 
+\item We could derive this by minimizing  
+$$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$$
 
-\end{itemize}
-
-$$ \argmin \E [L(z, c)] = $$
-$$ \argmin \E [(z - c)^2] = $$
-$$ \argmin \E [z^2] - 2cE[z] + c^2 = $$
-$$ E[z] $$
-
-\begin{itemize}
-\item Using $Q = P_y$, this means that, given the label distribution we know,
-the best constant is $c = E[y]$.
-%\item If we only have data $y_1, \ldots y_n$
-%$\argmin \E_{z \sim P_n} [(z - c)^2] = \E_{z \sim P_n}[z] = \frac{1}{n} \sumin \yi = \bar{y}$
-\item If we only have data \(y_1, \ldots, y_n\), then the empirical product distribution is defined as $P_n = \frac{1}{n}\sum_{i=1}^n \delta_{y^{(i)}}$, so that for any measurable function \(g\),
-$\mathbb{E}_{z\sim P_n}[g(z)] = \frac{1}{n}\sum_{i=1}^n g\bigl(y^{(i)}\bigr).$
-Thus, for the minimization problem
-\[
- \argmin_{c \in \mathbb{R}} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c \in \mathbb{R}} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \mathbb{R}} \frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2,
-\]
+\item And later we will proceed like that
+\item But we can get the result for free from our previous 
+  consideration
+  
+\item For data $y^{(1)}, \ldots, y^{(n)}$, empirical distribution is $P_n = \meanin \delta_{\yi}$
+\item For any measurable $g$: $\E_{z\sim P_n}[g(z)] = \meanin g\bigl(\yi\bigr)$
+%Thus, for the minimization problem
+%\[
+% \argmin_{c \in \R} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c %\in \R} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \R} %\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2,
+%\]
 %taking the derivative with respect to \(c\) yields
 %\[
 %\frac{d}{dc}\left(\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2\right) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2\left(c-\frac{1}{n}\sum_{i=1}^n y^{(i)}\right)=0.
 %\]
-the optimal constant is the sample mean
+\item Hence: Optimal constant is sample mean
 \[
-c = \frac{1}{n}\sum_{i=1}^n y^{(i)} = \bar{y}.
+c = \meanin \yi = \bar{y}
 \]
 
 %\item And we want to find and optimal constant model for 
@@ -196,53 +209,27 @@ c = \frac{1}{n}\sum_{i=1}^n y^{(i)} = \bar{y}.
 
 \begin{vbframe}{Risk Minimizer}
 
-%Our goal is to minimize the risk
+\begin{itemizeM}
 
-%$$ \risk_L\left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. $$
+\item Assume, hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted;\\
+contains any measurable $f: \Xspace \to \R^g$
 
-%for a certain hypothesis $f \in \Hspace$ and a loss $\Lyf$. 
+\item We know $\Pxy$
 
-%{\tiny NB: As $\risk_L$ depends on loss $L$, we sometimes 
-%make this explicit with a subscript if needed and omit it in other cases.}
-
-\lz 
-
-Assume we are in an \enquote{ideal world}: 
-
-\begin{itemize}
-	\item The hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted. We can choose any measurable $f: \Xspace \to \R^g$ 
-	\item We also assume an ideal optimizer; the risk minimization can always be 
-        solved perfectly and efficiently
-	\item We know $\Pxy$
-\end{itemize}
-
-How should $f$ be chosen? 
-
-
-\framebreak 
-
-The $f$ with minimal risk across all (measurable) functions 
-is called the \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}. 
+\item $f$ with minimal risk across $\Hspace_{all}$
+is called\\
+\textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}
 
 \begin{eqnarray*}
-	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk\left(f\right) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy. 
+	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk\left(f\right) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy
 \end{eqnarray*}
 
-The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hspace_{all}})$
+\item The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hspace_{all}})$
 
-\lz
+\item \textbf{Risk minimizer within} $\Hspace \subset \Hspace_{all}$ is
+$\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 
-
-Similarly, we define the risk minimizer over some restricted $\Hspace \subset \Hspace_{all}$ as
-
-\begin{eqnarray*}
-	\fbayes_{\Hspace} &=& \argmin_{f \in \Hspace} \risk\left(f\right)
-\end{eqnarray*}
-
-
-% Note that we search over an unrestricted hypothesis space (that is over all possible functions $f: \Xspace \to \R^g$)!
-
-
+\end{itemizeM}
 
 \end{vbframe}
 
@@ -270,16 +257,17 @@ Similarly, we define the risk minimizer over some restricted $\Hspace \subset \H
 
 \begin{frame}[t]{optimal point-wise predictions}  
 
-To derive the risk minimizer, observe that by law of total expectation 
-$$    \risk(f) = \E_{xy} \left[\Lxy\right] 
-    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right].$$
-
 \begin{itemize}
-	\item We can choose $\fx$ as we want (unrestricted hypothesis space, no assumed functional form)
-	\item Hence, for a fixed value $\xtil \in \Xspace$ we can select \textbf{any} value $c$ we want to predict. So we construct the \textbf{point-wise optimizer} 
+
+\item To derive the RM, by law of total expectation 
+$$    \riskf = \E_{xy} \left[\Lxy\right] 
+    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right]$$
+
+	\item We can choose $\fx$ as we want from $\Hspace_{all}$ %(unrestricted hypothesis space, no assumed functional form)
+	\item Hence, for fixed feature vector $\xtil$ we can select \textbf{any} value $c$ to predict. So we construct the \textbf{point-wise optimizer} 
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
- $$\fbayes(\xtil) = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
+ $$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
 \end{itemize}
 
 \begin{center}
@@ -292,23 +280,25 @@ $$    \risk(f) = \E_{xy} \left[\Lxy\right]
 \begin{vbframe}{Theoretical and Empirical Risk}  
  
 
-The risk minimizer is mainly a theoretical tool: 
-
 \begin{itemize}
-	\item In practice, need to restrict $\Hspace$ so we efficiently search over it. 
-	\item We (usually) don't know $\Pxy$. Instead, optimize optimizing \textbf{empirical} risk minimizer
-
-	\begin{eqnarray*}
-		{\hat f}_{\Hspace} = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
-	\end{eqnarray*}
+\item Bayes risk minimizer is mainly a theoretical tool
+\item In practice, need to restrict $\Hspace$ for efficient search %so we efficiently search over it. 
+\item We don't normally know $\Pxy$. Instead, use ERM. 
+$$
+{\hat f}_{\Hspace} = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
+$$
+\item Due to \textbf{law of large numbers}, empirical risk for fixed model converges to true risk, so consistent estimator
+$$
+\riskeb(f) = \frac{1}{n} \sumin \Lxyi \overset{n \to \infty}{\longrightarrow} \riskf 
+$$
+\item Still, that does not imply that the selected ERM minimizer converges to $f^{\ast}$, due to overfitting or lack of uniform convergence. 
+\item Would need more assumptions / math. machinery for this, \\
+will not pursue this here. 
 
 \end{itemize}
 
-Note that according to the \textbf{law of large numbers} (LLN), the empirical risk converges to the true risk (but beware of overfitting!): 
 
-\begin{eqnarray*}
-	\bar\risk_\text{emp}(f) = \frac{1}{n} \sumin \Lxyi \overset{n \to \infty}{\longrightarrow} \riskf. 
-\end{eqnarray*}
+
 
 \end{vbframe}
 
@@ -316,19 +306,21 @@ Note that according to the \textbf{law of large numbers} (LLN), the empirical ri
 
 \begin{vbframe}{Estimation and Approximation Error} 
 
-\textbf{Goal: } Train model $\hat f_{\Hspace}$ which has true risk $\risk\left(\hat f_{\Hspace}\right)$ close Bayes risk $\riskbayes$. \\
-So, minimize \textbf{Bayes regret} or \textbf{excess risk}
+\begin{itemizeL}
+    \item Goal: Train model $\hat f_{\Hspace}$ with risk $\risk\left(\hat f_{\Hspace}\right)$ close to Bayes risk $\riskbayes$ \\
+    \item Minimize \textbf{Bayes regret} or \textbf{excess risk}
 $$
 	\risk\left(\hat f_{\Hspace}\right) - \riskbayes
 $$ 
-\lz 
 
-Can decompose: 
+\item Decompose: 
 
 \begin{eqnarray*}
 	\risk\left(\hat f_{\Hspace}\right) - \riskbayes &=& \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
     &=& \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}}) \right] 
 \end{eqnarray*}
+
+\end{itemizeL}
 
 \framebreak 
 
@@ -338,20 +330,20 @@ Can decompose:
 \includegraphics[width=0.5\textwidth]{figure_man/risk_minimization_diagram.png}
 \end{center}
 
-\vspace{-0.4cm}
+
 
 $$
-	\risk\left(\hat f_{\Hspace}\right) - \riskbayes = \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} 
-    
+	\risk\left(\hat f_{\Hspace}\right) - \riskbayes = \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
 $$
 
-\vspace{-0.4cm}
+\vfill
 
 \begin{itemize}
 \item \textbf{Estimation error}:
-We fit $\hat f_{\Hspace}$ via ERM, so on finite data, so we usually don't find best $f \in \Hspace$.
+We fit $\hat f_{\Hspace}$ via ERM on finite data, \\
+so we don't find best $f \in \Hspace$
 \item \textbf{Approximation error}: 
-$\Hspace$ will often not contain Bayes optimal $\fbayes$. 
+$\Hspace$ will often not contain Bayes optimal $\fbayes$ 
 \end{itemize}
 
 \end{vbframe}
@@ -371,7 +363,7 @@ Let $\ind:\mathbb{D} \to \Hspace$ be a learning algorithm that takes a training 
 The learning method $\ind$ is said to be \textbf{consistent} w.r.t. a certain distribution $\Pxy$ if the risk of the estimated model $\hat f$ converges in probability ( \enquote{$\overset{p}{\longrightarrow}$}) to the Bayes risk $\riskbayes$ when $n_\text{train}$ goes to $\infty$: 
 
 $$
-	\risk\left(\ind\left(\Dtrain\right)\right) \overset{p}{\longrightarrow} \riskbayes \quad \text{for } n_\text{train} \to \infty.
+	\risk\left(\ind\left(\Dtrain\right)\right) \overset{p}{\longrightarrow} \riskbayes \quad \text{for } n_\text{train} \to \infty
 $$
 
 \vfill
