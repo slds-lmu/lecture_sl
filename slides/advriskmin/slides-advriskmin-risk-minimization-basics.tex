@@ -268,10 +268,13 @@ $$    \riskf = \E_{xy} \left[\Lxy\right]
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
  $$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
+        \item Under L2 loss, best point-wise prediction is simply cond. mean
+
+$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 \end{itemize}
 
 \begin{center}
-\includegraphics[width=1\textwidth]{figure/optimal_pointwise.png}
+\includegraphics[width=0.8\textwidth]{figure/optimal_pointwise.png}
 \end{center}
 
 
