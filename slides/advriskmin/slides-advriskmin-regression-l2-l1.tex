@@ -16,31 +16,31 @@
 
 \begin{document}
     
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
-    Advanced Risk Minimization
-  }{% Lecture title  
-    Regression Losses: L2 and L1 loss
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/loss_quadratic_1.png
-  }{
-  \item Derive the risk minimizer of the L2-loss
-  \item Derive the optimal constant model for the L2-loss
-  \item Know risk minimizer and optimal constant model for L1-loss
+\titlemeta{
+Advanced Risk Minimization
+}{
+Regression Losses: L2 and L1 loss
+}{
+figure/loss_quadratic_1.png
+}{
+\item L2 loss and risk minimizers
+\item L1 loss and risk minimizers
 }
 
 \begin{vbframe}{L2-Loss}
-
-\vspace*{-0.5cm}
 
 $$
 \Lxy = \left(y-\fx\right)^2 \quad \text{or} \quad \Lxy = 0.5 \left(y-\fx\right)^2
 $$
 
-\vspace*{-2mm}
+\vfill
 
 \begin{itemize}
-\item Tries to reduce large residuals (if residual is twice as large, loss is 4 times as large), hence outliers in $y$ can become problematic
-\item Analytic properties: convex, differentiable $\Rightarrow$ gradient no problem in loss minimization\\ {\small (\textbf{Warning}: $\riskef$ can still be non-smooth/non-convex due to $f(\xv)$)}
+\item Tries to reduce large residuals \\
+If residual is twice as large, loss is 4 times as large\\
+Hence, sensitive to outliers in $y$
+\item Analytic properties: convex, differentiable 
+%$\Rightarrow$ gradient no problem in loss minimization\\ {\small (\textbf{Warning}: $\riskef$ can still be non-smooth/non-convex due to $f(\xv)$)}
 %\item Residuals = Pseudo-residuals: \begin{footnotesize} $\tilde r = - \pd{0.5 (y-\fx)^2}{\fx} = y - \fx = r$\end{footnotesize}
 \end{itemize}
 
@@ -61,68 +61,86 @@ $$
 \end{vbframe}
 
 
+\begin{vbframe}{L2: Optimal value is expectation}
+
+\begin{itemizeL}
+%\item Let's consider L2 here as simplest case
+\item Can derive a general result now for any $z ~ \sim Q$
+\item Consider 
+$$ 
+\argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] 
+$$
+$$
+\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   
+$$
+
+\item The RHS is minimized by $c = \E[z]$\\
+(simple quadratic, or take derivative and set to 0)
 
 
-\begin{vbframe}{L2-loss: Optimal Constant Model}
-Let us consider the (true) risk for  $\Yspace = \R$ and $L2$-Loss $\Lxy = \left(y-\fx\right)^2$ with $\Hspace$ restricted to constants. %The optimal constant model $f_{c}^{\ast}$ in terms of the theoretical risk is the expected value over $y$: 
-As derived previously, for the squared loss, the optimal constant model is given by 
-\vspace{-0.2cm}
-$$f_{c}^{\ast} = \argmin_{c \in \mathbb{R}} \E_{xy} \left[(y-c)^2\right] =\E_{y}[y]$$
 
-  %\begin{eqnarray*}
-  %  f_{c}^{\ast} &=& \argmin_{c \in \mathbb{R}} \E_{xy} %\left[(y-c)^2\right] = \argmin_{c \in \mathbb{R}} \E_{y} %\left[(y-c)^2\right] %= \E_{y~|~\xv}\left[y~|~\xv\right] \overset{\text{drop } \xv}{=} \E_y \left[y\right] 
-  %  \\
-    %&=& \argmin_{c \in \mathbb{R}} \E_{y} \left[(y-c)^2\right] \\
-   % &=& \argmin_{c \in \mathbb{R}} \underbrace{\E_{y}\left[(y - c)^2\right] - \left(\E_{y}[y] - c\right)^2}_{= \var_{y}[y - c] = \var_{y}[y]} + \left(\E_{y}[y] - c\right)^2 \\
-   % &=& \argmin_{c \in \mathbb{R}} \var_{y}[y] + \left(\E_{y}[y] - c\right)^2  \\
-   % &=& \E_{y}[y]
-  %\end{eqnarray*} 
-
-%\framebreak 
-
-We also derived: the empirical constant minimizer is $\hat{f}_{c} = \bar y$.  
-\vspace{-0.2cm}
-\begin{center}
-\includegraphics[width = 0.5\textwidth ]{figure/L2-loss.png} \\
-\end{center}
-
-%\framebreak
-
-%\textbf{Proof: }
-
-%\vspace{0.2cm}
-
-%For the optimal constant model $f_{c}^{\ast}$ for the L2-%loss $\Lyf = \left(y - f\right)^2$ we solve the %optimization problem 
-%$$
-%\argmin_{f \in \Hspace} \riskef = \argmin_{\theta \in \R} \sumin (\yi - \theta)^2. 
-%$$
+\end{itemizeL}
+\end{vbframe}
 
 
-%We calculate the first derivative of $\riske$ w.r.t. $\theta$ and set it to $0$: 
 
 
-%\begin{eqnarray*}
-%\frac{\partial \risket}{\partial \theta} = -2 \sumin %\left(\yi - \theta\right) &\overset{!}{=}& 0 \\
-%\sumin \yi - n \theta&=& 0 \\
-%\hat \theta&=& \frac{1}{n} \sumin \yi =: \bar y.
-%\end{eqnarray*}
+\begin{vbframe}{L2: Optimal Constant Model}
+
+\begin{itemizeS}
+
+\item From the previous we immediately get for $Q = P_y$
+$$
+f_{c}^{\ast} = \argmin_{c \in \R} \E_{y} [ (y - c)^2 ] = \E[y]
+$$
+\item For the best empirical constant we could minimize   
+$$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$$
+
+And later we will proceed like that
+\item But we can get the result for free from our previous 
+  consideration
+  
+\item For data $y^{(1)}, \ldots, y^{(n)}$, empirical distribution is $P_n = \meanin \delta_{\yi}$
+%Thus, for the minimization problem
+%\[
+% \argmin_{c \in \R} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c %\in \R} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \R} %\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2,
+%\]
+%taking the derivative with respect to \(c\) yields
+%\[
+%\frac{d}{dc}\left(\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2\right) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2\left(c-\frac{1}{n}\sum_{i=1}^n y^{(i)}\right)=0.
+%\]
+\item Hence: Optimal constant is sample mean
+$$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c) = 
+\E_{z \sim P_n} (z-c)^2 = \E[z] = \meanin \yi = \bar{y}
+$$
+
+\end{itemizeS}
 
 
 \end{vbframe}
 
 \begin{vbframe}{L2-Loss: Risk Minimizer}
 
-Let us consider the (true) risk for  $\Yspace = \R$ and the $L2$-Loss $\Lxy = \left(y-\fx\right)^2$ with unrestricted $\Hspace = \{\fx: \Xspace \to \R^g\}$.
+\begin{itemizeS}
 
-\lz
+\item Let's minimize true risk for unrestricted hypothesis space and $L2$
 
-Since $\Hspace$ is unrestricted, at any point $\xv = \xtil$, we can predict any value $c$ we want. To find 
+\item We know: At any point $\xv = \xtil$, our loss-optimal prediction is 
 
-$$\fbayes(\xtil) = \mbox{argmin}_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right]\,,$$ 
+$$\fbayes(\xtil) = \argmin_{c \in \R} \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right]$$ 
 
-we can apply the previous derivation of $f_{c}^{\ast}$ under $L2$ loss using the conditional label distribution. The best point-wise prediction is then given by the cond. mean
+\item Again from the previous, \\
+we know the minimizer for $L2$ is the conditional expectation 
 
 $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{figure/optimal_pointwise.png}
+\end{center}
+
+
+\end{itemizeS}
+
 
 %\begin{itemize}
 %\item By the law of total expectation
@@ -192,67 +210,44 @@ to obtain variance.
 \begin{vbframe}{L1-Loss}
 
 % Description
-\vspace*{-0.1cm}
-The L1 loss is defined as
 $$
 \Lxy = \left|y-\fx\right|
 $$
 
 \begin{itemize}
-\setlength{\itemsep}{1.5em}
-\item More robust than $L2$, outliers in $y$ are less problematic.
-\item Analytical properties: convex, not differentiable for $y = f(\bm{x})$ (optimization becomes harder).
+\item More robust than $L2$, outliers in $y$ are less problematic
+\item Analytical properties: convex, not differentiable for $y = f(\bm{x})$ (optimization becomes harder)
 \end{itemize}
 
-\vspace*{0.2cm}
+\vfill
 
-\begin{center}  \includegraphics[width = 9cm]{figure/loss_absolute_2.png} \\
+\begin{center}  
+\includegraphics[width = 9cm]{figure/loss_absolute_2.png} 
 \end{center}
 
 
 \end{vbframe}
 
 
-\begin{vbframe}{L1-Loss: Risk Minimizer}
+\begin{vbframe}{L1-Loss: Optimal predictions}
 
-We calculate the (true) risk for the $L1$-Loss $\Lxy = \left|y-\fx\right|$ with unrestricted $\Hspace = \{f: \Xspace \to \Yspace\}$. 
+\begin{itemizeL}
 
-\vspace{0.5cm}
+\item Optimal constant model is median: 
+$f_{c}^{\ast} = \text{med} [y]$
 
-\begin{itemize}
-  \setlength{\itemsep}{1.4em}  
-  \item We use the law of total expectation
-  \vspace{0.3cm}
-  $$
-    \riskf = \E_x \left[\E_{y|x}\left[|y-\fx|~|\xv = \xtil\right]\right]. 
-  $$
-  \item As the functional form of $f$ is not restricted, we can just optimize point-wise at any point $\xv = \xtil$. The best prediction at $\xv = \xtil$ is then 
-  \vspace{0.3cm}  
-  $$
-    f^{\ast}(\xv) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv \right]. 
-  $$
+\item Empirical version: $\hat{f}_c = \text{med}(y^{(1)}, \ldots, y^{(n)}) $  
 
-\end{itemize}
+\item Derivations slightly harder and in deep-dive
+
+\item Risk minimizer / optimal conditional prediction:
+  $$
+    f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv = \xtil \right]
+  $$
+\end{itemizeL}
 
 \end{vbframe}
 
-\begin{vbframe}{L1-Loss: Optimal constant model}
-
-The optimal constant model in terms of the theoretical risk for the L1 loss is the median over $y$:
-
-\begin{eqnarray*}
-  f_{c}^{\ast} &=& \text{med}_{y|x} \left[y ~|~ \xv \right] \overset{\text{drop } \xv}{=}  \text{med}_{y} \left[y \right]
-  \end{eqnarray*} 
-
-The optimizer $\hat{f}_c$ of the empirical risk is $\text{med}(\yi)$ over $\yi$, which is the empirical estimate for $\text{med}_{y} \left[y \right]$. 
-
-\vspace*{-0.3cm}
-
-\begin{center}
-\includegraphics[width = 0.5\textwidth ]{figure/l1_vs_l2.png} \\
-\end{center}
-
-\end{vbframe}
 
 
 \endlecture

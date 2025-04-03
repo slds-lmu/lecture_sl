@@ -35,11 +35,11 @@ $\rx := y - \fx$
 \item Generalize concept to \textbf{pseudo-residuals}: 
 %as the negative first derivatives of loss functions w.r.t. $\fx$
 $$
-\tilde \rx := - \frac{\partial \Lxy}{\partial \fx}
+\tilde{r}(\xv) := - \frac{\partial \Lxy}{\partial \fx}
 $$
 \item If we wiggle $\fx$, how much does $L$ change?
 \item Can be used for score-based classifiers and other models
-\item Note that $\tilde{\rx}$ depends on $y$, $\fx$ and $L$
+\item Note that $\tilde{r}(\xv)$ depends on $y$, $\fx$ and $L$
 
 \vfill
 
@@ -95,7 +95,7 @@ $$
 \item This is effectively the PR which is the direction of the pseudo-residual
 
 \begin{eqnarray*}
-	\fx &\leftarrow& \fx + \tilde \rx\\ 
+	\fx &\leftarrow& \fx + \tilde{r}(\xv)\\ 
 \end{eqnarray*}
 
 \item Iteratively stepping towards the direction of the pseudo-residuals is the underlying idea of gradient boosting, which is a learning algorithm that will be covered in a later chapter
@@ -113,7 +113,7 @@ $$
 	 \thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	
 	$$
 	% with step size $\alpha^{[t]}$. 
-	\item This can be seen as approximating the unexplained information (measured by the loss) through a model update. 
+	\item This can be seen as approximating the unexplained information (measured by the loss) through a model update
 	% \framebreak 
 	\item Using the chain rule:
         % mwe see that the pseudo-residuals are input to the update direction
@@ -123,9 +123,9 @@ $$
 	\cdot \nabla_{\thetav} \fxit \\ 
 	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
 	\end{eqnarray*}
-	\item Hence the update is determined by a loss-optimal directional change of the model output 
-        and a loss-independent derivative of $\fx$.
-        This is a flexible, nearly loss-independent variant of GD.
+	\item Update is loss-optimal directional change of model output 
+        and a loss-independent derivative of $\fx$
+        \item This is a flexible, nearly loss-independent variant of GD
         % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
 \end{itemize}	
 

@@ -45,14 +45,17 @@ res.dat$pred_95 <- preds.95
 # Calculate true conditional mean
 res.dat$true_mean <- theta0 + theta1 * res.dat$x
 
-
 p <- ggplot(res.dat, aes(x = x)) +
-  geom_line(aes(y = pred_5, color = "q=0.05"), size = 1.6, alpha=1) +   
-  geom_line(aes(y = pred_50, color = "q=0.5"), size = 1.6, alpha=1) +
-  geom_line(aes(y = pred_95, color = "q=0.95"), size = 1.6, alpha=1) +
+  geom_line(aes(y = pred_5, color = "alpha=0.05"), size = 1.6, alpha = 1) +   
+  geom_line(aes(y = pred_50, color = "alpha=0.5"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_95, color = "alpha=0.95"), size = 1.6, alpha = 1) +
   geom_line(aes(y = true_mean, linetype = "True mean"), color = "black", size = 1.6) +
-  geom_point(aes(y = y), color = "darkgrey", size = 2, alpha=1) +  
+  geom_point(aes(y = y), color = "darkgrey", size = 2, alpha = 1) +  
   labs(y = "y", x = "x", color = "Quantile", linetype = "") +
+  scale_color_manual(
+    values = c("alpha=0.05" = "blue", "alpha=0.5" = "red", "alpha=0.95" = "green"),
+    labels = c(expression(alpha==0.05), expression(alpha==0.5), expression(alpha==0.95))
+  ) +
   scale_linetype_manual(values = c("True mean" = "dashed")) +
   theme_minimal() +
   theme(text = element_text(size = 12), 
@@ -61,7 +64,7 @@ p <- ggplot(res.dat, aes(x = x)) +
         legend.title = element_text(size = rel(1.5)),
         legend.text = element_text(size = rel(1.3))) +
   guides(color = guide_legend(order = 1), linetype = guide_legend(order = 2))
-# Print plot
+
 print(p)
 
 # Save figure

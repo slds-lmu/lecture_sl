@@ -94,34 +94,55 @@ We don't care here, now.
 
 \end{vbframe}
 
-\begin{vbframe}{Optimal constants for a loss}
+
+\begin{vbframe}{Optimal loss values -- M-Estimators}
 
 \begin{itemize}
 \item Assume some RV $z \sim Q, Z \in \Yspace$ as target
 \item $z$ not the same as $y$, as we want to fiddle with its distribution
 \item We now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
 What is the constant that approximates $z$ with minimal loss?
+
 \end{itemize}
 
 \lz
 
 3 cases for Q
 \begin{itemize}
-\item $Q = P_y$, (uncond.) distribution of labels y, marginal of $\Pxy$
-\item $Q = P_n$, the empirical product distribution for data $y_1, \ldots, y_n$
+\item $Q = P_y$, distribution of labels y, marginal of $\Pxy$
+\item $Q = P_n$, the empirical product distribution for data $y^{(1)}, \ldots, y^{(n)}$
 \item $Q = P_{y | x = \tilde{x}}$, conditional label distribution at point $x = \tilde{x}$
 \end{itemize}
 
 \lz
 
-Solving $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$ provides 
-multiple results.
+%Solving $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$ provides 
+%multiple results.
 
 
 \end{vbframe}
 
 
-\begin{vbframe}{Unconditional: Optimal Constant Model}
+\begin{vbframe}{Optimal unconditional values}
+
+\begin{itemizeL}
+
+\item Associating such a 
+$$c = \argmin_c \E_{z \sim Q}[L(z, c)]$$
+with a distribution, is also called a statistical functional
+
+\item This specific loss-minimizing value is called an M-estimator
+
+\item If we look at the empirical counterpart, with the empirical distribution, this is the so-called ``plug-in'' estimator
+
+$$\argminlim_{c \in \R} \sumin L(\yi,c)$$
+
+\end{itemizeL}
+
+\end{vbframe}
+
+
+\begin{vbframe}{Optimal Constant Model}
 
 \begin{itemize}
 \item Goal: loss optimal, constant baseline predictor
@@ -138,71 +159,12 @@ $$f_{c}^{\ast} = \argmin_{c \in \R} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in
 
 \end{itemize}
 
-\vspace*{-0.2cm}
-
 \begin{center}
-	\includegraphics[width = 0.38\textwidth]{figure/l1_vs_l2.png}
+	\includegraphics[width = 0.32\textwidth]{figure/l1_vs_l2.png}
 \end{center}
 \end{vbframe}
 
 
-\begin{vbframe}{L2: Opt. Constants and Opt. Unconditional}
-
-\begin{itemizeM}
-\item Let's consider L2 here as simplest case
-\item Can derive a general result now for any $z ~ \sim Q$
-\item Consider 
-$$ 
-\argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] 
-$$
-$$
-\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   
-$$
-
-\item The RHS is obviously minimized by $c = \E[z]$\\
-(simple quadratic, or take derivative and set to 0)
-
-
-\item For $Q = P_y$: the best constant is $c = \E[y]$, \\
-so expectation of label distribution
-
-\end{itemizeM}
-\end{vbframe}
-
-
-
-
-\begin{vbframe}{L2: Empirical Optimal Constant Model}
-
-\begin{itemize}
-\item We could derive this by minimizing  
-$$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$$
-
-\item And later we will proceed like that
-\item But we can get the result for free from our previous 
-  consideration
-  
-\item For data $y^{(1)}, \ldots, y^{(n)}$, empirical distribution is $P_n = \meanin \delta_{\yi}$
-\item For any measurable $g$: $\E_{z\sim P_n}[g(z)] = \meanin g\bigl(\yi\bigr)$
-%Thus, for the minimization problem
-%\[
-% \argmin_{c \in \R} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c %\in \R} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \R} %\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2,
-%\]
-%taking the derivative with respect to \(c\) yields
-%\[
-%\frac{d}{dc}\left(\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2\right) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2\left(c-\frac{1}{n}\sum_{i=1}^n y^{(i)}\right)=0.
-%\]
-\item Hence: Optimal constant is sample mean
-\[
-c = \meanin \yi = \bar{y}
-\]
-
-%\item And we want to find and optimal constant model for 
-
-\end{itemize}
-
-
-\end{vbframe}
 
 
 
@@ -268,9 +230,9 @@ $$    \riskf = \E_{xy} \left[\Lxy\right]
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
  $$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
-        \item Under L2 loss, best point-wise prediction is simply cond. mean
+%        \item Under L2 loss, best point-wise prediction is simply cond. mean
 
-$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
+%$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 \end{itemize}
 
 \begin{center}

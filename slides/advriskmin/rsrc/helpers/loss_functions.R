@@ -6,7 +6,7 @@ library(qrmix)
 library(quantreg)
 library(quantreg)
 library(hqreg)
-library(bmrm)
+#library(bmrm)
 library(MASS)
 
 

@@ -12,7 +12,7 @@ theme_enlarged <- function() {
   theme_minimal() +
     theme(
       plot.title = element_text(hjust = 0.5, size = 16),
-      plot.subtitle = element_text(hjust = 0.1, size = 13),
+      plot.subtitle = element_text(hjust = 0.1, size = 10),
       axis.title = element_text(size = 16),               
       axis.text = element_text(size = 16),
       legend.text = element_text(size=16)

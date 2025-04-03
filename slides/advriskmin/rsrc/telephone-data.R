@@ -69,15 +69,21 @@ res.tel$pred_huber <- preds.huber
 res.tel$pred_logcosh <- preds.logcosh
 res.tel$pred_cauchy <- preds.cauchy
 
-# Plot results for telephone data
 p <- ggplot(res.tel, aes(x = year)) +
-  geom_line(aes(y = pred_l2, color = "L2 (OLS)"), size = 1.6, alpha = 1) +   
-  geom_line(aes(y = pred_l1_manual, color = "L1"), size = 1.6, alpha = 1) +
-  geom_line(aes(y = pred_huber, color = "Huber"), size = 1.6, alpha = 1) +
-  geom_line(aes(y = pred_logcosh, color = "Log-Cosh"), size = 1.6, alpha = 1) +
-  geom_line(aes(y = pred_cauchy, color = "Cauchy"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_l2, color = "L2 (OLS)", linetype = "L2 (OLS)"), size = 1.6, alpha = 1) +   
+  geom_line(aes(y = pred_l1_manual, color = "L1", linetype = "L1"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_huber, color = "Huber", linetype = "Huber"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_logcosh, color = "Log-Cosh", linetype = "Log-Cosh"), size = 1.6, alpha = 1) +
+  geom_line(aes(y = pred_cauchy, color = "Cauchy", linetype = "Cauchy"), size = 1.6, alpha = 1) +
   geom_point(aes(y = calls), color = "black", size = 4, alpha = 1) +  
-  labs(y = "Calls (in mio.)", x = "Year", color = "Loss") +
+  labs(y = "Calls (in mio.)", x = "Year", color = "Loss", linetype = "Loss") +
+  scale_linetype_manual(values = c(
+    "L2 (OLS)" = "solid", 
+    "L1" = "solid", 
+    "Huber" = "dotted", 
+    "Log-Cosh" = "dotdash", 
+    "Cauchy" = "twodash"
+  )) +
   theme_minimal() +
   theme(text = element_text(size = 12), 
         axis.title = element_text(size = rel(2)),   
@@ -85,7 +91,6 @@ p <- ggplot(res.tel, aes(x = year)) +
         legend.title = element_text(size = rel(1.5)),
         legend.text = element_text(size = rel(1.3)))
 
-# Print plot
 print(p)
 
 # Save figure

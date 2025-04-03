@@ -18,14 +18,14 @@
 
 \begin{document}
     
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Advanced Risk Minimization
   }{% Lecture title  
     Bernoulli Loss
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/bernoulli_prob.png
   }{
-  \item Know the Bernoulli loss and related losses (log-loss, logistic loss, Binomial loss)
+  \item Know the Bernoulli loss and related losses (log, logistic, binomial loss)
   \item Derive the risk minimizer
   \item Derive the optimal constant model 
   %\item Understand the connection between log-loss and entropy splitting 
@@ -34,11 +34,8 @@
 \begin{vbframe}{Bernoulli loss on probabilities}
 
 The likelihood function for $n$ samples of a Bernoulli RV with probability $\pi$ parametrized by $\thetav$ is
-
 %$$\mathcal{L}(\pix) = \prodin \pix^{\yi} \left(1-\pix\right)^{1-\yi}$$
-
 %$$\mathcal{L}(\pi) = \pix^{y} \left(1-\pix\right)^{1-y}, \,, \, y \in \setzo $$
-
 $$
 \LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \,\,, \, y \in \setzo
 $$
@@ -53,7 +50,12 @@ The Bernoulli loss is then defined as the NLL of a single sample
 
 \framebreak 
 
-If probs are transformed into scores as $\pix = \left(1 + \exp(-\fx)\right)^{-1}$ (or if $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$ are the log-odds), we get at an equiv. loss formulation:
+\begin{itemize}
+    \item Transform probs into scores (log-odds): $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$
+    \item Then $\pix = \left(1 + \exp(-\fx)\right)^{-1}$
+    \item Yields equivalent loss formulation
+\end{itemize}
+%If probs are transformed into scores as $\pix = \left(1 + \exp(-\fx)\right)^{-1}$ (or if $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$ are the log-odds), we get at an equiv. loss formulation:
 
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 \lz
@@ -221,25 +223,25 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
   \thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi
 \end{eqnarray*}
 
-Again, this is the fraction of class-1 observations in the observed data.
-We can simply prove this again by setting the derivative of the risk to 0 and solving for $\theta$. The optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is:
+This is the fraction of class-1 observations in the observed data.
+We can prove this by setting the derivative of the risk to 0 and solving for $\theta$. The optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is:
 
 \begin{eqnarray*}
   \thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n} 
 \end{eqnarray*}
 
-where $\nn$ and $\np$ are the numbers of negative and positive observations, respectively.
+where $\nn$ and $\np$ are the numbers of negative and positive observations.%, respectively.
 
-This again shows a tight (and unsurprising) connection of this loss to log-odds.
+This shows a tight (and unsurprising) connection of this loss to log-odds.
 
-Proving this is also a (quite simple) exercise.
+Proving this is left as exercise.
 }
 
 \end{vbframe}
 
 \begin{vbframe}{Bernoulli-Loss: Naming Convention}
 
-We have seen three loss functions that are closely related. In the literature, there are different names for the losses: 
+We have seen several closely related loss functions: %In the literature, there are different names for the losses: 
 
 %\begin{eqnarray*}
 %  L(y, \fx) &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
@@ -253,7 +255,7 @@ We have seen three loss functions that are closely related. In the literature, t
 
 \lz
 
-are equally referred to as Bernoulli, Binomial, logistic, log loss, or cross-entropy (showing equivalence is a simple exercise).
+They are equally referred to as Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss. % (showing equivalence is a simple exercise).
 
 %  $$
 %    L(y, \pix) = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo
@@ -273,15 +275,15 @@ are equally referred to as Bernoulli, Binomial, logistic, log loss, or cross-ent
 \footnotesize
 %The choice of the loss function may also impact convergence behavior.
 
-In case of \textbf{complete separation}, optimization might even 
-fail entirely, e.g.:
+In case of \textbf{complete separation}, optimization might 
+fail, e.g.:
 %Consider the following scenario:
 
 \vspace{0.5cm}
 
 \begin{minipage}{0.7\textwidth}
   \begin{itemize}
-    \item \textbf{Bernoulli loss} is margin-based and strictly monotonicly decreasing in
+    \item \textbf{Bernoulli loss} is margin-based and strictly monotonically decreasing in
     $y \cdot \fx$: 
     % \scriptsize
     $$\Lxy = \log \left( 1 + \exp \left( - y  \fx \right)\right)$$
@@ -376,9 +378,8 @@ $$
     \includegraphics[width=0.8\textwidth]{figure/softmax_2}
   \end{minipage}%
   \item In practice, data are seldomly linearly separable and misclassified 
-  examples act as counterweights to increasing parameter values.
-  \item Besides, we can use \textbf{regularization} to encourage convergence 
-  to robust solutions.
+  examples act as counterweights to increasing parameter values
+  \item We can also use \textbf{regularization} for  robust solutions
 \end{itemize}
 
 \end{vbframe}

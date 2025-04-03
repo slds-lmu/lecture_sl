@@ -16,30 +16,37 @@
 
 \begin{document}
     
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
-    Advanced Risk Minimization
-  }{% Lecture title  
-    Advanced Regression Losses
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/plot_loss_overview.png
-  }{
-  \item Huber loss
-  \item Log-cosh loss
-  \item Cauchy loss
-  \item $\eps$-insensitive loss
-  \item Quantile loss
+\titlemeta{
+Advanced Risk Minimization
+}{
+Advanced Regression Losses
+}{
+figure/plot_loss_overview.png
+}{
+\item Huber loss
+\item Log-Cosh loss
+\item Cauchy loss
+\item $\eps$-Insensitive loss
+\item Quantile loss
 }
 
 \begin{vbframe}{Advanced Loss Functions \citelink{WANG2020COMPRE}}
-\lz
-\begin{itemize}\setlength\itemsep{1.5em} 
 
-\item Can use other losses for other posteriors
-\item Handle errors in a custom fashions
-\item Achieve properties like robustness
-\item Handle new predictive tasks
-
+\begin{itemize}
+\item Handle errors in custom fashion
+\item Model other error distributions\\
+(see section on max. likelihood)
+\item Induce properties like robustness
+\item Handle other predictive tasks
 \end{itemize}
+
+\vfill
+
+\begin{center}
+\includegraphics[width = 0.55\textwidth]{figure/plot_loss_overview.png}
+\end{center}
+
+
 
 
 
@@ -65,40 +72,23 @@ $$
 \Lxy = \begin{cases}
   \frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
   \epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
-  \end{cases}, \quad \epsilon > 0
+  \end{cases} \quad \epsilon > 0
 $$
 
 \begin{itemize}
 \item Piece-wise combination of $L1$/$L2$ to have robustness/smoothness
 \item Analytic properties: convex, differentiable (once)
-% \item Combines advantages of $L1$ and $L2$ loss: differentiable + robust
 \end{itemize}
-
-% \vspace*{-1cm}
-
-% \begin{center}
-% \includegraphics[width = 0.45\textwidth]{figure/loss_huber_plot.png}~~\includegraphics[width = 0.45\textwidth]{figure_man/loss_huber_plot2.png}\\
-% \end{center}
 
 \begin{center}
 \includegraphics[width = 0.65\textwidth]{figure/loss_huber_plot.png}
 \end{center}
 
-\vspace*{-0.2cm}
-
 \begin{itemize}
-\item No closed-form solution even for constant or linear model. 
-\item Solution behaves like \textbf{trimmed mean}: a (conditional) mean of two (conditional) quantiles. % (the location depends on the distribution and the value of $\epsilon$).  
+\item No closed-form solution even for constant or linear model
+\item Solution behaves like \textbf{trimmed mean}:\\
+a (conditional) mean of two (conditional) quantiles  
 \end{itemize}
-
-% \vspace*{0.2cm}
-
-% \textbf{Optimal constant model:}
-% \begin{itemize}
-% \item Similarly, there is no closed-form solution for the optimal constant model. 
-% \item Numerical optimization methods are necessary. 
-% \item The \enquote{optimal} solution can only be approached to a certain degree of accuracy via iterative optimization.
-% \end{itemize}
 
 \end{vbframe}
 
@@ -107,43 +97,50 @@ $$
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
 $$
-\Lxy = \log \left( \cosh(\left|y - \fx\right|) \right) \quad \text{where}\,\text{cosh}(x):=\frac{e^x+e^{-x}}{2}
-% \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
+\Lxy = \log \left( \cosh(\left|y - \fx\right|) \right) \qquad \text{cosh}(x)=\frac{e^x+e^{-x}}{2}
 $$
 
-\normalsize
+\vfill
+
 \begin{itemize}
-\item Logarithm of the hyperbolic cosine of the residual.
-\item Approximately equal to $0.5 (\left|y - \fx\right|)^2$ for small residuals and to $\left|y - \fx\right| - \log 2$ for large residuals, meaning it works a smoothed out $L1$ loss using $L2$ around the origin. %like $L2$ loss for small residuals, but is less outlier-sensitive due to its $L1$ approximation for larger residuals.
-\item Has all the advantages of Huber loss and is, moreover, twice differentiable everywhere.
+%\item Logarithm of the hyperbolic cosine of the residual.
+\item Approx. $0.5 (\left|y - \fx\right|)^2$ for small residuals;\\
+$\left|y - \fx\right| - \log 2$ for large residuals
+\item Smoothed combo of $L1$ / $L2$ loss
+\item Similar to Huber, but twice differentiable
 \end{itemize}
 
+\vfill
+
 \begin{center}
-% \includegraphics[width = 0.6\textwidth]{figure_man/loss_cauchy_plot1.png}
 \includegraphics[width = 0.5\textwidth]{figure/loss_logcosh.png}
 \end{center}
 
 \framebreak
 
-What is the idea behind the log-cosh loss?
-\vspace{-0.3cm}
+%What is the idea behind the log-cosh loss?
+
 \begin{columns}
 
 \begin{column}{0.4\textwidth}
 %\textbf{Left Column}
 
-{\scriptsize
-Essentially, we  
-\begin{enumerate}\setlength{\itemsep}{0.32em}
-    \item take derivative of $L1$ loss w.r.t.~$y-\fx$, which is the $\text{sign}(y-\fx)$ function
-    \item eliminate discontinuity at $0$ by approximating $\text{sign}(y-\fx)$ using the cont. differentiable $\text{tanh}(y-\fx)$
-    \item finally integrate the smoothed sign function ``up again'' to obtain smoothed $L1$ loss $\log(\text{cosh}(y-\fx))=\log(\text{cosh}(|y-\fx|))$
+\vspace{1cm}
+
+Essential idea:
+\begin{enumerate}
+    \item Derivative of $L1$ \\
+    w.r.t. residual 
+    %$\text{sign}(y-\fx)$ function
+    \item Approx. $\sign$ with $\tanh$
+    %$\text{sign}(y-\fx)$ using the cont. differentiable $\text{tanh}(y-\fx)$
+    \item Integrate ``up again'' 
 \end{enumerate}
-}
+
 \end{column}
 
-\begin{column}{0.7\textwidth}
-%\textbf{Right Column}
+\begin{column}{0.6\textwidth}
+
 
 \begin{figure}
       \centering
@@ -155,17 +152,26 @@ Essentially, we
 
 \end{columns}
 
-The log-cosh approach to obtain a differentiable approximation of the $L1$ loss can also be extended to  differentiable quantile/pinball losses.
+\vfill
+
+Same trick can be used to get differentiable pinball losses
 
 \framebreak
 
-\textbf{The cosh($\theta,\sigma$) distribution}:\\
-The (normalized) reciprocal $\text{cosh}(x)$ defines a pdf: \\
-it is positive and $\int_{-\infty}^{\infty} \frac{1}{\pi \text{cosh}(x)} \text{d}x = 1$.\\
-\vspace{0.1cm}
-We can define a location-scale family of distributions (using $\theta$ and $\sigma$) resembling Gaussians with \textbf{heavier tails}. 
+\textbf{cosh($\theta,\sigma$) distribution}:\\
 
-It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the $\text{cosh}(\theta,1)$ distribution.
+\begin{itemize}
+
+\item Normalized reciprocal $\text{cosh}(x)$ is pdf: 
+positive and $\int_{-\infty}^{\infty} \frac{1}{\pi \text{cosh}(x)} \text{d}x = 1$
+
+\item Location-scale type ($\theta, \sigma$) 
+resembling Gaussian with heavy tails
+
+\item ERM using log-cosh 
+is equivalent to MLE of $\text{cosh}(\theta,1)$ distribution
+
+\end{itemize}
 
 \begin{columns}
 
@@ -175,20 +181,18 @@ It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the
 {\normalsize 
 \begin{itemize}\setlength{\itemsep}{0.32em}
     \item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh \left(\frac{x-\theta}{\sigma}\right)}$
-    \item $\mathbb{E}_{X\sim p}[X]=\theta$
-    \item $\text{Var}_{X \sim p}[X]=\frac{1}{4}(\pi^2 \sigma^2)$
-    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prod_{i=1}^n \frac{1}{\pi \cosh \left(x_i-\theta\right)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(x_i-\theta))$}
+    \item $\E_{x \sim p}[x] = \theta$
+    \item $\var_{x \sim p}[x]=\frac{1}{4} \pi^2 \sigma^2 $
+    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh \left(\yi-\theta\right)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
 \end{itemize}
 }
 \end{column}
 
 \begin{column}{0.7\textwidth}
-%\textbf{Right Column}
 
 \begin{figure}
       \centering
-        \scalebox{1}{\includegraphics{figure/cosh-gaussian-densities.png}}
-        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
+        \scalebox{1}{\includegraphics{figure_man/cosh-gaussian-densities.png}}
     \end{figure}
 
 \end{column}
@@ -205,19 +209,16 @@ It is easy to check that ERM using the log-cosh loss is equivalent to MLE of the
 $$
 \Lxy = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - \fx\right|}{c}\right)^2 \right), 
 \quad c \in \R
-% \log \left(\tfrac{1}{2} (\left|y - f\right| / c)^2 + 1\right), \quad c \in \R
 $$
 
-\normalsize
 \begin{itemize}
-\item Particularly robust toward outliers (controllable via $c$).
-\item Analytic properties: differentiable, but not convex! 
+\item Particularly robust toward outliers (controllable via $c$)
+\item Analytic properties: differentiable, but not convex
 \end{itemize}
 
 \vfill
 
 \begin{center}
-% \includegraphics[width = 0.6\textwidth]{figure_man/loss_cauchy_plot1.png}
 \includegraphics[width = 0.6\textwidth]{figure/loss_cauchy.png}
 \end{center}
 
@@ -225,9 +226,15 @@ $$
 
 \begin{vbframe}{Telephone data}
 
-{\small We now illustrate the effect of using robust loss functions. The telephone data set contains the number of calls (in 10mio units) made in Belgium between 1950 and 1973 ($n=24$). Outliers are due to a change in measurement without re-calibration for 6 years.}
+\begin{itemize}
 
-\vspace{0.2cm}
+\item Illustrate the effect of robust losses on telephone data set 
+\item Nr. of calls (in 10mio units) in Belgium 1950-1973
+\item Outliers due to a change in measurement without re-calibration 
+
+\end{itemize}
+
+\vfill
 
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/telephone-data.pdf}
@@ -274,9 +281,9 @@ $$
   \end{cases}, \quad \epsilon \in \R_{+}
 $$
 \begin{itemize}
-\item Modification of $L1$ loss, errors below $\epsilon$ accepted without penalty
+\item Modification of $L1$, errors below $\epsilon$ get no penalty
 \item Used in SVM regression
-\item Properties: convex and not differentiable for $ y - \fx \in \{-\epsilon, \epsilon\}$
+\item Properties: convex, not differentiable for $ y - \fx \in \{-\epsilon, \epsilon\}$
 \end{itemize}
 
 \vfill
@@ -320,21 +327,17 @@ $$
 %\end{vbframe}
 
 \begin{vbframe}{Quantile Loss / Pinball Loss}
-\vspace{-0.3cm}
 
-\small
 $$
 \Lxy = \begin{cases} (1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
 \alpha (y - \fx) & \text{ if } y \ge \fx
 \end{cases}, \quad \alpha \in (0, 1)
 $$
 
-
-\normalsize
 \begin{itemize}
 \item Extension of $L1$ loss (equal to $L1$ for $\alpha = 0.5$).
-\item Weighs either positive or negative residuals more strongly
-\item $\alpha<0.5$ $(\alpha>0.5)$ penalty to over-estimation (under-estimation)
+\item Penalizes either over- or under-estimation more
+%\item $\alpha<0.5$ $(\alpha>0.5)$ penalty to over-estimation (under-estimation)
 \item Risk minimizer is (conditional) 
     $\alpha$-quantile (median for $\alpha=0.5$)
 \end{itemize}
@@ -362,9 +365,14 @@ $$
 
 \framebreak
 
-We simulate $n=200$ samples from a heteroskedastic LM using the DGP $y = 1+0.2x+\varepsilon$, where $\varepsilon \sim \mathcal{N}(0, 0.5+0.5x)$ and $x \sim \mathcal{U}[0,10]$.\\
+\begin{itemize}
 
-Using the quantile loss, we estimate the conditional $\alpha$-quantiles for $\alpha \in \{0.05, 0.5, 0.95\}$.
+\item Simulate $n=200$ samples from heteroskedastic LM 
+\item $y = 1+0.2x+\varepsilon$; 
+$\quad \varepsilon \sim \mathcal{N}(0, 0.5+0.5x)$; $\quad x \sim \mathcal{U}[0,10]$
+\item Fit LM with pinball losses to estimate $\alpha$-quantiles 
+
+\end{itemize}
 
 \vspace{-0.2cm}
 
