@@ -10,8 +10,11 @@ losses <- list(
   "Huber" = function(res) Huber(res, c = 5)
 )
 
+pl = plotLoss(df, losses) + 
+  scale_color_viridis_d() +
+  theme_minimal() +
+  theme(text = element_text(size = 20L))
 
-pl = plotLoss(df, losses) 
 
 ggplot2::ggsave("../figure/loss_l2_l1_huber.png", pl)
 
