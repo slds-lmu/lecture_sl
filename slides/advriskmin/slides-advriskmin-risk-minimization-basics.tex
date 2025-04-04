@@ -98,7 +98,7 @@ We don't care here, now.
 \begin{vbframe}{Optimal loss values -- M-Estimators}
 
 \begin{itemize}
-\item Assume some RV $z \sim Q, Z \in \Yspace$ as target
+\item Assume some RV $z \sim Q, z \in \Yspace$ as target
 \item $z$ not the same as $y$, as we want to fiddle with its distribution
 \item We now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
 What is the constant that approximates $z$ with minimal loss?
@@ -111,7 +111,7 @@ What is the constant that approximates $z$ with minimal loss?
 \begin{itemize}
 \item $Q = P_y$, distribution of labels y, marginal of $\Pxy$
 \item $Q = P_n$, the empirical product distribution for data $y^{(1)}, \ldots, y^{(n)}$
-\item $Q = P_{y | x = \tilde{x}}$, conditional label distribution at point $x = \tilde{x}$
+\item $Q = P_{y | \xv = \xtil}$, conditional label distribution at point $\xv = \xtil$
 \end{itemize}
 
 \lz
@@ -128,8 +128,8 @@ What is the constant that approximates $z$ with minimal loss?
 \begin{itemizeL}
 
 \item Associating such a 
-$$c = \argmin_c \E_{z \sim Q}[L(z, c)]$$
-with a distribution, is also called a statistical functional
+$$c = \argmin_{c \in \R} \E_{z \sim Q}[L(z, c)]$$
+with a distribution, is also called a statistical function
 
 \item This specific loss-minimizing value is called an M-estimator
 
@@ -256,9 +256,9 @@ $$
 $$
 \riskeb(f) = \frac{1}{n} \sumin \Lxyi \overset{n \to \infty}{\longrightarrow} \riskf 
 $$
-\item Still, that does not imply that the selected ERM minimizer converges to $f^{\ast}$, due to overfitting or lack of uniform convergence. 
+\item Still, that does not imply that the selected ERM minimizer converges to $f^{\ast}$, due to overfitting or lack of uniform convergence 
 \item Would need more assumptions / math. machinery for this, \\
-will not pursue this here. 
+will not pursue this here 
 
 \end{itemize}
 

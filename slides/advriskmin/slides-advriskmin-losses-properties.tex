@@ -68,19 +68,25 @@ is influenced by choice of the loss
 \item Regr. losses often only depend on  \textbf{residuals} 
 $\rx := y - \fx$
 
-\item Classif. losses usually expressed in terms of 
-  \textbf{margin}: $\nu := y \cdot \fx$
+\item Classif. losses usually in terms of 
+  \textbf{margin}: $\nu(\xv) := y \cdot \fx$
 
 
 \end{itemize}
 
 \vfill
 
-\begin{minipage}[b]{1\textwidth}
-  \includegraphics[width=0.65\textwidth]{figure/overview_classif.png}
+\splitV[0.4]{
+  \includegraphics[width=\textwidth]{figure/loss_dist_based}
+  \tiny \centering
+  Distance-based: $L1$
+}{
+\includegraphics[width=\textwidth]{figure/overview_classif.png}
   \tiny \centering
   %Margin-based losses
-\end{minipage}%
+}
+
+
 
 
 \end{vbframe}
@@ -93,7 +99,7 @@ A loss is
 \begin{itemize}
   \item \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$
   \item \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
-  $a \in \R$.
+  $a \in \R$
   \item \textbf{distance-based} if it can be written in terms of residual 
     $\Lxy = \psi (r)$ for some $\psi: \R \to \R$, and 
     $\psi(r) = 0 \Leftrightarrow r = 0$
@@ -141,7 +147,7 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
   \begin{table}[]
   \begin{tabular}{r|r|r|r}
   \toprule
-  $y - \fxh$ & $L1$ & $L2$ & Huber ($\eps = 5$) \\ \hline
+  $y - \fx$ & $L1$ & $L2$ & Huber ($\eps = 5$) \\ \hline
   1 & 1 & 1 & 0.5 \\
   5 & 5 & 25 & 12.5 \\
   10 & 10 & 100 & 37.5 \\
