@@ -168,23 +168,28 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 \vfill
 
 
-\begin{minipage}[c]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[c]{0.45\textwidth}
-  \includegraphics[width=\textwidth]{figure/loss_l1_l2}
-  \footnotesize \centering
-\end{minipage}%
-\begin{minipage}[c]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[c]{0.45\textwidth}
+% \begin{minipage}[c]{0.05\textwidth}
+%   \phantom{foo}
+% \end{minipage}%
+\splitV[0.4]{
+\includegraphics[width=\textwidth]{slides/advriskmin/figure/loss_l2_l1_huber.png}
+}{
 \includegraphics[width=\textwidth]{figure/robustness}
-  %\small \raggedright
-  %is an example for a loss function that is not very robust towards
-  %outliers. It penalizes large residuals more than $L1$ or Huber loss, which are
-  %considered robust.
-\end{minipage}%
+}
+% \begin{minipage}[c]{0.45\textwidth}
+%   \includegraphics[width=\textwidth]{slides/advriskmin/figure/loss_l2_l1_huber.png}
+%   \footnotesize \centering
+% \end{minipage}%
+% \begin{minipage}[c]{0.05\textwidth}
+%   \phantom{foo}
+% \end{minipage}%
+% \begin{minipage}[c]{0.45\textwidth}
+% \includegraphics[width=\textwidth]{figure/robustness}
+%   %\small \raggedright
+%   %is an example for a loss function that is not very robust towards
+%   %outliers. It penalizes large residuals more than $L1$ or Huber loss, which are
+%   %considered robust.
+% \end{minipage}%
 
 % \framebreak 
 % 
