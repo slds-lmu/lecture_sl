@@ -32,7 +32,7 @@
 
 \begin{vbframe}{Maximum Likelihood}
 
-Let's consider regression from a maximum likelihood perspective. Assume: 
+Regression from a maximum likelihood perspective. Assume: 
 
 $$
 	y~|~ \xv \sim p(y~|~\xv, \thetav)
@@ -59,7 +59,7 @@ where $\ftrue$ has params $\thetav$ and $\eps$ a RV that follows some distributi
 
 \framebreak 
 
-From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution family $p(y~|~\xv, \thetav)$.
+From a statistics / maximum-likelihood perspective, we assume (or we pretend) we know the underlying distribution family $p(y~|~\xv, \thetav)$:
 
 \begin{itemize}
 \item Given i.i.d data $
@@ -89,14 +89,14 @@ $$ -\loglt = -\sumin \lpdfyigxit. $$
 
 \framebreak 
 
-From an ML perspective we assume our hypothesis space corresponds to the space of the (parameterized) $\ftrue$. 
+From a machine learning perspective we assume our hypothesis space corresponds to the space of the (parameterized) $\ftrue$. 
 
 \begin{itemize}
 \item Simply define neg. log-likelihood as \textbf{loss function} 
 $$ \Lxyt := - \lpdfygxt $$
 \item Then, maximum-likelihood 
  = ERM
-$$\risket = \sumin \Lxyit$$
+$$- \loglt = \risket = \sumin \Lxyit$$
 
 % \item Then the maximum-likelihood estimator $\thetah$, which we obtain by optimizing $\LLt$ is identical
 % to the loss-minimal $\thetah$ we obtain by minimizing $\risket$.
@@ -120,7 +120,7 @@ Assume $y = \ftrue(\xv) + \eps$ with additive Gaussian errors, i.e. $\epsi \sim 
 
 %\framebreak 
 
-Easy to see: minimizing Gaussian NLL s is ERM with $L2$-loss:
+Minimizing Gaussian NLL is ERM with $L2$-loss:
 {\small
 \begin{eqnarray*}
 - \loglt &=& - \log\left(\LL(\thetav)\right) \\
@@ -168,11 +168,11 @@ also follows Laplace distribution with mean $\fxit$ and scale  $\sigma$.
 The likelihood is then 
 
 \begin{eqnarray*}
-\LL(\thetav) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,.
+\LL(\thetav) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,
 \end{eqnarray*}
 The negative log-likelihood is
 $$
-- \loglt \propto \sumin \left|\yi - \fxit\right|.
+- \loglt \propto \sumin \left|\yi - \fxit\right|
 $$
 
 MLE for Laplacian errors = ERM with L1-loss. 
@@ -188,9 +188,9 @@ MLE for Laplacian errors = ERM with L1-loss.
 
 \begin{footnotesize}
 \begin{itemize}
-	\item We simulate data $y ~|~x \sim \text{Laplacian}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$. 
-\item We can plot the empirical error distribution, i.e. the distribution of the residuals after fitting a regression model w.r.t. $L1$-loss.
-\item With the help of a Q-Q-plot we can compare the empirical residuals vs. the theoretical quantiles of a Laplacian distribution.  
+	\item We simulate data $y ~|~x \sim \text{Laplacian}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$
+\item We can plot the empirical error distribution, i.e. the distribution of the residuals after fitting a regression model w.r.t. $L1$-loss
+\item With the help of a Q-Q-plot we can compare the empirical residuals vs. the theoretical quantiles of a Laplacian distribution  
 \end{itemize}
 \end{footnotesize}
 \includegraphics{figure/residuals_plot_L1.pdf}
@@ -220,7 +220,7 @@ $$
   L(y, \pix) = -y\log(\pix)-(1-y)\log(1-\pix), \quad y \in \{0, 1\}
 $$
 
-which we introduced as \textbf{Bernoulli} loss. 
+which we introduced as \textbf{Bernoulli} loss 
 
 %\begin{center}
 %\includegraphics[width = 0.6\textwidth]{figure/bernoulli_prob.png} \\
@@ -484,7 +484,7 @@ For \textbf{every} error distribution $\P_\eps$ we can derive an equivalent loss
     %\item $\thetah \in \argmax_{\thetav} \log\left(\LL(\thetav)\right) \implies $
     
 \vspace{0.2cm}    
-\textbf{But}: Other way does not always work: We cannot derive a pdf/error distrib. for every loss -- the Hinge loss is one prominent example (some prob. interpretation is still possible \citelink{SOLLICH1999NINTH}).
+\textbf{But}: Other way does not always work: We cannot derive a pdf/error distrib. for every loss -- the Hinge loss is one prominent example (some prob. interpretation is still possible \citelink{SOLLICH1999NINTH})
 %\framebreak
 
 \vspace{0.2cm}

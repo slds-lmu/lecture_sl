@@ -35,7 +35,7 @@ $\rx := y - \fx$
 \item Generalize concept to \textbf{pseudo-residuals}: 
 %as the negative first derivatives of loss functions w.r.t. $\fx$
 $$
-\tilde{r}(\xv) := - \frac{\partial \Lxy}{\partial \fx}
+\tilde{r}(\xv) := - \frac{d \Lxy}{d \fx}
 $$
 \item If we wiggle $\fx$, how much does $L$ change?
 \item Can be used for score-based classifiers and other models
@@ -66,7 +66,7 @@ $$
 \item  Point-wise error at this specific $\xv$ becomes $0$
 }
 \only<3>{
-\item In gradient boosting, we don't do point-wise updates but ``smoothly distort'' $f$ so we generalize
+\item (In gradient boosting, which we cover later, we don't do point-wise updates but ``smoothly distort'' $f$ so we generalize)
 }
 \end{itemize}
 
@@ -84,21 +84,19 @@ $$
 
 \begin{itemize}
 
-\item When applying GD to compute a point-wise update of $\fx$, 
-we go a step of negative gradient of loss
+\item Best local change of $f$ at $\xv$ to reduce loss most:
 
 $$
-	\fx \leftarrow \fx - \frac{\partial \Lxy}{\partial \fx} 
+	\fx \leftarrow \fx - \frac{d \Lxy}{d \fx} 
 $$
-\item This would be for one observation 
 
-\item This is effectively the PR which is the direction of the pseudo-residual
+\item This is effectively the PR 
 
 \begin{eqnarray*}
 	\fx &\leftarrow& \fx + \tilde{r}(\xv)\\ 
 \end{eqnarray*}
 
-\item Iteratively stepping towards the direction of the pseudo-residuals is the underlying idea of gradient boosting, which is a learning algorithm that will be covered in a later chapter
+\item (Such iterative updates of $f$ like a loss-reducing GD in function space is the major underlying idea of GB)
 
 \end{itemize}
 
@@ -113,12 +111,11 @@ $$
 	 \thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	
 	$$
 	% with step size $\alpha^{[t]}$. 
-	\item This can be seen as approximating the unexplained information (measured by the loss) through a model update
 	% \framebreak 
 	\item Using the chain rule:
         % mwe see that the pseudo-residuals are input to the update direction
 	\begin{eqnarray*}
-	\nabla_{\thetav} \risket &=&\sumin \left.\frac{\partial L\left(\yi, \fx\right)}{\partial \fx} \right|_{f = \fxit} 
+	\nabla_{\thetav} \risket &=&\sumin \left.\frac{d L\left(\yi, \fx\right)}{d \fx} \right|_{f = \fxit} 
         % _{= - \tilde r^{(i)}}
 	\cdot \nabla_{\thetav} \fxit \\ 
 	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.

@@ -34,18 +34,17 @@
 \begin{vbframe}{Hinge Loss}
 
 \begin{itemize}
-  \item The intuitive appeal of the 0-1-loss is set off by its analytical
-  properties ill-suited to direct optimization.
-  \item The \textbf{hinge loss} is a continuous relaxation that acts as a convex 
-  upper bound on the 0-1-loss (for $y \in \setmp$): 
-  $$\Lxy = \max \{ 0, 1 - y\fx \}.$$
-  \item Note that the hinge loss only equals zero for a margin $y\fx\geq 1$, 
-  encouraging confident (correct) predictions.
-  \item Hinge loss is often used in SVMs (cf. chapters on SVMs)
+  \item 0-1-loss is intuitive but ill-suited to direct optimization
+  \item \textbf{Hinge loss} is continuous and convex 
+  upper bound on the 0-1-loss 
+  $$\Lxy = \max \{ 0, 1 - y\fx \} \quad \text{for} \ y \in \setmp$$
+  \item Only zero for margin $y\fx\geq 1$, 
+  encourages confident predictions
+  \item Often used in SVMs %(cf. chapters on SVMs)
   % \item A squared version exists for putting a sharper penalty on 
   % misclassifications:
   % $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
-  \item It resembles a door hinge, hence the name:
+  \item Resembles a door hinge, hence the name:
 \end{itemize}
 
 \begin{center}
@@ -58,11 +57,11 @@
 \begin{vbframe}{Squared Hinge Loss}
 
 \begin{itemize}
-  \item We can also specify a \textbf{squared} version for the hinge loss:
-  $$\Lxy = \max \{ 0, (1 - y\fx)\}^2.$$
+  \item Can also define the \textbf{squared hinge loss}:
+  $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
   \item The $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts 
-  a high penalty on more confidently wrong predictions. 
-  \item Therefore, it is continuously differentiable yet more outlier-sensitive than the hinge loss.
+  a high penalty on more confidently wrong predictions
+  \item Cont. differentiable yet more outlier-sensitive than hinge loss
 \end{itemize}
 
 \begin{center}
@@ -84,7 +83,7 @@
   \Lxy = &(y - \fx)^2 = y^2 - 2y\fx + \fx^2 =\\
   = &1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
   \end{eqnarray*}
-  \item This loss behaves just like the squared hinge loss for $y\fx < 1$, but is not clipped to $0$ for $y\fx>1$ (zero only for $y\fx = 1$ and increases again in $y\fx$ which is in general not desirable!)
+  \item Behaves like squared hinge loss for $y\fx < 1$, but is not clipped to $0$ for $y\fx>1$ (zero only for $y\fx = 1$ and increases again in $y\fx$ which is in general not desirable!)
 \end{itemize}
 
 \begin{center}
@@ -97,12 +96,14 @@
 
 \begin{vbframe}{Classification Losses: Exponential Loss}
 
-Another smooth 
-approximation to the 0-1-loss is the \textbf{exponential loss}:
+
 \begin{itemize}
-\item $\Lxy = \exp(-y\fx)$, used in AdaBoost.
-\item Convex, differentiable (thus easier to optimize than 0-1-loss).
-\item Loss increases exponentially for wrong predictions with high confidence; if prediction is correct but with low confidence only, the loss is still positive.
+\item Another smooth 
+approx. of 0-1-loss is the \textbf{exponential loss}:
+$$\Lxy = \exp(-y\fx)$$ 
+\item Used in AdaBoost
+\item Convex, differentiable (thus easier to optimize than 0-1-loss)
+\item Loss increases exponentially for wrong predictions with high confidence; low-confidence correct predictions have positive loss
 %\item No closed-form analytic solution to (empirical) risk minimization.
 \end{itemize}
 
@@ -116,18 +117,17 @@ approximation to the 0-1-loss is the \textbf{exponential loss}:
 \begin{vbframe}{Classification Losses: AUC-loss}
 
 \begin{itemize}
-\item Often AUC is used as an evaluation criterion for binary classifiers.
-\item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples. %$y_i, i = 1, \ldots, n_{-1} + n_1$.
+\item Often AUC is used as an evaluation criterion for binary classifiers
+\item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples %$y_i, i = 1, \ldots, n_{-1} + n_1$.
 \item The AUC can then be defined as
 $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} [f^{(i)} > f^{(j)}]$$
-\item This is not differentiable w.r.t $f$ due to indicator $[f^{(i)} > f^{(j)}]$.
-\item The indicator function can be approximated by the distribution function of the triangular distribution on $[-1, 1]$ with mean $0$.
-\item However, direct optimization of the AUC is numerically difficult and might not work as well as using 
-a common loss and tuning for AUC in practice.
+\item This is not differentiable w.r.t $f$ due to indicator $[f^{(i)} > f^{(j)}]$
+\item The indicator function can be approximated by the distribution function of the triangular distribution on $[-1, 1]$ with mean $0$
+\item Direct optimization of AUC is numerically difficult rather use common loss and tune for AUC in practice
 
 \end{itemize}
 
-For a comprehensive survey on advanced loss functions, see, e.g., \citelink{WANG2020COMPRE}
+Comprehensive survey on advanced loss functions: \citelink{WANG2020COMPRE}
 
 \end{vbframe}
 
