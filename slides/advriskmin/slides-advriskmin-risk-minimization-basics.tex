@@ -109,9 +109,15 @@ What is the constant that approximates $z$ with minimal loss?
 
 3 cases for Q
 \begin{itemize}
-\item $Q = P_y$, distribution of labels y, marginal of $\Pxy$
-\item $Q = P_n$, the empirical product distribution for data $y^{(1)}, \ldots, y^{(n)}$
-\item $Q = P_{y | \xv = \xtil}$, conditional label distribution at point $\xv = \xtil$
+\item $Q = P_y$, distribution of labels y, marginal of $\Pxy$\\
+optimal theoretical constant prediction
+
+\item $Q = P_n$, the empirical product distribution for data $y^{(1)}, \ldots, y^{(n)}$\\
+optimal empirical constant prediction
+
+\item $Q = P_{y | \xv = \xtil}$, conditional label distribution at point $\xv = \xtil$\\
+Bayes optimal pointwise prediction / theoretical risk minimizer 
+
 \end{itemize}
 
 \lz
@@ -125,19 +131,21 @@ What is the constant that approximates $z$ with minimal loss?
 
 \begin{vbframe}{Optimal unconditional values}
 
-\begin{itemizeL}
+\begin{itemize}
 
 \item Associating such a 
-$$c = \argmin_{c \in \R} \E_{z \sim Q}[L(z, c)]$$
-with a distribution, is also called a statistical function
+$$c = \argmin_{c \in \R} \E_{z \sim Q}[L(z, c)]$$ with 
+a distribution is called a ``statistical functional''
 
-\item This specific loss-minimizing value is called an M-estimator
+\item Such a loss-minimizing version, and especially its empirical version below, is called an \textbf{M-estimator}\\
+\item ``M'' can be read as ``max-likelihood type'', or ``minimizing'',\\
+I prefer the latter
 
 \item If we look at the empirical counterpart, with the empirical distribution, this is the so-called ``plug-in'' estimator
 
 $$\argminlim_{c \in \R} \sumin L(\yi,c)$$
 
-\end{itemizeL}
+\end{itemize}
 
 \end{vbframe}
 

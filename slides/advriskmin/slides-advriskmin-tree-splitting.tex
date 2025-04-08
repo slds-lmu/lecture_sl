@@ -24,48 +24,72 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure_man/cart_tree_i2ml.png
   }{
-  \item Know how tree splitting is 'nothing new' and related to loss functions 
-  \item Brier score minimization corresponds to gini splitting
-  \item Bernoulli loss minimization corresponds to entropy splitting
+  \item Tree splitting loss vs impurity:
+  \item Bernoulli loss $\sim$ entropy splitting
+  \item Brier score $\sim$ gini splitting
 }
 
+\begin{vbframe}{Risk minimization and impurity}
+
+%For an introduction on trees, see our \textbf{I2ML} lecture \\%(cf. our section on trees)%\\
+
+
+\begin{itemize}
+    \item Tree fitting: Find best way to split parent node $\Np_0$ into child nodes $\Np_1$ and $\Np_2$, such that $\Np_1 \cup \Np_2 = \Np_0$ and $\Np_1 \cap \Np_2 = \emptyset$
+    \item Two options for evaluating how good a split is: Per node $\Np$ compute the following:
+\begin{enumerate}
+    \item Compute impurity $\text{Imp}(\Np)$ directly from observations in $\Np$
+    \item Fit optimal constant using loss function, sum up losses for $\Np$
+\end{enumerate}
+    \item Summarize on split level:
+    \begin{enumerate}
+        \item Weighted average ($n_0 = n_1 + n_2$ are number of obs in nodes)
+        $$\text{Imp(split)} = \frac{n_1}{n_0} \text{Imp}(\Np_1) + \frac{n_2}{n_0} \text{Imp}(\Np_2)$$
+        \item Sum of individual losses
+        $$\risk(\text{split}) = \risk(\Np_1) + \risk(\Np_2)$$
+    \end{enumerate}
+\end{itemize}
+
+\end{vbframe}
+
 \begin{vbframe}{Bernoulli loss min = Entropy splitting}
+\textbf{Claim:} Using entropy in (1) 
+    %splitting $\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN$ 
+    is equivalent to using Bernoulli loss in (2) %($\pikN := \frac{1}{n_{\Np}} \textstyle\sum_{(\xv,y) \in \Np} [y = k]$)
 
-For an introduction on trees, see our \textbf{I2ML} lecture \\%(cf. our section on trees)%\\
-\vspace{0.2cm}
-When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another common approach is to minimize the average node impurity $\text{Imp}(\Np)$. 
+\textbf{Proof:} %To prove this we show that the risk related to a subset of observations 
+$\Np \subseteq \D$ denotes subset of observations in that node. 
 
-\vspace*{0.2cm}
-
-\textbf{Claim:} Entropy splitting $\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN$ is equivalent to minimize risk measured by the Bernoulli loss. 
-
-\begin{footnotesize}
-Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$. 
-\end{footnotesize}
-
-\vspace*{0.2cm}
-
-\textbf{Proof: } To prove this we show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills $\risk(\Np) = n_\Np \text{Imp}(\Np),
-$
-  
-where 
-%$I$ is the entropy criterion $\text{Imp}(\Np)$ and 
-$\risk(\Np)$ is calculated w.r.t. the (multiclass) Bernoulli loss  
-
+Risk $\risk(\Np)$ of node $\Np$ w.r.t. (multiclass) Bernoulli loss  
 $$
-  \Lpixy = -\sum_{k = 1}^g [y = k] \log \left(\pi_k(\xv)\right).
+  \Lpixy = -\sum_{k = 1}^g [y = k] \log \left(\pi_k(\xv)\right)
 $$
+$\Rightarrow$ Optimal constant per node $\pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$.\\
+
+Entropy of node $\Np$:
+$$
+\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN %, \quad \pikN := \frac{1}{n_{\Np}} \textstyle\sum_{(\xv,y) \in \Np} [y = k]
+$$
+
+
+
+
+
 
 \framebreak 
 \begin{footnotesize}
 \begin{eqnarray*}
 \risk(\Np) &=& \sum_{\xy \in \Np} \left(- \sum_{k = 1}^g [y = k] \log \pi_k(\xv) \right) \\
-&\overset{(*)}{=}& -\sum_{k = 1}^g \sum_{\xy \in \Np} [y = k]\log \pikN \\
-&=& -\sum_{k = 1}^g \log \pikN \underbrace{\sum_{\xy \in \Np} [y = k]}_{n_{\Np}\cdot \pikN } \\
- &=& -n_{\Np} \sum_{k = 1}^g \pikN \log \pikN = n_\Np \text{Imp}(\Np), 
+&=& -\sum_{k = 1}^g \sum_{\xy \in \Np} [y = k]\log \pikN \\
+&=& -\sum_{k = 1}^g \log \pikN %\underbrace{\sum_{\xy \in \Np} [y = k]}_{n_{\Np}\cdot \pikN }
+\\
+ &=& -n_{\Np} \sum_{k = 1}^g \pikN \log \pikN = n_\Np \text{Imp}(\Np)\\
+ \Rightarrow \risk(\text{split}) &=& \risk(\Np_1) + \risk(\Np_2)  = n_1 \text{Imp}(\Np_1) + n_2 \text{Imp}(\Np_2)\\
+ &=&n_0 \left(\frac{n_1}{n_0} \text{Imp}(\Np_1) + \frac{n_2}{n_0} \text{Imp}(\Np_2)\right) = n_0\text{Imp(split)}\\
+\
 \end{eqnarray*} 
+Bernoulli-risk of the split $\risk(\text{split})$ is proportional to its entropy-impurity $\text{Imp(split)}$, i.e., $\argmin_\text{split} \risk(\text{split}) = \argmin_\text{split} \text{Imp(split)}$ \\
 
-where in $^{(*)}$ the optimal constant per node $\pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$ was plugged in. 
 \end{footnotesize}
 % \framebreak
 
@@ -83,63 +107,75 @@ where in $^{(*)}$ the optimal constant per node $\pikN = \frac{1}{n_{\Np}} \sum\
 
 \begin{vbframe}{Brier score minimization = Gini splitting}
 
-When fitting a tree we minimize the risk within each node $\Np$ by risk minimization and predict the optimal constant. Another approach that is common in literature is to minimize the average node impurity $\text{Imp}(\Np)$. 
+\textbf{Claim:} Using Gini in (1) 
+    %splitting $\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN$ 
+    is equivalent to using Brier score in (2) %($\pikN := \frac{1}{n_{\Np}} \textstyle\sum_{(\xv,y) \in \Np} [y = k]$)
+    
 
-\vspace*{0.2cm}
+% \textbf{Claim:} Gini splitting $\text{Imp}(\Np) = \sum_{k=1}^g \pikN \left(1-\pikN \right)$ is equivalent to the Brier score minimization. 
 
-\textbf{Claim:} Gini splitting $\text{Imp}(\Np) = \sum_{k=1}^g \pikN \left(1-\pikN \right)$ is equivalent to the Brier score minimization. 
+\textbf{Proof:} %To prove this we show that the risk related to a subset of observations 
+
+Risk $\risk(\Np)$ of node $\Np$ w.r.t. (multiclass) Brier score
+$$
+  \Lpixy = \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2
+$$
+$\Rightarrow$ Optimal constant per node: $\pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k] = \frac{n_{\Np,k}}{n_{\Np }}$ \\ ($n_{\Np,k}$ is the number of class $k$ observations in node $\Np$) \\
+
+\lz
+
+Gini index of node $\Np$:
+$$
+\text{Imp}(\Np) = \sum_{k=1}^g \pikN \left(1-\pikN \right) %, \quad \pikN := \frac{1}{n_{\Np}} \textstyle\sum_{(\xv,y) \in \Np} [y = k]
+$$
+
 
 \begin{footnotesize}
-Note that $\pikN := \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k]$ 
-\end{footnotesize}
 
-\vspace*{0.2cm}
-
-\begin{footnotesize}
-
-\textbf{Proof: } We show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
+% \textbf{Proof: } We show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
 
 
-$$
-  \risk(\Np) = n_\Np \text{Imp}(\Np),
-$$
+% $$
+%   \risk(\Np) = n_\Np \text{Imp}(\Np),
+% $$
   
-  where $\text{Imp}$ is the Gini impurity and $\risk(\Np)$ is calculated w.r.t. the (multiclass) Brier score
+%   where $\text{Imp}$ is the Gini impurity and $\risk(\Np)$ is calculated w.r.t. the (multiclass) Brier score
 
 
-$$
-  \Lpixy = \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2.
-$$
+% $$
+%   \Lpixy = \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2.
+% $$
 
 \framebreak
 
-\vspace*{-0.5cm}
+%\vspace*{-0.5cm}
 \begin{eqnarray*}
-\risk(\Np) &=& \sum_{\xy \in \Np}  \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2 
-= \sum_{k = 1}^g \sum_{\xy \in \Np} \left([y = k] - \frac{n_{\Np,k}}{n_{\Np }}\right)^2,
-\end{eqnarray*}
-
-by plugging in the optimal constant prediction w.r.t. the Brier score ($n_{\Np,k}$ is defined as the number of class $k$ observations in node $\Np$): 
-$$\hat \pi_k(\xv)= \pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k] = \frac{n_{\Np,k}}{n_{\Np }}. $$ 
-
- We split the inner sum and further simplify the expression
-
-\begin{eqnarray*}
+\risk(\Np) &=& \sum_{\xy \in \Np}  \sum_{k = 1}^g \left([y = k] - \pikN\right)^2 
+= \sum_{k = 1}^g \sum_{\xy \in \Np} \left([y = k] - \frac{n_{\Np,k}}{n_{\Np }}\right)^2\\
+% \end{eqnarray*}
+% by plugging in the optimal constant prediction w.r.t. the Brier score ($n_{\Np,k}$ is defined as the number of class $k$ observations in node $\Np$): 
+% $$\hat \pi_k(\xv)= \pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} [y = k] = \frac{n_{\Np,k}}{n_{\Np }}. $$ 
+%  We split the inner sum and further simplify the expression
+% \begin{eqnarray*}
 &=& \sum_{k = 1}^{g} \left(\sum_{\xy \in \Np: ~ y = k} \left(1 - \frac{n_{\Np,k}}{n_{\Np }}\right)^2 + \sum_{\xy \in \Np: ~ y \ne k} \left(0 - \frac{n_{\Np,k}}{n_{\Np }}\right)^2\right) \\
 &=& \sum_{k = 1}^g n_{\Np,k}\left(1 - \frac{n_{\Np,k}}{n_{\Np }}\right)^2 + (n_{\Np } - n_{\Np,k})\left(\frac{n_{\Np,k}}{n_{\Np }}\right)^2, 
 \end{eqnarray*}
 
 since for $n_{\Np,k}$ observations the condition $y = k$ is met, and for the remaining $(n_\Np - n_{\Np,k})$ observations it is not. 
 
-
+\framebreak
 We further simplify the expression to
 
 % \begin{footnotesize}
 \begin{eqnarray*}
 \risk(\Np) &=&  \sum_{k = 1}^g n_{\Np,k}\left(\frac{n_{\Np } - n_{\Np,k}}{n_{\Np }}\right)^2 + (n_{\Np } - n_{\Np,k})\left(\frac{n_{\Np,k}}{n_{\Np }}\right)^2 \\
 &=& \sum_{k = 1}^g \frac{n_{\Np,k}}{n_{\Np }} \frac{n_{\Np } - n_{\Np,k}}{n_{\Np }} \left(n_{\Np } - n_{\Np,k } + n_{\Np,k}\right) \\
-&=& n_{\Np } \sum_{k = 1}^g \pikN \cdot \left(1 - \pikN \right) = n_\Np \text{Imp}(\Np).
-\end{eqnarray*}
+&=& n_{\Np } \sum_{k = 1}^g \pikN \cdot \left(1 - \pikN \right) = n_\Np \text{Imp}(\Np)\\
+ \Rightarrow \risk(\text{split}) &=& \risk(\Np_1) + \risk(\Np_2)  = n_1 \text{Imp}(\Np_1) + n_2 \text{Imp}(\Np_2)\\
+ &=&n_0 \left(\frac{n_1}{n_0} \text{Imp}(\Np_1) + \frac{n_2}{n_0} \text{Imp}(\Np_2)\right) = n_0\text{Imp(split)}\\
+\
+\end{eqnarray*} 
+Brier-risk of the split $\risk(\text{split})$ is proportional to its gini-impurity $\text{Imp(split)}$, i.e., $\argmin_\text{split} \risk(\text{split}) = \argmin_\text{split} \text{Imp(split)}$\\
 % \end{footnotesize}
 
 \end{footnotesize}

@@ -18,29 +18,35 @@
 \titlemeta{
 Advanced Risk Minimization
 }{
-0-1-Loss
+Classification and 0-1-Loss
 }{
 figure/zero_one.png
 }{
-\item Optimal constants 
-\item Risk minimizer
+\item 0-1 loss 
+\item Risk minimizer(s) / Optimal predictions
+\item Bayes error rate
+\item Generative approach in classification 
 }
 
 \begin{vbframe}{0-1-Loss}
 
 \begin{itemize}
+\footnotesize
   \item Let us first consider a discrete classifier $h: \Xspace \to \Yspace$
   \item Most natural choice to evaluate seems to be 0-1-loss 
     $$
-  \Lhxy = \mathds{1}_{\{y \ne \hx\}} =
-     \footnotesize \begin{cases} 1 \quad \text{ if } y \ne \hx \\ 0 \quad    \text{ if } y = \hx  \end{cases}
+  \Lhxy = \mathds{1}_{\{y \ne \hx\}} 
   $$
-  \item For binary case and scoring classifier $\fx$, \\
+  \item For $\Yspace \in \setmp$ and scoring classifier $\fx$\\
   can write it in terms of margin $\nu = y\fx$
   $$
   \Lxy = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{y\fx < 0\}}
   $$
-  % and for a probabilistic classifier $\Lxy = \mathds{1}_{\{\pix \ge 0.5 \}}$. 
+  \item For $\Yspace \in \setzo$ and probabilistic classifier $\pix$
+$$
+\Lpixy = y \mathds{1}_{\{\pix < 0.5\}} + (1-y) \mathds{1}_{\{\pix \geq 0.5\}} = \mathds{1}_{\{(2y-1)(\pix - 0.5) < 0 \}} 
+$$
+  
   \item Analytical properties:  Not continuous, even for linear $\fx$ the optimization problem is NP-hard and close to intractable \citelink{FELDMAN2012AGNOSTIC}
 \end{itemize}
 
@@ -51,7 +57,7 @@ figure/zero_one.png
 \end{vbframe}
 
 
-\begin{vbframe}{0-1-loss: Risk Minimizer}
+\begin{vbframe}{Risk Minimizer for discrete classifiers}
 
 \begin{itemize}
 
@@ -68,10 +74,13 @@ figure/zero_one.png
 \item $\P(y = k| \xv)$ is true posterior probability for class $k$
 
 \item For binary case, we denote $\eta(\xv) := \P(y = 1 ~|~ \xv)$ and get: 
-
 $$
 \riskf = \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right]
 $$
+
+\item The above formulas work for any loss not only 0-1; and hard labelers, scorers or probabilistic classifiers
+
+\item Especially for hard-labelers and arbitrary misclassification costs, we see this producing the cost-optimal decision, weighted by posterior probs, and we see this again in cost-sensitive learning
 
 % The risk minimizer for a general loss function $\Lxy$ is
 
@@ -84,104 +93,102 @@ $$
 
 \end{itemize}
 
+\end{vbframe}
 
-\framebreak 
 
+\begin{vbframe}{0-1-loss: Optimal predictions}
 
-Point-wise optimizer for 0-1-loss (defined on a discrete classifier $\hx$): 
+\begin{itemize}
 
-  \begin{eqnarray*}  
-  h^{\ast}(\xtil) &=& \argmin_{l \in \Yspace} \sum_{k \in \Yspace} L(k, l) \cdot \P(y = k~|~\xv = \xtil) \\
-  &=& \argmin_{l \in \Yspace} \sum_{k \ne l} \P(y = k~|~\xv = \xtil) \\ 
-  &=& \argmin_{l \in \Yspace} 1 - \P(y = l~|~\xv = \xtil) \\
-  &=& \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xtil),
+\item For multiclass and hard labeler $\hx$
+\item Optimal constant
+\begin{eqnarray*}   h_{c}^{\ast}  &=& \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
+&=& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
+  &=& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
+  &=& \argmax_{k \in \Yspace} \P(y = k)
   \end{eqnarray*}
 
-which corresponds to predicting the most probable class. 
 
-\vspace*{0.2cm} 
+\item Translation: Predict most probable class
 
-Note that sometimes $h^{\ast}(\xtil) = \argmax_{l \in \Yspace} \P(y = l~|~ \xv = \xtil)$ is referred to as the \textbf{Bayes optimal classifier} (without closer specification of the the loss function used). 
+\item Empirical version: $\hat{h}_c = \argmaxlim_{k \in \Yspace} \pikh$
 
-\lz 
+\item Risk minimizer / optim. cond. prediction / Bayes optim. classifier:
 
-The Bayes risk for the 0-1-loss (also: Bayes error rate) is 
+ $h^{\ast}(\xtil) = \argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ 
+
+\end{itemize}
+
+\end{vbframe}
+
+
+\begin{vbframe}{Bayes risk  / Bayes error rate}
 
 $$
-  \riskbayes = 1 - \E_{x} \left[\max_{l \in \Yspace} \P(y = l~|~ \xv)\right]
+  \riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
 $$
 
-\lz 
+\vfill
 
-In the binary case ($g = 2$) we can write risk minimizer and Bayes risk:  
+For binary case, can write risk minimizer and Bayes risk as:  
 
-\begin{eqnarray*}
-  \hxbayes &=& \begin{cases} 1 & \eta(\xv) \ge \frac{1}{2} \\ 0 & \eta(\xv) < \frac{1}{2}\end{cases} \\
-\end{eqnarray*}
+$$
+  \hxbayes = \begin{cases} 1 & \eta(\xv) \ge \frac{1}{2} \\ 0 & \eta(\xv) < \frac{1}{2}\end{cases} 
+$$
 
-\vspace*{-0.7cm}
+$$
+\riskbayes = \E_x\left[\min(\eta(\xv), 1 - \eta(\xv))\right] = 1 - \E_x\left[\max(\eta(\xv), 1 - \eta(\xv))\right] 
+$$
 
-\begin{eqnarray*}
-  \riskbayes &=& \E_x\left[\min(\eta(\xv), 1 - \eta(\xv))\right] = 1 - \E_x\left[\max(\eta(\xv), 1 - \eta(\xv))\right] 
-\end{eqnarray*}
-
-
-% \framebreak 
+ 
+\end{vbframe}
 
 
-% If we can estimate $\Pxy$ very well via $\pikx$ through a stochastic model, we can compute the loss-optimal classifications point-wise. 
+\begin{vbframe}{Generative classifiers}
 
-% \lz
+\begin{itemize}
 
-% \textbf{Example}: Assume that our data is generated by a Mixture of Gaussian distributions. 
+\item So, $\argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ is what we want to do
 
-% \begin{center}
-% \includegraphics[width = 9cm ]{figure_man/bayes_error_1.png} \\
-% \end{center}
+\item Assume we can model densities given classes and use Bayes:
 
-% \framebreak 
+$$
+\P(y = k~|~ \xv = \xtil)  = \frac{p(\xtil | y = k) \P(y = k)} {p(\xtil)} 
+$$
 
-% We could try to approximate the $\P(y = k ~|~ \xv = \xv)$ via a stochastic model $\pix$ (shown as contour lines): 
+\item Then
+$$
+\argmax_{k \in \Yspace} \P(y = k~|~ \xv = \xtil) = \argmax_{k \in \Yspace}  p(\xtil | y = k) \P(y = k)
+$$
+\item Then we can estimate these conditional densities and the prior probs, and classify via them
 
-% \begin{center}
-% \includegraphics[width = 9cm ]{figure_man/bayes_error_2.png} \\
-% \end{center}
-
-% For each new $\xv$, we estimate the class probabilities directly with the stochastic model $\pix$, and our best point-wise prediction is 
-
-% \begin{eqnarray*}
-%   \fxh &=& \argmin_{f \in \Hspace} \sum_{k \in \Yspace} L(k, f(\bm{x})) \pix\,.  \\
-% \end{eqnarray*}
+\item This idea we will see in so-called ``generative approaches'' for classification, so in LDA, QDA, etc.
 
 
-% \lz 
+\end{itemize}
 
-% But usually we directly adapt to the loss via \textbf{empirical risk minimization}. 
+\end{vbframe}
 
-% $$
-% \fh = \argmin_{f \in \Hspace} \riske(f) = \argmin_{f \in \Hspace} \sumin \Lxyi.
-% $$
-  
 
-\framebreak 
+\begin{vbframe}{Example}
 
-\textbf{Example: } Assume that $\P(y = 1) = \frac{1}{2}$ and $
-\P(x ~|~ y) = \begin{cases}
+\begin{itemize}
+
+\item  Assume $\P(y = 1) = \frac{1}{2}$ 
+\item And conditional densities of $x$ per class as normal $
+\begin{cases}
 \phi_{\mu_1, \sigma^2}(x) & \text{for } y = 0\\ 
 \phi_{\mu_2, \sigma^2}(x) & \text{for } y = 1
 \end{cases}$
 
-\vfill
+\item Bayes optimal classifier = orange; Bayes error = red 
 
+\end{itemize}
 
-Bayes optimal classifier = orange; Bayes error = red 
-
-\vfill
 
 \begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/bayes_error_5.png} \\
+\includegraphics[width = 0.8\textwidth]{figure/bayes_error_5.png} 
 \end{center}
-
 
 
 \end{vbframe}
