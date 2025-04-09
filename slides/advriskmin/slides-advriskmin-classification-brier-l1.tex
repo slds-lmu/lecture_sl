@@ -31,44 +31,6 @@
   % \item Understand the connection between Brier score and Gini splitting 
 }
 
-% \begin{vbframe}{Classification Losses: (Naive) L2-Loss}
-
-
-% $$
-% \Lxy = (1 - y\fx)^2,
-% $$
-
-
-% \begin{itemize}
-%   \item L2-loss defined on scores
-%   \item Predictions with high confidence $|f(x)|$ are penalized  regardless of whether the signs of $y$ and $f(x)$ match.
-%   \item Squared loss on the loss functions is thus not the best choice.
-
-%   <<loss-squareclass-plot, echo=FALSE, results='hide', fig.height= 1.8, fig.asp = 0.4>>=
-%  x = seq(-2, 5, by = 0.01)
-%  plot(x, (1-x)^2, type = "l", xlab = expression(y %.% f(x)), ylab = expression(paste((1-yf(x))^2)), main = "Square loss")
-%  box()
-% @
-
-%   \item The theoretical risk becomes
-%     \begin{eqnarray*}
-%     \risk(f) &=& \mathbb{E}_x [(1-\fx)^2 (P(1 | x)) + (1+\fx)^2 (1-P(1 | x))] \\
-%     &=& \mathbb{E}_x [1 + 2\fx + \fx^2-4\fx P(1 | x)].
-%     \end{eqnarray*}
-%   \item By differentiating w.r.t. $f(x)$ we get the minimizer of $\risk(f)$ for the square loss function
-
-%     \begin{eqnarray*}
-%     f(\xv) &=& 2\cdot P(1 | \xv) - 1.
-%     \end{eqnarray*}
-%     \item The empiricla optimzer is then
-%     $$
-%     \fh(\xv) = \frac{2}{n}\cdot \sumin \I[y^{(i)} = 1] - 1.
-%     $$
-
-
-% \end{itemize}
-
-% \end{vbframe}
 
 \begin{vbframe}{Brier Score}
 

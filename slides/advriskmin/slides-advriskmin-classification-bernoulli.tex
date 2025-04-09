@@ -265,34 +265,6 @@ fail, e.g.:
     %\small
   \item Data perfectly separable by our learner, so we can find $\thetav$:
    $$ \yi \fxit = \yi \thetav^T \xi > 0 ~~ \forall \xi$$
-%    \\ \vspace{0.1cm} \scriptsize 
-    %as every $\xi$ is correctly classified: $\fxit < 0$ for
-    %$\yi = -1$, $> 0$ for $\yi = 1$ \small
-   % \vspace{0.1cm}
- %   \item[$\Rightarrow$] $y \fxt = $ 
-  %\end{itemize}
- % \vspace{0.1cm}
-  %   \begin{itemize}
-  %   \small
-  %   \item[$\Rightarrow$] $f \left( \xv ~|~ a \cdot \thetav \right) = 
-  %   a \cdot \fxt$ for $a > 1$
-  % \end{itemize}
-%\end{itemize}
-
-% \vfill
-
-% With optimization, e.g., gradient descent, we can always find a set of 
-% parameters $\thetav^\prime$ that fully separates the data.
-
-%\framebreak
-
-%\begin{itemize} 
-  %\small
- % \item In optimization, e.g., with gradient descent, we can always find a set 
-  %of parameters $\thetav^\prime$ that classifies all samples perfectly.
-   
-  %But taking a closer look at $\risket$, we find that the same can be 
-  %achieved with $2 \cdot \thetav^\prime$ -- and at lower risk:
   
 \item Can now a construct a strictly better $\thetav$
 
@@ -304,14 +276,7 @@ $$
 
 \item As ||$\thetav$|| increases, sum strictly decreases, as argument of L is strictly larger
 
-  %  \begin{flalign*
-    %\riske(2 \cdot \thetav) &= \sumin  
-    % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
-   % L \left( \left \rvert f\left( \xi ~|~ 2  \cdot \thetav \right) \right \rvert  
-   % \right)
-   %5 = \sumin L \left(2 \cdot \left \rvert %\fxit \right \rvert \right) \\
-   %5 &< \sumin L \left( \left \rvert \fxit \right \rvert \right) = \risket
- % \end{flalign*}
+
 \item We can iterate that, so there is no local (or global) optimum, and no numerical procedure can converge
 %  \item This actually holds true for every $a \cdot \thetav$ with $a > 1$.
 %  \begin{itemize}
@@ -346,69 +311,6 @@ $$
 
 \end{vbframe}
 
-
-
-
-% \vspace*{-0.2cm}
-
-% \begin{eqnarray*}
-%   \Lxy = \log \left[1 + \exp \left(-y\fx\right)\right].
-% \end{eqnarray*}
-
-% We transform scores into probabilities by
-
-% $$
-% \pix = \P(y = 1 ~|~\xv) = s(\fx) = \frac{1}{1 + \exp(- \fx)},
-% $$
-
-% with $s(.)$ being the logistic sigmoid function as introduced in chapter 2.
-
-% \framebreak
-
-% As already shown before, an equivalent approach that directly outputs probabilities $\pix$ is minimizing the \textbf{Bernoulli loss}
-
-% \begin{eqnarray*}
-% \Lxy = -y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)
-% \end{eqnarray*}
-
-% for $\pix$ in the hypothesis space
-
-% \begin{eqnarray*}
-%   \Hspace = \left\{\pi: \Xspace \to [0, 1] ~|~\pix = s(\thetav^\top \xv)\right\}
-% \end{eqnarray*}
-
-% with $s(.)$ again being the logistic function.
-
-% \framebreak
-
-
-% Logistic Regression with one feature $\xv \in \R$. The figure shows how $\xv \mapsto \pix$.
-
-% <<fig.height=4>>=
-% set.seed(1234)
-% n = 20
-% x = runif(n, min = 0, max = 7)
-% y = x + rnorm(n) > 3.5
-% df = data.frame(x = x, y = y)
-
-% model = glm(y ~ x,family = binomial(link = 'logit'), data = df)
-% df$score = predict(model)
-% df$prob = predict(model, type = "response")
-% x = seq(0, 7, by = 0.01)
-% dfn = data.frame(x = x)
-% dfn$prob = predict(model, newdata = dfn, type = "response")
-% dfn$score = predict(model, newdata = dfn)
-
-% p2 = ggplot() + geom_line(data = dfn, aes(x = x, y = prob))
-% p2 = p2 + geom_point(data = df, aes(x = x, y = prob, colour = y), size = 2)
-% p2 = p2 + xlab("x") + ylab(expression(pi(x)))
-% p2 = p2 + theme(legend.position = "none")
-% p2
-% @
-
-% \framebreak
-
-% Logistic regression with two features:
 
 \endlecture
 
