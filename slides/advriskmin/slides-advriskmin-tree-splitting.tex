@@ -93,12 +93,6 @@ Bernoulli-risk of the split $\risk(\text{split})$ is proportional to its entropy
 \end{footnotesize}
 % \framebreak
 
-% \textbf{Conclusion}: 
-% \begin{itemize}
-%   \item Stumps/trees with entropy splitting use the same loss function as logistic regression (binary) / softmax regression (multiclass).
-%   \item    While logistic regression is based on the hypothesis space of \textbf{linear functions}, stumps/trees use \textbf{step functions} as hypothesis spaces. 
-
-% \end{itemize}  
 
 \end{vbframe}
 
@@ -111,8 +105,6 @@ Bernoulli-risk of the split $\risk(\text{split})$ is proportional to its entropy
     %splitting $\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN$ 
     is equivalent to using Brier score in (2) %($\pikN := \frac{1}{n_{\Np}} \textstyle\sum_{(\xv,y) \in \Np} [y = k]$)
     
-
-% \textbf{Claim:} Gini splitting $\text{Imp}(\Np) = \sum_{k=1}^g \pikN \left(1-\pikN \right)$ is equivalent to the Brier score minimization. 
 
 \textbf{Proof:} %To prove this we show that the risk related to a subset of observations 
 
@@ -132,19 +124,7 @@ $$
 
 \begin{footnotesize}
 
-% \textbf{Proof: } We show that the risk related to a subset of observations $\Np \subseteq \D$ fulfills 
 
-
-% $$
-%   \risk(\Np) = n_\Np \text{Imp}(\Np),
-% $$
-  
-%   where $\text{Imp}$ is the Gini impurity and $\risk(\Np)$ is calculated w.r.t. the (multiclass) Brier score
-
-
-% $$
-%   \Lpixy = \sum_{k = 1}^g \left([y = k] - \pi_k(\xv)\right)^2.
-% $$
 
 \framebreak
 
