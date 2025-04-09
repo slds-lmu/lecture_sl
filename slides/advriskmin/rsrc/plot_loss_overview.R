@@ -78,6 +78,7 @@ p <- ggplot2::ggplot(df, aes(x = x, y = value, color = loss, linetype = loss)) +
   ggplot2::guides(
     color = guide_legend(
       ncol = 2,
+      keywidth = unit(1.5, "cm"),  # Increase the length of the legend lines
       override.aes = list(
         linetype = c("dotted", "solid", "twodash", "solid", "dotdash")
       )
@@ -89,9 +90,9 @@ p <- ggplot2::ggplot(df, aes(x = x, y = value, color = loss, linetype = loss)) +
   ggplot2::ylab(bquote(L(y, f(x)))) +
   ggplot2::theme_bw() +
   ggplot2::theme(
-    text = element_text(size = 16L),
+    text = element_text(size = 13L),
     legend.position = "bottom",
-    legend.text = element_text(size = 15L)
+    legend.text = element_text(size = 13L)
   )
 
 print(p)

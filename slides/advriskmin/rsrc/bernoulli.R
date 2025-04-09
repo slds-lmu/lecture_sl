@@ -2,6 +2,7 @@
 # classification bernoulli
 
 # FIG: Bernoulli loss (1) on margin (2) on probability (3) on margin no quote
+# and (4) on log loss
 # ------------------------------------------------------------------------------
 
 library(ggplot2)
@@ -55,3 +56,30 @@ p_3 <- ggplot(data.frame(x_1, y), aes(x = x_1, y = y)) +
   ylab(expression(L(y, f(x))))
 p_3
 ggsave("../figure/bernoulli.png", p_3, height = 2.85, width = 5)
+
+# ------------------------------------------------------------------------------
+
+# Define a sequence of f values over the range [-10, 10]
+f_values <- seq(-5, 5, length.out = 1000)
+
+# Compute the loss values for y = 0 and y = 1
+loss_y0 <- log(1 + exp(f_values))         # L(0, f) = log(1 + exp(f))
+loss_y1 <- -f_values + log(1 + exp(f_values))  # L(1, f) = -f + log(1 + exp(f))
+
+# Create individual data frames for y = 0 and y = 1
+df_y0 <- data.frame(f = f_values, Loss = loss_y0, y = factor(0))
+df_y1 <- data.frame(f = f_values, Loss = loss_y1, y = factor(1))
+
+# Combine the data frames
+df <- rbind(df_y0, df_y1)
+
+# Create the ggplot2 plot with similar styling
+p_4 <- ggplot(data = df, aes(x = f, y = Loss, color = y)) + 
+  geom_line(size = 1.2) + 
+  xlab(expression(f(x))) + 
+  ylab(expression(L(y, f(x)))) + 
+  theme(text = element_text(size = 20)) +
+  scale_color_viridis_d(end = 0.9)
+
+print(p_4)
+ggsave("../figure/bernoulli_logloss.png", p_4 height = 4, width = 6)

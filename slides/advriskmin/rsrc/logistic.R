@@ -47,7 +47,7 @@ ggsave("../figure/logistic.png", p_1, height = 4, width = 6)
        
 p_2 <- ggplot(df_2, aes(x = x, y = y)) + 
   geom_line(size = 1.2) +
-  xlab(expression(p(x))) +
+  xlab(expression(eta(x))) +
   ylab(expression(f^"*"*(x))) +
   theme(text = element_text(size = 20))
 p_2

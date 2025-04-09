@@ -32,19 +32,24 @@
 }
 
 \begin{vbframe}{On probs}
-
+\begin{small}
 Likelihood of Bernoulli RV:
 $$
 \LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \,\,, \, y \in \setzo
 $$
-
 Transform into NLL:
 $$- \loglt = \sumin - \yi \log\left(\pixit\right) - \left(1-\yi\right)\log\left(1-\pixit\right)$$
 
 Bernoulli loss: loss on single sample
-  $$
-    \Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo 
-  $$
+$$
+\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo 
+$$ 
+\end{small}
+
+
+\begin{center}
+\includegraphics[width=0.38\textwidth]{figure/bernoulli_prob.png}    
+\end{center}
 
 \end{vbframe}
 
@@ -57,11 +62,13 @@ Bernoulli loss: loss on single sample
 \end{itemize}
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 
+\lz
+
 \begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
 \begin{figure}
-  \subfloat{\includegraphics[width=0.45\textwidth]{figure/bernoulli_prob.png}}
-  \subfloat{\includegraphics[width=0.45\textwidth]{figure/logistic.png}}\\
+  \subfloat{\includegraphics[width=0.45\textwidth]{figure/logistic.png}}
+  \includegraphics[width=0.45\textwidth]{figure/bernoulli_logloss.png}\\
 \end{figure}
 \end{center}
 
@@ -134,11 +141,11 @@ For fixed $\xv$, minimize inner part pointwise, use $c$ for best value:
 	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
 \end{minipage}
 
-\begin{itemizeS}
+\begin{itemizeM}
     \item Undefined for $\eta(\xv) \in \setzo$
     \item Predicts smooth curve increasing in $\P(y=1~|~\xv = \xtil)$ otherwise
     \item Equals $0$ when $\P(y=1~|~\xv = \xtil) = 0.5$
-\end{itemizeS}
+\end{itemizeM}
 
 
 \framebreak 

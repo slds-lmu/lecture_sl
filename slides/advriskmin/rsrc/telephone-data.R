@@ -85,6 +85,16 @@ p <- ggplot(res.tel, aes(x = year)) +
     "Cauchy" = "twodash"
   )) +
   theme_minimal() +
+  ggplot2::guides(
+    color = guide_legend(
+      ncol = 1,
+      keywidth = unit(2, "cm"),  # Increase the length of the legend lines
+      override.aes = list(
+        linetype = c("twodash", "dotted", "solid", "solid", "dotdash")
+      )
+    ),
+    linetype = "none"
+  ) +
   theme(text = element_text(size = 12), 
         axis.title = element_text(size = rel(2)),   
         axis.text = element_text(size = rel(2)),  
