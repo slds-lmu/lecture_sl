@@ -138,7 +138,7 @@ $$p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$$
 \begin{itemize} \setlength\itemsep{1.2em}
     \item F.O.C.:\quad $p \cdot L'(p) \overset{!}{=} (1-p) \cdot L'(1-p)$
     \item A second solution is $L'(p)=-2(1-p)$, resulting in $-2p(1-p)=-2(1-p)p$ and the antiderivative $L(p)=(1-p)^2=\frac{1}{2}((1-p)^2+(0-(1-p))^2)$
-    \item This is also called the \textbf{Brier score} and is effectively the \textbf{MSE loss} for probabilities $$\Lpixy=\frac{1}{2}\sum_{i=1}^{2}(y_i-\pi_i(\xv))^2$$
+    \item This is also called the \textbf{Brier score} and is effectively the \textbf{L2 loss} for probabilities $$\Lpixy=\frac{1}{2}\sum_{i=1}^{2}(y_i-\pi_i(\xv))^2$$
      {\small (with $y_1=y, y_2=1-y$ and likewise $\pi_1(\xv)=\pix, \pi_2(\xv)=1-\pix$)}
     \item Using positive orientation (maximization), this gives rise to the \textbf{quadratic scoring rule}, which for two classes is $S(\pix,y)=-\frac{1}{2} \sum_{i=1}^{2}(y_i-\pi_i(\xv))^2$
 \end{itemize}

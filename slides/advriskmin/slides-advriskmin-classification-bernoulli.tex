@@ -25,40 +25,38 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/bernoulli_prob.png
   }{
-  \item Know the Bernoulli loss and related losses (log, logistic, binomial loss)
-  \item Derive the risk minimizer
-  \item Derive the optimal constant model 
-  %\item Understand the connection between log-loss and entropy splitting 
+  \item Bernoulli (log, logistic, binomial) loss
+  \item Risk minimizer
+  \item Optimal constant
+  \item Complete separation problem
 }
 
-\begin{vbframe}{Bernoulli loss on probabilities}
+\begin{vbframe}{On probs}
 
-The likelihood function for $n$ samples of a Bernoulli RV with probability $\pi$ parametrized by $\thetav$ is
-%$$\mathcal{L}(\pix) = \prodin \pix^{\yi} \left(1-\pix\right)^{1-\yi}$$
-%$$\mathcal{L}(\pi) = \pix^{y} \left(1-\pix\right)^{1-y}, \,, \, y \in \setzo $$
+Likelihood of Bernoulli RV:
 $$
 \LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \,\,, \, y \in \setzo
 $$
 
-Taking the negative log to turn products in into sums and maximization into minimization, we obtain the NLL:
+Transform into NLL:
 $$- \loglt = \sumin - \yi \log\left(\pixit\right) - \left(1-\yi\right)\log\left(1-\pixit\right)$$
 
-The Bernoulli loss is then defined as the NLL of a single sample
+Bernoulli loss: loss on single sample
   $$
     \Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo 
   $$
 
-\framebreak 
+\end{vbframe}
+
+\begin{vbframe}{On decision scores}
 
 \begin{itemize}
     \item Transform probs into scores (log-odds): $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$
     \item Then $\pix = \left(1 + \exp(-\fx)\right)^{-1}$
     \item Yields equivalent loss formulation
 \end{itemize}
-%If probs are transformed into scores as $\pix = \left(1 + \exp(-\fx)\right)^{-1}$ (or if $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$ are the log-odds), we get at an equiv. loss formulation:
-
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
-\lz
+
 \begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
 \begin{figure}
@@ -69,112 +67,62 @@ $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 
 \end{vbframe}
 
-\begin{vbframe}{Bernoulli Loss Label Encoding}
-For different label encoding $y' \in \setmp$, recognize that $y=(y'+1)/2$. Substituting $y$ into $\Lxy$ yields
-\begin{equation*}
-  \Lxy = \log(1+\exp(-y \cdot \fx)) \quad \text{for } y \in \setmp
-  %\Lyf &=& - y \cdot f + \log(1 + \exp(f)) \quad \text{for } y \in \setzo 
-\end{equation*}
-
-%Note that the expression $L(y, \fx) = \log(1 + \exp(-y \cdot \fx))$ for $y \in \setmp$ can be derived from the typical log-loss for $y \in \setzo$ %:
-%\[
-%L(y, \fx) = - y \cdot \fx + \log(1 + \exp(\fx))
-%\]
-%by recognizing that the labels can be transformed from $y \in \setzo$ to $y' \in \setmp$ using the mapping $y' = 2y - 1$. Substituting $y'$ into the typical formulation gives:
-%\[
-%L(y', \fx) = \log(1 + \exp(-y' \cdot \fx))
-%\]
+\begin{vbframe}{Loss in terms of margin}
 
 \begin{itemize}
-  % \item Two equivalent formulations: labels $y \in \setmp$ or $y \in \setzo$
-  \item Two equivalent formulations for different label encodings
-  %\item Negative log-likelihood of Bernoulli model, e.g., logistic regression
-  \item All variants convex, differentiable
-  %\item Pseudo-residuals (0/1 case): $\tilde{r} = y - \frac{1}{1+\exp(-\fx)}$\\   
-  % Interpretation: $L1$ distance between 0/1-labels and posterior prob!
+\item For $y \in \setmp$, loss becomes: 
+$$
+  \Lxy = \log(1+\exp(-y \cdot \fx)) 
+$$
+ \item Simply check both cases for y to see
+ \item Transformation $y'=(y+1)/2$ and $y'=2y-1$ help to convert between the 2 encodings
+ \item All loss variants convex, differentiable
 \end{itemize}
 
-\vspace{0.2cm}
 \begin{center}
-% \includegraphics[width = 9cm ]{figure_man/bernoulli.png} \\
 \includegraphics[width = 8cm]{figure/bernoulli_margin.png}
 \end{center}
 
 \end{vbframe}
 
 
+\begin{vbframe}{Risk Minimizer on Probs}
 
-
-%\begin{vbframe}{Bernoulli loss on probabilities}
-
-%If scores are transformed into probabilities by the logistic function  $\pi = \left(1 + \exp(-f)\right)^{-1}$ (or equivalently if $f = \log\left(\frac{\pi}{1 - \pi}\right)$ are the log-odds of $\pi$), we arrive at another equivalent formulation of the loss, where $y$ is again encoded as $\setzo$:
-
-%  $$
-%    L(y, \pi) = - y \log \left(\pi\right) - (1 - y) \log \left(1 - \pi\right). 
-%  $$
-  
-%\begin{center}
-% \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
-%\begin{figure}
-%  \subfloat{\includegraphics[width=0.5\textwidth]{figure/bernoulli_prob.png}}
-%  \subfloat{\includegraphics[width=0.5\textwidth]{figure/logistic.png}}\\
-%\end{figure}
-%\end{center}
-
-%\end{vbframe}
-
-
-
-\begin{vbframe}{Bernoulli loss: Risk Minimizer}
-
-The risk minimizer for the Bernoulli loss defined for probabilistic classifiers $\pix$ and on $y \in \{0, 1\}$ is
+For probs and $y \in \setzo$ is
 
 $$
   \piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil). 
 $$
 
-\vspace*{0.2cm}
+\textbf{Proof:} We had seen before;
+
+$$
+  \riskf = \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right]
+$$
+
+\vfill
+
+
+For fixed $\xv$, minimize inner part pointwise, use $c$ for best value:
 
 \begin{footnotesize}
-\textbf{Proof:} We can write the risk for binary $y$ as follows: 
-
-% Again, we make use of the law of total expectation
-
-% \begin{eqnarray*}
-%   \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ L(y, \fx) ] \right] \\
-%           & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv = \xv)\right]\,. 
-%           % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
-% \end{eqnarray*}
-
-% In the binary case this becomes 
-
-% \vspace*{-0.3cm}
-
-\vspace*{-0.3cm}
-
 \begin{eqnarray*}
-  \riskf &=& \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right],
-\end{eqnarray*}
-
-with $\eta(\xv) = \P(y = 1 ~|~ \xv)$ (see section on the 0-1-loss for more details). 
-
-For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the derivative to $0$: 
-
-\vspace*{-0.3cm}
-
-\begin{eqnarray*}
-  \frac{\partial }{\partial c} \left(- \log c  \cdot \eta(\xv)- \log (1 - c) \cdot (1 - \eta(\xv))\right) &=& 0 \\
+  \frac{d }{d c} \left(- \log c  \cdot \eta(\xv)- \log (1 - c) \cdot (1 - \eta(\xv))\right) &=& 0 \\
   - \frac{\eta(\xv)}{c} + \frac{1 - \eta(\xv)}{1 - c} &=& 0 \\
-  % - \frac{\eta(\xv) (1 - c)}{c (1 - c)} + \frac{c(1 - \eta(\xv))}{c(1 - c)} &=& 0 \\
   \frac{- \eta(\xv) + \eta(\xv) c + c - \eta(\xv) c}{c (1 - c)} &=& 0 \\
-  c &=& \eta(\xv). 
+  c &=& \eta(\xv)
 \end{eqnarray*}
-
 \end{footnotesize}
 
-\framebreak 
+\end{vbframe}
 
-The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and scores $\fx$ is the point-wise log-odds, i.e. the logit function (inverse of logistic function) of $\eta(\xv) = \P(y=1|~\xv)$:
+\begin{vbframe}{Risk Minimizer on Scores}
+
+
+\begin{itemizeS}
+    \item For $y \in \{-1, 1\}$ and scores $\fx$: RM is point-wise log-odds
+\end{itemizeS}
+
 
 \begin{minipage}{0.3\textwidth} 
 	\centering
@@ -186,7 +134,12 @@ The risk minimizer for the Bernoulli loss defined on $y \in \{-1, 1\}$ and score
 	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
 \end{minipage}
 
-The function is undefined when $\P(y=1~|~\xv = \xtil) = 1$ or $\P(y=1~|~\xv = \xtil) = 0$, but predicts a smooth curve which grows when $\P(y=1~|~\xv = \xtil)$ increases and equals $0$ when $\P(y=1~|~\xv = \xtil) = 0.5$
+\begin{itemizeS}
+    \item Undefined for $\eta(\xv) \in \setzo$
+    \item Predicts smooth curve increasing in $\P(y=1~|~\xv = \xtil)$ otherwise
+    \item Equals $0$ when $\P(y=1~|~\xv = \xtil) = 0.5$
+\end{itemizeS}
+
 
 \framebreak 
 
@@ -217,29 +170,32 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 
 \begin{vbframe}{Bernoulli: Optimal constant Model}
 
-{\small The optimal constant probability model $\pix = \theta$ w.r.t. the Bernoulli loss for labels from $\Yspace = \setzo$ is:
+{\small 
 
-\begin{eqnarray*}
-  \thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi
-\end{eqnarray*}
+\begin{itemizeS}
+    \item Optimal constant probability model $\pix = \theta$ w.r.t. the Bernoulli loss for labels from $\Yspace = \setzo$ is 
+    
+    $$\thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi$$
+    \item Fraction of class-1 observations in the observed data
+    \item Derived by setting derivative of risk to $0$ and solving for $\theta$
+    \item Optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is
 
-This is the fraction of class-1 observations in the observed data.
-We can prove this by setting the derivative of the risk to 0 and solving for $\theta$. The optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is:
+    $$\thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n}$$ 
 
-\begin{eqnarray*}
-  \thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n} 
-\end{eqnarray*}
+    where $\nn$ and $\np$ are the numbers of negative and positive observations.%, respectively.
 
-where $\nn$ and $\np$ are the numbers of negative and positive observations.%, respectively.
+    \item Shows tight (and unsurprising) connection of this loss to log-odds. Proof is left as an exercise.
+\end{itemizeS}
 
-This shows a tight (and unsurprising) connection of this loss to log-odds.
-
-Proving this is left as exercise.
 }
+
+
+
+
 
 \end{vbframe}
 
-\begin{vbframe}{Bernoulli-Loss: Naming Convention}
+\begin{vbframe}{Naming Conventions}
 
 We have seen several closely related loss functions: %In the literature, there are different names for the losses: 
 
@@ -248,10 +204,9 @@ We have seen several closely related loss functions: %In the literature, there a
 %  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
 %\end{eqnarray*}
 
-\begin{eqnarray*} \Lxy &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
-\Lxy &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo \\
-\Lpixy &=& - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo \\
-\Lpixy &=& - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) \quad \text{for } y \in \setmp \end{eqnarray*}
+\begin{alignat*}{3} \Lxy    &= \log(1+\exp(-y\fx)) &&\quad \text{for } y \in \setmp \\ \Lxy    &= - y \cdot \fx + \log(1 + \exp(\fx)) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) &&\quad \text{for } y \in \setmp \end{alignat*}
+
+
 
 \lz
 

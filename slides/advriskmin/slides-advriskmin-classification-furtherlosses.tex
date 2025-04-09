@@ -123,7 +123,7 @@ $$\Lxy = \exp(-y\fx)$$
 $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} [f^{(i)} > f^{(j)}]$$
 \item This is not differentiable w.r.t $f$ due to indicator $[f^{(i)} > f^{(j)}]$
 \item The indicator function can be approximated by the distribution function of the triangular distribution on $[-1, 1]$ with mean $0$
-\item Direct optimization of AUC is numerically difficult rather use common loss and tune for AUC in practice
+\item Direct optimization of AUC is numerically difficult, rather use common loss and tune for AUC in practice
 
 \end{itemize}
 

@@ -1,0 +1,33 @@
+
+
+* use itemize on pretty much all slides
+
+* iterate language. short style
+
+* optimize linebreaks. optimally one sentence/thought per line. 
+(the above does not need to be OVERDONE)
+no "hanging" word
+
+* for common symbols extend latex math
+
+* no "whitespace control mess". 
+use the new layout macros. in general. 
+
+* for vertical spacing nearly always use \vfill
+
+* don't always change fontsize. usually this is not needed
+
+* absolute prio: check plots if there any todos left / errors.
+this must be resolved BEFORE friday
+
+* I know that this is maybe less clear but:
+delete outcommented UNNEEDED GARBAGE stuff. 
+if in case of doubt a bit too much stays, this is fine.
+
+* use good titles. the titles count in the text. they don't need to be repeated
+they should optimally describe what happens on the slide.
+also don't repeat the chunk name always in slide titles
+
+* delete punctuation in formulas
+
+* usually: do not indent stuff. 
