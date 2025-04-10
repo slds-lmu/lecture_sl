@@ -132,7 +132,7 @@ Minimizing Gaussian NLL is ERM with $L2$-loss:
 \begin{footnotesize}
 \begin{itemize}
 	\item We simulate data $y ~|~x \sim \mathcal{N}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$ 
-\item Let's plot empirical errors as histogram, after fitting our model with $L2$-loss
+\item Let's plot residuals as histogram, after fitting our model with $L2$-loss (blue)
 \item Q-Q-plot compares empirical residuals vs. theoretical quantiles of Gaussian 
 \end{itemize}
 \end{footnotesize}
@@ -140,6 +140,11 @@ Minimizing Gaussian NLL is ERM with $L2$-loss:
 \begin{center}
 \includegraphics[width = 0.8\textwidth]{figure/residuals_plot_L2.pdf}
 \end{center}
+
+\begin{itemize}
+    \item The residuals are approximately normally distributed 
+\end{itemize}
+
 \end{vbframe}
 
 \begin{vbframe}{Laplace Errors - L1-Loss}
