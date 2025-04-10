@@ -25,8 +25,8 @@
 
 \begin{vbframe} {Bias-variance decomposition}
 
-Consider generalization error of a learning algorithm $\ind$.
-This is expected error of a model $\fh_{\D_n}$, on training sets of size $n$, evaluated on a fresh, random test sample.
+Generalization error of learner  $\ind$: 
+Expected error of model $\fh_{\D_n}$, on training sets of size $n$, evaluated on a fresh, random test sample.
   $$GE_n\left(\ind\right) = \E_{\D_n \sim \Pxy^n, (\xv, y) \sim \Pxy}\left( L\left(y, \fh_{\D_n}(\xv)\right) \right) = \E_{\D_n, xy}\left( L\left(y, \fh_{\D_n}(\xv)\right) \right)  $$
 Expectation is taken over all training sets \textbf{and} independent test sample.\\
 \lz
@@ -37,7 +37,7 @@ $$
 with zero-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$ independent of $\xv$.
 \vspace{0.1cm}
 
-{\scriptsize ${\ast}$ Similar decomps also exist for other losses expressible as Bregman divergences (e.g. cross-entropy). One exception is the $0/1$ loss (\cite{BROWN2024BIAS})}
+{\scriptsize ${\ast}$ Similar decomps also exist for other losses expressible as Bregman divergences (e.g. cross-entropy). One exception is the $0/1$ loss \citelink{BROWN2024BIAS}}
 
 \framebreak 
 
@@ -54,7 +54,7 @@ $$
     Also called Bayes, intrinsic or irreducible error.
     No matter what we do, we will never get below this error.
   \item The second term expresses, on average, how much $\fh_{\D_n}(\xv)$ fluctuates around test points if we vary the training data. Also expresses learner's tendency to learn random things irrespective of real signal (overfitting)
-  \item The third term says how much we are "off" on average at test locations (underfitting).
+  \item The third term says how much we are ``off'' on average at test locations (underfitting).
     Models with high capacity typically have low \textbf{bias} and \textit{vice versa}
 \end{enumerate}
 
@@ -205,7 +205,7 @@ $$GE_n\left(\ind\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
       \item \textbf{generalize} to new data
     \end{enumerate}  
   \item Failure of the first point is called \textbf{underfitting}
-  \item Failure of the second item is called \textbf{overfitting}
+  \item Failure of the second point is called \textbf{overfitting}
 \end{itemize}  
 
 
@@ -219,7 +219,7 @@ $$GE_n\left(\ind\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
 
 
 \begin{itemize}
-  \item The tendency of a model to underfit/overfit is a function of its capacity, determined by the type of hypotheses it can learn.
+  \item The tendency of a model to underfit/overfit is a function of its capacity, determined by the type of hypotheses it can learn
   \item Usually, low bias means high capacity, which in turn means a higher chance of overfitting
   \item Low-bias models usually have 
   also higher variance
@@ -262,7 +262,7 @@ Both are commonly described using the same figure and analogies
 Knowing $\fh_{\Hspace} \in \arg\inf_{f \in \Hspace} \riske(f)$ assumes we found a global minimizer of $\riske$, which is often impossible (e.g. DNNs). 
 \vspace{0.2cm}
 
-In practice, optimizing $\riske$ gives us our 'best guess' $\tilde{f}_{\Hspace} \in \Hspace$ of $\fh_{\Hspace}$. We can now decompose its excess risk finer as
+In practice, optimizing $\riske$ gives us our ``best guess'' $\tilde{f}_{\Hspace} \in \Hspace$ of $\fh_{\Hspace}$. We can now decompose its excess risk finer as
 
 \begin{eqnarray*}
     \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
@@ -272,10 +272,10 @@ Note that the optimization error can be negative, even though $\riske(\tilde{f}_
 
 \framebreak
 
-We can further decompose estimation error more finely by defining the \textit{centroid} model or 'systematic' model part.\\
+We can further decompose estimation error more finely by defining the \textit{centroid} model or ``systematic'' model part.\\
 \vspace{0.15cm}
 
-Given $\fh_{\Hspace} \in  \arg\min_{f \in \Hspace} \riske(f)$ the centroid model under squared loss is the mean prediction at each $x$ over all $\D_n$, $f^{\circ}_{\Hspace} := \E_{\D_n \sim \Pxy^n}[\fh_{\Hspace}] $,.
+Given $\fh_{\Hspace} \in  \arg\min_{f \in \Hspace} \riske(f)$ the centroid model under squared loss is the mean prediction at each $x$ over all $\D_n$, $f^{\circ}_{\Hspace} := \E_{\D_n \sim \Pxy^n}[\fh_{\Hspace}] $.
 \vspace{0.15cm}
 
 With $f^{\circ}_{\Hspace}$ we can decompose the expected estimation error as
