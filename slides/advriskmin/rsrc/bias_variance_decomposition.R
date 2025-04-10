@@ -66,9 +66,9 @@ Y_true_test <- Y_noiseless[-train_index]
 ### 1st plot: Plot of train and test data
 save_plot("../figure/bias_variance_decomposition-train_test.png")
 plot(X_train, Y_train, col = "blue", pch = 19, cex = 1.2, xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
-points(X[-train_index], Y[-train_index], col = "red", pch = 19, cex = 1.5)
+points(X[-train_index], Y[-train_index], col = "orange", pch = 19, cex = 1.5)
 # add a legend
-legend("topright", legend = c("Train", "Test"), col = c("blue", "red"), pch = 19, pt.cex = c(1.2, 1.5), cex=1.2)
+legend("topright", legend = c("Train", "Test"), col = c("blue", "orange"), pch = 19, pt.cex = c(1.2, 1.5), cex=1.2)
 lines(X, Y_noiseless, col = "black", lwd = 2)
 dev.off()
 
@@ -98,7 +98,7 @@ dev.off()
 ### 4th plot: Plot test points, real model, average model and show the bias
 save_plot("../figure/bias_variance_decomposition-linear_model_bias.png")
 bias = mean(((coef_df_mean[1] + coef_df_mean[2] * X_test) - ( X_test + 0.5 * X_test^2))^2)
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5, xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5, xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
 abline(coef_df_mean, col=rgb(0, 0, 1, 0.6), lwd = 2, lty=2)
 segments(X_test,Y_true_test, X_test, calculate_polynomial(coef_df_mean,1,X_test), col = "blue", lwd = 3, lty = 'solid')
@@ -116,7 +116,7 @@ prediction_means <- apply(Y_test_predicted, 2, mean)
 prediction_vars <- apply(Y_test_predicted, 2, var)
 prediction_min <- apply(Y_test_predicted, 2, min)
 prediction_max <- apply(Y_test_predicted, 2, max)
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,
      xlim = c(-3, 3), ylim = c(-2, 10), xlab = "x", ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
 for (i in 1:number_of_models) {
@@ -149,7 +149,7 @@ noise <- rep(error_std^2, length(X_test))
 mse <- bias_squared + variance + noise
 mse_total <- mean(mse)
 
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,
      xlim = c(-3, 3), ylim = c(-2, 10),
      xlab = "x", ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
@@ -186,7 +186,7 @@ dev.off()
 ### 8th plot: Plot test points, real model, average model and show the bias
 save_plot("../figure/bias_variance_decomposition-complex_model_bias.png")
 bias=mean(((calculate_polynomial(coef_df_mean,grade,X_test)) - (X_test + 0.5 * X_test^2))^2)
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
 plot_polynomial(coef_df_mean,grade,rgb(0, 0, 1, 0.6),2,2)
 segments(X_test,Y_true_test, X_test, calculate_polynomial(coef_df_mean,grade,X_test), col = "blue", lwd = 3, lty = 'solid')
@@ -204,7 +204,7 @@ prediction_means <- apply(Y_test_predicted, 2, mean)
 prediction_vars <- apply(Y_test_predicted, 2, var)
 prediction_min <- apply(Y_test_predicted, 2, min)
 prediction_max <- apply(Y_test_predicted, 2, max)
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,
      xlim = c(-3, 3), ylim = c(-2, 10), xlab = "x", ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
 for (i in 1:number_of_models) {
@@ -237,7 +237,7 @@ noise <- rep(error_std^2, length(X_test))
 mse <- bias_squared + variance + noise
 mse_total <- mean(mse)
 
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,
      xlim = c(-3, 3), ylim = c(-2, 10),
      xlab = "x", ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
@@ -274,7 +274,7 @@ dev.off()
 ### 12th plot: Plot test points, real model, average model and show the bias
 save_plot("../figure/bias_variance_decomposition-correct_model_bias.png")
 bias=mean(((calculate_polynomial(coef_df_mean,grade,X_test)) - (X_test + 0.5 * X_test^2))^2)
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,xlim = c(-3, 3), ylim = c(-2, 10),xlab = "x",ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
 plot_polynomial(coef_df_mean,grade,rgb(0,0,1,0.6),2,2)
 segments(X_test,Y_true_test, X_test, calculate_polynomial(coef_df_mean,grade,X_test), col = "blue", lwd = 3, lty = 'solid')
@@ -291,7 +291,7 @@ prediction_means <- apply(Y_test_predicted, 2, mean)
 prediction_vars <- apply(Y_test_predicted, 2, var)
 prediction_min <- apply(Y_test_predicted, 2, min)
 prediction_max <- apply(Y_test_predicted, 2, max)
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,
      xlim = c(-3, 3), ylim = c(-2, 10), xlab = "x", ylab = "y")
 lines(X, Y_noiseless, col = "black", lwd = 2)
 for (i in 1:number_of_models) {
@@ -326,7 +326,7 @@ noise <- rep(error_std^2, length(X_test))
 mse <- bias_squared + variance + noise
 mse_total <- mean(mse)
 
-plot(X_test, Y_test, col = "red", pch = 19, cex = 1.5,
+plot(X_test, Y_test, col = "orange", pch = 19, cex = 1.5,
      xlim = c(-3, 3), ylim = c(-2, 10),
      xlab = "x", ylab = "y")
 
