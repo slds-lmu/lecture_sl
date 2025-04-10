@@ -15,20 +15,20 @@
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/bias_variance_decomposition-linear_model_bias.png
   }{
-  \item Understand how to decompose the generalization error of a learner into 
+  \item Understand how to decompose the generalization error of a learner under L2 loss into 
   \begin{itemize}
     \item \footnotesize Bias of the learner
-    \item \footnotesize Variance of the learner
+    \item \footnotesize Variance
     \item \footnotesize Inherent noise in the data
   \end{itemize} 
 }
 
 \begin{vbframe} {Bias-Variance decomposition}
 
-Let us take a closer look at the generalization error of a learning algorithm $\ind$.
-This is the expected error of an induced model $\fh_{\D_n}$, on training sets of size $n$, when applied to a fresh, random test observation.
+Generalization error of learner  $\ind$: 
+Expected error of model $\fh_{\D_n}$, on training sets of size $n$, evaluated on a fresh, random test sample.
   $$GE_n\left(\ind\right) = \E_{\D_n \sim \Pxy^n, (\xv, y) \sim \Pxy}\left( L\left(y, \fh_{\D_n}(\xv)\right) \right) = \E_{\D_n, xy}\left( L\left(y, \fh_{\D_n}(\xv)\right) \right)  $$
-We therefore need to take the expectation over all training sets of size $n$, as well as the independent test observation.
+Expectation is taken over all training sets \textbf{and} independent test sample.\\
 
 \lz 
 
