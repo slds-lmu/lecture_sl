@@ -68,11 +68,9 @@ $$
 \textbf{Illustration}: Let us consider the following example. We generate a dataset using the following model : 
 $$y = x + \frac{x^2}{2} + \epsilon  \ , \ \ \ \ \epsilon \sim 
 N (0, 1)$$
-
-The data is then split into a training set and a test set.
-
+The data is then split into a training set and a test set
 \begin{center}
-  \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-train_test.png}
+  \includegraphics[width = 0.42\textwidth]{figure/bias_variance_decomposition-train_test.png}
 \end{center}
 
 \framebreak
@@ -88,7 +86,7 @@ First, we train several (low capacity) linear models (polynomial of degree $d=1$
 
 \framebreak
 
-By creating several models, we obtain the average model over different samples of the training dataset.
+By creating several models, we obtain the average model over different samples of the training dataset
 
 \begin{center}
   \includegraphics[width = 0.5\textwidth]{figure/bias_variance_decomposition-linear_model.png}
@@ -144,7 +142,7 @@ $$GE_n\left(\ind\right) \approx 1 + 1.628 + 0.135 = 2.763 $$
 We will repeat the same procedure, but use a high-degree polynomial ($d=7$) with more capacity.
 
 \begin{center}
-  \includegraphics[width = 0.5\textwidth]{figure/bias_variance_decomposition-complex_model.png}
+  \includegraphics[width = 0.55\textwidth]{figure/bias_variance_decomposition-complex_model.png}
 \end{center}
 
 
@@ -170,7 +168,7 @@ $$GE_n\left(\ind\right) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
 What happens if we use a model with the same complexity as the true model (quadratic polynomial)? 
 
 \begin{center}
-  \includegraphics[width = 0.5\textwidth]{figure/bias_variance_decomposition-correct_model.png}
+  \includegraphics[width = 0.55\textwidth]{figure/bias_variance_decomposition-correct_model.png}
 \end{center}
 
 \framebreak
