@@ -237,39 +237,11 @@ $$
 \vfill
 
 \begin{center}
-\includegraphics[width = 0.6\textwidth]{figure/telephone-data.pdf}
+\includegraphics[width = 0.8\textwidth]{figure/telephone-data.pdf}
 \end{center}
 
 \end{vbframe}
 
-%\begin{comment}
-%% BB: i have removed this, there are not a lot of referenences and examples
-%% so this might simply be to exotic
-% \begin{vbframe}{Log-Barrier Loss}
-
-% \begin{small}
-% \[
-%   \Lyf = \left\{\begin{array}{lr}
-%         -\epsilon^{2} \cdot \log \Bigl( 1 - \Bigl(\frac{\left|y - f\right|}{\epsilon}\Bigr)^2 \Bigr) & \text{if } \left|y-f\right| \leq \epsilon \\
-%         \infty & \text{if } \left|y-f\right|  > \epsilon
-%         \end{array}\right.
-%   \]
-% \end{small}
-
-% \begin{itemize}
-% \item Behaves like $L2$ loss for small residuals
-% \item We use this if we don't want residuals larger than $\epsilon$ at all
-% \item No guarantee that the risk minimization problem has a solution
-% \item Plot shows log-barrier loss for $\epsilon=2$:
-% \end{itemize}
-
-% \begin{center}
-% % \includegraphics[width = 0.8\textwidth]{figure_man/log-barrier01.png}
-% \includegraphics[width = 0.8\textwidth]{figure/loss_logbarrier_1.png}
-% \end{center}
-
-
-% \end{vbframe}
 
 \begin{vbframe}{$\eps$-Insensitive loss}
 
@@ -294,37 +266,7 @@ $$
 \end{center}
 
 \end{vbframe}
-%\end{comment}
 
-%% BB: der beweis hier sieht falsch aus...!
-%% \begin{vbframe}{$\epsilon$-insensitive Loss: Optimal Constant}
-
-%% % Derive Constant model and eps-insens loss
-%What is the optimal constant model $f = \thetav$ w.r.t. the $\epsilon$-insensitive loss $\Lyf =  |y - f| ~ \mathds{1}_{ \left\{|y - f| > \epsilon \right\}}$?
-
-%\vspace{-0.2cm}
-%\begin{eqnarray*}
-%\hat \thetav&=& \argmin_{\thetav\in \R}\sumin \Lyfi \\
-%&=& \argmin_{\thetav\in \R} \sum_{i \in I_\eps} \left| \yi - \thetav \right| - \eps  \\
-%&=& \argmin_{\thetav\in \R} \sum_{i \in I_\eps} \left| \yi - \thetav \right| - \sum_{i \in I_\eps} \eps \\
-%&=& \text{median}\left(\left\{\yi ~|~ i \in I_\eps\right\}\right) - |I_\eps| \cdot \eps \\
-%\end{eqnarray*}
-
-%with $I_\eps := \left\{i: |\yi - fi| \le \eps \right\}$.
-
-%% \framebreak
-
-%% 
-%% < <eps-loss-plot, fig.height = 5.5, include = FALSE>>=
-%%   
-%%   plotConstantModel(df, c("L2", "L1", "quant25", "quant75", "Huber1", "eps2"))
-%% @
-%% 
-%% \begin{center}
-%% \includegraphics[width = 10cm]{figure/eps-loss-plot-1.pdf} \\
-%% \end{center}
-
-%\end{vbframe}
 
 \begin{vbframe}{Quantile Loss / Pinball Loss}
 
@@ -351,17 +293,6 @@ $$
 
 % \framebreak
 
-% BB: this proof cannot be true, it simply states what it claimed???
-% What is the optimal constant model $f = \thetav$ w.r.t.\ the quantile loss?
-% \vspace{-0.2cm}
-% \begin{eqnarray*}
-% \thetah&=& \argmin_{\thetav\in \R}\sumin \Lxyi \\
-% \Leftrightarrow\quad 
-% \thetah &=& \argmin_{\thetav \in \R}\left\{ (1 - \alpha) \sum_{\yi<\thetav}  \left|\yi-\thetav\right| + \alpha \sum_{\yi \geq\thetav}  \left|\yi-\thetav\right|\right\} \\
-% \Leftrightarrow\quad \thetah &=& Q_\alpha(\{\yi\})
-% \end{eqnarray*}
-
-% where $Q_\alpha(\cdot)$ computes the empirical $\alpha$-quantile of $\{\yi\}, i = 1, ..., n$.
 
 \framebreak
 
