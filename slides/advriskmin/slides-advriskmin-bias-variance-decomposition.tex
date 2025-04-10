@@ -107,7 +107,7 @@ We can now estimate the (squared) bias, by computing the average squared differe
 We compute the average variance of the predictions of the models we trained at the test point locations.
 \vspace{-0.35cm}
 \begin{center}
-  \includegraphics[width = 0.35\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
+  \includegraphics[width = 0.5\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
 \end{center}
 \vspace{-0.8cm}
 
@@ -122,7 +122,7 @@ $$GE_n\left(\ind\right) \approx 1 + 1.628 + 0.135 = 2.763 $$
 \framebreak
 
 \begin{center}
-  \includegraphics[width = 0.35\textwidth]{figure/bias_variance_decomposition-linear_model_variance.png}
+  \includegraphics[width = 0.45\textwidth]{figure/bias_variance_decomposition-linear_model_mse.png}
 \end{center}
 
 \begin{footnotesize}
@@ -151,11 +151,12 @@ We will repeat the same procedure, but use a high-degree polynomial ($d=7$) with
 \framebreak
 
 \begin{center}
-  \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-complex_model_bias.png}
-  \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-complex_model_variance.png}
+  \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-complex_model_bias.png}
+  \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-complex_model_variance.png}
+  \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-complex_model_mse.png}
 \end{center}
 
-$$GE_n\left(\ind\right) \approx 1 + 0.139 + 1.963 = 3.102 $$
+$$GE_n\left(\ind\right) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
 
 \begin{itemize}
   \item The generalization error is higher than before
@@ -175,11 +176,12 @@ What happens if we use a model with the same complexity as the true model (quadr
 \framebreak
 
 \begin{center}
-  \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-correct_model_bias.png}
-  \includegraphics[width = 0.4\textwidth]{figure/bias_variance_decomposition-correct_model_variance.png}
+  \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-correct_model_bias.png}
+  \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-correct_model_variance.png}
+  \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-correct_model_mse.png}
 \end{center}
 
-$$GE_n\left(\ind\right) \approx 1 + 0.008 + 0.082 = 1.091 $$
+$$GE_n\left(\ind\right) \approx 1 + 0.008 + 0.082 = 1.09 $$
 
 \begin{itemize}
   \item The generalization error is the lowest at this complexity.
