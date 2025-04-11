@@ -21,7 +21,13 @@ laplace_plot = ggplot(df, aes(x = x, y = density)) +
     #title = "Laplace Density Function",
     x = "x",
     y = "density"
-  ) 
+  ) +
+  theme(
+    axis.title = element_text(size = 20)  # Axis title font size
+   # axis.text = element_text(size = 14)    # Tick label font size
+  )
   #theme_minimal()
+
+laplace_plot
 
 ggsave("../figure/laplace-plot.png", plot = laplace_plot, width = 6, height = 4, dpi = 300)
