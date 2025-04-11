@@ -18,26 +18,29 @@
 \begin{document}
     
 \titlemeta{
-    Advanced Risk Minimization
-  }{% Lecture title  
-  	Proper Scoring Rules
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/bernoulli_prob.png
-  }{
-  \item Honest probabilistic forecasts
-  \item Proper scoring rules
-  \item Log score    
-  \item Brier score
+Advanced Risk Minimization
+}{
+Proper Scoring Rules
+}{
+figure/bernoulli_prob.png
+}{
+\item Honest probabilistic forecasts
+\item Log score    
+\item Brier score
 }
 
-\begin{vbframe}{Probabilistic Forecasts \citelink{GNEITING2007}}
+\begin{vbframe}{Probabilistic Predictions \citelink{GNEITING2007}}
 
-Scoring rules $S(P,y)$ assess the quality of probabilistic forecasts by assigning a score based on the predictive distribution $P$ and the realized event $y$. The expected score w.r.t. the RV $y \sim Q$ is
+\begin{itemize}
+    \item 
+\end{itemize}
+
+Scoring rules $S(P,y)$ assess the quality of probabilistic predictions by assigning a score based on the predictive distribution $P$ and the realized event $y$. The expected score w.r.t. the RV $y \sim Q$ is
 $$ S(P,Q) = \E_{y \sim Q}[S(P,y)]$$
 
 
 
-A scoring rule is \textbf{proper} if forecaster maximizes expected score for an observation drawn from $Q$ if the forecast is $Q$ rather than $P \neq Q$:
+A scoring rule is \textbf{proper} if predictor maximizes expected score for an observation drawn from $Q$ if the forecast is $Q$ rather than $P \neq Q$:
 
 $$S(Q,Q) \geq S(P,Q) \,\, \text{for all} \, P,Q $$
 
