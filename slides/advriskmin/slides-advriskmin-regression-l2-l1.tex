@@ -171,34 +171,49 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
 \begin{vbframe}{L2 loss means minimizing variance}
 
-\vspace{1cm}
+\begin{columns}[t]
+  \column{0.65\textwidth}
+    \vspace{0pt}
+    \begin{itemize}
+      \item Let's reconsider the previous
+      \item Optimized for const whose squared dist to points is minimal (on avg)
+      \item Result: $\hat{\theta} = \bar{y}$
+      \item What is the associated risk?\\
+        $\mathcal{R}(\hat{\theta}) = \sum_{i=1}^n (y_i - \bar{y})^2$
+      \item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
+        to obtain variance
+      \item Same holds for the pointwise construction / conditional distribution considered before
+    \end{itemize}
 
-\splitVCC[0.65]{
-\begin{itemize}
-  \item Let's reconsider the previous
-  \item Optimized for const whose squared dist to points is minimal (on avg)
-  \item Result: $\thetah = \bar{y}$
-  \item What is the associated risk?
-  $\riske(\thetah) = \sumin (\yi - \bar{y})^2$
-  \item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
-  to obtain variance
-  \item Same holds for the pointwise construction / conditional distribution considered before
-\end{itemize}
-}
-{
-    \includegraphics{figure_man/plot_const_var.png}
-}
-%        \item  Generally, if model yields unbiased predictions, { $\E_{y~|~\xv}\left[y-\fx~|~\xv\right]=0$}, using $L2$-loss means minimizing variance of model residuals
+  \column{0.34\textwidth}
+    \vspace{0pt} % force top alignment
+    \includegraphics[width=\textwidth]{figure_man/plot_const_var.png}
+\end{columns}
 
-%\vspace{-0.2cm}
-%\begin{center}
-%\includegraphics[width=0.4\textwidth]{figure_man/plot_const_var.png} \\
-%\end{center}
-%\vspace{-0.2cm}
-%{\small $\Rightarrow$ Generally, if model yields unbiased predictions, {\scriptsize $\E_{y~|~\xv}\left[y-\fx~|~\xv\right]=0$}, using $L2$-loss $\triangleq$ minimizing variance of model residuals}
-
-%The same holds true for the pointwise construction / conditional distribution as considered in the slides before.
 \end{vbframe}
+
+
+% DO NOT REMOVE THIS BUT INCLUDE IT AGAIN WHEN COMMAND AVAILABLE
+%\begin{vbframe}{L2 loss means minimizing variance}
+%\splitVCentered[0.65]{
+%\splitVCC{
+
+%\begin{itemize}
+
+%\item Let's reconsider the previous
+%\item Optimized for const whose squared dist to points is minimal (on avg)
+%\item Result: $\thetah = \bar{y}$
+%\item What is the associated risk?
+%$\riske(\thetah) = \sumin (\yi - \bar{y})^2$
+%\item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
+%to obtain variance
+%\item Same holds for the pointwise construction / %conditional distribution considered before
+
+%\end{itemize}
+
+%}{\includegraphics{figure_man/plot_const_var.png}}
+
+%\end{vbframe}
 
 \begin{vbframe}{L1-Loss}
 
