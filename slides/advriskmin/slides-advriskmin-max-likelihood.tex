@@ -19,14 +19,14 @@
 \titlemeta{
 Advanced Risk Minimization
 }{
-Maximum Likelihood Estimation vs. Empirical Risk Minimization
+Maximum Likelihood vs. ERM
 }{
 figure/residuals_plot_L2_title.png
 }{
 \item Max. lik. and ERM are the same
 \item Gaussian errors = L2 loss
 \item Laplace errors = L1 loss
-\item Bernoulli targets vs. Log loss
+\item Bernoulli targets vs. log loss
 }
 
 \begin{vbframe}{Maximum Likelihood}
@@ -53,7 +53,7 @@ $$
 \includegraphics[width = 0.75\textwidth]{figure/ftrue.pdf}
 \end{minipage}
 
-\item $\ftrue$ has params $\thetav$ and $\eps \sim\P_\eps$, with $\E[\eps] = 0, \epsilon \perp \!\!\! \perp \xv$.
+\item $\ftrue$ has params $\thetav$ and $\eps \sim\P_\eps$, with $\E[\eps] = 0, \epsilon \perp \!\!\! \perp \xv$
 
 \item We now want to learn $\ftrue$ (or its params)
 
@@ -99,7 +99,7 @@ $$ \Lxyt := - \lpdfygxt $$
  = ERM
 $$- \loglt = \risket = \sumin \Lxyit$$
 
-\item NB: When we are only interested in the minimizer, we can ignore multiplicative or additive constants and use $\propto$ as \enquote{proportional up to positive multiplicative and additive constants}
+\item NB: When only interested in minimizer, we use $\propto$ as \enquote{proportional up to pos. multiplicative and general additive constants}
 
 \end{itemize}
 
@@ -161,7 +161,7 @@ $$
 }{
 %\end{minipage}%
 %\begin{minipage}{0.5\textwidth}
-Laplace density, $x \sim LP(0,1)$
+\small{$\qquad$ Laplace density, $x \sim \text{LP}(0,1)$}
 \includegraphics[width = \textwidth]{slides/advriskmin/figure/laplace-plot.png}
 %\end{minipage}
 }
@@ -174,19 +174,18 @@ also follows Laplace distribution with mean $\fxit$ and scale  $\sigma$
 \end{itemize}
 \framebreak 
 
-The likelihood is then 
-
+\begin{itemize}
+    \item The likelihood is then 
 \begin{eqnarray*}
 \LL(\thetav) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,
 \end{eqnarray*}
-The negative log-likelihood is
+\item The negative log-likelihood is
 $$
 - \loglt \propto \sumin \left|\yi - \fxit\right|
 $$
 
-MLE for Laplacian errors = ERM with L1-loss 
+\item MLE for Laplacian errors = ERM with L1-loss 
 
-\begin{itemize}
 \item Some losses correspond to more complex or less known error densities, like the Huber loss \citelink{MEYER2021ALTERNATIVE}
 
 \item Huber density is (unsurprisingly) a hybrid of Gaussian and Laplace
@@ -196,7 +195,7 @@ MLE for Laplacian errors = ERM with L1-loss
 \framebreak 
 
 \begin{itemize}
-	\item Same setup, now with $y ~|~x \sim \text{Laplacian}\left(\ftrue(x), 1\right)$ 
+	\item Same setup, now with $y ~|~x \sim \text{LP}\left(\ftrue(x), 1\right)$ 
 \item Now fit LM with L1 loss
 
 \vfill
@@ -242,32 +241,27 @@ $$
 
 \begin{vbframe}{Distributions and losses}
 
-\begin{itemize}
+\begin{itemizeL}
 
 \item For \textbf{every} error distribution $\P_\eps$, can derive an equivalent loss
-\item Leads to same point estimator for the params vector $\thetav$ as maximum-likelihood
-\
-Formally: Formally, $\thetah \in \argmax_{\thetav} \LL(\thetav) \Leftrightarrow \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$.  %\implies \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))$
-    %\item $\thetah \in \argmax_{\thetav} \log\left(\LL(\thetav)\right) \implies $
+\item Leads to same point estimator for $\thetav$ as maximum-likelihood:
+
+$$
+\thetah \in \argmax_{\thetav} \LL(\thetav) \Leftrightarrow \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))
+$$
     
-\vspace{0.2cm}    
-\textbf{But}: Other way does not always work: We cannot derive a pdf/error distrib. for every loss -- the Hinge loss is one prominent example (some prob. interpretation is still possible \citelink{SOLLICH1999NINTH})
+\item But \textbf{cannot} derive a pdf/error distrib. for every loss, e.g., Hinge loss; some prob. interpretation still possible \citelink{SOLLICH1999NINTH}
 %\framebreak
 
-\vspace{0.2cm}
-\textbf{When} does the reverse direction hold?
-
-If we can write loss as $L(y,\fx)=L_{\mathbb{P}}(y-\fx)=L_{\mathbb{P}}(r)$ for $r \in \mathbb{R}$, then minimizing $L_{\mathbb{P}}(y-\fx)$ is equiv. to maximizing a conditional log-likelihood $\log(p(y-f(\xv|\thetav))$ if
+\item For dist.-based loss on residual $L(y,\fx)=L_{\mathbb{P}}(r)$, ERM is fully equiv. to max. conditional log-likelihood $\log(p(r))$ if
 \begin{enumerate}
- \setlength{\itemsep}{1.0em}
     \item $\log(p(r))$ is affine trafo of $L_{\mathbb{P}}$ (undoing the $\propto$):
-% minus due to sign chance when we go from loss to loglik
     $\log(p(r)) = a - bL_{\mathbb{P}}(r),\,\,a \in \mathbb{R}, b>0$
     \item  $p$ is a pdf (non-negative and integrates to one)
 \end{enumerate}
 
 
-\end{itemize}
+\end{itemizeL}
 
 
 \end{vbframe}

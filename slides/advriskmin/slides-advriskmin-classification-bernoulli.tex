@@ -81,13 +81,22 @@ $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 $$
   \Lxy = \log(1+\exp(-y \cdot \fx)) 
 $$
- \item Simply check both cases for y to see
- \item Transformation $y'=(y+1)/2$ and $y'=2y-1$ help to convert between the 2 encodings
+ %\item Simply check both cases for y to see
+ \item For $y=-1$ plug $y'=0$ in old loss: $L(0,\fx)=\log(1+\exp(\fx)$
+ \item For $y=y'=1$: 
+ \begin{eqnarray*}
+  L(1,\fx)=-\fx+\log(1+\exp(\fx))&=&\log(1+\exp(\fx))-\log(\exp(\fx))\\
+  &=&\log(1+\exp(-\fx)
+\end{eqnarray*}
+ 
+ %$$L(1,\fx)=-\fx+\log(1+\exp(\fx))=-\log(\exp(\fx))+\log(1+\exp(\fx))=\log(1+\exp(-\fx))$$
+ \item Convert between 2 encodings using $y=2y'-1$ for $y' \in \setzo$
+ %\item Transformation $y=2y'-1$ and $y'=(y+1)/2$ help convert between 2 encodings $y' \in \setzo, y \in \setmp$
  \item All loss variants convex, differentiable
 \end{itemize}
 
 \begin{center}
-\includegraphics[width = 8cm]{figure/bernoulli_margin.png}
+\includegraphics[width = 6cm]{figure/bernoulli_margin.png}
 \end{center}
 
 \end{vbframe}
@@ -101,7 +110,7 @@ $$
   \piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil). 
 $$
 
-\textbf{Proof:} We had seen before;
+\textbf{Proof:} We had seen before
 
 $$
   \riskf = \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right]
@@ -110,7 +119,7 @@ $$
 \vfill
 
 
-For fixed $\xv$, minimize inner part pointwise, use $c$ for best value:
+For fixed $\xv$, minimize inner part pointwise, use $c\in(0,1)$ for best value:
 
 \begin{footnotesize}
 \begin{eqnarray*}
@@ -127,7 +136,7 @@ For fixed $\xv$, minimize inner part pointwise, use $c$ for best value:
 
 
 \begin{itemizeS}
-    \item For $y \in \{-1, 1\}$ and scores $\fx$: RM is point-wise log-odds
+    \item For $y \in \{-1, 1\}$ and scores $\fx$: RM is pointwise log-odds
 \end{itemizeS}
 
 
@@ -156,7 +165,7 @@ For fixed $\xv$, minimize inner part pointwise, use $c$ for best value:
   &=& \E_x \left[ \log(1 + \exp(- \fx)) \eta(\xv)+ \log(1 + \exp(\fx)) (1 - \eta(\xv)) \right] 
 \end{eqnarray*}
 
-For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the derivative to $0$: 
+For fixed $\xv$ we get pointwise optimal value $c$ by setting derivative to $0$: 
 
 \begin{footnotesize}
   \begin{eqnarray*}
@@ -180,16 +189,16 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 {\small 
 
 \begin{itemizeS}
-    \item Optimal constant probability model $\pix = \theta$ w.r.t. the Bernoulli loss for labels from $\Yspace = \setzo$ is 
+    \item Optimal constant probability model $\pix = \theta$ w.r.t. Bernoulli loss for labels $\Yspace = \setzo$ is 
     
     $$\thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi$$
-    \item Fraction of class-1 observations in the observed data
+    \item Fraction of class-1 observations in observed data
     \item Derived by setting derivative of risk to $0$ and solving for $\theta$
-    \item Optimal constant score model $\fx = \theta$ w.r.t. the Bernoulli loss labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is
+    \item Optimal constant score model $\fx = \theta$ w.r.t. Bernoulli loss and labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is
 
     $$\thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n}$$ 
 
-    where $\nn$ and $\np$ are the numbers of negative and positive observations.%, respectively.
+    where $\nn$ and $\np$ are numbers of negative and positive observations.%, respectively.
 
     \item Shows tight (and unsurprising) connection of this loss to log-odds. Proof is left as an exercise.
 \end{itemizeS}
@@ -204,12 +213,7 @@ For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the der
 
 \begin{vbframe}{Naming Conventions}
 
-We have seen several closely related loss functions: %In the literature, there are different names for the losses: 
-
-%\begin{eqnarray*}
-%  L(y, \fx) &=& \log(1+\exp(-y\fx)) \quad \text{for } y \in \setmp \\
-%  L(y, \fx) &=& - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo 
-%\end{eqnarray*}
+We have seen several closely related loss functions: 
 
 \begin{alignat*}{3} \Lxy    &= \log(1+\exp(-y\fx)) &&\quad \text{for } y \in \setmp \\ \Lxy    &= - y \cdot \fx + \log(1 + \exp(\fx)) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) &&\quad \text{for } y \in \setmp \end{alignat*}
 
@@ -217,17 +221,7 @@ We have seen several closely related loss functions: %In the literature, there a
 
 \lz
 
-They are equally referred to as Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss. % (showing equivalence is a simple exercise).
-
-%  $$
-%    L(y, \pix) = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \quad \text{for } y \in \setzo
-%  $$
-
-%is referred to as cross-entropy or log-loss. 
-
-%\lz 
-
-%We usually refer to all of them as \textbf{Bernoulli loss}, and rather make clear whether they are defined on labels $y \in \setzo$ or $y \in \setmp$ and on scores $\fx$ or probabilities $\pix$. 
+All named Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss
 
 \end{vbframe}
 
@@ -239,7 +233,6 @@ They are equally referred to as Bernoulli-, Binomial-, logistic-, log-, or cross
 
 In case of \textbf{complete separation}, optimization might 
 fail, e.g.:
-%Consider the following scenario:
 
 \vspace{0.5cm}
 
@@ -261,12 +254,11 @@ fail, e.g.:
 \begin{itemize}
   \item $f$ linear in $\thetav$, e.g.,
   \textbf{logistic regression} with $\fxt = \thx$
-  %\begin{itemize}
     %\small
   \item Data perfectly separable by our learner, so we can find $\thetav$:
    $$ \yi \fxit = \yi \thetav^T \xi > 0 ~~ \forall \xi$$
   
-\item Can now a construct a strictly better $\thetav$
+\item Can now construct a strictly better $\thetav$
 
 $$    \riske(2 \cdot \thetav) = \sumin  
     % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
@@ -277,17 +269,8 @@ $$
 \item As ||$\thetav$|| increases, sum strictly decreases, as argument of L is strictly larger
 
 
-\item We can iterate that, so there is no local (or global) optimum, and no numerical procedure can converge
-%  \item This actually holds true for every $a \cdot \thetav$ with $a > 1$.
-%  \begin{itemize}
-%    \small
-%    \item[$\Rightarrow$] By increasing $\| \thetav \|$, our loss becomes smaller 
-%    and smaller, and optimization runs infinitely.
-    % \item[$\Rightarrow$] This is a consequence of the above assumptions and 
-    % sometimes encountered in logistic regression and linear support vector 
-    % machines.
-  \end{itemize}
-%\end{itemize}  
+\item By induction there is no local optimum, and no num. procedure can converge
+  \end{itemize} 
 
 \framebreak
 
@@ -304,9 +287,9 @@ $$
   \begin{minipage}[b]{0.5\textwidth}
     \includegraphics[width=0.8\textwidth]{figure/softmax_2}
   \end{minipage}%
-  \item In practice, data are seldomly linearly separable and misclassified 
+  \item In practice, data are rarely linearly separable and misclassified 
   examples act as counterweights to increasing parameter values
-  \item We can also use \textbf{regularization} for  robust solutions
+  \item Can also use \textbf{regularization} for  robust solutions
 \end{itemize}
 
 \end{vbframe}

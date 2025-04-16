@@ -1,0 +1,166 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+\input{../../latex-math/ml-eval}
+
+\title{Introduction to Machine Learning}
+
+\begin{document}
+    
+\titlemeta{
+Advanced Risk Minimization
+}{
+Bias-Variance 2: \\
+Approximation and Estimation error
+}{
+figure/bias_variance_decomposition-linear_model_bias.png
+}{
+\item Capacity and Overitting
+\item Decomposing excess risk
+\item Into estimation, approx. and optim. error
+}
+
+
+
+\begin{vbframe}{Capacity and overfitting}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width = 0.6\textwidth]{figure_man/lcurve_1.png}
+    \tiny{\\ Credit: Ian Goodfellow}
+  \end{figure}
+  
+
+\begin{itemize}
+  \item Performance of a learner depends on its ability to 
+    \begin{enumerate}
+      \item \textbf{fit} the training data well
+      \item \textbf{generalize} to new data
+    \end{enumerate}  
+  \item Failure of the first point is called \textbf{underfitting}
+  \item Failure of the second point is called \textbf{overfitting}
+\end{itemize}  
+
+
+\framebreak
+
+\begin{figure}
+  \centering
+  \includegraphics[width = 0.6\textwidth]{figure_man/lcurve_1.png}
+  \tiny{\\ Credit: Ian Goodfellow}
+\end{figure}
+
+
+\begin{itemize}
+  \item The tendency of a learner to underfit/overfit is a function of its capacity, determined by the type of hypotheses it can learn
+  \item Usually: high capacity $\rightarrow$ low bias $\rightarrow$ better fit on train
+  \item But: high capacity $\rightarrow$ high variance $\rightarrow$ high chance of overfitting
+  \item For such models, regularization (discussed later) is essential
+  \item Even for correctly specified models, the generalization error is lower-bounded by the irreducible noise $\sigma^2$
+\end{itemize}
+\end{vbframe}
+
+
+\begin{vbframe}{Approximation and Estimation \citelink{BROWN2024BIAS} }
+
+\begin{itemize}
+
+\item BV decomp often confused with related (but different) decomp: 
+%\textbf{excess risk} into \textbf{estimation} and \textbf{approximation} error
+
+$$
+    \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} = \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
+$$
+
+\item Both commonly described using same figure and analogies
+
+\vfill
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.7\textwidth]{figure_man/biasvar-vs-estapprox-tradeoff.png}
+    \tiny{\\ Credit: \cite{BROWN2024BIAS}}
+  \end{figure}
+
+\vfill
+
+
+\item BV decomp. only holds for certain losses, above is universal
+
+\end{itemize}
+
+\end{vbframe}
+
+%\framebreak
+
+\begin{vbframe}{Approx./Estimation Error \citelink{BROWN2024BIAS}}
+    
+\begin{itemize}
+    \item Approx. error is a structural property of $\Hspace$
+    \item Estimation error is random due to dependence on data in $\fh$
+    \item Estimation error occurs as we choose $f \in \Hspace$ with limited train data minimizing $\riske$ instead of $\risk$
+
+\item Knowing $\fh_{\Hspace} \in \arg\inf_{f \in \Hspace} \riske(f)$ assumes we found a global minimizer of $\riske$, which is often impossible (e.g. ANNs) 
+
+\item In practice, optimizing $\riske$ gives us ``best guess'' $\tilde{f}_{\Hspace} \in \Hspace$ of $\fh_{\Hspace}$ 
+
+\item Can now decompose its excess risk finer as
+
+\begin{eqnarray*}
+    \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
+\end{eqnarray*}
+
+\item NB: Optim err. can be $< 0$, but $\riske(\tilde{f}_{\Hspace}) \geq \riske(\fh_{\Hspace})$ always
+
+\end{itemize}
+
+\framebreak
+
+\begin{itemizeM}
+
+\item We can further decompose estimation error more finely by defining the \textit{centroid} model or ``systematic'' model part.\\
+
+\item For $\fh_{\Hspace} \in  \arg\min_{f \in \Hspace} \riske(f)$ centroid model under L2 loss is mean prediction at each $x$ over all $\D_n$, $f^{\circ}_{\Hspace} := \E_{\D_n \sim \Pxy^n}[\fh_{\Hspace}] $
+
+\item With $f^{\circ}_{\Hspace}$, can decompose expected estimation error as
+$$
+ \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f ^{\ast}_{\Hspace})\right]}_{\text{expected estimation error}} = \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f^{\circ}_{\Hspace}) \right]}_{\text{estimation variance}} + \underbrace{\risk(f^{\circ}_{\Hspace})-\risk(f^{\ast}_{\Hspace})}_{\text{estimation bias}}   
+$$
+
+
+\item Estimation bias measures distance of centroid model to risk minimizer over $\Hspace$
+\item Estimation var. spread of ERM around centroid model induced by randomness due to $\D_n$
+
+\end{itemizeM}
+
+
+
+
+\framebreak
+
+\begin{itemizeM}
+
+\item Can now connect derived quantities back to bias and variance 
+\item Bias is not only approx. error and variance is not estimation error
+\item Many details skipped here, see paper!
+
+$$ \text{bias} = \text{approximation error} + \text{estimation bias} $$
+$$\text{variance} = \text{optimization error} + \text{estimation variance}$$
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.45\textwidth]{figure_man/expected-risk-decomp.png}
+    \tiny{\\ Credit: \cite{BROWN2024BIAS}}
+  \end{figure}
+
+\item \textbf{NB}: For special case of LM and L2 loss, we have very small optim / numerical error and estimation bias; so both decomps agree
+
+\end{itemizeM}
+
+\end{vbframe}
+
+\endlecture
+\end{document}
+
+
