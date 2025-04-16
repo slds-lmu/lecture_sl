@@ -23,7 +23,7 @@
   }{% Lecture title  
     Advanced Classification Losses
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/overview_classif.png
+  figure/overview_classif_all.png
   }{
   \item (squared) Hinge loss
   \item $L2$ loss defined on scores
@@ -34,9 +34,9 @@
 \begin{vbframe}{Hinge Loss}
 
 \begin{itemize}
-  \item 0-1-loss is intuitive but ill-suited to direct optimization
+  \item 0-1-loss intuitive but ill-suited for direct optimization
   \item \textbf{Hinge loss} is continuous and convex 
-  upper bound on the 0-1-loss 
+  upper bound on 0-1-loss 
   $$\Lxy = \max \{ 0, 1 - y\fx \} \quad \text{for} \ y \in \setmp$$
   \item Only zero for margin $y\fx\geq 1$, 
   encourages confident predictions
@@ -48,7 +48,7 @@
 \end{itemize}
 
 \begin{center}
-\includegraphics[width = 0.7\textwidth]{figure/hinge.png}
+\includegraphics[width = 0.8\textwidth]{figure/overview_classif_subset1.png}
 \end{center}
 
 \end{vbframe}
@@ -57,15 +57,14 @@
 \begin{vbframe}{Squared Hinge Loss}
 
 \begin{itemize}
-  \item Can also define the \textbf{squared hinge loss}:
+  \item Can also define \textbf{squared hinge loss}:
   $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
-  \item The $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts 
-  a high penalty on more confidently wrong predictions
+  \item $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
   \item Cont. differentiable yet more outlier-sensitive than hinge loss
 \end{itemize}
 
 \begin{center}
-\includegraphics[width = 0.7\textwidth]{figure/hinge_squared.png}
+\includegraphics[width = 0.8\textwidth]{figure/overview_classif_subset2.png}
 \end{center}
 
 \end{vbframe}
@@ -76,18 +75,17 @@
 % Source: https://davidrosenberg.github.io/mlcourse/Archive/2017Fall/Lectures/04a.loss-functions.pdf
 
 \begin{itemize}
-  \item Analogous to the Brier score defined on probabilities we can specify a 
-  \textbf{squared loss on classification scores} (with labels $y \in \setmp$, using 
-  that $y^2 = 1$):
+  \item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
   \begin{eqnarray*}
-  \Lxy = &(y - \fx)^2 = y^2 - 2y\fx + \fx^2 =\\
-  = &1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
+  \Lxy &=&(y - \fx)^2 = y^2 - 2y\fx + \fx^2\\
+  &=&1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
   \end{eqnarray*}
-  \item Behaves like squared hinge loss for $y\fx < 1$, but is not clipped to $0$ for $y\fx>1$ (zero only for $y\fx = 1$ and increases again in $y\fx$ which is in general not desirable!)
+  \item Like sq. hinge loss for $y\fx < 1$, but not clipped to $0$ for $y\fx>1$
+  \item Only 0 for $y\fx = 1$ and increasing again in $y\fx$ (undesirable!)
 \end{itemize}
 
 \begin{center}
-\includegraphics[width = 0.7\textwidth]{figure/squared_scores.png}
+\includegraphics[width = 0.8\textwidth]{figure/overview_classif_subset3.png}
 \end{center}
 
 \end{vbframe}
@@ -99,7 +97,7 @@
 
 \begin{itemize}
 \item Another smooth 
-approx. of 0-1-loss is the \textbf{exponential loss}:
+approx. of 0-1-loss is \textbf{exponential loss}:
 $$\Lxy = \exp(-y\fx)$$ 
 \item Used in AdaBoost
 \item Convex, differentiable (thus easier to optimize than 0-1-loss)
@@ -109,7 +107,7 @@ $$\Lxy = \exp(-y\fx)$$
 
 
 \begin{figure}
-\includegraphics[width = 0.8\textwidth]{figure/exponential.png}
+\includegraphics[width = 0.8\textwidth]{figure/overview_classif_all.png}
 \end{figure}
 
 \end{vbframe}
@@ -117,16 +115,16 @@ $$\Lxy = \exp(-y\fx)$$
 \begin{vbframe}{AUC-loss}
 
 \begin{itemize}
-\item Often AUC is used as an evaluation criterion for binary classifiers
+\item AUC often used as evaluation criterion for binary classifiers
 \item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples %$y_i, i = 1, \ldots, n_{-1} + n_1$.
-\item The AUC can then be defined as
-$$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} [f^{(i)} > f^{(j)}]$$
-\item This is not differentiable w.r.t $f$ due to indicator $[f^{(i)} > f^{(j)}]$
-\item The indicator function can be approximated by the distribution function of the triangular distribution on $[-1, 1]$ with mean $0$
-\item Direct optimization of AUC is numerically difficult, rather use common loss and tune for AUC in practice
+\item AUC can then be defined as
+$$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} \I [f^{(i)} > f^{(j)}]$$
+\item Not differentiable w.r.t $f$ due to indicator $\I [f^{(i)} > f^{(j)}]$
+\item Indicator can be approximated by distribution function of triangular distribution on $[-1, 1]$ with mean $0$
+\item Direct optimization of AUC numerically difficult, rather use common loss and tune for AUC in practice
 
 \end{itemize}
-
+\lz
 Comprehensive survey on advanced loss functions: \citelink{WANG2020COMPRE}
 
 \end{vbframe}
