@@ -43,7 +43,7 @@ train_model <- function(training_lenght,X_train,Y_train,poly_grade=1,plot_points
 }
 
 save_plot <- function(path){
-png(path)
+png(path, width = 960, height = 960, res=150)
 }
 
 data_length=40
