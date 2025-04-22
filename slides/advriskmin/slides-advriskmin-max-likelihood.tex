@@ -60,7 +60,8 @@ $$
 \end{itemize}
 
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Maximum Likelihood}
 
 \begin{itemize}
 \item Given i.i.d data $\D = \Dset$ from $\Pxy$ 
@@ -118,7 +119,6 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 \end{eqnarray*}
 }
 
-%\framebreak 
 
 \item Minimizing Gaussian NLL is ERM with $L2$-loss
 {\small
@@ -130,7 +130,8 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 }
 
 \end{itemize}
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Gaussian Errors - L2-Loss} 
 
 \begin{itemize}
 	\item Simulate data $y ~|~x \sim \mathcal{N}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$ 
@@ -162,7 +163,7 @@ $$
 %\end{minipage}%
 %\begin{minipage}{0.5\textwidth}
 \small{$\qquad$ Laplace density, $x \sim \text{LP}(0,1)$}
-\includegraphics[width = \textwidth]{slides/advriskmin/figure/laplace-plot.png}
+\includegraphics[width = \textwidth]{figure/laplace-plot.png}
 %\end{minipage}
 }
 \begin{itemize}
@@ -172,7 +173,9 @@ y = \ftrue(\xv) + \eps
 $$
 also follows Laplace distribution with mean $\fxit$ and scale  $\sigma$ 
 \end{itemize}
-\framebreak 
+
+\end{vbframe}
+\begin{vbframe}{Laplace Errors - L1-Loss}
 
 \begin{itemize}
     \item The likelihood is then 
@@ -192,7 +195,8 @@ $$
 
 \end{itemize}
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Laplace Errors - L1-Loss}
 
 \begin{itemize}
 	\item Same setup, now with $y ~|~x \sim \text{LP}\left(\ftrue(x), 1\right)$ 
@@ -251,7 +255,6 @@ $$
 $$
     
 \item But \textbf{cannot} derive a pdf/error distrib. for every loss, e.g., Hinge loss; some prob. interpretation still possible \citelink{SOLLICH1999NINTH}
-%\framebreak
 
 \item For dist.-based loss on residual $L(y,\fx)=L_{\mathbb{P}}(r)$, ERM is fully equiv. to max. conditional log-likelihood $\log(p(r))$ if
 \begin{enumerate}

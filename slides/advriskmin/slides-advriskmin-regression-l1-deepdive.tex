@@ -45,8 +45,12 @@ We now compute the derivative of the above term and set it to $0$
 \end{eqnarray*}
 
 which yields $c = \text{med}_y(y)$. 
+\end{footnotesize}
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{L1-Loss: Risk Minimizer}
+
+\begin{footnotesize}
 
 $^\ast$ \textbf{Note} that since we are computing the derivative w.r.t. the integration boundaries, we need to use Leibniz integration rule 
 
@@ -101,8 +105,10 @@ We get
 \end{center}
 
 
+\end{itemize}
 
-  \framebreak
+\end{vbframe}
+\begin{vbframe}{L1-Loss: Optimal constant model}
 
   W.l.o.g. assume now that all $\yi$ are sorted in increasing order.
 
@@ -131,7 +137,8 @@ We get
   % Now we define for $i \in \{1,\dots,i_{\max}\} \; \mathcal{I}_i := [y^{(i)},y^{(n+1-i)}].$ \\
   % From construction it follows that for  $j \in \{1,\dots,i_{\max}-1\}$
   % $$\mathcal{I}_{j+1} \subseteq \mathcal{I}_j \Rightarrow \forall i \in \{1,\dots,i_{\max}\}:  \mathcal{I}_{i_{\max}} \subseteq \mathcal{I}_i.$$
-  \framebreak 
+\end{vbframe}
+\begin{vbframe}{L1-Loss: Optimal constant model}
 
 
   From this follows that
@@ -146,16 +153,13 @@ We get
   \vspace{0.35cm}  
   Since the median fulfills these conditions, we can conclude that it minimizes 
   the $L1$ loss.
-\end{itemize}
 
-% \framebreak
 
 
 % \begin{center}
 % \includegraphics[width = 11cm ]{figure_man/L1-loss.png} \\
 % \end{center}
 
-% \framebreak 
 
 % We see that the $L1$-Loss is more robust w.r.t. outliers than the $L2$-Loss. 
 % \vspace{0.3cm}
@@ -165,7 +169,6 @@ We get
 % \includegraphics[width = 9cm ]{figure_man/L1andL2-loss.png} \\
 % \end{center}
 
-\framebreak 
 
 \end{vbframe}
 
