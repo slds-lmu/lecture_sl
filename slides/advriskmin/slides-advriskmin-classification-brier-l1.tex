@@ -11,7 +11,7 @@
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
-\input{../../latex-math/ml-trees} % For the comparison of Brier and Gini index
+\input{../../latex-math/ml-trees} 
 
 \title{Introduction to Machine Learning}
 
@@ -19,31 +19,33 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
-    L2/L1 Loss on Probabilities
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/brier.png
+  }{L2/L1 Loss on Probabilities
+  }{figure/brier.png
   }{
   \item Brier score / L2-Loss on probabilities
   \item Derivation of risk minimizer
   \item Optimal constant model 
   \item L1 loss on probabilities
   \item Calibration
-  % \item Understand the connection between Brier score and Gini splitting 
 }
 
 
 \begin{vbframe}{Brier Score}
 
+\begin{footnotesize}
+
 \begin{itemizeM}
-    \item Binary Brier score defined on probabilities $\pix \in [0, 1]$ and labels $y \in \{0, 1\}$ is $L2$ loss on probabilities $$\Lpixy = (\pix - y)^2$$
-    \item Despite convex in $\pix$ $$\Lxy=((1+\exp{(-\fx)})^{-1}-y)^2$$ as composite function not convex in $\fx$ (log. sigmoid for $\pix$)
+\item Binary Brier score defined on probabilities $\pix \in [0, 1]$ and labels $y \in \{0, 1\}$ is $L2$ loss on probabilities $$\Lpixy = (\pix - y)^2$$
+\item Despite convex in $\pix$ $$\Lxy=((1+\exp{(-\fx)})^{-1}-y)^2$$ as composite function not convex in $\fx$ (log. sigmoid for $\pix$)
+\item Exception would be so-called linear prob. model with $\pix = \thetav^T \xv$,\\
+but that is quite uncommon in ML 
 \end{itemizeM}
 
-\vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/brier.png}
 \end{center}
+
+\end{footnotesize}
 
 
 \end{vbframe}
@@ -54,9 +56,9 @@
     \item Risk minimizer for (binary) Brier score is $$\piastxtil = \eta(\xtil) = \P(y=1~|~\xv = \xtil)$$
     \item Attains minimum if prediction equals \enquote{true} prob $\eta(\xv)$ of outcome
     \item Risk minimizer for multiclass Brier score is 
-$$\piastxtil = \P(y = k ~|~ \xv = \xtil) $$
+$$\pi^{\ast}_k(\xtil) = \eta_k(\xtil) =  \P(y = k ~|~ \xv = \xtil) $$
 \end{itemizeL}
- 
+
 \framebreak
 \textbf{Proof: } We only prove the binary case. We need to minimize 
 
@@ -82,16 +84,11 @@ The expression is minimized for $c = \eta(\xv)$
 \begin{vbframe}{Brier Score: Optimal constant Model}
 
 \begin{itemizeL}
-    \item Optimal constant probability model $\pix = \theta$ w.r.t. Brier score for labels $y \in  \setzo$ is $$\argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin \left(\yi - \theta\right)^2 = \frac{1}{n} \sumin \yi$$
+    \item Optimal constant probability model for labels $\Yspace = \setzo$ is 
+    $$\argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin \left(\yi - \theta\right)^2 = \frac{1}{n} \sumin \yi$$
     \item Fraction of class-1 observations in the observed data\\ (directly follows from $L2$ proof for regression)
     \item Similarly, optimal constant for the multiclass Brier score is $$\thetah_k = \frac{1}{n}\sumin \I [\yi = k]$$
 \end{itemizeL}
-
-%\begin{equation*}
-%  \argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin \left(\yi - \theta\right)^2 = \frac{1}{n} \sumin \yi
-  %\Leftrightarrow \frac{\partial \riske(\theta)}{\partial \theta} &=& - 2 \cdot \sumin (\yi - \theta) = 0 \\
-  %\hat \theta &=& \frac{1}{n} \sumin \yi.   
-%\end{equation*}
 
 \end{vbframe}
 
@@ -101,7 +98,7 @@ The expression is minimized for $c = \eta(\xv)$
     \item As Brier score is proper scoring rule, it can be used for calibration
     \item Prediction $\pi(\mathbf{x})\in[0,1]$ called \textbf{calibrated} if 
 $$\P\bigl(y=1 \mid \pi(\mathbf{x})=p\bigr)=p \quad \forall\, p\in[0,1]$$
-    \item Means: if we predict $p$, then in $p \cdot 100\%$ of cases we observe $y=1$ (neither over- or underconfident)
+    \item Means: if we predict $p$, then in $p \cdot 100\%$ of cases we observe $y=1$ (neither over- nor underconfident)
     \item Recall RM for Brier score $\pi^*(\mathbf{x}) = \eta(\mathbf{x}) = \P(y=1 \mid \mathbf{x})$. As \(\pi^*(\mathbf{x})=\eta(\mathbf{x})\), optimal predictor satisfies $$\P\bigl(y=1 \mid \pi^*(\mathbf{x})=p\bigr)=p$$
 i.e., is perfectly calibrated
 \end{itemizeL}
@@ -111,12 +108,10 @@ i.e., is perfectly calibrated
 \begin{vbframe}{L1 loss on probabilities}
 \begin{itemizeM}
     \item Binary L1 loss on probabilities $\pix \in [0, 1]$ and labels $y \in \setzo$: $$\Lpixy = |\pix - y|$$
-    \item As L1 loss not a \textbf{strictly} proper scoring rule, should not necessarily expect good calibration
+    \item As L1 loss not a \textbf{strictly} proper scoring rule (see part on this), should not necessarily expect good calibration
     \item Despite convex in $\pix$ $$\Lxy=|(1+\exp{(-\fx)})^{-1}-y|$$ as composite function not convex in $\fx$ (log. sigmoid for $\pix$)
 \end{itemizeM}
 
-%As the L1 loss is not a \textbf{strictly} proper scoring rule, it should not necessarily be used for calibration. 
-\vspace{-0.2cm}
 \begin{center}
 \includegraphics[width = 0.6\textwidth]{figure/l1_loss.png}
 \end{center}

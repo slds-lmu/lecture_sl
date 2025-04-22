@@ -20,10 +20,8 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
-    Bernoulli Loss
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/bernoulli_prob.png
+  }{Bernoulli Loss
+  }{figure/bernoulli_prob.png
   }{
   \item Bernoulli (log, logistic, binomial) loss
   \item Risk minimizer
@@ -31,27 +29,46 @@
   \item Complete separation problem
 }
 
-\begin{vbframe}{On probs}
-\begin{small}
-Likelihood of Bernoulli RV:
+\begin{vbframe}{On probabilities}
+ 
+\begin{itemizeL}
+\item  Likelihood of Bernoulli RV:
 $$
 \LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \,\,, \, y \in \setzo
 $$
-Transform into NLL:
+\item Transform into NLL:
 $$- \loglt = \sumin - \yi \log\left(\pixit\right) - \left(1-\yi\right)\log\left(1-\pixit\right)$$
-
-Bernoulli loss: loss on single sample
+\item Bernoulli loss: loss on single sample
 $$
-\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo 
+\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \qquad y \in \setzo 
 $$ 
-\end{small}
-
-
-\begin{center}
-\includegraphics[width=0.38\textwidth]{figure/bernoulli_prob.png}    
-\end{center}
+\end{itemizeL}
 
 \end{vbframe}
+
+
+\begin{vbframe}{On probabilities}
+ 
+\begin{itemizeS}
+\item Bernoulli loss
+$$
+\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \qquad y \in \setzo 
+$$ 
+\item Confidently wrong predictions are harshly penalized
+
+\begin{center}
+\includegraphics[width=0.35\textwidth]{figure/bernoulli_prob.png}  \end{center}
+
+\item A.k.a. Binomial, log, or cross-entropy loss
+\item Can also write for $y \in \setmp $
+$$
+\Lpixy  = - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) \qquad y \in \setmp 
+$$
+\end{itemizeS}
+
+\end{vbframe}
+
+
 
 \begin{vbframe}{On decision scores}
 
@@ -59,10 +76,11 @@ $$
     \item Transform probs into scores (log-odds): $\fx = \log\left(\frac{\pix}{1 - \pix}\right)$
     \item Then $\pix = \left(1 + \exp(-\fx)\right)^{-1}$
     \item Yields equivalent loss formulation
-\end{itemize}
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
+    \item For these and other simple derivations, see deep dive
+\end{itemize}
 
-\lz
+\vfill
 
 \begin{center}
 % \includegraphics[width = 10cm ]{figure_man/bernoulli-loss.png} \\
@@ -81,22 +99,21 @@ $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 $$
   \Lxy = \log(1+\exp(-y \cdot \fx)) 
 $$
- %\item Simply check both cases for y to see
- \item For $y=-1$ plug $y'=0$ in old loss: $L(0,\fx)=\log(1+\exp(\fx)$
- \item For $y=y'=1$: 
- \begin{eqnarray*}
-  L(1,\fx)=-\fx+\log(1+\exp(\fx))&=&\log(1+\exp(\fx))-\log(\exp(\fx))\\
-  &=&\log(1+\exp(-\fx)
-\end{eqnarray*}
+%  \item For $y=-1$ plug $y'=0$ in old loss: $L(0,\fx)=\log(1+\exp(\fx)$
+%  \item For $y=y'=1$: 
+%  \begin{eqnarray*}
+%   L(1,\fx)=-\fx+\log(1+\exp(\fx))&=&\log(1+\exp(\fx))-\log(\exp(\fx))\\
+%   &=&\log(1+\exp(-\fx)
+% \end{eqnarray*}
  
- %$$L(1,\fx)=-\fx+\log(1+\exp(\fx))=-\log(\exp(\fx))+\log(1+\exp(\fx))=\log(1+\exp(-\fx))$$
- \item Convert between 2 encodings using $y=2y'-1$ for $y' \in \setzo$
- %\item Transformation $y=2y'-1$ and $y'=(y+1)/2$ help convert between 2 encodings $y' \in \setzo, y \in \setmp$
- \item All loss variants convex, differentiable
+%  \item Convert between 2 encodings using $y=2y'-1$ for $y' \in \setzo$
+\item All loss variants convex, differentiable
 \end{itemize}
 
+ \vfill
+
 \begin{center}
-\includegraphics[width = 6cm]{figure/bernoulli_margin.png}
+\includegraphics[width = 8cm]{figure/bernoulli_margin.png}
 \end{center}
 
 \end{vbframe}
@@ -104,20 +121,19 @@ $$
 
 \begin{vbframe}{Risk Minimizer on Probs}
 
-For probs and $y \in \setzo$ is
-
+\begin{itemize}
+    \item For probs and $y \in \setzo$, the risk minimizer is
 $$
-  \piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil). 
+  \piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil) 
 $$
+\end{itemize}
 
-\textbf{Proof:} We had seen before
+%% BB: I am keeping this proof here for didactive purposes
 
+\textbf{Proof:} We have seen before
 $$
   \riskf = \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right]
 $$
-
-\vfill
-
 
 For fixed $\xv$, minimize inner part pointwise, use $c\in(0,1)$ for best value:
 
@@ -136,161 +152,131 @@ For fixed $\xv$, minimize inner part pointwise, use $c\in(0,1)$ for best value:
 
 
 \begin{itemizeS}
-    \item For $y \in \{-1, 1\}$ and scores $\fx$: RM is pointwise log-odds
+\item For $y \in \{-1, 1\}$ and scores $\fx$: RM is pointwise log-odds
+$$\fxbayes =  \log (\frac{\eta(\xv) }{1-\eta(\xv) })$$
+\item Undefined for $\eta(\xv) \in \setzo$
+\item Monotonously increasing in $\eta(\xv)$, with  $\fbayes(\xv) = 0$ if $\eta(\xv)=0.5$
+
 \end{itemizeS}
 
+\vfill
 
-\begin{minipage}{0.3\textwidth} 
-	\centering
-	{$\fxbayes =  \log (\frac{\eta(\xv) }{1-\eta(\xv) })$}
-\end{minipage}
-\hspace{-.03\textwidth}
-\begin{minipage}{0.7\textwidth}
-	\centering	
-	\includegraphics[width=0.7\textwidth]{figure/logistic_inverse.png}
-\end{minipage}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{figure/logistic_inverse.png}
+\end{center}
 
-\begin{itemizeM}
-    \item Undefined for $\eta(\xv) \in \setzo$
-    \item Predicts smooth curve increasing in $\P(y=1~|~\xv = \xtil)$ otherwise
-    \item Equals $0$ when $\P(y=1~|~\xv = \xtil) = 0.5$
-\end{itemizeM}
+% \textbf{Proof: } As before we minimize 
+% \begin{eqnarray*}
+%   \riskf &=& \E_x \left[L(1, \fx) \cdot \eta(\xv) + L(-1, \fx) \cdot (1 - \eta(\xv)) \right] \\
+%   &=& \E_x \left[ \log(1 + \exp(- \fx)) \eta(\xv)+ \log(1 + \exp(\fx)) (1 - \eta(\xv)) \right] 
+% \end{eqnarray*}
 
+% For fixed $\xv$ we get pointwise optimal value $c$ by setting derivative to $0$: 
 
-\framebreak 
-
-\textbf{Proof: } As before we minimize 
-\begin{eqnarray*}
-  \riskf &=& \E_x \left[L(1, \fx) \cdot \eta(\xv) + L(-1, \fx) \cdot (1 - \eta(\xv)) \right] \\
-  &=& \E_x \left[ \log(1 + \exp(- \fx)) \eta(\xv)+ \log(1 + \exp(\fx)) (1 - \eta(\xv)) \right] 
-\end{eqnarray*}
-
-For fixed $\xv$ we get pointwise optimal value $c$ by setting derivative to $0$: 
-
-\begin{footnotesize}
-  \begin{eqnarray*}
-  \frac{\partial }{\partial c} \log(1 + \exp(-c)) \eta(\xv)+ \log(1 + \exp(c)) (1 - \eta(\xv)) &=& 0 \\
-  - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{\exp(c)}{1 + \exp(c)} (1 - \eta(\xv)) &=& 0 \\ 
-  % - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{1}{1 + \exp(- c)} (1 - \eta(\xv)) &=& 0\\ 
-  % &=& -  \frac{\exp(-c)}{1 + \exp(-c)} p + \frac{1}{1 + \exp(-c)} - \frac{1}{1 + \exp(-c)} p \\
-  - \frac{\exp(-c) \eta(\xv) - 1 + \eta(\xv)}{1 + \exp(-c)} &=& 0 \\
-  - \eta(\xv) + \frac{1}{1 + \exp(-c)} &=& 0\\
-  % \eta(\xv) &=& \frac{1}{1 + \exp(-c)} \\
-   c &=& \log\left(\frac{\eta(\xv)}{1 - \eta(\xv)}\right)
-  \end{eqnarray*}
-\end{footnotesize}
+% \begin{footnotesize}
+%   \begin{eqnarray*}
+%   \frac{d }{d c} \log(1 + \exp(-c)) \eta(\xv)+ \log(1 + \exp(c)) (1 - \eta(\xv)) &=& 0 \\
+%   - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{\exp(c)}{1 + \exp(c)} (1 - \eta(\xv)) &=& 0 \\ 
+%   % - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{1}{1 + \exp(- c)} (1 - \eta(\xv)) &=& 0\\ 
+%   % &=& -  \frac{\exp(-c)}{1 + \exp(-c)} p + \frac{1}{1 + \exp(-c)} - \frac{1}{1 + \exp(-c)} p \\
+%   - \frac{\exp(-c) \eta(\xv) - 1 + \eta(\xv)}{1 + \exp(-c)} &=& 0 \\
+%   - \eta(\xv) + \frac{1}{1 + \exp(-c)} &=& 0\\
+%   % \eta(\xv) &=& \frac{1}{1 + \exp(-c)} \\
+%    c &=& \log\left(\frac{\eta(\xv)}{1 - \eta(\xv)}\right)
+%   \end{eqnarray*}
+% \end{footnotesize}
 
 \end{vbframe}
 
 
 
-\begin{vbframe}{Bernoulli: Optimal constant Model}
+\begin{vbframe}{Empirical optimal constant models}
 
-{\small 
 
-\begin{itemizeS}
-    \item Optimal constant probability model $\pix = \theta$ w.r.t. Bernoulli loss for labels $\Yspace = \setzo$ is 
+\begin{itemizeL}
+\item Optimal constant probability model for labels $\Yspace = \setzo$ is 
+$$\thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi$$
+\item Fraction of class-1 observations in observed data
+%\item Derived by setting derivative of risk to $0$ and solving for $\theta$
+\item Optimal constant score model:
+$$\thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n}$$ 
+$\nn$ and $\np$ are nr.  of neg. and pos. observations
+\item Again shows connection to log-odds 
+\end{itemizeL}
+
+\end{vbframe}
+
+%% BB: we dont need summary slides
+% \begin{vbframe}{Naming Conventions}
+
+% \begin{itemize}
     
-    $$\thetah = \argmin_{\theta} \risket = \frac{1}{n} \sumin \yi$$
-    \item Fraction of class-1 observations in observed data
-    \item Derived by setting derivative of risk to $0$ and solving for $\theta$
-    \item Optimal constant score model $\fx = \theta$ w.r.t. Bernoulli loss and labels from $\Yspace = \setmp$ or $\Yspace = \setzo$ is
+% \item We have seen several closely related loss functions: 
+% \begin{alignat*}{3} \Lxy    &= \log(1+\exp(-y\fx)) &&\quad \text{for } y \in \setmp \\ \Lxy    &= - y \cdot \fx + \log(1 + \exp(\fx)) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) &&\quad \text{for } y \in \setzo \\ 
+% \Lpixy  &= - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) &&\quad \text{for } y \in \setmp \end{alignat*}
 
-    $$\thetah = \argmin_{\theta} \risket = \log \frac{\np}{\nn} = \log \frac{\np / n}{\nn /n}$$ 
+% \item Names that are used interchangeably: Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss
+% \end{itemize}
 
-    where $\nn$ and $\np$ are numbers of negative and positive observations.%, respectively.
-
-    \item Shows tight (and unsurprising) connection of this loss to log-odds. Proof is left as an exercise.
-\end{itemizeS}
-
-}
-
-
-
-
-
-\end{vbframe}
-
-\begin{vbframe}{Naming Conventions}
-
-We have seen several closely related loss functions: 
-
-\begin{alignat*}{3} \Lxy    &= \log(1+\exp(-y\fx)) &&\quad \text{for } y \in \setmp \\ \Lxy    &= - y \cdot \fx + \log(1 + \exp(\fx)) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) &&\quad \text{for } y \in \setmp \end{alignat*}
-
-
-
-\lz
-
-All named Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss
-
-\end{vbframe}
+% \end{vbframe}
 
 
 \begin{vbframe}{Optimization Properties: Convergence}
 
-\footnotesize
+\begin{footnotesize}
 %The choice of the loss function may also impact convergence behavior.
 
-In case of \textbf{complete separation}, optimization might 
-fail, e.g.:
+\begin{itemize}
 
-\vspace{0.5cm}
+\item In case of \textbf{complete separation}, optimization might 
+fail
 
-\begin{minipage}{0.7\textwidth}
-  \begin{itemize}
-    \item \textbf{Bernoulli loss} is margin-based and strictly monotonically decreasing in
-    $y \cdot \fx$: 
-    % \scriptsize
-    $$\Lxy = \log \left( 1 + \exp \left( - y  \fx \right)\right)$$
-  \end{itemize}
-\end{minipage}%
-\begin{minipage}{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}{0.25\textwidth}
+\begin{minipage}{0.6\textwidth}
+\item Loss strictly decreasing in margin
+$y \cdot \fx$: 
+$$\Lxy = \log \left( 1 + \exp \left( - y  \fx \right)\right)$$
+\item $f$ linear in $\thetav$, e.g.,
+\textbf{log. regr.} with $\fxt = \thx$
+
+\end{minipage}
+\begin{minipage}{0.30\textwidth}
   \includegraphics[width=\textwidth]{figure/bernoulli.png}
 \end{minipage}%
 
-\begin{itemize}
-  \item $f$ linear in $\thetav$, e.g.,
-  \textbf{logistic regression} with $\fxt = \thx$
-    %\small
-  \item Data perfectly separable by our learner, so we can find $\thetav$:
-   $$ \yi \fxit = \yi \thetav^T \xi > 0 ~~ \forall \xi$$
-  
+\item Assume data separable, so we can find $\thetav$:
+$$ \yi \fxit = \yi \thetav^T \xi > 0 ~~ \forall \xi$$
+
 \item Can now construct a strictly better $\thetav$
 
-$$    \riske(2 \cdot \thetav) = \sumin  
-    % \log \left( 1 + \exp \left( - |2 \thetav^T \xi| \right)\right) \\
-    L \left( 2 \yi \thetav^T \xi  
-    \right) < \risket
+$$    
+\riske(2 \cdot \thetav) = \sumin L ( 2 \yi \thetav^T \xi) < \risket
 $$
 
 \item As ||$\thetav$|| increases, sum strictly decreases, as argument of L is strictly larger
 
+\item Loss is bounded from below, but no global optimium, cannot converge
+\end{itemize} 
+\end{footnotesize}
 
-\item By induction there is no local optimum, and no num. procedure can converge
-  \end{itemize} 
 
 \framebreak
 
-\begin{itemize}
-  \small
-  \item
-  Geometrically, this translates to an ever steeper slope of the 
-  logistic/softmax function, i.e., increasingly sharp discrimination:
-  
-  \vspace{0.3cm}
-  \begin{minipage}[b]{0.5\textwidth}
-    \includegraphics[width=0.8\textwidth]{figure/softmax_1}
-  \end{minipage}%
-  \begin{minipage}[b]{0.5\textwidth}
-    \includegraphics[width=0.8\textwidth]{figure/softmax_2}
-  \end{minipage}%
-  \item In practice, data are rarely linearly separable and misclassified 
-  examples act as counterweights to increasing parameter values
-  \item Can also use \textbf{regularization} for  robust solutions
-\end{itemize}
+\begin{itemizeL}
+\item
+Geometrically, this translates to an ever steeper slope of the 
+logistic/softmax function, i.e., increasingly sharp discrimination:
+
+\vspace{0.3cm}
+\begin{minipage}[b]{0.5\textwidth}
+\includegraphics[width=0.8\textwidth]{figure/softmax_1}
+\end{minipage}%
+\begin{minipage}[b]{0.5\textwidth}
+\includegraphics[width=0.8\textwidth]{figure/softmax_2}
+\end{minipage}%
+\item In practice, data are rarely linearly separable and misclassified 
+examples act as counterweights to increasing parameter values
+\item Can also use \textbf{regularization} for  robust solutions
+\end{itemizeL}
 
 \end{vbframe}
 
