@@ -23,7 +23,7 @@
   }{Bernoulli Loss
   }{figure/bernoulli_prob.png
   }{
-  \item Bernoulli (log, logistic, binomial) loss
+  \item Bernoulli (log, logistic, binomial, cross-entropy) loss
   \item Risk minimizer
   \item Optimal constant
   \item Complete separation problem
@@ -34,13 +34,13 @@
 \begin{itemizeL}
 \item  Likelihood of Bernoulli RV:
 $$
-\LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \,\,, \, y \in \setzo
+\LLt = \prodin \pixit^{\yi} \left(1-\pixit\right)^{1-\yi} \qquad  y \in \setzo
 $$
 \item Transform into NLL:
 $$- \loglt = \sumin - \yi \log\left(\pixit\right) - \left(1-\yi\right)\log\left(1-\pixit\right)$$
 \item Bernoulli loss: loss on single sample
 $$
-\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \qquad y \in \setzo 
+\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) \qquad  y \in \setzo 
 $$ 
 \end{itemizeL}
 
