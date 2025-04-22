@@ -32,9 +32,9 @@ p_1 <- ggplot(data.frame(x_1, y), aes(x = x_1, y = y)) +
 p_1 <- p_1 + 
   annotate(
     "text",
-    x = 2,
+    x = 1.5,
     y = 2,
-    label = expression(L(y, f(x)) == ln(1 + exp(-y * f(x)))),
+    label = expression(L(y, f(x)) == log(1 + exp(-y * f(x)))),
     size = 7)
 
 p_1 <- p_1 + theme(text = element_text(size = 20))
