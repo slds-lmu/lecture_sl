@@ -16,50 +16,13 @@ Approximation and Estimation error
 }{
 figure/bias_variance_decomposition-linear_model_bias.png
 }{
-\item Capacity and Overitting
 \item Decomposing excess risk
 \item Into estimation, approx. and optim. error
 }
 
 
 
-\begin{vbframe}{Capacity and overfitting}
 
-  \begin{figure}
-    \centering
-    \includegraphics[width = 0.6\textwidth]{figure_man/lcurve_1.png}
-    \tiny{\\ Credit: Ian Goodfellow}
-  \end{figure}
-  
-
-\begin{itemize}
-  \item Performance of a learner depends on its ability to 
-    \begin{enumerate}
-      \item \textbf{fit} the training data well
-      \item \textbf{generalize} to new data
-    \end{enumerate}  
-  \item Failure of the first point is called \textbf{underfitting}
-  \item Failure of the second point is called \textbf{overfitting}
-\end{itemize}  
-
-
-\framebreak
-
-\begin{figure}
-  \centering
-  \includegraphics[width = 0.6\textwidth]{figure_man/lcurve_1.png}
-  \tiny{\\ Credit: Ian Goodfellow}
-\end{figure}
-
-
-\begin{itemize}
-  \item The tendency of a learner to underfit/overfit is a function of its capacity, determined by the type of hypotheses it can learn
-  \item Usually: high capacity $\rightarrow$ low bias $\rightarrow$ better fit on train
-  \item But: high capacity $\rightarrow$ high variance $\rightarrow$ high chance of overfitting
-  \item For such models, regularization (discussed later) is essential
-  \item Even for correctly specified models, the generalization error is lower-bounded by the irreducible noise $\sigma^2$
-\end{itemize}
-\end{vbframe}
 
 
 \begin{vbframe}{Approximation and Estimation \citelink{BROWN2024BIAS} }
