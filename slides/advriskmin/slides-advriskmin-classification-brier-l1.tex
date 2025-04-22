@@ -22,10 +22,10 @@
   }{L2/L1 Loss on Probabilities
   }{figure/brier.png
   }{
-  \item Brier score / L2-Loss on probabilities
+  \item Brier score / $L2$ loss on probabilities
   \item Derivation of risk minimizer
   \item Optimal constant model 
-  \item L1 loss on probabilities
+  \item $L1$ loss on probabilities
   \item Calibration
 }
 
@@ -36,15 +36,24 @@
 
 \begin{itemizeM}
 \item Binary Brier score defined on probabilities $\pix \in [0, 1]$ and labels $y \in \{0, 1\}$ is $L2$ loss on probabilities $$\Lpixy = (\pix - y)^2$$
-\item Despite convex in $\pix$ $$\Lxy=((1+\exp{(-\fx)})^{-1}-y)^2$$ as composite function not convex in $\fx$ (log. sigmoid for $\pix$)
+\item Despite convex in $\pix$ $$\Lxy=((1+\exp{(-\fx)})^{-1}-y)^2$$ as composite function not convex in $\fx$
 \item Exception would be so-called linear prob. model with $\pix = \thetav^T \xv$,\\
 but that is quite uncommon in ML 
 \end{itemizeM}
 
-\begin{center}
-\includegraphics[width = 0.45\textwidth]{figure/brier.png}
-\includegraphics[width = 0.45\textwidth]{figure/brier_on_score.png}
-\end{center}
+% \vspace{-0.2cm}
+% \begin{center}
+% \includegraphics[width = 0.45\textwidth]{figure/brier.png}
+% \includegraphics[width = 0.45\textwidth]{figure/brier_on_score.png}
+% \end{center}
+
+\lz 
+
+\splitVCC{
+\includegraphics[width = \textwidth]{figure/brier.png}
+}{
+\includegraphics[width = \textwidth]{figure/brier_on_score.png}
+}
 
 \end{footnotesize}
 
@@ -87,7 +96,7 @@ The expression is minimized for $c = \eta(\xv)$
 
 \begin{itemizeL}
     \item Optimal constant probability model for labels $\Yspace = \setzo$ is 
-    $$\argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin \left(\yi - \theta\right)^2 = \frac{1}{n} \sumin \yi$$
+    $$\thetah=\argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin \left(\yi - \theta\right)^2 = \frac{1}{n} \sumin \yi$$
     \item Fraction of class-1 observations in the observed data\\ (directly follows from $L2$ proof for regression)
     \item Similarly, optimal constant for the multiclass Brier score is $$\thetah_k = \frac{1}{n}\sumin \I [\yi = k]$$
 \end{itemizeL}
@@ -110,15 +119,21 @@ i.e., is perfectly calibrated
 \begin{vbframe}{L1 loss on probabilities}
 \begin{itemizeM}
     \item Binary L1 loss on probabilities $\pix \in [0, 1]$ and labels $y \in \setzo$: $$\Lpixy = |\pix - y|$$
-    \item As L1 loss not a \textbf{strictly} proper scoring rule (see part on this), should not necessarily expect good calibration
-    \item Despite convex in $\pix$ $$\Lxy=|(1+\exp{(-\fx)})^{-1}-y|$$ as composite function not convex in $\fx$ (log. sigmoid for $\pix$)
+    \item As L1 loss not a proper scoring rule (see part on this), should not necessarily expect good calibration
+    \item Despite convex in $\pix$ $$\Lxy=|(1+\exp{(-\fx)})^{-1}-y|$$ as composite function not convex in $\fx$ 
 \end{itemizeM}
 
-\begin{center}
-\includegraphics[width = 0.45\textwidth]{figure/l1_loss.png}
-\includegraphics[width = 0.45\textwidth]{figure/l1_loss_on_score.png}
-\end{center}
+\lz
 
+% \begin{center}
+% \includegraphics[width = 0.45\textwidth]{figure/l1_loss.png}
+% \includegraphics[width = 0.45\textwidth]{figure/l1_loss_on_score.png}
+% \end{center}
+\splitVCC{
+\includegraphics[width = \textwidth]{figure/l1_loss.png}
+}{
+\includegraphics[width = \textwidth]{figure/l1_loss_on_score.png}
+}
 
 \end{vbframe}
 
