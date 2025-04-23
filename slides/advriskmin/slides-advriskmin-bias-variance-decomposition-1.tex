@@ -36,7 +36,7 @@ GE_n\left(\ind\right) = \E_{\D_n \sim \Pxy^n, (\xv, y) \sim \Pxy}\left[ L\left(y
 $$
 
 \item $\E$ taken over all train sets \textbf{and} independent test sample. Could also frame this as expected risk (expectation over $\D_n$)
-$$GE_n\left(\ind\right) = \E_{\D_n}\E_{xy}\left[ L\left(y, \fh_{\D_n}(\xv)\right)\right] =  \E_{\D_n}\left[\risk(\fh_{\D_n})\right]$$
+$$GE_n\left(\ind\right) = \E_{\D_n}\left[\E_{xy}\left[ L\left(y, \fh_{\D_n}(\xv)\right)\right]\right] =  \E_{\D_n}\left[\risk(\fh_{\D_n})\right]$$
 
 \item For L2 loss, can additively decompose  $GE_n\left(\ind\right)$ into 3 components
 
@@ -64,7 +64,7 @@ $$
     whatever we we do, will never be better
   \item Second: how much \textbf{$\fh_{\D_n}(\xv)$ fluctuates} at test $\xv$ if we vary training data, averaged over feature space; = learner's tendency to learn random things irrespective of real signal (overfitting)
   
-  \item Third: how ``off'' are we on average at test locations (underfitting); uses ``average model integrated out over all $\D_n$; \\
+  \item Third: how ``off'' are we on average at test locations (underfitting); uses ``average model integrated out over all $\D_n$''; \\
   models with high capacity have low \textbf{bias} and vice versa
 \end{enumerate}
 

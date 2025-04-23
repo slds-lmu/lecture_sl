@@ -25,7 +25,7 @@ figure/bias_variance_decomposition-linear_model_bias.png
 
 
 
-\begin{vbframe}{Approximation and Estimation \citelink{BROWN2024BIAS} }
+\begin{vbframe}{Approx./Estimation Error \citelink{BROWN2024BIAS}}
 
 \begin{itemize}
 
@@ -53,12 +53,10 @@ $$
 
 \end{itemize}
 
-\end{vbframe}
 
-%\framebreak
+\framebreak
 
-\begin{vbframe}{Approx./Estimation Error \citelink{BROWN2024BIAS}}
-    
+   
 \begin{itemize}
     \item Approx. error is a structural property of $\Hspace$
     \item Estimation error is random due to dependence on data in $\fh$
@@ -82,7 +80,7 @@ $$
 
 \begin{itemizeM}
 
-\item We can further decompose estimation error more finely by defining the \textit{centroid} model or ``systematic'' model part.\\
+\item We can further decompose estimation error more finely by defining the \textit{centroid} model or ``systematic'' model part
 
 \item For $\fh_{\Hspace} \in  \arg\min_{f \in \Hspace} \riske(f)$ centroid model under L2 loss is mean prediction at each $x$ over all $\D_n$, $f^{\circ}_{\Hspace} := \E_{\D_n \sim \Pxy^n}[\fh_{\Hspace}] $
 
