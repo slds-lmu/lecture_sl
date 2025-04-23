@@ -76,7 +76,9 @@ $$
 
 
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Risk minimization and impurity}
+
 \begin{footnotesize}
 \begin{eqnarray*}
 \risk(\Np) &=& \sum_{\xy \in \Np} \left(- \sum_{k = 1}^g [y = k] \log \pi_k(\xv) \right) \\
@@ -91,7 +93,6 @@ $$
 Bernoulli-risk of the split $\risk(\text{split})$ is proportional to its entropy-impurity $\text{Imp(split)}$, i.e., $\argmin_\text{split} \risk(\text{split}) = \argmin_\text{split} \text{Imp(split)}$ \\
 
 \end{footnotesize}
-% \framebreak
 
 
 \end{vbframe}
@@ -122,12 +123,10 @@ $$
 $$
 
 
+\end{vbframe}
+\begin{vbframe}{Brier score minimization = Gini splitting}
+
 \begin{footnotesize}
-
-
-
-\framebreak
-
 %\vspace*{-0.5cm}
 \begin{eqnarray*}
 \risk(\Np) &=& \sum_{\xy \in \Np}  \sum_{k = 1}^g \left([y = k] - \pikN\right)^2 
@@ -143,7 +142,13 @@ $$
 
 since for $n_{\Np,k}$ observations the condition $y = k$ is met, and for the remaining $(n_\Np - n_{\Np,k})$ observations it is not. 
 
-\framebreak
+\end{footnotesize}
+
+\end{vbframe}
+
+\begin{vbframe}{Brier score minimization = Gini splitting}
+
+\begin{footnotesize}
 We further simplify the expression to
 
 % \begin{footnotesize}

@@ -23,7 +23,7 @@
   \end{itemize} 
 }
 
-\begin{vbframe} {Bias-Variance decomposition}
+\begin{vbframe}{Bias-Variance decomposition}
 
 Generalization error of learner  $\ind$: 
 Expected error of model $\fh_{\D_n}$, on training sets of size $n$, evaluated on a fresh, random test sample.
@@ -38,7 +38,8 @@ y = \ftrue(\xv) + \epsilon
 $$
 with zero-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$ independent of $\xv$.  
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Bias-Variance decomposition}
 
 By plugging in the $L2$ loss $L(y, f(\xv)) = (y - f(\xv))^2$ we get
 
@@ -61,7 +62,9 @@ Let us consider the error $(*)$ conditioned on one fixed test observation $(\xv,
 
 by using the linearity of the expectation.  %and $\var(y) = \E(y^2) - \E^2(y)$. 
 
-\framebreak
+\end{vbframe}
+\begin{vbframe}{Bias-Variance decomposition}
+
 \begin{footnotesize}
 $$
 (*) = \E_{\D_n}\left(\left(y - \fh_{\D_n}(\xv)\right)^2\right) = 
@@ -91,7 +94,8 @@ $$
 \end{footnotesize}
 
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Bias-Variance decomposition}
 
 \begin{footnotesize}
 $$

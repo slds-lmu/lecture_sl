@@ -67,7 +67,8 @@ We can solve this constrained optimization problem by plugging the constraint in
  \theta_g = 1 - \sum^{g-1}_{j=1}\theta_j.
 $
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe}{Multiclass log loss: Emp. Risk Minimizer}
 With this, we find the equivalent optimization problem
 \begin{eqnarray*}
   \argminl_{\theta \in (0, 1)^{g-1}}\riske  & = & \argminl_{\theta \in (0, 1)^{g-1}}
@@ -84,7 +85,8 @@ For $j \in \{1,\dots,g-1\}$, the $j$-th partial derivative of our objective
 \end{eqnarray*}
 where $n_k$ with $k\in \{1,\dots, g\}$ is the number of label $k$ in $y$ and we assume that $n_k > 0.$
 
-\framebreak
+\end{vbframe}
+\begin{vbframe}{Multiclass log loss: Emp. Risk Minimizer}
 
 For the minimizer, it must hold for $j \in \{1,\dots,g-1\}$ that
 \begin{eqnarray*}
@@ -98,6 +100,7 @@ For the minimizer, it must hold for $j \in \{1,\dots,g-1\}$ that
     \left(\Rightarrow \sum\nolimits^{g-1}_{j=1}\hat{\theta}_j = 1- \hat{\theta}_g = 1 - \frac{n_g}{n} < 1 \checkmark
 \right)
 \end{eqnarray*}
+
 \end{vbframe}
 
 \begin{vbframe}{Convexity}

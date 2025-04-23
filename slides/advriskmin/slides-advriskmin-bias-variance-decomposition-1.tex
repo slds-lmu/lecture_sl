@@ -50,7 +50,8 @@ with 0-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$; independent of $\
 
 \end{itemize} 
 
-\framebreak 
+\end{vbframe}
+\begin{vbframe} {Bias-variance decomposition}
 
 
 $GE_n\left(\ind\right) =$  
@@ -183,20 +184,21 @@ better if we avg. over more models and test points
 
 \end{footnotesize}
 
-\end{vbframe} 
+\end{vbframe}
 
 
-\begin{vbframe} {Higher complexity learner}
+\begin{vbframe}{Higher complexity learner}
 
 \begin{itemize}
 \item Same procedure, but using a high-degree polynomial ($d=7$)
+\end{itemize}
 
 \begin{center}
   \includegraphics[width = 0.55\textwidth]{figure/bias_variance_decomposition-complex_model.png}
 \end{center}
 
-
-\framebreak
+\end{vbframe} 
+\begin{vbframe}{Higher complexity learner}
 
 \begin{center}
   \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-complex_model_bias.png}
@@ -210,6 +212,7 @@ $$GE_n\left(\ind\right) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
 \vfill
 
 
+\begin{itemize}
 \item GE higher than before, although hypo space now contains $\ftrue$
 \item Bias is lower, and variance higher 
 \item Higher capacity learner overfits (here).\\
@@ -217,10 +220,13 @@ $$GE_n\left(\ind\right) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
    
 \item NB: There is an ``edge effect'' on LHS, Runge effect,\\
   leads to higher bias as ``artifact'' here (ignore this)
+\end{itemize}
 
 
-\framebreak
+\end{vbframe}
+\begin{vbframe} {Higher complexity learner}
 
+\begin{itemize}
 \item What happens if we use a model with the same complexity as the true model (quadratic polynomial)? 
 \end{itemize}
 
@@ -228,7 +234,8 @@ $$GE_n\left(\ind\right) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
   \includegraphics[width = 0.55\textwidth]{figure/bias_variance_decomposition-correct_model.png}
 \end{center}
 
-\framebreak
+\end{vbframe}
+\begin{vbframe} {Higher complexity learner}
 
 \begin{center}
   \includegraphics[width = 0.3\textwidth]{figure/bias_variance_decomposition-correct_model_bias.png}
@@ -269,7 +276,8 @@ $$GE_n\left(\ind\right) \approx 1 + 0.008 + 0.082 = 1.09 $$
 \end{itemize}  
 
 
-\framebreak
+\end{vbframe}
+\begin{vbframe}{Capacity and overfitting}
 
 \begin{figure}
   \centering
