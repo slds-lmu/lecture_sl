@@ -22,19 +22,19 @@ figure_man/discrete/marginalization-more.png
 }
 
 \begin{framei}[sep=L]{Weight-Space View}
-    \item Until now: hypothesis space $\Hspace$ of parameterized functions $\fxt$ % (in particular, the space of linear functions)
-    \item Bayesian paradigm: distribution over parameters (weights) $\thetav$
-    \item Bayes' rule: update prior to posterior belief after observing data
-    $$
-    p(\thetav | \Xmat, \yv) 
-    = \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
-    = \frac{p(\yv | \Xmat, \thetav) \cdot q(\thetav)}{p(\yv|\Xmat)}
-    $$
+\item Until now: hypothesis space $\Hspace$ of parameterized functions $\fxt$ % (in particular, the space of linear functions)
+\item Bayesian paradigm: distribution over parameters (weights) $\thetav$
+\item Bayes' rule: update prior to posterior belief after observing data
+$$
+p(\thetav | \Xmat, \yv) 
+= \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
+= \frac{p(\yv | \Xmat, \thetav) \cdot q(\thetav)}{p(\yv|\Xmat)}
+$$
 \end{framei}
 
 \begin{framei}[sep=L]{Function-Space View}
-    \item New POV: rather than finding $\thetav$ to parameterize $\fxt$ in parameter space,  search space of admissible functions directly
-    \item Sticking to Bayesian inference, specify prior distribution \textbf{over functions} and update according to observed data points
+\item New POV: rather than finding $\thetav$ to parameterize $\fxt$ in parameter space,  search space of admissible functions directly
+\item Sticking to Bayesian inference, specify prior distribution \textbf{over functions} and update according to observed data points
 \end{framei}
 
 \begin{framei}{drawing from function priors}

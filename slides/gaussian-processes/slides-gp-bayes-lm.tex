@@ -8,16 +8,16 @@
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
-    Gaussian Processes
-  }{% Lecture title  
-    Bayesian Linear Model
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/bayes_lm/posterior_5_3.pdf
-  }{
-  \item Know the Bayesian linear model
-  \item The Bayesian LM returns a (posterior) distribution instead of a point estimate
-  \item Know how to derive the posterior distribution for a Bayesian LM 
+\titlemeta{
+Gaussian Processes
+}{
+Bayesian Linear Model
+}{
+figure/bayes_lm/posterior_5_3.pdf
+}{
+\item Know the Bayesian linear model
+\item The Bayesian LM returns a (posterior) distribution instead of a point estimate
+\item Know how to derive the posterior distribution for a Bayesian LM 
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,166 +29,277 @@
 \item $\yv = \yvec$
 \end{framei}
 
-\begin{vbframe}{Review: The Bayesian Linear Model}
+\begin{framei}[sep=L]{the bayesian linear model revisited}
+\item Standard linear regression model for $i$-th observation, with $\thetav \in \R^p$ fixed but unknown
+$$\yi = \fxi + \epsi = \thetav^T \xi + \epsi, \quad \text{for } i \in \nset$$
+\item Bayesian perspective: $\thetav$ = RV with associated distribution
+\item Function outputs $\fxi$ differ from observed values $\yi$ by some additive noise assumed to be i.i.d. Gaussian
+$$\epsi \sim \mathcal{N}(0, \sigma^2) \quad \forall i$$ 
+$\Rightarrow$ Independent of $\xv, \thetav$
+\end{framei}
 
-Let $\D = \left\{(\xi[1], \yi[1]), ..., (\xi[n], \yi[n])\right\}$ be a training set of i.i.d. observations from some unknown distribution.
-
-\begin{figure}
-  \includegraphics[width=0.6\textwidth]{figure/bayes_lm/example.pdf}
-\end{figure}
-
-Let $\yv = (\yi[1], ..., \yi[n])^\top$ and $\Xmat \in \R^{n \times p}$ be the design matrix where the i-th row contains vector $\xi$.  
-
-\framebreak
-
-The linear regression model is defined as
-
+\begin{framei}[sep=L]{from prior to posterior}
+\item Prior belief about parameter distribution, e.g., $\thetav \sim \normal(\zero, \tau^2 \id_p)$
+\item Bayes' rule: update prior to posterior belief after observing data
 $$
-y = \fx + \epsilon = \thetav^T \xv + \epsilon 
+p(\thetav | \Xmat, \yv) 
+= \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
+= \frac{p(\yv | \Xmat, \thetav) \cdot q(\thetav)}{p(\yv|\Xmat)}
 $$
-
-or on the data:
-
-\begin{eqnarray*}
-\yi &=& \fxi + \epsi = \thetav^T \xi + \epsi, \quad \text{for } i \in \{1, \ldots, n\}
-\end{eqnarray*}
-
-
-We now assume (from a Bayesian perspective) that also our parameter vector $\thetav$ is stochastic and follows a distribution.
-The observed values $\yi$ differ from the function values $\fxi$ by some additive noise, which is assumed to be i.i.d. Gaussian 
+\item Gaussian family is ``self-conjugate'': Gaussian prior \& Gaussian likelihood $\Rightarrow$ Gaussian posterior 
 $$
-\epsi \sim \mathcal{N}(0, \sigma^2)$$
-and independent of $\xv$ and $\thetav$.
-
-\framebreak
-
-Let us assume we have \textbf{prior beliefs} about the parameter $\thetav$ that are represented in a prior distribution $\thetav \sim \mathcal{N}(\zero, \tau^2 \id_p).$
-
-\lz 
-
-Whenever data points are observed, we update the parameters' prior distribution according to Bayes' rule 
-
+\thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2} \Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})
 $$
-\underbrace{p(\thetav | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetav)}^{\text{likelihood}}\overbrace{q(\thetav)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
-$$
+with $\Kmat:= \sigma^{-2}\Xmat^T\Xmat + \tau^{-2} \id_p$
+\end{framei}
 
-\framebreak 
+\begin{frame}{posterior contraction}
+\vfill
+\splitVTT{
+\imageL{figure/bayes_lm/prior_1.pdf}
+}{
+\imageR{figure/bayes_lm/prior_2.pdf}
+}
+\end{frame}
 
-The posterior distribution of the parameter $\thetav$ is again normal distributed (the Gaussian family is self-conjugate): 
-
-$$
-\thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^\top\yv, \bm{A}^{-1})
-$$
-
-with $\bm{A}:= \sigma^{-2}\Xmat^\top\Xmat + \frac{1}{\tau^2} \id_p$.
-
-\lz 
-
-\begin{footnotesize}
-\textbf{Note:} If the posterior distribution $p(\thetav~|~\Xmat, \yv)$ are in the same probability distribution family as the prior $q(\thetav)$ w.r.t. a specific likelihood function $p(\yv~|~\Xmat, \thetav)$, they are called \textbf{conjugate distributions}. The prior is then called a \textbf{conjugate prior} for the likelihood. The Gaussian family is self-conjugate: Choosing a Gaussian prior for a Gaussian Likelihood ensures that the posterior is Gaussian. 
-\end{footnotesize}
-
-\framebreak 
-
-\begin{figure}
-  \includegraphics[width=0.5\textwidth]{figure/bayes_lm/prior_1.pdf}~\includegraphics[width=0.5\textwidth]{figure/bayes_lm/prior_2.pdf}
-\end{figure}
-
-\framebreak 
-
-\foreach \x in{5, 10, 20} {
-\begin{figure}
-  \includegraphics[width=0.5\textwidth]{figure/bayes_lm/posterior_\x_1.pdf}~  \includegraphics[width=0.5\textwidth]{figure/bayes_lm/posterior_\x_2.pdf}
-\end{figure}
+\foreach \i in{5, 10, 20}{
+\begin{frame}{posterior contraction}
+\vfill
+\splitVTT{
+\imageL{figure/bayes_lm/posterior_\i_1.pdf}
+}{
+\imageR{figure/bayes_lm/posterior_\i_2.pdf}
+}
+\end{frame}
 }
 
-\framebreak 
-
-\begin{footnotesize}
-\textbf{Proof:}\\
-We want to show that 
-\begin{itemize}
-  \item for a Gaussian prior on $\thetav \sim \mathcal{N}(\zero, \tau^2 \id_p)$
-  \item for a Gaussian Likelihood $y ~|~ \Xmat, \thetav \sim \mathcal{N}(\Xmat^\top \thetav, \sigma^2 \id_n)$ 
+\begin{framei}[fs=small]{proof: gaussianity of posterior}
+\item We want to show that for
+\begin{itemize} \small
+  \item Gaussian prior $\thetav \sim \normal(\zero, \tau^2 \id_p)$ and 
+  \item Gaussian likelihood $\yv ~|~ \Xmat, \thetav \sim \normal(\Xmat^T \thetav, \sigma^2 \id_n)$ 
 \end{itemize}
-the resulting posterior is Gaussian $\mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^\top\yv, \bm{A}^{-1})$ with $\bm{A}:= \sigma^{-2}\Xmat^\top\Xmat + \frac{1}{\tau^2} \id_p$.
-
-Plugging in Bayes' rule and multiplying out yields
+the resulting posterior is Gaussian: $\thetav ~|~ \Xmat, \yv \sim \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})$ 
+\vfill
+\item Plug in Bayes' rule and keep only terms depending on $\thetav$
 \begin{eqnarray*}
-p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \propto \exp\biggl[-\frac{1}{2\sigma^2}(\yv - \Xmat\thetav)^\top(\yv - \Xmat\thetav)-\frac{1}{2\tau^2}\thetav^\top\thetav\biggr] \\
-&=& \exp\biggl[-\frac{1}{2}\biggl(\underbrace{\sigma^{-2}\yv^\top\yv}_{\text{doesn't depend on } \thetav} - 2 \sigma^{-2} \yv^\top \Xmat \thetav + \sigma^{-2}\thetav^\top \Xmat^\top \Xmat \thetav  + \tau^{-2} \thetav^\top\thetav \biggr)\biggr] \\
-&\propto& \exp\biggl[-\frac{1}{2}\biggl(\sigma^{-2}\thetav^\top \Xmat^\top \Xmat \thetav  + \tau^{-2} \thetav^\top\thetav  - 2 \sigma^{-2} \yv^\top \Xmat \thetav \biggr)\biggr] \\
-&=& \exp\biggl[-\frac{1}{2}\thetav^\top\underbrace{\biggl(\sigma^{-2} \Xmat^\top \Xmat + \tau^{-2} \id_p \biggr)}_{:= \Amat} \thetav + \textcolor{red}{\sigma^{-2} \yv^\top \Xmat \thetav}\biggr]
+p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \quad \propto \quad \exp [-\tfrac{1}{2\sigma^2}(\yv - \Xmat\thetav)^T(\yv - \Xmat\thetav)-\tfrac{1}{2\tau^2}\thetav^T\thetav ] \\
+&=& \exp \left[ -\tfrac{1}{2} (\textcolor{black!50}{\sigma^{-2}\yv^T\yv} - 2 \sigma^{-2} \yv^T \Xmat \thetav + \sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav ) \right] \\
+&\propto& \exp \left[ -\tfrac{1}{2} (\sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav  - 2 \sigma^{-2} \yv^T \Xmat \thetav ) \right] \\
+&=& \exp \biggl[ -\tfrac{1}{2}\thetav^T\underbrace{(\sigma^{-2} \Xmat^T \Xmat + \tau^{-2} \id_p )}_{:= \Kmat} \thetav  +\textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} \biggr] 
 \end{eqnarray*}
+\item Note how this resembles a normal density, except for the term in \textcolor{orange}{orange}
+\item No need to worry about normalizing constant -- sole purpose: ensure density integrates to total prob of 1
+\end{framei}
 
-This expression resembles a normal density - except for the term in red!
-
-\framebreak
-
-\textbf{Note:} We need not worry about the normalizing constant since its mere role is to convert probability functions to density functions with a total probability of one.
-
-
-We subtract a (not yet defined) constant $c$ while compensating for this change by adding the respective terms (\enquote{adding $0$}), emphasized in green:
-
+\begin{framei}[fs=small]{proof: gaussianity of posterior}
+\item Get rid of nuisance term by introducing \textcolor{blue}{complementary terms} and compensating for the added quantities  (``creative 0'')
 \begin{eqnarray*}
-	p(\thetav | \Xmat, \yv) &\propto&  \exp\biggl[-\frac{1}{2}(\thetav \textcolor{green}{- c})^\top\Amat  (\thetav \textcolor{green}{- c}) \textcolor{green}{- c^\top \Amat \thetav} + \underbrace{\textcolor{green}{\frac{1}{2}c^\top\Amat c}}_{\text{doesn't depend on } \thetav} +\sigma^{-2} \yv^\top \Xmat \thetav\biggr] \\
-	&\propto& \exp\biggl[-\frac{1}{2}(\thetav \textcolor{green}{- c})^\top\Amat  (\thetav \textcolor{green}{- c}) \textcolor{green}{- c^\top \Amat \thetav} +\sigma^{-2} \yv^\top \Xmat \thetav\biggr]
+	p(\thetav | \Xmat, \yv) &\propto&  \exp[-\tfrac{1}{2}(\thetav \textcolor{blue}{- c})^T\Kmat  (\thetav \textcolor{blue}{- c}) \textcolor{blue}{- c^T \Kmat \thetav} + \underbrace{\textcolor{blue}{\tfrac{1}{2}c^T\Kmat c}}_{\text{doesn't depend on } \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} ] \\
+	&\propto& \exp [-\tfrac{1}{2}(\thetav \textcolor{blue}{- c})^T\Kmat  (\thetav \textcolor{blue}{- c}) \textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} ]
 \end{eqnarray*}
-
-If we choose $c$ such that $- c^\top \Amat \thetav +\sigma^{-2} \yv^\top \Xmat \thetav = 0$, the posterior is normal with mean $c$ and covariance matrix $\Amat^{-1}$. Taking into account that $\Amat$ is symmetric, this is if we choose
-
+\item Choosing $c$  s.t. 
+$\textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} = 0$ 
+leads to 
+$p(\thetav | \Xmat, \yv) \propto \exp [-\tfrac{1}{2}(\thetav - c)^T\Kmat  (\thetav -c) ]$
+\item Using that $\Kmat$ is symmetric, this implies 
 \begin{eqnarray*}
-&& \sigma^{-2} \yv^\top \Xmat = c^\top\Amat \\
-&\Leftrightarrow & \sigma^{-2} \yv^\top \Xmat \Amat^{-1} = c^\top \\
-&\Leftrightarrow& c = \sigma^{-2} \Amat^{-1} \Xmat^\top \yv
+&& \sigma^{-2} \yv^T \Xmat = c^T\Kmat \\
+&\Leftrightarrow & \sigma^{-2} \yv^T \Xmat \Kmat^{-1} = c^T \\
+&\Leftrightarrow& c = \sigma^{-2} \Kmat^{-1} \Xmat^T \yv
 \end{eqnarray*}
+\item Finally: $\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1}) \qed$
+\end{framei}
 
-as claimed.
-
-\end{footnotesize}
-
-\framebreak 
-
-Based on the posterior distribution 
-
+\begin{framei}[sep=L]{posterior predictive distribution}
+\item Based on the posterior 
 $$
-\thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^\top\yv, \bm{A}^{-1})
+\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})
 $$
-
-we can derive the predictive distribution for a new observations $\xv_*$. The predictive distribution for the Bayesian linear model, i.e. the distribution of $\thetav^\top \xv_*$, is 
-
+we can derive the predictive distribution of the Bayesian LM
+\item For a new observation $\xv_*$ we get
 $$
-y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^\top \Xmat \Amat^{-1}\xv_*, \xv_*^\top\Amat^{-1}\xv_*)
+y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^T \Xmat \Kmat^{-1}\xv_*, \xv_*^T\Kmat^{-1}\xv_*)
 $$
+\item NB: entire distribution with built-in confidence
+% (applying the rules for linear transformations of Gaussians). 
+\end{framei}
 
-(applying the rules for linear transformations of Gaussians). 
-
-\framebreak 
-
-
-\foreach \x in{5, 10, 20} {
-\begin{figure}
-  \includegraphics[width=0.5\textwidth]{figure/bayes_lm/posterior_\x_3.pdf} \\
-  \begin{footnotesize}
-    For every test input $\xv_*$, we get a distribution over the prediction $y_*$. In particular, we get a posterior mean (orange) and a posterior variance (grey region equals $+/-$ two times standard deviation). 
-  \end{footnotesize}
-\end{figure}
+\foreach \i in{5, 10, 20} {
+\begin{framei}{posterior mean and variance}
+\item For every test input $\xv_*$, we get a posterior mean (orange) \& variance (grey region; $\pm 2\times$ standard deviation)
+\vfill
+\imageC[.5]{figure/bayes_lm/posterior_\i_3.pdf}
+\end{framei}
 }
 
-\end{vbframe}
+\begin{framei}[sep=L]{summary: bayesian lm}
+\item Bayesian perspective: whole distributions, rather than just point estimates, for $\thetav$
+\item From posterior distribution of $\thetav$ we can derive a predictive distribution for $y_* = \thetav^T \xv_*$
+\item Online updates: after observing new data points, recompute posterior $\Rightarrow$ decreasing uncertainty
+\item Next up: generalize this idea to nonlinear functions
+\end{framei}
+
+% \begin{vbframe}{Review: The Bayesian Linear Model}
+
+% Let $\D = \left\{(\xi[1], \yi[1]), ..., (\xi[n], \yi[n])\right\}$ be a training set of i.i.d. observations from some unknown distribution.
+
+% \begin{figure}
+%   \includegraphics[width=0.6\textwidth]{figure/bayes_lm/example.pdf}
+% \end{figure}
+
+% Let $\yv = (\yi[1], ..., \yi[n])^T$ and $\Xmat \in \R^{n \times p}$ be the design matrix where the i-th row contains vector $\xi$.  
+
+% \framebreak
+
+% The linear regression model is defined as
+
+% $$
+% y = \fx + \epsilon = \thetav^T \xv + \epsilon 
+% $$
+
+% or on the data:
+
+% \begin{eqnarray*}
+% \yi &=& \fxi + \epsi = \thetav^T \xi + \epsi, \quad \text{for } i \in \{1, \ldots, n\}
+% \end{eqnarray*}
 
 
-\begin{vbframe}{Summary: The Bayesian Linear Model}
+% We now assume (from a Bayesian perspective) that also our parameter vector $\thetav$ is stochastic and follows a distribution.
+% The observed values $\yi$ differ from the function values $\fxi$ by some additive noise, which is assumed to be i.i.d. Gaussian 
+% $$
+% \epsi \sim \mathcal{N}(0, \sigma^2)$$
+% and independent of $\xv$ and $\thetav$.
 
-\begin{itemize}
-  \item By switching to a Bayesian perspective, we do not only have point estimates for the parameter $\thetav$, but whole \textbf{distributions}
-  \item From the posterior distribution of $\thetav$, we can derive a predictive distribution for $y_* = \thetav^\top \xv_*$.  
-  \item We can perform online updates: Whenever datapoints are observed, we can update the \textbf{posterior distribution} of $\thetav$
-\end{itemize}
+% \framebreak
 
-Next, we want to develop a theory for general shape functions, and not only for linear function. 
+% Let us assume we have \textbf{prior beliefs} about the parameter $\thetav$ that are represented in a prior distribution $\thetav \sim \mathcal{N}(\zero, \tau^2 \id_p).$
 
-\end{vbframe}
+% \lz 
+
+% Whenever data points are observed, we update the parameters' prior distribution according to Bayes' rule 
+
+% $$
+% \underbrace{p(\thetav | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetav)}^{\text{likelihood}}\overbrace{q(\thetav)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
+% $$
+
+% \framebreak 
+
+% The posterior distribution of the parameter $\thetav$ is again normal distributed (the Gaussian family is self-conjugate): 
+
+% $$
+% \thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^T\yv, \bm{A}^{-1})
+% $$
+
+% with $\bm{A}:= \sigma^{-2}\Xmat^T\Xmat + \frac{1}{\tau^2} \id_p$.
+
+% \lz 
+
+% \begin{footnotesize}
+% \textbf{Note:} If the posterior distribution $p(\thetav~|~\Xmat, \yv)$ are in the same probability distribution family as the prior $q(\thetav)$ w.r.t. a specific likelihood function $p(\yv~|~\Xmat, \thetav)$, they are called \textbf{conjugate distributions}. The prior is then called a \textbf{conjugate prior} for the likelihood. The Gaussian family is self-conjugate: Choosing a Gaussian prior for a Gaussian Likelihood ensures that the posterior is Gaussian. 
+% \end{footnotesize}
+
+% \framebreak 
+
+% \begin{figure}
+%   \includegraphics[width=0.5\textwidth]{figure/bayes_lm/prior_1.pdf}~\includegraphics[width=0.5\textwidth]{figure/bayes_lm/prior_2.pdf}
+% \end{figure}
+
+% \framebreak 
+
+% \foreach \x in{5, 10, 20} {
+% \begin{figure}
+%   \includegraphics[width=0.5\textwidth]{figure/bayes_lm/posterior_\x_1.pdf}~  \includegraphics[width=0.5\textwidth]{figure/bayes_lm/posterior_\x_2.pdf}
+% \end{figure}
+% }
+
+% \framebreak 
+
+% \begin{footnotesize}
+% \textbf{Proof:}\\
+% We want to show that 
+% \begin{itemize}
+%   \item for a Gaussian prior on $\thetav \sim \mathcal{N}(\zero, \tau^2 \id_p)$
+%   \item for a Gaussian Likelihood $y ~|~ \Xmat, \thetav \sim \mathcal{N}(\Xmat^T \thetav, \sigma^2 \id_n)$ 
+% \end{itemize}
+% the resulting posterior is Gaussian $\mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^T\yv, \bm{A}^{-1})$ with $\bm{A}:= \sigma^{-2}\Xmat^T\Xmat + \frac{1}{\tau^2} \id_p$.
+
+% Plugging in Bayes' rule and multiplying out yields
+% \begin{eqnarray*}
+% p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \propto \exp\biggl[-\frac{1}{2\sigma^2}(\yv - \Xmat\thetav)^T(\yv - \Xmat\thetav)-\frac{1}{2\tau^2}\thetav^T\thetav\biggr] \\
+% &=& \exp\biggl[-\frac{1}{2}\biggl(\underbrace{\sigma^{-2}\yv^T\yv}_{\text{doesn't depend on } \thetav} - 2 \sigma^{-2} \yv^T \Xmat \thetav + \sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav \biggr)\biggr] \\
+% &\propto& \exp\biggl[-\frac{1}{2}\biggl(\sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav  - 2 \sigma^{-2} \yv^T \Xmat \thetav \biggr)\biggr] \\
+% &=& \exp\biggl[-\frac{1}{2}\thetav^T\underbrace{\biggl(\sigma^{-2} \Xmat^T \Xmat + \tau^{-2} \id_p \biggr)}_{:= \Amat} \thetav + \textcolor{red}{\sigma^{-2} \yv^T \Xmat \thetav}\biggr]
+% \end{eqnarray*}
+
+% This expression resembles a normal density - except for the term in red!
+
+% \framebreak
+
+% \textbf{Note:} We need not worry about the normalizing constant since its mere role is to convert probability functions to density functions with a total probability of one.
+
+
+% We subtract a (not yet defined) constant $c$ while compensating for this change by adding the respective terms (\enquote{adding $0$}), emphasized in green:
+
+% \begin{eqnarray*}
+% 	p(\thetav | \Xmat, \yv) &\propto&  \exp\biggl[-\frac{1}{2}(\thetav \textcolor{green}{- c})^T\Amat  (\thetav \textcolor{green}{- c}) \textcolor{green}{- c^T \Amat \thetav} + \underbrace{\textcolor{green}{\frac{1}{2}c^T\Amat c}}_{\text{doesn't depend on } \thetav} +\sigma^{-2} \yv^T \Xmat \thetav\biggr] \\
+% 	&\propto& \exp\biggl[-\frac{1}{2}(\thetav \textcolor{green}{- c})^T\Amat  (\thetav \textcolor{green}{- c}) \textcolor{green}{- c^T \Amat \thetav} +\sigma^{-2} \yv^T \Xmat \thetav\biggr]
+% \end{eqnarray*}
+
+% If we choose $c$ such that $- c^T \Amat \thetav +\sigma^{-2} \yv^T \Xmat \thetav = 0$, the posterior is normal with mean $c$ and covariance matrix $\Amat^{-1}$. Taking into account that $\Amat$ is symmetric, this is if we choose
+
+% \begin{eqnarray*}
+% && \sigma^{-2} \yv^T \Xmat = c^T\Amat \\
+% &\Leftrightarrow & \sigma^{-2} \yv^T \Xmat \Amat^{-1} = c^T \\
+% &\Leftrightarrow& c = \sigma^{-2} \Amat^{-1} \Xmat^T \yv
+% \end{eqnarray*}
+
+% as claimed.
+
+% \end{footnotesize}
+
+% \framebreak 
+
+% Based on the posterior distribution 
+
+% $$
+% \thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2}\bm{A}^{-1}\Xmat^T\yv, \bm{A}^{-1})
+% $$
+
+% we can derive the predictive distribution for a new observations $\xv_*$. The predictive distribution for the Bayesian linear model, i.e. the distribution of $\thetav^T \xv_*$, is 
+
+% $$
+% y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^T \Xmat \Amat^{-1}\xv_*, \xv_*^T\Amat^{-1}\xv_*)
+% $$
+
+% (applying the rules for linear transformations of Gaussians). 
+
+% \framebreak 
+
+
+% \foreach \x in{5, 10, 20} {
+% \begin{figure}
+%   \includegraphics[width=0.5\textwidth]{figure/bayes_lm/posterior_\x_3.pdf} \\
+%   \begin{footnotesize}
+%     For every test input $\xv_*$, we get a distribution over the prediction $y_*$. In particular, we get a posterior mean (orange) and a posterior variance (grey region equals $+/-$ two times standard deviation). 
+%   \end{footnotesize}
+% \end{figure}
+% }
+
+% \end{vbframe}
+
+
+% \begin{vbframe}{Summary: The Bayesian Linear Model}
+
+% \begin{itemize}
+%   \item By switching to a Bayesian perspective, we do not only have point estimates for the parameter $\thetav$, but whole \textbf{distributions}
+%   \item From the posterior distribution of $\thetav$, we can derive a predictive distribution for $y_* = \thetav^T \xv_*$.  
+%   \item We can perform online updates: Whenever datapoints are observed, we can update the \textbf{posterior distribution} of $\thetav$
+% \end{itemize}
+
+% Next, we want to develop a theory for general shape functions, and not only for linear function. 
+
+% \end{vbframe}
 
 
 
@@ -211,7 +322,7 @@ Next, we want to develop a theory for general shape functions, and not only for 
 % The resulting model is
 % 
 % $$
-% f(x) = \theta^\top \phi(x) = \theta_1 x + \theta_2 x^2.
+% f(x) = \theta^T \phi(x) = \theta_1 x + \theta_2 x^2.
 % $$
 % 
 % The following plots show the posterior distribution of $\theta_1, \theta_2$ for the observed data. The more observations we have the \enquote{surer} we are about the parameters value.
