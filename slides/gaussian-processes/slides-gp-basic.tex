@@ -8,101 +8,161 @@
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
-    Gaussian Processes
-  }{% Lecture title  
-    Basics
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure_man/discrete/marginalization-more.png
-  }{
-  \item GPs model distributions over functions 
-  \item The marginalization property makes this distribution easily tractable
-  \item GPs are fully specified by mean and covariance function 
-  \item GPs are indexed families
+\titlemeta{
+Gaussian Processes
+}{
+Basics
+}{
+figure_man/discrete/marginalization-more.png
+}{
+\item GPs model distributions over functions 
+\item The marginalization property makes this distribution easily tractable
+\item GPs are fully specified by mean and covariance function 
+\item GPs are indexed families
 }
 
-\begin{vbframe}{Weight-Space View}
+% \begin{vbframe}{Weight-Space View}
 
-\begin{itemize}
-  \item Until now we considered a hypothesis space $\Hspace$ of parameterized functions $\fxt$ (in particular, the space of linear functions). 
-  \item Using Bayesian inference, we derived distributions for $\thetav$ after having observed data $\D$. 
-  \item Prior believes about the parameter are expressed via a prior distribution $q(\thetav)$, which is updated according to Bayes' rule 
+% \begin{itemize}
+%   \item Until now we considered a hypothesis space $\Hspace$ of parameterized functions $\fxt$ (in particular, the space of linear functions). 
+%   \item Using Bayesian inference, we derived distributions for $\thetav$ after having observed data $\D$. 
+%   \item Prior believes about the parameter are expressed via a prior distribution $q(\thetav)$, which is updated according to Bayes' rule 
 
-  $$
-  \underbrace{p(\thetav | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetav)}^{\text{likelihood}}\overbrace{q(\thetav)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
-  $$
-\end{itemize}
+%   $$
+%   \underbrace{p(\thetav | \Xmat, \yv)}_{\text{posterior}} = \frac{\overbrace{p(\yv | \Xmat, \thetav)}^{\text{likelihood}}\overbrace{q(\thetav)}^{\text{prior}}}{\underbrace{p(\yv|\Xmat)}_{\text{marginal}}}. 
+%   $$
+% \end{itemize}
 
-\end{vbframe}
+% \end{vbframe}
+
+% \begin{vbframe}{Function-space View}
+
+% Let us change our point of view: 
+
+% \begin{itemize}
+%   \item Instead of \enquote{searching} for a parameter  $\thetav$ in the parameter space, we directly search in a space of \enquote{allowed} functions $\Hspace$.  
+%   \item We still use Bayesian inference, but instead specifying a prior distribution over a parameter, we specify a prior distribution \textbf{over functions} and update it according to the data points we have observed. 
+% \end{itemize}
+
+% \framebreak 
+
+% Intuitively, imagine we could draw a huge number of functions from some prior distribution over functions $^{(*)}$. 
+
+% \begin{figure}
+%   \includegraphics[width=0.8\textwidth]{figure/gp_sample/1_1.pdf}
+% \end{figure}
+
+% \vspace*{-0.5cm}
+
+% \begin{footnotesize}
+%   $^{(*)}$ We will see in a minute how distributions over functions can be specified. 
+% \end{footnotesize}
+
+% \framebreak 
+
+% \foreach \x in{1,2,3} {
+%     After observing some data points, we are only allowed to sample those functions, that are consistent with the data. \\
+%   \begin{figure}
+%     \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_\x.pdf}
+%   \end{figure}
+% }
+
+% \framebreak 
+
+% As we observe more and more data points, the variety of functions consistent with the data shrinks. 
+%   \begin{figure}
+%     \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
+%   \end{figure}
+
+% \framebreak 
+
+% Inutitively, there is something like \enquote{mean} and a \enquote{variance} of a distribution over functions. 
+
+%   \begin{figure}
+%     \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
+%   \end{figure}
+
+% \end{vbframe}
+
+% \begin{frame}{Weight-space vs. Function-space View}
+
+% \begin{table}
+%   \begin{tabular}{cc}
+%   \textbf{Weight-Space View} & \textbf{Function-Space View} \vspace{4mm}\\ 
+%   Parameterize functions & \vspace{1mm}\\
+%   \footnotesize Example: $\fxt = \thetav^\top \xv$ & \vspace{3mm}\\
+%   Define distributions on $\thetav$ & Define distributions on $f$ \vspace{4mm}\\
+%   Inference in parameter space $\Theta$ & Inference in function space $\Hspace$
+%   \end{tabular}
+% \end{table}  
+
+% \lz
+
+% Next, we will see how we can define distributions over functions mathematically. 
 
 
-\begin{vbframe}{Function-space View}
+% \end{frame}
 
-Let us change our point of view: 
+\begin{framei}[sep=L]{Weight-Space View}
+    \item Until now: hypothesis space $\Hspace$ of parameterized functions $\fxt$ % (in particular, the space of linear functions)
+    \item Bayesian paradigm: distribution over parameters (weights) $\thetav$
+    \item Bayes' rule: update prior to posterior belief after observing data
+    $$
+    p(\thetav | \Xmat, \yv) 
+    = \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
+    = \frac{p(\yv | \Xmat, \thetav) \cdot q(\thetav)}{p(\yv|\Xmat)}
+    $$
+\end{framei}
 
-\begin{itemize}
-  \item Instead of \enquote{searching} for a parameter  $\thetav$ in the parameter space, we directly search in a space of \enquote{allowed} functions $\Hspace$.  
-  \item We still use Bayesian inference, but instead specifying a prior distribution over a parameter, we specify a prior distribution \textbf{over functions} and update it according to the data points we have observed. 
-\end{itemize}
+\begin{framei}[sep=L]{Function-Space View}
+    \item New POV: rather than finding $\thetav$ to parameterize $\fxt$ in parameter space,  search space of admissible functions directly
+    \item Sticking to Bayesian inference, specify prior distribution \textbf{over functions} and update according to observed data points
+\end{framei}
 
-\framebreak 
+\begin{framei}{drawing from function priors}
+\item Imagine we could draw functions from some prior distribution
 
-Intuitively, imagine we could draw a huge number of functions from some prior distribution over functions $^{(*)}$. 
+\vfill
 
-\begin{figure}
-  \includegraphics[width=0.8\textwidth]{figure/gp_sample/1_1.pdf}
-\end{figure}
+\imageC[.8]{figure/gp_sample/1_1.pdf}
+\end{framei}
 
-\vspace*{-0.5cm}
-
-\begin{footnotesize}
-  $^{(*)}$ We will see in a minute how distributions over functions can be specified. 
-\end{footnotesize}
-
-\framebreak 
-
-\foreach \x in{1,2,3} {
-    After observing some data points, we are only allowed to sample those functions, that are consistent with the data. \\
-  \begin{figure}
-    \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_\x.pdf}
-  \end{figure}
+\foreach \i in{1,2,3} {
+\begin{framei}{drawing from function priors}
+\item After observing some data points, we restrict sampling to functions consistent with the data
+\vfill
+\imageC[.8]{figure/gp_sample/2_\i.pdf}
+\end{framei}
 }
 
-\framebreak 
-
-As we observe more and more data points, the variety of functions consistent with the data shrinks. 
-  \begin{figure}
-    \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
-  \end{figure}
-
-\framebreak 
-
-Inutitively, there is something like \enquote{mean} and a \enquote{variance} of a distribution over functions. 
-
-  \begin{figure}
-    \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
-  \end{figure}
-
-\end{vbframe}
+\begin{framei}{drawing from function priors}
+\item Variety of admissible functions shrinks with observing more data
+\vfill
+\imageC[.8]{figure/gp_sample/2_4.pdf}
+\item Intuitively: distributions over functions have ``mean'' \& ``variance''
+\end{framei}
 
 \begin{frame}{Weight-space vs. Function-space View}
-
-\begin{table}
-  \begin{tabular}{cc}
-  \textbf{Weight-Space View} & \textbf{Function-Space View} \vspace{4mm}\\ 
-  Parameterize functions & \vspace{1mm}\\
-  \footnotesize Example: $\fxt = \thetav^\top \xv$ & \vspace{3mm}\\
-  Define distributions on $\thetav$ & Define distributions on $f$ \vspace{4mm}\\
-  Inference in parameter space $\Theta$ & Inference in function space $\Hspace$
-  \end{tabular}
-\end{table}  
-
-\lz
-
-Next, we will see how we can define distributions over functions mathematically. 
-
-
+\splitVTT{
+\textbf{Weight-Space View}
+\spacer
+\begin{itemizeL}
+\item Parameterize functions \\ (e.g., $\fxt = \thx$)
+\item Define distributions on $\thetav$
+\item Inference in param space $\Theta$
+\end{itemizeL}
+}{
+\textbf{Function-Space View}
+\spacer
+\begin{itemizeL}
+\item Work on functions directly \phantom{(e.g., $\fxt = \thx$)}
+\item Define distributions on $f$
+\item Inference in function space $\Hspace$
+\end{itemizeL}
+}
 \end{frame}
+
+% --------------------------------------------------
 
 \section{Distributions on Functions}
 
@@ -256,10 +316,10 @@ $$
 Note that the covariance controls the \enquote{shape} of the drawn function. Consider two extreme cases where function values are
 
 \begin{enumerate}
-  \item[a)] strongly correlated: $\bm{K} = \begin{footnotesize}\begin{pmatrix} 1 & 0.99 & \dots & 0.99 \\
+  \item[a)] strongly correlated: $\bm{K} = $ \footnotesize$ \begin{pmatrix} 1 & 0.99 & \dots & 0.99 \\
   0.99 & 1 & \dots & 0.99 \\
   0.99 & 0.99 & \ddots & 0.99 \\
-  0.99 & \dots & 0.99 & 1 \end{pmatrix}\end{footnotesize}$
+  0.99 & \dots & 0.99 & 1 \end{pmatrix}$ \normalsize
   \item[b)] uncorrelated: $\bm{K} = \id$
 \end{enumerate}
 

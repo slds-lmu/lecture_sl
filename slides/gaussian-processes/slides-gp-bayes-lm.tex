@@ -22,28 +22,12 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%\input{../../style/preamble}
-%\input{../../latex-math/basic-math}
-%\input{../../latex-math/basic-ml}
-%\input{../../latex-math/ml-gp}
-
-%\newcommand{\titlefigure}{figure/bayes_lm/posterior_5_3.pdf} % does not fit
-%\newcommand{\learninggoals}{
-%  \item Know the Bayesian linear model
-%  \item The Bayesian LM returns a (posterior) distribution instead of a point estimate
-%  \item Know how to derive the posterior distribution for a Bayesian LM 
-%}
-
-%\title{Introduction to Machine Learning}
-%\date{}
-
-%\begin{document}
-
-%\lecturechapter{The Bayesian Linear Model}
-%\lecture{Introduction to Machine Learning}
-
+\begin{framei}{data situation}
+\item $\D = \Dset$: i.i.d. training set from some unknown distribution
+\imageC[.6]{figure/bayes_lm/example.pdf}
+\item $\Xmat \in \R^{n \times p}$: design matrix, where $i$-th row contains vector $\xi$
+\item $\yv = \yvec$
+\end{framei}
 
 \begin{vbframe}{Review: The Bayesian Linear Model}
 
