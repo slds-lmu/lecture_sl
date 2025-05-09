@@ -11,7 +11,7 @@
 \titlemeta{
 Gaussian Processes
 }{
-Basics
+Stochastic Processes and Distributions on Functions
 }{
 figure_man/discrete/marginalization-more.png
 }{
@@ -47,6 +47,7 @@ $$
 
 \foreach \i in{1,2,3} {
 \begin{framei}{drawing from function priors}
+\addtocounter{page}{0}
 \item After observing some data points, we restrict sampling to functions consistent with the data
 \vfill
 \imageC[.8]{figure/gp_sample/2_\i.pdf}
@@ -84,70 +85,104 @@ $$
 
 \section{Distributions on Functions}
 
-\begin{vbframe}{Discrete Functions}
+\begin{framei}[sep=L]{discrete functions}
+\item Let $\Xspace = \xdat$ be a finite set
+\item Let $\Hspace = \{h ~|~ h: \Xspace \rightarrow \R\}$
+\item Any $h \in \Hspace$ has finite domain with $n < \infty$ elements $\Rightarrow$ neat representation with $n$-dim vector 
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
+\end{framei}
 
-For simplicity, let us consider functions with finite domains first. 
-
-\lz 
-
-
-Let $\mathcal{X} = \left\{\xv^{(1)}, \dots , \xv^{(n)}\right\}$ be a finite set of elements and $\Hspace$ the set of all functions from $\mathcal{X} \to \R$.
-
-\lz
-
-Since the domain of any $h(.) \in \Hspace$ has only $n$ elements, we can represent the function $h(.)$ compactly as a $n$-dimensional vector $$\bm{h} = \left[h\left(\xv^{(1)}\right), \dots, h\left(\xv^{(n)}\right)\right].$$
-\end{vbframe}
-
-
-\begin{frame}{Discrete Functions}
-
-\textbf{Example 1:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{two} points $\Xspace = \{0, 1\}$. 
-
-\lz 
-
-Examples for functions that live in this space: 
-
-\begin{figure}[h]
-\foreach \x in{1,2,3} {
-  \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_2_\x.pdf} \par
+\foreach \i in{1,2,3}{
+\begin{framei}{random discrete functions}
+\item Case 1: input space $\Xspace = \setzo$
+\item Example of functions living in this space
+\vfill
+\imageC[.7]{figure/discrete/example_2_\i.pdf}
+\end{framei}
 }
-\end{figure}
 
-
-\end{frame}
-
-\begin{frame}{Discrete Functions}
-
-\textbf{Example 2:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{five} points $\Xspace = \{0, 0.25, 0.5, 0.75, 1\}$.
-
-\lz 
-
-Examples for functions that live in this space: 
-
-\begin{figure}[h]
-\foreach \x in{1,2,3} {
-  \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_5_\x.pdf}\par
+\foreach \i in{1,2,3}{
+\begin{framei}{random discrete functions}
+\item Case 2: input space $\Xspace = \{0, 0.25, 0.5, 0.75, 1\}$
+\item Example of functions living in this space
+\vfill
+\imageC[.7]{figure/discrete/example_5_\i.pdf}
+\end{framei}
 }
-\end{figure}
 
-\end{frame}
-
-
-\begin{frame}{Discrete Functions}
-
-\textbf{Example 3:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{ten} points. 
-
-\lz 
-
-Examples for functions that live in this space: 
-
-\begin{figure}[h]
-\foreach \x in{1,2,3} {
-  \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_10_\x.pdf}\par
+\foreach \i in{1,2,3}{
+\begin{framei}{random discrete functions}
+\item Case 3: input space $ |\Xspace| = 10$
+\item Example of functions living in this space
+\vfill
+\imageC[.7]{figure/discrete/example_10_\i.pdf}
+\end{framei}
 }
-\end{figure}
 
-\end{frame}
+% \begin{vbframe}{Discrete Functions}
+
+% For simplicity, let us consider functions with finite domains first. 
+
+% \lz 
+
+
+% Let $\mathcal{X} = \left\{\xv^{(1)}, \dots , \xv^{(n)}\right\}$ be a finite set of elements and $\Hspace$ the set of all functions from $\mathcal{X} \to \R$.
+
+% \lz
+
+% Since the domain of any $h(.) \in \Hspace$ has only $n$ elements, we can represent the function $h(.)$ compactly as a $n$-dimensional vector $$\bm{h} = \left[h\left(\xv^{(1)}\right), \dots, h\left(\xv^{(n)}\right)\right].$$
+% \end{vbframe}
+
+
+% \begin{frame}{Discrete Functions}
+
+% \textbf{Example 1:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{two} points $\Xspace = \{0, 1\}$. 
+
+% \lz 
+
+% Examples for functions that live in this space: 
+
+% \begin{figure}[h]
+% \foreach \x in{1,2,3} {
+%   \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_2_\x.pdf} \par
+% }
+% \end{figure}
+
+
+% \end{frame}
+
+% \begin{frame}{Discrete Functions}
+
+% \textbf{Example 2:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{five} points $\Xspace = \{0, 0.25, 0.5, 0.75, 1\}$.
+
+% \lz 
+
+% Examples for functions that live in this space: 
+
+% \begin{figure}[h]
+% \foreach \x in{1,2,3} {
+%   \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_5_\x.pdf}\par
+% }
+% \end{figure}
+
+% \end{frame}
+
+
+% \begin{frame}{Discrete Functions}
+
+% \textbf{Example 3:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{ten} points. 
+
+% \lz 
+
+% Examples for functions that live in this space: 
+
+% \begin{figure}[h]
+% \foreach \x in{1,2,3} {
+%   \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_10_\x.pdf}\par
+% }
+% \end{figure}
+
+% \end{frame}
 
 
 \begin{vbframe}{Distributions on Discrete Functions}
