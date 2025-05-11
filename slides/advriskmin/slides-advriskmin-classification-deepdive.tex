@@ -28,11 +28,11 @@
   \item Derive the optimal constant model for the empirical multiclass log loss risk
 }
 
-\begin{vbframe}{Binary log loss: Emp. Risk Minimizer}
+\begin{frame2}[small]{Binary log loss: Emp. Risk Minimizer}
 
 Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{0, 1\}$ we want to determine the optimal constant model for the empirical log loss risk.
 
-\vspace*{-0.5cm}
+\vfill
 
 \begin{eqnarray*}
   \argminl_{\theta \in (0, 1)}\riske  & = & 
@@ -41,19 +41,19 @@ Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{
 
 The minimizer can be found by setting the derivative to zero, i.e.,
 
-\vspace*{-0.5cm}
+\vfill
 
 \begin{align*}
   \frac{d}{d\theta}\riske\quad  & = & 
   -\sum^n_{i=1} \frac{y^{(i)}}{\theta} - \frac{1-y^{(i)}}{1-\theta} & \overset{!}{=}  0\\
   \quad&\iff&  -\sum^n_{i=1} y^{(i)}(1-\theta) - \theta(1-y^{(i)})  & \overset{!}{=} 0 \\
-   \quad &\iff&  -\sum^n_{i=1} \left(y^{(i)} - \theta\right)  & \overset{!}{=} 0 \\
+   \quad &\iff&  -\sum^n_{i=1} (y^{(i)} - \theta)  & \overset{!}{=} 0 \\
   \Rightarrow \hat{\theta} = \frac{1}{n}\sum^n_{i=1} y^{(i)}\quad &\quad\in& (0,1)\;\checkmark \text{(assuming both labels occur).}
 \end{align*}
 
-\end{vbframe}
+\end{frame2}
 
-\begin{vbframe}{Multiclass log loss: Emp. Risk Minimizer}
+\begin{frame}{Multiclass log loss: Emp. Risk Minimizer}
 
 Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{1, \dots, g\}$ with $g\in\mathbb{N}_{>1}$ we want to determine the optimal constant model $\theta \in (0,1)^g$ for the empirical log loss risk
 
@@ -64,16 +64,15 @@ Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{
 \end{eqnarray*}
 
 We can solve this constrained optimization problem by plugging the constraint into the risk (we could also use Lagrange multipliers), i.e., we replace $\theta_g$ (this is an arbitrary choice) such that $
- \theta_g = 1 - \sum^{g-1}_{j=1}\theta_j.
-$
+ \theta_g = 1 - \sum^{g-1}_{j=1}\theta_j.$
 
-\end{vbframe}
-\begin{vbframe}{Multiclass log loss: Emp. Risk Minimizer}
+\end{frame}
+\begin{frame}{Multiclass log loss: Emp. Risk Minimizer}
 With this, we find the equivalent optimization problem
 \begin{eqnarray*}
   \argminl_{\theta \in (0, 1)^{g-1}}\riske  & = & \argminl_{\theta \in (0, 1)^{g-1}}
   -\sum^n_{i=1}\sum^{g-1}_{j=1} \mathds{1}_{\{y^{(i)} = j\}}\log(\theta_j) \\ 
-  &&+ \mathds{1}_{\{y^{(i)} = g\}}\log\left(1 - \sum\nolimits^{g-1}_{j=1}\theta_j\right) \\
+  &&+ \mathds{1}_{\{y^{(i)} = g\}}\log(1 - \sum\nolimits^{g-1}_{j=1}\theta_j) \\
   &\text{s.t.}&  \sum\nolimits^{g-1}_{j=1}\theta_j < 1.
 \end{eqnarray*}
 
@@ -85,27 +84,29 @@ For $j \in \{1,\dots,g-1\}$, the $j$-th partial derivative of our objective
 \end{eqnarray*}
 where $n_k$ with $k\in \{1,\dots, g\}$ is the number of label $k$ in $y$ and we assume that $n_k > 0.$
 
-\end{vbframe}
-\begin{vbframe}{Multiclass log loss: Emp. Risk Minimizer}
+\end{frame}
+
+\begin{frame}{Multiclass log loss: Emp. Risk Minimizer}
 
 For the minimizer, it must hold for $j \in \{1,\dots,g-1\}$ that
 \begin{eqnarray*}
  \frac{\partial}{\partial \theta_j}\riske  & \overset{!}{=} & 0 \\
   \iff  -n_j\theta_g + n_g\theta_j & \overset{!}{=} & 0 \\
- \Rightarrow \sum^{g-1}_{j=1}\left( -n_j\theta_g + n_g\theta_j\right) & \overset{!}{=} & 0 \\
+ \Rightarrow \sum^{g-1}_{j=1}( -n_j\theta_g + n_g\theta_j) & \overset{!}{=} & 0 \\
   \iff -(n-n_g)\theta_g + n_g(1-\theta_g) & \overset{!}{=} & 0 \\
     \iff -n\theta_g + n_g & \overset{!}{=} & 0 \\
     \Rightarrow \hat{\theta}_g  = \frac{n_g}{n}& &  \in (0,1)\; \checkmark \\
     \Rightarrow   \forall j \in \{1,\dots,g-1\}:\quad \hat{\theta}_j =  \frac{\hat{\theta}_gn_j}{n_g} =  \frac{n_j}{n} &  &  \in (0,1)\; \checkmark. \\
-    \left(\Rightarrow \sum\nolimits^{g-1}_{j=1}\hat{\theta}_j = 1- \hat{\theta}_g = 1 - \frac{n_g}{n} < 1 \checkmark
-\right)
+    (\Rightarrow \sum\nolimits^{g-1}_{j=1}\hat{\theta}_j = 1- \hat{\theta}_g = 1 - \frac{n_g}{n} < 1 \checkmark
+)
 \end{eqnarray*}
 
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe}{Convexity}
+\begin{frame}{Convexity}
 Finally, we check that we indeed found a minimizer by showing that $\riske$ is convex for the multiclass case (binary is a special case of this):
-\vspace*{0.3cm}
+
+\vfill
 
 The Hessian of $\riske$
 \begin{eqnarray*}
@@ -117,7 +118,7 @@ The Hessian of $\riske$
 \end{eqnarray*}
 is positive definite since all its eigenvalues $$\lambda_j = \frac{n_j}{\theta_j^2} > 0 \quad \forall j \in\{1,\dots,g-1\}.$$ 
 From this, it follows that $\riske$ is (strictly) convex.
-\end{vbframe}
+\end{frame}
 
 \endlecture
 

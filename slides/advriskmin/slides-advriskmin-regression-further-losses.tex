@@ -30,27 +30,18 @@ figure/plot_loss_overview.png
 \item Quantile loss
 }
 
-\begin{vbframe}{Advanced Loss Functions \citelink{WANG2020COMPRE}}
+\begin{framei}[sep=M]{Advanced Loss Functions \citelink{WANG2020COMPRE}}
 
-\begin{itemize}
 \item Handle errors in custom fashion
 \item Model other error distributions\\
 (see section on max. likelihood)
 \item Induce properties like robustness
 \item Handle other predictive tasks
-\end{itemize}
 
 \vfill
 
-\begin{center}
-\includegraphics[width = 0.55\textwidth]{figure/plot_loss_overview.png}
-\end{center}
 
-
-
-
-
-\vspace{1cm}
+\imageC[0.55]{figure/plot_loss_overview.png}
 
 % Examples:
 % \begin{itemize}
@@ -61,12 +52,11 @@ figure/plot_loss_overview.png
 % % \item Sometimes a custom loss must be designed specifically for the given application.
 % % \item Some learning algorithms use specific loss functions, e.g., the hinge loss for SVMs.
 % % \end{itemize}
-\end{vbframe}
+\end{framei}
 
-\begin{vbframe}{Huber Loss}
+\begin{frame}{Huber Loss}
 
 % Description
-\vspace*{-0.5cm}
 
 $$
 \Lxy = \begin{cases}
@@ -80,9 +70,9 @@ $$
 \item Analytic properties: convex, differentiable (once)
 \end{itemize}
 
-\begin{center}
-\includegraphics[width = 0.65\textwidth]{figure/loss_huber_plot.png}
-\end{center}
+
+\imageC[0.65]{figure/loss_huber_plot.png}
+
 
 \begin{itemize}
 \item No closed-form solution even for constant or linear model
@@ -90,14 +80,14 @@ $$
 a (conditional) mean of two (conditional) quantiles  
 \end{itemize}
 
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
+\begin{frame}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
 
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
 $$
-\Lxy = \log \left( \cosh(\left|y - \fx\right|) \right) \qquad \text{cosh}(x)=\frac{e^x+e^{-x}}{2}
+\Lxy = \log ( \cosh(\left|y - \fx\right|) ) \qquad \text{cosh}(x)=\frac{e^x+e^{-x}}{2}
 $$
 
 \vfill
@@ -112,22 +102,17 @@ $\left|y - \fx\right| - \log 2$ for large residuals
 
 \vfill
 
-\begin{center}
-\includegraphics[width = 0.5\textwidth]{figure/loss_logcosh.png}
-\end{center}
 
-\end{vbframe}
+\imageC[0.5]{figure/loss_logcosh.png}
 
-\begin{vbframe}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
+
+\end{frame}
+
+\begin{frame}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
 %What is the idea behind the log-cosh loss?
 
-\begin{columns}
-
-\begin{column}{0.4\textwidth}
-%\textbf{Left Column}
-
-\vspace{1cm}
-
+\vfill
+\splitV[0.4]{
 Essential idea:
 \begin{enumerate}
     \item Derivative of $L1$ \\
@@ -137,29 +122,17 @@ Essential idea:
     %$\text{sign}(y-\fx)$ using the cont. differentiable $\text{tanh}(y-\fx)$
     \item Integrate ``up again'' 
 \end{enumerate}
-
-\end{column}
-
-\begin{column}{0.6\textwidth}
-
-
-\begin{figure}
-      \centering
-        \scalebox{0.99}{\includegraphics{figure/logcosh-derivation.png}}
+}
+{\imageC{figure/logcosh-derivation.png}}
         %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
-    \end{figure}
-
-\end{column}
-
-\end{columns}
 
 \vfill
 
 Same trick can be used to get differentiable pinball losses
 
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
+\begin{frame}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
 
 \textbf{cosh($\theta,\sigma$) distribution}:\\
 
@@ -176,41 +149,28 @@ is equivalent to MLE of $\text{cosh}(\theta,1)$ distribution
 
 \end{itemize}
 
-\begin{columns}
+\vfill
 
-\begin{column}{0.5\textwidth}
-%\textbf{Left Column}
-
-{\normalsize 
+\splitV[0.52]{
+{\normalsize
 \begin{itemize}\setlength{\itemsep}{0.32em}
-    \item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh \left(\frac{x-\theta}{\sigma}\right)}$
+    \item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh (\frac{x-\theta}{\sigma})}$
     \item $\E_{x \sim p}[x] = \theta$
     \item $\var_{x \sim p}[x]=\frac{1}{4} \pi^2 \sigma^2 $
-    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh \left(\yi-\theta\right)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
+    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh (\yi-\theta)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
 \end{itemize}
-}
-\end{column}
-
-\begin{column}{0.7\textwidth}
-
-\begin{figure}
-      \centering
-        \scalebox{1}{\includegraphics{figure/cosh-gaussian-densities.png}}
-    \end{figure}
-
-\end{column}
-
-\end{columns}
+}}
+{\imageL[1.1]{figure/cosh-gaussian-densities.png}}
 
 
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe}{Cauchy loss}
+\begin{frame}{Cauchy loss}
 
 % Confirmed with Bernd: use def from https://www.user.tu-berlin.de/mtoussai/teaching/15-MachineLearning/15-MachineLearning-script.pdf, p. 24 
 
 $$
-\Lxy = \frac{c^2}{2} \log \left( 1 + \left( \frac{\left|y - \fx\right|}{c}\right)^2 \right), 
+\Lxy = \frac{c^2}{2} \log ( 1 + ( \frac{\left|y - \fx\right|}{c})^2 ), 
 \quad c \in \R
 $$
 
@@ -221,40 +181,35 @@ $$
 
 \vfill
 
-\begin{center}
-\includegraphics[width = 0.6\textwidth]{figure/loss_cauchy.png}
-\end{center}
 
-\end{vbframe}
+\imageC[0.6]{figure/loss_cauchy.png}
 
-\begin{vbframe}{Telephone data}
 
-\begin{itemize}
+\end{frame}
+
+\begin{framei}[sep=M]{Telephone data}
 
 \item Illustrate the effect of robust losses on telephone data set 
 \item Nr. of calls (in 10mio units) in Belgium 1950-1973
 \item Outliers due to a change in measurement without re-calibration 
 
-\end{itemize}
-
 \vfill
 
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/telephone-data.pdf}
-\end{center}
-
-\end{vbframe}
+\imageC[0.8]{figure/telephone-data.pdf}
 
 
-\begin{vbframe}{$\eps$-Insensitive loss}
+\end{framei}
 
-\vspace*{-0.3cm}
+
+\begin{frame}{$\eps$-Insensitive loss}
+
 $$
 \Lxy =  \begin{cases}
   0  & \text{if } |y - \fx| \le \epsilon \\
   |y - \fx|-\epsilon & \text{otherwise }
   \end{cases}, \quad \epsilon \in \R_{+}
 $$
+
 \begin{itemize}
 \item Modification of $L1$, errors below $\epsilon$ get no penalty
 \item Used in SVM regression
@@ -263,15 +218,15 @@ $$
 
 \vfill
 
-\begin{center}
-% \includegraphics[width = 10cm, height = 4.7cm]{figure_man/2_6_loss_epsilon_plot1.png} \\
-\includegraphics[width = 0.8\textwidth]{figure/loss_eps_insensitive.png}
-\end{center}
 
-\end{vbframe}
+% \imageC[10cm, height = 4.7cm]{figure_man/2_6_loss_epsilon_plot1.png} \\
+\imageC[0.8]{figure/loss_eps_insensitive.png}
 
 
-\begin{vbframe}{Quantile Loss / Pinball Loss}
+\end{frame}
+
+
+\begin{frame}{Quantile Loss / Pinball Loss}
 
 $$
 \Lxy = \begin{cases} (1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
@@ -289,33 +244,24 @@ $$
 
 \vfill
 
-\begin{center}
-% \includegraphics[width = 10cm, height = 4.7cm]{figure_man/2_3_loss_pinball_plot2.png}
-\includegraphics[width = 0.8\textwidth]{figure/loss_quantile.png}
-\end{center}
 
-\end{vbframe}
+% \imageC[10cm, height = 4.7cm]{figure_man/2_3_loss_pinball_plot2.png}
+\imageC[0.8]{figure/loss_quantile.png}
 
-\begin{vbframe}{Quantile Loss / Pinball Loss}
-  
-\begin{itemize}
+
+\end{frame}
+
+\begin{framei}[sep=M]{Quantile Loss / Pinball Loss}
 
 \item Simulate $n=200$ samples from heteroskedastic LM 
 \item $y = 1+0.2x+\varepsilon$; 
 $\quad \varepsilon \sim \mathcal{N}(0, 0.5+0.5x)$; $\quad x \sim \mathcal{U}[0,10]$
 \item Fit LM with pinball losses to estimate $\alpha$-quantiles 
 
-\end{itemize}
-
-\vspace{-0.2cm}
-
-\begin{center}
-\includegraphics[width = 0.62\textwidth]{figure/quantile-regression.pdf}
-\end{center}
-
-\end{vbframe}
+\imageC[0.62]{figure/quantile-regression.pdf}
 
 
+\end{framei}
 
 
 \endlecture

@@ -27,9 +27,8 @@ figure/pseudo_residual_1.png
 \item PRs for common losses
 }
 
-\begin{vbframe}{Pseudo-Residuals}
+\begin{framei}[sep=M]{Pseudo-Residuals}
 
-\begin{itemize}
 \item In regression, residuals are defined as 
 $\rx := y - \fx$
 \item Generalize concept to \textbf{pseudo-residuals}: 
@@ -43,12 +42,10 @@ $$
 
 \vfill
 
-% \includegraphics[width=0.7\textwidth]{figure_man/loss.png}
-\includegraphics[width=0.7\textwidth]{figure/plot_quad_pseudores.png}
+% \imageC[0.7]{figure_man/loss.png}
+\imageC[0.7]{figure/plot_quad_pseudores.png}
 
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
 \begin{frame}[t]{Best point-wise update}
@@ -70,19 +67,17 @@ $$
 }
 \end{itemize}
 
-\begin{center}
-\only<1>{\includegraphics[width=0.4\textwidth]{figure/pseudo_residual_1.png}}
-\only<2>{\includegraphics[width=0.4\textwidth]{figure/pseudo_residual_2.png}}
-\only<3>{\includegraphics[width=0.4\textwidth]{figure/pseudo_residual_3.png}}
-\end{center}
+
+\only<1>{\imageC[0.4]{figure/pseudo_residual_1.png}}
+\only<2>{\imageC[0.4]{figure/pseudo_residual_2.png}}
+\only<3>{\imageC[0.4]{figure/pseudo_residual_3.png}}
+
 
 \end{overlayarea} 
 
 \end{frame}
 
-\begin{vbframe}{Approximate Best point-wise update}
-
-\begin{itemize}
+\begin{framei}[sep=M]{Approximate Best point-wise update}
 
 \item Best local change of $f$ at $\xv$ to reduce loss most:
 
@@ -98,14 +93,11 @@ $$
 
 \item (Such iterative updates of $f$ like a loss-reducing GD in function space is the major underlying idea of GB)
 
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{GD in ML and Pseudo-Residuals}
+\begin{framei}[sep=M]{GD in ML and Pseudo-Residuals}
 
-\begin{itemize}
 	\item In GD, we move in the direction of the negative gradient by updating the parameters: 
 	$$
 	 \thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	
@@ -115,7 +107,7 @@ $$
 	\item Using the chain rule:
         % mwe see that the pseudo-residuals are input to the update direction
 	\begin{eqnarray*}
-	\nabla_{\thetav} \risket &=&\sumin \left.\frac{d L\left(\yi, \fx\right)}{d \fx} \right|_{f = \fxit} 
+	\nabla_{\thetav} \risket &=&\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
         % _{= - \tilde r^{(i)}}
 	\cdot \nabla_{\thetav} \fxit \\ 
 	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
@@ -124,7 +116,7 @@ $$
         and a loss-independent derivative of $\fx$
         \item This is a flexible, nearly loss-independent variant of GD
         % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
-\end{itemize}	
+
 
 % For risk minimization, the update rule for the parameter $\thetav$ is 
 % \begin{footnotesize}
@@ -134,12 +126,11 @@ $$
 % \end{eqnarray*}
 % \end{footnotesize}
 % $\alpha^{[t]} \in [0,1]$ is called \enquote{learning rate} in this context.
-\end{vbframe}
+\end{framei}
 
-\begin{vbframe}{Pseudo-residuals for common losses}
+\begin{frame}{Pseudo-residuals for common losses}
 
-\lz
-\lz
+\vfill
 
 \begin{table}[ht]
 \centering
@@ -153,12 +144,12 @@ Exponential loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
 \end{tabular}
 \end{table}
 
-\lz
+\vfill
 
 NB: $\pi(\xv)=s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$ is the (sigmoidal) logistic function,
 and $\pi_k(\xv)$ its multi-class generalization, the softmax.
 
-\end{vbframe}
+\end{frame}
 
 
 

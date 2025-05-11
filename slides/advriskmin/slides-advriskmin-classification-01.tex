@@ -28,7 +28,7 @@ figure/zero_one.png
 \item Generative approach in classification 
 }
 
-\begin{vbframe}{0-1-Loss}
+\begin{frame}{0-1-Loss}
 
 \splitV{
 \begin{itemize}
@@ -40,9 +40,7 @@ $$
 \end{itemize}
 }
 {
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/zero_one.png}
-\end{center}
+\imageC[0.8]{figure/zero_one.png}
 }
 
 \vfill
@@ -59,13 +57,10 @@ $$
 $$
 \item Analytical properties:  Not continuous, even for linear $\fx$ optim. problem NP-hard = close to intractable \citelink{FELDMAN2012AGNOSTIC}
 \end{itemize}
+\end{frame}
 
-\end{vbframe}
 
-
-\begin{vbframe}{Risk Minimizer for discrete classifiers}
-
-\begin{itemize}
+\begin{framei}[sep=M]{Risk Minimizer for discrete classifiers}
 
 \item Again, unravel with law of total expectation (works for multiclass)
 
@@ -97,15 +92,10 @@ $$
 %   \fxbayes &=& \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xtil)\right]\,.  \\
 % \end{eqnarray*}
 
-
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{0-1-loss: Optimal predictions}
-
-\begin{itemize}
+\begin{framei}[sep=M]{0-1-loss: Optimal predictions}
 
 \item For multiclass and hard labeler $\hx$
 \item Optimal constant
@@ -124,12 +114,10 @@ $$
 
  $h^{\ast}(\xtil) = \argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ 
 
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{Bayes risk  / Bayes error rate}
+\begin{frame}{Bayes risk  / Bayes error rate}
 
 $$
   \riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
@@ -148,12 +136,11 @@ $$
 $$
 
  
-\end{vbframe}
+\end{frame}
 
 
-\begin{vbframe}{Generative classifiers}
+\begin{framei}[sep=M]{Generative classifiers}
 
-\begin{itemize}
 
 \item So, $\argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ is what we want to do
 
@@ -171,15 +158,10 @@ $$
 
 \item This idea we will see in so-called ``generative approaches'' for classification, so in LDA, QDA, etc.
 
-
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{Example}
-
-\begin{itemize}
+\begin{framei}[sep=M]{Example}
 
 \item  Assume $\P(y = 1) = \frac{1}{2}$ 
 \item And conditional densities of $x$ per class as normal $
@@ -190,15 +172,9 @@ $$
 
 \item Bayes optimal classifier = orange; Bayes error = red 
 
-\end{itemize}
+\imageC[0.8]{figure/bayes_error_5.png} 
 
-
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/bayes_error_5.png} 
-\end{center}
-
-
-\end{vbframe}
+\end{framei}
 
 \endlecture
 

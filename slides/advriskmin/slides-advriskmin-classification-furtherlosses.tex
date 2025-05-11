@@ -31,9 +31,8 @@
   \item AUC loss 
 }
 
-\begin{vbframe}{Hinge Loss}
+\begin{framei}[sep=M]{Hinge Loss}
 
-\begin{itemize}
   \item 0-1-loss intuitive but ill-suited for direct optimization
   \item \textbf{Hinge loss} is continuous and convex 
   upper bound on 0-1-loss 
@@ -45,36 +44,30 @@
   % misclassifications:
   % $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
   \item Resembles a door hinge, hence the name
-\end{itemize}
 
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/overview_classif_subset1.png}
-\end{center}
-
-\end{vbframe}
+\imageC[0.8]{figure/overview_classif_subset1.png}
 
 
-\begin{vbframe}{Squared Hinge Loss}
+\end{framei}
 
-\begin{itemize}
+
+\begin{framei}[sep=M]{Squared Hinge Loss}
+
   \item Can also define \textbf{squared hinge loss}:
   $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
   \item $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
   \item Cont. differentiable yet more outlier-sensitive than hinge loss
-\end{itemize}
 
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/overview_classif_subset2.png}
-\end{center}
-
-\end{vbframe}
+\imageC[0.8]{figure/overview_classif_subset2.png}
 
 
-\begin{vbframe}{Squared Loss on Scores}
+\end{framei}
+
+
+\begin{framei}[sep=M]{Squared Loss on Scores}
 
 % Source: https://davidrosenberg.github.io/mlcourse/Archive/2017Fall/Lectures/04a.loss-functions.pdf
 
-\begin{itemize}
   \item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
   \begin{eqnarray*}
   \Lxy &=&(y - \fx)^2 = y^2 - 2y\fx + \fx^2\\
@@ -82,20 +75,16 @@
   \end{eqnarray*}
   \item Like sq. hinge loss for $y\fx < 1$, but not clipped to $0$ for $y\fx>1$
   \item Only 0 for $y\fx = 1$ and increasing again in $y\fx$ (undesirable!)
-\end{itemize}
 
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/overview_classif_subset3.png}
-\end{center}
+\imageC[0.8]{figure/overview_classif_subset3.png}
 
-\end{vbframe}
+
+\end{framei}
 
 
 
-\begin{vbframe}{Exponential Loss}
+\begin{framei}[sep=M]{Exponential Loss}
 
-
-\begin{itemize}
 \item Another smooth 
 approx. of 0-1-loss is \textbf{exponential loss}:
 $$\Lxy = \exp(-y\fx)$$ 
@@ -103,16 +92,12 @@ $$\Lxy = \exp(-y\fx)$$
 \item Convex, differentiable (thus easier to optimize than 0-1-loss)
 \item Loss increases exponentially for wrong predictions with high confidence; low-confidence correct predictions have positive loss
 %\item No closed-form analytic solution to (empirical) risk minimization.
-\end{itemize}
 
+\imageC[0.8]{figure/overview_classif_all.png}
 
-\begin{figure}
-\includegraphics[width = 0.8\textwidth]{figure/overview_classif_all.png}
-\end{figure}
+\end{framei}
 
-\end{vbframe}
-
-\begin{vbframe}{AUC-loss}
+\begin{frame}{AUC-loss}
 
 \begin{itemize}
 \item AUC often used as evaluation criterion for binary classifiers
@@ -124,14 +109,10 @@ $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} \I [
 \item Direct optimization of AUC numerically difficult, rather use common loss and tune for AUC in practice
 
 \end{itemize}
-\lz
+\vfill
 Comprehensive survey on advanced loss functions: \citelink{WANG2020COMPRE}
 
-\end{vbframe}
-
-
-
-
+\end{frame}
 
 \endlecture
 
