@@ -31,14 +31,13 @@
   \item Consistency
 }
 
-\begin{vbframe}{Empirical Risk Minimization}
+\begin{frame}{Empirical Risk Minimization}
 To learn a model, we usually do ERM:
-\vspace{-0.3cm}
 $$\riskef = \sumin \Lxyi$$
-\vspace{-0.2cm}
+\vfill
 {\small
 \begin{itemize}\setlength\itemsep{0.5pt} 
-    \item observations $\left(\xi, \yi\right) \in  \Xspace \times \Yspace$
+    \item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
 %    so from feature and target space
     \item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
     %$\fx$ is a model 
@@ -49,25 +48,25 @@ $$\riskef = \sumin \Lxyi$$
     %$\Lxy$ 
     measures error between label and prediction
     \item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
-    $\left(\xi, \yi\right)  \overset{\text{i.i.d.}}{\sim} \Pxy$    
+    $(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$    
     %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
 \end{itemize}
 }
 Minimizing theoretical risk, so expected loss over DGP, is major goal:
 
-$$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
-\end{vbframe}
+$$ \risk (f) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
+\end{frame}
 
-\begin{vbframe}{Two short examples}
+\begin{frame}{Two short examples}
 \textbf{Regression with linear model:}\\
 \begin{itemize}
     \item Model: $f(\xv) = \thetav^\top \xv + \theta_0$
     \item Squared loss:  
-    $\Lxy = \left(y-\fx\right)^2$
+    $\Lxy = (y-\fx)^2$
     \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetav^\top \xv + \theta_0 : \thetav \in \R^d, \theta_0 \in \R \right\}$$
 \end{itemize}
 
-\vspace{0.3cm}
+\vfill
 
 \textbf{Binary classification with shallow MLP:}\\
 \begin{itemize}
@@ -76,15 +75,15 @@ $$ \risk \left(f\right) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
     \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \R^{h \times d}, \mathbf{b}_1 \in \R^h, \mathbf{w}_2 \in \R^h, b_2 \in \R \right\}$$}
 \end{itemize}
   
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe}{Hypothesis Spaces and Parametrization}
+\begin{frame}{Hypothesis Spaces and Parametrization}
+
 We often write $\riskf$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a family of parametrized curves:
 
 $$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{from functional family parametrized by}\,\thetav\}$$
 
 \vfill
-
 
 \begin{itemizeL}
     \item Optimizing numeric vectors is more convenient than functions
@@ -92,10 +91,10 @@ $$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{from functional family parametrize
 We don't care here, now. 
 \end{itemizeL}
 
-\end{vbframe}
+\end{frame}
 
 
-\begin{vbframe}{Optimal loss values -- M-Estimators}
+\begin{frame}{Optimal loss values -- M-Estimators}
 
 \begin{itemize}
 \item Assume some RV $z \sim Q, z \in \Yspace$ as target
@@ -105,7 +104,7 @@ What is the constant that approximates $z$ with minimal loss?
 
 \end{itemize}
 
-\lz
+\vfill
 
 3 cases for Q
 \begin{itemize}
@@ -120,18 +119,13 @@ Bayes optimal pointwise prediction / theoretical risk minimizer
 
 \end{itemize}
 
-\lz
-
 %Solving $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$ provides 
 %multiple results.
 
+\end{frame}
 
-\end{vbframe}
 
-
-\begin{vbframe}{Optimal unconditional values}
-
-\begin{itemize}
+\begin{framei}[sep=M]{Optimal unconditional values}
 
 \item Associating such a 
 $$c = \argmin_{c \in \R} \E_{z \sim Q}[L(z, c)]$$ with 
@@ -145,14 +139,11 @@ I prefer the latter
 
 $$\argminlim_{c \in \R} \sumin L(\yi,c)$$
 
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{Optimal Constant Model}
+\begin{framei}[sep=M]{Optimal Constant Model}
 
-\begin{itemize}
 \item Goal: loss optimal, constant baseline predictor
 \item ``constant'': featureless ML model, always predicts same value
 \item ``baseline'': more complex model has to be better 
@@ -165,21 +156,13 @@ $$f_{c}^{\ast} = \argmin_{c \in \R} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in
 
 \item Estimation via ERM: $\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$
 
-\end{itemize}
 
-\begin{center}
-	\includegraphics[width = 0.32\textwidth]{figure/l1_vs_l2.png}
-\end{center}
-\end{vbframe}
+\imageC[0.32]{figure/l1_vs_l2.png}
+
+\end{framei}
 
 
-
-
-
-
-\begin{vbframe}{Risk Minimizer}
-
-\begin{itemizeM}
+\begin{framei}[sep=M]{Risk Minimizer}
 
 \item Assume, hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted;\\
 contains any measurable $f: \Xspace \to \R^g$
@@ -191,7 +174,7 @@ is called\\
 \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}
 
 \begin{eqnarray*}
-	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk\left(f\right) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy
+	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk(f) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy
 \end{eqnarray*}
 
 \item The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hspace_{all}})$
@@ -199,9 +182,7 @@ is called\\
 \item \textbf{Risk minimizer within} $\Hspace \subset \Hspace_{all}$ is
 $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 
-\end{itemizeM}
-
-\end{vbframe}
+\end{framei}
 
 
 
@@ -217,10 +198,10 @@ $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 % 	\item So we construct the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
 % \end{itemize}
 
-% \lz
-% \begin{center}
-% \includegraphics[width=1\textwidth]{figure/optimal_pointwise.png}
-% \end{center}
+% \vfill
+% 
+% \imageC[1]{figure/optimal_pointwise.png}
+% 
 
 
 % \end{frame}
@@ -243,17 +224,16 @@ $$    \riskf = \E_{xy} \left[\Lxy\right]
 %$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 \end{itemize}
 
-\begin{center}
-\includegraphics[width=0.8\textwidth]{figure/optimal_pointwise.png}
-\end{center}
+
+\imageC[0.8]{figure/optimal_pointwise.png}
+
 
 
 \end{frame}
 
-\begin{vbframe}{Theoretical and Empirical Risk}  
+\begin{framei}[sep=M]{Theoretical and Empirical Risk}  
  
 
-\begin{itemize}
 \item Bayes risk minimizer is mainly a theoretical tool
 \item In practice, need to restrict $\Hspace$ for efficient search %so we efficiently search over it. 
 \item We don't normally know $\Pxy$. Instead, use ERM. 
@@ -268,46 +248,39 @@ $$
 \item Would need more assumptions / math. machinery for this, \\
 will not pursue this here 
 
-\end{itemize}
+\end{framei}
 
 
 
+\begin{framei}[sep=L]{Estimation and Approximation Error} 
 
-\end{vbframe}
-
-
-
-\begin{vbframe}{Estimation and Approximation Error} 
-
-\begin{itemizeL}
-    \item Goal: Train model $\hat f_{\Hspace}$ with risk $\risk\left(\hat f_{\Hspace}\right)$ close to Bayes risk $\riskbayes$ \\
+    \item Goal: Train model $\hat f_{\Hspace}$ with risk $\risk(\hat f_{\Hspace})$ close to Bayes risk $\riskbayes$ \\
     \item Minimize \textbf{Bayes regret} or \textbf{excess risk}
 $$
-	\risk\left(\hat f_{\Hspace}\right) - \riskbayes
+	\risk(\hat f_{\Hspace}) - \riskbayes
 $$ 
 
 \item Decompose: 
 
 \begin{eqnarray*}
-	\risk\left(\hat f_{\Hspace}\right) - \riskbayes &=& \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
+	\risk(\hat f_{\Hspace}) - \riskbayes &=& \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
     &=& \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}}) \right] 
 \end{eqnarray*}
 
-\end{itemizeL}
+\end{framei}
 
-\end{vbframe}
-\begin{vbframe}{Estimation and Approximation Error} 
+\begin{frame}{Estimation and Approximation Error} 
 
 % https://docs.google.com/presentation/d/1vXuX8P6p7TFlXnpVcInQM6PR3qHk9LqC2Z75_I4u4Lo/edit#slide=id.p
 
-\begin{center}
-\includegraphics[width=0.5\textwidth]{figure_man/risk_minimization_diagram.png}
-\end{center}
+
+\imageC[0.5]{figure_man/risk_minimization_diagram.png}
+
 
 
 
 $$
-	\risk\left(\hat f_{\Hspace}\right) - \riskbayes = \underbrace{\left[\risk\left(\hat f_{\Hspace}\right) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
+	\risk(\hat f_{\Hspace}) - \riskbayes = \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
 $$
 
 \vfill
@@ -320,51 +293,47 @@ so we don't find best $f \in \Hspace$
 $\Hspace$ will often not contain Bayes optimal $\fbayes$ 
 \end{itemize}
 
-\end{vbframe}
+\end{frame}
 
 
-\begin{vbframe}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
+\begin{frame}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
 % https://mlweb.loria.fr/book/en/consistency.html
 
 \textbf{Consistency} is an asymptotic property of a learning algorithm, which ensures the algorithm returns \textbf{the correct model} when given \textbf{unlimited data}.
 
-\lz 
+\vfill 
 
 Let $\ind:\mathbb{D} \to \Hspace$ be a learning algorithm that takes a training set $\Dtrain \sim \Pxy$ of size $n_\text{train}$ and estimates a model $\hat f: \Xspace \to \R^g$. 
 
-\lz 
+\vfill 
 
 The learning method $\ind$ is said to be \textbf{consistent} w.r.t. a certain distribution $\Pxy$ if the risk of the estimated model $\hat f$ converges in probability ( \enquote{$\overset{p}{\longrightarrow}$}) to the Bayes risk $\riskbayes$ when $n_\text{train}$ goes to $\infty$: 
 
 $$
-	\risk\left(\ind\left(\Dtrain\right)\right) \overset{p}{\longrightarrow} \riskbayes \quad \text{for } n_\text{train} \to \infty
+	\risk(\ind(\Dtrain)) \overset{p}{\longrightarrow} \riskbayes \quad \text{for } n_\text{train} \to \infty
 $$
 
-\vfill
+\end{frame}
 
-
-
-\end{vbframe}
-
-\begin{vbframe}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
+\begin{frame}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
 
 Consistency is defined w.r.t. a particular distribution $\Pxy$.
 But since we usually don't know $\Pxy$, consistency
 does not offer much help to choose an algorithm for a specific task. 
 
-\lz 
+\vfill 
 
 More interesting is the stronger concept of \textbf{universal consistency}: An algorithm is universally consistent if it is consistent for \textbf{any} distribution. 
 
-\lz 
+\vfill 
 
 In Stone's famous consistency theorem (1977), the universal consistency of a weighted average estimator such as KNN was proven. Many other ML models have since then been proven to be universally consistent (SVMs, ANNs, etc.).
 
-%\lz
+%\vfill
 
 %\textbf{Note}: universal consistency is a desirable property - however, it does not tell us anything about convergence rates ...
 
-\end{vbframe}
+\end{frame}
 
 
 
@@ -382,7 +351,7 @@ In Stone's famous consistency theorem (1977), the universal consistency of a wei
 %   0-1 & $\hxbayes = \argmax_{l \in \Yspace} \P(y = l~|~ \xv)$  & $\hxh = \text{mode} \left\{\yi\right\}$ \\
 %   Brier & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
 %   Bernoulli (on probs) & $\pixbayes = \P(y = 1~|~\xv)$ & $\pixh = \frac{1}{n} \sumin \yi$\\
-%   Bernoulli (on scores) & $\fxbayes = \log\left(\frac{\P(y = 1 ~|~\xv)}{1 - \P(y = 1 ~|~\xv)}\right)$ & $\fxh = \log \frac{n_{+1}}{n_{-1}}$  
+%   Bernoulli (on scores) & $\fxbayes = \log(\frac{\P(y = 1 ~|~\xv)}{1 - \P(y = 1 ~|~\xv)})$ & $\fxh = \log \frac{n_{+1}}{n_{-1}}$  
 %   \end{tabular}
 % \end{table}
 
@@ -397,8 +366,6 @@ In Stone's famous consistency theorem (1977), the universal consistency of a wei
 % }
 
 % \end{frame}
-
-
 
 
 

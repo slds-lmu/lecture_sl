@@ -31,9 +31,8 @@ figure/bernoulli_prob.png
 \item 0/1 is proper but not strict
 }
 
-\begin{vbframe}{Prob. Preds / scoring rules \citelink{GNEITING2007}}
+\begin{framei}[sep=M]{Prob. Preds / scoring rules \citelink{GNEITING2007}}
 
-\begin{itemizeM}
 \item Is specific loss $\Lpixy$ on a prob. classifier ``reasonable''?
 \item Assume binary classification with $y \in \setzo$
 \item Loss can already be called scoring rule, but we also now take expectation over $y$
@@ -46,13 +45,9 @@ Can do this unconditionally or conditionally, all the same anyway
 \item Minimizing the above asks then for the risk minimizer!
 
 
-\end{itemizeM}
+\end{framei}
 
-\end{vbframe}
-
-\begin{vbframe}{Proper scoring rule \citelink{GNEITING2007}}
-
-\begin{itemize}
+\begin{framei}[sep=M]{Proper scoring rule \citelink{GNEITING2007}}
 
 \item SR is \textbf{proper} if true label distrib $Q$ is among the optimal 
 solutions, when we maximize $S(Q, P)$ in the 2nd argument (for a given $Q$)
@@ -77,15 +72,10 @@ $$
 \item (Strictly) proper SR ensure optimization pushes solution $\pix$ to $Q$ 
 
 
+\end{framei}
 
-\end{itemize}
+\begin{framei}[sep=M]{L1 loss is not proper}
 
-
-\end{vbframe}
-
-\begin{vbframe}{L1 loss is not proper}
-
-\begin{itemize}
 
 \item Let's look at it unconditionally, so we don't always have to write $x$
     
@@ -113,12 +103,11 @@ $$\E_y[L(y, \pi)]=\eta |1-\pi| + (1-\eta) \pi = \eta+\pi(1-2\eta)$$
 
 %\item The score $S(\pi,y)=-\Lpiy$ is therefore not proper.
 
-\end{itemize}
 
-\end{vbframe}
+\end{framei}
 
-\begin{vbframe}{0/1 loss is proper -- but not strict}
-\begin{itemize}
+\begin{framei}[sep=M]{0/1 loss is proper -- but not strict}
+
 \item \textbf{0/1 loss} $L(y, \pi)=\mathds{1}_{\{y \neq h_\pi\}}$ using hard labeler  $h_{\pi}=\mathds{1}_{\{\pi\geq0.5\}}$ 
 \item Expected loss:
 \begin{eqnarray*}
@@ -140,44 +129,41 @@ $$\E_y[L(y, \pi)]=\eta |1-\pi| + (1-\eta) \pi = \eta+\pi(1-2\eta)$$
 \item True $\eta$ among solutions $\rightarrow$ proper
 \item True $\eta$ is not unique minimizer $\rightarrow$ not strictly proper
 
-\end{itemize}
-
 
 %$$\E_y[L(y, \pi)]=p L(1,\pi) + (1-p) L(0,\pi) = $$
-\end{vbframe}
+\end{framei}
 
-\begin{vbframe}{Discover proper scoring rules}
+\begin{frame}{Discover proper scoring rules}
 
 \begin{itemizeL}
-    \item How define $L$ such that $\E_y[L(y, \pi)]$ is minimized at $\pi^{\ast}=\eta$? 
+
+\item How define $L$ such that $\E_y[L(y, \pi)]$ is minimized at $\pi^{\ast}=\eta$? 
 %$$\E_{y}[L(y, \pi)]=\eta \cdot L(1,\pi) + (1-\eta) \cdot L(0,\pi)$$
 
 \item Assume symmetry: 
 $L(1,\pi)=L(\pi)$ and $L(0,\pi)=L(1-\pi)$ \\
 
-\item 
-\begin{minipage}[t]{0.5\textwidth}
-Remember that when we plotted such losses, we usually had 2 curves,
+\end{itemizeL}
+
+\splitV[0.6]{
+\begin{itemizeL}
+\item Remember that when we plotted such losses, we usually had 2 curves,
 symmetric at $\pi=0.5$?
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.4\textwidth}
-\vspace{-0.1cm}
-\begin{center}
-\includegraphics[width=2.5cm]{figure/bernoulli_prob.png}
-\end{center}
-\end{minipage}
+\end{itemizeL}
+}
+{\imageL[0.6]{figure/bernoulli_prob.png}}
+
+\begin{itemizeL}
 \item Then, with $\eta = \P(y = 1)$
 $$\E_{y}[L(y, \pi)]=\eta \cdot L(\pi) + (1-\eta) \cdot L(1-\pi)$$
 \item First-order condition: Set $L'(\pi) = 0$, and $\pi=\eta$ at minimum 
 $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
+
 \end{itemizeL}
+\end{frame}
 
-\end{vbframe}
+\begin{framei}[sep=M]{Log loss / Brier are strictly proper}
 
-\begin{vbframe}{Log loss / Brier are strictly proper}
-
-\begin{itemize}
     \item First-order condition: 
     $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
     \item One solution is $L'(\eta)=-1/\eta$ % resulting in $-p/p=-(1-p)/(1-p)=-1$ and the
@@ -194,13 +180,11 @@ $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
   
 
 \item Both strictly proper (check 2nd derivative for strict convexity)
-\end{itemize}
 
-\end{vbframe}
 
-\begin{vbframe}{Outlook}
+\end{framei}
 
-\begin{itemizeL}
+\begin{framei}[sep=L]{Outlook}
 
     \item Usually SRs are maximimized, I adapted notation a bit here
     for us, to get a direct connection ERM
@@ -214,10 +198,7 @@ $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
 
     \item  If you want to know more: start by reading the Gneiting paper
     
-\end{itemizeL}
-
-
-\end{vbframe}
+\end{framei}
 
 
 

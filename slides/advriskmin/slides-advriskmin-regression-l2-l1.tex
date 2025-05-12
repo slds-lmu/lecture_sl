@@ -27,10 +27,10 @@ figure/loss_quadratic_1.png
 \item L1 loss and risk minimizers
 }
 
-\begin{vbframe}{L2-Loss}
+\begin{frame}{L2-Loss}
 
 $$
-\Lxy = \left(y-\fx\right)^2 \quad \text{or} \quad \Lxy = 0.5 \left(y-\fx\right)^2
+\Lxy = (y-\fx)^2 \quad \text{or} \quad \Lxy = 0.5 (y-\fx)^2
 $$
 
 \vfill
@@ -51,19 +51,13 @@ Hence, sensitive to outliers in $y$
 
 % \framebreak
 
+\imageC[0.8]{figure/loss_quadratic_2.png}
+
+\end{frame}
 
 
+\begin{framei}[sep=L]{L2: Optimal value is expectation}
 
-\begin{center}
-  \includegraphics[width = 9cm]{figure/loss_quadratic_2.png} \\
-\end{center}
-
-\end{vbframe}
-
-
-\begin{vbframe}{L2: Optimal value is expectation}
-
-\begin{itemizeL}
 %\item Let's consider L2 here as simplest case
 \item Can derive a general result now for any $z ~ \sim Q$
 \item Consider 
@@ -77,17 +71,12 @@ $$
 \item The RHS is minimized by $c = \E[z]$\\
 (simple quadratic, or take derivative and set to 0)
 
-
-
-\end{itemizeL}
-\end{vbframe}
+\end{framei}
 
 
 
 
-\begin{vbframe}{L2: Optimal Constant Model}
-
-\begin{itemizeS}
+\begin{framei}[sep=S]{L2: Optimal Constant Model}
 
 \item From the previous we immediately get for $Q = P_y$
 $$
@@ -103,25 +92,20 @@ And later we will proceed like that
 \item For data $y^{(1)}, \ldots, y^{(n)}$, empirical distribution is $P_n = \meanin \delta_{\yi}$
 %Thus, for the minimization problem
 %\[
-% \argmin_{c \in \R} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c %\in \R} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \R} %\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2,
+% \argmin_{c \in \R} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c %\in \R} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \R} %\frac{1}{n}\sum_{i=1}^n (y^{(i)}-c)^2,
 %\]
 %taking the derivative with respect to \(c\) yields
 %\[
-%\frac{d}{dc}\left(\frac{1}{n}\sum_{i=1}^n \left(y^{(i)}-c\right)^2\right) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2\left(c-\frac{1}{n}\sum_{i=1}^n y^{(i)}\right)=0.
+%\frac{d}{dc}(\frac{1}{n}\sum_{i=1}^n (y^{(i)}-c)^2) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2(c-\frac{1}{n}\sum_{i=1}^n y^{(i)})=0.
 %\]
 \item Hence: Optimal constant is sample mean
 $$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c) = 
 \E_{z \sim P_n} (z-c)^2 = \E[z] = \meanin \yi = \bar{y}
 $$
 
-\end{itemizeS}
+\end{framei}
 
-
-\end{vbframe}
-
-\begin{vbframe}{L2-Loss: Risk Minimizer}
-
-\begin{itemizeS}
+\begin{framei}[sep=S]{L2-Loss: Risk Minimizer}
 
 \item Let's minimize true risk for unrestricted hypothesis space and $L2$
 
@@ -134,12 +118,8 @@ we know the minimizer for $L2$ is the conditional expectation
 
 $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
-\begin{center}
-\includegraphics[width=0.7\textwidth]{figure/optimal_pointwise.png}
-\end{center}
 
-
-\end{itemizeS}
+\imageC[0.7]{figure/optimal_pointwise.png}
 
 
 %\begin{itemize}
@@ -160,20 +140,21 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 %\begin{footnotesize}
 %$^{(*)}$ follows from the drivation of $f_{c}^{\ast}$
 %  \begin{eqnarray*}
-%  && \mbox{argmin}_c \E\left[(y - c)^2\right] = \mbox{argmin}_c \underbrace{\E\left[(y - c)^2\right] - \left(\E[y] - c\right)^2}_{= \var[y - c] = \var[y]} + \left(\E[y] - c\right)^2 \\ &=& \mbox{argmin}_c \var[y] + \left(\E[y] - c\right)^2 = \E[y]. 
+%  && \mbox{argmin}_c \E\left[(y - c)^2\right] = \mbox{argmin}_c \underbrace{\E\left[(y - c)^2\right] - (\E[y] - c)^2}_{= \var[y - c] = \var[y]} + (\E[y] - c)^2 \\ &=& \mbox{argmin}_c \var[y] + (\E[y] - c)^2 = \E[y]. 
 %  \end{eqnarray*}
 %\end{footnotesize}
 
 %\end{itemize}
 
 
-\end{vbframe}
+\end{framei}
 
-\begin{vbframe}{L2 loss means minimizing variance}
+\begin{frame}{L2 loss means minimizing variance}
 
-\begin{columns}[t]
-  \column{0.65\textwidth}
-    \vspace{0pt}
+  \vfill
+
+\splitV[0.65]
+{
     \begin{itemize}
       \item Let's reconsider the previous
       \item Optimized for const whose squared dist to points is minimal (on avg)
@@ -184,17 +165,13 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
         to obtain variance
       \item Same holds for the pointwise construction / conditional distribution considered before
     \end{itemize}
+}{\imageC[]{figure_man/plot_const_var.png}}
 
-  \column{0.34\textwidth}
-    \vspace{0pt} % force top alignment
-    \includegraphics[width=\textwidth]{figure_man/plot_const_var.png}
-\end{columns}
-
-\end{vbframe}
+\end{frame}
 
 
 % DO NOT REMOVE THIS BUT INCLUDE IT AGAIN WHEN COMMAND AVAILABLE
-%\begin{vbframe}{L2 loss means minimizing variance}
+%\begin{framei}[sep=M]{L2 loss means minimizing variance}
 %\splitVCentered[0.65]{
 %\splitVCC{
 
@@ -211,11 +188,11 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
 %\end{itemize}
 
-%}{\includegraphics{figure_man/plot_const_var.png}}
+%}{\imageC{figure_man/plot_const_var.png}}
 
-%\end{vbframe}
+%\end{framei}
 
-\begin{vbframe}{L1-Loss}
+\begin{frame}{L1-Loss}
 
 % Description
 $$
@@ -229,17 +206,12 @@ $$
 
 \vfill
 
-\begin{center}  
-\includegraphics[width = 9cm]{figure/loss_absolute_2.png} 
-\end{center}
+\imageC[0.8]{figure/loss_absolute_2.png} 
+
+\end{frame}
 
 
-\end{vbframe}
-
-
-\begin{vbframe}{L1-Loss: Optimal predictions}
-
-\begin{itemizeL}
+\begin{framei}[sep=L]{L1-Loss: Optimal predictions}
 
 \item Optimal constant model is median: 
 $f_{c}^{\ast} = \text{med} [y]$
@@ -252,9 +224,8 @@ $f_{c}^{\ast} = \text{med} [y]$
   $$
     f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv = \xtil \right]
   $$
-\end{itemizeL}
 
-\end{vbframe}
+\end{framei}
 
 
 

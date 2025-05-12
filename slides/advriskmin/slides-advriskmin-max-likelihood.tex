@@ -29,9 +29,8 @@ figure/residuals_plot_L2_title.png
 \item Bernoulli targets vs. log loss
 }
 
-\begin{vbframe}{Maximum Likelihood}
+\begin{framei}[sep=M]{Maximum Likelihood}
 
-\begin{itemize}
 \item Regression from a maximum likelihood perspective
 \item Assume data comes from $\Pxy$ 
 \item Conditional perspective: 
@@ -44,52 +43,47 @@ $$
 Common case:
 true underlying relationship $\ftrue$ with additive noise (surface plus noise model): 
 
-\begin{minipage}{0.5\textwidth}
+\splitVCC{
 $$
 y = \ftrue(\xv) + \eps
 $$
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width = 0.75\textwidth]{figure/ftrue.pdf}
-\end{minipage}
+}%
+{
+\imageL[0.75]{figure/ftrue.pdf}
+}
 
 \item $\ftrue$ has params $\thetav$ and $\eps \sim\P_\eps$, with $\E[\eps] = 0, \epsilon \perp \!\!\! \perp \xv$
 
 \item We now want to learn $\ftrue$ (or its params)
 
-\end{itemize}
 
+\end{framei}
+\begin{framei}[sep=M]{Maximum Likelihood}
 
-\end{vbframe}
-\begin{vbframe}{Maximum Likelihood}
-
-\begin{itemize}
 \item Given i.i.d data $\D = \Dset$ from $\Pxy$ 
 \item Max. likelihood maximizes \textbf{likelihood} of data under params
 
-\begin{minipage}{0.5\textwidth}
+\splitVCC{
 $$ \LLt = \prod_{i=1}^n \pdfyigxit $$
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width = 0.75\textwidth]{figure/log_reg_ml.pdf}
-\end{minipage}
+}%
+{
+\imageL[0.75]{figure/log_reg_ml.pdf}
+}
 
 \item Equivalent: minimize \textbf{negative log-likelihood (NLL)}
 
-\begin{minipage}{0.5\textwidth}
+\splitVCC{
 $$ -\loglt = -\sumin \lpdfyigxit. $$
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width = 0.75\textwidth]{figure/log_reg_erm.pdf}
-\end{minipage}
-\end{itemize}
+}%
+{
+\imageL[0.75]{figure/log_reg_erm.pdf}
+}
 
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{Risk Minimization} 
+\begin{framei}[sep=M]{Risk Minimization} 
 
-\begin{itemize}
 \item In ML / ERM: instead of conditional distribution, pick a loss 
 \item Our admissible functions come from hypothesis space 
 \item But in stats, must assume some form of $\ftrue$, no difference
@@ -102,20 +96,16 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 
 \item NB: When only interested in minimizer, we use $\propto$ as \enquote{proportional up to pos. multiplicative and general additive constants}
 
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
-\begin{vbframe}{Gaussian Errors - L2-Loss} 
-
-\begin{itemize}
+\begin{framei}[sep=M]{Gaussian Errors - L2-Loss} 
 
 \item Assume $y = \ftrue(\xv) + \eps$ with $\eps \sim \normal(0, \sigma^2)$ 
-\item Then $y~|~\xv \sim \normal\left(\ftrue(\xv), \sigma^2\right)$ and likelihood is 
+\item Then $y~|~\xv \sim \normal(\ftrue(\xv), \sigma^2)$ and likelihood is 
 {\small
 \begin{eqnarray*}
-\LL(\thetav) &=& \prodin \pdf\left(\yi ~\bigg|~ \fxit, \sigma^2\right) \\ &\propto& \prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)
+\LL(\thetav) &=& \prodin \pdf(\yi ~\bigg|~ \fxit, \sigma^2) \\ &\propto& \prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)
 \end{eqnarray*}
 }
 
@@ -123,64 +113,58 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 \item Minimizing Gaussian NLL is ERM with $L2$-loss
 {\small
 \begin{eqnarray*}
-- \loglt &=& - \log\left(\LL(\thetav)\right) \\
-&\propto& - \log\left(\prodin \exp\left(-\frac{1}{2\sigma^2} \left(\yi - \fxit\right)^2\right)\right) \\
-&\propto& \sumin \left(\yi - \fxit\right)^2
+- \loglt &=& - \log(\LL(\thetav)) \\
+&\propto& - \log(\prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)) \\
+&\propto& \sumin (\yi - \fxit)^2
 \end{eqnarray*}
 }
 
-\end{itemize}
-\end{vbframe}
-\begin{vbframe}{Gaussian Errors - L2-Loss} 
+\end{framei}
+\begin{framei}[sep=M]{Gaussian Errors - L2-Loss} 
 
-\begin{itemize}
-	\item Simulate data $y ~|~x \sim \mathcal{N}\left(\ftrue(x), 1\right)$ with $\ftrue = 0.2 \cdot x$ 
+\item Simulate data $y ~|~x \sim \mathcal{N}(\ftrue(x), 1)$ with $\ftrue = 0.2 \cdot x$ 
 \item Plot residuals as histogram, after fitting LM with $L2$-loss (blue)
 \item Compare emp. residuals vs. theor. quantiles via Q-Q-plot
 
-\begin{center}
-\includegraphics[width = 0.8\textwidth]{figure/residuals_plot_L2.pdf}
-\end{center}
+
+\imageC[0.8]{figure/residuals_plot_L2.pdf}
+
 
 \item Residuals are approximately Gaussian!
-\end{itemize}
 
-\end{vbframe}
+\end{framei}
 
-\begin{vbframe}{Laplace Errors - L1-Loss}
+\begin{framei}[sep=M]{Laplace Errors - L1-Loss}
 
-\begin{itemize}
-    \item Consider Laplacian errors $\eps$, with density 
-\end{itemize}
-\lz
+\item Consider Laplacian errors $\eps$, with density 
 
-\splitVCC[0.5]{
-%\begin{minipage}{0.5\textwidth}
+\vfill
+
+\splitVCC[0.4]{
+%\begin{minipage}{0.5}
 $$
- \frac{1}{2\sigma} \exp\left(-\frac{|\eps|}{\sigma}\right)\,, \sigma > 0
+ \frac{1}{2\sigma} \exp(-\frac{|\eps|}{\sigma})\,, \sigma > 0
 $$
 }{
 %\end{minipage}%
-%\begin{minipage}{0.5\textwidth}
-\small{$\qquad$ Laplace density, $x \sim \text{LP}(0,1)$}
-\includegraphics[width = \textwidth]{figure/laplace-plot.png}
+%\begin{minipage}{0.5}
+{\small $\qquad$ Laplace density, $x \sim \text{LP}(0,1)$}
+\imageL[0.9]{figure/laplace-plot.png}
 %\end{minipage}
 }
-\begin{itemize}
+
 \item Then
 $$
 y = \ftrue(\xv) + \eps 
 $$
 also follows Laplace distribution with mean $\fxit$ and scale  $\sigma$ 
-\end{itemize}
 
-\end{vbframe}
-\begin{vbframe}{Laplace Errors - L1-Loss}
+\end{framei}
+\begin{framei}[sep=M]{Laplace Errors - L1-Loss}
 
-\begin{itemize}
     \item The likelihood is then 
 \begin{eqnarray*}
-\LL(\thetav) &=& \prod_{i=1}^n \pdf\left(\yi ~\bigg|~ \fxit, \sigma\right) \\ &\propto& \exp\left(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|\right)\,
+\LL(\thetav) &=& \prod_{i=1}^n \pdf(\yi ~\bigg|~ \fxit, \sigma) \\ &\propto& \exp(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|)\,
 \end{eqnarray*}
 \item The negative log-likelihood is
 $$
@@ -193,34 +177,25 @@ $$
 
 \item Huber density is (unsurprisingly) a hybrid of Gaussian and Laplace
 
-\end{itemize}
+\end{framei}
+\begin{framei}[sep=M]{Laplace Errors - L1-Loss}
 
-\end{vbframe}
-\begin{vbframe}{Laplace Errors - L1-Loss}
-
-\begin{itemize}
-	\item Same setup, now with $y ~|~x \sim \text{LP}\left(\ftrue(x), 1\right)$ 
+\item Same setup, now with $y ~|~x \sim \text{LP}(\ftrue(x), 1)$ 
 \item Now fit LM with L1 loss
 
 \vfill
 
-\includegraphics{figure/residuals_plot_L1.pdf}
+\imageC{figure/residuals_plot_L1.pdf}
 
 
 \item Again, residuals approximately match quantiles!
 
 
-\end{itemize}
-
-
-\end{vbframe}
+\end{framei}
 
 
 
-\begin{vbframe}{Maximum Likelihood in Classification}
-
-
-\begin{itemize}
+\begin{framei}[sep=M]{Maximum Likelihood in Classification}
 
 \item Now binary classification
 \item $y \in \setzo$ is Bernoulli, $y ~|~ \xv \sim \text{Bern}(\pi_\text{true}(\xv))$
@@ -236,16 +211,12 @@ $$
 $$
 
 
-\end{itemize}
-
-\end{vbframe}
+\end{framei}
 
 
 
 
-\begin{vbframe}{Distributions and losses}
-
-\begin{itemizeL}
+\begin{framei}[sep=L]{Distributions and losses}
 
 \item For \textbf{every} error distribution $\P_\eps$, can derive an equivalent loss
 \item Leads to same point estimator for $\thetav$ as maximum-likelihood:
@@ -263,11 +234,7 @@ $$
     \item  $p$ is a pdf (non-negative and integrates to one)
 \end{enumerate}
 
-
-\end{itemizeL}
-
-
-\end{vbframe}
+\end{framei}
 
 
 \endlecture

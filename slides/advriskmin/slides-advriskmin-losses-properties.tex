@@ -32,11 +32,7 @@
   \item Some fundamental terminology
 }
 
-\begin{vbframe}{The role of Loss Functions}
-
-\vfill
-
-\begin{itemizeL}
+\begin{framei}[sep=L]{The role of Loss Functions}
 
 \item Should be designed to measure errors appropriately
 
@@ -49,21 +45,18 @@ $$
 \argmint \risket
 $$
 is influenced by choice of the loss 
-\end{itemizeL}
 
 %\vspace{0.5cm}
 %\textbf{NB}: We use some losses as examples which are only introduced later in the chapter.
 
-\end{vbframe}
+\end{framei}
 
 % ------------------------------------------------------------------------------
 
 
-\begin{vbframe}{Losses with one argument}
+\begin{framei}[sep=M]{Losses with one argument}
 
 % https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
-
-\begin{itemize}
 
 \item Regr. losses often only depend on  \textbf{residuals} 
 $\rx := y - \fx$
@@ -71,33 +64,27 @@ $\rx := y - \fx$
 \item Classif. losses usually in terms of 
   \textbf{margin}: $\nu(\xv) := y \cdot \fx$
 
-
-\end{itemize}
-
 \vfill
 
-\splitV[0.4]{
-  \includegraphics[width=\textwidth]{figure/loss_dist_based}
+\splitVCC[0.4]{
+  \imageC{figure/loss_dist_based}
   \tiny \centering
   Distance-based: $L1$
 }{
-\includegraphics[width=\textwidth]{figure/overview_classif.png}
+\imageC{figure/overview_classif.png}
   \tiny \centering
   %Margin-based losses
 }
 
+\end{framei}
 
 
-
-\end{vbframe}
-
-
-\begin{vbframe}{Some basic properties}
+\begin{frame}{Some basic properties}
 
 % https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
 A loss is  
 \begin{itemize}
-  \item \textbf{symmetric} if $\Lxy = L\left(\fx, y\right)$
+  \item \textbf{symmetric} if $\Lxy = L(\fx, y)$
   \item \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
   $a \in \R$
   \item \textbf{distance-based} if it can be written in terms of residual 
@@ -108,42 +95,41 @@ A loss is
 
 \vfill
 
-%\begin{minipage}[b]{0.25\textwidth}
-%  \includegraphics[width=\textwidth]{figure/plot_loss_overview_classif_2}
+%\begin{minipage}[b]{0.25}
+%  \imageC[]{figure/plot_loss_overview_classif_2}
 %  \tiny \centering
 %  Margin-based losses
 %\end{minipage}%
-\begin{minipage}[b]{0.32\textwidth}
-  \includegraphics[width=\textwidth]{figure/loss_dist_based}
+\splitVThree
+{
+  \imageC{figure/loss_dist_based}
   \tiny \centering
   Distance-based: $L1$
-\end{minipage}%
-\begin{minipage}[b]{0.265\textwidth}
-  \includegraphics[width=\textwidth]{figure/loss_transl_inv.png}
+}%
+{
+  \imageC{figure/loss_transl_inv.png}
   \tiny \centering
   Translation-invariant: $L2$
-\end{minipage}%
-\begin{minipage}[b]{0.40\textwidth}
-  \includegraphics[width=\textwidth]{figure/loss_symmetric}
+}%
+{
+  \imageC{figure/loss_symmetric}
   \tiny \centering
   Symmetric: Brier score
-\end{minipage}
+}
 
-\end{vbframe}
+\end{frame}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Robustness}
-
-\small
+\begin{frame2}[small]{Robustness}
 
 Outliers (in $y$) have large residuals $\rx = y - \fx$. Some losses are more
 affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2) it is not robust, linear (L1) or even sublinear losses are more robust.
 
-\vspace{0.5cm}
+\vfill
 
-\begin{minipage}[c]{0.5\textwidth}
-  \footnotesize
+\splitVCC{
+  {\footnotesize
   \begin{table}[]
   \begin{tabular}{r|r|r|r}
   \toprule
@@ -153,35 +139,30 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
   10 & 10 & 100 & 37.5 \\
   50 & 50 & 2500  & 237.5
 \end{tabular}
-\end{table}
-\end{minipage}%
-\begin{minipage}[c]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[c]{0.45\textwidth}
-  \small
+\end{table}}
+}%
+{
   As a consequence, a model is less influenced by outliers than by ``inliers'' if 
   the loss is \textbf{robust}.\\
   Outliers e.g.\ strongly influence $L2$.
-\end{minipage}%
+}%
 
 \vfill
 
-
 \splitVTT[0.4]{
-\includegraphics[width=0.9\textwidth]{figure/loss_l2_l1_huber.png}
+\imageC[0.9]{figure/loss_l2_l1_huber.png}
 }{
-\includegraphics[width=0.9\textwidth]{figure/robustness}
+\imageC[0.9]{figure/robustness}
 }
-% \begin{minipage}[c]{0.45\textwidth}
-%   \includegraphics[width=\textwidth]{figure/loss_l2_l1_huber.png}
+% \begin{minipage}[c]{0.45}
+%   \imageC[]{figure/loss_l2_l1_huber.png}
 %   \footnotesize \centering
 % \end{minipage}%
-% \begin{minipage}[c]{0.05\textwidth}
+% \begin{minipage}[c]{0.05}
 %   \phantom{foo}
 % \end{minipage}%
-% \begin{minipage}[c]{0.45\textwidth}
-% \includegraphics[width=\textwidth]{figure/robustness}
+% \begin{minipage}[c]{0.45}
+% \imageC[]{figure/robustness}
 %   %\small \raggedright
 %   %is an example for a loss function that is not very robust towards
 %   %outliers. It penalizes large residuals more than $L1$ or Huber loss, which are
@@ -192,15 +173,15 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 % 
 % The L2 loss is an example for a loss function that is not very robust towards outliers. It penalizes large residuals more than the L1 or the Huber loss. The L1 and the Huber loss are thus regarded robust. 
 % 
-% \begin{center}
-% \includegraphics[width=0.8\textwidth]{figure/robustness.png}
-% \end{center}
+% 
+% \imageC[0.8]{figure/robustness.png}
+% 
 
-\end{vbframe}
+\end{frame2}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Optimization Properties: Smoothness}
+\begin{frame}{Optimization Properties: Smoothness}
 
 % \textcolor{blue}{LW: points 1-3 together w/ plot on subsequent slide; scnd slide w/ concrete examples (e.g., gd failing w/ lasso}
 
@@ -213,20 +194,15 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 
 \vfill
 
-\begin{minipage}[c]{0.4\textwidth}
-  \includegraphics[width=0.9\textwidth]{figure/overview_classif.png}
-\end{minipage}%
-\begin{minipage}[c]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[c]{0.55\textwidth}
-  \footnotesize \raggedright
+\splitVCC{
+  \imageC[0.9]{figure/overview_classif.png}
+}%
+{
+  \raggedright {\footnotesize
   Squared loss, exponential loss and squared hinge loss are continuously 
   differentiable. Hinge loss is continuous but not differentiable. 
-  0-1 loss is not even continuous.
-\end{minipage}%
-
-\framebreak
+  0-1 loss is not even continuous.}
+}%
 
 % \small
 % \textbf{Example: Lasso regression}
@@ -248,20 +224,20 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 
 % \vfill
 
-% \begin{minipage}[c]{0.3\textwidth}
-%   \includegraphics[width=\textwidth]{figure/lasso_unpenalized}
+% \begin{minipage}[c]{0.3}
+%   \imageC[]{figure/lasso_unpenalized}
 % \end{minipage}%
-% \begin{minipage}[c]{0.05\textwidth}
+% \begin{minipage}[c]{0.05}
 %   \phantom{foo}
 % \end{minipage}%
-% \begin{minipage}[c]{0.3\textwidth}
-%   \includegraphics[width=0.9\textwidth]{figure/lasso_penalty}
+% \begin{minipage}[c]{0.3}
+%   \imageC[0.9]{figure/lasso_penalty}
 % \end{minipage}%
-% \begin{minipage}[c]{0.05\textwidth}
+% \begin{minipage}[c]{0.05}
 %   \phantom{foo}
 % \end{minipage}%
-% \begin{minipage}[c]{0.3\textwidth}
-%   \includegraphics[width=0.9\textwidth]{figure/lasso_penalized}
+% \begin{minipage}[c]{0.3}
+%   \imageC[0.9]{figure/lasso_penalized}
 % \end{minipage}%
 
 % \tiny Example: $y = x_1 + 1.2 x_2 + \epsilon$. \textit{Left:} unpenalized 
@@ -269,18 +245,16 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 % (all as functions of $\thetav$). We see how the $L1$ penalty nudges the optimum 
 % towards (0, 0) and compromises the original objective's smoothness.
 
-\end{vbframe}
+\end{frame}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Optimization Properties: Convexity}
-
-\begin{itemizeL}
+\begin{framei}[sep=L]{Optimization Properties: Convexity}
 
 \item $\risket$ is convex if
 $$
-\riske\left(t \cdot \thetav + (1 - t) \cdot \tilde \thetav\right) \le t \cdot
-\riske\left(\thetav\right) + (1 - t) \cdot \riske\left(\tilde \thetav \right)
+\riske(t \cdot \thetav + (1 - t) \cdot \tilde \thetav) \le t \cdot
+\riske(\thetav) + (1 - t) \cdot \riske(\tilde \thetav )
 $$
 $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 (strictly convex if above holds with strict inequality)
@@ -291,14 +265,12 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 \item For $\riske \in \mathcal{C}^{2}$, $\riske$ is convex iff Hessian $\nabla^2 \risket$ is psd
 
 \item Above holds for arbitrary functions, not only risks
-  
-\end{itemizeL}
 
-\end{vbframe}
+\end{framei}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Optimization properties: Convexity}
+\begin{frame}{Optimization properties: Convexity}
 
 \begin{itemizeL}
 \item Convexity of $\risket$ depends both on convexity of $L(\cdot)$ (given in most cases) and $\fxt$ (often problematic)
@@ -308,24 +280,18 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 
 \vfill
 
-\begin{minipage}[b]{0.5\textwidth}
-  \footnotesize \raggedright
+\splitVCC{
+  \raggedright {\footnotesize
   \href{https://arxiv.org/pdf/1712.09913.pdf}{Li et al., 2018: 
   \textit{Visualizing the Loss Landscape of Neural Nets}}. 
   The problem on the bottom right is convex, the others are not (note that 
   very high-dimensional surfaces are coerced into 3D here).  
-  \\
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[b]{0.05\textwidth}
-  \phantom{foo}
-\end{minipage}%
-\begin{minipage}[b]{0.45\textwidth}
-  \includegraphics[width=0.75\textwidth]{
-  figure_man/convex-vs-nonconfex-landscape}
-\end{minipage}%
+  \phantom{foo}}}
+{
+  \imageC[0.75]{
+  figure_man/convex-vs-nonconfex-landscape}}%
 
-\end{vbframe}
+\end{frame}
 
 % ------------------------------------------------------------------------------
 
@@ -333,7 +299,7 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 
 % ------------------------------------------------------------------------------
 
-% \begin{vbframe}{Analytical Properties: Convergence}
+% \begin{framei}[sep=M]{Analytical Properties: Convergence}
 % 
 % \small
 % The choice of the loss function may also impact the convergence behavior of the 
@@ -341,7 +307,7 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 % 
 % \vspace{0.2cm}
 % 
-% \begin{minipage}[b]{0.7\textwidth}
+% \begin{minipage}[b]{0.7}
 %   \begin{itemize} 
 %     \small
 %     \item Example: optimizers, e.g., gradient descent, in logistic regression 
@@ -351,25 +317,25 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 %     loss, which reaches 0 only in the infinite limit of the margin.
 %   \end{itemize}  
 % \end{minipage}%
-% \begin{minipage}[b]{0.05\textwidth}
+% \begin{minipage}[b]{0.05}
 %   \phantom{foo}
 % \end{minipage}%
-% \begin{minipage}[b]{0.25\textwidth}
-%   \includegraphics[width=\textwidth]{figure/plot_bernoulli}
+% \begin{minipage}[b]{0.25}
+%   \imageC[]{figure/plot_bernoulli}
 % \end{minipage}%
 % 
 % % \vfill
-% % \includegraphics[width=0.4\textwidth]{figure_man/snap_bernoulli_loss}
+% % \imageC[0.4]{figure_man/snap_bernoulli_loss}
 % % \vfill
 % 
 % \begin{itemize} 
 %   \item In the case of complete separation, we have
 %   \footnotesize
 %   \begin{flalign*}
-%     \risket &= \sumin \log \left( 1 + \exp \left( - \yi \thetav^T \xi \right)
-%     \right) \\ &=
-%     \sumin \log \left( 1 + \exp \left( - | \thetav^T \xi| \right)
-%     \right),
+%     \risket &= \sumin \log ( 1 + \exp ( - \yi \thetav^T \xi )
+%     ) \\ &=
+%     \sumin \log ( 1 + \exp ( - | \thetav^T \xi| )
+%     ),
 %   \end{flalign*}
 %   \small
 %   as every observation is correctly classified (i.e., $\thetav^T \xi < 0$ \\for
@@ -388,11 +354,11 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 %   infinitely running optimization.
 %   
 %   \vspace{0.3cm}
-%   \begin{minipage}[b]{0.4\textwidth}
-%     \includegraphics[width=0.8\textwidth]{figure/softmax_1}
+%   \begin{minipage}[b]{0.4}
+%     \imageC[0.8]{figure/softmax_1}
 %   \end{minipage}%
-%   \begin{minipage}[b]{0.4\textwidth}
-%     \includegraphics[width=0.8\textwidth]{figure/softmax_2}
+%   \begin{minipage}[b]{0.4}
+%     \imageC[0.8]{figure/softmax_2}
 %   \end{minipage}%
 % \end{itemize}  
 % 
@@ -400,7 +366,7 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 % 
 % 
 % 
-% \end{vbframe}
+% \end{framei}
 
 % ------------------------------------------------------------------------------
 
