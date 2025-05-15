@@ -23,8 +23,8 @@ figure_man/discrete/marginalization-more.png
 
 \begin{framei}[sep=L]{Weight-Space View}
 \item Until now: hypothesis space $\Hspace$ of parameterized functions $\fxt$ % (in particular, the space of linear functions)
-\item Bayesian paradigm: distribution over parameters (weights) $\thetav$
-\item Bayes' rule: update prior to posterior belief after observing data
+\item ERM: find risk-minimal parameters (weights) $\thetav$
+\item Bayesian paradigm: distribution over $\thetav$ $\Rightarrow$ update prior to posterior belief after observing data acc to Bayes' rule
 $$
 p(\thetav | \Xmat, \yv) 
 = \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
@@ -76,14 +76,14 @@ $$
 \begin{itemizeL}
 \item Work on functions directly \phantom{(e.g., $\fxt = \thx$)}
 \item Define distributions on $f$
-\item Inference in function space $\Hspace$
+\item Inference in fun space $\Hspace$
 \end{itemizeL}
 }
 \end{frame}
 
 % --------------------------------------------------
 
-\section{Distributions on Functions}
+% \section{Distributions on Functions}
 
 \begin{framei}[sep=L]{discrete functions}
 \item Let $\Xspace = \xdat$ be a finite set
@@ -92,231 +92,87 @@ $$
 $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
 \end{framei}
 
-\foreach \i in{1,2,3}{
-\begin{framei}{random discrete functions}
-\item Case 1: input space $\Xspace = \setzo$
-\item Example of functions living in this space
+\foreach \i [count=\idx from 1] in {2, 5, 10} {
+\begin{framei}[sep=L]{example: random discrete functions}
+\item Case $\idx$: finite input space with cardinality $|\Xspace| = \i$
+\item Example functions living in this space
 \vfill
-\imageC[.7]{figure/discrete/example_2_\i.pdf}
+\splitVThree{
+\imageC{figure/discrete/example_\i_1.pdf}
+}{
+\imageC{figure/discrete/example_\i_2.pdf}
+}{
+\imageC{figure/discrete/example_\i_3.pdf}
+}
 \end{framei}
 }
 
-\foreach \i in{1,2,3}{
-\begin{framei}{random discrete functions}
-\item Case 2: input space $\Xspace = \{0, 0.25, 0.5, 0.75, 1\}$
-\item Example of functions living in this space
+\begin{framei}{Distributions on Discrete Functions}
+\item Specify (discrete) probability function on functions $h \in \Hspace$ $\Rightarrow$ natural way: vector representation
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
+\item $\bm{h}$ as $n$-dim RV, e.g.,
+$$\bm{h} \sim \normal(\mv, \Kmat)$$
+\item For now: set $\mv = \zero$, assume $\Kmat$ to be given
+\end{framei}
+
+\foreach \i [count=\idx from 1] in {2, 5, 10} {
+\foreach \j in {1, 2, 3} {
+\begin{framei}{example: random discrete functions}
+\item Case $\idx$ (ctd): $h: \Xspace \to \Yspace$ defined on $\i$ points
+\item Sample representatives by sampling from a $\i$-dim Gaussian
+\ifnum \i=2
+$$\bm{h} = [h(\xi[1]), h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
+\else 
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
+\fi
 \vfill
-\imageC[.7]{figure/discrete/example_5_\i.pdf}
+\splitV{
+\imageC[.9]{figure/discrete/example_norm_\i_\j_a.pdf}
+}{
+\imageC[.9]{figure/discrete/example_norm_\i_\j_b.pdf}
+}
 \end{framei}
 }
+}
 
-\foreach \i in{1,2,3}{
-\begin{framei}{random discrete functions}
-\item Case 3: input space $ |\Xspace| = 10$
-\item Example of functions living in this space
+\begin{framei}{Role of the Covariance Function}
+\item Note: covariance controls ``shape'' of function drawn
+\item Extreme case a) almost perfectly correlated 
+\footnotesize
+$$\Kmat = \begin{pmatrix} 1 & 0.99 & \dots & 0.99 \\
+0.99 & 1 & \dots & 0.99 \\
+0.99 & 0.99 & \ddots & 0.99 \\
+0.99 & \dots & 0.99 & 1 \end{pmatrix}$$
+\normalsize
+\item Extreme case b) uncorrelated $\Rightarrow$ $\Kmat = \id$
 \vfill
-\imageC[.7]{figure/discrete/example_10_\i.pdf}
+\splitVCompact{.35}{.35}{
+\imageC{figure/discrete/example_extreme_50_1.pdf}
+}{
+\imageC{figure/discrete/example_extreme_50_2.pdf}
+}
 \end{framei}
+
+\begin{framei}[sep=L]{spatial correlation}
+\item ``Meaningful'' functions (on numeric spaces) often characterized by a spatial property:
+% $\xi, \xi[j]$ close in $\Xspace$ $\Rightarrow$ $f(\xi), f(\xi[j])$ should be close in $\Yspace$
+$$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ close in } \Yspace$$
+\item In other words: if points are close in $\Xspace$, their function values should be correlated
+\item Enforce this by choosing covariance function s.t.
+$$\Kmat_{ij} \text{ high } \Leftrightarrow \xi[i], \xi[j] \text{ close in } \Xspace$$
+\end{framei} 
+
+\begin{framei}[sep=L]{spatial correlation}
+\item Compute covariance matrix by a function based on distance between $\xi$ and $\xi[j]$
+\item E.g., $\Kmat_{ij} = k(\xi, \xi[j]) = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$
+\vfill
+\splitVCompact{.35}{.35}{
+\imageC{figure/discrete/example_extreme_50_3.pdf}
+}{
+\imageC{figure/discrete/example_extreme_50_4.pdf}
 }
-
-% \begin{vbframe}{Discrete Functions}
-
-% For simplicity, let us consider functions with finite domains first. 
-
-% \lz 
-
-
-% Let $\mathcal{X} = \left\{\xv^{(1)}, \dots , \xv^{(n)}\right\}$ be a finite set of elements and $\Hspace$ the set of all functions from $\mathcal{X} \to \R$.
-
-% \lz
-
-% Since the domain of any $h(.) \in \Hspace$ has only $n$ elements, we can represent the function $h(.)$ compactly as a $n$-dimensional vector $$\bm{h} = \left[h\left(\xv^{(1)}\right), \dots, h\left(\xv^{(n)}\right)\right].$$
-% \end{vbframe}
-
-
-% \begin{frame}{Discrete Functions}
-
-% \textbf{Example 1:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{two} points $\Xspace = \{0, 1\}$. 
-
-% \lz 
-
-% Examples for functions that live in this space: 
-
-% \begin{figure}[h]
-% \foreach \x in{1,2,3} {
-%   \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_2_\x.pdf} \par
-% }
-% \end{figure}
-
-
-% \end{frame}
-
-% \begin{frame}{Discrete Functions}
-
-% \textbf{Example 2:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{five} points $\Xspace = \{0, 0.25, 0.5, 0.75, 1\}$.
-
-% \lz 
-
-% Examples for functions that live in this space: 
-
-% \begin{figure}[h]
-% \foreach \x in{1,2,3} {
-%   \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_5_\x.pdf}\par
-% }
-% \end{figure}
-
-% \end{frame}
-
-
-% \begin{frame}{Discrete Functions}
-
-% \textbf{Example 3:} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{ten} points. 
-
-% \lz 
-
-% Examples for functions that live in this space: 
-
-% \begin{figure}[h]
-% \foreach \x in{1,2,3} {
-%   \includegraphics<\x>[width=0.7\linewidth]{figure/discrete/example_10_\x.pdf}\par
-% }
-% \end{figure}
-
-% \end{frame}
-
-
-\begin{vbframe}{Distributions on Discrete Functions}
-
-\vspace*{0.5cm}
-
-One natural way to specify a probability function on discrete function $h \in \Hspace$ is to use the vector representation 
-$$
-  \bm{h} = \left[h\left(\xi[1]\right), h\left(\xi[2]\right), \dots, h\left(\xi[n]\right)\right]
-$$ 
-
-
-of the function.
-
-\lz
-
-Let us see $\bm{h}$ as a $n$-dimensional random variable. We will further assume the following normal distribution: 
-
-$$
-  \bm{h} \sim \mathcal{N}\left(\bm{m}, \bm{K}\right).
-$$ 
-
-\textbf{Note: } For now, we set $\bm{m} = \bm{0}$ and take the covariance matrix $\bm{K}$ as given. We will see later how they are chosen / estimated. 
-
-\end{vbframe}
-
-\begin{frame}{Discrete Functions}
-
-\textbf{Example 1 (continued):} Let $h: \Xspace \to \Yspace$ be a function that is defined on \textbf{two} points $\Xspace$. We sample functions by sampling from a two-dimensional normal variable
-
-$$
-\bm{h} = [h(1), h(2)] \sim \mathcal{N}(\bm{m}, \bm{K})
-$$
-
-
-\begin{figure}[H]
-\foreach \x in{1,2,3} {
-  \includegraphics<\x>[width=0.4\linewidth]{figure/discrete/example_norm_2_\x_a.pdf} ~  \includegraphics<\x>[width=0.4\linewidth]{figure/discrete/example_norm_2_\x_b.pdf} 
-} \par
-\begin{footnotesize}
-In this example, $m = (0, 0)$ and $K = \begin{pmatrix} 1 & 0.5 \\ 0.5 & 1 \end{pmatrix}$. 
-\end{footnotesize}
-\end{figure}
-
-\end{frame}
-
-
-\begin{frame}{Discrete Functions}
-
-\textbf{Example 2 (continued):} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{five} points. We sample functions by sampling from a five-dimensional normal variable
-
-
-$$
-\bm{h} = [h(1), h(2), h(3), h(4), h(5)] \sim \mathcal{N}(\bm{m}, \bm{K})
-$$
-
-\begin{figure}[h]
-\foreach \x in{1,2,3} {
-  \includegraphics<\x>[width=0.4\linewidth]{figure/discrete/example_norm_5_\x_a.pdf} ~  \includegraphics<\x>[width=0.4\linewidth]{figure/discrete/example_norm_5_\x_b.pdf}
-}
-\end{figure}
-
-\end{frame}
-
-\begin{frame}{Discrete Functions}
-
-\textbf{Example 3 (continued):} Let us consider $h: \Xspace \to \Yspace$ where the input space consists of \textbf{ten} points. We sample functions by sampling from ten-dimensional normal variable
-
-$$
-\bm{h} = [h(1), h(2), \dots, h(10)] \sim \mathcal{N}(\bm{m}, \bm{K})
-$$
-
-\begin{figure}[h]
-\foreach \x in{1,2,3} {
-  \includegraphics<\x>[width=0.4\linewidth]{figure/discrete/example_norm_10_\x_a.pdf} ~  \includegraphics<\x>[width=0.4\linewidth]{figure/discrete/example_norm_10_\x_b.pdf}
-}
-\end{figure}
-
-\end{frame}
-
-
-\begin{vbframe}{Role of the Covariance Function}
-
-Note that the covariance controls the \enquote{shape} of the drawn function. Consider two extreme cases where function values are
-
-\begin{enumerate}
-  \item[a)] strongly correlated: $\bm{K} = $ \footnotesize$ \begin{pmatrix} 1 & 0.99 & \dots & 0.99 \\
-  0.99 & 1 & \dots & 0.99 \\
-  0.99 & 0.99 & \ddots & 0.99 \\
-  0.99 & \dots & 0.99 & 1 \end{pmatrix}$ \normalsize
-  \item[b)] uncorrelated: $\bm{K} = \id$
-\end{enumerate}
-
-\begin{figure}
-  \includegraphics[width=0.35\linewidth]{figure/discrete/example_extreme_50_1.pdf} ~~  \includegraphics[width=0.35\linewidth]{figure/discrete/example_extreme_50_2.pdf}
-\end{figure}
-
-
-\framebreak 
-
-\begin{itemize}
-  \item \enquote{Meaningful} functions (on a numeric space $\Xspace$) may be characterized by a spatial property: \vspace*{0.2cm}
-  \begin{itemize}
-    \item[] If two points $\xi, \xi[j]$ are close in $\Xspace$-space, their function values $f(\xi), f(\xi[j])$ should be close in $\Yspace$-space. 
-  \end{itemize} \vspace*{0.2cm}
-  In other words: If they are close in $\Xspace$-space, their functions values should be \textbf{correlated}! \vspace*{0.4cm}
-  \item We can enforce that by choosing a covariance function with  
-  $$
-    \bm{K}_{ij} \text{ high, if } \xi[i], \xi[j] \text{ close.}
-  $$
-
-  \framebreak 
-
-  \item We can compute the entries of the covariance matrix by a function that is based on the distance between $\xi, \xi[j]$, for example: 
-  
-  \vspace*{0.2cm}
-  \begin{enumerate}
-    \item[c)] Spatial correlation: \begin{footnotesize}$K_{ij} = k(\xi[i], \xi[j]) = \exp\left(-\frac{1}{2}\left|\xi - \xi[j]\right|^2\right)$\end{footnotesize}
-  \end{enumerate}
-  
-\begin{figure}
-  \includegraphics[width=0.45\linewidth]{figure/discrete/example_extreme_50_4.pdf} ~~  \includegraphics[width=0.45\linewidth]{figure/discrete/example_extreme_50_3.pdf}
-\end{figure}
-
-\end{itemize}
-
-\begin{footnotesize}
-\textbf{Note}: $k(\cdot,\cdot)$ is known as the \textbf{covariance function} or \textbf{kernel}. It will be studied in more detail later on.
-\end{footnotesize}
-
-\end{vbframe}
-
-
-
+\item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
+\end{framei} 
 
 % \begin{vbframe}
 % \begin{figure}
@@ -336,7 +192,7 @@ Note that the covariance controls the \enquote{shape} of the drawn function. Con
 % \end{vbframe}
 
 
-\section{Gaussian Processes}
+% \section{Gaussian Processes}
 
 \begin{vbframe}{From Discrete to Continuous Functions}
 
@@ -491,7 +347,7 @@ Since we specified the mean function to be zero $m(\xv) \equiv 0$, the drawn fun
 \end{vbframe}
 
 
-\section{Gaussian Processes as Indexed Family}
+% \section{Gaussian Processes as Indexed Family}
 
 
 
