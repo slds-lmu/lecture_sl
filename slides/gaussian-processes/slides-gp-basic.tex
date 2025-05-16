@@ -111,7 +111,7 @@ $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
 \item Specify (discrete) probability function on functions $h \in \Hspace$ $\Rightarrow$ natural way: vector representation
 $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
 \item $\bm{h}$ as $n$-dim RV, e.g.,
-$$\bm{h} \sim \normal(\mv, \Kmat)$$
+$$\bm{h} \sim \gaussmk$$
 \item For now: set $\mv = \zero$, assume $\Kmat$ to be given
 \end{framei}
 
@@ -174,120 +174,278 @@ $$\Kmat_{ij} \text{ high } \Leftrightarrow \xi[i], \xi[j] \text{ close in } \Xsp
 \item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
 \end{framei} 
 
-% \begin{vbframe}
-% \begin{figure}
-% 	\centering
-% 	\includegraphics{figure_man/discrete/sample2.png} \\
-% 	\begin{footnotesize} If we sample again, we get another function. 
-% 	\end{footnotesize}
-% \end{figure}
+\begin{framei}{From Discrete to Continuous Functions}
+\item Recall: we defined distributions on functions by the (Gaussian) random vector of corresponding function values 
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
+\item We can do this for ever larger $n$ (as ``granular'' as we want)
+\vfill
+\imageC{figure/discrete/example_limit.pdf}
+\end{framei}
 
+\begin{framei}[sep = L]{From Discrete to Continuous Functions}
+\item No matter how large $n$ is: still functions over discrete domains
+\item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
+\item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
+\item Observation: random vectors $\bm{h}$ are collections of RVs enumerated by index set $\nset$ $\Rightarrow$ \textbf{indexed family} 
+\item Can we use more general, infinite index sets? % to create such collections? $\Rightarrow$ \textbf{stochastic processes}
+\end{framei}
 
-% However, we are usually interested in functions with infinite domain size. 
+\begin{framei}{definition: indexed family}
+\item Mathematical ``rule'' to map indices to some state space %$\mathcal{S}$
+$$s: T \rightarrow \mathcal{S}$$ 
+% , \quad t \mapsto s_t = s(t) $$
+\item Can assume many forms depending on $T$ and $\mathcal{S}$
+\vfill
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Cardinality of $T$} & \textbf{$\mathcal{S}$: (real) numbers} & \textbf{$\mathcal{S}$: RVs} \\
+\hline
+Finite & list & random vector \\
+\hline
+Countably $\infty$ & sequence & discrete-time \textbf{stochastic process} \\
+\hline
+Uncountably $\infty$ & sequence & continuous-time \textbf{stochastic process} \\
+\hline
+\end{tabular}
+\vfill
+\item $\mathcal{S}$ might also contain other objects like sets, \dots
+\end{framei}
 
-% \lz 
-
-% This idea is extended to infinite domain size via \textbf{Gaussian processes}. 
-
-% \end{vbframe}
-
-
-% \section{Gaussian Processes}
-
-\begin{vbframe}{From Discrete to Continuous Functions}
-
+\begin{frame}{example: real-valued indexed families}
+\splitV{
+\begin{itemizeL}
+\item $\mathcal{S} = \R$
+\item $t \mapsto s_t$
+\item Finite, e.g., $T = \nset$ $\Rightarrow$ list
+\item Countably $\infty$, e.g., $T = \N$ $\Rightarrow$ sequence 
+\end{itemizeL}
+}{
+\imageR{figure_man/indexed_family/indexed_family_1.png}
+\imageR{figure_man/indexed_family/indexed_family_2.png}
+}
+\vfill
 \begin{itemize}
-  \item We defined distributions on functions with discrete domain by defining a Gaussian on the vector of the respective function values 
-  $$
-    \mathbf{h} = [h(\xi[1]), h(\xi[2]), \dots, h(\xi[n])] \sim \mathcal{N}(\bm{m}, \bm{K})
-  $$
-
-  \item We can do this for $n \to \infty$ (as \enquote{granular} as we want)
-  \begin{figure}
-    \includegraphics[width = 0.9\textwidth]{figure/discrete/example_limit.pdf}
-  \end{figure}
+\item Uncountably $\infty$, e.g., $T = \R$ $\Rightarrow$ example: $\{\sin(t): t \in \R\}$
 \end{itemize}
-
-\end{vbframe}
-
-\begin{frame}{From Discrete to Continuous Functions}
-
-
-\begin{itemize}
-  \item No matter how large $n$ is, we are still considering a function over a discrete domain. 
-  \item How can we extend our definition to functions with \textbf{continuous domain} $\Xspace \subset \R$?
-\end{itemize}
-
 \end{frame}
 
+\begin{framei}[sep=L]{definition: stochastic process}
+\item Indexed family of RVs 
+$$\{Y_t: t \in T\}$$ 
+% \item Special instance of indexed families: random state space
+\item $T$ often has temporal interpretation $\Rightarrow$ e.g., stock prices
+\item Aka random function $\Rightarrow$ random element in fun space
+\item Intuition: probability distributions describe random vectors, SP describe random functions
+\end{framei}
 
-\begin{frame}{Gaussian Processes: Intuition}
-
+\begin{frame}{example: stochastic processes}
+\splitV{
+\begin{itemizeL}
+\item $\mathcal{S}$: space of RVs
+\item $t \mapsto Y_t$
+\item Finite, e.g., $T = \nset$ $\Rightarrow$ random vector
+\item Countably $\infty$, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
+\end{itemizeL}
+}{
+\imageR{figure_man/indexed_family/indexed_family_4.png}
+\imageR{figure_man/indexed_family/indexed_family_3.png}
+}
+\vfill
 \begin{itemize}
-  \only<1>{
-    \item Intuitively, a function $f$ drawn from \textbf{Gaussian process} can be understood as an \enquote{infinite} long Gaussian random vector. 
-    \item It is unclear how to handle an \enquote{infinite} long Gaussian random vector!
-  \lz 
-  \begin{figure}
-    \includegraphics[width=0.3\textwidth]{figure_man/question.png}
-  \end{figure}
-  }
-  \only<2-4>{
-    \item Thus, it is required that for \textbf{any finite set} of inputs $\{\xi[1], \dots, \xi[n]\} \subset \Xspace$, the vector $\mathbf{f}$ has a Gaussian distribution
+\item Uncountably $\infty$, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
+\end{itemize}
+\end{frame}
+
+\begin{framei}[sep=L]{intuition: gaussian processes}
+\item Recall: we were looking for a continuous version ($n \rightarrow \infty$) of
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
+\item Solution: \textbf{Gaussian process} $\Rightarrow$ SP with special index set $\Xspace$
+$$\{\fx: \xv \in \Xspace \}$$
+\item Distinguishing feature: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
+\end{framei}
+
+\foreach \i in {5, 10, 50}{
+\begin{framei}[sep=L]{marginalization property}
+\item For any finite set of inputs, $\fv$ has a Gaussian distribution
     $$
-      \bm{f} = \left[f\left(\xi[1]\right), \dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
+      \fv = \fvec \sim \gaussmk
     $$ 
-    with $\bm{m}$ and $\bm{K}$ being calculated by a mean function $m(.)$ / covariance function $k(.,.)$.
-    \item This property is called \textbf{Marginalization Property}. 
-    \begin{figure}
-      \only<2>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_5.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-5.png}}
-      \only<3>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_10.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
-      \only<4>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_50.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
-   \end{figure}
-    }
-\end{itemize}
+\item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
+\vfill
+\splitV{
+\imageC[.9]{figure/discrete/example_marginalization_\i.pdf}
+}{
+\ifnum \i=5
+\imageC[1]{figure_man/discrete/marginalization-5.png}
+\else
+\imageC[1]{figure_man/discrete/marginalization-more.png}
+\fi
+}
+\end{framei}
+}
 
-\end{frame}
-
-
-\begin{vbframe}{Gaussian Processes}
-
-This intuitive explanation is formally defined as follows: 
-
-\lz 
-
-A function $\fx$ is generated by a GP $\gp$ if for \textbf{any finite} set of inputs $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$, the associated vector of function values $\bm{f} = \left(f(\xv^{(1)}), \dots, f(\xv^{(n)})\right)$ has a Gaussian distribution
-
+\begin{framei}[sep=L]{definition: gaussian process}
+\item Formally, 
+$$\fx \sim \gp$$
+iff for any finite set of inputs $\xdat$, 
 $$
-\bm{f} = \left[f\left(\xi[1]\right),\dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
+\fv = \fvec \sim \gaussmk
 $$
+where
+$$
+\mv := (m(\xi))_{i \in \nset}, \quad
+\Kmat := \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}
+$$
+with \textbf{mean function} $m(\cdot)$ and \textbf{covariance function} $k(\cdot, \cdot)$
+\item Sampling from this GP gives us infinitely long random vectors, i.e., random functions!
+\end{framei}
 
-with 
-
-
-\begin{eqnarray*}
-\textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
-\textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}, 
-\end{eqnarray*}
- 
-where $m(\xv)$ is called mean function and $k(\xv, \xv^\prime)$ is called covariance function. 
-
-
-\framebreak 
-
-\vspace*{0.5cm} 
-
-A GP is thus \textbf{completely specified} by its mean and covariance function
-
-\vspace*{-0.2cm}
+\begin{framei}[sep=L]{definition: gaussian process}
+\item GPs are completely specified by their mean \& cov function
 \begin{eqnarray*}
 m(\xv) &=& \E[f(\xv)] \\
 k(\xv, \xv^\prime) &=& \E\biggl[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right)\biggr]
 \end{eqnarray*}
+\item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
-\vfill
+$\Rightarrow$ common, not necessarily drastic assumption 
+\end{framei}
 
-\textbf{Note}: For now, we assume $m(\xv) \equiv 0$. This is not necessarily a drastic limitation - thus it is common to consider GPs with a zero mean function. 
+   %  with $\bm{m}$ and $\bm{K}$ being calculated by a mean function $m(.)$ / covariance function $k(.,.)$.
+   %  \item This property is called \textbf{Marginalization Property}. 
+   %  \begin{figure}
+   %    \only<2>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_5.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-5.png}}
+   %    \only<3>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_10.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
+   %    \only<4>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_50.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
+   % \end{figure}
+
+% \begin{framei}{examples of indexed families}
+% \item Sequences: $\mathcal{S} = \R$
+% \item Finite sequences (lists): $|T| < \infty$, e.g., $T = \nset$
+% \imageL[.5]{figure_man/indexed_family/indexed_family_1.png}
+% \item Infinite sequences: $|T| = \infty$, e.g., $T = \N$
+% \imageL[.5]{figure_man/indexed_family/indexed_family_2.png}
+% \end{framei}
+
+% \begin{framei}{examples of indexed families}
+% \item More complicated, e.g., $\mathcal{S}$ is some space over RVs
+% \item \textcolor{red}{LW hier<l}
+% \item Finite sequences (lists): $|T| < \infty$, e.g., $T = \nset$
+% \imageL[.5]{figure_man/indexed_family/indexed_family_1.png}
+% \item Infinite sequences: $|T| = \infty$, e.g., $T = \N$
+% \imageL[.5]{figure_man/indexed_family/indexed_family_2.png}
+% \end{framei}
+
+% \begin{vbframe}{Indexed Family}
+
+% Some simple examples for indexed families are:
+
+% \vspace*{0.3cm}
+
+% \begin{minipage}{0.43\linewidth}
+%   \begin{itemize}
+%   \item finite sequences (lists): $T = \{1, 2, \dots, n\}$ and $\left(s_t\right)_{t \in T} \in \R$ \vspace{1cm}
+%   \item infinite sequences: $T = \N$ and $\left(s_t\right)_{t \in T} \in \R$
+%   \end{itemize}
+% \end{minipage}
+% \begin{minipage}{0.55\linewidth}
+% \includegraphics{figure_man/indexed_family/indexed_family_1.png} \\
+% \includegraphics{figure_man/indexed_family/indexed_family_2.png}
+% \end{minipage}
+
+
+% \framebreak
+
+% But the indexed set $\mathcal{S}$ can be something more complicated, for example functions or \textbf{random variables} (RV):
+
+% \begin{minipage}{0.43\linewidth}
+%   \vspace*{0.5cm}
+%   \begin{itemize}
+%     \item $T = \{1, \dots, m\}$, $Y_t$'s are RVs: Indexed family is a random vector. \vspace*{0.2cm}
+%     \item $T = \N$, $Y_t$'s are RVs: Indexed family is a stochastic process in discrete time \vspace*{0.2cm}
+%     \item $T = \Z^2$, $Y_t$'s are RVs: Indexed family is a 2D-random walk.
+%   \end{itemize}
+% \end{minipage}\hfill
+% \begin{minipage}{0.5\linewidth}
+% \includegraphics{figure_man/indexed_family/indexed_family_4.png} \\
+% \includegraphics{figure_man/indexed_family/indexed_family_3.png}
+% \end{minipage}
+
+% \end{vbframe}
+
+
+
+
+
+
+
+% \begin{frame}{Gaussian Processes: Intuition}
+
+% \begin{itemize}
+%   \only<1>{
+%     \item Intuitively, a function $f$ drawn from \textbf{Gaussian process} can be understood as an \enquote{infinite} long Gaussian random vector. 
+%     \item It is unclear how to handle an \enquote{infinite} long Gaussian random vector!
+%   \lz 
+%   \begin{figure}
+%     \includegraphics[width=0.3\textwidth]{figure_man/question.png}
+%   \end{figure}
+%   }
+%   \only<2-4>{
+%     \item Thus, it is required that for \textbf{any finite set} of inputs $\{\xi[1], \dots, \xi[n]\} \subset \Xspace$, the vector $\mathbf{f}$ has a Gaussian distribution
+%     $$
+%       \bm{f} = \left[f\left(\xi[1]\right), \dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
+%     $$ 
+%     with $\bm{m}$ and $\bm{K}$ being calculated by a mean function $m(.)$ / covariance function $k(.,.)$.
+%     \item This property is called \textbf{Marginalization Property}. 
+%     \begin{figure}
+%       \only<2>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_5.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-5.png}}
+%       \only<3>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_10.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
+%       \only<4>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_50.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
+%    \end{figure}
+%     }
+% \end{itemize}
+
+% \end{frame}
+
+
+% \begin{vbframe}{Gaussian Processes}
+
+% This intuitive explanation is formally defined as follows: 
+
+% \lz 
+
+% A function $\fx$ is generated by a GP $\gp$ if for \textbf{any finite} set of inputs $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$, the associated vector of function values $\bm{f} = \left(f(\xv^{(1)}), \dots, f(\xv^{(n)})\right)$ has a Gaussian distribution
+
+% $$
+% \bm{f} = \left[f\left(\xi[1]\right),\dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
+% $$
+
+% with 
+
+
+% \begin{eqnarray*}
+% \textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
+% \textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}, 
+% \end{eqnarray*}
+ 
+% where $m(\xv)$ is called mean function and $k(\xv, \xv^\prime)$ is called covariance function. 
+
+
+% \framebreak 
+
+% \vspace*{0.5cm} 
+
+% A GP is thus \textbf{completely specified} by its mean and covariance function
+
+% \vspace*{-0.2cm}
+% \begin{eqnarray*}
+% m(\xv) &=& \E[f(\xv)] \\
+% k(\xv, \xv^\prime) &=& \E\biggl[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right)\biggr]
+% \end{eqnarray*}
+
+% \vfill
+
+% \textbf{Note}: For now, we assume $m(\xv) \equiv 0$. This is not necessarily a drastic limitation - thus it is common to consider GPs with a zero mean function. 
 
 % \framebreak
 
@@ -303,7 +461,7 @@ k(\xv, \xv^\prime) &=& \E\biggl[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^
 
 % The \textbf{marginalization property} makes it possible to handle this \enquote{infinite} representation: evaluations of the process on any finite number of points follow a multivariate normal distribution.
 
-\end{vbframe}
+% \end{vbframe}
 
 \begin{vbframe}{Sampling from a Gaussian process Prior}
 
