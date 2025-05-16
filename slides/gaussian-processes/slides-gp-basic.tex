@@ -230,11 +230,10 @@ Uncountably $\infty$ & sequence & continuous-time \textbf{stochastic process} \\
 \end{frame}
 
 \begin{framei}[sep=L]{definition: stochastic process}
-\item Indexed family of RVs 
+\item Indexed family of RVs with specific covariance structure
 $$\{Y_t: t \in T\}$$ 
-% \item Special instance of indexed families: random state space
-\item $T$ often has temporal interpretation $\Rightarrow$ e.g., stock prices
-\item Aka random function $\Rightarrow$ random element in fun space
+\item Some distributional assumption for $Y_t$
+\item Often temporal interpretation of $T$ $\Rightarrow$ e.g., stock prices
 \item Intuition: probability distributions describe random vectors, SP describe random functions
 \end{framei}
 
@@ -257,9 +256,9 @@ $$\{Y_t: t \in T\}$$
 \end{frame}
 
 \begin{framei}[sep=L]{intuition: gaussian processes}
-\item Special case of SP: \textbf{Gaussian process}
-\item (Uncountable) index set $\Xspace$ $\Rightarrow$ $\{\fx: \xv \in \Xspace \}$
-\item Distinguishing feature: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
+\item \textbf{Gaussian process}: special case of SP 
+\item Index set: $\Xspace$, cov structure: Gaussian 
+\item Corollary: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
 \vfill
 \splitV{
 \imageC{figure_man/indexed_family/indexed_family_5.png}
@@ -272,7 +271,7 @@ $$\{Y_t: t \in T\}$$
 
 \foreach \i in {5, 10, 50}{
 \begin{framei}[sep=L]{marginalization property}
-\item For any finite set of inputs, $\fv$ has a Gaussian distribution
+\item Distinguishing feature of GPs: for any finite set of inputs,
     $$
       \fv = \fvec \sim \gaussmk
     $$ 
@@ -305,20 +304,40 @@ $$
 with \textbf{mean function} $m(\cdot)$ and \textbf{covariance function} $k(\cdot, \cdot)$
 \end{framei}
 
+\begin{framei}[sep=L]{existence theorem}
+% \item Idea: for any particular finite-dim distributions, the corresponding GP exists
+\item For \textbf{any} 
+\begin{itemize}
+\item state space $\Xspace$,
+\item mean function $m: \Xspace \rightarrow \R$,
+\item covariance function $k: \Xspace \times \Xspace \rightarrow \R$, 
+\end{itemize}
+there \textbf{exists} a Gaussian process $\mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t.
+\begin{eqnarray*}
+\E(\fx) &=& m(\xv) \\
+\cov(\fx, f(\xv^\prime)) &=& \kxxp
+\end{eqnarray*}
+$\forall \xv, \xv^\prime \in \Xspace$
+\item Version of Kolmogorov consistency theorem  \\
+$\Rightarrow$ proof: \citelink{GRIMMETT2001PROC} (Thm. 8.6.3)
+\item Intuition: for any mean \& cov structure we prescribe for random vectors $\fv$, there is a corresponding GP to generate them
+\end{framei}
+
 \begin{framei}[sep=L]{definition: gaussian process}
-\item GPs are completely specified by their mean \& cov function
+\item GPs are thus completely specified by their mean \& cov function
 \begin{eqnarray*}
 m(\xv) &=& \E[f(\xv)] \\
-k(\xv, \xv^\prime) &=& \E\biggl[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right)\biggr]
+k(\xv, \xv^\prime) &=& \cov(\fx, f(\xv^\prime)) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right) \right]
 \end{eqnarray*}
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
 $\Rightarrow$ common, not necessarily drastic assumption 
-\item Sampling from GPs gives us random functions!
+\item Properties of GPs mainly governed by $k(\cdot, \cdot)$
+\item By virtue of existence thm: sampling from GPs gives us random functions with our properties of choice
 \end{framei}
 
 \begin{framei}[sep=L]{sampling from gaussian processes}
-\item Consider $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
+\item Example: $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
 $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 \item To visualize sample functions, 
 \begin{itemize}
@@ -326,7 +345,7 @@ $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
   \item compute $\Kmat = \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}$ from all pairs $\xi, \xi[j]$ 
   \item draw $\bm{f} \sim \mathcal{N}(\bm{0}, \bm{K})$ 
 \end{itemize}
-\item 10 randomly function (note 0 mean)
+\item 10 randomly drawn functions (note 0 mean)
 \vfill
 \imageC[.9]{figure/gp_sample/different_samples.pdf}
 \end{framei}
