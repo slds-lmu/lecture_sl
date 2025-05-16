@@ -257,11 +257,17 @@ $$\{Y_t: t \in T\}$$
 \end{frame}
 
 \begin{framei}[sep=L]{intuition: gaussian processes}
-\item Recall: we were looking for a continuous version ($n \rightarrow \infty$) of
-$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
-\item Solution: \textbf{Gaussian process} $\Rightarrow$ SP with special index set $\Xspace$
-$$\{\fx: \xv \in \Xspace \}$$
+\item Special case of SP: \textbf{Gaussian process}
+\item (Uncountable) index set $\Xspace$ $\Rightarrow$ $\{\fx: \xv \in \Xspace \}$
 \item Distinguishing feature: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
+\vfill
+\splitV{
+\imageC{figure_man/indexed_family/indexed_family_5.png}
+}{
+\imageC[.8]{figure_man/indexed_family/indexed_family_6.png}
+}
+\vfill
+\item Precisely what we were looking for: process to generate arbitrarily long Gaussian random vectors!
 \end{framei}
 
 \foreach \i in {5, 10, 50}{
@@ -297,7 +303,6 @@ $$
 \Kmat := \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}
 $$
 with \textbf{mean function} $m(\cdot)$ and \textbf{covariance function} $k(\cdot, \cdot)$
-\item Sampling from this GP gives us infinitely long random vectors, i.e., random functions!
 \end{framei}
 
 \begin{framei}[sep=L]{definition: gaussian process}
@@ -309,32 +314,95 @@ k(\xv, \xv^\prime) &=& \E\biggl[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
 $\Rightarrow$ common, not necessarily drastic assumption 
+\item Sampling from GPs gives us random functions!
 \end{framei}
 
-   %  with $\bm{m}$ and $\bm{K}$ being calculated by a mean function $m(.)$ / covariance function $k(.,.)$.
-   %  \item This property is called \textbf{Marginalization Property}. 
-   %  \begin{figure}
-   %    \only<2>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_5.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-5.png}}
-   %    \only<3>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_10.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
-   %    \only<4>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_50.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
-   % \end{figure}
+\begin{framei}[sep=L]{sampling from gaussian processes}
+\item Consider $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
+$$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
+\item To visualize sample functions, 
+\begin{itemize}
+\item choose high number $n$ of (equidistant) points $\xdat$
+  \item compute $\Kmat = \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}$ from all pairs $\xi, \xi[j]$ 
+  \item draw $\bm{f} \sim \mathcal{N}(\bm{0}, \bm{K})$ 
+\end{itemize}
+\item 10 randomly function (note 0 mean)
+\vfill
+\imageC[.9]{figure/gp_sample/different_samples.pdf}
+\end{framei}
 
-% \begin{framei}{examples of indexed families}
-% \item Sequences: $\mathcal{S} = \R$
-% \item Finite sequences (lists): $|T| < \infty$, e.g., $T = \nset$
-% \imageL[.5]{figure_man/indexed_family/indexed_family_1.png}
-% \item Infinite sequences: $|T| = \infty$, e.g., $T = \N$
-% \imageL[.5]{figure_man/indexed_family/indexed_family_2.png}
-% \end{framei}
 
-% \begin{framei}{examples of indexed families}
-% \item More complicated, e.g., $\mathcal{S}$ is some space over RVs
-% \item \textcolor{red}{LW hier<l}
-% \item Finite sequences (lists): $|T| < \infty$, e.g., $T = \nset$
-% \imageL[.5]{figure_man/indexed_family/indexed_family_1.png}
-% \item Infinite sequences: $|T| = \infty$, e.g., $T = \N$
-% \imageL[.5]{figure_man/indexed_family/indexed_family_2.png}
-% \end{framei}
+% \begin{vbframe}{Sampling from a Gaussian process Prior}
+
+% We can draw functions from a Gaussian process prior. Let us consider $\fx \sim \mathcal{GP}\left(0, k(\xv, \xv^\prime)\right)$ with the squared exponential covariance function $^{(*)}$
+
+% $$
+% k(\xv, \xv^\prime) = \exp\left(-\frac{1}{2\ls^2}\|\xv - \xv^\prime\|^2\right), ~~ \ls = 1.
+% $$
+% \vspace{-4cm}
+% This specifies the Gaussian process completely. 
+
+% \vspace{8cm}
+% \footnotesize
+% $^{(*)}$ We will talk later about different choices of covariance functions. 
+
+% \normalsize
+
+% \framebreak 
+
+% To visualize a sample function, we 
+
+% \begin{itemize}
+%   \item choose a high number $n$ (equidistant) points $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$
+%   \item compute the corresponding covariance matrix $\Kmat = \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}$ by plugging in all pairs $\xv^{(i)}, \xv^{(j)}$ 
+%   \item sample from a Gaussian $\bm{f} \sim \mathcal{N}(\bm{0}, \bm{K})$. 
+% \end{itemize}
+
+% We draw $10$ times from the Gaussian, to get $10$ different samples.  
+
+% % Using $100$ equidistant points, we repeat the process of generating the Gaussian $10$ times ($10$ different functions) and draw each function by connecting the sampled values. 
+
+% % \lz
+
+% \begin{figure}
+%   \includegraphics[width=0.9\textwidth]{figure/gp_sample/different_samples.pdf}
+% \end{figure}
+
+% \vspace{-0.2cm}
+% Since we specified the mean function to be zero $m(\xv) \equiv 0$, the drawn functions have zero mean.
+
+% \end{vbframe}
+
+
+% \section{Gaussian Processes as Indexed Family}
+
+
+
+
+% \begin{vbframe}{Gaussian processes as an Indexed Family}
+
+% \begin{block}{Definition}
+% A \textbf{Gaussian process} is a (infinite) collection of random variables, any \textbf{finite} number of which have a \textbf{joint Gaussian distribution}.
+% \end{block}
+
+% \lz
+
+% A Gaussian process is a special case of a \textbf{stochastic process} which is defined as a collection of random variables indexed by some index set (also called an \textbf{indexed family}). What does it mean? 
+
+% \lz 
+
+% An \textbf{indexed family} is a mathematical function (or \enquote{rule}) to map indices $t \in T$ to objects in $\mathcal{S}$. 
+
+% \begin{block}{Definition}
+% A \textbf{family of elements in $\mathcal{S}$ indexed by $T$} (indexed family) is a surjective function 
+% \vspace*{-0.3cm}
+% \begin{eqnarray*}
+% s: T &\to& \mathcal{S} \\
+%    t &\mapsto& s_t = s(t) 
+% \end{eqnarray*}
+% \end{block}
+
+% \end{vbframe}
 
 % \begin{vbframe}{Indexed Family}
 
@@ -373,220 +441,21 @@ $\Rightarrow$ common, not necessarily drastic assumption
 
 % \end{vbframe}
 
-
-
-
-
-
-
-% \begin{frame}{Gaussian Processes: Intuition}
+% \begin{frame}{Indexed Family}
 
 % \begin{itemize}
-%   \only<1>{
-%     \item Intuitively, a function $f$ drawn from \textbf{Gaussian process} can be understood as an \enquote{infinite} long Gaussian random vector. 
-%     \item It is unclear how to handle an \enquote{infinite} long Gaussian random vector!
-%   \lz 
-%   \begin{figure}
-%     \includegraphics[width=0.3\textwidth]{figure_man/question.png}
-%   \end{figure}
-%   }
-%   \only<2-4>{
-%     \item Thus, it is required that for \textbf{any finite set} of inputs $\{\xi[1], \dots, \xi[n]\} \subset \Xspace$, the vector $\mathbf{f}$ has a Gaussian distribution
-%     $$
-%       \bm{f} = \left[f\left(\xi[1]\right), \dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
-%     $$ 
-%     with $\bm{m}$ and $\bm{K}$ being calculated by a mean function $m(.)$ / covariance function $k(.,.)$.
-%     \item This property is called \textbf{Marginalization Property}. 
-%     \begin{figure}
-%       \only<2>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_5.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-5.png}}
-%       \only<3>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_10.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
-%       \only<4>{\includegraphics[width=0.4\textwidth]{figure/discrete/example_marginalization_50.pdf}\includegraphics[width=0.5\textwidth]{figure_man/discrete/marginalization-more.png}}
-%    \end{figure}
-%     }
+%   \item A Gaussian process is also an indexed family, where the random variables $f(\xv)$ are indexed by the input values $\xv \in \Xspace$. 
+%   \item Their special feature: Any indexed (finite) random vector has a multivariate Gaussian distribution (which comes with all the nice properties of Gaussianity!). 
 % \end{itemize}
 
+% \begin{figure}
+%   \includegraphics<1>[width=0.7\textwidth]{figure_man/indexed_family/indexed_family_5.png} \par
+%   \only<1>{\begin{footnotesize} Visualization for a one-dimensional $\Xspace$. \end{footnotesize}}
+%   \includegraphics<2>[width=0.6\textwidth]{figure_man/indexed_family/indexed_family_6.png}\par
+%   \only<2>{\begin{footnotesize} Visualization for a two-dimensional $\Xspace$. \end{footnotesize}}
+% \end{figure}
+
 % \end{frame}
-
-
-% \begin{vbframe}{Gaussian Processes}
-
-% This intuitive explanation is formally defined as follows: 
-
-% \lz 
-
-% A function $\fx$ is generated by a GP $\gp$ if for \textbf{any finite} set of inputs $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$, the associated vector of function values $\bm{f} = \left(f(\xv^{(1)}), \dots, f(\xv^{(n)})\right)$ has a Gaussian distribution
-
-% $$
-% \bm{f} = \left[f\left(\xi[1]\right),\dots, f\left(\xi[n]\right)\right] \sim \mathcal{N}\left(\bm{m}, \bm{K}\right),
-% $$
-
-% with 
-
-
-% \begin{eqnarray*}
-% \textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
-% \textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}, 
-% \end{eqnarray*}
- 
-% where $m(\xv)$ is called mean function and $k(\xv, \xv^\prime)$ is called covariance function. 
-
-
-% \framebreak 
-
-% \vspace*{0.5cm} 
-
-% A GP is thus \textbf{completely specified} by its mean and covariance function
-
-% \vspace*{-0.2cm}
-% \begin{eqnarray*}
-% m(\xv) &=& \E[f(\xv)] \\
-% k(\xv, \xv^\prime) &=& \E\biggl[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right)\biggr]
-% \end{eqnarray*}
-
-% \vfill
-
-% \textbf{Note}: For now, we assume $m(\xv) \equiv 0$. This is not necessarily a drastic limitation - thus it is common to consider GPs with a zero mean function. 
-
-% \framebreak
-
-% \vspace*{0.5cm}
-
-% Intuitively, one can think of a function $f$ drawn from a Gaussian process prior as a Gaussian distribution with an \enquote{infinitely} long mean vector and an \enquote{infinite by infinite} covariance matrix.
-
-% \lz
-
-% Each dimension of the Gaussian corresponds to an element $\xv$ from the domain $\mathcal{X}$. The corresponding component of the random vector represents the value of $f(\xv)$.
-
-% \lz
-
-% The \textbf{marginalization property} makes it possible to handle this \enquote{infinite} representation: evaluations of the process on any finite number of points follow a multivariate normal distribution.
-
-% \end{vbframe}
-
-\begin{vbframe}{Sampling from a Gaussian process Prior}
-
-We can draw functions from a Gaussian process prior. Let us consider $\fx \sim \mathcal{GP}\left(0, k(\xv, \xv^\prime)\right)$ with the squared exponential covariance function $^{(*)}$
-
-$$
-k(\xv, \xv^\prime) = \exp\left(-\frac{1}{2\ls^2}\|\xv - \xv^\prime\|^2\right), ~~ \ls = 1.
-$$
-\vspace{-4cm}
-This specifies the Gaussian process completely. 
-
-\vspace{8cm}
-\footnotesize
-$^{(*)}$ We will talk later about different choices of covariance functions. 
-
-\normalsize
-
-\framebreak 
-
-To visualize a sample function, we 
-
-\begin{itemize}
-  \item choose a high number $n$ (equidistant) points $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$
-  \item compute the corresponding covariance matrix $\Kmat = \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}$ by plugging in all pairs $\xv^{(i)}, \xv^{(j)}$ 
-  \item sample from a Gaussian $\bm{f} \sim \mathcal{N}(\bm{0}, \bm{K})$. 
-\end{itemize}
-
-We draw $10$ times from the Gaussian, to get $10$ different samples.  
-
-% Using $100$ equidistant points, we repeat the process of generating the Gaussian $10$ times ($10$ different functions) and draw each function by connecting the sampled values. 
-
-% \lz
-
-\begin{figure}
-  \includegraphics[width=0.9\textwidth]{figure/gp_sample/different_samples.pdf}
-\end{figure}
-
-\vspace{-0.2cm}
-Since we specified the mean function to be zero $m(\xv) \equiv 0$, the drawn functions have zero mean.
-
-\end{vbframe}
-
-
-% \section{Gaussian Processes as Indexed Family}
-
-
-
-
-\begin{vbframe}{Gaussian processes as an Indexed Family}
-
-% \begin{block}{Definition}
-% A \textbf{Gaussian process} is a (infinite) collection of random variables, any \textbf{finite} number of which have a \textbf{joint Gaussian distribution}.
-% \end{block}
-
-% \lz
-
-A Gaussian process is a special case of a \textbf{stochastic process} which is defined as a collection of random variables indexed by some index set (also called an \textbf{indexed family}). What does it mean? 
-
-\lz 
-
-An \textbf{indexed family} is a mathematical function (or \enquote{rule}) to map indices $t \in T$ to objects in $\mathcal{S}$. 
-
-\begin{block}{Definition}
-A \textbf{family of elements in $\mathcal{S}$ indexed by $T$} (indexed family) is a surjective function 
-\vspace*{-0.3cm}
-\begin{eqnarray*}
-s: T &\to& \mathcal{S} \\
-   t &\mapsto& s_t = s(t) 
-\end{eqnarray*}
-\end{block}
-
-\end{vbframe}
-
-\begin{vbframe}{Indexed Family}
-
-Some simple examples for indexed families are:
-
-\vspace*{0.3cm}
-
-\begin{minipage}{0.43\linewidth}
-  \begin{itemize}
-  \item finite sequences (lists): $T = \{1, 2, \dots, n\}$ and $\left(s_t\right)_{t \in T} \in \R$ \vspace{1cm}
-  \item infinite sequences: $T = \N$ and $\left(s_t\right)_{t \in T} \in \R$
-  \end{itemize}
-\end{minipage}
-\begin{minipage}{0.55\linewidth}
-\includegraphics{figure_man/indexed_family/indexed_family_1.png} \\
-\includegraphics{figure_man/indexed_family/indexed_family_2.png}
-\end{minipage}
-
-
-\framebreak
-
-But the indexed set $\mathcal{S}$ can be something more complicated, for example functions or \textbf{random variables} (RV):
-
-\begin{minipage}{0.43\linewidth}
-  \vspace*{0.5cm}
-  \begin{itemize}
-    \item $T = \{1, \dots, m\}$, $Y_t$'s are RVs: Indexed family is a random vector. \vspace*{0.2cm}
-    \item $T = \N$, $Y_t$'s are RVs: Indexed family is a stochastic process in discrete time \vspace*{0.2cm}
-    \item $T = \Z^2$, $Y_t$'s are RVs: Indexed family is a 2D-random walk.
-  \end{itemize}
-\end{minipage}\hfill
-\begin{minipage}{0.5\linewidth}
-\includegraphics{figure_man/indexed_family/indexed_family_4.png} \\
-\includegraphics{figure_man/indexed_family/indexed_family_3.png}
-\end{minipage}
-
-\end{vbframe}
-
-\begin{frame}{Indexed Family}
-
-\begin{itemize}
-  \item A Gaussian process is also an indexed family, where the random variables $f(\xv)$ are indexed by the input values $\xv \in \Xspace$. 
-  \item Their special feature: Any indexed (finite) random vector has a multivariate Gaussian distribution (which comes with all the nice properties of Gaussianity!). 
-\end{itemize}
-
-\begin{figure}
-  \includegraphics<1>[width=0.7\textwidth]{figure_man/indexed_family/indexed_family_5.png} \par
-  \only<1>{\begin{footnotesize} Visualization for a one-dimensional $\Xspace$. \end{footnotesize}}
-  \includegraphics<2>[width=0.6\textwidth]{figure_man/indexed_family/indexed_family_6.png}\par
-  \only<2>{\begin{footnotesize} Visualization for a two-dimensional $\Xspace$. \end{footnotesize}}
-\end{figure}
-
-\end{frame}
 
 
 \endlecture
