@@ -19,9 +19,9 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{L2/L1 Loss on Probabilities
-  }{figure/brier.png
-  }{
+}{L2/L1 Loss on Probabilities
+}{figure/brier.png
+}{
   \item Brier score / $L2$ loss on probabilities
   \item Derivation of risk minimizer
   \item Optimal constant model 
@@ -73,12 +73,12 @@ which we do pointwise for every $\xv$. We plug in the Brier score
 
 \vspace*{-0.3cm}
 
-\begin{eqnarray*}
-	&& \argmin_c \quad L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
-	&=&  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))  \quad |{\,+\eta(\xv)^2-\eta(\xv)^2}\\
-  &=&  \argmin_c \quad (c^2 -2c\eta(\xv) + \eta(\xv)^2)- \eta(\xv)^2 + \eta(\xv) \\
-	&=&  \argmin_c \quad (c - \eta(\xv))^2
-\end{eqnarray*}
+\begin{align*}
+	& \argmin_c \quad L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
+	&=  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))  \quad |{\,+\eta(\xv)^2-\eta(\xv)^2}\\
+  &=  \argmin_c \quad (c^2 -2c\eta(\xv) + \eta(\xv)^2)- \eta(\xv)^2 + \eta(\xv) \\
+	&=  \argmin_c \quad (c - \eta(\xv))^2
+\end{align*}
 
 The expression is minimized for $c = \eta(\xv)$
 

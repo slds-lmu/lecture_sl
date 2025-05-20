@@ -21,11 +21,11 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{
+}{
     Properties of Loss Functions
-  }{
+}{
   figure_man/vgg_example.png
-  }{
+}{
   \item Statistical properties 
   \item Robustness 
   \item Optimization properties
@@ -79,19 +79,15 @@ $\rx := y - \fx$
 \end{framei}
 
 
-\begin{frame}{Some basic properties}
+\begin{framei}{Basic properties of loss}
 
-% https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
-A loss is  
-\begin{itemize}
+% https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf 
   \item \textbf{symmetric} if $\Lxy = L(\fx, y)$
   \item \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
   $a \in \R$
   \item \textbf{distance-based} if it can be written in terms of residual 
     $\Lxy = \psi (r)$ for some $\psi: \R \to \R$, and 
     $\psi(r) = 0 \Leftrightarrow r = 0$
- \end{itemize}
-
 
 \vfill
 
@@ -117,7 +113,7 @@ A loss is
   Symmetric: Brier score
 }
 
-\end{frame}
+\end{framei}
 
 % ------------------------------------------------------------------------------
 
