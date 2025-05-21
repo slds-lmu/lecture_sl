@@ -38,7 +38,7 @@
   
   \begin{align*}
     H(y,x) &= H(x) + H(y|x) \\
-    &=  - \theta_x log(\theta_x) - (1-\theta_x) ( log(1-\theta_x) + H(\epsilon))
+    &=  - \theta_x log(\theta_x) - (1-\theta_x) ( log(1-\theta_x) - H(\epsilon))
   \end{align*}
   
   
