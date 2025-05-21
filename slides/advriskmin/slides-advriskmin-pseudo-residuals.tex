@@ -87,9 +87,9 @@ $$
 
 \item This is effectively the PR 
 
-\begin{eqnarray*}
-	\fx &\leftarrow& \fx + \tilde{r}(\xv)\\ 
-\end{eqnarray*}
+\begin{align*}
+	\fx &\leftarrow \fx + \tilde{r}(\xv)
+\end{align*}
 
 \item (Such iterative updates of $f$ like a loss-reducing GD in function space is the major underlying idea of GB)
 
@@ -106,12 +106,12 @@ $$
 	% \framebreak 
 	\item Using the chain rule:
         % mwe see that the pseudo-residuals are input to the update direction
-	\begin{eqnarray*}
-	\nabla_{\thetav} \risket &=&\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
+	\begin{align*}
+	\nabla_{\thetav} \risket &=\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
         % _{= - \tilde r^{(i)}}
 	\cdot \nabla_{\thetav} \fxit \\ 
-	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
-	\end{eqnarray*}
+	&= - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
+	\end{align*}
 	\item Update is loss-optimal directional change of model output 
         and a loss-independent derivative of $\fx$
         \item This is a flexible, nearly loss-independent variant of GD
@@ -120,10 +120,10 @@ $$
 
 % For risk minimization, the update rule for the parameter $\thetav$ is 
 % \begin{footnotesize}
-% \begin{eqnarray*}
+% \begin{align*}
 % \thetav^{[t+1]} &\leftarrow & \thetav^{[t]} - \alpha^{[t]}  \sumin \nabla_{\thetav} \left. \Lxyit \right|_{\thetav = \thetav^{[t]}} \\
 % \thetav^{[t+1]} &\leftarrow & \thetav^{[t]} + \alpha^{[t]} \sumin \tilde r^{(i)} \cdot \left. \nabla_{\thetav} \fxit \right|_{\thetav = \thetav^{[t]}} 
-% \end{eqnarray*}
+% \end{align*}
 % \end{footnotesize}
 % $\alpha^{[t]} \in [0,1]$ is called \enquote{learning rate} in this context.
 \end{framei}

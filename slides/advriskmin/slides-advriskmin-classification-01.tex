@@ -66,11 +66,11 @@ $$
 
 \vspace*{-0.5cm}
 
-\begin{eqnarray*}
-  \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ~|~ \xv ] \right] \\
-          & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right] 
-          % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
-\end{eqnarray*}
+\begin{align*}
+  \riskf  & = \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ~|~ \xv ] \right] \\
+          & = \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right] 
+          %& = E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
+\end{align*}
 
 \item $\eta_k(x) := \P(y = k| \xv)$ is true posterior probability for class $k$
 
@@ -88,9 +88,9 @@ $$
 
 % \vspace*{-0.3cm}
 
-% \begin{eqnarray*}
-%   \fxbayes &=& \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xtil)\right]\,.  \\
-% \end{eqnarray*}
+% \begin{align*}
+%   \fxbayes &= \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xtil)\right]\,.  \\
+% \end{align*}
 
 \end{framei}
 
@@ -99,11 +99,11 @@ $$
 
 \item For multiclass and hard labeler $\hx$
 \item Optimal constant
-\begin{eqnarray*}   h_{c}^{\ast}  &=& \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
-&=& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
-  &=& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
-  &=& \argmax_{k \in \Yspace} \P(y = k)
-  \end{eqnarray*}
+\begin{align*}   h_{c}^{\ast}  &= \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
+&= \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
+  &= \argmin_{k \in \Yspace} 1 - \P(y = k) \\
+  &= \argmax_{k \in \Yspace} \P(y = k)
+  \end{align*}
 
 
 \item Translation: Predict most probable class
@@ -117,26 +117,20 @@ $$
 \end{framei}
 
 
-\begin{frame}{Bayes risk  / Bayes error rate}
+\begin{framei}[sep=L]{Bayes risk  / Bayes error rate}
 
-$$
-  \riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
-$$
+\item $$\riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]$$
 
-\vfill
-
-For binary case, can write risk minimizer and Bayes risk as:  
+\item For binary case, can write risk minimizer and Bayes risk as:  
 
 $$
   \hxbayes = \begin{cases} 1 & \eta(\xv) \ge \frac{1}{2} \\ 0 & \eta(\xv) < \frac{1}{2}\end{cases} 
 $$
 
-$$
-\riskbayes = \E_x\left[\min(\eta(\xv), 1 - \eta(\xv))\right] = 1 - \E_x\left[\max(\eta(\xv), 1 - \eta(\xv))\right] 
-$$
+\item $$\riskbayes = \E_x\left[\min(\eta(\xv), 1 - \eta(\xv))\right] = 1 - \E_x\left[\max(\eta(\xv), 1 - \eta(\xv))\right] $$
 
  
-\end{frame}
+\end{framei}
 
 
 \begin{framei}[sep=M]{Generative classifiers}

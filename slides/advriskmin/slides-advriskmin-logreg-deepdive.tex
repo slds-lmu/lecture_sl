@@ -19,47 +19,43 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
+}{% Lecture title  
     Logistic regression (Deep-Dive)
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+}{% Relative path to title page image: Can be empty but must not start with slides/
   figure/bernoulli_prob.png
-  }{
+}{
   \item Derive the gradient of the logistic regression
   \item Derive the Hessian of the logistic regression
   \item Show that the logistic regression is a convex problem
 }
 
-\begin{frame}{Logistic regression: Risk Problem}
+\begin{framei}{Logistic regression: Risk Problem}
 
-Given $n \in \mathbb{N}$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \{0, 1\}$ we want to minimize the following risk 
+\item Given $n \in \mathbb{N}$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \{0, 1\}$ we want to minimize the following risk 
 
-\begin{eqnarray*}
-  \riske  & = & 
+\begin{align*}
+  \riske & = 
   -\sum^n_{i=1} \yi\log(\pixit) + (1-\yi\log(1-\pixit))
-\end{eqnarray*}
+\end{align*}
 
-with respect to $\thetav$ where the probabilistic classifier
+with respect to $\thetav$
 
-\begin{eqnarray*}
-  \pixit  & = & 
- s(\fxit),
-\end{eqnarray*}
+\item The probabilistic classifier $\pixit = s(\fxit)$
 
-the sigmoid function $s(f) = \frac{1}{1 + \exp(-f)}$ and the score $\fxit = \thx.$
+\item The sigmoid function $s(f) = \frac{1}{1 + \exp(-f)}$
 
-\vfill
+\item The score $\fxit = \thx$
 
-NB: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top.$
+\item NB: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top$
 
-\end{frame}
+\end{framei}
 
-\begin{frame}{Logistic regression: Gradient}
+\begin{frame2}[small]{Logistic regression: Gradient}
 
 We find the gradient of logistic regression with the chain rule, s.t., 
 
 \vfill
 
-{\small
 \begin{align*}
   \frac{\partial}{\partial\thetav}\riske  & =  
  -\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetav} +  \\
@@ -71,17 +67,15 @@ We find the gradient of logistic regression with the chain rule, s.t.,
   &=  
   -\sum^n_{i=1} (\yi(1-\pixit)  -  (1-\yi)\pixit )(\xi)^\top.\\
 \end{align*}
-}
 
-
-\end{frame}
+\end{frame2}
 
 \begin{frame}{Logistic regression: Gradient}
 
 \begin{align*}
-  \quad &=& 
+  \quad &= 
   \sumin (\pixit - \yi)(\xi)^\top\\
-    \quad &=& 
+    \quad &= 
   (\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y})^\top\mathbf{X}\\
 \end{align*}
 
@@ -121,7 +115,7 @@ We find the Hessian via differentiation, s.t.,
 \end{align*}
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
-$$(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]).$$
+$$(\pixit[1](1-\pixit[1]), \dots, \pixit[n](1-\pixit[n])).$$
 }
 
 Can now be used in Newton-Raphson and other 2nd order optimizers.
@@ -129,23 +123,23 @@ Can now be used in Newton-Raphson and other 2nd order optimizers.
 
 \end{frame}
 
-\begin{frame}{Logistic regression: Convexity}
-Finally, we check that logistic regression is a convex problem:
-\vfill
+\begin{framei}{Logistic regression: Convexity}
 
-We define the diagonal matrix $\bar{\mathbf{D}} \in \mathbb{R}^{n \times n}$ with diagonal 
-$$(\sqrt{\pixit[1])(1-\pixit[1]}, \dots, \sqrt{\pixit[n](1-\pixit[n]}) $$
+\item  Finally, we check that logistic regression is a convex problem:
+
+\item We define the diagonal matrix $\bar{\mathbf{D}} \in \mathbb{R}^{n \times n}$ with diagonal 
+$$(\sqrt{\pixit[1](1-\pixit[1])}, \dots, \sqrt{\pixit[n](1-\pixit[n])}) $$
 which is possible since $\pi$ maps into (0, 1). \\
-\vfill
-With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that
+
+\item With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that
 
 $$\mathbf{w}^\top  \nabla^2_{\thetav}\riske \mathbf{w} =   \mathbf{w}^\top  \mathbf{X}^\top \bar{\mathbf{D}}^\top \bar{\mathbf{D}}\mathbf{X} \mathbf{w} = (\bar{\mathbf{D}}\mathbf{X} \mathbf{w})^\top\bar{\mathbf{D}}\mathbf{X} \mathbf{w} = \Vert \bar{\mathbf{D}}\mathbf{X} \mathbf{w} \Vert^2_2 \geq 0$$
 
 since obviously $\mathbf{D} = \bar{\mathbf{D}}^\top \bar{\mathbf{D}}.$ \\
-\vfill
-$\Rightarrow \nabla^2_{\thetav}\riske$ is positive semi-definite $\Rightarrow \riske$ is convex.
 
-\end{frame}
+\item $\Rightarrow \nabla^2_{\thetav}\riske$ is positive semi-definite $\Rightarrow \riske$ is convex.
+
+\end{framei}
 
 \endlecture
 

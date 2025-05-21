@@ -40,7 +40,6 @@ figure/plot_loss_overview.png
 
 \vfill
 
-
 \imageC[0.55]{figure/plot_loss_overview.png}
 
 % Examples:
@@ -54,59 +53,47 @@ figure/plot_loss_overview.png
 % % \end{itemize}
 \end{framei}
 
-\begin{frame}{Huber Loss}
+\begin{framei}{Huber Loss}
 
 % Description
 
-$$
+\item $$
 \Lxy = \begin{cases}
   \frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
   \epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
   \end{cases} \quad \epsilon > 0
 $$
 
-\begin{itemize}
 \item Piece-wise combination of $L1$/$L2$ to have robustness/smoothness
 \item Analytic properties: convex, differentiable (once)
-\end{itemize}
-
 
 \imageC[0.65]{figure/loss_huber_plot.png}
 
-
-\begin{itemize}
 \item No closed-form solution even for constant or linear model
 \item Solution behaves like \textbf{trimmed mean}:\\
 a (conditional) mean of two (conditional) quantiles  
-\end{itemize}
 
-\end{frame}
+\end{framei}
 
-\begin{frame}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
+\begin{framei}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
 
 % Confirmed with Bernd: use def from https://heartbeat.fritz.ai/5-regression-loss-functions-all-machine-learners-should-know-4fb140e9d4b0
 
-$$
+\item $$
 \Lxy = \log ( \cosh(\left|y - \fx\right|) ) \qquad \text{cosh}(x)=\frac{e^x+e^{-x}}{2}
 $$
 
-\vfill
-
-\begin{itemize}
 %\item Logarithm of the hyperbolic cosine of the residual.
 \item Approx. $0.5 (\left|y - \fx\right|)^2$ for small residuals;\\
 $\left|y - \fx\right| - \log 2$ for large residuals
 \item Smoothed combo of $L1$ / $L2$ loss
 \item Similar to Huber, but twice differentiable
-\end{itemize}
 
-\vfill
-
+\vfill 
 
 \imageC[0.5]{figure/loss_logcosh.png}
 
-
-\end{frame}
+\end{framei}
 
 \begin{frame}{Log-cosh Loss \citelink{SALEH2022STATISTICAL}}
 %What is the idea behind the log-cosh loss?
@@ -165,27 +152,24 @@ is equivalent to MLE of $\text{cosh}(\theta,1)$ distribution
 
 \end{frame}
 
-\begin{frame}{Cauchy loss}
+\begin{framei}{Cauchy loss}
 
 % Confirmed with Bernd: use def from https://www.user.tu-berlin.de/mtoussai/teaching/15-MachineLearning/15-MachineLearning-script.pdf, p. 24 
 
-$$
+\item $$
 \Lxy = \frac{c^2}{2} \log ( 1 + ( \frac{\left|y - \fx\right|}{c})^2 ), 
 \quad c \in \R
 $$
 
-\begin{itemize}
 \item Particularly robust toward outliers (controllable via $c$)
 \item Analytic properties: differentiable, but not convex
-\end{itemize}
 
-\vfill
-
+\vfill 
 
 \imageC[0.6]{figure/loss_cauchy.png}
 
 
-\end{frame}
+\end{framei}
 
 \begin{framei}[sep=M]{Telephone data}
 
@@ -201,55 +185,47 @@ $$
 \end{framei}
 
 
-\begin{frame}{$\eps$-Insensitive loss}
+\begin{framei}{$\eps$-Insensitive loss}
 
-$$
+\item $$
 \Lxy =  \begin{cases}
   0  & \text{if } |y - \fx| \le \epsilon \\
   |y - \fx|-\epsilon & \text{otherwise }
   \end{cases}, \quad \epsilon \in \R_{+}
 $$
 
-\begin{itemize}
 \item Modification of $L1$, errors below $\epsilon$ get no penalty
 \item Used in SVM regression
 \item Properties: convex, not differentiable for $ y - \fx \in \{-\epsilon, \epsilon\}$
-\end{itemize}
 
-\vfill
-
-
+\vfill 
 % \imageC[10cm, height = 4.7cm]{figure_man/2_6_loss_epsilon_plot1.png} \\
 \imageC[0.8]{figure/loss_eps_insensitive.png}
 
 
-\end{frame}
+\end{framei}
 
 
-\begin{frame}{Quantile Loss / Pinball Loss}
+\begin{framei}{Quantile Loss / Pinball Loss}
 
-$$
+\item $$
 \Lxy = \begin{cases} (1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
 \alpha (y - \fx) & \text{ if } y \ge \fx
 \end{cases}, \quad \alpha \in (0, 1)
 $$
 
-\begin{itemize}
 \item Extension of $L1$ loss (equal to $L1$ for $\alpha = 0.5$).
 \item Penalizes either over- or under-estimation more
 %\item $\alpha<0.5$ $(\alpha>0.5)$ penalty to over-estimation (under-estimation)
 \item Risk minimizer is (conditional) 
     $\alpha$-quantile (median for $\alpha=0.5$)
-\end{itemize}
 
 \vfill
-
 
 % \imageC[10cm, height = 4.7cm]{figure_man/2_3_loss_pinball_plot2.png}
 \imageC[0.8]{figure/loss_quantile.png}
 
-
-\end{frame}
+\end{framei}
 
 \begin{framei}[sep=M]{Quantile Loss / Pinball Loss}
 

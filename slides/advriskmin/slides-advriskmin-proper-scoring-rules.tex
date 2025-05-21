@@ -110,15 +110,15 @@ $$\E_y[L(y, \pi)]=\eta |1-\pi| + (1-\eta) \pi = \eta+\pi(1-2\eta)$$
 
 \item \textbf{0/1 loss} $L(y, \pi)=\mathds{1}_{\{y \neq h_\pi\}}$ using hard labeler  $h_{\pi}=\mathds{1}_{\{\pi\geq0.5\}}$ 
 \item Expected loss:
-\begin{eqnarray*}
-\E_y[\L(y, \pi)] &=& \eta \cdot L(1,\pi) + (1-\eta) \cdot L(0,\pi)\\
-&=& \left\{
+\begin{align*}
+\E_y[\L(y, \pi)] &= \eta \cdot L(1,\pi) + (1-\eta) \cdot L(0,\pi)\\
+&= \left\{
 \begin{array}{ll}
 \eta & \text{if } h_{\pi} = 0 \\
 1-\eta & \text{if } h_{\pi} = 1
 \end{array}
 \right.
-\end{eqnarray*}
+\end{align*}
 
 \item So expected loss only takes 2 values
 

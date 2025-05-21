@@ -104,19 +104,19 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 \item Assume $y = \ftrue(\xv) + \eps$ with $\eps \sim \normal(0, \sigma^2)$ 
 \item Then $y~|~\xv \sim \normal(\ftrue(\xv), \sigma^2)$ and likelihood is 
 {\small
-\begin{eqnarray*}
-\LL(\thetav) &=& \prodin \pdf(\yi ~\bigg|~ \fxit, \sigma^2) \\ &\propto& \prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)
-\end{eqnarray*}
+\begin{align*}
+\LL(\thetav) &= \prodin \pdf(\yi ~\bigg|~ \fxit, \sigma^2) \\ &\propto \prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)
+\end{align*}
 }
 
 
 \item Minimizing Gaussian NLL is ERM with $L2$-loss
 {\small
-\begin{eqnarray*}
-- \loglt &=& - \log(\LL(\thetav)) \\
-&\propto& - \log(\prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)) \\
-&\propto& \sumin (\yi - \fxit)^2
-\end{eqnarray*}
+\begin{align*}
+- \loglt &= - \log(\LL(\thetav)) \\
+&\propto - \log(\prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)) \\
+&\propto \sumin (\yi - \fxit)^2
+\end{align*}
 }
 
 \end{framei}
@@ -163,9 +163,9 @@ also follows Laplace distribution with mean $\fxit$ and scale  $\sigma$
 \begin{framei}[sep=M]{Laplace Errors - L1-Loss}
 
     \item The likelihood is then 
-\begin{eqnarray*}
-\LL(\thetav) &=& \prod_{i=1}^n \pdf(\yi ~\bigg|~ \fxit, \sigma) \\ &\propto& \exp(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|)\,
-\end{eqnarray*}
+\begin{align*}
+\LL(\thetav) &= \prod_{i=1}^n \pdf(\yi ~\bigg|~ \fxit, \sigma) \\ &\propto \exp(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|)\,
+\end{align*}
 \item The negative log-likelihood is
 $$
 - \loglt \propto \sumin \left|\yi - \fxit\right|
@@ -200,11 +200,11 @@ $$
 \item Now binary classification
 \item $y \in \setzo$ is Bernoulli, $y ~|~ \xv \sim \text{Bern}(\pi_\text{true}(\xv))$
 \item  NLL:
-\begin{eqnarray*}
-- \loglt &=& -\sumin \lpdfyigxit \\ 
-&=& - \sumin \log \big[\pi(\xi)^{y^{(i)}} \cdot (1 - \pi(\xi))^{(1 - y^{(i)})} \big]\\
-&=& \sumin -\yi \log[\pi(\xi)] - (1-\yi) \log [1 - \pi(\xi)]
-\end{eqnarray*}
+\begin{align*}
+- \loglt &= -\sumin \lpdfyigxit \\ 
+&= - \sumin \log \big[\pi(\xi)^{y^{(i)}} \cdot (1 - \pi(\xi))^{(1 - y^{(i)})} \big]\\
+&= \sumin -\yi \log[\pi(\xi)] - (1-\yi) \log [1 - \pi(\xi)]
+\end{align*}
 \item Results in Bernoulli / log loss:
 $$
   L(y, \pix) = -y\log(\pix)-(1-y)\log(1-\pix)

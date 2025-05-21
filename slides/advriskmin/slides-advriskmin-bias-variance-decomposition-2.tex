@@ -27,7 +27,7 @@ figure/bias_variance_decomposition-linear_model_bias.png
 %\textbf{excess risk} into \textbf{estimation} and \textbf{approximation} error
 
 $$
-    \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} = \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
+    \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hall})}_{\text{excess risk}} = \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hall})}_{\text{approx. error}} 
 $$
 
 \item Both commonly described using same figure and analogies
@@ -54,12 +54,11 @@ $$
 
 \item Can now decompose its excess risk finer as
 
-\begin{eqnarray*}
-    \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
-\end{eqnarray*}
+\begin{align*}
+    \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hall})}_{\text{excess risk}} &= \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hall})}_{\text{approx. error}} 
+\end{align*}
 
 \item NB: Optim err. can be $< 0$, but $\riske(\tilde{f}_{\Hspace}) \geq \riske(\fh_{\Hspace})$ always
-
 
 \end{framei}
 

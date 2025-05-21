@@ -18,11 +18,11 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
+}{% Lecture title  
     L1 Risk Minimizer (Deep-Dive)
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+}{% Relative path to title page image: Can be empty but must not start with slides/
   figure/loss_absolute_1.png
-  }{
+}{
   \item Derive the risk minimizer of the L1-loss
   \item Derive the optimal constant model for the L1-loss
 }
@@ -30,18 +30,19 @@
 \begin{frame2}[footnotesize]{L1-Loss: Risk Minimizer}
 
 \textbf{Proof:} Let $p(y)$ be the density function of $y$. Then: 
-  \begin{eqnarray*}
-  && \argmin_c \E\left[|y - c|\right] = \argmin_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
-  &=& \argmin_c \int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y 
-  \end{eqnarray*}
+  \begin{align*}
+  & \argmin_c \E\left[|y - c|\right] = \argmin_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
+  &= \argmin_c \int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y 
+  \end{align*}
 
 We now compute the derivative of the above term and set it to $0$
 
-\begin{eqnarray*}
-0 &=& \frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y) \\ &\overset{^\ast\text{Leibniz}}{=}& \int_{-\infty}^c  ~p(y)~\text{d}y - \int_c^\infty ~p(y)~\text{d}y =   \P_y (y \le c) - (1 - \P_y (y \le c)) \\
-&=& 2 \cdot \P_y (y \le c) - 1 \\
-\Leftrightarrow 0.5 &=& \P_y (y \le c),
-\end{eqnarray*}
+\begin{align*}
+0 &= \frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y) \\
+ &\overset{^\ast\text{Leibniz}}{=} \int_{-\infty}^c  ~p(y)~\text{d}y - \int_c^\infty ~p(y)~\text{d}y =   \P_y (y \le c) - (1 - \P_y (y \le c)) \\
+&= 2 \cdot \P_y (y \le c) - 1 \\
+\Leftrightarrow 0.5 &= \P_y (y \le c),
+\end{align*}
 
 which yields $c = \text{med}_y(y)$. 
 
@@ -51,27 +52,24 @@ which yields $c = \text{med}_y(y)$.
 
 $^\ast$ \textbf{Note} that since we are computing the derivative w.r.t. the integration boundaries, we need to use Leibniz integration rule 
 
-\begin{eqnarray*}
-  \frac{\partial}{\partial c} (\int_a^c g(c, y) ~\text{d}y) &=& g(c, c) + \int_a^c \frac{\partial}{\partial c} g(c, y) ~\text{d}y \\
-  \frac{\partial}{\partial c} (\int_c^a g(c, y) ~\text{d}y) &=& - g(c, c) + \int_c^a \frac{\partial}{\partial c} g(c, y) ~\text{d}y    
-\end{eqnarray*}
+\begin{align*}
+  \frac{\partial}{\partial c} (\int_a^c g(c, y) ~\text{d}y) &= g(c, c) + \int_a^c \frac{\partial}{\partial c} g(c, y) ~\text{d}y \\
+  \frac{\partial}{\partial c} (\int_c^a g(c, y) ~\text{d}y) &= - g(c, c) + \int_c^a \frac{\partial}{\partial c} g(c, y) ~\text{d}y    
+\end{align*}
 
 We get 
-\begin{eqnarray*}
-&&\frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y ) \\
-&=& \frac{\partial}{\partial c} (\int_{-\infty}^c \underbrace{-(y - c)~p(y)}_{g_1(c, y)}~\text{d}y) + \frac{\partial}{\partial c} (\int_c^\infty \underbrace{(y - c)~p(y)}_{g_2(c, y)}~\text{d}y ) \\
-&=& \underbrace{g_1(c, c)}_{=0} + \int_{-\infty}^c \frac{\partial}{\partial c}  (-(y - c))~p(y)~\text{d}y - \underbrace{g_2(c, c)}_{= 0} + \int_c^\infty \frac{\partial}{\partial c}  (y - c)~p(y)~\text{d}y \\
-&=& \int_{-\infty}^c  ~p(y)~\text{d}y + \int_c^\infty -~p(y)~\text{d}y. 
-\end{eqnarray*}
+\begin{align*}
+&\frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y ) \\
+&= \frac{\partial}{\partial c} (\int_{-\infty}^c \underbrace{-(y - c)~p(y)}_{g_1(c, y)}~\text{d}y) + \frac{\partial}{\partial c} (\int_c^\infty \underbrace{(y - c)~p(y)}_{g_2(c, y)}~\text{d}y ) \\
+&= \underbrace{g_1(c, c)}_{=0} + \int_{-\infty}^c \frac{\partial}{\partial c}  (-(y - c))~p(y)~\text{d}y - \underbrace{g_2(c, c)}_{= 0} + \int_c^\infty \frac{\partial}{\partial c}  (y - c)~p(y)~\text{d}y \\
+&= \int_{-\infty}^c  ~p(y)~\text{d}y + \int_c^\infty -~p(y)~\text{d}y. 
+\end{align*}
 
 \end{frame2}
 
 
-\begin{frame}{L1-Loss: Optimal constant model}
+\begin{framei}{L1-Loss: Optimal constant model Proof}
 
-\textbf{Proof}: 
-
-\begin{itemize}
   \item Firstly note that for $n = 1$ the median $\thetah = \text{med}(\yi) = y^{(1)}$ obviously minimizes the emp. risk $\riske$ using the $L1$ loss. 
 
 
@@ -85,61 +83,52 @@ We get
   \vspace*{-0.3cm}
   Any $\thetah \in [a,b]$ minimizes $S_{a,b}(\theta)$, because it holds that
   \vspace*{-0.0cm}
-  \begin{eqnarray*}
-  S_{a,b}(\theta) &=& \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 2\cdot\min\{|a-\theta|,|b-\theta|\}
+  \begin{align*}
+  S_{a,b}(\theta) &= \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 2\cdot\min\{|a-\theta|,|b-\theta|\}
   ,& \text{ otherwise. }\end{cases}
-  \end{eqnarray*}
+  \end{align*}
 
 \imageC[0.4]{figure_man/S_function_plot.pdf}
 
-\end{itemize}
+\end{framei}
 
-\end{frame}
-\begin{frame}{L1-Loss: Optimal constant model}
+\begin{framei}{L1-Loss: Optimal constant model}
 
-  W.l.o.g. assume now that all $\yi$ are sorted in increasing order.
+  \item W.l.o.g. assume now that all $\yi$ are sorted in increasing order.
 
-  Let us define $i_{\max} = n / 2$ for $n$ even and $i_{\max} = (n - 1) / 2$ for $n$ odd and consider the intervals 
+  \item Let us define $i_{\max} = n / 2$ for $n$ even and $i_{\max} = (n - 1) / 2$ for $n$ odd and consider the intervals 
   $$
     \mathcal{I}_i := [y^{(i)},y^{(n+1-i)}], i \in \{1, ..., i_{\max}\}. 
   $$
 
-  By construction $\mathcal{I}_{j+1} \subseteq \mathcal{I}_j$ for $j \in \{1,\dots,i_{\max}-1\}$ and $\mathcal{I}_{i_{\max}} \subseteq \mathcal{I}_i$. With this, $\riske$ can be expressed as
+  \item By construction $\mathcal{I}_{j+1} \subseteq \mathcal{I}_j$ for $j \in \{1,\dots,i_{\max}-1\}$ and $\mathcal{I}_{i_{\max}} \subseteq \mathcal{I}_i$. With this, $\riske$ can be expressed as
   \begin{footnotesize}
-  \begin{eqnarray*}
-  \riske(\theta) &=& \sumin L(\yi,\theta) = \sumin|\yi - \theta| \\ 
-  &=& \underbrace{|\yi[1] - \theta| + |\yi[n] - \theta|}_{= S_{\yi[1], \yi[n]}(\theta)} + \underbrace{|\yi[2] - \theta| + |\yi[n - 1] - \theta|}_{= S_{\yi[2], \yi[n - 1]}(\theta)} + ...  \\
-  &=& \begin{cases} \sum\limits_{i = 1}^{i_{\max}} S_{\yi, \yi[n + 1 - i]}(\theta) & \text{ for } n \text{ is even} \\
+  \begin{align*}
+  \riske(\theta) &= \sumin L(\yi,\theta) = \sumin|\yi - \theta| \\ 
+  &= \underbrace{|\yi[1] - \theta| + |\yi[n] - \theta|}_{= S_{\yi[1], \yi[n]}(\theta)} + \underbrace{|\yi[2] - \theta| + |\yi[n - 1] - \theta|}_{= S_{\yi[2], \yi[n - 1]}(\theta)} + ...  \\
+  &= \begin{cases} \sum\limits_{i = 1}^{i_{\max}} S_{\yi, \yi[n + 1 - i]}(\theta) & \text{ for } n \text{ is even} \\
   \sum\limits_{i = 1}^{i_{\max}} (S_{\yi, \yi[n + 1 - i]}(\theta)) + |\yi[(n + 1)/2] - \theta| & \text{ for } n \text{ is odd}. \end{cases}
-  \end{eqnarray*}
+  \end{align*}
   \end{footnotesize}
 
-  % \begin{eqnarray*}
+  % \begin{align*}
   % \begin{cases}
   % \sum^{\overbrace{n/2}^{=:i_{\max}}}_{i=1} \overbrace{S_{y^{(i)},y^{(n+1-i)}}(c)}^{=:S_i(c)},&  \text{ for } n \text{ is even}\\
   % (\sum^{\overbrace{(n-1)/2}^{=:i_{\max}}}_{i=1} \underbrace{S_{y^{(i)},y^{(n+1-i)}}(c)}_{=:S_i(c)}) + \underbrace{|y^{(n+1)/2}-c|}_{=:S_0(c)},& \text{ for } n \text{ is odd}. 
   % \end{cases}
-  % \end{eqnarray*}
+  % \end{align*}
   % \end{footnotesize}
   % Now we define for $i \in \{1,\dots,i_{\max}\} \; \mathcal{I}_i := [y^{(i)},y^{(n+1-i)}].$ \\
   % From construction it follows that for  $j \in \{1,\dots,i_{\max}-1\}$
   % $$\mathcal{I}_{j+1} \subseteq \mathcal{I}_j \Rightarrow \forall i \in \{1,\dots,i_{\max}\}:  \mathcal{I}_{i_{\max}} \subseteq \mathcal{I}_i.$$
-\end{frame}
-\begin{frame}{L1-Loss: Optimal constant model}
-
-  From this follows that
-  \begin{itemize}
-  \setlength{\itemsep}{1.4em}
-  \item for \enquote{$n$ is even}: $\thetah \in  \mathcal{I}_{i_{\max}} = [y^{(n/2)},y^{(n/2+1)}]$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\} \; \Rightarrow$  it minimizes $\riske$,
-  \item for \enquote{$n$ is odd}: $\thetah = y^{(n+1)/2} \in \mathcal{I}_{i_{\max}}$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\}$ and it's minimal for
+\end{framei}
+\begin{framei}[sep=L]{L1-Loss: Optimal constant model}
+  \item For \enquote{$n$ is even}: $\thetah \in  \mathcal{I}_{i_{\max}} = [y^{(n/2)},y^{(n/2+1)}]$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\} \; \Rightarrow$  it minimizes $\riske$,
+  \item For \enquote{$n$ is odd}: $\thetah = y^{(n+1)/2} \in \mathcal{I}_{i_{\max}}$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\}$ and it's minimal for
   $|\yi[(n + 1)/2] - \theta|$ \\ $\Rightarrow$
   it minimizes $\riske$.
-  \end{itemize}
-  \vfill
-  Since the median fulfills these conditions, we can conclude that it minimizes 
+  \item Since the median fulfills these conditions, we can conclude that it minimizes 
   the $L1$ loss.
-
-
 
 % 
 % \imageC[11cm ]{figure_man/L1-loss.png} \\
@@ -155,7 +144,7 @@ We get
 % 
 
 
-\end{frame}
+\end{framei}
 
 
 % \begin{framei}[sep=M]{Robustness}

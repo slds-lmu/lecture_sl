@@ -20,11 +20,11 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{% Lecture title  
+}{% Lecture title  
     Advanced Classification Losses
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+}{% Relative path to title page image: Can be empty but must not start with slides/
   figure/overview_classif_all.png
-  }{
+}{
   \item (squared) Hinge loss
   \item $L2$ loss defined on scores
   \item Exponential loss
@@ -69,10 +69,10 @@
 % Source: https://davidrosenberg.github.io/mlcourse/Archive/2017Fall/Lectures/04a.loss-functions.pdf
 
   \item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
-  \begin{eqnarray*}
-  \Lxy &=&(y - \fx)^2 = y^2 - 2y\fx + \fx^2\\
-  &=&1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
-  \end{eqnarray*}
+  \begin{align*}
+  \Lxy &=(y - \fx)^2 = y^2 - 2y\fx + \fx^2\\
+  &=1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
+  \end{align*}
   \item Like sq. hinge loss for $y\fx < 1$, but not clipped to $0$ for $y\fx>1$
   \item Only 0 for $y\fx = 1$ and increasing again in $y\fx$ (undesirable!)
 
@@ -97,9 +97,7 @@ $$\Lxy = \exp(-y\fx)$$
 
 \end{framei}
 
-\begin{frame}{AUC-loss}
-
-\begin{itemize}
+\begin{framei}{AUC-loss}
 \item AUC often used as evaluation criterion for binary classifiers
 \item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples %$y_i, i = 1, \ldots, n_{-1} + n_1$.
 \item AUC can then be defined as
@@ -107,12 +105,9 @@ $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} \I [
 \item Not differentiable w.r.t $f$ due to indicator $\I [f^{(i)} > f^{(j)}]$
 \item Indicator can be approximated by distribution function of triangular distribution on $[-1, 1]$ with mean $0$
 \item Direct optimization of AUC numerically difficult, rather use common loss and tune for AUC in practice
+\item Comprehensive survey on advanced loss functions: \citelink{WANG2020COMPRE}
 
-\end{itemize}
-\vfill
-Comprehensive survey on advanced loss functions: \citelink{WANG2020COMPRE}
-
-\end{frame}
+\end{framei}
 
 \endlecture
 

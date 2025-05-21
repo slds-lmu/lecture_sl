@@ -19,11 +19,11 @@
     
 \titlemeta{
     Advanced Risk Minimization
-  }{
+}{
   	Risk Minimization Basics
-  }{
+}{
   figure_man/optimization_steps.jpeg
-  }{
+}{
   \item Risk minimization and ERM recap
   \item Bayes optimal model, Bayes risk
   \item Bayes regret, estimation and approximation error    
@@ -31,31 +31,26 @@
   \item Consistency
 }
 
-\begin{frame}{Empirical Risk Minimization}
-To learn a model, we usually do ERM:
+\begin{framei}[fs=small]{Empirical Risk Minimization}
+\item To learn a model, we usually do ERM:
 $$\riskef = \sumin \Lxyi$$
-\vfill
-{\small
-\begin{itemize}\setlength\itemsep{0.5pt} 
-    \item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
+\item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
 %    so from feature and target space
-    \item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
+\item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
     %$\fx$ is a model 
     from hypothesis space $\Hspace$;
     maps a feature vector to output score;
     often we omit $\Hspace$ in index 
-    \item loss $L:\Yspace\times\R^g\rightarrow\R$ ,
+\item loss $L:\Yspace\times\R^g\rightarrow\R$ ,
     %$\Lxy$ 
     measures error between label and prediction
-    \item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
+\item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
     $(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$    
-    %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
-\end{itemize}
-}
-Minimizing theoretical risk, so expected loss over DGP, is major goal:
-
+    %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef
+\item Minimizing theoretical risk, so expected loss over DGP, is major goal:
 $$ \risk (f) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
-\end{frame}
+
+\end{framei}
 
 \begin{frame}{Two short examples}
 \textbf{Regression with linear model:}\\
@@ -77,36 +72,28 @@ $$ \risk (f) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
   
 \end{frame}
 
-\begin{frame}{Hypothesis Spaces and Parametrization}
+\begin{framei}[sep=L]{Hypothesis Spaces and Parametrization}
 
-We often write $\riskf$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a family of parametrized curves:
+\item We often write $\riskf$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a family of parametrized curves:
 
 $$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{from functional family parametrized by}\,\thetav\}$$
 
-\vfill
-
-\begin{itemizeL}
-    \item Optimizing numeric vectors is more convenient than functions
+\item Optimizing numeric vectors is more convenient than functions
 \item For some model classes, some parameters encode the same function (non-injective mapping, non-identifiability). \\
 We don't care here, now. 
-\end{itemizeL}
-
-\end{frame}
 
 
-\begin{frame}{Optimal loss values -- M-Estimators}
+\end{framei}
 
-\begin{itemize}
+
+\begin{framei}{Optimal loss values -- M-Estimators}
+
 \item Assume some RV $z \sim Q, z \in \Yspace$ as target
 \item $z$ not the same as $y$, as we want to fiddle with its distribution
 \item We now consider $\argmin_c \E_{z \sim Q}[L(z, c)]$\\
 What is the constant that approximates $z$ with minimal loss?
 
-\end{itemize}
-
-\vfill
-
-3 cases for Q
+\item 3 cases for Q
 \begin{itemize}
 \item $Q = P_y$, distribution of labels y, marginal of $\Pxy$\\
 optimal theoretical constant prediction
@@ -122,7 +109,7 @@ Bayes optimal pointwise prediction / theoretical risk minimizer
 %Solving $\argmin_c \E_{z \sim Q}[L(z, c)]$ for any $Q$ provides 
 %multiple results.
 
-\end{frame}
+\end{framei}
 
 
 \begin{framei}[sep=M]{Optimal unconditional values}
@@ -164,22 +151,22 @@ $$f_{c}^{\ast} = \argmin_{c \in \R} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in
 
 \begin{framei}[sep=M]{Risk Minimizer}
 
-\item Assume, hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted;\\
+\item Assume, hypothesis space $\Hspace=\Hall$ is unrestricted;\\
 contains any measurable $f: \Xspace \to \R^g$
 
 \item We know $\Pxy$
 
-\item $f$ with minimal risk across $\Hspace_{all}$
+\item $f$ with minimal risk across $\Hall$
 is called\\
 \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}
 
-\begin{eqnarray*}
-	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk(f) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy
-\end{eqnarray*}
+\begin{align*}
+	\fbayes_{\Hall} &= \argmin_{f \in \Hall} \risk(f) = \argmin_{f \in \Hall}\Exy\left[\Lxy\right]\\ &=  \argmin_{f \in \Hall}\int \Lxy \text{d}\Pxy
+\end{align*}
 
-\item The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hspace_{all}})$
+\item The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hall})$
 
-\item \textbf{Risk minimizer within} $\Hspace \subset \Hspace_{all}$ is
+\item \textbf{Risk minimizer within} $\Hspace \subset \Hall$ is
 $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 
 \end{framei}
@@ -214,7 +201,7 @@ $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 $$    \riskf = \E_{xy} \left[\Lxy\right] 
     = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right]$$
 
-	\item We can choose $\fx$ as we want from $\Hspace_{all}$ %(unrestricted hypothesis space, no assumed functional form)
+	\item We can choose $\fx$ as we want from $\Hall$ %(unrestricted hypothesis space, no assumed functional form)
 	\item Hence, for fixed feature vector $\xtil$ we can select \textbf{any} value $c$ to predict. So we construct the \textbf{point-wise optimizer} 
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
@@ -262,78 +249,63 @@ $$
 
 \item Decompose: 
 
-\begin{eqnarray*}
-	\risk(\hat f_{\Hspace}) - \riskbayes &=& \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
-    &=& \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}}) \right] 
-\end{eqnarray*}
+\begin{align*}
+	\risk(\hat f_{\Hspace}) - \riskbayes &= \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
+    &= \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hall}) \right] 
+\end{align*}
 
 \end{framei}
 
-\begin{frame}{Estimation and Approximation Error} 
+\begin{framei}{Estimation and Approximation Error} 
 
 % https://docs.google.com/presentation/d/1vXuX8P6p7TFlXnpVcInQM6PR3qHk9LqC2Z75_I4u4Lo/edit#slide=id.p
 
 
-\imageC[0.5]{figure_man/risk_minimization_diagram.png}
-
-
-
-
-$$
+\item $$
 	\risk(\hat f_{\Hspace}) - \riskbayes = \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
 $$
 
-\vfill
+\imageC[0.5]{figure_man/risk_minimization_diagram.png}
 
-\begin{itemize}
 \item \textbf{Estimation error}:
 We fit $\hat f_{\Hspace}$ via ERM on finite data, \\
 so we don't find best $f \in \Hspace$
 \item \textbf{Approximation error}: 
 $\Hspace$ will often not contain Bayes optimal $\fbayes$ 
-\end{itemize}
 
-\end{frame}
+\end{framei}
 
 
-\begin{frame}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
+\begin{framei}[sep=L]{(Universally) Consistent Learners \citelink{STNE1977CONS}}
 % https://mlweb.loria.fr/book/en/consistency.html
 
-\textbf{Consistency} is an asymptotic property of a learning algorithm, which ensures the algorithm returns \textbf{the correct model} when given \textbf{unlimited data}.
+\item \textbf{Consistency} is an asymptotic property of a learning algorithm, which ensures the algorithm returns \textbf{the correct model} when given \textbf{unlimited data}.
 
-\vfill 
+\item Let $\ind:\mathbb{D} \to \Hspace$ be a learning algorithm that takes a training set $\Dtrain \sim \Pxy$ of size $n_\text{train}$ and estimates a model $\hat f: \Xspace \to \R^g$. 
 
-Let $\ind:\mathbb{D} \to \Hspace$ be a learning algorithm that takes a training set $\Dtrain \sim \Pxy$ of size $n_\text{train}$ and estimates a model $\hat f: \Xspace \to \R^g$. 
-
-\vfill 
-
-The learning method $\ind$ is said to be \textbf{consistent} w.r.t. a certain distribution $\Pxy$ if the risk of the estimated model $\hat f$ converges in probability ( \enquote{$\overset{p}{\longrightarrow}$}) to the Bayes risk $\riskbayes$ when $n_\text{train}$ goes to $\infty$: 
+\item The learning method $\ind$ is said to be \textbf{consistent} w.r.t. a certain distribution $\Pxy$ if the risk of the estimated model $\hat f$ converges in probability ( \enquote{$\overset{p}{\longrightarrow}$}) to the Bayes risk $\riskbayes$ when $n_\text{train}$ goes to $\infty$: 
 
 $$
 	\risk(\ind(\Dtrain)) \overset{p}{\longrightarrow} \riskbayes \quad \text{for } n_\text{train} \to \infty
 $$
 
-\end{frame}
+\end{framei}
 
-\begin{frame}{(Universally) Consistent Learners \citelink{STNE1977CONS}}
+\begin{framei}[sep=L]{(Universally) Consistent Learners \citelink{STNE1977CONS}}
 
-Consistency is defined w.r.t. a particular distribution $\Pxy$.
+\item Consistency is defined w.r.t. a particular distribution $\Pxy$.
 But since we usually don't know $\Pxy$, consistency
 does not offer much help to choose an algorithm for a specific task. 
 
-\vfill 
+\item More interesting is the stronger concept of \textbf{universal consistency}: An algorithm is universally consistent if it is consistent for \textbf{any} distribution. 
 
-More interesting is the stronger concept of \textbf{universal consistency}: An algorithm is universally consistent if it is consistent for \textbf{any} distribution. 
-
-\vfill 
-
-In Stone's famous consistency theorem (1977), the universal consistency of a weighted average estimator such as KNN was proven. Many other ML models have since then been proven to be universally consistent (SVMs, ANNs, etc.).
+\item In Stone's famous consistency theorem (1977), the universal consistency of a weighted average estimator such as KNN was proven. Many other ML models have since then been proven to be universally consistent (SVMs, ANNs, etc.).
 
 %\vfill
 
 %\textbf{Note}: universal consistency is a desirable property - however, it does not tell us anything about convergence rates ...
 
-\end{frame}
+\end{framei}
 
 
 
