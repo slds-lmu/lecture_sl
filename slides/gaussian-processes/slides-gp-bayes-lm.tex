@@ -30,17 +30,23 @@ figure/bayes_lm/posterior_5_3.pdf
 \item $\yv = \yvec$
 \end{framei}
 
-\begin{framei}[sep=L]{the bayesian linear model revisited}
+\begin{framei}[sep=L]{bayesian linear model revisited}
 \item Standard linear regression model for $i$-th observation, with $\thetav \in \R^p$ fixed but unknown
-$$\yi = \fxi + \epsi = \thetav^T \xi + \epsi, \quad \text{for } i \in \nset$$
-\item Bayesian perspective: $\thetav$ = RV with associated distribution
-\item Function outputs $\fxi$ differ from observed values $\yi$ by some additive noise assumed to be i.i.d. Gaussian
+$$\yi = \fxi + \epsi = \thetav^T \xi + \epsi \quad \forall i$$
+\item Assumption: function outputs $\fxi$ differ from observed values $\yi$ by additive, i.i.d. Gaussian noise (ind of $\xv, \thetav$)
 $$\epsi \sim \mathcal{N}(0, \sigma^2) \quad \forall i$$ 
-$\Rightarrow$ Independent of $\xv, \thetav$
+\item Bayesian perspective: $\thetav$ also RV with associated (prior) distribution, e.g., $\thetav \sim \normal(\zero, \tau^2 \id_p)$
+\end{framei}
+
+\begin{framei}{gp perspective}
+\item Weight-space view: prior over $\thetav$, function-space view: prior over linear functions
+\item Example: random lines with intercept 0, slope $\thetav \sim \normal(0, 1)$
+
+\textcolor{red}{TODO LW: random slopes plot}
+\item Random lines = draws from GP with linear kernel, giving rise to collection of RVs $\{ \fx = \thetav \xv: \xv \in \R\}$, where $\fv$ is mv Gaussian for any finite set of inputs $\xdat$
 \end{framei}
 
 \begin{framei}[sep=L]{from prior to posterior}
-\item Prior belief about parameter distribution, e.g., $\thetav \sim \normal(\zero, \tau^2 \id_p)$
 \item Bayes' rule: update prior to posterior belief after observing data
 $$
 p(\thetav | \Xmat, \yv) 
@@ -52,6 +58,7 @@ $$
 \thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2} \Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})
 $$
 with $\Kmat:= \sigma^{-2}\Xmat^T\Xmat + \tau^{-2} \id_p$
+\item Intuitively: quantifies posterior (i.e., after seeing data) probability of $\thetav$ having generated the observed data
 \end{framei}
 
 \begin{frame}{posterior contraction}
@@ -89,12 +96,12 @@ p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \quad \prop
 &\propto& \exp \left[ -\tfrac{1}{2} (\sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav  - 2 \sigma^{-2} \yv^T \Xmat \thetav ) \right] \\
 &=& \exp \biggl[ -\tfrac{1}{2}\thetav^T\underbrace{(\sigma^{-2} \Xmat^T \Xmat + \tau^{-2} \id_p )}_{:= \Kmat} \thetav  +\textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} \biggr] 
 \end{eqnarray*}
-\item Note how this resembles a normal density, except for the term in \textcolor{orange}{orange}
-\item No need to worry about normalizing constant -- sole purpose: ensure density integrates to total prob of 1
+\item Note how this resembles a normal density, except for term in \textcolor{orange}{orange}
+\item (No need to worry about normalizing constant $\Rightarrow$ sole purpose: ensure density integrates to total prob of 1)
 \end{framei}
 
 \begin{framei}[fs=small]{proof: gaussianity of posterior}
-\item Get rid of nuisance term by introducing \textcolor{blue}{complementary terms} and compensating for the added quantities  (``creative 0'')
+\item Trick: introduce \textcolor{blue}{constant $c$}, compensating for added quantities  (``creative 0''), s.t. additions will conveniently cancel out with nuisance term
 \begin{eqnarray*}
 	p(\thetav | \Xmat, \yv) &\propto&  \exp[-\tfrac{1}{2}(\thetav \textcolor{blue}{- c})^T\Kmat  (\thetav \textcolor{blue}{- c}) \textcolor{blue}{- c^T \Kmat \thetav} + \underbrace{\textcolor{blue}{\tfrac{1}{2}c^T\Kmat c}}_{\text{doesn't depend on } \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} ] \\
 	&\propto& \exp [-\tfrac{1}{2}(\thetav \textcolor{blue}{- c})^T\Kmat  (\thetav \textcolor{blue}{- c}) \textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} ]
@@ -102,7 +109,8 @@ p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \quad \prop
 \item Choosing $c$  s.t. 
 $\textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} = 0$ 
 leads to 
-$p(\thetav | \Xmat, \yv) \propto \exp [-\tfrac{1}{2}(\thetav - c)^T\Kmat  (\thetav -c) ]$
+% $p(\thetav | \Xmat, \yv) \propto \exp [-\tfrac{1}{2}(\thetav - c)^T\Kmat  (\thetav -c) ]$
+$\thetav ~|~ \Xmat, \yv \sim \normal(c, \Kmat^{-1})$
 \item Using that $\Kmat$ is symmetric, this implies 
 \begin{eqnarray*}
 && \sigma^{-2} \yv^T \Xmat = c^T\Kmat \\
@@ -113,17 +121,18 @@ $p(\thetav | \Xmat, \yv) \propto \exp [-\tfrac{1}{2}(\thetav - c)^T\Kmat  (\thet
 \end{framei}
 
 \begin{framei}[sep=L]{posterior predictive distribution}
-\item Based on the posterior 
+\item How does prediction change w.r.t. classical (non-Bayesian) LM?
+\item Gaussian posterior   
 $$
 \thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})
 $$
-we can derive the predictive distribution of the Bayesian LM
+induces (Gaussian) predictive distribution
 \item For a new observation $\xv_*$ we get
 $$
 y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^T \Xmat \Kmat^{-1}\xv_*, \xv_*^T\Kmat^{-1}\xv_*)
 $$
-\item NB: entire distribution with built-in confidence
-% (applying the rules for linear transformations of Gaussians). 
+\item Intuitively: expectation over all $\thetav$-parameterized LMs, weighted acc to posterior prob $\leftrightarrow$ classical LM: only max-prob $\thetav^{\text{MAP}}$
+\item Entire distribution with built-in uncertainty quantification!
 \end{framei}
 
 \foreach \i in{5, 10, 20} {
@@ -135,10 +144,10 @@ $$
 }
 
 \begin{framei}[sep=L]{summary: bayesian lm}
-\item Bayesian perspective: whole distributions, rather than just point estimates, for $\thetav$
+\item Bayesian perspective: entire distributions, rather than just point estimates, for $\thetav$
 \item From posterior distribution of $\thetav$ we can derive a predictive distribution for $y_* = \thetav^T \xv_*$
 \item Online updates: after observing new data points, recompute posterior $\Rightarrow$ decreasing uncertainty
-\item Next up: generalize this idea to nonlinear functions
+% \item Next up: generalize this idea to nonlinear functions
 \end{framei}
 
 \endlecture

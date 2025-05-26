@@ -257,7 +257,7 @@ $$\{Y_t: t \in T\}$$
 \end{frame}
 
 \begin{framei}[sep=L]{intuition: gaussian processes}
-\item \textbf{Gaussian process}: special case of SP 
+\item Special case of SP 
 \item Index set: $\Xspace$, cov structure: Gaussian 
 \item Corollary: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
 \vfill
@@ -321,11 +321,11 @@ there \textbf{exists} a Gaussian process $\mathcal{GP}(m(\cdot), k(\cdot, \cdot)
 $\forall \xv, \xv^\prime \in \Xspace$
 \item Version of Kolmogorov consistency theorem  \\
 $\Rightarrow$ proof: \citelink{GRIMMETT2001PROC} (Thm. 8.6.3)
-\item Intuition: for any mean \& cov structure we prescribe for random vectors $\fv$, there is a corresponding GP to generate them
+\item Intuition: for any mean \& cov structure we prescribe for random vectors $\fv$, there is a corresponding GP to generate $\fv$
 \end{framei}
 
-\begin{framei}[sep=L]{definition: gaussian process}
-\item GPs are thus completely specified by their mean \& cov function
+\begin{framei}[sep=L]{implications of existence thm}
+\item GPs completely specified by their mean \& cov function
 \begin{eqnarray*}
 m(\xv) &=& \E[f(\xv)] \\
 k(\xv, \xv^\prime) &=& \cov(\fx, f(\xv^\prime)) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right) \right]
@@ -344,7 +344,7 @@ $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 \begin{itemize}
 \item choose high number $n$ of (equidistant) points $\xdat$
   \item compute $\Kmat = \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}$ from all pairs $\xi, \xi[j]$ 
-  \item draw $\bm{f} \sim \mathcal{N}(\bm{0}, \bm{K})$ 
+  \item draw $\fv \sim \normal(\zero, \Kmat)$ 
 \end{itemize}
 \item 10 randomly drawn functions (note 0 mean)
 \vfill
