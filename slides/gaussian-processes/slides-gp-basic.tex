@@ -190,25 +190,26 @@ $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
 \item Can we use more general, infinite index sets? % to create such collections? $\Rightarrow$ \textbf{stochastic processes}
 \end{framei}
 
-\begin{framei}{definition: indexed family}
+\begin{framei}[sep=L]{definition: indexed family}
 \item Mathematical ``rule'' to map indices to some state space %$\mathcal{S}$
-$$s: T \rightarrow \mathcal{S}$$ 
-% , \quad t \mapsto s_t = s(t) $$
+$$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
+\item Gives rise to collection $\{s_t: t \in T\}$
 \item Can assume many forms depending on $T$ and $\mathcal{S}$
-\vfill
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Cardinality of $T$} & \textbf{$\mathcal{S}$: (real) numbers} & \textbf{$\mathcal{S}$: RVs} \\
-\hline
-Finite & list & random vector \\
-\hline
-Countably $\infty$ & sequence & discrete-time \textbf{stochastic process} \\
-\hline
-Uncountably $\infty$ & sequence & continuous-time \textbf{stochastic process} \\
-\hline
-\end{tabular}
-\vfill
-\item $\mathcal{S}$ might also contain other objects like sets, \dots
+\item $T$: in particular, finite vs infinite
+% \vfill
+% \begin{tabular}{|l|l|l|}
+% \hline
+% \textbf{Cardinality of $T$} & \textbf{$\mathcal{S}$: (real) numbers} & \textbf{$\mathcal{S}$: RVs} \\
+% \hline
+% Finite & list & random vector \\
+% \hline
+% Countably $\infty$ & sequence & discrete-time \textbf{stochastic process} \\
+% \hline
+% Uncountably $\infty$ & sequence & continuous-time \textbf{stochastic process} \\
+% \hline
+% \end{tabular}
+% \vfill
+\item $\mathcal{S}$: numbers, RVs, sets, \dots
 \end{framei}
 
 \begin{frame}{example: real-valued indexed families}
@@ -216,8 +217,8 @@ Uncountably $\infty$ & sequence & continuous-time \textbf{stochastic process} \\
 \begin{itemizeL}
 \item $\mathcal{S} = \R$
 \item $t \mapsto s_t$
-\item Finite, e.g., $T = \nset$ $\Rightarrow$ list
-\item Countably $\infty$, e.g., $T = \N$ $\Rightarrow$ sequence 
+\item Finite index set, e.g., $T = \nset$ $\Rightarrow$ list
+\item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ sequence 
 \end{itemizeL}
 }{
 \imageR{figure_man/indexed_family/indexed_family_1.png}
@@ -225,12 +226,12 @@ Uncountably $\infty$ & sequence & continuous-time \textbf{stochastic process} \\
 }
 \vfill
 \begin{itemize}
-\item Uncountably $\infty$, e.g., $T = \R$ $\Rightarrow$ example: $\{\sin(t): t \in \R\}$
+\item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ \\example: $\{\sin(t): t \in \R\}$
 \end{itemize}
 \end{frame}
 
 \begin{framei}[sep=L]{definition: stochastic process}
-\item Indexed family of RVs with specific covariance structure
+\item Special kind of indexed family: RVs with specific covariance structure
 $$\{Y_t: t \in T\}$$ 
 \item Some distributional assumption for $Y_t$
 \item Often temporal interpretation of $T$ $\Rightarrow$ e.g., stock prices
@@ -242,8 +243,8 @@ $$\{Y_t: t \in T\}$$
 \begin{itemizeL}
 \item $\mathcal{S}$: space of RVs
 \item $t \mapsto Y_t$
-\item Finite, e.g., $T = \nset$ $\Rightarrow$ random vector
-\item Countably $\infty$, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
+\item Finite index set, e.g., $T = \nset$ \\$\Rightarrow$ random vector
+\item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
 \end{itemizeL}
 }{
 \imageR{figure_man/indexed_family/indexed_family_4.png}
@@ -251,7 +252,7 @@ $$\{Y_t: t \in T\}$$
 }
 \vfill
 \begin{itemize}
-\item Uncountably $\infty$, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
+\item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
 \end{itemize}
 \end{frame}
 
