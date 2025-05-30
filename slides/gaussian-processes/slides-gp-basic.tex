@@ -337,7 +337,7 @@ $\Rightarrow$ common, not necessarily drastic assumption
 \item By virtue of existence thm: sampling from GPs gives us random functions with our properties of choice
 \end{framei}
 
-\begin{framei}[sep=L]{sampling from gaussian processes}
+\begin{framei}[sep=L]{sampling from gaussian process priors}
 \item Example: $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
 $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 \item To visualize sample functions, 
@@ -349,6 +349,13 @@ $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 \item 10 randomly drawn functions (note 0 mean)
 \vfill
 \imageC[.9]{figure/gp_sample/different_samples.pdf}
+\end{framei}
+
+\begin{framei}[sep=L]{sampling from gaussian process priors}
+\item Example: 2D Brownian motion
+\item $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
+$$ \kxxp = \min (\xv, \xv^\prime)$$
+\item \textcolor{red}{TODO LW: plot}
 \end{framei}
 
 \endlecture
