@@ -83,87 +83,116 @@ $$
 
 % --------------------------------------------------
 
-% \section{Distributions on Functions}
-
-\begin{framei}[sep=L]{discrete functions}
-\item Let $\Xspace = \xdat$ be a finite set
-\item Let $\Hspace = \{h ~|~ h: \Xspace \rightarrow \R\}$
-\item Any $h \in \Hspace$ has finite domain with $n < \infty$ elements $\Rightarrow$ neat representation with $n$-dim vector 
+\begin{framei}{discrete functions}
+\item Let $\Xspace = \xdat$, $\Hspace = \{h ~|~ h: \Xspace \rightarrow \R\}$
+\item Any $h \in \Hspace$ has finite domain with $n < \infty$ elements \\$\Rightarrow$ neat representation with $n$-dim vector 
 $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
-\end{framei}
-
-\foreach \i [count=\idx from 1] in {2, 5, 10} {
-\begin{framei}[sep=L]{example: random discrete functions}
-\item Case $\idx$: finite input space with cardinality $|\Xspace| = \i$
-\item Example functions living in this space
-\vfill
+\item Example functions living in this space for $|\Hspace| \in \{2, 5, 10\}$
 \splitVThree{
-\imageC{figure/discrete/example_\i_1.pdf}
+\imageC{figure/discrete/example_2_1.pdf}
 }{
-\imageC{figure/discrete/example_\i_2.pdf}
+\imageC{figure/discrete/example_5_1.pdf}
 }{
-\imageC{figure/discrete/example_\i_3.pdf}
+\imageC{figure/discrete/example_10_1.pdf}
 }
+\textcolor{red}{TODO LW: new plots}
 \end{framei}
-}
 
-\begin{framei}{Distributions on Discrete Functions}
-\item Specify (discrete) probability function on functions $h \in \Hspace$ $\Rightarrow$ natural way: vector representation
-$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
-\item $\bm{h}$ as $n$-dim RV, e.g.,
-$$\bm{h} \sim \gaussmk$$
+% \begin{framei}[sep=L]{discrete functions}
+% \item Let $\Xspace = \xdat$ be a finite set
+% \item Let $\Hspace = \{h ~|~ h: \Xspace \rightarrow \R\}$
+% \item Any $h \in \Hspace$ has finite domain with $n < \infty$ elements $\Rightarrow$ neat representation with $n$-dim vector 
+% $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ]$$
+% \end{framei}
+
+% \foreach \i [count=\idx from 1] in {2, 5, 10} {
+% \begin{framei}[sep=L]{example: random discrete functions}
+% \item Case $\idx$: finite input space with cardinality $|\Xspace| = \i$
+% \item Example functions living in this space
+% \vfill
+% \splitVThree{
+% \imageC{figure/discrete/example_\i_1.pdf}
+% }{
+% \imageC{figure/discrete/example_\i_2.pdf}
+% }{
+% \imageC{figure/discrete/example_\i_3.pdf}
+% }
+% \end{framei}
+% }
+
+\begin{framei}[sep=L]{Distributions on Discrete Functions}
+\item Specify (discrete) probability function on functions $h \in \Hspace$ 
+\item Natural way: vector representation as $n$-dim RV, e.g.,
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ] \sim \gaussmk$$
 \item For now: set $\mv = \zero$, assume $\Kmat$ to be given
 \end{framei}
 
-\foreach \i [count=\idx from 1] in {2, 5, 10} {
-\foreach \j in {1, 2, 3} {
+\foreach \i [count=\idx from 1] in {2, 5} {
+\foreach \j in {1, 2} {
 \begin{framei}{example: random discrete functions}
-\item Case $\idx$ (ctd): $h: \Xspace \to \Yspace$ defined on $\i$ points
+\item Example ctd: $h: \Xspace \to \Yspace$ defined on $\i$ points
 \item Sample representatives by sampling from a $\i$-dim Gaussian
 \ifnum \i=2
 $$\bm{h} = [h(\xi[1]), h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
 \else 
 $$\bm{h} = [h(\xi[1]), \dots, h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
 \fi
+\item Samples: \ifnum \j=1 weakly ($\Kmat \approx \id$) \else strongly (large off-diag in $\Kmat$) \fi correlated components
 \vfill
 \splitV{
-\imageC[.9]{figure/discrete/example_norm_\i_\j_a.pdf}
+\imageC[.8]{figure/discrete/example_norm_\i_\j_a.pdf}
 }{
-\imageC[.9]{figure/discrete/example_norm_\i_\j_b.pdf}
+\imageC[.8]{figure/discrete/example_norm_\i_\j_b.pdf}
 }
+\textcolor{red}{TODO LW: new plots}
 \end{framei}
 }
 }
 
-\begin{framei}{Role of the Covariance Function}
-\item Note: covariance controls ``shape'' of function drawn
-\item Extreme case a) almost perfectly correlated 
-\footnotesize
-$$\Kmat = \begin{pmatrix} 1 & 0.99 & \dots & 0.99 \\
-0.99 & 1 & \dots & 0.99 \\
-0.99 & 0.99 & \ddots & 0.99 \\
-0.99 & \dots & 0.99 & 1 \end{pmatrix}$$
-\normalsize
-\item Extreme case b) uncorrelated $\Rightarrow$ $\Kmat = \id$
-\vfill
-\splitVCompact{.35}{.35}{
-\imageC{figure/discrete/example_extreme_50_1.pdf}
-}{
-\imageC{figure/discrete/example_extreme_50_2.pdf}
-}
-\end{framei}
+% \foreach \i [count=\idx from 1] in {2, 5, 10} {
+% \foreach \j in {1, 2, 3} {
+% \begin{framei}{example: random discrete functions}
+% \item Case $\idx$ (ctd): $h: \Xspace \to \Yspace$ defined on $\i$ points
+% \item Sample representatives by sampling from a $\i$-dim Gaussian
+% \ifnum \i=2
+% $$\bm{h} = [h(\xi[1]), h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
+% \else 
+% $$\bm{h} = [h(\xi[1]), \dots, h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
+% \fi
+% \vfill
+% \splitV{
+% \imageC[.9]{figure/discrete/example_norm_\i_\j_a.pdf}
+% }{
+% \imageC[.9]{figure/discrete/example_norm_\i_\j_b.pdf}
+% }
+% \end{framei}
+% }
+% }
 
-\begin{framei}[sep=L]{spatial correlation}
-\item ``Meaningful'' functions (on numeric spaces) often characterized by a spatial property:
-% $\xi, \xi[j]$ close in $\Xspace$ $\Rightarrow$ $f(\xi), f(\xi[j])$ should be close in $\Yspace$
+% \begin{framei}{Role of the Covariance Function}
+% \item Note: covariance controls ``shape'' of function drawn
+% \item Extreme case a) almost perfectly correlated 
+% \footnotesize
+% $$\Kmat = \begin{pmatrix} 1 & 0.99 & \dots & 0.99 \\
+% 0.99 & 1 & \dots & 0.99 \\
+% 0.99 & 0.99 & \ddots & 0.99 \\
+% 0.99 & \dots & 0.99 & 1 \end{pmatrix}$$
+% \normalsize
+% \item Extreme case b) uncorrelated $\Rightarrow$ $\Kmat = \id$
+% \vfill
+% \splitVCompact{.35}{.35}{
+% \imageC{figure/discrete/example_extreme_50_1.pdf}
+% }{
+% \imageC{figure/discrete/example_extreme_50_2.pdf}
+% }
+% \end{framei}
+
+\begin{framei}{spatial correlation}
+\item ``Meaningful'' functions (on numeric $\Xspace$) often have spatial property:
 $$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ close in } \Yspace$$
-\item In other words: if points are close in $\Xspace$, their function values should be correlated
-\item Enforce this by choosing covariance function s.t.
-$$\Kmat_{ij} \text{ high } \Leftrightarrow \xi[i], \xi[j] \text{ close in } \Xspace$$
-\end{framei} 
-
-\begin{framei}[sep=L]{spatial correlation}
-\item Compute covariance matrix by a function based on distance between $\xi$ and $\xi[j]$
+\item In other words: fun values of nearby points should be correlated
+\item Enforce this by choosing dist-based covariance function
+$$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ high }$$
 \item E.g., $\Kmat_{ij} = k(\xi, \xi[j]) = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$
 \vfill
 \splitVCompact{.35}{.35}{
@@ -172,10 +201,23 @@ $$\Kmat_{ij} \text{ high } \Leftrightarrow \xi[i], \xi[j] \text{ close in } \Xsp
 \imageC{figure/discrete/example_extreme_50_4.pdf}
 }
 \item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
+\textcolor{red}{TODO LW: new plots (adapt titles)}
 \end{framei} 
 
+% \begin{framei}[sep=L]{spatial correlation}
+% \item Compute covariance matrix by a function based on distance between $\xi$ and $\xi[j]$
+% \item E.g., $\Kmat_{ij} = k(\xi, \xi[j]) = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$
+% \vfill
+% \splitVCompact{.35}{.35}{
+% \imageC{figure/discrete/example_extreme_50_3.pdf}
+% }{
+% \imageC{figure/discrete/example_extreme_50_4.pdf}
+% }
+% \item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
+% \end{framei} 
+
 \begin{framei}{From Discrete to Continuous Functions}
-\item Recall: we defined distributions on functions by the (Gaussian) random vector of corresponding function values 
+\item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
 $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
 \item We can do this for ever larger $n$ (as ``granular'' as we want)
 \vfill
@@ -186,16 +228,36 @@ $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
 \item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
 \item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
-\item Observation: random vectors $\bm{h}$ are collections of RVs enumerated by index set $\nset$ $\Rightarrow$ \textbf{indexed family} 
-\item Can we use more general, infinite index sets? % to create such collections? $\Rightarrow$ \textbf{stochastic processes}
+\item Observation: random vectors $\bm{h} = [h(\xi[1]), \dots, h(\xi[n])]$ are collections of RVs enumerated by $\nset$ $\Rightarrow$ \textbf{indexed family} 
+\item Can we use more general, infinite index sets?
 \end{framei}
 
-\begin{framei}[sep=L]{definition: indexed family}
+\begin{framei}{definition: indexed family}
 \item Mathematical ``rule'' to map indices to some state space %$\mathcal{S}$
 $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \item Gives rise to collection $\{s_t: t \in T\}$
 \item Can assume many forms depending on $T$ and $\mathcal{S}$
-\item $T$: in particular, finite vs infinite
+\item Example: real-valued $\mathcal{S}$ 
+\splitV{
+\begin{itemizeM}
+\item $\mathcal{S} = \R$, $t \mapsto s_t$
+\item Finite index set, e.g., $T = \nset$ $\Rightarrow$ list
+\item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ sequence 
+\item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ \\example: $\{\sin(t): t \in \R\}$
+\end{itemizeM}
+}{
+\imageR[.8]{figure_man/indexed_family/indexed_family_1.png}
+\imageR[.8]{figure_man/indexed_family/indexed_family_2.png}
+}
+\end{framei}
+
+% \begin{framei}[sep=L]{definition: indexed family}
+% \item Mathematical ``rule'' to map indices to some state space %$\mathcal{S}$
+% $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
+% \item Gives rise to collection $\{s_t: t \in T\}$
+% \item Can assume many forms depending on $T$ and $\mathcal{S}$
+% \item $T$: in particular, finite vs infinite
+
 % \vfill
 % \begin{tabular}{|l|l|l|}
 % \hline
@@ -209,56 +271,66 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 % \hline
 % \end{tabular}
 % \vfill
-\item $\mathcal{S}$: numbers, RVs, sets, \dots
-\end{framei}
+% \item $\mathcal{S}$: numbers, RVs, sets, \dots
+% \end{framei}
 
-\begin{frame}{example: real-valued indexed families}
-\splitV{
-\begin{itemizeL}
-\item $\mathcal{S} = \R$
-\item $t \mapsto s_t$
-\item Finite index set, e.g., $T = \nset$ $\Rightarrow$ list
-\item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ sequence 
-\end{itemizeL}
-}{
-\imageR{figure_man/indexed_family/indexed_family_1.png}
-\imageR{figure_man/indexed_family/indexed_family_2.png}
-}
-\vfill
-\begin{itemize}
-\item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ \\example: $\{\sin(t): t \in \R\}$
-\end{itemize}
-\end{frame}
+% \begin{frame}{example: real-valued indexed families}
+% \splitV{
+% \begin{itemizeL}
+% \item $\mathcal{S} = \R$
+% \item $t \mapsto s_t$
+% \item Finite index set, e.g., $T = \nset$ $\Rightarrow$ list
+% \item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ sequence 
+% \end{itemizeL}
+% }{
+% \imageR{figure_man/indexed_family/indexed_family_1.png}
+% \imageR{figure_man/indexed_family/indexed_family_2.png}
+% }
+% \vfill
+% \begin{itemize}
+% \item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ \\example: $\{\sin(t): t \in \R\}$
+% \end{itemize}
+% \end{frame}
 
-\begin{framei}[sep=L]{definition: stochastic process}
-\item Special kind of indexed family: RVs with specific covariance structure
-$$\{Y_t: t \in T\}$$ 
-\item Some distributional assumption for $Y_t$
-\item Often temporal interpretation of $T$ $\Rightarrow$ e.g., stock prices
+\begin{framei}[sep=M]{definition: stochastic process}
+\item Special kind of indexed family: RVs with specific distributional assumption + cov structure $\Rightarrow$ $\{Y_t: t \in T\}$
+% \item $\{Y_t: t \in T\}$ $\Rightarrow$ often temporal interpretation of $T$
 \item Intuition: probability distributions describe random vectors, SP describe random functions
-\end{framei}
-
-\begin{frame}{example: stochastic processes}
+\item Examples
 \splitV{
-\begin{itemizeL}
-\item $\mathcal{S}$: space of RVs
-\item $t \mapsto Y_t$
+\begin{itemizeM}
+\item $\mathcal{S}$: space of RVs, $t \mapsto Y_t$
 \item Finite index set, e.g., $T = \nset$ \\$\Rightarrow$ random vector
 \item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
-\end{itemizeL}
-}{
-\imageR{figure_man/indexed_family/indexed_family_4.png}
-\imageR{figure_man/indexed_family/indexed_family_3.png}
-}
-\vfill
-\begin{itemize}
 \item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
-\end{itemize}
-\end{frame}
+\end{itemizeM}
+}{
+\imageR[.8]{figure_man/indexed_family/indexed_family_4.png}
+\imageR[.8]{figure_man/indexed_family/indexed_family_3.png}
+}
+\end{framei}
+
+% \begin{frame}{example: stochastic processes}
+% \splitV{
+% \begin{itemizeL}
+% \item $\mathcal{S}$: space of RVs
+% \item $t \mapsto Y_t$
+% \item Finite index set, e.g., $T = \nset$ \\$\Rightarrow$ random vector
+% \item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
+% \end{itemizeL}
+% }{
+% \imageR{figure_man/indexed_family/indexed_family_4.png}
+% \imageR{figure_man/indexed_family/indexed_family_3.png}
+% }
+% \vfill
+% \begin{itemize}
+% \item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
+% \end{itemize}
+% \end{frame}
 
 \begin{framei}[sep=L]{intuition: gaussian processes}
-\item Special case of SP 
-\item Index set: $\Xspace$, cov structure: Gaussian 
+\item Special kind of SP 
+\item Index set: $\Xspace$, distr assumption + cov structure: Gaussian 
 \item Corollary: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
 \vfill
 \splitV{
@@ -272,9 +344,10 @@ $$\{Y_t: t \in T\}$$
 
 \foreach \i in {5, 10, 50}{
 \begin{framei}[sep=L]{marginalization property}
-\item Distinguishing feature of GPs: for any finite set of inputs,
+\item Consider finite set of inputs $\bm{X} = \xdat \subset \Xspace$
+\item Distinguishing feature of GPs: for any such $\bm{X}$,
     $$
-      \fv = \fvec \sim \gaussmk
+      \fv = f(\bm{X}) = \fvec \sim \gaussmk
     $$ 
 \item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
 \vfill
@@ -282,7 +355,7 @@ $$\{Y_t: t \in T\}$$
 \imageC[.9]{figure/discrete/example_marginalization_\i.pdf}
 }{
 \ifnum \i=5
-\imageC[1]{figure_man/discrete/marginalization-5.png}
+\imageC[.9]{figure_man/discrete/marginalization-5.png}
 \else
 \imageC[1]{figure_man/discrete/marginalization-more.png}
 \fi
@@ -292,17 +365,18 @@ $$\{Y_t: t \in T\}$$
 
 \begin{framei}[sep=L]{definition: gaussian process}
 \item Formally, 
-$$\fx \sim \gp$$
-iff for any finite set of inputs $\xdat$, 
+$$f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$$
+iff for any finite set of inputs $\bm{X} \subset \Xspace$, 
 $$
-\fv = \fvec \sim \gaussmk
+f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))
 $$
-where
-$$
-\mv := (m(\xi))_{i \in \nset}, \quad
-\Kmat := \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}
-$$
-with \textbf{mean function} $m(\cdot)$ and \textbf{covariance function} $k(\cdot, \cdot)$
+\item Depends on \textbf{mean function} $m: \Xspace \rightarrow \R$ and \textbf{covariance function} $k: \Xspace \times \Xspace \rightarrow \R^+_0$
+\item For specific set $\bm{X}$ we get (deterministic) vectors / mats
+\begin{itemizeL}
+\item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]$
+\item $\Kmat = k(\bm{X}, \bm{X}) = \left(k(\xv, \xv^\prime) \right)_{\xv, , \xv^\prime \in X}$
+\item $\fv \sim \normal(\mv, \Kmat)$
+\end{itemizeL}
 \end{framei}
 
 \begin{framei}[sep=L]{existence theorem}
@@ -311,17 +385,18 @@ with \textbf{mean function} $m(\cdot)$ and \textbf{covariance function} $k(\cdot
 \begin{itemize}
 \item state space $\Xspace$,
 \item mean function $m: \Xspace \rightarrow \R$,
-\item covariance function $k: \Xspace \times \Xspace \rightarrow \R$, 
+\item covariance function $k: \Xspace \times \Xspace \rightarrow \R^+_0$, 
 \end{itemize}
-there \textbf{exists} a Gaussian process $\mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t.
+\vfill
+there \textbf{exists} $\mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\forall \xv, \xv^\prime \in \Xspace$
 \begin{eqnarray*}
 \E(\fx) &=& m(\xv) \\
 \cov(\fx, f(\xv^\prime)) &=& \kxxp
 \end{eqnarray*}
-$\forall \xv, \xv^\prime \in \Xspace$
+and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
+\item Intuition: for any mean \& cov structure we prescribe, there is a corresponding GP to generate $\fv$ with these characteristics
 \item Version of Kolmogorov consistency theorem  \\
 $\Rightarrow$ proof: \citelink{GRIMMETT2001PROC} (Thm. 8.6.3)
-\item Intuition: for any mean \& cov structure we prescribe for random vectors $\fv$, there is a corresponding GP to generate $\fv$
 \end{framei}
 
 \begin{framei}[sep=L]{implications of existence thm}
@@ -333,17 +408,17 @@ k(\xv, \xv^\prime) &=& \cov(\fx, f(\xv^\prime)) = \E \left[\left( f(\xv) - \E[f(
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
 $\Rightarrow$ common, not necessarily drastic assumption 
-\item Properties of GPs mainly governed by $k(\cdot, \cdot)$
-\item By virtue of existence thm: sampling from GPs gives us random functions with our properties of choice
+\item Denote by $\mathcal{GP}(\zero, k(\cdot, \cdot))$ $\Rightarrow$ properties mainly governed by $k(\cdot, \cdot)$
+\item By virtue of existence thm: sampling from GP priors gives us random functions with our properties of choice
 \end{framei}
 
 \begin{framei}[sep=L]{sampling from gaussian process priors}
-\item Example: $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
+\item Example: $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
 $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 \item To visualize sample functions, 
 \begin{itemize}
-\item choose high number $n$ of (equidistant) points $\xdat$
-  \item compute $\Kmat = \left(k(\xi, \xi[j]) \right)_{i,j \in \nset}$ from all pairs $\xi, \xi[j]$ 
+\item choose high number $n$ of (equidistant) points $\bm{X} = \xdat$
+  \item compute $\Kmat = k(\bm{X}, \bm{X})$ from all pairs $\xi, \xi[j] \in \bm{X}$ 
   \item draw $\fv \sim \normal(\zero, \Kmat)$ 
 \end{itemize}
 \item 10 randomly drawn functions (note 0 mean)
@@ -353,7 +428,7 @@ $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 
 \begin{framei}[sep=L]{sampling from gaussian process priors}
 \item Example: 2D Brownian motion
-\item $\fx \sim \mathcal{GP}(\zero, \kxxp)$ with cov function
+\item $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
 $$ \kxxp = \min (\xv, \xv^\prime)$$
 \item \textcolor{red}{TODO LW: plot}
 \end{framei}
