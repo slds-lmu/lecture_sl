@@ -4,11 +4,19 @@ import json
 import logging
 import argparse
 
-logging.basicConfig(level=logging.DEBUG, 
-                    format='%(asctime)s - %(levelname)s - %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S',
-                    filename='main.log',
-                    filemode='a')
+# Set up logging to both file and console
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    filename='main.log',
+    filemode='a'
+)
+
+console = logging.StreamHandler()
+console.setLevel(logging.DEBUG)
+console.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S'))
+logging.getLogger().addHandler(console)
 
 logging.debug("-" * 20)
 
@@ -80,7 +88,15 @@ def process_file(path, texts, main_folder, save_folder="inserted"):
             logging.debug(f"Keys updated: {updated_keys}")
             all_keys_updated = set(updated_keys) == set(texts.keys())
             if not all_keys_updated:
-                logging.warning(f"Not all keys updated. Keys in json but not in file: {set(texts.keys()) - set(updated_keys)} | in file but not in json: {set(updated_keys) - set(texts.keys())}")
+                in_json_not_in_file = set(texts.keys()) - set(updated_keys)
+                in_file_not_in_json = set(updated_keys) - set(texts.keys())
+                
+                all_missing_keys = in_json_not_in_file | in_file_not_in_json
+
+                okay_to_miss = ["colab_R_link", "colab_python_link"]
+                if (len(all_missing_keys) > 1) or \
+                    list(all_missing_keys)[0] not in okay_to_miss:
+                        logging.warning(f"Not all keys updated. Keys in json but not in file: {in_json_not_in_file} | in file but not in json: {in_file_not_in_json}")
         else:
             logging.info(f"No placeholders in: {path}")
 
@@ -111,8 +127,16 @@ def process_file(path, texts, main_folder, save_folder="inserted"):
             logging.debug(f"Keys updated: {updated_keys}")
             all_keys_updated = set(updated_keys) == set(texts.keys())
             if not all_keys_updated:
-                logging.warning(f"Not all keys updated. Keys in json but not in file: {set(texts.keys()) - set(updated_keys)} | in file but not in json: {set(updated_keys) - set(texts.keys())}")
+                in_json_not_in_file = set(texts.keys()) - set(updated_keys)
+                in_file_not_in_json = set(updated_keys) - set(texts.keys())
+                
+                all_missing_keys = in_json_not_in_file | in_file_not_in_json
 
+                okay_to_miss = ["colab_R_link", "colab_python_link"]
+                if (len(all_missing_keys) > 1) or \
+                    list(all_missing_keys)[0] not in okay_to_miss:
+                        logging.warning(f"Not all keys updated. Keys in json but not in file: {in_json_not_in_file} | in file but not in json: {in_file_not_in_json}")
+  
         else:
             logging.info(f"No placeholders in: {path}")
     else:
