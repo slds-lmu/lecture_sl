@@ -1,0 +1,2 @@
+In VS Code \bm and \emph seem to work fine, but it's important to remember that it's not the case when rendering in Google Colab/GitHub. 
+One should replace \bm with \boldsymbol and \emph with double stars.
