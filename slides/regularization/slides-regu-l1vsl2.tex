@@ -71,7 +71,7 @@ $\Sigma_{k,l}=0.7^{|k-l|}$
   \begin{itemize}
     \item Typically we omit $\theta_0$ in penalty $J(\thetav)$ so that the ``infinitely'' regularized model is the constant model (but can be implementation-dependent).
     \item Unregularized LM has \textbf{rescaling equivariance}, if you scale some features, can simply "anti-scale" coefs and risk does not change.
-    \item Not true for Reg-LM: if you down-scale features, coeffs become larger to counteract. They are then penalized stronger in $J(\thetav)$, making them less attractive without any relevenat reason.
+    \item Not true for Reg-LM: if you down-scale features, coeffs become larger to counteract. They are then penalized stronger in $J(\thetav)$, making them less attractive without any relevant reason.
     \item \textbf{So: usually standardize features in regularized models, whether linear or non-linear!}  
       
     % \item While ridge regression usually leads to smaller estimated coefficients, but still dense $\thetav$ vectors,
