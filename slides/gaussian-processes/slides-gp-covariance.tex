@@ -20,10 +20,11 @@ figure_man/covariance2D-2.png
 }
 
 \begin{framei}[sep=L]{valid covariance functions}
-\item Recall marginalization property of GPs: for any $\xdat \subset \Xspace$,
-$$\fv = \fvec \sim \gaussmk$$
-\item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\xdat$
-\item Cov function (or kernel) determines cov matrix: $\Kmat_{ij} = k(\xi, \xi[j])$
+\item Recall marginalization property of GPs: for any $\bm{X} = \xdat \subset \Xspace$,
+$$\fv = f(\bm{X}) \sim \gaussmk$$
+with $\mv = m(\bm{X})$, $\Kmat = k(\bm{X}, \bm{X})$
+\item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
+\item Cov function (or kernel) determines cov matrix: $\Kmat = k(\bm{X}, \bm{X})$
 \item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions
 \end{framei}
 
@@ -37,7 +38,7 @@ $$k(\xv, \xv^\prime) = k(\bm{d})$$
 \end{framei}
 
 \begin{framei}{example: stationary covariance}
-\item Let $\fx \sim \mathcal{GP}(m, k)$ with $\kxxp = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
+\item Let $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot)$ with $\kxxp = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
 \item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$
 \item If you want to know about the correlation between $f(\xi[1])$ and $f(\xi[2])$, compute $\bm{d}(\xi[1], \xi[2])$
 \vfill
@@ -106,8 +107,12 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item \textcolor{red}{TODO LW: plot}
 \end{framei}
 
-\begin{framei}[sep=L]{periodic kernel}
-\item intuition, formula, viz
+\begin{framei}{periodic kernel}
+\item E.g., $\kxxp = \exp \left(\frac{-2\sin^2 \pi (\| \xv - \xv^\prime\| / m)}{\ls^2} \right)$
+\item $m$: period, $\ls$: length-scale
+\item Implements idea that $\xv$ should be similar to $\xv + m$, similarity decaying quadratically in $\ls$
+\item Use for: periodic trends
+\item \textcolor{red}{TODO LW: plot}
 \end{framei}
 
 \begin{framei}{matérn kernel}

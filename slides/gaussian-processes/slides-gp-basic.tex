@@ -127,8 +127,8 @@ $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n] ) ] \sim \gaussmk$$
 \item For now: set $\mv = \zero$, assume $\Kmat$ to be given
 \end{framei}
 
-\foreach \i [count=\idx from 1] in {2, 5} {
-\foreach \j in {1, 2} {
+\foreach \i [count=\idx from 1] in {2, 5, 10} {
+% \foreach \j in {1, 2} {
 \begin{framei}{example: random discrete functions}
 \item Example ctd: $h: \Xspace \to \Yspace$ defined on $\i$ points
 \item Sample representatives by sampling from a $\i$-dim Gaussian
@@ -137,16 +137,22 @@ $$\bm{h} = [h(\xi[1]), h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
 \else 
 $$\bm{h} = [h(\xi[1]), \dots, h(\xi[\i])] \sim \normal(\zero, \Kmat)$$
 \fi
-\item Samples: \ifnum \j=1 weakly ($\Kmat \approx \id$) \else strongly (large off-diag in $\Kmat$) \fi correlated components
+% \item Samples: \ifnum \j=1 weakly ($\Kmat \approx \id$) \else strongly (large off-diag in $\Kmat$) \fi correlated components
 \vfill
 \splitV{
-\imageC[.8]{figure/discrete/example_norm_\i_\j_a.pdf}
+\imageC[.5]{figure/discrete/example_norm_\i_1_a.pdf}
 }{
-\imageC[.8]{figure/discrete/example_norm_\i_\j_b.pdf}
+\imageC[.5]{figure/discrete/example_norm_\i_1_b.pdf}
 }
-\textcolor{red}{TODO LW: new plots}
+\vfill
+\splitV{
+\imageC[.5]{figure/discrete/example_norm_\i_2_a.pdf}
+}{
+\imageC[.5]{figure/discrete/example_norm_\i_2_b.pdf}
+}
+\textcolor{red}{TODO LW: replace plots (1st row weakly, 2nd row strongly correlated}
 \end{framei}
-}
+% }
 }
 
 % \foreach \i [count=\idx from 1] in {2, 5, 10} {
@@ -201,7 +207,8 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 \imageC{figure/discrete/example_extreme_50_4.pdf}
 }
 \item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
-\textcolor{red}{TODO LW: new plots (adapt titles)}
+
+\textcolor{red}{TODO LW: new plots}
 \end{framei} 
 
 % \begin{framei}[sep=L]{spatial correlation}
@@ -216,15 +223,17 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 % \item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
 % \end{framei} 
 
-\begin{framei}{From Discrete to Continuous Functions}
-\item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
-$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
-\item We can do this for ever larger $n$ (as ``granular'' as we want)
-\vfill
-\imageC{figure/discrete/example_limit.pdf}
-\end{framei}
+% \begin{framei}{From Discrete to Continuous Functions}
+% \item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
+% $$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
+% \item We can do this for ever larger $n$ (as ``granular'' as we want)
+% \vfill
+% \imageC{figure/discrete/example_limit.pdf}
+% \end{framei}
 
 \begin{framei}[sep = L]{From Discrete to Continuous Functions}
+\item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
+$$\bm{h} = [h(\xi[1]), \dots, h(\xi[n])] \sim \gaussmk$$
 \item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
 \item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
@@ -342,7 +351,7 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \item Precisely what we were looking for: process to generate arbitrarily long Gaussian random vectors!
 \end{framei}
 
-\foreach \i in {5, 10, 50}{
+\foreach \i in {10, 50}{
 \begin{framei}[sep=L]{marginalization property}
 \item Consider finite set of inputs $\bm{X} = \xdat \subset \Xspace$
 \item Distinguishing feature of GPs: for any such $\bm{X}$,
@@ -360,6 +369,7 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \imageC[1]{figure_man/discrete/marginalization-more.png}
 \fi
 }
+\textcolor{red}{TODO LW: new plots}
 \end{framei}
 }
 
@@ -371,12 +381,13 @@ $$
 f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))
 $$
 \item Depends on \textbf{mean function} $m: \Xspace \rightarrow \R$ and \textbf{covariance function} $k: \Xspace \times \Xspace \rightarrow \R^+_0$
-\item For specific set $\bm{X}$ we get (deterministic) vectors / mats
-\begin{itemizeL}
+\item For specific set $\bm{X}$ we get deterministic vectors / matrices (with slight abuse of notation for argument $\bm{X}$)
+\vfill
+\begin{itemizeM}
 \item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]$
 \item $\Kmat = k(\bm{X}, \bm{X}) = \left(k(\xv, \xv^\prime) \right)_{\xv, , \xv^\prime \in X}$
 \item $\fv \sim \normal(\mv, \Kmat)$
-\end{itemizeL}
+\end{itemizeM}
 \end{framei}
 
 \begin{framei}[sep=L]{existence theorem}
@@ -388,7 +399,7 @@ $$
 \item covariance function $k: \Xspace \times \Xspace \rightarrow \R^+_0$, 
 \end{itemize}
 \vfill
-there \textbf{exists} $\mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\forall \xv, \xv^\prime \in \Xspace$
+there \textbf{exists} $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\forall \xv, \xv^\prime \in \Xspace$
 \begin{eqnarray*}
 \E(\fx) &=& m(\xv) \\
 \cov(\fx, f(\xv^\prime)) &=& \kxxp
