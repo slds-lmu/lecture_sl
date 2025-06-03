@@ -1,0 +1,104 @@
+---
+title: "Exercise 3 -- Advanced Risk Minimization III"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+  # - notebook: sol_advriskmin_3_R.ipynb
+  #   title: "Exercise sheet for R"
+  #   url: "https://github.com/slds-lmu/lecture_i2ml/blob/master/exercises/supervised-classification/ex_classification_2_R.ipynb"
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_py.ipynb).
+:::
+
+# Exercise
+The dataset $\texttt{forbes}$ in the R-package $\texttt{MASS}$ contains 17 different observations of $y$ and $x$ at different locations in the Alps and Scotland, i.e., the data set is $(x^{(i)},y^{(i)})_{i=1}^{17}.$ Analyze whether his conjecture was reasonable by using the following code snippet:
+
+::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#exercise echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#exercise echo=true >}}
+:::
+
+::: callout-note
+*Hint:* As a sanity check whether your function to find the optimal coefficients work, it should hold that $\hat\theta_1 \approx 0.3787548$ and $\hat\theta_2 \approx 0.02062236.$
+:::
+
+::: {.content-visible when-profile="solution"}
+# Solution
+## Defining the model equation
+$$
+y = \theta_1 \exp(\theta_2 x)
+$$
+
+::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#model_equation echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#model_equation echo=true >}}
+:::
+
+## Optimal coefficients
+We need to minimize the empirical risk. Recall that since we're using the generalized L2-loss we have:
+$$
+L\left(y, f(\mathbf{x ~|~ \boldsymbol{\theta} })\right)= \big(\log(y)-\log(f(\mathbf{x ~|~ \boldsymbol{\theta}}))\big)^2
+$$
+and the empirical risk is given by:
+$$
+    \mathcal{R}_{\text{emp}}(\boldsymbol{\theta}) = \sum_{i=1}^{n} L\left(y^{(i)}, f(\mathbf{x}^{(i)} ~|~ \boldsymbol{\theta})\right)
+$$
+For the optimization we will use the L-BFGS (Limited-memory BFGS) method. You can learn more about it [here](https://en.wikipedia.org/wiki/Limited-memory_BFGS). Also, you can refer to our  [optimization course](https://slds-lmu.github.io/website_optimization/) to get the idea of second-order methods, learns the concept of symmetric rank-1 update and the BFGS method.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#optim_coeff echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#optim_coeff echo=true >}}
+:::
+
+## Checking Forbes' conjecture
+As we can see the conjecture is quite reasonable, and we experience a big residual only for the point $x \backsimeq  205$.
+Also, the Mean Absolute Percentage Error (MAPE) is only around $0.4\%$.
+
+### Visually
+::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#forbes_visually echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#forbes_visually echo=true >}}
+:::
+
+### MAPE
+::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#forbes_mape echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#forbes_mape echo=true >}}
+:::
+
+# Alternative solution
+Luckily, we had derived an analytic solution earlier, and given that dataset size is quite small, we can directly apply it.
+
+:::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#analytical_solution echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#analytical_solution echo=true >}}
+::::
+
+# Full code
+
+::: {.panel-tabset}
+### R
+{{< embed sol_advriskmin_3_R.ipynb#full_code echo=true >}}
+### Python
+{{< embed sol_advriskmin_3_py.ipynb#full_code echo=true >}}
+:::
+:::
