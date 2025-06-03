@@ -30,6 +30,7 @@ INSERT_exercise
 INSERT_hint
 :::
 
+::: {.content-visible when-profile="solution"}
 INSERT_solution_header
 INSERT_model_equation
 
@@ -83,4 +84,5 @@ INSERT_full_code_header
 {{< embed sol_advriskmin_3_R.ipynb#full_code echo=true >}}
 ### Python
 {{< embed sol_advriskmin_3_py.ipynb#full_code echo=true >}}
+:::
 :::

@@ -31,6 +31,7 @@ The dataset $\texttt{forbes}$ in the R-package $\texttt{MASS}$ contains 17 diffe
 *Hint:* As a sanity check whether your function to find the optimal coefficients work, it should hold that $\hat\theta_1 \approx 0.3787548$ and $\hat\theta_2 \approx 0.02062236.$
 :::
 
+::: {.content-visible when-profile="solution"}
 # Solution:
 ## Defining the model equation
 $$
@@ -99,4 +100,5 @@ Luckily, we had derived an analytic solution earlier, and given that dataset siz
 {{< embed sol_advriskmin_3_R.ipynb#full_code echo=true >}}
 ### Python
 {{< embed sol_advriskmin_3_py.ipynb#full_code echo=true >}}
+:::
 :::

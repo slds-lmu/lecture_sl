@@ -3091,7 +3091,6 @@ vertical-align: -.125em;
   <ul>
   <li><a href="#python-3" id="toc-python-3" class="nav-link active" data-scroll-target="#python-3">Python</a></li>
   <li><a href="#python-4" id="toc-python-4" class="nav-link" data-scroll-target="#python-4">Python</a></li>
-  <li><a href="#python-5" id="toc-python-5" class="nav-link" data-scroll-target="#python-5">Python</a></li>
   </ul>
 </nav>
 </div>
@@ -3503,7 +3502,11 @@ Note
 </div>
 </div>
 <p>:::</p>
-<p>INSERT_alternative_solution :::: {.panel-tabset} ### R</p>
+<p>INSERT_alternative_solution</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href>R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href>Python</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl_python_sols\lecture_sl\exercises_quarto\advriskmin_3\sol_advriskmin_3_R.ipynb" data-notebook-title="R - ARM - Exercise 3" data-notebook-cellid="cell-analytical_solution">
 <div id="cell-analytical_solution" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hat_theta_2 <span class="ot">=</span> <span class="fu">cov</span>(bp,<span class="fu">log</span>(pres))<span class="sc">/</span>(<span class="fu">var</span>(bp)) </span>
@@ -3521,9 +3524,8 @@ Note
 </div>
 </div>
 </div>
-</section>
-<section id="python-5" class="level3">
-<h3 class="anchored" data-anchor-id="python-5">Python</h3>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl_python_sols\lecture_sl\exercises_quarto\advriskmin_3\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-analytical_solution">
 <div id="cell-analytical_solution" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hat_theta_2 <span class="op">=</span> np.cov(forbes[<span class="st">&#39;bp&#39;</span>], np.log(forbes[<span class="st">&#39;pres&#39;</span>]))[<span class="dv">0</span>,<span class="dv">1</span>] <span class="op">/</span> np.var(forbes[<span class="st">&#39;bp&#39;</span>])</span>
@@ -3551,12 +3553,14 @@ Note
 </div>
 </div>
 </div>
-<p>::::</p>
+</div>
+</div>
+</div>
 <p>INSERT_full_code_header</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href>R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href>Python</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href>R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href>Python</a></li></ul>
 <div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl_python_sols\lecture_sl\exercises_quarto\advriskmin_3\sol_advriskmin_3_R.ipynb" data-notebook-title="R - ARM - Exercise 3" data-notebook-cellid="cell-full_code">
 <div id="full_code" class="cell" data-vscode="{&quot;languageId&quot;:&quot;r&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param X the feature input matrix X</span></span>
@@ -3655,7 +3659,7 @@ Mean Absolute Percentage Error (MAPE): 0.4106409 %</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl_python_sols\lecture_sl\exercises_quarto\advriskmin_3\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-full_code">
 <div id="full_code" class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param X the feature input matrix X</span></span>
