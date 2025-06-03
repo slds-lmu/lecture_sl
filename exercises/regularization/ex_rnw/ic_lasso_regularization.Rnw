@@ -5,7 +5,7 @@ Let the hypothesis space be the linear models:
 $$
   \Hspace = \{ \fx = \thetav^\top \xv ~|~  \thetav \in \R^p  \}. 
 $$
-Suppose your loss function of interest is the L2 loss $\Lxy= \frac12 \big(y-\fx\big)^2.$ Consider the $L_1$-regularized empirical risk of a model $\fxt$ (i.e., Lasso regression):
+Suppose your loss function of interest is the L2 loss $\Lxy= \frac12 \big(y-\fx\big)^2.$ Consider the $L_1$-regularized empirical risk of a model $\fx$ (i.e., Lasso regression):
 $$
 	\riskrt = \risket + \lambda \|\thetav\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \xi \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
 $$
