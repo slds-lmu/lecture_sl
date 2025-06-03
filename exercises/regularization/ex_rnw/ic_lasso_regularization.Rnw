@@ -3,11 +3,11 @@ Consider the regression learning setting, i.e., $\mathcal{Y} = \R,$ and feature 
 Let the hypothesis space be the linear models:
 
 $$
-  \Hspace = \{ \fx = \thetav^\top \Xmat ~|~  \thetav \in \R^p  \}. 
+  \Hspace = \{ \fx = \thetav^\top \xv ~|~  \thetav \in \R^p  \}. 
 $$
 Suppose your loss function of interest is the L2 loss $\Lxy= \frac12 \big(y-\fx\big)^2.$ Consider the $L_1$-regularized empirical risk of a model $\fxt$ (i.e., Lasso regression):
 $$
-	\riskrt = \risket + \lambda \|\thetav\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
+	\riskrt = \risket + \lambda \|\thetav\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \xi \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
 $$
 Assume that ${\Xmat}^T \Xmat = \id,$ which holds if $\Xmat$ has orthonormal columns. Show that the minimizer $\thetah_{\text{Lasso}} = (\thetah_{\text{Lasso},1},\ldots,\thetah_{\text{Lasso},p})^\top$ is given by
 
