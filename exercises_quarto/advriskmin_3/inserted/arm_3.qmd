@@ -14,7 +14,7 @@ notebook-view:  false
 :::
 
 ::: callout-tip
-You can run the notebooks in Google Colab here: [R](ToDo), [Python](ToDo).
+You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_py.ipynb).
 :::
 
 # Exercise

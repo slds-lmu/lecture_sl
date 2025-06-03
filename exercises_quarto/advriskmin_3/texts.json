@@ -1,6 +1,6 @@
 {
-    "colab_R_link": "ToDo",
-    "colab_python_link": "ToDo",
+    "colab_R_link": "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_R.ipynb",
+    "colab_python_link": "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_py.ipynb",
     "exercise": "# Exercise\nThe dataset $\\texttt{forbes}$ in the R-package $\\texttt{MASS}$ contains 17 different observations of $y$ and $x$ at different locations in the Alps and Scotland, i.e., the data set is $(x^{(i)},y^{(i)})_{i=1}^{17}.$ Analyze whether his conjecture was reasonable by using the following code snippet:",
     "hint": "*Hint:* As a sanity check whether your function to find the optimal coefficients work, it should hold that $\\hat\\theta_1 \\approx 0.3787548$ and $\\hat\\theta_2 \\approx 0.02062236.$",
     "solution_header": "# Solution:",
