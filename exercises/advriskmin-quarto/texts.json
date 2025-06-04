@@ -1,0 +1,14 @@
+{
+    "colab_R_link": "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_R.ipynb",
+    "colab_python_link": "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_py.ipynb",
+    "exercise": "# Exercise\nThe dataset $\\texttt{forbes}$ in the R-package $\\texttt{MASS}$ contains 17 different observations of $y$ and $x$ at different locations in the Alps and Scotland, i.e., the data set is $(x^{(i)},y^{(i)})_{i=1}^{17}.$ Analyze whether his conjecture was reasonable by using the following code snippet:",
+    "hint": "*Hint:* As a sanity check whether your function to find the optimal coefficients work, it should hold that $\\hat\\theta_1 \\approx 0.3787548$ and $\\hat\\theta_2 \\approx 0.02062236.$",
+    "solution_header": "# Solution",
+    "model_equation": "## Defining the model equation\n$$\ny = \\theta_1 \\exp(\\theta_2 x)\n$$",
+"optimal_coefficients": "## Optimal coefficients\nWe need to minimize the empirical risk. Recall that since we're using the generalized L2-loss we have:\n$$\nL\\left(y, f(\\mathbf{x ~|~ \\boldsymbol{\\theta} })\\right)= \\big(\\log(y)-\\log(f(\\mathbf{x ~|~ \\boldsymbol{\\theta}}))\\big)^2\n$$\nand the empirical risk is given by:\n$$\n    \\mathcal{R}_{\\text{emp}}(\\boldsymbol{\\theta}) = \\sum_{i=1}^{n} L\\left(y^{(i)}, f(\\mathbf{x}^{(i)} ~|~ \\boldsymbol{\\theta})\\right)\n$$\nFor the optimization we will use the L-BFGS (Limited-memory BFGS) method. You can learn more about it [here](https://en.wikipedia.org/wiki/Limited-memory_BFGS). Also, you can refer to our  [optimization course](https://slds-lmu.github.io/website_optimization/) to get the idea of second-order methods, learns the concept of symmetric rank-1 update and the BFGS method.",
+    "checking_forbes": "## Checking Forbes' conjecture\nAs we can see the conjecture is quite reasonable, and we experience a big residual only for the point $x \\backsimeq  205$.\nAlso, the Mean Absolute Percentage Error (MAPE) is only around $0.4\\%$.",
+    "visually_header": "### Visually",
+    "mape_header": "### MAPE",
+    "alternative_solution": "# Alternative solution\nLuckily, we had derived an analytic solution earlier, and given that dataset size is quite small, we can directly apply it.",
+    "full_code_header": "# Full code"
+}
