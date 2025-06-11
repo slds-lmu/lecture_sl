@@ -385,7 +385,7 @@ $$
 \vfill
 \begin{itemizeM}
 \item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]$
-\item $\Kmat = k(\bm{X}, \bm{X}) = \left(k(\xv, \xv^\prime) \right)_{\xv, , \xv^\prime \in X}$
+\item $\Kmat = k(\bm{X}, \bm{X}) = \left(k(\xv, \tilde{\xv}) \right)_{\xv, , \tilde{\xv} \in X}$
 \item $\fv \sim \normal(\mv, \Kmat)$
 \end{itemizeM}
 \end{framei}
@@ -399,10 +399,10 @@ $$
 \item covariance function $k: \Xspace \times \Xspace \rightarrow \R^+_0$, 
 \end{itemize}
 \vfill
-there \textbf{exists} $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\forall \xv, \xv^\prime \in \Xspace$
+there \textbf{exists} $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\forall \xv, \tilde{\xv} \in \Xspace$
 \begin{eqnarray*}
 \E(\fx) &=& m(\xv) \\
-\cov(\fx, f(\xv^\prime)) &=& \kxxp
+\cov(\fx, f(\tilde{\xv})) &=& k(\xv, \tilde{\xv})
 \end{eqnarray*}
 and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
 \item Intuition: for any mean \& cov structure we prescribe, there is a corresponding GP to generate $\fv$ with these characteristics
@@ -414,7 +414,7 @@ $\Rightarrow$ proof: \citelink{GRIMMETT2001PROC} (Thm. 8.6.3)
 \item GPs completely specified by their mean \& cov function
 \begin{eqnarray*}
 m(\xv) &=& \E[f(\xv)] \\
-k(\xv, \xv^\prime) &=& \cov(\fx, f(\xv^\prime)) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xv^\prime) - \E[f(\xv^\prime)] \right) \right]
+k(\xv, \tilde{\xv}) &=& \cov(\fx, f(\tilde{\xv})) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\tilde{\xv}) - \E[f(\tilde{\xv})] \right) \right]
 \end{eqnarray*}
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
@@ -425,7 +425,7 @@ $\Rightarrow$ common, not necessarily drastic assumption
 
 \begin{framei}[sep=L]{sampling from gaussian process priors}
 \item Example: $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
-$$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
+$$ k(\xv, \tilde{\xv}) = \exp\left(-\tfrac{1}{2}\|\xv - \tilde{\xv}\|^2\right)$$
 \item To visualize sample functions, 
 \begin{itemize}
 \item choose high number $n$ of (equidistant) points $\bm{X} = \xdat$
@@ -440,7 +440,7 @@ $$ \kxxp = \exp\left(-\tfrac{1}{2}\|\xv - \xv^\prime\|^2\right)$$
 \begin{framei}[sep=L]{sampling from gaussian process priors}
 \item Example: 2D Brownian motion
 \item $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
-$$ \kxxp = \min (\xv, \xv^\prime)$$
+$$ k(\xv, \tilde{\xv}) = \min (\xv, \tilde{\xv})$$
 \item \textcolor{red}{TODO LW: plot}
 \end{framei}
 
