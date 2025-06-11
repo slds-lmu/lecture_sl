@@ -8,201 +8,122 @@
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Gaussian Processes
-  }{% Lecture title  
+  }{
     Training of a Gaussian Process
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+  }{
   figure/gp_training/fit_vs_penalty.pdf
   }{
   \item Training of GPs via Maximum Likelihood estimation of its hyperparameters
   \item Computational complexity is governed by matrix inversion of the covariance matrix
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{framei}[sep=L]{Training of a Gaussian process}
+\item All we need for GP predictions (in regression): matrix computations
+\item Implicit assumption: fully specified cov function, incl. hyperparams
+\item Nice GP property: numerical hyperparams of given cov function can be learned during training
+\end{framei}
 
-
-%\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%\input{../../style/preamble}
-%\input{../../latex-math/basic-math}
-%\input{../../latex-math/basic-ml}
-%\input{../../latex-math/ml-gp}
-
-%\newcommand{\titlefigure}{figure/gp_training/fit_vs_penalty.pdf} %does not fit
-%\newcommand{\learninggoals}{
-%  \item Training of GPs via Maximum Likelihood estimation of its hyperparameters
-%  \item Computational complexity is governed by matrix inversion of the covariance matrix
-%}
-
-%\title{Introduction to Machine Learning}
-%\date{}
-
-%\begin{document}
-
-%\lecturechapter{Gaussian Process Training}
-%\lecture{Introduction to Machine Learning}
-
-
-\begin{vbframe}{Training of a Gaussian process}
-
-\begin{itemize}
-\item To make predictions for a regression task by a Gaussian process, one simply needs to perform matrix computations.
-\vspace{.5cm}
-\item But for this to work out, we assume that the covariance functions is fully given, including all of its hyperparameters.\vspace{.5cm}
-\item A very nice property of GPs is that we can learn the numerical hyperparameters of a selected covariance function directly during GP training.
-\end{itemize}
-
-\end{vbframe}
-
-\begin{vbframe}{Training a GP via maximum likelihood}
-
-Let us assume 
-
-$$
-	y = \fx + \eps, ~ \eps \sim \mathcal{N}\left(0, \sigma^2\right),
-$$
-where $\fx \sim \mathcal{GP}\left(\bm{0}, k\left(\xv, \xv^\prime | \thetav \right)\right)$. 
-
-\lz 
-
-Observing $\bm{y} \sim \mathcal{N}\left(\bm{0}, \bm{K} + \sigma^2 \id\right)$, the marginal log-likelihood (or evidence) is
+\begin{framei}[sep=L]{Training a GP via maximum likelihood}
+\item Let $$y = \fx + \epsilon, \quad \epsilon \sim \normal(0, \sigma^2)$$
+with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \lamv))$ for hyperparam config $\lamv$
+\item This yields $\yv \sim \normal(\zero, \Kmat_y )$ with  $\Kmat_y = \Kmat + \sigma^2 \id$
+\item We get the \textbf{marginal log-likelihood / evidence}
 \begin{eqnarray*}
-\log p(\bm{y} ~|~ \bm{X}, \thetav) &=& \log \left[\left(2 \pi\right)^{-n / 2} |\bm{K}_y|^{-1 / 2} \exp\left(- \frac{1}{2} \bm{y}^\top \bm{K}_y^{-1} \bm{y}\right) \right]\\
-&=& -\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y} - \frac{1}{2} \log \left| \bm{K}_y \right| - \frac{n}{2} \log 2\pi. 
+\log p(\yv | \bm{X}, \lamv) &= \log \left[(2 \pi )^{-n / 2} |\Kmat_y|^{-1 / 2} \exp(- \tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv) \right] \\
+&= - \tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv - \tfrac{1}{2} \log | \Kmat_y | - \tfrac{n}{2} \log 2 \pi
 \end{eqnarray*}
+\item $\log p(\yv | \bm{X}, \lamv)$ depends on $\lamv$ (though   usually omitted in notation)
+\end{framei}
 
-with $\bm{K}_y:=\bm{K} + \sigma^2 \id$ and $\thetav$ denoting the hyperparameters (the parameters of the covariance function). 
+\begin{framei}[sep=L]{marginal log-likelihood components}
+\item Common cov function hyperparam: length-scale $\ls$
+\item Recall: smaller $\ls$ $\Rightarrow$ more flexible model
+\item Marginal log-lik terms have interpretable roles depending on $\ls$
+\item \textbf{Data fit} $- \tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv$: better for smaller $\ls$
+\item \textbf{Smoothness term} $- \tfrac{1}{2} \log | \Kmat_y |$: smaller for smaller  $\ls$
+\item \textbf{Normalization constant} $- \tfrac{n}{2} \log 2 \pi$
+\end{framei}
 
-\framebreak
+% ----------------------------------------------------
 
+\begin{framei}[sep=L]{mll components: example}
+\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\vfill
+\splitV{
+\imageC[1]{figure/gp_training/fit_vs_penalty.pdf}
+}{
+\imageC[1]{figure/gp_training/datapoints.pdf}
+}
+\end{framei}
 
-The three terms of the marginal likelihood have interpretable roles, considering that 
-the model becomes less flexible as the length-scale increases:
+\begin{framei}[sep=L]{mll components: example}
+\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\item $\ls = 0.2$: good fit but low smoothness term
+\vfill
+\splitV{
+\imageC[1]{figure/gp_training/fit_vs_penalty_0_2.pdf}
+}{
+\imageC[1]{figure/gp_training/datapoints_0_2.pdf}
+}
+\end{framei}
 
-\begin{itemize}
-\item the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, which tends to decrease if the length scale increases
-\item the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$, which depends on the covariance function only and which increases with the length-scale, because the model gets less complex with growing length-scale
-\item a normalization constant $- \frac{n}{2} \log 2\pi$
-\end{itemize}
+\begin{framei}[sep=L]{mll components: example}
+\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\item $\ls = 2$: high smoothness but poor fit
+\vfill
+\splitV{
+\imageC[1]{figure/gp_training/fit_vs_penalty_2.pdf}
+}{
+\imageC[1]{figure/gp_training/datapoints_2.pdf}
+}
+\end{framei}
 
-\end{vbframe}
+\begin{framei}[sep=L]{mll components: example}
+\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\item $\ls = 0.5$: balancing fit and smoothness term
+\vfill
+\splitV{
+\imageC[1]{figure/gp_training/fit_vs_penalty_0_5.pdf}
+}{
+\imageC[1]{figure/gp_training/datapoints_0_5.pdf}
+}
+\end{framei}
 
-\begin{vbframe}{Training a GP: Example}
+% ----------------------------------------------------
 
-To visualize this, we consider a zero-mean Gaussian process with squared exponential kernel
-
-$$
-k(\xv, \xv^\prime) = \exp\left(-\frac{1}{2\ls^2}\|\xv - \xv^\prime\|^2\right),
-$$
-
-
-\begin{itemize}
-	\item Recall, the model is smoother and less complex for higher length-scale $\ls$.
-	\item We show how the 
-	\begin{itemize}
-		\item data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, 
-		\item the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$, and 
-		\item the overall value of the marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ 
-	\end{itemize}
-	behave for increasing value of $\ls$.
-\end{itemize}
-
-\framebreak 
-
-\begin{figure}
-	\includegraphics[width = 0.5\textwidth]{figure/gp_training/fit_vs_penalty.pdf}~	\includegraphics[width = 0.5\textwidth]{figure/gp_training/datapoints.pdf}
-\end{figure}
-
-\begin{footnotesize}
-	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.
-\end{footnotesize}
-
-
-\framebreak 
-
-\begin{figure}
-	\includegraphics[width = 0.5\textwidth]{figure/gp_training/fit_vs_penalty_0_2.pdf}~	\includegraphics[width = 0.5\textwidth]{figure/gp_training/datapoints_0_2.pdf}
-\end{figure}
-
-\begin{footnotesize}
-		The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.\\ 
-		A small $\ls$ results in a good fit, but a high complexity penalty (low $- \frac{1}{2} \log \left| \bm{K}_y \right|$).
-\end{footnotesize}
-
-\framebreak
-
-\begin{figure}
-	\includegraphics[width = 0.5\textwidth]{figure/gp_training/fit_vs_penalty_2.pdf}~	\includegraphics[width = 0.5\textwidth]{figure/gp_training/datapoints_2.pdf}
-\end{figure}
-
-\begin{footnotesize}
-	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.\\ 
-	A large $\ls$ results in a poor fit. 
-\end{footnotesize}
-
-\framebreak 
-
-\begin{figure}
-	\includegraphics[width = 0.5\textwidth]{figure/gp_training/fit_vs_penalty_0_5.pdf}~	\includegraphics[width = 0.5\textwidth]{figure/gp_training/datapoints_0_5.pdf}
-\end{figure}
-
-\begin{footnotesize}
-	The left plot shows how values of the data fit $-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y}$, the complexity penalty $- \frac{1}{2} \log \left| \bm{K}_y \right|$ (high value means less penalization) and the overall marginal likelihood $\log p(\bm{y} ~|~ \bm{X}, \thetav)$ behave for increasing values of $\ls$.\\ 
-	The maximizer of the log-likelihood, $\ls = 0.5$, balances complexity and fit. 
-\end{footnotesize}
-
-
-\end{vbframe}
-
-\begin{vbframe}{Training a GP via maximum likelihood}
-
-To set the hyperparameters by maximizing the marginal likelihood, we seek the partial derivatives w.r.t. the hyperparameters
-
-\begin{footnotesize}
+\begin{framei}[sep=L]{optimizing kernel hyperparameters}
+\item Idea: set partial derivatives wrt hyperparams to 0
 \begin{eqnarray*}
-\frac{\partial}{\partial\theta_j} \log p(\bm{y} ~|~ \bm{X}, \thetav) &=& \frac{\partial}{\partial\theta_j}  \left(-\frac{1}{2}\bm{y}^T\bm{K}_y^{-1} \bm{y} - \frac{1}{2} \log \left| \bm{K}_y \right| - \frac{n}{2} \log 2\pi\right) \\ 
-&=&\frac{1}{2} \yv^\top \bm{K}^{-1} \frac{\partial \bm{K}}{\partial \theta_j}\bm{K}^{-1} \yv - \frac{1}{2} \text{tr}\left(\bm{K}^{-1} \frac{\partial \bm{K}}{\partial \thetav} \right) \\
-&=& \frac{1}{2} \text{tr}\left((\bm{K}^{-1}\bm{y}\bm{y}^T\bm{K}^{-1} - \bm{K}^{-1})\frac{\partial\bm{K}}{\partial\theta_j}\right)
+\pd{}{\lambda_j}
+\log p(\yv ~|~ \bm{X}, \lamv) &=& \pd{}{\lambda_j}  \left(-\tfrac{1}{2}\yv^T\Kmat_y^{-1} \yv - \tfrac{1}{2} \log \left| \Kmat_y \right| - \tfrac{n}{2} \log 2\pi\right) \\ 
+&=&\tfrac{1}{2} \yv^T \Kmat^{-1} \pd{\Kmat}{\lambda_j}\Kmat^{-1} \yv - \tfrac{1}{2} \text{tr}\left(\Kmat^{-1} \pd{\Kmat}{ \lamv} \right) \\
+&=& \tfrac{1}{2} \text{tr}\left((\Kmat^{-1}\yv\yv^T\Kmat^{-1} - \Kmat^{-1})\pd{\Kmat}{\lambda_j}\right)
 \end{eqnarray*}
-\end{footnotesize}
+using $\pd{}{\lambda_j} \Kmat^{-1} = - \Kmat^{-1}  \pd{\Kmat}{\lambda_j}\Kmat^{-1}$ and $\pd{}{\lamv} \log  |\Kmat| = \text{tr}\left(\Kmat^{-1} \pd{\Kmat}{\lamv} \right)$
+\item Bottleneck: inverting (or rather, decomposing) $\Kmat$ \\$\Rightarrow$ $\order(n^3)$ for standard methods
+\item Only $\order(n^2)$ per hyperparam / partial derivative once $\Kmat^{-1}$ is known $\Rightarrow$ small overhead, so use gradient-based optim 
+\end{framei}
 
-using $\frac{\partial}{\partial \theta_j} \bm{K}^{-1} = - \bm{K}^{-1} \frac{\partial \bm{K}}{\partial \theta_j}\bm{K}^{-1}$ and $\frac{\partial}{\partial \thetav} \log  |\bm{K}| = \text{tr}\left(\bm{K}^{-1} \frac{\partial \bm{K}}{\partial \thetav} \right)$. 
-
-\framebreak
-
-\begin{itemize}
-  \item The complexity and the runtime of training a Gaussian process is dominated by the computational task of inverting $\bm{K}$ - or let's rather say for decomposing it.
-  \item Standard methods require $\order(n^3)$ time (!) for this.
-  \item Once $\bm{K}^{-1}$ - or rather the decomposition -is known, the computation of the partial derivatives requires only $\order(n^2)$ time per hyperparameter.
-  \item  Thus, the computational overhead of computing derivatives is small, so using a gradient based optimizer is advantageous. 
-\end{itemize} 
-
-
-\framebreak 
-
-% https://arxi.org/pdf/1807.01065v1.pdf
-Workarounds to make GP estimation feasible for big data include:
-\begin{itemize}
-\item using kernels that yield sparse $\bm K$: cheaper to invert.
-\item subsampling the data to estimate $\theta$: $\order(m^3)$ for subset of size $m$.
-\item combining estimates on different subsets of size $m$:\\ \textbf{Bayesian committee}, $\order(n m^2)$.
-\item using low-rank approximations of $\bm{K}$ by using only a representative subset (\enquote{inducing points}) of $m$ training data $\bm X_m$:\\ \textbf{Nyström approximation} $\bm K \approx \bm K_{nm} \bm K_{mm}^{-} \bm K_{mn}$,\\ $\order(nmk + m^3)$ for a rank-k-approximate inverse of $\bm K_{mm}$.
-\item exploiting structure in $\bm{K}$ induced by the kernel: exact solutions but complicated maths, not  applicable for all kernels.
-\end{itemize}
-
-... this is still an active area of research.
-
-\end{vbframe}
+\begin{framei}[sep=L]{strategies for big data}
+\item Kernels that yield sparse $\Kmat$ $\Rightarrow$ cheaper to invert
+\item Subsample data $\Rightarrow$ $\order(m^3)$ with $m^3 \ll n^3$
+\item \textbf{Bayesian committee}: combine estimates on different size-$m$ estimates $\Rightarrow$ $\order(nm^2)$
+\item \textbf{Nyström approx}: low-rank approx from representative subset (``inducing points''): $\Kmat \approx \Kmat_{nm}\Kmat_{mm}^{-1}\Kmat_{mn}$ $\Rightarrow$ $\order(nmk + m^3)$ for rank-$k$-approx inverse of $\Kmat_{mm}$
+\item Exploit structure in $\Kmat$ induced by kernels $\Rightarrow$ exact but complicated solutions; kernel-specific
+\item Still active research area
+\end{framei}
 
 % \begin{vbframe}{Gaussian process as a linear smoother}
 % 
-% Let's consider mean prediction at training points only. For simplicity, we write $\bm{K}:= \bm{K}(\Xmat, \Xmat)$. The predicted mean values at the training points are
+% Let's consider mean prediction at training points only. For simplicity, we write $\Kmat:= \Kmat(\Xmat, \Xmat)$. The predicted mean values at the training points are
 % 
 % $$
-% \bm{\bar f} = \bm{K}(\bm{K} + \sigma_n^2\id)^{-1}.
+% \bm{\bar f} = \Kmat(\Kmat + \sigma_n^2\id)^{-1}.
 % $$
 % 
-% Let $\bm{K}$ have the eigendecomposition $\bm{K} = \sumin \lambda_i\bm{u}_i \bm{u}_i^T. $\lambda_i$ is the $i$-th eigenvalue, and $\bm{u}_i$ is the corresponding eigenvalue. The predicted mean can be written as
+% Let $\Kmat$ have the eigendecomposition $\Kmat = \sumin \lambda_i\bm{u}_i \bm{u}_i^T. $\lambda_i$ is the $i$-th eigenvalue, and $\bm{u}_i$ is the corresponding eigenvalue. The predicted mean can be written as
 % 
 % $$
 % \bm{\bar f} = \sumin \frac{\gamma_i \lambda_i}{\lambda_i + \sigma_n^2}\bm{u}_i
