@@ -8,11 +8,11 @@
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Gaussian Processes
-  }{% Lecture title  
+  }{
     Gaussian Posterior Process and Prediction
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+  }{
   figure/gp_pred/post_variance.pdf
   }{
   \item Know how to derive the posterior process
@@ -20,136 +20,46 @@
   \item Model noise via a nugget term
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{framei}[sep=L]{gp prediction}
+\item So far: sampling from GP priors
+\item More interesting than drawing random functions from GP priors: predict at unseen test point $\xv_\ast$ with $f_\ast = f(\xv_\ast)$
+\item Given: training data with design matrix $\Xmat$, observed values $\fv = f(\Xmat) = \fvec$
+\item Goal: infer distribution of $f_\ast | \xv_\ast, \Xmat, \fv$ $\Rightarrow$ update prior to posterior process
+\end{framei}
 
-%\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%\input{../../style/preamble}
-%\input{../../latex-math/basic-math}
-%\input{../../latex-math/basic-ml}
-%\input{../../latex-math/ml-gp}
-
-%\newcommand{\titlefigure}{figure/gp_pred/post_variance.pdf}
-%\newcommand{\learninggoals}{
-%  \item Know how to derive the posterior process
-%  \item GPs are interpolating and spatial models
-%  \item Model noise via a nugget term
-%}
-
-%\title{Introduction to Machine Learning}
-%\date{}
-
-%\begin{document}
-
-%\lecturechapter{Gaussian Process Prediction}
-%\lecture{Introduction to Machine Learning}
-
-\begin{vbframe}{Gaussian Posterior Process And Prediction}
-
-\vspace*{1cm}
-
-\begin{itemize}
-  \item So far, we have learned how to \textbf{sample} from a GP prior.
-\item However, most of the time, we are not interested in drawing random functions from the prior. Instead, we usually like to use the knowledge provided by the training data to predict values of $f$ at a new test point $\xv_*$. 
-\item In what follows, we will investigate how to update the Gaussian process prior ($\to$ posterior process) and how to make predictions.
-\end{itemize}
-
-\end{vbframe}
-
-\section{Gaussian Posterior Process and Prediction}
-
-
-\begin{vbframe}{Posterior process}
-
-% \textbf{Noise-free Case:}
-% 
-% In the noise-free case, $y^{(i)} = f(\xi)$ ($\epsi \equiv 0$, no additive noise). The targets correspond to the true function values $\yv = \bm{f}$ (training observations) and $\yv^* = \bm{f}^*$ (test observations).
-% 
-% \lz 
-
-\begin{itemize}
-  \item Let us now distinguish between observed training inputs, also denote by a design matrix $\Xmat$, and the corresponding observed values
-  $$
-    \bm{f} = \left[f\left(\xi[1]\right), ..., f\left(\xi[n]\right)\right]
-  $$ 
-
-and one single \textbf{unobserved test point} $\xv_*$ with $f_* = f\left(\xv_*\right).$
-
-\item We now want to infer the distribution of $f_* | \xv_*, \bm{X}, \bm{f}$.
-  $$
-    f_* = f\left(\xv_*\right)
-  $$  
-  \item Assuming a zero-mean GP prior $\mathcal{GP}\left(\bm{0}, k(\xv, \xv^\prime)\right)$ we know
-
-$$
-\begin{bmatrix}
-\bm{f} \\
-f_*
+\begin{framei}[sep=M]{posterior process}
+\item Again assuming $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$, we get
+$$\begin{bmatrix}
+\fv \\ f_\ast
 \end{bmatrix} \sim  
-\mathcal{N}\biggl(\bm{0}, \begin{bmatrix} \Kmat & \bm{k}_* \\ \bm{k}_*^T & \bm{k}_{**}\end{bmatrix}\biggr).
-$$
-
-Here, $\Kmat = \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}$, $\bm{k}_* = \left[k\left(\xv_*, \xi[1]\right), ..., k\left(\xv_*, \xi[n]\right)\right]$ and $ \bm{k}_{**}\ = k(\xv_*, \xv_*)$. 
-
-\framebreak 
-
-\item Given that $\bm{f}$ is observed, we can apply the general rule for condition $^{(*)}$ of Gaussian random variables and obtain the following formula: 
-
-\begin{eqnarray*}
-f_* ~|~ \xv_*, \Xmat, \bm{f} \sim \mathcal{N}(\bm{k}_{*}^{T}\Kmat^{-1}\bm{f}, \bm{k}_{**} - \bm{k}_*^T \Kmat ^{-1}\bm{k}_*).
-\end{eqnarray*}
-
-% \begin{eqnarray*}
-% \bm{f}_* | \Xmat_*, \Xmat, \bm{f} \sim \mathcal{N}(\Kmat_{*}^{T}\Kmat^{-1}\bm{f}, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
-% \end{eqnarray*}
-\item As the posterior is a Gaussian, the maximum a-posteriori estimate, i.e. the mode of the posterior distribution, is $\bm{k}_{*}^{T}\Kmat^{-1}\bm{f}. $
-\end{itemize}
-
-\framebreak 
-
-$^{(*)}$ General rule for condition of Gaussian random variables: 
-
-\lz 
-
-  If the $m$-dimensional Gaussian vector $\bm{z} \sim \mathcal{N}(\mu, \Sigma)$ can be partitioned with $\bm{z} = \left(\bm{z}_1, \bm{z}_2\right)$ where $\bm{z}_1$ is $m_1$-dimensional and $\bm{z}_2$ is $m_2$-dimensional, and:
-$$\left(\mu_1, \mu_2\right), \quad \Sigma = \begin{pmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{pmatrix},$$
-
-then the conditioned distribution of $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is a multivariate normal  
-
-$$
-  \mathcal{N}\left(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1}\left(\bm{a} - \mu_1\right), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1}\Sigma_{12} \right)
-$$
-
-\end{vbframe} 
-
-\begin{frame}{GP prediction: Two points}
-
-Let us visualize this by a simple example: 
+\normal \left(\zero, \begin{bmatrix} \Kmat & \bm{k}_* \\ \bm{k}_*^T & \bm{k}_{**}\end{bmatrix}\right)$$
+with $\bm{k}_* = [k(\xv_*, \xi[1]), \dots, k(\xv_*, \xi[n])]$,  $ \bm{k}_{**}\ = k(\xv_*, \xv_*)$
+\item General rule for condition of Gaussian RVs
 \begin{itemize}
-  \item Assume we observed a single training point $\xv = - 0.5$, and want to make a prediction at a test point $\xv_* = 0.5$. 
-  \item Under a zero-mean GP with $k(\xv, \xv^\prime) = \exp(-\frac{1}{2}\|\xv - \xv^\prime\|^2)$, we compute the cov-matrix:
-  $$
-    \begin{bmatrix} f \\ f_* \end{bmatrix} \sim \mathcal{N}\biggl(\bm{0}, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\biggr). 
-  $$ 
-  \item Assume that we observe the point $\fx = 1$. 
-  \item We compute the posterior distribution: 
-  \begin{eqnarray*}
-    f_* ~|~ \xv_*, \xv, f &\sim& \mathcal{N}(\bm{k}_{*}^{T}\Kmat^{-1}f, k_{**} - \bm{k}_*^T \Kmat^{-1}\bm{k}_*) \\
-    &\sim& \mathcal{N}(0.61 \cdot 1 \cdot 1, 1 - 0.61 \cdot 1 \cdot 0.61) \\
-    &\sim& \mathcal{N}\left(0.61, 0.6279\right) 
-  \end{eqnarray*}
-  \item The MAP-estimate for $\xv_*$ is $f(\xv_*) = 0.61$, and the uncertainty estimate is $0.6279$. 
-  % what can we say about the function value at a new point $\xv_* = -0.5$? 
-  % \item<+-> We compute the covariance function and have
-
-  % \item<+-> After observing $\fx = 1$ we want to predict a value for $f(\xv_*)$. 
-  % \item<+-> We compute the posterior distribution conditioned on $\fx = 1$
-  % \begin{eqnarray*}
-
-  % \end{eqnarray*}
+\item $\bm{z} \sim \normal(\mu, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\mu = (\mu_1, \mu_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
+\item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is MV normal 
+$$\normal(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \mu_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
 \end{itemize}
+\item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xv_*, \Xmat, \fv \sim \normal(\bm{k}_{*}^{T}\Kmat^{-1}\fv, \bm{k}_{**} - \bm{k}_*^T \Kmat ^{-1}\bm{k}_*)$$
+\item \textbf{Maximum-a-posteriori (MAP)} estimate: $\bm{k}_{*}^{T}\Kmat^{-1}\fv$
+\end{framei}
 
-\end{frame} 
+\begin{framei}[sep=L]{example: 2 points}
+\item Single training point $\xv = -0.5$, test point $\xv_* = 0.5$
+\item Zero-mean GP with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2} \| \xv - \tilde{\xv} \|^2)$ leads to 
+$$\begin{bmatrix} f \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\right)$$
+\item Assuming we observe $\fx = 1$, compute posterior distribution
+\begin{eqnarray*}
+    f_* ~|~ \xv_*, \xv, \fv &\sim& \normal(\bm{k}_{*}^{T}\Kmat^{-1} \fv, k_{**} - \bm{k}_*^T \Kmat^{-1}\bm{k}_*) \\
+    &\sim& \normal(0.61 \cdot 1 \cdot 1, 1 - 0.61 \cdot 1 \cdot 0.61) \\
+    &\sim& \normal\left(0.61, 0.6279\right) 
+  \end{eqnarray*}
+\item MAP-estimate: $f(\xv_*) = 0.61$, uncertainty estimate: $0.6279$
+\end{framei}
 
+% ------------------------------------------------------
+% LW FROM HERE
+% ------------------------------------------------------
 
 \begin{vbframe}{GP prediction: Two points}
 
@@ -233,15 +143,15 @@ Let us visualize this by a simple example:
   \item We can generalize the formula for the posterior process for multiple unobserved test points: 
 
 $$
-  \bm{f}_* = \left[f\left(\xi[1]_*\right), ..., f\left(\xi[m]_*\right)\right]. 
+  \fv_* = \left[f\left(\xi[1]_*\right), ..., f\left(\xi[m]_*\right)\right]. 
 $$
   \item Under a zero-mean Gaussian process, we have
   $$
     \begin{bmatrix}
-    \bm{f} \\
-    \bm{f}_*
+    \fv \\
+    \fv_*
     \end{bmatrix} \sim  
-    \mathcal{N}\biggl(\bm{0}, \begin{bmatrix} \Kmat & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr),
+    \normal\biggl(\bm{0}, \begin{bmatrix} \Kmat & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr),
   $$
     with $\Kmat_* = \left(k\left(\xi, \xv_*^{(j)}\right)\right)_{i,j}$, $\Kmat_{**} = \left(k\left(\xi[i]_*, \xi[j]_*\right)\right)_{i,j}$.
   
@@ -249,7 +159,7 @@ $$
   
   \item Similar to the single test point situation, to get the posterior distribution, we exploit the general rule of conditioning for Gaussians:
   \begin{eqnarray*}
-    \bm{f}_* ~|~ \Xmat_*, \Xmat, \bm{f} \sim \mathcal{N}(\Kmat_{*}^{T}\Kmat^{-1}\bm{f}, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
+    \fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
   \end{eqnarray*}  
   \item This formula enables us to talk about correlations among different test points and sample functions from the posterior process. 
 \end{itemize}
@@ -266,7 +176,7 @@ The \enquote{prediction} for a training point $\xi$ is the exact function value 
 \vspace*{-0.8cm}
 
 \begin{eqnarray*}
-\bm{f} ~|~ \Xmat, \bm{f} \sim \mathcal{N}(\Kmat\Kmat^{-1}\bm{f}, \Kmat - \Kmat^T \Kmat^{-1} \Kmat) = \mathcal{N}(\bm{f}, \bm{0}).
+\fv ~|~ \Xmat, \fv \sim \normal(\Kmat\Kmat^{-1}\fv, \Kmat - \Kmat^T \Kmat^{-1} \Kmat) = \normal(\fv, \bm{0}).
 \end{eqnarray*}
 
 Thus, a Gaussian process is a function \textbf{interpolator}.
@@ -288,7 +198,7 @@ Thus, a Gaussian process is a function \textbf{interpolator}.
 \begin{itemize}
   \begin{footnotesize}
   \item The correlation among two outputs depends on distance of  the corresponding input points  $\xv$ and $\xv^\prime$ (e.g. Gaussian covariance kernel $k(\xv, \xv^\prime) = \exp \left(\frac{- \|\xv - \xv^\prime\|^2}{2 l^2}\right)$ )
-  \item Hence, close data points with high spatial similarity $k(\xv, \xv^\prime)$ enter into more strongly correlated predictions: $\bm{k}_*^\top \bm{K}^{-1} \bm{f}$ ($\bm{k}_* := \left(k(\xv, \xv^{(1)}), ..., k(\xv, \xv^{(n)})\right)$).
+  \item Hence, close data points with high spatial similarity $k(\xv, \xv^\prime)$ enter into more strongly correlated predictions: $\bm{k}_*^\top \bm{K}^{-1} \fv$ ($\bm{k}_* := \left(k(\xv, \xv^{(1)}), ..., k(\xv, \xv^{(n)})\right)$).
   \end{footnotesize}  
 
 
@@ -341,7 +251,7 @@ Example (continued): Posterior variance.
   \item In reality, however, this is often not the case. 
   \item We often only have access to a noisy version of the true function value
   $$
-    y = \fx + \eps, \eps \sim\mathcal{N}\left(0, \sigma^2\right).
+    y = \fx + \eps, \eps \sim\normal\left(0, \sigma^2\right).
   $$
   \item Let us still assume that $\fx$ is a Gaussian process.
   \item Then,
@@ -361,7 +271,7 @@ Example (continued): Posterior variance.
   \item Let us now derive the predictive distribution for the case of noisy observations. 
   \item The prior distribution of $y$, assuming that $f$ is modeled by a Gaussian process is then
   $$
-    \bm{y} = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \mathcal{N}\left(\bm{m}, \bm{K} + \sigma^2 \bm{I}_n \right),
+    \bm{y} = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\bm{m}, \bm{K} + \sigma^2 \bm{I}_n \right),
   $$
   with 
   \begin{eqnarray*}
@@ -374,23 +284,23 @@ Example (continued): Posterior variance.
   \item We distinguish again between 
   \begin{itemize}
     \item observed training points $\Xmat, \yv$, and 
-    \item unobserved test inputs $\Xmat_*$ with unobserved values $\bm{f}_*$
+    \item unobserved test inputs $\Xmat_*$ with unobserved values $\fv_*$
   \end{itemize} 
   and get
   $$
   \begin{bmatrix}
   \bm{y} \\
-  \bm{f}_*
+  \fv_*
   \end{bmatrix} \sim  
-    \mathcal{N}\biggl(\bm{0}, \begin{bmatrix} \Kmat + \sigma^2 \bm{I}_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr).
+    \normal\biggl(\bm{0}, \begin{bmatrix} \Kmat + \sigma^2 \bm{I}_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr).
   $$
 
 \framebreak
 
-  \item Similarly to the noise-free case, we condition according to the rule of conditioning for Gaussians to get the posterior distribution for the test outputs $\bm{f}_*$ at $\Xmat_*$: 
+  \item Similarly to the noise-free case, we condition according to the rule of conditioning for Gaussians to get the posterior distribution for the test outputs $\fv_*$ at $\Xmat_*$: 
 
   \begin{eqnarray*}
-    \bm{f}_* ~|~ \Xmat_*, \Xmat, \bm{y} \sim \mathcal{N}(\bm{m}_{\text{post}}, \bm{K}_\text{post}).
+    \fv_* ~|~ \Xmat_*, \Xmat, \bm{y} \sim \normal(\bm{m}_{\text{post}}, \bm{K}_\text{post}).
 \end{eqnarray*}
   with 
   \begin{eqnarray*}
