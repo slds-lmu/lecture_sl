@@ -434,11 +434,12 @@ $$ k(\xv, \tilde{\xv}) = \exp\left(-\tfrac{1}{2}\|\xv - \tilde{\xv}\|^2\right)$$
 \end{itemize}
 \item 10 randomly drawn functions (note 0 mean)
 \vfill
-\imageC[.9]{figure/gp_sample/different_samples.pdf}
+\imageC[.8]{figure/gp_sample/different_samples.pdf}
 \end{framei}
 
 \begin{framei}[sep=L]{sampling from gaussian process priors}
 \item Example: 2D Brownian motion
+\item Random fluctuations of particles' position in some medium
 \item $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
 $$ k(\xv, \tilde{\xv}) = \min (\xv, \tilde{\xv})$$
 \item \textcolor{red}{TODO LW: plot}

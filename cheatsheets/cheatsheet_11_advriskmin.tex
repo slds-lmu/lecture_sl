@@ -1,0 +1,370 @@
+\documentclass{beamer}
+\newcommand \beameritemnestingprefix{}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-trees.tex}
+\input{../latex-math/ml-nn.tex}
+\input{../latex-math/ml-eval}
+
+\title{Supervised Learning :\,: CHEAT SHEET} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ % Package description in header
+%	The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+
+\begin{document}
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+        \begin{myblock}{Basic Concepts}
+
+          \begin{codebox}
+            \textbf{Risk minimization}
+          \end{codebox}
+          \begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+            \item Empirical risk minimizer: $\hat f = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi$
+            \item Optimal constant model: $\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$
+            \item Risk minimizer (Bayes optimal model): $\fbayes_{\Hspace_{all}} = \argmin_{f \in \Hspace_{all}} \risk(f) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]$\\
+                  The resulting risk is called \textbf{Bayes risk}:  $\riskbayes = \risk(\fbayes_{\Hspace_{all}})$
+            \item Bayes regret:
+          $
+	        \risk(\hat f_{\Hspace}) - \riskbayes = \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
+          $
+          \end{itemize}
+
+          \begin{codebox}
+            \textbf{Relative items}
+          \end{codebox}
+          
+          \begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+            \item \textbf{Residuals:} $\rx := y - \fx$, best point-wise update $\fx \leftarrow \fx + \rx$
+            \item \textbf{Pseudo-residuals:} $\tilde{r}(\xv) := - \frac{d \Lxy}{d \fx}$, approx. $\fx \leftarrow \fx + \tilde{r}(\xv)$
+            \item \textbf{Margin:} $\nu(\xv) := y \cdot \fx$
+            \item Prediction $\pi(\mathbf{x})\in[0,1]$ is called \textbf{calibrated} if 
+$$\P\bigl(y=1 \mid \pi(\mathbf{x})=p\bigr)=p \quad \forall\, p\in[0,1]$$
+            \item \textbf{Scoring rules} $S(Q, P) = \E_{y \sim Q}[L(Q, P)]$ is \textbf{proper} if true label distrib $Q$ is among the optimal solutions, 
+          when we maximize $S(Q, P)$ in the 2nd argument (for a given $Q$)
+          $$S(Q,Q) \leq S(Q, P) \,\, \text{for all} \, P,Q $$
+          \end{itemize}
+
+
+          \begin{codebox}
+            \textbf{Properties of Loss Functions}
+          \end{codebox}
+          
+          \begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+            \item Symmetric: $\Lxy = L(\fx, y)$
+            \item Translation-invariant: $L(y + a, \fx + a) = \Lxy, a \in \R$
+            \item Distance-based: can be written in terms of residual \\
+             $\Lxy = \psi (r)$ for some $\psi: \R \to \R$, and $\psi(r) = 0 \Leftrightarrow r = 0$
+            \item Robust: less influenced by outliers than by “inliers”
+          \end{itemize}
+
+
+          \begin{codebox}
+            \textbf{Properties of Optimization}
+          \end{codebox}
+
+          \begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+            \item Smoothness: measured by number of continuous derivatives, depends on both $\Lxy$ and $\fx$
+            \item Convexity: have several good properties, depends on both $\Lxy$ and $\fxt$
+          \end{itemize}
+
+
+							\end{myblock}\vfill
+						}
+					
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+
+\begin{myblock}{Regression Losses}
+
+  \begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+        \item L2 Loss: convex, differentiable, sensitive to outliers, max. likelihood of Gaussian errors
+        $$\Lxy = (y-\fx)^2 \quad \text{or} \quad \Lxy = 0.5 (y-\fx)^2$$
+
+        \item L1 Loss: convex, more robust than L2, not differentiable at $y = \fx$, not proper, max. likelihood of Laplace errors
+        $$\Lxy = |y - \fx|$$
+
+        \item Huber Loss: convex, once differentiable
+        $$\Lxy = \begin{cases}
+              \frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
+              \epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
+              \end{cases} \quad \epsilon > 0$$
+
+        \item Log-cosh Loss: convex, twice differentiable
+        $$\Lxy = \log ( \cosh(|y - \fx|) ) \qquad \text{cosh}(x)=\frac{e^x+e^{-x}}{2}$$
+        
+        \item Cauchy Loss: differentiable, not convex
+        $$\Lxy = \frac{c^2}{2} \log ( 1 + ( \frac{|y - \fx|}{c})^2 ), \quad c \in \R$$
+        
+        \item $\eps$-Insensitive Loss: convex, not differentiable for $ y - \fx \in \{-\epsilon, \epsilon\}$
+        $$\Lxy =  \begin{cases}
+              0  & \text{if } |y - \fx| \le \epsilon \\
+              |y - \fx|-\epsilon & \text{otherwise }
+              \end{cases}, \quad \epsilon \in \R_{+}$$
+        
+        \item Quantile Loss: extension of L1 with $\alpha$-quantile as risk minimizer
+        $$\Lxy = \begin{cases} (1 - \alpha) (\fx - y) & \text{ if } y < \fx\\
+              \alpha (y - \fx) & \text{ if } y \ge \fx
+              \end{cases}, \quad \alpha \in (0, 1)$$
+
+\end{itemize}
+	\end{myblock}
+          
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+  \begin{myblock}{Classification Losses}
+
+  \begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+        \item 0-1 Loss: not continuous, NP hard, proper but not strict\\
+        $h$ discrete classifier, $f$ score function, $\pi$ probability function\\
+        $$\Lhxy = \mathds{1}_{\{y \ne \hx\}}, \riskbayes = 1 - \E_{x}[\max_{k \in \Yspace} \P(y = k~|~ \xv)]$$
+        $$\Lxy = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{y\fx < 0\}} \qquad y \in \setmp$$
+        $$\Lpixy = y \mathds{1}_{\{\pix < 0.5\}} + (1-y) \mathds{1}_{\{\pix \geq 0.5\}} = \mathds{1}_{\{(2y-1)(\pix - 0.5) < 0 \}}\ y \in \setzo $$
+        
+
+        \item Bernoulli Loss: strictly proper, max. likelihood of Bernoulli errors
+        $$ \Lpixy = - y \log (\pix) - (1 - y) \log (1 - \pix) \qquad y \in \setzo $$ 
+        $$ \Lpixy  = - \frac{1 + y}{2} \log(\pix) - \frac{1 - y}{2} \log(1 - \pix) \qquad y \in \setmp $$
+        $$ \Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \qquad y \in \setzo $$
+        $$ \Lxy = \log(1+\exp(-y \cdot \fx)) \qquad y \in \setmp $$
+        
+        \item Brier Score: strictly proper
+        $$ \Lpixy = (\pix - y)^2, y \in \{0, 1\} $$
+        $$ \Lxy=((1+\exp{(-\fx)})^{-1}-y)^2, y \in \{0, 1\} $$
+
+        \item Hinge Loss: continuous, convex, upper bound on 0-1-loss 
+        $$ \Lxy = \max \{ 0, 1 - y\fx \} \qquad y \in \setmp $$
+        
+        \item Squared Hinge Loss: continuous, convex, more outlier-sensitive than hinge loss
+        $$ \Lxy = \max \{ 0, (1 - y\fx)\}^2 \qquad y \in \setmp $$
+        
+        \item Exponential Loss: convex, differentiable
+        $$ \Lxy = \exp(-y\fx) \qquad y \in \setmp $$ 
+        
+        \item AUC-Loss: not differentiable
+         $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} \I [f^{(i)} > f^{(j)}]$$
+         $y \in \setmp$ with $\nn$ negative and $\np$ positive samples
+
+
+        \item Multiclass Bernoulli Loss
+        $$ \Lpixy = -\sum_{k = 1}^g [y = k] \log (\pi_k(\xv)) $$
+        Risk minimization is equivalent to \textbf{entropy splitting}\\
+        Entropy of node $\Np$: $\text{Imp}(\Np) = -\textstyle\sum_{k = 1}^g \pikN \log \pikN$
+
+        \item Multiclass Brier Score: strictly proper
+        $$ \Lpixy = \sum_{k = 1}^g ([y = k] - \pi_k(\xv))^2 $$
+        Risk minimization is equivalent to \textbf{Gini splitting}\\
+        Gini index of node $\Np$: $\text{Imp}(\Np) = \sum_{k=1}^g \pikN (1-\pikN)$
+
+\end{itemize}
+
+\end{myblock}
+
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+       \begin{myblock}{Logistic Regression}
+
+Given $n$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \{0, 1\}$, 
+we want to minimize:
+$$ \riske = -\sum^n_{i=1} \yi\log(\pixit) + (1-\yi\log(1-\pixit))$$
+
+Probabilistic classifier: $\pixit = s(\fxit)$
+
+Sigmoid function: $s(f) = \frac{1}{1 + \exp(-f)}$, $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$
+
+Score: $\fxit = \thx.$, $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top.$
+
+$$\frac{\partial}{\partial\thetav}\riske = \sumin (\pixit - \yi)(\xi)^\top = (\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y})^\top\mathbf{X}$$
+where  $\mathbf{X} = (
+    \xi[1], \dots, 
+    \xi[n])^\top \in \R^{n\times d}, \mathbf{y} = (
+    \yi[1], \dots,
+    \yi[n]
+)^\top,$ \\ $\pi(\mathbf{X}\vert\;\thetav) = (
+    \pixit[1], \dots,
+    \pixit[n]
+)^\top \in \R^{n}$.
+
+
+$$\nabla^2_{\thetav}\riske = \sum^n_{i=1}\xi (\pixit(1-\pixit))(\xi)^\top = \mathbf{X}^\top \mathbf{D} \mathbf{X}$$
+
+\end{myblock}
+
+						}
+					
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+
+\begin{myblock}{Bias-Variance Decomposition}
+
+$GE_n(\ind) =$  
+$$
+ \underbrace{\sigma^2}_{\text{Var. of $\epsilon$}} + \E_{x}\underbrace{\left[\var_{\D_n}(\fh_{\D_n}(\xv) ~|~\xv)\right]}_{\text{Variance of learner at } \xv} + \E_{x}\underbrace{\left[(\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)))^2~|~\xv\right]}_{\text{Squared bias of learner at } \xv}  
+$$
+
+\begin{enumerate}
+  \item First: variance of ``pure''
+     \textbf{noise} $\epsilon$; aka Bayes, intrinsic or irreducible error; 
+    whatever we we do, will never be better
+  \item Second: how much \textbf{$\fh_{\D_n}(\xv)$ fluctuates} at test $\xv$ if we vary training data, averaged over feature space; = learner's tendency to learn random things irrespective of real signal (overfitting)
+  
+  \item Third: how ``off'' are we on average at test locations (underfitting); uses ``average model integrated out over all $\D_n$''; \\
+  models with high capacity have low \textbf{bias} and vice versa
+\end{enumerate}
+
+  \end{myblock}
+
+
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+\begin{myblock}{Summary of Loss Functions and Estimators}
+    \fbox{
+									\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{
+										\begin{table}[] 
+											\small
+											\renewcommand{\arraystretch}{1.25} %<- modify value to suit your needs
+											\begin{tabular}{c|lll}
+												Loss Function & Risk Minimizer & Optimal Constant Model\\ \hline
+												L2 & $\fxbayes = \E_{y|x} \left[y ~|~ \xv \right]$ & $\fx = \frac{1}{n} \sumin \yi$ \\
+												L1 & $\fxbayes = \text{med}_{y|x} \left[y ~|~ \xv \right]$ & $\fx = \text{med}(\yi)$\\
+												0-1 & $\hxbayes = \argmax_{k \in \Yspace} \P(y = k~|~ \xv)$  & $\hx = \text{mode} \left\{\yi\right\}$ \\
+												Brier & $\pi^*_k(\xv) = \P(y = k~|~\xv)$ & $\pikx =  \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}}$\\
+												Bernoulli (on probs) & $\pi^*_k(\xv) = \P(y = k~|~\xv)$ & $\pikx =  \frac{1}{n} \sumin \mathds{1}_{\{\yi = k\}}$ \\
+												Bernoulli (on scores) & $f^*_k(\xv) = \log\left(\frac{\P(y = k ~|~\xv)}{1 - \P(y = k ~|~\xv)}\right)$ & $\fkx = \log \frac{n_{k}}{n - n_{k}}$  
+											\end{tabular}
+										\end{table}
+									}
+								}\\
+   	\end{myblock}   
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+
+\end{document}

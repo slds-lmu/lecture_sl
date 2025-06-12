@@ -1,0 +1,310 @@
+\documentclass{beamer}
+\newcommand \beameritemnestingprefix{}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-trees.tex}
+\input{../latex-math/ml-nn.tex}
+\input{../latex-math/ml-ensembles.tex}
+
+
+\title{Supervised Learning :\,: CHEAT SHEET} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ % Package description in header
+%	The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+
+\begin{document}
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+					\begin{myblock}{AdaBoost}
+						\textbf{Boosting} is a homogeneous ensemble method that takes a weak classifier and sequentially apply it to modified versions of the training data.
+
+
+							\begin{algorithm}[H]
+								\begin{algorithmic}[1]
+									\State Initialize observation weights: $w^{[1](i)} = \frac{1}{n} \quad \forall i \in \nset$
+									\For {$m = 1 \to M$}
+									\State Fit classifier to training data with weights $\wm$ and get $\blh$
+									\State Calculate weighted in-sample misclassification rate
+									$$
+									\errm = \sumin \wmi \cdot \mathds{1}_{\{\yi \,\neq\, \blh(\xi)\}}
+									$$
+									\State Compute: $ \betamh = \frac{1}{2} \log \left( \frac{1 - \errm}{\errm}\right)$
+									\State Set: $w^{[m+1](i)} = \wmi \cdot \exp\left(- \betamh \cdot
+									\yi \cdot \blh(\xi)\right) $
+									\State Normalize $w^{[m+1](i)}$ such that $\sumin w^{[m+1](i)} = 1$
+									\EndFor
+									\State Output: $\fxh = \sum_{m=1}^{M} \betamh \blh(\xv)$
+								\end{algorithmic}
+								\caption{AdaBoost $\Yspace = \setmp$}
+							\end{algorithm}
+							
+\fbox{
+									\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{
+										\begin{table}[] 
+											\small
+											\renewcommand{\arraystretch}{1.25} %<- modify value to suit your needs
+											\begin{tabular}{c|lll}
+												 & Random Forest & AdaBoost\\ \hline
+												Base Learners & typically deeper decision trees & weak learners, e.g. only stumps \\
+												Weights & equal & different, depending on predictive accuracy\\
+												Structure & independent BLs  & sequential, order matter \\
+												Aim & variance reduction & bias and variance reduction\\
+												Overfit & tends not to & tends to \\
+												\end{tabular}
+										\end{table}
+									}
+								}\\
+
+							
+						\end{myblock} 
+
+
+            \begin{myblock}{Gradient Boosting}
+
+We want to learn an additive model: $
+\fx = \sum_{m=1}^M \alpha^{[m]} \blxt$
+
+Hence, we minimize the empirical risk:
+$$
+\riskef = \sum_{i=1}^n L\left(\yi,\fxi \right) =
+\sum_{i=1}^n L\left(\yi, \sum_{m=1}^M \alpha^{[m]} b(\xi, \thetav^{[m]}) %\blxt
+\right)
+$$
+
+And add additive components in a greedy fashion by sequentially minimizing the risk only w.r.t. the next additive component:
+$$ \min \limits_{\alpha, \bm{\theta}} \sum_{i=1}^n L\left(\yi, \fmdh\left(\xi\right) + \alpha b\left(\xi, \bm{\theta}\right)\right) $$
+
+Doing this iteratively is called \textbf{forward stagewise additive modeling}.
+
+
+	\end{myblock} 
+
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{}
+  \begin{algorithm}[H]
+							%	\begin{footnotesize}
+									\begin{center}
+										\caption{Gradient Boosting Algorithm}
+										\begin{algorithmic}[1]
+											\State Initialize $\hat{f}^{[0]}(\xv) = \argmin_{\bm{\theta}} \sumin L(\yi, b(\xi, \bm{\theta}))$
+											%\State Set the learning rate $\beta$ to a small constant value
+											\For{$m = 1 \to M$}
+											\State For all $i$: $\rmi = -\left[\pd{\Lxyi}{\fxi}\right]_{f=\fmdh}$
+											\State Fit a regression base learner to the pseudo-residuals $\rmi$:
+											\State $\thetamh = \argmin \limits_{\bm{\theta}} \sumin (\rmi - b(\xi, \bm{\theta}))^2$
+											%\State Line search: $\betamh = \argmin_{\beta} \sumin L(\yi, \fmd(\xv) + \beta b(\xv, \thetamh))$
+											\State Set $\betam$ to $\beta$ being a small constant value or via line search
+											\State Update $\fmh(\xv) = \fmdh(\xv) + \betam b(\xv, \thetamh)$
+											\EndFor
+											\State Output $\fh(\xv) = \hat{f}^{[M]}(\xv)$
+										\end{algorithmic}
+									\end{center}
+							%	\end{footnotesize}
+							\end{algorithm}
+
+              \begin{codebox} 
+            \textbf{Gradient Boosting with Trees}
+            \end{codebox}
+
+            Tree can be seen as additive model: $ b(\xv) = \sum_{t=1}^{T} c_t \mathds{1}_{\{\xv \in R_t\}} $, $R_t$ are the terminal regions, $c_t$ are terminal constants.
+ 
+            GB with trees is still additive:
+$
+  \fm(\xv) = \fmd(\xv) +  \alpha^{[m]} \bl(\xv) 
+         = \fmd(\xv) +  \alpha^{[m]} \sum_{t=1}^{\Tm} \ctm \mathds{1}_{\{\xv \in \Rtm\}}
+        &= \fmd(\xv) +  \sum_{t=1}^{\Tm} \ctmt \mathds{1}_{\{\xv \in \Rtm\}}$
+
+With $\ctmt = \alpha^{[m]} \cdot \ctm = \argmin_{c} \sum_{\xi \in \Rtm} L(\yi, \fmd(\xi) + c)$.
+
+\begin{algorithm}[H]
+  %\begin{footnotesize}
+  \begin{center}
+  \caption{Gradient Boosting for $g$-class Classification.}
+    \begin{algorithmic}[1]
+      \State Initialize $f_{k}^{[0]}(\xv) = 0,\ k = 1,\ldots,g$
+      \For{$m = 1 \to M$}
+          \State Set $\pikx = \frac{\exp(f_k^{[m]}(\xv))}{\sum_j \exp(f_j^{[m]}(\xv))}, k = 1,\ldots,g$
+            \For{$k = 1 \to g$}
+              \State For all $i$: Compute $\rmi_k = \mathds{1}_{\{\yi = k\}} - \pi_k(\xi)$
+              \State Fit regr. tree to the $\rmi_k$ giving terminal regions $R_{tk}^{[m]}$
+              \State Compute
+              \State \hskip\algorithmicindent\relax $\hat{c}_{tk}^{[m]} =
+                \frac{g-1}{g}\frac{\sum_{\xi \in R_{tk}^{[m]}} \rmi_k}{\sum_{\xi \in R_{tk}^{[m]}} \left|\rmi_k\right|\left(1 - \left|\rmi_k\right|\right)}$
+              \State Update $\hat{f}_k^{[m]}(\xv) = \hat{f}_k^{[m-1]}(\xv) + \sum_t \hat{c}_{tk}^{[m]} \mathds{1}_{\{\xv \in R_{tk}^{[m]}\}}$
+            \EndFor
+      \EndFor
+    \State Output $\hat{f}_1^{[M]}, \ldots, \hat{f}_g^{[M]}$
+    \end{algorithmic}
+    \end{center}
+    %\end{footnotesize}
+\end{algorithm}
+  \end{myblock}
+
+
+  \begin{myblock}{XGBoost}
+XGBoost uses stochastic GB for data subsampling with regularization:   
+$$
+    \riskr^{[m]} = \sum_{i=1}^{n} L(\yi, \fmd(\xi) + \bl(\xi))
+    + \lambda_1 J_1(\bl) + \lambda_2 J_2(\bl) + \lambda_3 J_3(\bl)
+$$
+
+
+\end{myblock}
+
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+\begin{myblock}{}
+\begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+    \item $J_1(\bl) = T^{[m]}$:  Nr of leaves to penalize tree depth
+    \item $J_2(\bl) = \left\|\mathbf{c}^{[m]}\right\|^2_2$:  L2 penalty over leaf values 
+    \item $J_3(\bl) = \left\|\mathbf{c}^{[m]}\right\|_1$: L1 penalty over leaf values 
+  \end{itemize}
+
+\end{myblock}
+
+\begin{myblock}{Component Wise Boosting}
+For CWB we generalize to multiple base learner sets $\{ \mathcal{B}_1, ... \mathcal{B}_J \}$ with associated parameter spaces
+$\{ \bm{\Theta}_1, ... \bm{\Theta}_J \}$.
+
+
+\begin{algorithm}[H]
+  \begin{center}
+  \caption{Componentwise Gradient Boosting.}
+    \begin{algorithmic}[1]
+      \State Initialize $\fm[0](\xv) = \argmin_{\theta_0\in\R} \sum  \limits_{i=1}^n L(\yi, \theta_0)$
+      \For{$m = 1 \to M$}
+        \State For all $i$: $\rmi = -\left[\pd{L(y, f)}{f}\right]_{f=\fmd(\xi),y=\yi}$
+        \For {$j= 1\to J$}
+          \State Fit regression base learner $b_j \in \mathcal{B}_j$ to the vector of pseudo-residuals $\rmm$:
+          \State $\thetamh_j = \argmin_{\thetav \in \bm{\Theta_j}} \sum  \limits_{i=1}^n
+          (\rmi - b_j(\xi, \thetav))^2$
+        \EndFor
+        \State $j^{[m]} = \argmin_{j} \sum  \limits_{i=1}^n (\rmi - \hat{b}_j(\xi, \thetamh_j))^2$
+        \State Update $\fm(\xv) = \fmd(\xv) + \alpha \hat{b}_{\hat{j}}(\xv, \thetamh_{j^{[m]}})$
+      \EndFor
+      \State Output $\fh(\xv) = \fm[M](\xv)$
+    \end{algorithmic}
+    \end{center}
+\end{algorithm}
+
+\begin{codebox}
+  \textbf{Handling Categorical Features in CWB}
+\end{codebox}
+\begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+    \item 
+        One base learner to simultaneously estimate all categories: 
+        $$b_j(x_j | \thetav_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetav_j$$
+        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetav\in\R^G$ as estimators. 
+    
+    \item 
+        One binary base learner per category: $b_{j,g}(x_j | \theta_{j,g}) = \theta_{j,g}\mathds{1}_{\{g = x_j\}}$\\
+        Including all categories of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ %with each accounting for one specific class.
+  \end{itemize}
+  
+  \begin{codebox}
+  \textbf{Handling Intercept in CWB}
+\end{codebox}
+  Loss-optimal constant $\fm[0](\xv)$ as an initial model intercept.
+%\vspace{0.3cm}
+\begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+\item Include an intercept BL
+\item Add BL $b_{\text{int}} = \theta$ as potential candidate considered in each iteration and remove intercept from all linear BLs, i.e., $b_j(\xv) = \theta_j x_j$.
+    Final intercept is given as $\fm[0](\xv) + \hat{\theta}$.
+   \end{itemize}
+
+\end{myblock}
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+\end{document}
