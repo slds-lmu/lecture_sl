@@ -1,0 +1,365 @@
+\documentclass{beamer}
+\newcommand \beameritemnestingprefix{}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-trees.tex}
+\input{../latex-math/ml-nn.tex}
+
+
+\title{Supervised Learning :\,: CHEAT SHEET} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ % Package description in header
+%	The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+
+\begin{document}
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+					\begin{myblock}{Regularization}
+
+            Regularization is an effective technique to reduce overfitting.
+  $$
+  \riskrf = \riskef + \lambda \cdot J(f) = \sumin \Lxyi + \lambda \cdot J(f)
+  $$
+\begin{itemize}[$\bullet$]
+  \setlength{\itemindent}{+.3in}
+  \item $J(f)$: \textbf{complexity penalty}, \textbf{roughness penalty} or \textbf{regularizer}
+  \item $\lambda \geq 0$: \textbf{complexity control} parameter
+  \item The higher $\lambda$, the more we penalize complexity
+
+  \item $\lambda = 0$: We just do simple ERM; $\lambda \to \infty$: we don't care about loss, models become as \enquote{simple} as possible
+
+\item $\lambda$ is hard to set manually and is usually selected via CV
+
+  \item As for $\riske$, $\riskr$ and $J$ are often defined in terms of $\thetav$: \\
+  
+  $$\riskrt = \risket + \lambda \cdot J(\thetav)$$
+
+\end{itemize}
+
+\end{myblock}
+
+\begin{myblock}{Ridge Regression}
+
+Use L2 penalty in linear regression:
+\begin{eqnarray*}  
+\thetah_{\text{ridge}} &=& \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi \right)^2 + \lambda \sum_{j=1}^{p} \theta_j^2 \\
+%&=& \argmin_{\thetav} \left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right) + \lambda \thetav^\top \thetav \\
+&=& \argmin_{\thetav} \| \yv - \Xmat \thetav \|_2^2  + \lambda \|\thetav\|_2^2
+\end{eqnarray*}
+
+Can still analytically solve this:
+$$\thetah_{\text{ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$\\
+
+Equivalent to solving the following constrained optimization problem:
+\begin{eqnarray*}
+\min_{\thetav} && \sumin \left(\yi - \fxit\right)^2 \\
+  \text{s.t. } && \|\thetav\|_2^2  \leq t \\
+\end{eqnarray*}
+
+For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$, $\thetah_{\text{OLS}}=\Xmat^{\top}\yv$:
+$$\thetah_{\text{Ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{no sparsity})\vspace{-0.22cm}$$
+
+\end{myblock}
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+\begin{myblock}{}
+
+\begin{codebox}
+\textbf{Geometric Analysis}
+\end{codebox}
+Quadratic Taylor approx of unregularized $\risket$ around its minimizer $\thetah$, where $\bm{H}$ is the Hessian of $\risket$ at $\thetah$:
+$$ \mathcal{\tilde R}_{\text{emp}}(\thetav)= \mathcal{R}_{\text{emp}}(\thetah) + \nabla_{\thetav} \mathcal{R}_{\text{emp}}(\thetah)\cdot(\thetav - \thetah) + \ \frac{1}{2} (\thetav - \thetah)^T \bm{H} (\thetav - \thetah) $$
+
+Since we want a minimizer, first-order term is 0 and $\bm{H}$ is positive semidefinite:
+$$ \mathcal{\tilde R}_{\text{emp}}(\thetav)= \mathcal{R}_{\text{emp}}(\thetah) + \ \frac{1}{2} (\thetav - \thetah)^T \bm{H} (\thetav - \thetah) $$
+
+$$\nabla_{\thetav}\mathcal{\tilde R}_{\text{reg}}(\thetav) = 0 \rightarrow \hat{\thetav}_{\text{ridge}} = (\bm{H} + \lambda \id)^{-1}\bm{H} \thetah$$
+
+$\bm{H}$ is a real symmetric matrix, it can be decomposed as $\bm{H} = \bm{Q} \bm{\Sigma} \bm{Q}^\top$:
+\begin{aligned} 
+    \hat{\thetav}_{\text{ridge}} &=\left(\bm{Q} \bm{\Sigma} \bm{Q}^{\top}+\lambda \id\right)^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
+              &=\left[\bm{Q}(\bm{\Sigma}+\lambda \id) \bm{Q}^{\top}\right]^{-1} \bm{Q} \bm{\Sigma} \bm{Q}^{\top} \thetah \\ 
+              &=\bm{Q}(\bm{\Sigma} + \lambda \id)^{-1} \bm{\Sigma} \bm{Q}^{\top} \thetah 
+    \end{aligned}
+  \end{myblock}
+\begin{myblock}{Lasso Regression}
+
+Use L1 penalty in linear regression:
+\begin{align*}
+\thetah_{\text{lasso}}&= \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi\right)^2 + \lambda \sum_{j=1}^{p} \vert\theta_j\vert\\
+&= \argmin_{\thetav}\left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right) + \lambda \|\thetav\|_1
+\end{align*}
+
+Lasso can shrink some coeffs to zero, which gives sparse solutions. However, it has difficulties handling correlated predictors.\\
+
+Equivalent to solving the following constrained optimization problem:
+\begin{eqnarray*}
+\min_{\thetav} && \sumin \left(\yi - \fxit\right)^2 \\
+  \text{s.t. } && \|\thetav\|_1  \leq t \\
+\end{eqnarray*}
+
+For special case of orthonormal design $\Xmat^{\top}\Xmat=\id$, $\thetah_{\text{OLS}}=\Xmat^{\top}\yv$:
+$$\thetah_{\text{lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})\vspace{-0.1cm}.$$
+Function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called \textbf{soft thresholding} operator: for $|\theta|\leq\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
+\end{myblock}
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+\begin{myblock}{}
+\begin{codebox}
+\textbf{Geometric Analysis}
+\end{codebox}
+$$ \mathcal{\tilde R}_{\text{emp}}(\thetav)= \mathcal{R}_{\text{emp}}(\thetah) + \ \frac{1}{2} (\thetav - \thetah)^T \bm{H} (\thetav - \thetah) $$
+We assume the $\bm{H}$ is diagonal, with $H_{j,j} \geq 0$
+$$\mathcal{\tilde R}_{\text{reg}}(\thetav) = \mathcal{R}_{\text{emp}}(\thetah) + \sum_j \left[ \frac{1}{2} H_{j,j} (\theta_j - \hat{\theta}_j)^2 \right] + \sum_j \lambda |\theta_j|$$
+
+Minimize analytically:
+     \begin{align*}\hat{\theta}_{\text{lasso},j} &= \sign(\hat{\theta}_j) \max \left\{ |\hat{\theta}_j| - \frac{\lambda}{H_{j,j}},0 \right\} \\
+     &= \begin{cases} 
+     \hat{\theta}_j + \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j < -\frac{\lambda}{H_{j,j}} \\
+       0 &, \text{if}   \;\hat{\theta}_j \in [-\frac{\lambda}{H_{j,j}}, \frac{\lambda}{H_{j,j}}] \\
+     \hat{\theta}_j - \frac{\lambda}{H_{j,j}} &, \text{if}   \;\hat{\theta}_j > \frac{\lambda}{H_{j,j}} \\
+     \end{cases}
+     \end{align*}
+If $H_{j,j} = 0$ exactly, $\thetah_{\text{lasso},j} = 0$
+  
+\end{myblock}
+
+\begin{myblock}{More Regularization Methods}
+
+\begin{codebox}
+\textbf{Elastic Net Regression}
+\end{codebox}
+\begin{align*}
+\mathcal{R}_{\text{elnet}}(\thetav) &=  \sumin (\yi - \thetav^\top \xi)^2 + \lambda_1 \|\thetav\|_1 + \lambda_2 \|\thetav\|_2^2 \\
+&= \sumin (\yi - \thetav^\top \xi)^2 + \lambda \left( (1-\alpha) \|\thetav\|_1 + \alpha \|\thetav\|_2^2\right),\\
+ \alpha=\frac{\lambda_2}{\lambda_1+\lambda_2}, \lambda=\lambda_1+\lambda_2
+\end{align*}
+
+
+\end{myblock}
+
+  
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{}
+        \begin{codebox}
+\textbf{Other Examples}
+\end{codebox}
+
+\begin{itemize}[$\bullet$]
+  \setlength{\itemindent}{+.3in}
+\item \textbf{L0}: not continuous or convex, NP-hard
+$$\lambda \|\thetav\|_0 = \lambda \sum_j |\theta_j|^0$$
+
+\item Smoothly Clipped Absolute Deviations (SCAD): non-convex, $\gamma>2$ controlls how fast penalty ``tapers off''
+$$
+\text{SCAD}(\theta \mid \lambda, \gamma)= \begin{cases}\lambda|\theta| & \text { if }|\theta| \leq \lambda \\ \frac{2 \gamma \lambda|\theta|-\theta^2-\lambda^2}{2(\gamma-1)} & \text { if } \lambda<|\theta|<\gamma \lambda \\ \frac{\lambda^2(\gamma+1)}{2} & \text { if }|\theta| \geq \gamma \lambda\end{cases}
+$$
+
+\item Minimax Concave Penalty (MCP): non-convex, $\gamma>1$ controlls how fast penalty ``tapers off''
+$$
+MCP(\theta | \lambda, \gamma)= \begin{cases}\lambda|\theta|-\frac{\theta^2}{2 \gamma}, & \text { if }|\theta| \leq \gamma \lambda \\ \frac{1}{2} \gamma \lambda^2, & \text { if }|\theta|>\gamma \lambda\end{cases}
+$$
+\end{itemize}
+
+\end{myblock}
+\begin{myblock}{Equivalence of Regularization}
+
+  \begin{codebox}
+\textbf{RRM vs MAP}
+\end{codebox}
+Regularized risk minimization (RRM) is the same as a maximum a posteriori (MAP) estimate in Bayes.\\
+
+From Bayes theorem:
+$$
+p(\thetav | \xv, y) = \frac{p(y | \thetav, \xv) q(\thetav) }{p(y | \xv)} \propto 
+p(y | \thetav, \xv) q(\thetav)
+$$
+
+The maximum a posteriori (MAP) estimator of $\thetav$ is now the minimizer of
+$$
+- \log p\left(y ~|~ \thetav, \xv\right) - \log q(\thetav).
+$$
+
+Identify the loss $\Lxyt$ with $-\log(p(y | \thetav, \xv))$:
+\begin{itemize}[$\bullet$]
+  \setlength{\itemindent}{+.3in}
+ \item If $q(\thetav)$ is constant (i.e., we used a uniform, non-informative 
+  prior), the second term is irrelevant and we arrive at ERM.
+  \item If not, we can identify $J(\thetav) \propto -\log(q(\thetav))$, i.e., 
+  the log-prior corresponds to the regularizer, and the additional $\lambda$, which controls the strength of our
+  penalty, usually influences the peakedness / inverse variance / strength of our prior.
+\end{itemize}
+
+\end{myblock}
+
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{ }
+  
+   \begin{codebox}
+\textbf{L2 vs Weight Decay}
+\end{codebox}
+
+$L2$ regularization with GD is equivalent to weight decay.\\
+
+Optimize $L2$-regularized risk of a model $\fxt$ by GD:
+$$
+\min_{\thetav} \riskrt = \min_{\thetav} \risket + \frac{\lambda}{2} \|\thetav\|^2_2
+$$
+
+The gradient is
+$$
+\nabla_{\thetav} \riskrt = \nabla_{\thetav} \risket + \lambda \thetav
+$$
+
+We iteratively update $\thetav$ by step size \(\alpha\) times the negative gradient:
+\begin{align*}
+\thetav^{[\text{new}]} &= \thetav^{[\text{old}]} - \alpha \left(\nabla_{\thetav} \riske(\thetav^{[\text{old}]}) + \lambda \thetav^{[\text{old}]}\right) \\&=
+\thetav^{[\text{old}]} (1 - \alpha \lambda) - \alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})
+\end{align*}
+{\small
+We see how $\thetav^{[old]}$ decays in magnitude -- for small $\alpha$ and $\lambda$.}
+\end{myblock}
+
+\begin{myblock}{Early stopping}
+Early stopping is another technique to aboid overfitting, which makes traning process stop when validation error stops decreasing.
+\begin{enumerate}
+									\setlength{\itemindent}{+.3in}
+									\item Split training data $\Dtrain$ into $\mathcal{D}_{\text{subtrain}}$ and $\mathcal{D}_{\text{val}}.$ 
+									\item Train on $\mathcal{D}_{\text{subtrain}}$ and evaluate model using the validation set $\mathcal{D}_{\text{val}}$.
+									\item Stop training when validation error stops decreasing.
+									\item Use parameters of the previous step for the actual model.
+								\end{enumerate}
+
+
+\end{myblock}
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+ \begin{myblock}{}
+
+
+\end{myblock}
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+\end{columns}
+\end{frame}
+
+\end{document}

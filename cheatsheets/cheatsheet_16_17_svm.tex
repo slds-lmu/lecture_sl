@@ -1,0 +1,405 @@
+\documentclass{beamer}
+\newcommand \beameritemnestingprefix{}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-trees.tex}
+\input{../latex-math/ml-nn.tex}
+\input{../latex-math/ml-svm}
+\input{../latex-math/ml-eval}
+
+
+\title{Supervised Learning :\,: CHEAT SHEET} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ % Package description in header
+%	The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+
+\begin{document}
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+					\begin{myblock}{Linear hard-margin SVM}
+      
+For labeled data $\D = \Dset$, with $\yi \in \{-1, +1\}$:
+\begin{itemize}[$\bullet$]
+  \setlength{\itemindent}{+.3in}
+  \item Assume linear separation by $\fx = \thetav^\top \xv + \theta_0$, such that all $+$-observations are in the positive halfspace
+$
+  \phantom{i}\{\xv \in \Xspace: \fx > 0\}
+$
+  and all $-$-observations are in the negative halfspace
+$
+  \phantom{i}\{\xv \in \Xspace : \fx < 0\}.
+$
+
+  \item For a linear separating hyperplane, we have
+  $$
+    \yi \underbrace{\left(\thetav^\top \xi + \theta_0\right)}_{= \fxi} > 0 \quad \forall i \in \{1, 2, ..., n\}.
+  $$
+
+  \item 
+    % For correctly classified points $\left(\xi, \yi\right)$,
+  $$
+    d \left(f, \xi \right) = \frac{\yi \fxi}{\|\thetav\|} = \yi \frac{\thetav^T \xi + \theta_0}{\|\thetav\|}
+  $$
+  computes the (signed) distance to the separating hyperplane $\fx = 0$,
+    positive for correct classifications, negative for incorrect.
+   \item The distance of $f$ to the whole dataset $\D$
+    is the smallest distance
+    $
+    \gamma = \min\limits_i \Big\{ d \left(f, \xi \right) \Big\}
+    $, which represents the \textbf{safety margin}. It is positive if $f$ separates and we want to maximize it.
+\end{itemize}
+\begin{eqnarray*}
+    & \max\limits_{\thetav, \theta_0} & \gamma \\
+    & \text{s.t.} & \,\, d \left(f, \xi \right) \geq \gamma \quad \forall\, i \in \nset.
+    \end{eqnarray*}
+
+    \begin{codebox}
+\textbf{Primal linear hard-margin SVM:}
+\end{codebox}				
+								\begin{eqnarray*}
+									& \min\limits_{\thetav, \theta_0} \quad & \frac{1}{2} \|\thetav\|^2 \\
+									& \text{s.t.} & \,\,\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) \geq 1 \quad \forall\, i \in \nset
+								\end{eqnarray*}
+	This is a convex quadratic program.\\
+
+
+								\textbf{Support vectors}: All instances $(\xi, \yi)$ with minimal margin
+								$\yi  \fxi = 1$, fulfilling the inequality constraints with equality. 
+								All have distance of $\gamma = 1 / \|\thetav\|$ from the separating hyperplane.\\
+								
+The Lagrange function of the SVM optimization problem is
+{\small
+\begin{eqnarray*}
+&L(\thetav, \theta_0, \alphav) = & \frac{1}{2}\|\thetav\|^2  -  \sum_{i=1}^n \alpha_i \left[\yi  \left( \scp{\thetav}{\xi} + \theta_0 \right) - 1\right]\\
+ & \text{s.t.} & \,\, \alpha_i \ge 0 \quad \forall\, i \in \nset.
+\end{eqnarray*}
+}
+The \textbf{dual} form of this problem is
+$\max\limits_{\alpha} \min\limits_{\thetav, \theta_0}  L(\thetav, \theta_0,\alphav).$\\
+
+We find the stationary point of $L(\thetav, \theta_0,\alphav)$ w.r.t. $\thetav, \theta_0$ and obtain
+$$
+    \thetav = \sum_{i=1}^n \alpha_i \yi \xi, 
+    0 = \sum_{i=1}^n \alpha_i \yi \quad \forall\, i \in \nset.
+$$
+\end{myblock}
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{}
+
+ \begin{codebox}
+\textbf{Dual linear hard-margin SVM:}
+\end{codebox}
+
+\begin{eqnarray*}
+    & \max\limits_{\alphav \in \R^n} & \sum_{i=1}^n \alpha_i - \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha_i\alpha_j\yi y^{(j)} \scp{\xi}{\xv^{(j)}} \\
+    & \text{s.t.} & \sum_{i=1}^n \alpha_i \yi = 0, \\
+    & \quad & \alpha_i \ge 0~\forall i \in \nset,
+\end{eqnarray*}
+
+In matrix notation with $\bm{K}:= \Xmat \Xmat^T$:
+\begin{eqnarray*}
+  & \max\limits_{\alphav \in \R^n} & \one^T \alphav - \frac{1}{2} \alphav^T \diag(\yv)\bm{K} \diag(\yv) \alphav \\
+  & \text{s.t.} & \alphav^T \yv = 0, \\
+  & \quad & \alphav \geq 0,
+\end{eqnarray*}
+
+Solution (if existing):
+								%
+								$$
+								\thetah = \sum\nolimits_{i=1}^n \hat \alpha_i \yi \xi, \quad \theta_0 = \yi - \scp{\thetav}{\xi}.
+								$$
+  \end{myblock}
+
+  \begin{myblock}{Linear Soft-Margin SVM}
+    Allow violations of the margin constraints via slack vars $\sli \geq 0$
+    $$
+    \yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli
+    $$
+
+    Now we have two distinct and contradictory goals:
+    \begin{itemize}[$\bullet$]
+      \setlength{\itemindent}{+.3in}
+      \item Maximize the margin.
+      \item Minimize margin violations.
+    \end{itemize}
+
+    \begin{codebox}
+      \textbf{Primal linear soft-margin SVM:} 
+    \end{codebox}	
+							\begin{eqnarray*}
+								& \min\limits_{\thetav, \thetav_0,\sli} & \frac{1}{2} \|\thetav\|^2 + C   \sum_{i=1}^n \sli \\
+								& \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+								& \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset,\\
+							\end{eqnarray*}
+							where the constant $C > 0$ controls trade-off between the two conflicting
+							objectives of maximizing the size of the margin and minimizing the
+							frequency and size of margin violations.\\
+
+    \end{myblock}
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+  \begin{myblock}{}
+
+							
+						\begin{codebox}
+							\textbf{Dual linear soft-margin SVM:} 	
+						\end{codebox}
+							\begin{eqnarray*}
+								& \max\limits_{\alphav \in \R^n} & \sum_{i=1}^n \alpha_i - \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha_i\alpha_j\yi y^{(j)} \scp{\xi}{\xv^{(j)}} \\
+								& \text{s.t. } & 0 \le \alpha_i \le C, \forall\, i \in \nset \quad \text{and} \quad  \sum_{i=1}^n \alpha_i \yi = 0
+							\end{eqnarray*}
+
+        \begin{itemize}[$\bullet$]
+      \setlength{\itemindent}{+.3in}
+    \item Non-SVs have $\alpha_i = 0\; (\Rightarrow \mu_i = C \Rightarrow \sli = 0)$ and can be
+    removed from the problem without changing the solution. Their margin $y\fx \geq ~ 1.$ 
+    They are always classified correctly and are never inside of the margin. 
+    
+    \item SVs with $0 < \alpha_i < C\; (\Rightarrow \mu_i > 0 \Rightarrow \sli = 0)$ are located exactly on the
+    margin and have $y\fx=1$. 
+    \item SVs with $\alpha_i = C$ have an associated
+     slack $\sli \geq 0.$ They can be on the margin or can be margin violators with $y\fx < 1$ (they can even be misclassified if $\sli \geq 1$).
+\end{itemize}
+        
+Regularized ERM representation with hinge loss:
+$$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lxy = \max(1-y\fx, 0)$$
+  
+\end{myblock}
+
+\begin{myblock}{Optimization}
+  \begin{algorithm}[H]
+  \caption{Stochastic subgradient descent (without intercept $\theta_0$)}
+  \begin{algorithmic}[1]
+    \For {$t = 1, 2, ...$}
+      \State Pick step size $\alpha$
+      \State Randomly pick an index $i$
+      \State If $\yfi < 1$ set $\thetatn = (1 - \lambda \alpha) \thetat + \alpha \yi \xi$ 
+      \State If $\yfi \geq 1$ set $\thetatn = (1 - \lambda \alpha) \thetat$ 
+      \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+  \caption{Pairwise coordinate ascent in the dual}
+  \begin{algorithmic}[1]
+    \State Initialize $\alphav = 0$ (or more cleverly)
+    \For {$t = 1, 2, ...$}
+      \State Select some pair $\alpha_i, \alpha_j$ to update next
+      \State Optimize dual w.r.t. $\alpha_i, \alpha_j$, while holding $\alpha_k$ ($k\ne i, j$) fixed
+      \EndFor
+  \end{algorithmic}
+\end{algorithm}
+  
+\end{myblock}
+
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+					\begin{myblock}{Kernel}
+Kernel = Feature Map + Inner product\\
+
+\begin{codebox} \textbf{Mercer Kernel}
+\end{codebox}
+A \textbf{(Mercer) kernel} on a space~$\Xspace$ is a
+  continuous function
+  $$ k : \Xspace \times \Xspace \to \R $$
+  of two arguments with the properties
+  \begin{itemize}[$\bullet$]
+    \setlength{\itemindent}{+.3in}
+    \item Symmetry: $k(\xv, \tilde \xv) = k(\tilde \xv, \xv)$ for all
+    $\xv, \tilde \xv \in \Xspace$.
+    \item Positive definiteness: For each finite subset $\left\{\xv^{(1)}, \dots, \xv^{(n)}\right\}$
+    the \textbf{kernel Gram matrix} $\bm{K} \in \R^{n \times n}$ with entries
+    $K_{ij} = k(\xi, \xv^{(j)})$ is positive semi-definite.
+  \end{itemize}\\
+
+  \textbf{Reproducing property}: for all kernels, there must exist a Hilbert space, where a map $\phi$ of this space satisfies $k(\xv, \xtil) = \scp{\phix}{\phixt}$.
+  The space is called \textbf{reproducing kernel Hilbert space} (RKHS).
+
+\begin{codebox}
+      \textbf{Typical Kernels} 
+    \end{codebox}	
+  A kernel can be constructed from other kernels $k_1$ and~$k_2$:
+  \begin{itemize}[$\bullet$]
+    \setlength{\itemindent}{+.3in}
+      \item For $\lambda \geq 0$, $\lambda \cdot k_1$ is a kernel.
+      \item $k_1 + k_2$ is a kernel.
+      \item $k_1 \cdot k_2$ is a kernel (thus also $k_1^n$).
+    \end{itemize}\\
+
+
+    Useful kernels:
+  \begin{itemize}[$\bullet$]
+    \setlength{\itemindent}{+.3in}
+      \item Every constant function taking a non-negative value.
+      \item \textbf{Linear kernel}: $k(\xv, \tilde \xv) = \xv^\top \tilde \xv$.
+      \item \textbf{Polynomial kernel}: $k(\xv, \tilde \xv) = (\xv^\top \tilde \xv + b)^d, \text{ for } b\geq 0, d \in \N$.
+      $$\phix = \left( \sqrt{\mat{d \\ k_1, \ldots, k_{p+1}}} x_1^{k_1} \ldots x_p^{k_p} b^{k_{p+1}/2} \right)_{k_i \geq 0, \sum_i k_i = d}$$
+      \item \textbf{Gaussian kernel}: $k(\xv, \tilde \xv) = \exp(-\frac{\|\xv - \tilde \xv\|^2}{2\sigma^2})$
+or $k(\xv, \tilde \xv) = \exp(-\gamma \|\xv - \tilde \xv\|^2), ~ \gamma>0$
+    \end{itemize}
+
+
+\end{myblock}
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{ }
+\begin{codebox}
+\textbf{Dual kernelized soft-margin SVM:}
+\end{codebox}
+							%	
+									\begin{eqnarray*}
+										& \max_{\alpha} & \sum_{i=1}^n \alpha_i - \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha_i\alpha_j\yi y^{(j)} k(\xi, \xv^{(j)})  \\
+										& \text{s.t. } & 0 \le \alpha_i \le C, \forall\, i \in \nset \quad \text{and} \quad  \sum_{i=1}^n \alpha_i \yi = 0
+									\end{eqnarray*}	
+							
+								Kernel representation of separating hyperplane:
+									$$ \fx = \sumin \alpha_i \yi k(\xi, \xv)  + \theta_0$$
+
+\end{myblock}
+
+\begin{myblock}{Hyperparameters of SVM}
+    SVMs are somewhat sensitive to its hyperparameters and should always be tuned.\\
+
+    \begin{itemize}[$\bullet$]
+    \setlength{\itemindent}{+.3in}
+      \item The choice of C, the choice of the kernel, the kernel parameters are all up to the user.
+\item Small C allows for margin-violating points in favor of a large margin.
+\item Large C penalizes margin violators, decision boundary is more wiggly.
+    \end{itemize}
+
+\end{myblock}
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+  \begin{myblock}{}
+
+\end{myblock}
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+
+\end{document}
