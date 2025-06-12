@@ -12,8 +12,9 @@ if (FALSE) install.packages("pak")
 library(checkmate)
 library(data.table)
 library(ggplot2)
-library(patchwork)
 library(mvtnorm)
+library(patchwork)
+library(plotly)
 pak::pak("slds-lmu/vistool")
 library(vistool)
 
@@ -22,15 +23,26 @@ source("covariance_functions.R")
 # FUNCTIONS --------------------------------------------------------------------
 
 sample_zeromean_gp_prior = function(
-        kernel_type, n_samples, n_points, x_range, eps = 1e-6, ...
+        kernel_type, 
+        n_samples, 
+        n_points, 
+        x_range, 
+        y_range = NULL, 
+        eps = 1e-6, 
+        ...
     ) {
     x = seq(x_range[1], x_range[2], length.out = n_points)
-    kmat = get_kmat(x, x, kernel_type, ...)
+    if (!is.null(y_range)) { # bivariate kernels
+        y = seq(y_range[1], y_range[2], length.out = n_points)
+    } else y = x
+    kmat = get_kmat(x, y, kernel_type, ...)
     kmat = kmat + diag(eps, n_points)
     samples = rmvnorm(n_samples, mean = rep(0, n_points), sigma = kmat)
     dt = as.data.table(t(samples))
     names(dt) = sprintf("sample_%i", seq_len(n_samples))
     dt[, x := x]
+    if (!is.null(y_range)) dt[, y := y]
+    dt
 }
 
 plot_priors = function(
@@ -38,7 +50,8 @@ plot_priors = function(
         n_samples = 5, 
         n_points = 500, 
         x_range = c(-2, 2), 
-        ...) {
+        ...
+) {
     plot_data = sample_zeromean_gp_prior(
         kernel_type, n_samples, n_points, x_range, ...
     )
@@ -54,6 +67,43 @@ plot_priors = function(
         )
     
 }
+
+plot_priors_2d = function(
+        kernel_type, 
+        n_samples = 5, 
+        n_points = 500, 
+        x_range = c(-2, 2), 
+        y_range = c(-2, 2),
+        ...
+) {
+    plot_data = sample_zeromean_gp_prior(
+        kernel_type, n_samples, n_points, x_range, ...
+    )
+    plot_data_long = melt(plot_data, id.vars = "x")
+    ggplot(plot_data_long, aes(x = x, y = value, color = variable)) +
+        geom_line() +
+        scale_color_viridis_d() +
+        theme_bw() +
+        labs(x = "x", y = "f(x)") +
+        theme(
+            legend.position = "none",
+            axis.text.y = element_blank()
+        )
+    
+}
+
+x = y = seq(-2, 2, length.out = 10)
+kmat = kernel_min_bivariate(x, y)
+sample <- MASS::mvrnorm(1, rep(0, 10), kmat)
+
+foo = sample_zeromean_gp_prior("minimum_bivariate", 
+                               n_samples = 1, 
+                               n_points = 100, 
+                               x_range = c(0, 1), 
+                               y_range = c(0, 1))
+
+plot_ly(x = foo$x, y = foo$y, z = foo$sample_1) %>%
+    add_surface()
 
 # PLOTS ------------------------------------------------------------------------
 

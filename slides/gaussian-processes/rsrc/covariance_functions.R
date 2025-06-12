@@ -16,7 +16,8 @@ supported_kernels = c(
     "matern",
     "exponential",
     "squaredexp",
-    "minimum"
+    "minimum",
+    "minimum_bivariate"
 )
 
 # FUNCTIONS --------------------------------------------------------------------
@@ -42,16 +43,16 @@ kernel_periodic = function(x1, x2, period, lengthscale) {
 kernel_min = function(x1, x2) outer(x1, x2, function(i, j) pmin(i, j))
 
 kernel_min_bivariate = function(x1, x2) {
+    # Get product of component-wise minima
     get_min = function(x1, x2) pmin(x1[[1]], x2[[1]]) * pmin(x1[[2]], x2[[2]])
-    
-    # vectorize get_min,  populate upper triangle, create lower triangle, sum
-    
-    # for (i in 1:n_pts) {
-    #     for (j in i:n_pts) {
-    #         Sigma[i, j] <- cov_fun(grid[i, ], grid[j, ])[[1]]
-    #         Sigma[j, i] <- Sigma[i, j]  # symmetry
-    #     }
-    # }
+    grid_x = cbind(x1, x2)
+    grid_idx = expand.grid(i = seq_len(length(x1)), j = seq_len(length(x2)))
+    mins = apply(
+        grid_idx, 
+        1, 
+        function(i) get_min(grid_x[i[[1]], ], grid_x[i[[2]], ])
+    )
+    matrix(mins, nrow = length(x1), ncol = length(x2), byrow = FALSE)
 }
 
 kernel_matern = function(x1, x2, nu = 1.5, lengthscale = 1, sigma2 = 1) {
@@ -90,39 +91,9 @@ get_kmat = function(x1, x2, kernel_type, ...) {
         polynomial = kernel_polynomial(x1, x2, ...),
         periodic = kernel_periodic(x1, x2, ...),
         minimum = kernel_min(x1, x2),
+        minimum_bivariate = kernel_min_bivariate(x1, x2),
         matern = kernel_matern(x1, x2, ...),
         exponential = kernel_exp(x1, x2, ...),
         squaredexp = kernel_sqexp(x1, x2, ...)
     )
 }
-
-
-# # Parameters
-# n <- 10  # grid size in each dimension
-# s <- seq(0, 1, length.out = n)
-# t <- seq(0, 1, length.out = n)
-# 
-# # Create grid
-# grid <- expand.grid(s = s, t = t)
-# 
-# # Define covariance function: Cov(W(s1,t1), W(s2,t2)) = min(s1,s2) * min(t1,t2)
-# cov_fun <- function(a, b) {
-#     (pmin(a[1], b[1]) * pmin(a[2], b[2]))
-# }
-# 
-# # Build covariance matrix
-# n_pts <- nrow(grid)
-# Sigma <- matrix(0, n_pts, n_pts)
-# for (i in 1:n_pts) {
-#     for (j in i:n_pts) {
-#         Sigma[i, j] <- cov_fun(grid[i, ], grid[j, ])[[1]]
-#         Sigma[j, i] <- Sigma[i, j]  # symmetry
-#     }
-# }
-# 
-# # Sample from multivariate normal
-# library(MASS)
-# sample <- rmvnorm(1, rep(0, n_pts), Sigma)
-# 
-# # Reshape for plotting
-# Z <- matrix(sample, nrow = n, byrow = FALSE)

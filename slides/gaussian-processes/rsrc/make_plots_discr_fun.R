@@ -220,7 +220,7 @@ for (i in seq_len(nrow(plot_cases))) {
             dt$y, 
             dt$group, 
             draw_line = ifelse(n == 1, FALSE, TRUE),
-            vert_bars = FALSE  # ifelse(k == 1, TRUE, FALSE)
+            vert_bars = ifelse(n == 1, TRUE, FALSE)
         ),
         width = 6, 
         height = 4
