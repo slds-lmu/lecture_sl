@@ -32,16 +32,16 @@
 $$\begin{bmatrix}
 \fv \\ f_\ast
 \end{bmatrix} \sim  
-\normal \left(\zero, \begin{bmatrix} \Kmat & \bm{k}_* \\ \bm{k}_*^T & \bm{k}_{**}\end{bmatrix}\right)$$
-with $\bm{k}_* = [k(\xv_*, \xi[1]), \dots, k(\xv_*, \xi[n])]$,  $ \bm{k}_{**}\ = k(\xv_*, \xv_*)$
+\normal \left(\zero, \begin{bmatrix} \Kmat & \Kmat_* \\ \Kmat_*^T & \Kmat_{**}\end{bmatrix}\right)$$
+with $\Kmat_* = [k(\xv_*, \xi[1]), \dots, k(\xv_*, \xi[n])]$,  $ \Kmat_{**}\ = k(\xv_*, \xv_*)$
 \item General rule for condition of Gaussian RVs
 \begin{itemize}
 \item $\bm{z} \sim \normal(\mu, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\mu = (\mu_1, \mu_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
 \item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is MV normal 
 $$\normal(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \mu_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
 \end{itemize}
-\item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xv_*, \Xmat, \fv \sim \normal(\bm{k}_{*}^{T}\Kmat^{-1}\fv, \bm{k}_{**} - \bm{k}_*^T \Kmat ^{-1}\bm{k}_*)$$
-\item \textbf{Maximum-a-posteriori (MAP)} estimate: $\bm{k}_{*}^{T}\Kmat^{-1}\fv$
+\item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xv_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*)$$
+\item \textbf{Maximum-a-posteriori (MAP)} estimate: $\Kmat_{*}^{T}\Kmat^{-1}\fv$
 \end{framei}
 
 \begin{framei}[sep=L]{example: 2 points}
@@ -50,7 +50,7 @@ $$\normal(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \mu_1), \Sigma_{22} - \
 $$\begin{bmatrix} \fv \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\right)$$
 \item Assuming we observe $\fx = 1$, compute posterior distribution
 \begin{eqnarray*}
-    f_* ~|~ \xv_*, \xv, \fv &\sim& \normal(\bm{k}_{*}^{T}\Kmat^{-1} \fv, k_{**} - \bm{k}_*^T \Kmat^{-1}\bm{k}_*) \\
+    f_* ~|~ \xv_*, \xv, \fv &\sim& \normal(\Kmat_{*}^{T}\Kmat^{-1} \fv, k_{**} - \Kmat_*^T \Kmat^{-1}\Kmat_*) \\
     &\sim& \normal(0.61 \cdot 1 \cdot 1, 1 - 0.61 \cdot 1 \cdot 0.61) \\
     &\sim& \normal\left(0.61, 0.63\right) 
   \end{eqnarray*}
@@ -98,8 +98,8 @@ $$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{
 \imageC[.8]{figure/gp_pred/gp_interpolator.pdf}
 \end{framei}
 
-\begin{framei}[sep=M]{gp as spatial model}
-\item Recall spatial property: output correlation depends on distance in input space
+\begin{framei}[sep=L]{gp as spatial model}
+\item Spatial property: output correlation depends on input distance
 \item E.g., squared exponential kernel $k(\xv, \tilde{\xv}) = \exp \left(-\frac{\| \xv - \tilde{\xv} \|^2}{2\ls^2} \right)$
 \item Strongly correlated predictions for points with spatial proximity
 \item High posterior uncertainty for far-away points (0 at training locs)
@@ -111,141 +111,110 @@ $$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{
 }
 \end{framei}
 
-% \begin{vbframe}{GP as a spatial model}
+\begin{framei}[sep=L]{noisy GP}
+\item GP as interpolator: implicitly assumed access to true function value $\fx$ $\Rightarrow$ 0 uncertainty at training points
+\item Reality: noisy version
+$y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
+\item Covariance becomes 
+\begin{eqnarray*} 
+&& \cov(y^{(i)}, y^{(j)}) =  \cov (f(\xi) + \epsilon^{(i)}, f(\xi[j]) + \epsilon^{(j)}) \\
+&=& \cov(f(\xi), f(\xi[j])) + 2 \cdot \cov(f(\xi), \epsilon^{(j)}) + \cov(\epsilon^{(i)}, \epsilon^{(j)}) 
+\\ &=& k(\xi, \xi[j]) + \sigma^2 \delta_{ij}
+\end{eqnarray*}
+\item $\sigma^2$ often called \textbf{nugget}
+\item Estimate nugget term during training
+\end{framei}
 
-% \vspace*{-0.3cm}
+\begin{framei}[sep=L]{predictive distribution for noisy GP}
+\item Let $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$, $\Xmat = \xdat$
+\item Prior for $\yv$
+$$
+\yv = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\mv, \Kmat + \sigma^2 \id_n \right),
+$$
+with $\mv = m(\Xmat), \Kmat = k(\Xmat, \Xmat)$
+\item Again, look at joint distribution of training points $(\Xmat, \yv$) and unobserved test points $(\Xmat_*, \fv_*)$
+$$
+\begin{bmatrix} \yv \\ \fv_* \end{bmatrix} \sim  
+\normal\left(\zero, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\right)
+$$
+\end{framei}
+
+\begin{framei}[sep=M]{predictive distribution for noisy GP}
+\item Again, employ rule of conditioning for Gaussians 
+\begin{eqnarray*}
+\fv_* ~|~ \Xmat_*, \Xmat, \yv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post})
+\end{eqnarray*}
+with 
+$\mv_{\text{post}} = \Kmat_{*}^{T} (\Kmat+ \sigma^2 \cdot \id)^{-1}\yv$, 
+$\Kmat_\text{post} = \Kmat_{**} - \Kmat_*^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\Kmat_*$
+\item Recovers noise-free case for $\sigma^2 = 0$
+\item Noisy GP: no longer an interpolator 
+\item Posterior uncertainty increases with nugget (wider ``band'')
+\vfill
+\imageC[.7]{figure/gp_pred/gp_regression.pdf}
+\end{framei}
+
+% \begin{vbframe}{Noisy Gaussian Process}
 
 % \begin{itemize}
-%   \begin{footnotesize}
-%   \item The correlation among two outputs depends on distance of  the corresponding input points  $\xv$ and $\xv^\prime$ (e.g. Gaussian covariance kernel $k(\xv, \xv^\prime) = \exp \left(\frac{- \|\xv - \xv^\prime\|^2}{2 l^2}\right)$ )
-%   \item Hence, close data points with high spatial similarity $k(\xv, \xv^\prime)$ enter into more strongly correlated predictions: $\bm{k}_*^\top \bm{K}^{-1} \fv$ ($\bm{k}_* := \left(k(\xv, \xv^{(1)}), ..., k(\xv, \xv^{(n)})\right)$).
-%   \end{footnotesize}  
+%   \item Let us now derive the predictive distribution for the case of noisy observations. 
+%   \item The prior distribution of $y$, assuming that $f$ is modeled by a Gaussian process is then
+%   $$
+%     \yv = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\mv, \Kmat + \sigma^2 \id_n \right),
+%   $$
+%   with 
+%   \begin{eqnarray*}
+%     \textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
+%     \textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}. 
+%   \end{eqnarray*}
 
+%   \framebreak 
+  
+%   \item We distinguish again between 
+%   \begin{itemize}
+%     \item observed training points $\Xmat, \yv$, and 
+%     \item unobserved test inputs $\Xmat_*$ with unobserved values $\fv_*$
+%   \end{itemize} 
+%   and get
+%   $$
+%   \begin{bmatrix}
+%   \yv \\
+%   \fv_*
+%   \end{bmatrix} \sim  
+%     \normal\biggl(\bm{0}, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr).
+%   $$
 
-% \begin{center}
-% \includegraphics[width=0.5\textwidth]{figure/gp_pred/post_mean.pdf}
-% \end{center}
+% \framebreak
 
+%   \item Similarly to the noise-free case, we condition according to the rule of conditioning for Gaussians to get the posterior distribution for the test outputs $\fv_*$ at $\Xmat_*$: 
 
-% \begin{footnotesize}
-% Example: Posterior mean of a GP that was fitted with the Gaussian covariance kernel with $l = 1$. 
-% \end{footnotesize}
-
+%   \begin{eqnarray*}
+%     \fv_* ~|~ \Xmat_*, \Xmat, \yv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post}).
+% \end{eqnarray*}
+%   with 
+%   \begin{eqnarray*}
+%     \mv_{\text{post}} &=& \Kmat_{*}^{T} (\Kmat+ \sigma^2 \cdot \id)^{-1}\yv \\
+%     \Kmat_\text{post} &=& \Kmat_{**} - \Kmat_*^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\Kmat_*,
+%   \end{eqnarray*}
+% \item This converts back to the noise-free formula if $\sigma^2 = 0$.
 
 % \framebreak 
 
-% \item Posterior uncertainty increases if the new data points are far from the design points.
-% \item The uncertainty is minimal at the design points, since the posterior variance is zero at these points.
-% \end{itemize}
+% \item The noisy Gaussian process is not an interpolator any more.
+% \item A larger nugget term leads to a wider ``band'' around the observed training points.
+% \item The nugget term is estimated during training.
 
 
 % \begin{center}
-% \includegraphics[width=0.5\textwidth]{figure/gp_pred/post_variance.pdf}
+%     \includegraphics[width=0.8\textwidth]{figure/gp_pred/gp_regression.pdf}
 % \end{center}
-
-% \begin{footnotesize}
-% Example (continued): Posterior variance. 
-% \end{footnotesize}
-
+% \end{itemize}
 
 % \end{vbframe}
 
 
-% \section{Noisy Gaussian Process}
 
-\begin{vbframe}{Noisy Gaussian Process}
-
-\begin{itemize}
-  \item So far, we implicitly assumed that we had access to the true function value $\fx$.
-  \item For the squared exponential kernel, for example, we have
-  $$
-    \cov\left(f(\xi), f(\xi)\right) = 1.
-  $$
-  \item As a result, the posterior Gaussian process is an interpolator: 
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figure/gp_pred/gp_interpolator.pdf}
-  \end{center}
-
-\framebreak 
-
-  \item In reality, however, this is often not the case. 
-  \item We often only have access to a noisy version of the true function value
-  $$
-    y = \fx + \eps, \eps \sim\normal\left(0, \sigma^2\right).
-  $$
-  \item Let us still assume that $\fx$ is a Gaussian process.
-  \item Then,
-  \begin{footnotesize} 
-  \begin{eqnarray*}
-    &&\cov(y^{(i)}, y^{(j)}) = \cov\left(f\left(\xi\right) + \epsilon^{(i)}, f\left(\xi[j]\right) + \epsilon^{(j)}\right) \\
-    &=& \cov\left(f\left(\xi\right), f\left(\xi[j]\right)\right) + 2 \cdot \cov\left(f\left(\xi\right), \epsilon^{(j)}\right) + \cov\left(\epsilon^{(i)}, \epsilon^{(j)}\right) 
-    \\ &=& k\left(\xi, \xi[j]\right) + \sigma^2 \delta_{ij}. 
-  \end{eqnarray*}
-  \end{footnotesize}
-  \item $\sigma^2$ is called \textbf{nugget}. 
-\end{itemize}
-
-\framebreak 
-
-\begin{itemize}
-  \item Let us now derive the predictive distribution for the case of noisy observations. 
-  \item The prior distribution of $y$, assuming that $f$ is modeled by a Gaussian process is then
-  $$
-    \bm{y} = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\bm{m}, \bm{K} + \sigma^2 \bm{I}_n \right),
-  $$
-  with 
-  \begin{eqnarray*}
-    \textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
-    \textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}. 
-  \end{eqnarray*}
-
-  \framebreak 
-  
-  \item We distinguish again between 
-  \begin{itemize}
-    \item observed training points $\Xmat, \yv$, and 
-    \item unobserved test inputs $\Xmat_*$ with unobserved values $\fv_*$
-  \end{itemize} 
-  and get
-  $$
-  \begin{bmatrix}
-  \bm{y} \\
-  \fv_*
-  \end{bmatrix} \sim  
-    \normal\biggl(\bm{0}, \begin{bmatrix} \Kmat + \sigma^2 \bm{I}_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr).
-  $$
-
-\framebreak
-
-  \item Similarly to the noise-free case, we condition according to the rule of conditioning for Gaussians to get the posterior distribution for the test outputs $\fv_*$ at $\Xmat_*$: 
-
-  \begin{eqnarray*}
-    \fv_* ~|~ \Xmat_*, \Xmat, \bm{y} \sim \normal(\bm{m}_{\text{post}}, \bm{K}_\text{post}).
-\end{eqnarray*}
-  with 
-  \begin{eqnarray*}
-    \bm{m}_{\text{post}} &=& \Kmat_{*}^{T} \left(\Kmat+ \sigma^2 \cdot \id\right)^{-1}\bm{y} \\
-    \bm{K}_\text{post} &=& \Kmat_{**} - \Kmat_*^T \left(\Kmat  + \sigma^2 \cdot \id\right)^{-1}\Kmat_*,
-  \end{eqnarray*}
-\item This converts back to the noise-free formula if $\sigma^2 = 0$.
-
-\framebreak 
-
-\item The noisy Gaussian process is not an interpolator any more.
-\item A larger nugget term leads to a wider ``band'' around the observed training points.
-\item The nugget term is estimated during training.
-
-
-\begin{center}
-    \includegraphics[width=0.8\textwidth]{figure/gp_pred/gp_regression.pdf}
-\end{center}
-\end{itemize}
-
-\end{vbframe}
-
-
-
-\section{Decision Theory for Gaussian Processes}
+% \section{Decision Theory for Gaussian Processes}
 
 \begin{vbframe}{Risk Minimization for Gaussian Processes}
 
