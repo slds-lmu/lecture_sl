@@ -154,102 +154,55 @@ $\Kmat_\text{post} = \Kmat_{**} - \Kmat_*^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\K
 \imageC[.7]{figure/gp_pred/gp_regression.pdf}
 \end{framei}
 
-% \begin{vbframe}{Noisy Gaussian Process}
+\begin{framei}[sep=M]{risk minimization for GP}
+\item Recall: theoretical risk for unseen obs based on loss function $L$
+$$\riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy$$ 
+\item Standard ML minimizes empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
+\item For GPs, approx theoretical risk via posterior distribution $p(y | \D)$
+$$
+    \mathcal{R}(y_* ~|~ \xv_*) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xv_*, \D)d\tilde y_*. 
+  $$
+\item Intuition: hypothetical loss values, weighted by posterior probability of  each $\tilde y_*$ given observed data
+\item Optimal prediction wrt loss function
+$$
+    \yh_* | \xv_* = \argmin_{y_*} \mathcal{R}(y_*~|~ \xv_*).
+  $$
+\end{framei}
+
+% \begin{vbframe}{Risk Minimization for Gaussian Processes}
+
+% In machine learning, we learned about risk minimization. We usually choose a loss function and minimize the empirical risk  
+
+% $$
+%   \riske(f) := \sumin \Lxyi
+% $$
+% as an approximation to the theoretical risk
+
+% $$ 
+%   \riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. 
+% $$
 
 % \begin{itemize}
-%   \item Let us now derive the predictive distribution for the case of noisy observations. 
-%   \item The prior distribution of $y$, assuming that $f$ is modeled by a Gaussian process is then
-%   $$
-%     \yv = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\mv, \Kmat + \sigma^2 \id_n \right),
-%   $$
-%   with 
-%   \begin{eqnarray*}
-%     \textbf{m} &:=& \left(m\left(\xi\right)\right)_{i}, \quad
-%     \textbf{K} := \left(k\left(\xi, \xv^{(j)}\right)\right)_{i,j}. 
-%   \end{eqnarray*}
-
-%   \framebreak 
-  
-%   \item We distinguish again between 
-%   \begin{itemize}
-%     \item observed training points $\Xmat, \yv$, and 
-%     \item unobserved test inputs $\Xmat_*$ with unobserved values $\fv_*$
-%   \end{itemize} 
-%   and get
-%   $$
-%   \begin{bmatrix}
-%   \yv \\
-%   \fv_*
-%   \end{bmatrix} \sim  
-%     \normal\biggl(\bm{0}, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\biggr).
-%   $$
-
-% \framebreak
-
-%   \item Similarly to the noise-free case, we condition according to the rule of conditioning for Gaussians to get the posterior distribution for the test outputs $\fv_*$ at $\Xmat_*$: 
-
-%   \begin{eqnarray*}
-%     \fv_* ~|~ \Xmat_*, \Xmat, \yv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post}).
-% \end{eqnarray*}
-%   with 
-%   \begin{eqnarray*}
-%     \mv_{\text{post}} &=& \Kmat_{*}^{T} (\Kmat+ \sigma^2 \cdot \id)^{-1}\yv \\
-%     \Kmat_\text{post} &=& \Kmat_{**} - \Kmat_*^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\Kmat_*,
-%   \end{eqnarray*}
-% \item This converts back to the noise-free formula if $\sigma^2 = 0$.
+%   \item How does the theory of Gaussian processes fit into this theory? 
+%   \item What if we want to make a prediction which is optimal w.r.t. a certain loss function? 
+% \end{itemize}
 
 % \framebreak 
 
-% \item The noisy Gaussian process is not an interpolator any more.
-% \item A larger nugget term leads to a wider ``band'' around the observed training points.
-% \item The nugget term is estimated during training.
-
-
-% \begin{center}
-%     \includegraphics[width=0.8\textwidth]{figure/gp_pred/gp_regression.pdf}
-% \end{center}
+% \begin{itemize}
+%   \item The theory of Gaussian process gives us a posterior distribution 
+%   $$
+%     p(y ~|~\D)
+%   $$
+%   \item If we now want to make a prediction at a test point $\bm{x}_*$, we approximate the theoretical risk in a different way, by using the posterior distribution: 
+%   $$
+%     \mathcal{R}(y_* ~|~ \bm{x}_*) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\bm{x}_*, \D)d\tilde y_*. 
+%   $$
+%   \item The optimal prediciton w.r.t the loss function is then: 
+%   $$
+%     \hat y_* | \bm{x}_* = \argmin_{y_*} \mathcal{R}(y_*~|~ \bm{x}_*).
+%   $$
 % \end{itemize}
-
-% \end{vbframe}
-
-
-
-% \section{Decision Theory for Gaussian Processes}
-
-\begin{vbframe}{Risk Minimization for Gaussian Processes}
-
-In machine learning, we learned about risk minimization. We usually choose a loss function and minimize the empirical risk  
-
-$$
-  \riske(f) := \sumin \Lxyi
-$$
-as an approximation to the theoretical risk
-
-$$ 
-  \riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. 
-$$
-
-\begin{itemize}
-  \item How does the theory of Gaussian processes fit into this theory? 
-  \item What if we want to make a prediction which is optimal w.r.t. a certain loss function? 
-\end{itemize}
-
-\framebreak 
-
-\begin{itemize}
-  \item The theory of Gaussian process gives us a posterior distribution 
-  $$
-    p(y ~|~\D)
-  $$
-  \item If we now want to make a prediction at a test point $\bm{x}_*$, we approximate the theoretical risk in a different way, by using the posterior distribution: 
-  $$
-    \mathcal{R}(y_* ~|~ \bm{x}_*) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\bm{x}_*, \D)d\tilde y_*. 
-  $$
-  \item The optimal prediciton w.r.t the loss function is then: 
-  $$
-    \hat y_* | \bm{x}_* = \argmin_{y_*} \mathcal{R}(y_*~|~ \bm{x}_*).
-  $$
-\end{itemize}
 
 
 % In practical applications, we are often forced to make predictions. We need a point-like prediction that is \enquote{optimal} in some sense. 
