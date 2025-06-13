@@ -7,42 +7,26 @@
 
 # PREREQ -----------------------------------------------------------------------
 
-if (FALSE) install.packages("pak")
-
 library(checkmate)
 library(data.table)
 library(ggplot2)
 library(mvtnorm)
 library(patchwork)
-library(plotly)
-pak::pak("slds-lmu/vistool")
-library(vistool)
 
 source("covariance_functions.R")
 
 # FUNCTIONS --------------------------------------------------------------------
 
 sample_zeromean_gp_prior = function(
-        kernel_type, 
-        n_samples, 
-        n_points, 
-        x_range, 
-        y_range = NULL, 
-        eps = 1e-6, 
-        ...
+        kernel_type, n_samples, n_points, x_range, eps = 1e-6, ...
     ) {
     x = seq(x_range[1], x_range[2], length.out = n_points)
-    if (!is.null(y_range)) { # bivariate kernels
-        y = seq(y_range[1], y_range[2], length.out = n_points)
-    } else y = x
-    kmat = get_kmat(x, y, kernel_type, ...)
+    kmat = get_kmat(x, x, kernel_type, ...)
     kmat = kmat + diag(eps, n_points)
     samples = rmvnorm(n_samples, mean = rep(0, n_points), sigma = kmat)
     dt = as.data.table(t(samples))
     names(dt) = sprintf("sample_%i", seq_len(n_samples))
     dt[, x := x]
-    if (!is.null(y_range)) dt[, y := y]
-    dt
 }
 
 plot_priors = function(
@@ -68,50 +52,21 @@ plot_priors = function(
     
 }
 
-plot_priors_2d = function(
-        kernel_type, 
-        n_samples = 5, 
-        n_points = 500, 
-        x_range = c(-2, 2), 
-        y_range = c(-2, 2),
-        ...
-) {
-    plot_data = sample_zeromean_gp_prior(
-        kernel_type, n_samples, n_points, x_range, ...
+save_topdf = function(p, kernel_type) {
+    ggsave(
+        sprintf("../figure/cov_funs/cov_%s.pdf", kernel_type),
+        p,
+        width = 8,
+        height = 3
     )
-    plot_data_long = melt(plot_data, id.vars = "x")
-    ggplot(plot_data_long, aes(x = x, y = value, color = variable)) +
-        geom_line() +
-        scale_color_viridis_d() +
-        theme_bw() +
-        labs(x = "x", y = "f(x)") +
-        theme(
-            legend.position = "none",
-            axis.text.y = element_blank()
-        )
-    
 }
-
-x = y = seq(-2, 2, length.out = 10)
-kmat = kernel_min_bivariate(x, y)
-sample <- MASS::mvrnorm(1, rep(0, 10), kmat)
-
-foo = sample_zeromean_gp_prior("minimum_bivariate", 
-                               n_samples = 1, 
-                               n_points = 100, 
-                               x_range = c(0, 1), 
-                               y_range = c(0, 1))
-
-plot_ly(x = foo$x, y = foo$y, z = foo$sample_1) %>%
-    add_surface()
 
 # PLOTS ------------------------------------------------------------------------
 
 set.seed(123)
 
-plot_priors(kernel_type = "constant", intercept = 2)
-
-plot_priors(kernel_type = "linear", intercept = 2)
+save_topdf(plot_priors(kernel_type = "constant", intercept = 2), "constant")
+save_topdf(plot_priors(kernel_type = "linear", intercept = 2), "linear")
 
 p_polynomial = lapply(
     c(1, 2, 5),
@@ -120,7 +75,7 @@ p_polynomial = lapply(
             ggtitle(sprintf("degree %i", i))
     }
 )
-Reduce("+", p_polynomial)
+save_topdf(Reduce("+", p_polynomial), "polynomial")
 
 p_periodic = lapply(
     c(1, 2, 5),
@@ -129,7 +84,7 @@ p_periodic = lapply(
             ggtitle(sprintf("period %i", i))
     }
 )
-Reduce("+", p_periodic) # + plot_annotation(title = "length scale 1")
+save_topdf(Reduce("+", p_periodic), "periodic")
 
 p_matern = lapply(
     c(0.5, 2, 10),
@@ -138,7 +93,7 @@ p_matern = lapply(
             ggtitle(bquote(nu == .(i)))
     }
 )
-Reduce("+", p_matern)
+save_topdf(Reduce("+", p_matern), "matern")
 
 p_exponential = lapply(
     c(0.1, 1, 10),
@@ -147,7 +102,7 @@ p_exponential = lapply(
             ggtitle(sprintf("length scale %.1f", i))
     }
 )
-Reduce("+", p_exponential)
+save_topdf(Reduce("+", p_exponential), "exponential")
 
 p_squaredexp = lapply(
     c(0.1, 1, 10),
@@ -156,4 +111,4 @@ p_squaredexp = lapply(
             ggtitle(sprintf("length scale %.1f", i))
     }
 )
-Reduce("+", p_squaredexp)
+save_topdf(Reduce("+", p_squaredexp), "squaredexp")

@@ -7,7 +7,7 @@
 
 # PREREQ -----------------------------------------------------------------------
 
-if (FALSE) install.packages("pak")
+# if (FALSE) install.packages("pak")
 
 library(checkmate)
 library(data.table)
@@ -23,7 +23,7 @@ source("covariance_functions.R")
 # FUNCTIONS --------------------------------------------------------------------
 
 cov_brownian = function(s, t) pmin(s[[1]], t[[1]]) * pmin(s[[2]], t[[2]])
-# also see https://www.uni-ulm.de/fileadmin/website_uni_ulm/mawi.inst.110/lehre/ws13/Stochastik_II/Skript_4.pdf
+# https://www.uni-ulm.de/fileadmin/website_uni_ulm/mawi.inst.110/lehre/ws13/Stochastik_II/Skript_4.pdf
 
 # PLOTS ------------------------------------------------------------------------
 
@@ -44,11 +44,10 @@ cov_values = apply(
 )
 kmat =- matrix(0, n_tuples, n_tuples)
 kmat[ij_pairs] = cov_values # upper triangle
-kmat = kmat + t(kmat) - diag(diag(kmat)) # complete
+kmat = kmat + t(kmat) - diag(diag(kmat)) # complete symmetrically
 
 sample = rmvnorm(1, rep(0, n_tuples), kmat)
-surface_mat <- matrix(sample, nrow = n_pts, byrow = FALSE)
-
+surface_mat = matrix(sample, nrow = n_pts, byrow = FALSE)
 
 plot_ly(x = x1, y = x2, z = surface_mat) %>%
     add_surface() %>%

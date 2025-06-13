@@ -15,9 +15,7 @@ supported_kernels = c(
     "periodic",
     "matern",
     "exponential",
-    "squaredexp",
-    "minimum",
-    "minimum_bivariate"
+    "squaredexp"
 )
 
 # FUNCTIONS --------------------------------------------------------------------
@@ -38,21 +36,6 @@ kernel_periodic = function(x1, x2, period, lengthscale) {
     dist_mat = outer(x1, x2, function(i, j) abs(i - j))
     kmat = exp((-2 * sin(pi * dist_mat / period)**2) / lengthscale**2)
     kmat[seq_along(x1), seq_along(x2)]
-}
-
-kernel_min = function(x1, x2) outer(x1, x2, function(i, j) pmin(i, j))
-
-kernel_min_bivariate = function(x1, x2) {
-    # Get product of component-wise minima
-    get_min = function(x1, x2) pmin(x1[[1]], x2[[1]]) * pmin(x1[[2]], x2[[2]])
-    grid_x = cbind(x1, x2)
-    grid_idx = expand.grid(i = seq_len(length(x1)), j = seq_len(length(x2)))
-    mins = apply(
-        grid_idx, 
-        1, 
-        function(i) get_min(grid_x[i[[1]], ], grid_x[i[[2]], ])
-    )
-    matrix(mins, nrow = length(x1), ncol = length(x2), byrow = FALSE)
 }
 
 kernel_matern = function(x1, x2, nu = 1.5, lengthscale = 1, sigma2 = 1) {
@@ -90,8 +73,6 @@ get_kmat = function(x1, x2, kernel_type, ...) {
         linear = kernel_linear(x1, x2, ...),
         polynomial = kernel_polynomial(x1, x2, ...),
         periodic = kernel_periodic(x1, x2, ...),
-        minimum = kernel_min(x1, x2),
-        minimum_bivariate = kernel_min_bivariate(x1, x2),
         matern = kernel_matern(x1, x2, ...),
         exponential = kernel_exp(x1, x2, ...),
         squaredexp = kernel_sqexp(x1, x2, ...)
