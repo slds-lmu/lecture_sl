@@ -21,8 +21,7 @@
 }
 
 \begin{framei}[sep=L]{gp prediction}
-\item So far: sampling from GP priors
-\item More interesting than drawing random functions from GP priors: predict at unseen test point $\xv_\ast$ with $f_\ast = f(\xv_\ast)$
+\item More interesting than drawing random samples from GP priors: predict at unseen test point $\xv_\ast$ with $f_\ast = f(\xv_\ast)$
 \item Given: training data with design matrix $\Xmat$, observed values $\fv = f(\Xmat) = \fvec$
 \item Goal: infer distribution of $f_\ast | \xv_\ast, \Xmat, \fv$ \\$\Rightarrow$ update prior to posterior process
 \end{framei}
@@ -34,7 +33,7 @@ $$\begin{bmatrix}
 \end{bmatrix} \sim  
 \normal \left(\zero, \begin{bmatrix} \Kmat & \Kmat_* \\ \Kmat_*^T & \Kmat_{**}\end{bmatrix}\right)$$
 with $\Kmat_* = [k(\xv_*, \xi[1]), \dots, k(\xv_*, \xi[n])]$,  $ \Kmat_{**}\ = k(\xv_*, \xv_*)$
-\item General rule for condition of Gaussian RVs
+\item General rule for conditioning of Gaussian RVs
 \begin{itemize}
 \item $\bm{z} \sim \normal(\mu, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\mu = (\mu_1, \mu_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
 \item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is MV normal 
@@ -57,18 +56,17 @@ $$\begin{bmatrix} \fv \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatr
 \item MAP-estimate: $f(\xv_*) = 0.61$, uncertainty estimate: $0.63$
 \end{framei}
 
-\foreach \i in {1, 2, 3, 4, 5, 6} {
+\foreach \i in {2, 4, 5, 6} {
 \begin{framei}{example: 2 points}
-\ifnum \i<3
+\ifnum \i=2
 \item Bivariate normal density + marginals for joint distribution of $f, f_*$
-\else \ifnum \i<6
+\fi \ifnum \i=4
 \item Update posterior distribution, conditioning on observed value
-\item Possible predictor at $\xv_*$: MAP estimate
-\fi 
+\fi \ifnum \i>4
+\item Posterior mean: MAP estimate
 \ifnum \i=6
-\item Posterior uncertainty ($\pm2$ posterior SD) in grey
-\fi 
-\fi 
+\item Posterior uncertainty: $\pm2$ posterior SD (grey)
+\fi \fi
 \vfill
 \imageC[.8]{figure/gp_pred/\i.pdf}
 \end{framei}
@@ -93,7 +91,7 @@ $$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{
 \begin{eqnarray*}
 \fv ~|~ \Xmat, \fv &\sim& \normal(\Kmat\Kmat^{-1}\fv, \Kmat - \Kmat^T \Kmat^{-1} \Kmat) \\ &\sim& \normal(\fv, \zero)
 \end{eqnarray*}
-\item GP is function \textbf{interpolator}
+\item Implication: GP is function \textbf{interpolator}
 \vfill
 \imageC[.8]{figure/gp_pred/gp_interpolator.pdf}
 \end{framei}
@@ -117,7 +115,7 @@ $$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{
 $y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
 \item Covariance becomes 
 \begin{eqnarray*} 
-&& \cov(y^{(i)}, y^{(j)}) =  \cov (f(\xi) + \epsilon^{(i)}, f(\xi[j]) + \epsilon^{(j)}) \\
+&&\cov(y^{(i)}, y^{(j)}) \\ &=&  \cov (f(\xi) + \epsilon^{(i)}, f(\xi[j]) + \epsilon^{(j)}) \\
 &=& \cov(f(\xi), f(\xi[j])) + 2 \cdot \cov(f(\xi), \epsilon^{(j)}) + \cov(\epsilon^{(i)}, \epsilon^{(j)}) 
 \\ &=& k(\xi, \xi[j]) + \sigma^2 \delta_{ij}
 \end{eqnarray*}
@@ -158,7 +156,7 @@ $\Kmat_\text{post} = \Kmat_{**} - \Kmat_*^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\K
 \item Recall: theoretical risk for unseen obs based on loss function $L$
 $$\riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy$$ 
 \item No access to $\Pxy$ $\Rightarrow$ compute empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
-\item For GPs, we have a posterior predictive distribution over $y$, yielding
+\item For GPs, make use of posterior predictive distribution over $y$
 $$
     \mathcal{R}(y_* ~|~ \xv_*) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xv_*, \D)d\tilde y_*. 
   $$
@@ -168,42 +166,6 @@ $$
     \yh_* | \xv_* = \argmin_{y_*} \mathcal{R}(y_*~|~ \xv_*).
   $$
 \end{framei}
-
-% \begin{vbframe}{Risk Minimization for Gaussian Processes}
-
-% In machine learning, we learned about risk minimization. We usually choose a loss function and minimize the empirical risk  
-
-% $$
-%   \riske(f) := \sumin \Lxyi
-% $$
-% as an approximation to the theoretical risk
-
-% $$ 
-%   \riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy. 
-% $$
-
-% \begin{itemize}
-%   \item How does the theory of Gaussian processes fit into this theory? 
-%   \item What if we want to make a prediction which is optimal w.r.t. a certain loss function? 
-% \end{itemize}
-
-% \framebreak 
-
-% \begin{itemize}
-%   \item The theory of Gaussian process gives us a posterior distribution 
-%   $$
-%     p(y ~|~\D)
-%   $$
-%   \item If we now want to make a prediction at a test point $\bm{x}_*$, we approximate the theoretical risk in a different way, by using the posterior distribution: 
-%   $$
-%     \mathcal{R}(y_* ~|~ \bm{x}_*) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\bm{x}_*, \D)d\tilde y_*. 
-%   $$
-%   \item The optimal prediciton w.r.t the loss function is then: 
-%   $$
-%     \hat y_* | \bm{x}_* = \argmin_{y_*} \mathcal{R}(y_*~|~ \bm{x}_*).
-%   $$
-% \end{itemize}
-
 
 % In practical applications, we are often forced to make predictions. We need a point-like prediction that is \enquote{optimal} in some sense. 
 
