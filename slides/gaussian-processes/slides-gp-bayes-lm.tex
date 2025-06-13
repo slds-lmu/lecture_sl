@@ -23,7 +23,6 @@ figure/bayes_lm/posterior_5_3.pdf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{framei}{data situation}
-\item \textcolor{red}{Check: need to add/remove stuff due to new chapter order?}
 \item $\D = \Dset$: i.i.d. training set from some unknown distribution
 \imageC[.6]{figure/bayes_lm/example.pdf}
 \item $\Xmat \in \R^{n \times p}$: design matrix, where $i$-th row contains vector $\xi$
@@ -43,7 +42,8 @@ $$\epsi \sim \mathcal{N}(0, \sigma^2) \quad \forall i$$
 \item Example: random lines with intercept 0, slope $\thetav \sim \normal(0, 1)$
 
 \textcolor{red}{TODO LW: random slopes plot}
-\item Random lines = draws from GP with linear kernel, giving rise to collection of RVs $\{ \fx = \thetav \xv: \xv \in \R\}$, where $\fv$ is mv Gaussian for any finite set of inputs $\xdat$
+\item Random lines = draws from GP with linear kernel
+\item Collection of RVs $\{ \fx = \thetav \xv: \xv \in \R\}$\item $f(\Xmat)$ is mv Gaussian for any finite input with design matrix $\Xmat$
 \end{framei}
 
 \begin{framei}[sep=L]{from prior to posterior}

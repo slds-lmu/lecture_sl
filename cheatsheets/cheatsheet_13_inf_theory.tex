@@ -1,0 +1,281 @@
+\documentclass{beamer}
+\newcommand \beameritemnestingprefix{}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-trees.tex}
+\input{../latex-math/ml-nn.tex}
+
+
+\title{Supervised Learning :\,: CHEAT SHEET} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ % Package description in header
+%	The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+
+\begin{document}
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+				\begin{myblock}{Entropy}
+
+                \begin{codebox}
+                  \textbf{Entropy of Discreate Random Variables}
+                \end{codebox}
+								
+								Entropy of a discrete random variable $X$ with domain $\Xspace$ and pmf $p(x)$:
+								$$
+										H(X) := H(p) = - \E[\log_2(p(X))] = -\sum\nolimits_{x \in \Xspace} p(x) \log_2 p(x) 
+								$$
+								
+                Properties of discrete entropy:
+								\begin{itemize}[$\bullet$]
+            \setlength{\itemindent}{+.3in}
+									\item Entropy is non-negative, so $H(X) >= 0$.
+									\item If one event has probability $p(x) = 1$, then $H(X)=0$. 
+									\item Symmetry. Reordering values of $p(x)$ does not change entropy.
+									\item Adding or removing an event with $p(x)=0$ does not change entropy.
+									\item $H(X)$ is continuous in probabilities $p(x)$.
+									\item Entropy is additive for independent RVs.
+									\item Entropy is maximal for a uniform distribution.
+								\end{itemize}
+
+
+                \begin{codebox}
+                  \textbf{Differential Entropy of Continuous Random Variables}
+                \end{codebox}
+
+                Differential entropy of a continuous random variable $X$ with density function $f(x)$ and support $\Xspace$:				
+									$$ h(X) := h(f) := - \mathbb{E}[\log(f(x))] = - \int_{\Xspace} f(x) \log(f(x)) dx $$
+				
+
+                Properties of differential entropy:
+								\begin{itemize}[$\bullet$]
+									\setlength{\itemindent}{+.3in}
+								\item $h(f)$ can be negative.
+								\item $h(f)$ is additive for independent RVs.
+								\item $h(f)$ is maximized by the multivariate normal, if we restrict 
+								to all distributions with the same (co)variance, so
+								$h(X) \leq \frac{1}{2} \ln(2 \pi e)^n |\Sigma|.$
+								\item Translation-invariant, $ h(X+a) = h(X)$.
+								\item $h(AX) = h(X) + \log |A|$ for random vectors and matrix A.
+								\item For a given variance, the continuous distribution that maximizes differential entropy is the Gaussian.
+								\end{itemize}
+
+							\end{myblock}
+
+
+
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+              \begin{myblock}{Joint and Continuous Entropy}
+
+                \begin{codebox}
+                  \textbf{Joint Entropy}
+                \end{codebox}
+
+                Discrete:\\
+              Joint entropy of $n$ discrete random variables $X_1, X_2, \ldots, X_n:$
+								{\small 
+									$$ H(X_1, X_2, \ldots, X_n) = - \sum\nolimits_{x_1 \in \Xspace_1} \ldots \sum\nolimits_{x_n \in \Xspace_n} p(x_1,x_2, \ldots, x_n) \log_2(p(x_1,x_2, \ldots, x_n)) $$ 
+								}  
+                
+                Continuous:\\
+              Joint differential entropy of a continuous random vector $X$ with density function $f(x)$ and support $\Xspace:$
+									$$ h(X) = h(X_1, \ldots, X_n) = h(f) = - \int_{\Xspace} f(x) \log(f(x)) dx $$
+								
+
+                  \begin{codebox}
+                  \textbf{Conditional Entropy}
+                \end{codebox}
+
+                Discrete:\\
+							Conditional entropy of $Y$  given $X$ for $(X, Y) \sim p(x, y):$
+								{\small 
+									\begin{equation*}
+										\begin{aligned}
+											H(Y | X) &= \E_X[H(Y|X=x)] = \sum_{x \in \Xspace} p(x) H(Y | X=x) \\
+											&=-\sum_{x \in \Xspace} p(x) \sum_{y \in \Yspace} p(y | x) \log p(y | x) 
+											=-\sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log p(y | x)  
+										\end{aligned}
+									\end{equation*}
+								}  
+
+
+                Continuous:\\
+							Conditional entropy of $Y$ given $X$ (both continuous):
+								$$h(Y|X) = - \int f(x,y) \log f(x|y) dx dy.$$
+
+                Properties:
+								\begin{itemize}[$\bullet$]
+									\setlength{\itemindent}{+.3in}
+										\item $H(X, X)       = H(X)  $
+										\item $H(X | X)      = 0 $
+										\item $H(X, Y | Z)   =H(X | Z)+H(Y | X, Z)$
+										\item $H(X | Y) \leq H(X) $
+										\item  If $H(X|Y) = 0$, then $X$ is a function of $Y$
+								\end{itemize}
+
+                Chain rule for entropy:
+								$$H(X, Y)=H(X)+H(Y | X)$$
+					
+								n-Variable version:
+								$$H(X_{1}, X_{2}, \ldots, X_{n})=\sumin H(X_{i} | X_{i-1}, \ldots, X_{1})$$
+								
+
+                \end{myblock}
+
+							
+								
+							
+
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{Cross-Entropy and Kullback-Leibler Divergence}
+
+                  \begin{codebox}
+                  \textbf{Cross-entropy} of two distributions $p$ and $q$ on the same domain $\Xspace:$
+                  \end{codebox}
+                   
+								Discrete:
+								$$ H(p \| q) = \sum_{x \in \Xspace} p(x) \log(\frac{1}{q(x)}) = - \sum_{x \in \Xspace} p(x) \log(q(x)) = - \mathbb{E}_{X\sim p}[\log(q(X))]$$
+								
+                Continuous:
+                $$ H(p \| q) = \int p(x) \log(\frac{1}{q(x)}) dx = - \int p(x) \log(q(x)) dx = - \mathbb{E}_{X \sim p}[\log(q(X))]$$
+                
+
+                \begin{codebox}
+                  \textbf{Kullback-Leibler Divergence}
+                \end{codebox}
+								
+                Discrete:
+								$$ D_{KL}(p \| q) = \E_p [\log \frac{p(X)}{q(X)}] = \sum_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)} $$
+								
+                Continuous:
+                $$ D_{KL}(p \| q) = \E_p [\log \frac{p(X)}{q(X)}] = \int_{x \in \Xspace} p(x) \cdot \log \frac{p(x)}{q(x)} $$
+								
+								\begin{codebox}
+                  \textbf{Relation}
+                \end{codebox}
+								$$
+									H(p \| q) = H(p) + D_{KL}(p \| q)
+								$$
+								
+							\end{myblock}
+
+  \begin{myblock}{Mutual Information}
+							\textbf{Mutual information} between $X$ and $Y:$
+							
+              Discrete:
+								\begin{equation*}
+									\begin{aligned}
+										I(X ; Y) &= \E_{p(x, y)} [ \log \frac{p(X, Y)}{p(X) p(Y)} ] = \sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
+										&= H(X)-H(X | Y)
+									\end{aligned}
+								\end{equation*}
+
+              Continuous:
+								$$I(X ; Y) = \int f(x,y) \log \frac{f(x,y)}{f(x)f(y)} dx dy$$
+
+
+              Properties:
+								\begin{itemize}[$\bullet$]
+									\setlength{\itemindent}{+.3in}
+										\item $ I(X ; Y) = H(X) - H(X | Y) $
+											\item $I(X ; Y) = H(Y) - H(Y | X) $
+											\item $I(X ; Y) = H(X) + H(Y) - H(X, Y)$
+											\item $I(X ; Y) = I(Y ; X) $
+											\item $I(X ; X) = H(X)$
+											\item $ I(X;Y) \geq 0$, with equality if and only if $X$ and $Y$ are independent
+								\end{itemize}
+								
+							\end{myblock}
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+\end{document}

@@ -1,0 +1,264 @@
+\documentclass{beamer}
+\newcommand \beameritemnestingprefix{}
+
+
+\usepackage[orientation=landscape,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{mlr}}
+
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[english]{babel} % Language
+\usepackage{hyperref} % Hyperlinks
+\usepackage{ragged2e} % Text position
+\usepackage[export]{adjustbox} % Image position
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{psfrag}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{eqnarray}
+\usepackage{arydshln}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{colortbl}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{bm}
+
+
+\input{../latex-math/basic-math.tex}
+\input{../latex-math/basic-ml.tex}
+\input{../latex-math/ml-trees.tex}
+\input{../latex-math/ml-nn.tex}
+
+
+\title{Supervised Learning :\,: CHEAT SHEET} % Package title in header, \, adds thin space between ::
+\newcommand{\packagedescription}{ % Package description in header
+%	The \textbf{I2ML}: Introduction to Machine Learning course offers an introductory and applied overview of "supervised" Machine Learning. It is organized as a digital lecture.
+}
+
+\newlength{\columnheight} % Adjust depending on header height
+\setlength{\columnheight}{84cm} 
+
+\newtcolorbox{codebox}{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	hbox}
+
+\newtcolorbox{codeboxmultiline}[1][]{%
+	sharp corners,
+	leftrule=0pt,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	#1}
+
+\begin{document}
+\begin{frame}[fragile]{}
+\begin{columns}
+	\begin{column}{.31\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}
+				\parbox[t][\columnheight]{\textwidth}{
+
+					\begin{myblock}{Multiclass Classification}
+
+      Multiclass classification with $g > 2$ classes
+$$\D \subset \left(\Xspace \times \Yspace\right)^n, \Yspace = \{1, ..., g\}$$ 
+
+Goal is to find a model  $f: \Xspace \to \R^g$, where $g$ is the number of classes, that minimizes the expected loss over random variables $\xy \sim \Pxy$ 
+$$
+ \riskf = \E_{xy}[\Lxy] = \E_{x}\left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xv)\right] 
+$$
+
+The optimal model for a loss function $\Lxy$ is
+$$ \fxh = \argmin_{f \in \Hspace} \sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xv)\, $$
+
+ERM: $\fh = \argmin_{f \in \Hspace} \riske(f) = \argmin_{f \in \Hspace} \sumin \Lxyi$
+
+\begin{codebox} 
+  \textbf{One-Hot Encoding}
+  \end{codebox}
+$$
+\text{with}\quad \mathds{1}_{\{y = k\}} = \begin{cases} 1 & \text{ if } y = k \\
+0 & \text{ otherwise}\end{cases}
+$$
+
+\begin{codebox} 
+  \textbf{Notations}
+  \end{codebox}
+\begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+    \item Vectors of scores $$f(\xv) = \left(f_1(\xv), ..., f_g(\xv)\right)$$
+    \item Vectors of probabilities $$\pi(\xv) = \left(\pi_1(\xv), ..., \pi_g(\xv)\right)$$
+    \item Hard labels $$\hx = k, k \in \{1, 2, ..., g\}$$
+\end{itemize}
+
+\begin{codebox} 
+  \textbf{Loss Functions}
+  \end{codebox}
+
+\begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+  \item 0-1 Loss
+  $$ L(y, \hx) = \mathds{1}_{\{y \neq \hx\}} $$
+  \item Brier Score
+  $$ L(y, \pi(x)) = \sum_{k = 1}^g \left(\mathds{1}_{\{y = k\}} - \pi_k(\xv)\right)^2 $$
+  \item Logarithmic Loss
+  $$ L(y, \pi(x)) = - \sum_{k = 1}^g \mathds{1}_{\{y = k\}} \log\left(\pi_k(\xv)\right) $$
+\end{itemize}
+
+\end{myblock}
+
+				}
+			\end{minipage}
+		\end{beamercolorbox}
+	\end{column}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+\begin{myblock}{Softmax Regression}
+
+  Softmax regression gives us a \textbf{linear classifier}.
+
+  We have $g$ linear discriminant functions
+  $$
+      f_k(\xv) = \thetav_k^\top \xv, \quad k = 1, 2, ..., g,
+  $$
+  each indicating the confidence in class $k$.\\
+
+  The $g$ score functions are transformed into $g$ probability functions by the \textbf{softmax} function $s:\R^g \to [0,1]^g$ 
+  $$
+    \pi_k(\xv) = s(\fx)_k = \frac{\exp(\thetav_k^\top \xv)}{\sum_{j = 1}^g \exp(\thetav_j^\top \xv) }\,,
+  $$
+
+  The probabilities are well-defined: $\sum \pi_k(\xv) = 1$ and $\pi_k(\xv) \in [0, 1]$ for all $k$.\\
+
+  Use the multiclass \textbf{logarithmic loss}
+  $$
+    L(y, \pix) = - \sum_{k = 1}^g \mathds{1}_{\{y = k\}} \log\left(\pi_k(\xv)\right).
+  $$ \\
+  
+  The softmax function is 
+  \begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+  \item a smooth approximation of the arg max operation: \\
+  $s((1, 1000, 2)^T) \approx (0, 1, 0)^T$ (picks out 2nd element).  
+  \item invariant to constant offsets in the input:  
+    $$ 
+    s(\fx + \mathbf{c}) = \frac{\exp(\thetav_k^\top \xv + c)}{\sum_{j = 1}^g \exp(\thetav_j^\top \xv + c)} = 
+    \frac{\exp(\thetav_k^\top \xv)\cdot \exp(c)}{\sum_{j = 1}^g \exp(\thetav_j^\top \xv) \cdot \exp(c)} = 
+    s(\fx)
+    $$  
+\end{itemize}
+  \end{myblock}
+
+
+  \begin{myblock}{Binary Reduction}
+
+    Computational effort for one-vs-one is much higher than for one-vs-rest.
+  \begin{codebox} 
+  \textbf{One-vs-Rest}
+  \end{codebox}
+
+Create $g$ binary subproblems, where in each the $k$-th original class is encoded as $+1$, and all other classes (the \textbf{rest}) as $- 1$.
+
+Applying all classifiers to a sample $\xv \in \Xspace$ and predicting the label $k$ for which the corresponding classifier reports the highest confidence: 
+    $$
+      \hat y = \text{arg max}_{k \in \{1, 2, ..., g\}} \hat f_k(\xv). 
+    $$
+  
+\end{myblock}
+}
+\end{minipage}
+\end{beamercolorbox}
+\end{column}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{column}{.31\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth}
+\parbox[t][\columnheight]{\textwidth}{
+
+  \begin{myblock}{}
+  
+    \begin{codebox} 
+  \textbf{One-vs-One}
+  \end{codebox}
+
+Create $\frac{g(g - 1)}{2}$ binary sub-problems, where each $\D_{k, \tilde k} \subset \D$ only considers observations from a class-pair $\yi \in \{k, \tilde k\}$, other observations are omitted.
+
+Label prediction is done via \textbf{majority voting}. We predict the label of a new $\xv$ with all classifiers and select the class that occurred most often. 
+
+    \begin{codebox} 
+  \textbf{Error-Correcting Output Codes (ECOC)}
+  \end{codebox}
+
+  \textbf{Codebooks:} The k-th column defines how classes of all observations are encoded in the binary subproblem / for binary classifier $f_k(\xv)$.
+								Entry $(m, i)$ takes values $\in \{-1, 0, +1\}$
+								\begin{itemize}
+									\setlength{\itemindent}{+.3in}
+									\item if $0$, observations of class $\yi = m$ are ignored.
+									\item if $1$, observations of class $\yi = m$ are encoded as $1$.
+									\item if $- 1$, observations of class $\yi = m$ are encoded as $- 1$.
+								\end{itemize}
+  \begin{table}[]
+  \begin{tabular}{|c|r|r|r|r|r|r|r|r|} \hline
+  \textbf{Class}  & \textbf{$f_1{(\xv)}$} & \textbf{$f_2{(\xv)}$}  & \textbf{$f_3{(\xv)}$} & \textbf{$f_4{(\xv)}$} & \textbf{$f_5{(\xv)}$} & \textbf{$f_6{(\xv)}$} & \textbf{$f_7{(\xv)}$} & \textbf{$f_8{(\xv)}$}\\ \hline
+  \textbf{$1$} & -1 & -1 & -1 & -1 & 1 & 1 & 1 & 1 \\ \hline
+  \textbf{$2$} & -1 & - 1 & 1 & 1 & -1 & -1 & 1 & 1 \\ \hline
+  \textbf{$3$} & -1 & 1 & -1 & 1 & -1 & 1 & -1 & 1\\ \hline
+  \end{tabular}
+  \end{table}\\
+
+  We want to maximize distances between rows, and want the distances between columns to not be too small (identical columns) or too high (complementary columns):
+  \begin{itemize}[$\bullet$] 
+  \setlength{\itemindent}{+.3in}
+  \item Row separation: each codeword should be well-separated in Hamming distance from each of the other codewords.
+  \item Column separation: columns should be uncorrelated
+  \end{itemize}\\
+
+  Train L binary classifiers: only few classes $g \le 11$, exhaustive search can be performed.
+  
+  Randomized hill-climbing algorithm:
+\begin{itemize}[$\bullet$]
+  \setlength{\itemindent}{+.3in}
+    \item $g$ codewords of length $L$ are randomly drawn. 
+    \item Any pair of such random strings will be separated by a Hamming distance that is binomially distributed with mean $\frac{L}{2}$.
+    \item Iteratively improves the code: algorithm repeatedly finds the pair of rows closest together and the pair of columns that have the most extreme distance.
+    \item Then computes the four codeword bits where these rows and columns intersect and changes them to improve the row and column separations.
+    \item When the procedure reaches a local maximum, the algorithm randomly chooses pairs of rows and columns and tries to improve their separation.
+  \end{itemize}
+
+\end{myblock}
+  }
+  
+  \end{minipage}
+  \end{beamercolorbox}
+  \end{column}
+  
+  
+  
+\end{columns}
+\end{frame}
+\end{document}
