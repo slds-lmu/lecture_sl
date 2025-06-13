@@ -121,22 +121,22 @@ $y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
 &=& \cov(f(\xi), f(\xi[j])) + 2 \cdot \cov(f(\xi), \epsilon^{(j)}) + \cov(\epsilon^{(i)}, \epsilon^{(j)}) 
 \\ &=& k(\xi, \xi[j]) + \sigma^2 \delta_{ij}
 \end{eqnarray*}
-\item $\sigma^2$ often called \textbf{nugget}
-\item Estimate nugget term during training
+\item $\sigma^2$ often called \textbf{nugget} $\Rightarrow$ estimate during training
 \end{framei}
 
 \begin{framei}[sep=L]{predictive distribution for noisy GP}
 \item Let $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$, $\Xmat = \xdat$
-\item Prior for $\yv$
+\item Prior predictive distribution for $\yv$
 $$
 \yv = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\mv, \Kmat + \sigma^2 \id_n \right),
 $$
 with $\mv = m(\Xmat), \Kmat = k(\Xmat, \Xmat)$
-\item Again, look at joint distribution of training points $(\Xmat, \yv$) and unobserved test points $(\Xmat_*, \fv_*)$
+\item Consider joint distribution of training $(\Xmat, \yv$) and test points $(\Xmat_*, \fv_*)$
 $$
 \begin{bmatrix} \yv \\ \fv_* \end{bmatrix} \sim  
 \normal\left(\zero, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Kmat_* \\ \Kmat_*^T & \Kmat_{**} \end{bmatrix}\right)
 $$
+with (as before) $\Kmat_* = (k(\xi, \xv_*^{(j)}))_{i,j}$, $\Kmat_{**} = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
 \end{framei}
 
 \begin{framei}[sep=M]{predictive distribution for noisy GP}
@@ -157,12 +157,12 @@ $\Kmat_\text{post} = \Kmat_{**} - \Kmat_*^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\K
 \begin{framei}[sep=M]{risk minimization for GP}
 \item Recall: theoretical risk for unseen obs based on loss function $L$
 $$\riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy$$ 
-\item Standard ML minimizes empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
-\item For GPs, approx theoretical risk via posterior distribution $p(y | \D)$
+\item No access to $\Pxy$ $\Rightarrow$ compute empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
+\item For GPs, we have a posterior predictive distribution over $y$, yielding
 $$
     \mathcal{R}(y_* ~|~ \xv_*) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xv_*, \D)d\tilde y_*. 
   $$
-\item Intuition: hypothetical loss values, weighted by posterior probability of  each $\tilde y_*$ given observed data
+\item Intuition: expected loss weighted by posterior probability of each $\tilde y_*$ given observed data
 \item Optimal prediction wrt loss function
 $$
     \yh_* | \xv_* = \argmin_{y_*} \mathcal{R}(y_*~|~ \xv_*).
@@ -236,7 +236,7 @@ $$
 
 % For quadratic loss $L(y, y^\prime) = (y - y^\prime)^2$ this corresponds to the posterior mean. 
 
-\end{vbframe}
+% \end{vbframe}
 
 
 \endlecture
