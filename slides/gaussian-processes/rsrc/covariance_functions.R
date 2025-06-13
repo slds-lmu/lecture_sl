@@ -63,6 +63,10 @@ kernel_sqexp = function(x1, x2, lengthscale = 0.1) {
     kmat[seq_along(x1), seq_along(x2)]
 }
 
+kernel_sqexp_distance = function(d, lengthscale = 1) {
+    exp(- 0.5 * d**2 / lengthscale**2)
+}
+
 # Kernel factory
 
 get_kmat = function(x1, x2, kernel_type, ...) {
@@ -75,6 +79,6 @@ get_kmat = function(x1, x2, kernel_type, ...) {
         periodic = kernel_periodic(x1, x2, ...),
         matern = kernel_matern(x1, x2, ...),
         exponential = kernel_exp(x1, x2, ...),
-        squaredexp = kernel_sqexp(x1, x2, ...)
+        squaredexp = kernel_sqexp(x1, x2, ...),
     )
 }
