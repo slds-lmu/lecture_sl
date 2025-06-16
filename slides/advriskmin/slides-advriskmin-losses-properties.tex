@@ -62,17 +62,17 @@ is influenced by choice of the loss
 $\rx := y - \fx$
 
 \item Classif. losses usually in terms of 
-  \textbf{margin}: $\nu(\xv) := y \cdot \fx$
+  \textbf{margin}: $\nux  := y \cdot \fx$
 
 \vfill
 
 \splitVCC[0.4]{
   \imageC{figure/loss_dist_based}
-  \tiny \centering
+  \small \centering
   Distance-based: $L1$
 }{
 \imageC{figure/overview_classif.png}
-  \tiny \centering
+  \small \centering
   %Margin-based losses
 }
 
@@ -95,25 +95,20 @@ A loss is
 
 \vfill
 
-%\begin{minipage}[b]{0.25}
-%  \imageC[]{figure/plot_loss_overview_classif_2}
-%  \tiny \centering
-%  Margin-based losses
-%\end{minipage}%
 \splitVThree
 {
   \imageC{figure/loss_dist_based}
-  \tiny \centering
+  \small \centering
   Distance-based: $L1$
 }%
 {
   \imageC{figure/loss_transl_inv.png}
-  \tiny \centering
-  Translation-invariant: $L2$
+  \small \centering
+  Transl.-invariant.: $L2$
 }%
 {
   \imageC{figure/loss_symmetric}
-  \tiny \centering
+  \small \centering
   Symmetric: Brier score
 }
 
@@ -124,7 +119,7 @@ A loss is
 \begin{frame2}[small]{Robustness}
 
 Outliers (in $y$) have large residuals $\rx = y - \fx$. Some losses are more
-affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2) it is not robust, linear (L1) or even sublinear losses are more robust.
+affected by large residuals than others. If loss goes up superlinearly (e.g. L2) it is not robust, linear (L1) or even sublinear losses are more robust.
 
 \vfill
 
@@ -186,7 +181,7 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 % \textcolor{blue}{LW: points 1-3 together w/ plot on subsequent slide; scnd slide w/ concrete examples (e.g., gd failing w/ lasso}
 
 \begin{itemize}
-\item Measured by number of continuous derivatives
+\item Measured by number of continuous derivatives. $f \in \mathcal{C}^k$ for $k$-times cont. differentiable. $f$ and smooth for $f \in \mathcal{C}^{\infty}$
 \item Usually want to have at least gradients in optimization of $\risket$
 \item If loss is not differentiable, might have to use derivative-free optimization (or worse, in case of 0-1)
 \item Smoothness of $\risket$ not only depends on $L$, but also requires smoothness of $\fx$! 
@@ -275,6 +270,7 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 \begin{itemizeL}
 \item Convexity of $\risket$ depends both on convexity of $L(\cdot)$ (given in most cases) and $\fxt$ (often problematic)
 \item If we model our data using an exponential family distribution, we always get convex losses \furtherreading{WEDDERBURN1976MAX}
+%\citelink{WEDDERBURN1976}
 \item For $\fxt$ linear in $\thetav$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
 \end{itemizeL} 
 

@@ -18,9 +18,9 @@
 \begin{document}
     
 \titlemeta{
-    Advanced Risk Minimization
+  Advanced Risk Minimization
   }{
-  	Risk Minimization Basics
+  Risk Minimization Basics
   }{
   figure_man/optimization_steps.jpeg
   }{
@@ -34,9 +34,8 @@
 \begin{frame}{Empirical Risk Minimization}
 To learn a model, we usually do ERM:
 $$\riskef = \sumin \Lxyi$$
-\vfill
-{\small
-\begin{itemize}\setlength\itemsep{0.5pt} 
+
+\begin{itemizeM}[small]
     \item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
 %    so from feature and target space
     \item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
@@ -48,13 +47,14 @@ $$\riskef = \sumin \Lxyi$$
     %$\Lxy$ 
     measures error between label and prediction
     \item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
-    $(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$    
+    $(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$  
     %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
-\end{itemize}
-}
+\end{itemizeM}
+
 Minimizing theoretical risk, so expected loss over DGP, is major goal:
 
 $$ \risk (f) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
+
 \end{frame}
 
 \begin{frame}{Two short examples}
@@ -77,9 +77,10 @@ $$ \risk (f) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
   
 \end{frame}
 
-\begin{frame}{Hypothesis Spaces and Parametrization}
+\begin{frame}[c]{Hypothesis Spaces and Parametrization}
 
 We often write $\riskf$, but finding an optimal $f$ is operationalized as finding optimal $\thetav \in \Theta$ among a family of parametrized curves:
+\vfill
 
 $$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{from functional family parametrized by}\,\thetav\}$$
 
@@ -87,8 +88,8 @@ $$\Hspace = \{f_{\thetav}: f_{\thetav}\,\text{from functional family parametrize
 
 \begin{itemizeL}
     \item Optimizing numeric vectors is more convenient than functions
-\item For some model classes, some parameters encode the same function (non-injective mapping, non-identifiability). \\
-We don't care here, now. 
+    \item For some model classes, some parameters encode the same function (non-injective mapping, non-identifiability). \\
+    We don't care here, now. 
 \end{itemizeL}
 
 \end{frame}
@@ -106,7 +107,7 @@ What is the constant that approximates $z$ with minimal loss?
 
 \vfill
 
-3 cases for Q
+\textbf{3 cases for Q}:\\
 \begin{itemize}
 \item $Q = P_y$, distribution of labels y, marginal of $\Pxy$\\
 optimal theoretical constant prediction
@@ -157,29 +158,30 @@ $$f_{c}^{\ast} = \argmin_{c \in \R} \E_{xy} \left[L(y,c)\right] = \argmin_{c \in
 \item Estimation via ERM: $\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$
 
 
-\imageC[0.32]{figure/l1_vs_l2.png}
+\imageC[0.34]{figure/l1_vs_l2.png}
 
 \end{framei}
 
 
 \begin{framei}[sep=M]{Risk Minimizer}
 
-\item Assume, hypothesis space $\Hspace=\Hspace_{all}$ is unrestricted;\\
+\item Assume, hypothesis space $\Hspace=\Hall$ is unrestricted;\\
 contains any measurable $f: \Xspace \to \R^g$
 
 \item We know $\Pxy$
 
-\item $f$ with minimal risk across $\Hspace_{all}$
+\item $f$ with minimal risk across $\Hall$
 is called\\
 \textbf{risk minimizer}, \textbf{population minimizer} or \textbf{Bayes optimal model}
 
-\begin{eqnarray*}
-	\fbayes_{\Hspace_{all}} &=& \argmin_{f \in \Hspace_{all}} \risk(f) = \argmin_{f \in \Hspace_{all}}\Exy\left[\Lxy\right]\\ &=&  \argmin_{f \in \Hspace_{all}}\int \Lxy \text{d}\Pxy
-\end{eqnarray*}
+\begin{align*}
+\fbayes_{\Hall} &= \argmin_{f \in \Hall} \risk(f) = \argmin_{f \in \Hall}\Exy\left[\Lxy\right]\\ 
+&=  \argmin_{f \in \Hall}\int \Lxy \text{d}\Pxy
+\end{align*}
 
-\item The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hspace_{all}})$
+\item The resulting risk is called \textbf{Bayes risk}:  $\riskbayes_{} = \risk(\fbayes_{\Hall})$
 
-\item \textbf{Risk minimizer within} $\Hspace \subset \Hspace_{all}$ is
+\item \textbf{Risk minimizer within} $\Hspace \subset \Hall$ is
 $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 
 \end{framei}
@@ -214,7 +216,7 @@ $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 $$    \riskf = \E_{xy} \left[\Lxy\right] 
     = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right]$$
 
-	\item We can choose $\fx$ as we want from $\Hspace_{all}$ %(unrestricted hypothesis space, no assumed functional form)
+	\item We can choose $\fx$ as we want from $\Hall$ %(unrestricted hypothesis space, no assumed functional form)
 	\item Hence, for fixed feature vector $\xtil$ we can select \textbf{any} value $c$ to predict. So we construct the \textbf{point-wise optimizer} 
         % (we are not restricted by any functional form, e.g., a linear function)
 	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
@@ -224,16 +226,13 @@ $$    \riskf = \E_{xy} \left[\Lxy\right]
 %$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 \end{itemize}
 
-
 \imageC[0.8]{figure/optimal_pointwise.png}
-
-
 
 \end{frame}
 
+
 \begin{framei}[sep=M]{Theoretical and Empirical Risk}  
  
-
 \item Bayes risk minimizer is mainly a theoretical tool
 \item In practice, need to restrict $\Hspace$ for efficient search %so we efficiently search over it. 
 \item We don't normally know $\Pxy$. Instead, use ERM. 
@@ -262,10 +261,10 @@ $$
 
 \item Decompose: 
 
-\begin{eqnarray*}
-	\risk(\hat f_{\Hspace}) - \riskbayes &=& \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
-    &=& \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}}) \right] 
-\end{eqnarray*}
+\begin{align*}
+	\risk(\hat f_{\Hspace}) - \riskbayes &= \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
+    &= \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hall}) \right] 
+\end{align*}
 
 \end{framei}
 
@@ -280,7 +279,7 @@ $$
 
 
 $$
-	\risk(\hat f_{\Hspace}) - \riskbayes = \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
+\risk(\hat f_{\Hspace}) \fhspace - \riskbayes = \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}}  
 $$
 
 \vfill

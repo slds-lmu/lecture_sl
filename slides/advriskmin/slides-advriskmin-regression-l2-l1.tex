@@ -61,19 +61,13 @@ Hence, sensitive to outliers in $y$
 %\item Let's consider L2 here as simplest case
 \item Can derive a general result now for any $z ~ \sim Q$
 \item Consider 
-$$ 
-\argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] 
-$$
-$$
-\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   
-$$
+$$ \argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] $$
+$$\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   $$
 
 \item The RHS is minimized by $c = \E[z]$\\
 (simple quadratic, or take derivative and set to 0)
 
 \end{framei}
-
-
 
 
 \begin{framei}[sep=S]{L2: Optimal Constant Model}
@@ -86,8 +80,7 @@ $$
 $$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$$
 
 And later we will proceed like that
-\item But we can get the result for free from our previous 
-  consideration
+\item But we can get the result for free from our previous consideration
   
 \item For data $y^{(1)}, \ldots, y^{(n)}$, empirical distribution is $P_n = \meanin \delta_{\yi}$
 %Thus, for the minimization problem
@@ -153,9 +146,8 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
   \vfill
 
-\splitV[0.65]
-{
-    \begin{itemize}
+\splitVCC[0.55]{
+  \begin{itemizeM}[fs=normal]
       \item Let's reconsider the previous
       \item Optimized for const whose squared dist to points is minimal (on avg)
       \item Result: $\hat{\theta} = \bar{y}$
@@ -164,8 +156,10 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
       \item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
         to obtain variance
       \item Same holds for the pointwise construction / conditional distribution considered before
-    \end{itemize}
-}{\imageC[]{figure_man/plot_const_var.png}}
+    \end{itemizeM}
+  }{
+  \imageC[]{figure_man/plot_const_var.png}
+  }
 
 \end{frame}
 
@@ -221,9 +215,8 @@ $f_{c}^{\ast} = \text{med} [y]$
 \item Derivations slightly harder and in deep-dive
 
 \item Risk minimizer / optimal conditional prediction:
-  $$
-    f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv = \xtil \right]
-  $$
+$$f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv = \xtil \right]
+$$
 
 \end{framei}
 
