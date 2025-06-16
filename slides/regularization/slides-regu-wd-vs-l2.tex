@@ -66,14 +66,14 @@ How strongly we are pulled back (for fixed $\alpha$) depends on $\lambda$:
 \textbf{Caveat}: Equivalence of weight decay and $L2$ only holds for (S)GD!
 
 \begin{itemize}\setlength{\itemsep}{0.5em}
-    \item \citelink{HANSON1988} originally define WD ``decoupled'' from gradient-updates {\footnotesize $\alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})$} as
+    \item \furtherreading {HANSON1988} originally define WD ``decoupled'' from gradient-updates {\footnotesize $\alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})$} as
     {\footnotesize $\thetav^{[\text{new}]} =
     \thetav^{[\text{old}]} (1 - \lambda') - \alpha \nabla_{\thetav} \riske(\thetav^{[\text{old}]})$}
     \item This is equivalent to modern WD/$L2$ (last slide) using reparameterization $\lambda'=\alpha \lambda$
    % \item Using this we see the WD is decoupled from the gradient updates
     \item Consequence: if there is optimal $\lambda'$, then optimal $L2$ penalty is tightly coupled to $\alpha$ as $\lambda=\lambda'/ \alpha$ (and vice versa)
     
-    \item \citelink{LOSCH2019} show no equivalence of $L2$ and WD possible for adaptive methods like Adam (Prop. 2)
+    \item \furtherreading {LOSCH2019} show no equivalence of $L2$ and WD possible for adaptive methods like Adam (Prop. 2)
     \item In many cases where SGD+$L2$ works well, Adam+$L2$ underperforms due to non-equivalence with WD
     \item They propose a variant of Adam decoupling WD from gradient updates (AdamW), increasing performance over Adam+$L2$
 \end{itemize}

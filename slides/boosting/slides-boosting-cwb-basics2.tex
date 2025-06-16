@@ -106,7 +106,7 @@ There are two options to handle the intercept in CWB. In both, the loss-optimal 
   \begin{itemize}
     \setlength{\itemsep}{0.8em}
     \item {\footnotesize Add BL $b_{\text{int}} = \theta$ as potential candidate considered in each iteration and remove intercept from all linear BLs, i.e., $b_j(\xv) = \theta_j x_j$.}
-    \item {\footnotesize Final intercept is given as $\fm[0](\xv) + \hat{\theta}$. Linear BLs without intercept only make sense if covariates are centered (see \citelink{HOFNER2014MODEL} tutorial, p.~7)}
+    \item {\footnotesize Final intercept is given as $\fm[0](\xv) + \hat{\theta}$. Linear BLs without intercept only make sense if covariates are centered (see \furtherreading{HOFNER2014MODEL} tutorial, p.~7)}
   \end{itemize}
   
 %\framebreak
@@ -165,7 +165,7 @@ $\Rightarrow$ All intercepts in the base learners are collected and aggregated i
 
 \begin{vbframe}{Example: Life expectancy}
 
-Consider the \texttt{life expectancy} data set (WHO, available on \citelink{KUMAR2019KAGGLE})\,: regression task to predict life expectancy. \\
+Consider the \texttt{life expectancy} data set (WHO, available on \sourceref{KUMAR2019KAGGLE})\,: regression task to predict life expectancy. \\
 \vspace{0.1cm}
 We fit a CWB model with linear BLs (with intercept) 
 
