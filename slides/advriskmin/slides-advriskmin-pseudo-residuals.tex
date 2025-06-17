@@ -72,24 +72,23 @@ $$
 \only<2>{\imageC[0.4]{figure/pseudo_residual_2.png}}
 \only<3>{\imageC[0.4]{figure/pseudo_residual_3.png}}
 
-
 \end{overlayarea} 
 
 \end{frame}
 
-\begin{framei}[sep=M]{Approximate Best point-wise update}
+\begin{framei}[sep=M, fs=normal]{Approximate Best point-wise update}
 
 \item Best local change of $f$ at $\xv$ to reduce loss most:
 
 $$
-	\fx \leftarrow \fx - \frac{d \Lxy}{d \fx} 
+\fx \leftarrow \fx - \frac{d \Lxy}{d \fx} 
 $$
 
 \item This is effectively the PR 
 
-\begin{eqnarray*}
-	\fx &\leftarrow& \fx + \tilde{r}(\xv)\\ 
-\end{eqnarray*}
+\begin{align*}
+\fx \leftarrow& \fx + \tilde{r}(\xv)\\ 
+\end{align*}
 
 \item (Such iterative updates of $f$ like a loss-reducing GD in function space is the major underlying idea of GB)
 
@@ -98,24 +97,22 @@ $$
 
 \begin{framei}[sep=M]{GD in ML and Pseudo-Residuals}
 
-	\item In GD, we move in the direction of the negative gradient by updating the parameters: 
-	$$
-	 \thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	
-	$$
-	% with step size $\alpha^{[t]}$. 
-	% \framebreak 
-	\item Using the chain rule:
-        % mwe see that the pseudo-residuals are input to the update direction
-	\begin{eqnarray*}
-	\nabla_{\thetav} \risket &=&\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
-        % _{= - \tilde r^{(i)}}
-	\cdot \nabla_{\thetav} \fxit \\ 
-	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
-	\end{eqnarray*}
-	\item Update is loss-optimal directional change of model output 
-        and a loss-independent derivative of $\fx$
-        \item This is a flexible, nearly loss-independent variant of GD
-        % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
+\item In GD, we move in the direction of the negative gradient by updating the parameters: 
+$$\thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	$$
+% with step size $\alpha^{[t]}$. 
+% \framebreak 
+\item Using the chain rule:
+% mwe see that the pseudo-residuals are input to the update direction
+\begin{align*}
+\nabla_{\thetav} \risket &=\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
+% _{= - \tilde r^{(i)}}
+\cdot \nabla_{\thetav} \fxit \\ 
+&= - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
+\end{align*}
+\item Update is loss-optimal directional change of model output 
+and a loss-independent derivative of $\fx$
+\item This is a flexible, nearly loss-independent variant of GD
+% The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
 
 
 % For risk minimization, the update rule for the parameter $\thetav$ is 

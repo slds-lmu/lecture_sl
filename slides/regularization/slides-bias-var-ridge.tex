@@ -62,7 +62,7 @@ $$\text{MSE}(\thetah_{\text{ridge}})=\Vert \text{Bias}(\thetah_{\text{ridge}})\V
 Comparing MSEs of $\thetah_{\text{ridge}}$ and $\thetah_{\text{OLS}}$ and using $\text{Bias}(\thetah_{\text{OLS}})=0$ we find 
 $$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}}) = \underbrace{\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{ridge}})}\big)}_{>0} - \underbrace{\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2}_{>0}$$
 
-Since both terms are positive, sign of their diff is \textit{a priori} undetermined. \citelink{THEOBALD1974} and \citelink{FAREBROTHER1976} prove there always exists some $\lambda^{\ast}>0$ so that
+Since both terms are positive, sign of their diff is \textit{a priori} undetermined. \furtherreading {THEOBALD1974} and \furtherreading {FAREBROTHER1976} prove there always exists some $\lambda^{\ast}>0$ so that
 $$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}})>0$$
 \textbf{Important theoretical result}: While Gauss-Markov guarantuees $\thetah_{\text{OLS}}$ is best linear unbiased estimator (BLUE), there are biased estimators with lower MSE.
 

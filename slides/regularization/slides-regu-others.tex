@@ -31,7 +31,7 @@ To reduce the bias/shrinkage of regularized estimators various penalties were pr
 
 \end{vbframe}
 
-\begin{vbframe}{$Lq$ regularization \citelink{FU2000}}
+\begin{vbframe}{$Lq$ regularization \furtherreading {FU2000}}
 
 Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \thetav \Vert_q^q$ 
 
@@ -45,7 +45,7 @@ Besides $L1$/$L2$ we could use any $Lq$ (quasi-)norm penalty $\lambda \Vert \the
 {\footnotesize
 \begin{itemize}
     \item For $q<1$ penalty becomes non-convex but for $q>1$ no sparsity is achieved
-    \item Non-convex $Lq$ has nice properties like \textbf{oracle property} \citelink{ZOUHASTIE}: consistent (+ asy. unbiased) param estimation and var selection
+    \item Non-convex $Lq$ has nice properties like \textbf{oracle property} \furtherreading {ZOUHASTIE}: consistent (+ asy. unbiased) param estimation and var selection
     \item Downside: non-convexity makes optimization even harder than $L1$\\
     (no unique global minimum but multiple local minima)
 \end{itemize}
@@ -75,7 +75,7 @@ $$
 \end{itemize}
 \end{vbframe}
 
-\begin{vbframe}{SCAD \citelink{FAN2001}}
+\begin{vbframe}{SCAD \furtherreading {FAN2001}}
 
 Smoothly Clipped Absolute Deviations:\\
 non-convex, $\gamma>2$ controlls how fast penalty ``tapers off''
@@ -116,7 +116,7 @@ $$
 
 \end{vbframe}
 
-\begin{vbframe}{MCP \citelink{ZHANG2010}}
+\begin{vbframe}{MCP \furtherreading {ZHANG2010}}
 Minimax Concave Penalty:\\
 also non-convex; similar idea as SCAD with $\gamma>1$
 $$

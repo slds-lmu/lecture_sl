@@ -83,7 +83,7 @@
      \item Objective $\Psi$ can be different functions, e.g., AIC/BIC for LM or cross-validated performance of a learner
      \item Poses a discrete combinatorial optimization problem over search space of size = $2^p$, i.e., grows exponentially in $p$ (power set)%as it is the power set of $\{1,\ldots,p\}$
       %also known as $L_0$ regularization.
-     \item Unfortunately can not be solved efficiently in general (NP hard; see, e.g., \citelink{NATARAJAN1995SPARSE})
+     \item Unfortunately can not be solved efficiently in general (NP hard; see, e.g., \furtherreading{NATARAJAN1995SPARSE})
      \item Can avoid searching entire space by employing efficient search strategies, traversing search space in a ``smart" way %that finds performant feature subsets
 
     \end{itemize}
@@ -99,7 +99,7 @@
       \item Size of search space = $2^p$, i.e., grows exponentially in $p$ as it is the power set of $\{1,\ldots,p\}$
       \item Finding best subset is discrete combinatorial optimization problem.
       %also known as $L_0$ regularization.
-     \item It can be shown that this problem unfortunately can not be solved efficiently in general (NP hard; see, e.g., \citelink{NATARAJAN1995SPARSE})
+     \item It can be shown that this problem unfortunately can not be solved efficiently in general (NP hard; see, e.g., \furtherreading{NATARAJAN1995SPARSE})
      \item We can avoid having to search the entire space by employing efficient search strategies, moving through the search space in a smart way that finds performant feature subsets
      %\item By employing efficient search strategories, we can avoid searching the entire space.
     %\item Of course this does not mean that we have to search the entire space, since there are more efficient search strategies.
@@ -267,7 +267,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
             \hspace{1cm}
             \includegraphics[width = 0.75\textwidth]{figure/genetic-alg.png}
         %\hspace{1cm}
-        \citelink{MITSUO1996GENETIC}
+        \furtherreading{MITSUO1996GENETIC}
     \end{column}
     %
     \begin{column}{0.5\textwidth}
@@ -275,7 +275,7 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
         \setlength{\itemsep}{0.8em}
             \item Use CV/validation set for evaluation to avoid overfitting
             \item Choice of $\mu$ and $\lambda$ allows some control over exploration vs. exploitation trade-off
-            \item See our \citelink{OPTIMIZATIONLECTURE} for further information
+            \item See our \furtherreading{OPTIMIZATIONLECTURE} for further information
         \end{itemize}
     \end{column}
 \end{columns}
