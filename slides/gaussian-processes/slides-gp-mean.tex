@@ -8,11 +8,11 @@
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Gaussian Processes
-  }{% Lecture title  
+  }{
     Mean functions for GPs
-  }{% Relative path to title page image: Can be empty but must not start with slides/
+  }{
   figure/gp_sample/2_4.pdf
   }{
   \item Trends can be modeled via specification of the mean function
@@ -20,98 +20,111 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{framei}[sep=L]{non-zero-mean functions}
+\item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
+\item Not necessarily drastic limitation: \textbf{posterior} mean can be $\neq 0$
+$$\fv_\ast | \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*)$$
+\item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
+\item Assuming $\mathcal{GP}(m(\cdot), k(\cdot, \cdot))$, the posterior mean becomes
+$$m(\Xmat_*) + \Kmat_* \Kmat_y^{-1} (\yv - m(\Xmat))$$
+(posterior variance unchanged)
+\end{framei}
 
-%\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%\input{../../style/preamble}
-%\input{../../latex-math/basic-math}
-%\input{../../latex-math/basic-ml}
-%\input{../../latex-math/ml-gp}
+\begin{framei}[sep=L]{example: non-zero-mean prior}
+\item GPs with non-zero-mean priors: aka GPs with \textbf{trend}
+\vfill
+\splitVTT{
+\imageC[1]{figure/gp_sample/1_1.pdf}
+}{
+\imageC[1]{figure/gp_sample/2_1.pdf}
+}
+\vfill
+\splitVTT{
+\imageC[1]{figure/gp_sample/2_3.pdf}
+}{
+\imageC[1]{figure/gp_sample/2_4.pdf}
+}
+\end{framei}
 
-%\newcommand{\titlefigure}{figure/gp_sample/2_4.pdf} %does not fit
-%\newcommand{\learninggoals}{
-%  \item Trends can be modeled via specification of the mean function 
-%}
+\begin{framei}[sep=L]{basis function approach}
+\item Often difficult to come up with fixed mean function
+\item Possible solution: specify basis functions + infer coeffs from data
+\item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$$
+$\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
+\item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
+\end{framei}
 
-%\title{Introduction to Machine Learning}
-%\date{}
+% \begin{vbframe}{The Role of Mean Functions}
 
-%\begin{document}
-
-%\lecturechapter{Mean Functions for Gaussian Processes}
-%\lecture{Introduction to Machine Learning}
-
-
-\begin{vbframe}{The Role of Mean Functions}
-
-\begin{itemize}
-  \item It is common but by no means necessary to consider GPs with a zero-mean function 
-  $$
-    m(\xv) \equiv 0
-  $$
-  \item Note that this is not necessarily a drastic limitation, since the mean of the posterior process is not confined to be zero 
-  $$
-    \bm{f}_* | \Xmat_*, \Xmat, \bm{f} \sim \mathcal{N}(\Kmat_{*}^{T}\Kmat^{-1}\bm{f}, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
-  $$
-  \item Yet there are several reasons why one might wish to explicitly model a mean function, including interpretability, convenience of expressing prior informations, ... 
-  \item When assuming a non-zero mean GP prior $\gp$ with mean $m(\xv)$, the predictive mean becomes 
-  $$
-    m(\Xmat_*) + \Kmat_*\Kmat_y^{-1}\left(\bm{y} - m(\Xmat)\right)
-  $$
-  while the predictive variance remains unchanged. 
+% \begin{itemize}
+  % \item It is common but by no means necessary to consider GPs with a zero-mean function 
+  % $$
+  %   m(\xv) \equiv 0
+  % $$
+  % \item Note that this is not necessarily a drastic limitation, since the mean of the posterior process is not confined to be zero 
+  % $$
+  %   \fv_* | \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
+  % $$
+  % \item Yet there are several reasons why one might wish to explicitly model a mean function, including interpretability, convenience of expressing prior informations, ... 
+  % \item When assuming a non-zero mean GP prior $\gp$ with mean $m(\xv)$, the predictive mean becomes 
+  % $$
+  %   m(\Xmat_*) + \Kmat_*\Kmat_y^{-1}\left(\bm{y} - m(\Xmat)\right)
+  % $$
+  % while the predictive variance remains unchanged. 
   
-  \framebreak
+  % \framebreak
   
-  \item Gaussian processes with non-zero mean Gaussian process priors are also called Gaussian processes with trend.  
-\vspace{.3cm}
+%   \item Gaussian processes with non-zero mean Gaussian process priors are also called Gaussian processes with trend.  
+% \vspace{.3cm}
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/1_1.pdf}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=0.8\textwidth]{figure/gp_sample/1_1.pdf}
+% \end{figure}
 
-\framebreak
+% \framebreak
 
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_1.pdf}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_1.pdf}
+% \end{figure}
 
-\framebreak
+% \framebreak
  
 
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_2.pdf}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_2.pdf}
+% \end{figure}
 
- \framebreak
+%  \framebreak
  
  
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_3.pdf}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_3.pdf}
+% \end{figure}
 
-\framebreak
+% \framebreak
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
+% \end{figure}
 
-\framebreak
-
-
-\item In practice it can often be difficult to specify a fixed mean function
-\item In many cases it may be more convenient to specify a few fixed basis functions, whose coefficients, $\bm{\beta}$, are to be inferred from the data
-\item Consider 
-$$
-  g(\xv) = b(\xv)^\top \bm{\beta} + \fx, \text{   where } \fx \sim \mathcal{GP} \left(0, k(\xv, \tilde \xv)\right)
-$$
-\item This formulation expresses that the data is close to a global linear model with the residuals being modelled by a GP. 
-\item For the estimation of $g(\xv)$ please refer to \emph{Rasmussen, Gaussian Processes for Machine Learning, 2006}
-
-\end{itemize}
+% \framebreak
 
 
-\end{vbframe}
+% \item In practice it can often be difficult to specify a fixed mean function
+% \item In many cases it may be more convenient to specify a few fixed basis functions, whose coefficients, $\bm{\beta}$, are to be inferred from the data
+% \item Consider 
+% $$
+%   g(\xv) = b(\xv)^\top \bm{\beta} + \fx, \text{   where } \fx \sim \mathcal{GP} \left(0, k(\xv, \tilde \xv)\right)
+% $$
+% \item This formulation expresses that the data is close to a global linear model with the residuals being modelled by a GP. 
+% \item For the estimation of $g(\xv)$ please refer to \emph{Rasmussen, Gaussian Processes for Machine Learning, 2006}
+
+% \end{itemize}
+
+
+% \end{vbframe}
 
 
 \endlecture
