@@ -56,8 +56,8 @@ save_topdf = function(p, kernel_type) {
     ggsave(
         sprintf("../figure/cov_funs/cov_%s.pdf", kernel_type),
         p,
-        width = 8,
-        height = 3
+        width = 6,
+        height = 2.5
     )
 }
 
