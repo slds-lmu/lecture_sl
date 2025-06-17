@@ -30,7 +30,7 @@ figure/plot_loss_overview.png
 \item Quantile loss
 }
 
-\begin{framei}[sep=M]{Advanced Loss Functions \furtherreading{WANG2020COMPRE}}
+\begin{framei}[sep=M, fs=large]{Advanced Loss Functions \furtherreading{WANG2020COMPRE}}
 
 \item Handle errors in custom fashion
 \item Model other error distributions\\
@@ -124,7 +124,6 @@ Essential idea:
 \end{enumerate}
 }
 {\imageC{figure/logcosh-derivation.png}}
-        %\caption{\footnotesize lasso vs non-convex SCAD and MCP penalties for scalar parameter $\thetav$}
 
 \vfill
 
@@ -136,7 +135,7 @@ Same trick can be used to get differentiable pinball losses
 
 \textbf{cosh($\theta,\sigma$) distribution}:\\
 
-\begin{itemize}
+\begin{itemizeL}
 
 \item Normalized reciprocal $\text{cosh}(x)$ is pdf: 
 positive and $\int_{-\infty}^{\infty} \frac{1}{\pi \text{cosh}(x)} \text{d}x = 1$
@@ -147,19 +146,18 @@ resembling Gaussian with heavy tails
 \item ERM using log-cosh 
 is equivalent to MLE of $\text{cosh}(\theta,1)$ distribution
 
-\end{itemize}
+\end{itemizeL}
 
 \vfill
 
 \splitV[0.52]{
-{\normalsize
-\begin{itemize}\setlength{\itemsep}{0.32em}
+\begin{itemizeM}[small]\setlength{\itemsep}{0.32em}
     \item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh (\frac{x-\theta}{\sigma})}$
     \item $\E_{x \sim p}[x] = \theta$
     \item $\var_{x \sim p}[x]=\frac{1}{4} \pi^2 \sigma^2 $
     \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh (\yi-\theta)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
-\end{itemize}
-}}
+\end{itemizeM}
+}
 {\imageL[1.1]{figure/cosh-gaussian-densities.png}}
 
 
