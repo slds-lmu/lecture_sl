@@ -45,7 +45,7 @@ p1 <- ggplot(data = df.m, aes(x = x, y = value, colour = variable)) +
   ylab("f(x)") +
   ylim(c(-3, 3)) +
   theme(legend.position = "none") +
-  ggtitle("Functions drawn from a Gaussian process prior") +
+  # ggtitle("Functions drawn from a Gaussian process prior") +
   scale_color_viridis(end=0.9, discrete = TRUE)
 
 ggsave("../figure/gp_sample/1_1.pdf", width = 6, height = 4)
@@ -78,10 +78,10 @@ for (j in 1:length(x.obs)) {
     ylim(c(-3, 3)) +
     theme_bw() +
     theme(legend.position = "none") +
-    ggtitle(paste0("Posterior process after ", j, " observation", ifelse(j == 1, "", "s"))) +
+    # ggtitle(paste0("Posterior process after ", j, " observation", ifelse(j == 1, "", "s"))) +
     scale_color_viridis(end = 0.9, discrete = TRUE)
   
-  ggsave(paste0("../figure/gp_sample/2_", j, ".pdf"), width = 6, height = 4)
+  ggsave(paste0("../figure/gp_sample/2_", j, ".pdf"), width = 3, height = 2)
 }
 
 ###############################################

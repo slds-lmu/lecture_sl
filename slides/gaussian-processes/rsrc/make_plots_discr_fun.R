@@ -62,7 +62,7 @@ plot_discr_fun = function(x, y, group, draw_line = TRUE, vert_bars = FALSE) {
     dt = data.table(x = x, y = y, group = group)
     
     p = ggplot(dt, aes(x = x, y = y, group = group, color = group)) + 
-        geom_point(shape = 19) +
+        geom_point(shape = 15) +
         theme_bw()
     if (draw_line) {
         p = p + geom_line(
@@ -87,7 +87,7 @@ plot_discr_fun = function(x, y, group, draw_line = TRUE, vert_bars = FALSE) {
     p = p +
         scale_y_continuous(breaks = NULL, labels = NULL) +
         scale_color_gradientn(colours = c(low = "gray", high = "blue")) +
-        ylab("h(x)") +
+        ylab("f(x)") +
         theme(
             plot.background = element_blank(),
             panel.grid.major = element_blank(),
@@ -154,7 +154,8 @@ plot_cov = function(cov_mat, mu = NULL) {
                 panel.border = element_blank(),
                 axis.text.x = element_blank(),
                 axis.text.y = element_blank(),
-                panel.grid.major = element_blank()
+                panel.grid.major = element_blank(),
+                legend.position = "none"
             )
     }
     p
@@ -197,8 +198,8 @@ for (i in seq_len(nrow(plot_cases))) {
         ggsave(
             sprintf("../figure/discrete/discr_%i_%s_cov.pdf", size, cov),
             plot_cov(cov_mat),
-            width = 5, 
-            height = 4
+            width = 2, 
+            height = 2
         )
     }
     
@@ -222,8 +223,8 @@ for (i in seq_len(nrow(plot_cases))) {
             draw_line = ifelse(n == 1, FALSE, TRUE),
             vert_bars = ifelse(n == 1, TRUE, FALSE)
         ),
-        width = 6, 
-        height = 4
+        width = 2.5, 
+        height = 2
     )
     
 }
