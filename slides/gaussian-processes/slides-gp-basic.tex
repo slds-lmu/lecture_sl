@@ -45,19 +45,21 @@ $$
 \imageC[.8]{figure/gp_sample/1_1.pdf}
 \end{framei}
 
-\foreach \i in{1,2,3} {
 \begin{framei}{drawing from function priors}
-\addtocounter{page}{0}
-\item After observing some data points, we restrict sampling to functions consistent with the data
+\item Restrict sampling to functions consistent with observed data
 \vfill
-\imageC[.8]{figure/gp_sample/2_\i.pdf}
-\end{framei}
+\splitVTT{
+\imageC[.9]{figure/gp_sample/2_1.pdf}
+}{
+\imageC[.9]{figure/gp_sample/2_2.pdf}
 }
-
-\begin{framei}{drawing from function priors}
-\item Variety of admissible functions shrinks with observing more data
 \vfill
-\imageC[.8]{figure/gp_sample/2_4.pdf}
+\splitVTT{
+\imageC[.9]{figure/gp_sample/2_3.pdf}
+}{
+\imageC[.9]{figure/gp_sample/2_4.pdf}
+}
+\item Variety of admissible functions shrinks with seeing more data
 \item Intuitively: distributions over functions have ``mean'' \& ``variance''
 \end{framei}
 
@@ -86,14 +88,14 @@ $$
 \item Any $f \in \Hspace$ has finite domain with $n < \infty$ elements \\$\Rightarrow$ neat representation with $n$-dim vector 
 $$\fv = \fvec$$
 \item Example functions living in this space for $|\Hspace| \in \{2, 5, 10\}$
+\vfill
 \splitVThree{
-\imageC{figure/discrete/example_2_1.pdf}
+\imageC{figure/discrete/discr_2_expdecay_1n.pdf}
 }{
-\imageC{figure/discrete/example_5_1.pdf}
+\imageC{figure/discrete/discr_5_expdecay_1n.pdf}
 }{
-\imageC{figure/discrete/example_10_1.pdf}
+\imageC{figure/discrete/discr_10_expdecay_1n.pdf}
 }
-\textcolor{red}{TODO LW: new plots}
 \end{framei}
 
 \begin{framei}[sep=L]{Distributions on Discrete Functions}
@@ -113,18 +115,17 @@ $$\fv = [f(\xi[1]), f(\xi[2])] \sim \normal(\zero, \Kmat)$$
 $$\fv = [f(\xi[1]), \dots, f(\xi[\i])] \sim \normal(\zero, \Kmat)$$
 \fi
 \vfill
-\splitV{
-\imageC[.5]{figure/discrete/example_norm_\i_1_a.pdf}
+\splitVCompact{.35}{.35}{
+\imageL[1]{figure/discrete/discr_\i_identity_10n.pdf}
 }{
-\imageC[.5]{figure/discrete/example_norm_\i_1_b.pdf}
+\imageL[.8]{figure/discrete/discr_\i_identity_cov.pdf}
 }
 \vfill
-\splitV{
-\imageC[.5]{figure/discrete/example_norm_\i_2_a.pdf}
+\splitVCompact{.35}{.35}{
+\imageL[1]{figure/discrete/discr_\i_expdecay_10n.pdf}
 }{
-\imageC[.5]{figure/discrete/example_norm_\i_2_b.pdf}
+\imageL[.8]{figure/discrete/discr_\i_expdecay_cov.pdf}
 }
-\textcolor{red}{TODO LW: replace plots (1st row weakly, 2nd row strongly correlated}
 \end{framei}
 }
 
@@ -134,16 +135,14 @@ $$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ clo
 \item In other words: fun values of nearby points should be correlated
 \item Enforce this by choosing dist-based covariance function
 $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ high }$$
-\item E.g., $\Kmat_{ij} = k(\xi, \xi[j]) = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$
+\item E.g., $\Kmat_{ij} = k(\xi, \xi[j]) = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$ vs identity cov
 \vfill
 \splitVCompact{.35}{.35}{
-\imageC{figure/discrete/example_extreme_50_3.pdf}
+\imageC{figure/discrete/discr_50_squaredexp_1n.pdf}
 }{
-\imageC{figure/discrete/example_extreme_50_4.pdf}
+\imageC{figure/discrete/discr_50_identity_1n.pdf}
 }
 \item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
-
-\textcolor{red}{TODO LW: new plots}
 \end{framei} 
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
@@ -209,7 +208,7 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \item Precisely what we were looking for: process to generate arbitrarily long Gaussian random vectors!
 \end{framei}
 
-\foreach \i in {10, 50}{
+% \foreach \i in {10, 50}{
 \begin{framei}[sep=L]{marginalization property}
 \item Consider finite set of inputs $\bm{X} = \xdat \subset \Xspace$
 \item Distinguishing feature of GPs: for any such $\bm{X}$,
@@ -219,17 +218,16 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
 \vfill
 \splitV{
-\imageC[.9]{figure/discrete/example_marginalization_\i.pdf}
+\imageC[1]{figure/discrete/discr_50_squaredexp_1n.pdf}
 }{
-\ifnum \i=5
-\imageC[.9]{figure_man/discrete/marginalization-5.png}
-\else
+% \ifnum \i=5
+% \imageC[.9]{figure_man/discrete/marginalization-5.png}
+% \else
 \imageC[1]{figure_man/discrete/marginalization-more.png}
-\fi
+% \fi
 }
-\textcolor{red}{TODO LW: new plots}
 \end{framei}
-}
+% }
 
 \begin{framei}[sep=L]{definition: gaussian process}
 \item Formally, 
@@ -265,7 +263,7 @@ there \textbf{exists} $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\fo
 and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
 \item Intuition: for any mean \& cov structure we prescribe, there is a corresponding GP to generate $\fv$ with these characteristics
 \item Version of Kolmogorov consistency theorem  \\
-$\Rightarrow$ proof: \citelink{GRIMMETT2001PROC} (Thm. 8.6.3)
+$\Rightarrow$ proof: \furtherreading{GRIMMETT2001PROC} (Thm. 8.6.3)
 \end{framei}
 
 \begin{framei}[sep=L]{implications of existence theorem}

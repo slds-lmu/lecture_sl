@@ -43,9 +43,9 @@ $$k(\xv, \tilde{\xv}) = k(\bm{d})$$
 \item If you want to know about the correlation between $f(\xi[1])$ and $f(\xi[2])$, compute $\bm{d}(\xi[1], \xi[2])$
 \vfill
 \splitV{
-\imageC[.9]{figure/covariance2point/example_covariance_1.pdf}
+\imageC[.9]{figure/cov_funs/example_covariance_1.pdf}
 }{
-\imageC[1]{figure/covariance2point/example_function_1_1.pdf}
+\imageC[1]{figure/cov_funs/example_function_1_1.pdf}
 }
 \end{framei}
 
@@ -55,9 +55,9 @@ $$k(\xv, \tilde{\xv}) = k(\bm{d})$$
 \item Under the above GP assumption, $\yi[2]$ should be close to $\yi[1]$ 
 \vfill
 \splitV{
-\imageC[.9]{figure/covariance2point/example_covariance_1.pdf}
+\imageC[.9]{figure/cov_funs/example_covariance_1.pdf}
 }{
-\imageC[1]{figure/covariance2point/example_function_1_2.pdf}
+\imageC[1]{figure/cov_funs/example_function_1_2.pdf}
 }
 \end{framei}
 
@@ -66,9 +66,9 @@ $$k(\xv, \tilde{\xv}) = k(\bm{d})$$
 \item Further from $\xi[1]$ $\Rightarrow$ expect lower correlation between $\yi[3]$, $\yi[1]$ 
 \vfill
 \splitV{
-\imageC[.9]{figure/covariance2point/example_covariance_2.pdf}
+\imageC[.9]{figure/cov_funs/example_covariance_2.pdf}
 }{
-\imageC[1]{figure/covariance2point/example_function_2_1.pdf}
+\imageC[1]{figure/cov_funs/example_function_2_1.pdf}
 }
 \end{framei}
 
@@ -87,7 +87,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Constant function priors
 \item Global correlation irresp of concrete inputs $\xv, \tilde{\xv}$
 \item Use for: global-effect models
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_constant.pdf}
 \end{framei}
 
 \begin{framei}{linear kernel}
@@ -96,7 +96,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Measures directional similarity: higher if vectors point in similar dirs
 \item In general, non-stationary $\Rightarrow$ depends on absolute location of $\xv, \tilde{\xv}$
 \item Use for: linear models
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_linear.pdf}
 \end{framei}
 
 \begin{framei}{polynomial kernel}
@@ -104,7 +104,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Polynomial function priors
 \item Allows for non-linearity through higher-order monomials \& interaction terms
 \item Use for: polynomial trends
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_polynomial.pdf}
 \end{framei}
 
 \begin{framei}{periodic kernel}
@@ -112,7 +112,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item $m$: period, $\ls$: length-scale
 \item Implements idea that $\xv$ should be similar to $\xv + m$, similarity decaying quadratically in $\ls$
 \item Use for: periodic trends
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_periodic.pdf}
 \end{framei}
 
 \begin{framei}{matérn kernel}
@@ -122,7 +122,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Allows for controlled degree of smoothness via choice of $\nu$
 \item $\nu$ also determines differentiability
 \item Use for: non-linear trend with desired degree of smoothness
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_matern.pdf}
 \end{framei}
 
 \begin{framei}{exponential kernel}
@@ -132,7 +132,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Non-smooth: continuous but not differentiable
 \item Cov decays exponentially with distance (dep on $\ls$)
 \item Use for: non-linear trend with abrupt variations
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_exponential.pdf}
 \end{framei}
 
 \begin{framei}{squared exponential kernel}
@@ -142,7 +142,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Very smooth: continuous, $\infty$ differentiable (not always realistic)
 \item Cov decays quickly $\Rightarrow$ quadratic in $\ls$
 \item Use for: smooth, non-linear trend
-\item \textcolor{red}{TODO LW: plot}
+\imageC[.9]{figure/cov_funs/cov_squaredexp.pdf}
 \end{framei}
 
 \begin{framei}[sep=L]{characteristic length-scale}
@@ -183,7 +183,7 @@ $$
 \item Right: $\bm{M} = \Gamma \Gamma^T + \diag(\bm{\ls})^{-2}$ with $\Gamma = (1, -1)^T$ and $\bm{\ls} = (6, 6)^T$ $\Rightarrow$ $\Gamma$ determines dir of most rapid variation
 \vfill
 \imageC[1]{figure_man/covariance2D.png}
-\item Img source: \citelink{RASMUSSENWILLIAMS2006GPML}
+\item Img source: \furtherreading{RASMUSSENWILLIAMS2006GPML}
 \end{framei}
 
 \endlecture
