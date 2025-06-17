@@ -35,7 +35,7 @@ figure/zero_one.png
 \item Discrete classifier $h: \Xspace \to \Yspace$
 \item Maybe most ``natural'': 0-1-loss 
 $$
-\Lhxy = \mathds{1}_{\{y \ne \hx\}} 
+\Lhxy = \I_{\{y \ne \hx\}} 
 $$
 \end{itemize}
 }
@@ -49,11 +49,11 @@ $$
 \item For $\Yspace \in \setmp$ and scoring classifier $\fx$\\
 can write it in terms of margin $\nu = y\fx$
 $$
-\Lxy = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{y\fx < 0\}}
+\Lxy = \I_{\{\nu < 0\}} = \I_{\{y\fx < 0\}}
 $$
 \item For $\Yspace \in \setzo$ and prob. classifier $\pix$
 $$
-\Lpixy = y \mathds{1}_{\{\pix < 0.5\}} + (1-y) \mathds{1}_{\{\pix \geq 0.5\}} = \mathds{1}_{\{(2y-1)(\pix - 0.5) < 0 \}} 
+\Lpixy = y \I_{\{\pix < 0.5\}} + (1-y) \I_{\{\pix \geq 0.5\}} = \I_{\{(2y-1)(\pix - 0.5) < 0 \}} 
 $$
 \item Analytical properties:  Not continuous, even for linear $\fx$ optim. problem NP-hard = close to intractable \furtherreading{FELDMAN2012AGNOSTIC}
 \end{itemize}
@@ -62,7 +62,7 @@ $$
 
 \begin{framei}[sep=M]{Risk Minimizer for discrete classifiers}
 
-\item Again, unravel with law of total expectation (works for multiclass)
+\item Again, unravel with law of total expectation (here for multiclass)
 
 \vspace*{-0.5cm}
 
@@ -99,11 +99,11 @@ $$
 
 \item For multiclass and hard labeler $\hx$
 \item Optimal constant
-\begin{eqnarray*}   h_{c}^{\ast}  &=& \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
-&=& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
-  &=& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
-  &=& \argmax_{k \in \Yspace} \P(y = k)
-  \end{eqnarray*}
+\begin{align*}   h_{c}^{\ast}  =& \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
+=& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
+=& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
+=& \argmax_{k \in \Yspace} \P(y = k)
+  \end{align*}
 
 
 \item Translation: Predict most probable class
