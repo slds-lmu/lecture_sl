@@ -35,7 +35,6 @@ kernel_polynomial = function(x1, x2, intercept = 0, degree, scale = 1) {
 kernel_periodic = function(x1, x2, period, lengthscale) {
     dist_mat = outer(x1, x2, function(i, j) abs(i - j))
     kmat = exp((-2 * sin(pi * dist_mat / period)**2) / lengthscale**2)
-    kmat[seq_along(x1), seq_along(x2)]
 }
 
 kernel_matern = function(x1, x2, nu = 1.5, lengthscale = 1, sigma2 = 1) {
@@ -54,13 +53,11 @@ kernel_matern = function(x1, x2, nu = 1.5, lengthscale = 1, sigma2 = 1) {
 kernel_exp = function(x1, x2, lengthscale = 0.1) {
     dist_mat = outer(x1, x2, function(i, j) abs(i - j))
     kmat = exp(- dist_mat / lengthscale)
-    kmat[seq_along(x1), seq_along(x2)]
 }
 
 kernel_sqexp = function(x1, x2, lengthscale = 0.1) {
     dist_mat = as.matrix(dist(c(x1, x2), method = "euclidean"))
     kmat = exp(-0.5 * dist_mat**2 / lengthscale**2)
-    kmat[seq_along(x1), seq_along(x2)]
 }
 
 kernel_sqexp_distance = function(d, lengthscale = 1) {
@@ -76,9 +73,9 @@ get_kmat = function(x1, x2, kernel_type, ...) {
         constant = kernel_constant(x1, x2, ...),
         linear = kernel_linear(x1, x2, ...),
         polynomial = kernel_polynomial(x1, x2, ...),
-        periodic = kernel_periodic(x1, x2, ...),
+        periodic = kernel_periodic(x1, x2, ...)[seq_along(x1), seq_along(x2)],
         matern = kernel_matern(x1, x2, ...),
-        exponential = kernel_exp(x1, x2, ...),
-        squaredexp = kernel_sqexp(x1, x2, ...),
+        exponential = kernel_exp(x1, x2, ...)[seq_along(x1), seq_along(x2)],
+        squaredexp = kernel_sqexp(x1, x2, ...)[seq_along(x1), seq_along(x2)]
     )
 }

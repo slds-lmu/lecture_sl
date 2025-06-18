@@ -18,7 +18,7 @@ library(plotly)
 # pak::pak("slds-lmu/vistool")
 # library(vistool)
 
-source("covariance_functions.R")
+# source("covariance_functions.R")
 
 # FUNCTIONS --------------------------------------------------------------------
 
