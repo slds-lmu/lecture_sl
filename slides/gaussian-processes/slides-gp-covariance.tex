@@ -25,7 +25,7 @@ $$\fv = f(\bm{X}) \sim \gaussmk$$
 with $\mv = m(\bm{X})$, $\Kmat = k(\bm{X}, \bm{X})$
 \item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
 \item Cov function (or kernel) determines cov matrix: $\Kmat = k(\bm{X}, \bm{X})$
-\item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions
+\item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions \furtherreading{DUVENAUDKERNEL}
 \end{framei}
 
 \begin{framei}[sep=L]{stationary covariance functions}
@@ -145,11 +145,20 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \imageC[.9]{figure/cov_funs/cov_squaredexp.pdf}
 \end{framei}
 
+\begin{framei}[sep=L]{non-standard kernels}
+\item Example: 2D Brownian motion
+\item Physics application: random fluctuations of particles
+\item $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
+$$ k(\xv, \tilde{\xv}) = \min (\xv, \tilde{\xv})$$
+\item \textcolor{red}{TODO LW: plot}
+\end{framei}
+
 \begin{framei}[sep=L]{characteristic length-scale}
+\item Key hyperparameter of many (isotropic) kernels
 \item Controls how quickly function values become uncorrelated
 \item High (low) $\ls$: smooth (wiggly) functions
 \vfill
-\imageC[.8]{figure/gp_sample/varying_length_scale.pdf}
+\imageC[.7]{figure/gp_sample/varying_length_scale.pdf}
 \item Akin to SVM bandwidth but more general: length-scales may vary across input dims
 \end{framei}
 
@@ -184,7 +193,7 @@ $$
 \vfill
 \imageC[1]{figure_man/covariance2D.png}
 
-\furtherreading{RASMUSSENWILLIAMS2006GPML}
+\sourceref{RASMUSSENWILLIAMS2006GPML}
 \end{framei}
 
 \endlecture
