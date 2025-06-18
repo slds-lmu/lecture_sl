@@ -14,14 +14,14 @@
   }{% Lecture title  
   	Gradient Boosting: Classification
   }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/boosting_classif_title.png
+  figure_man/boosting_classif_title.PNG
   }{
   \item GB for binary classification simply uses
 	  Bernoulli or exponential loss
   \item For multiclass we fit $g$ discriminant functions in parallel
 }
 
-\begin{vbframe}{Binary classification}
+\begin{frame2}{Binary classification}
 
 
 For $\Yspace = \{0, 1\}$, we simply have to select an appropriate loss function, so let us
@@ -44,7 +44,8 @@ Hence, effectively, the pseudo-residuals are $y - \pix$.
 
 Through $\pix = s(\fx)$ we can also estimate posterior probabilities.
 
-\framebreak
+\end{frame2}
+\begin{frame2}{Binary classification}
 %
 
 \begin{itemize}
@@ -59,9 +60,9 @@ Through $\pix = s(\fx)$ we can also estimate posterior probabilities.
 \end{itemize}
 
 
-\end{vbframe}
+\end{frame2}
 
-\begin{vbframe}{Example: 2D Circle data}
+\begin{frame2}{Example: 2D Circle data}
 
 % We now illustrate the boosting iterations for a classification example in a similar manner as we did for regression.
 % However, we will now look at a simulation example with 2 instead of 1 influential features and one binary target variable.
@@ -83,7 +84,7 @@ Through $\pix = s(\fx)$ we can also estimate posterior probabilities.
 
 
 
-\end{vbframe}
+\end{frame2}
 
 \begin{frame}{Example: 2D Circle data}
 BG color is predicted probs on LHS on RHS we show and preds of BL.
@@ -136,7 +137,7 @@ BG color is predicted probs on LHS on RHS we show and preds of BL.
 
 % \section{Gradient Boosting for Multiclass Problems}
 
-\begin{vbframe}{Multiclass problems}
+\begin{frame2}{Multiclass problems}
 
 We proceed as in softmax regression and model a categorical distribution with multinomial / log loss.
 For $\Yspace = \{1, \ldots, g\}$, we create $g$ discriminant functions $\fkx$, one for each class and each one being an \textbf{additive} model of base learners.
@@ -151,7 +152,8 @@ Pseudo-residuals:
 $$-\pd{L(y, f_1(\xv), \ldots, f_g(\xv))}{\fkx} =  \mathds{1}_{\{y = k\}} - \pikx. $$
 
 
-\framebreak
+\end{frame2}
+\begin{frame2}{Multiclass problems}
 
 \begin{algorithm}[H]
   \begin{footnotesize}
@@ -174,7 +176,7 @@ $$-\pd{L(y, f_1(\xv), \ldots, f_g(\xv))}{\fkx} =  \mathds{1}_{\{y = k\}} - \pikx
     \end{footnotesize}
 \end{algorithm}
 
-\end{vbframe}
+\end{frame2}
 
 % \begin{vbframe}{Example: 2D Iris}
 	

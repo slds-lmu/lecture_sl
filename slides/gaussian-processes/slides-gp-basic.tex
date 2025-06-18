@@ -8,6 +8,17 @@
 
 \begin{document}
 
+% \newcommand{\fvec}{[f(\xi[1], \dots, \xi[n]]}
+\newcommand{\nzk}{\normal(\zero, \Kmat)}
+\newcommand{\kxxt}{k(\xv, \xtil)}
+\newcommand{\xxtnorm}{\| \xv - \xtil\|}
+\newcommand{\Xsubset}{\bm{X}}
+\newcommand{\fX}{f(\Xsubset)}
+\newcommand{\kXX}{k(\Xsubset, \Xsubset)}
+\newcommand{\mX}{m(\Xsubset)}
+\newcommand{\gpmk}{\mathcal{GP}(m(\cdot), k(\cdot, \cdot))}
+\newcommand{\gpzk}{\mathcal{GP}(\zero, k(\cdot, \cdot))}
+
 \titlemeta{
 Gaussian Processes
 }{
@@ -110,9 +121,9 @@ $$\fv = \fvec \sim \gaussmk$$
 \item Example ctd: $h: \Xspace \to \Yspace$ defined on $\i$ points
 \item Sample representatives by sampling from a $\i$-dim Gaussian
 \ifnum \i=2
-$$\fv = [f(\xi[1]), f(\xi[2])] \sim \normal(\zero, \Kmat)$$
+$$\fv = [f(\xi[1]), f(\xi[2])] \sim \nzk$$
 \else 
-$$\fv = [f(\xi[1]), \dots, f(\xi[\i])] \sim \normal(\zero, \Kmat)$$
+$$\fv = [f(\xi[1]), \dots, f(\xi[\i])] \sim \nzk$$
 \fi
 \vfill
 \splitVCompact{.35}{.35}{
@@ -135,7 +146,7 @@ $$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ clo
 \item In other words: fun values of nearby points should be correlated
 \item Enforce this by choosing dist-based covariance function
 $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ high }$$
-\item E.g., $\Kmat_{ij} = k(\xi, \xi[j]) = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$ vs identity cov
+\item E.g., $\Kmat_{ij} = \kxij = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$ vs identity cov
 \vfill
 \splitVCompact{.35}{.35}{
 \imageC{figure/discrete/discr_50_squaredexp_1n.pdf}
@@ -231,17 +242,17 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 
 \begin{framei}[sep=L]{definition: gaussian process}
 \item Formally, 
-$$f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$$
+$$f \sim \gpmk$$
 iff for any finite set of inputs $\bm{X} \subset \Xspace$, 
 $$
-f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))
+f(\bm{X}) \sim \normal(\mX, \kXX)
 $$
 \item Depends on \textbf{mean function} $m: \Xspace \rightarrow \R$ and \textbf{covariance function} $k: \Xspace \times \Xspace \rightarrow \R^+_0$
 \item For specific set $\bm{X}$ we get deterministic vectors / matrices (with slight abuse of notation for argument $\bm{X}$)
 \vfill
 \begin{itemizeM}
 \item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]$
-\item $\Kmat = k(\bm{X}, \bm{X}) = \left(k(\xv, \tilde{\xv}) \right)_{\xv, , \tilde{\xv} \in X}$
+\item $\Kmat = k(\bm{X}, \bm{X}) = \left(\kxxt \right)_{\xv, , \xtil \in X}$
 \item $\fv \sim \normal(\mv, \Kmat)$
 \end{itemizeM}
 \end{framei}
@@ -255,10 +266,10 @@ $$
 \item covariance function $k: \Xspace \times \Xspace \rightarrow \R^+_0$, 
 \end{itemize}
 \vfill
-there \textbf{exists} $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot))$ s.t. $\forall \xv, \tilde{\xv} \in \Xspace$
+there \textbf{exists} $f \sim \gpmk$ s.t. $\forall \xv, \xtil \in \Xspace$
 \begin{eqnarray*}
 \E(\fx) &=& m(\xv) \\
-\cov(\fx, f(\tilde{\xv})) &=& k(\xv, \tilde{\xv})
+\cov(\fx, f(\xtil)) &=& \kxxt
 \end{eqnarray*}
 and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
 \item Intuition: for any mean \& cov structure we prescribe, there is a corresponding GP to generate $\fv$ with these characteristics
@@ -270,35 +281,27 @@ $\Rightarrow$ proof: \furtherreading{GRIMMETT2001PROC} (Thm. 8.6.3)
 \item GPs completely specified by their mean \& cov function
 \begin{eqnarray*}
 m(\xv) &=& \E[f(\xv)] \\
-k(\xv, \tilde{\xv}) &=& \cov(\fx, f(\tilde{\xv})) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\tilde{\xv}) - \E[f(\tilde{\xv})] \right) \right]
+\kxxt &=& \cov(\fx, f(\xtil)) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xtil) - \E[f(\xtil)] \right) \right]
 \end{eqnarray*}
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
 $\Rightarrow$ common, not necessarily drastic assumption 
-\item Denote by $\mathcal{GP}(\zero, k(\cdot, \cdot))$ $\Rightarrow$ properties mainly governed by $k(\cdot, \cdot)$
+\item Denote by $\gpzk$ $\Rightarrow$ properties mainly governed by $k(\cdot, \cdot)$
 \item By virtue of existence thm: sampling from GP priors gives us random functions with our properties of choice
 \end{framei}
 
 \begin{framei}[sep=L]{sampling from gaussian process priors}
-\item Example: $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
-$$ k(\xv, \tilde{\xv}) = \exp\left(-\tfrac{1}{2}\|\xv - \tilde{\xv}\|^2\right)$$
+\item Example: $f \sim \gpzk$ with cov function
+$$ \kxxt = \exp\left(-\tfrac{1}{2}\xxtnorm^2\right)$$
 \item To visualize sample functions, 
 \begin{itemize}
 \item choose high number $n$ of (equidistant) points $\bm{X} = \xdat$
   \item compute $\Kmat = k(\bm{X}, \bm{X})$ from all pairs $\xi, \xi[j] \in \bm{X}$ 
-  \item draw $\fv \sim \normal(\zero, \Kmat)$ 
+  \item draw $\fv \sim \nzk$ 
 \end{itemize}
 \item 10 randomly drawn functions (note 0 mean)
 \vfill
 \imageC[.8]{figure/gp_sample/different_samples.pdf}
-\end{framei}
-
-\begin{framei}[sep=L]{sampling from gaussian process priors}
-\item Example: 2D Brownian motion
-\item Random fluctuations of particle positions in some medium
-\item $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
-$$ k(\xv, \tilde{\xv}) = \min (\xv, \tilde{\xv})$$
-\item \textcolor{red}{TODO LW: plot}
 \end{framei}
 
 \endlecture

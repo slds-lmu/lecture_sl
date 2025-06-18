@@ -224,100 +224,98 @@ With an $L2$ penalty we can now select $d$ "too large" but regularize our model 
 
 % \section{Lasso Regression}
 
-\begin{comment}
-\begin{vbframe}{Lasso Regression}
+% \begin{vbframe}{Lasso Regression}
 
-Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetav$:
-\vspace{-0.2cm}
-\begin{eqnarray*}
-\thetah_{\text{Lasso}}= \argmin_{\thetav} \underbrace{\sumin \left(\yi - \thetav^T \xi\right)^2}_{\left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right)} + \lambda \|\thetav\|_1
-\end{eqnarray*}
-Optimization is much harder now. $\riskrt$ is still convex, but in general there is no analytical solution and it is non-differentiable.\\
-\vspace{0.2cm}
+% Another shrinkage method is the so-called \textbf{Lasso regression} ({\scriptsize{least absolute shrinkage and selection operator}}), which uses an $L1$ penalty on $\thetav$:
+% \vspace{-0.2cm}
+% \begin{eqnarray*}
+% \thetah_{\text{Lasso}}= \argmin_{\thetav} \underbrace{\sumin \left(\yi - \thetav^T \xi\right)^2}_{\left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right)} + \lambda \|\thetav\|_1
+% \end{eqnarray*}
+% Optimization is much harder now. $\riskrt$ is still convex, but in general there is no analytical solution and it is non-differentiable.\\
+% \vspace{0.2cm}
 
 
-\framebreak
+% \framebreak
 
-Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.01, 0.5, 1, 1.5, 2, 2.5, 10.
+% Let $y=3x_{1} -2x_{2} +\epsilon $, $ \epsilon \sim N( 0,1)$. The true minimizer is $\theta ^{*} =( 3,-2)^{T}$. Consider $\lambda $ values of 0.01, 0.5, 1, 1.5, 2, 2.5, 10.
 
-\begin{figure}
-\includegraphics[width=0.7\textwidth]{figure/lin_model_regu_01.png}
-\end{figure}
+% \begin{figure}
+% \includegraphics[width=0.7\textwidth]{figure/lin_model_regu_01.png}
+% \end{figure}
 
-With increasing regularization, $\theta_{\textit{ridge}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
+% With increasing regularization, $\theta_{\textit{ridge}}$ is pulled back to the origin. Contours = unreg. objective, dots = reg. solution for increasing $\lambda$.
 
-%\textbf{NB}: lasso=least absolute shrinkage and selection operator.
+% %\textbf{NB}: lasso=least absolute shrinkage and selection operator.
 
-\framebreak 
+% \framebreak 
 
-Contours of regularized objective for different $\lambda$ values.
-\begin{figure}
-\includegraphics[width=0.9\textwidth]{figure/reg_contours_01.png}
-\end{figure}
+% Contours of regularized objective for different $\lambda$ values.
+% \begin{figure}
+% \includegraphics[width=0.9\textwidth]{figure/reg_contours_01.png}
+% \end{figure}
 
-\framebreak
+% \framebreak
 
-We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
-\vspace{-0.2cm}
-\begin{eqnarray*}
-\min_{\thetav} \sumin \left(\yi - \fxit\right)^2\,
-\text{subject to: } \|\thetav\|_1 \leq t
-\end{eqnarray*}
-The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
-\vspace{-0.1cm}
-\begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
-\includegraphics[width=0.95\textwidth]{figure/lasso_contour_cases.png}\\
-\end{figure}
+% We can also rewrite this as a constrained optimization problem. The penalty results in the constrained region to look like a diamond shape.
+% \vspace{-0.2cm}
+% \begin{eqnarray*}
+% \min_{\thetav} \sumin \left(\yi - \fxit\right)^2\,
+% \text{subject to: } \|\thetav\|_1 \leq t
+% \end{eqnarray*}
+% The kinks in $L1$ enforce sparse solutions because ``the loss contours first hit the sharp corners of the constraint'' at coordinate axes where (some) entries are zero. 
+% \vspace{-0.1cm}
+% \begin{figure}%\includegraphics[width=0.3\textwidth]{figure_man/lasso_hat.png}\\
+% \includegraphics[width=0.95\textwidth]{figure/lasso_contour_cases.png}\\
+% \end{figure}
 
-\end{vbframe}
+% \end{vbframe}
 
-\begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
-For the special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
-$$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
+% \begin{vbframe}{$L1$ and $L2$ Reg. with Orthonormal Design}
+% For the special case of orthonormal design $\Xmat^{\top}\Xmat=\id$ we can derive closed-form a solution in terms of $\thetah_{\text{OLS}}=(\Xmat^{\top}\Xmat)^{-1}\Xmat^{\top}\yv=\Xmat^{\top}\yv$:
+% $$\thetah_{\text{Lasso}}=\text{sign}(\thetah_{\text{OLS}})(\vert \thetah_{\text{OLS}} \vert - \lambda)_{+}\quad(\text{sparsity})$$
 
-The function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called the \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
-\vspace{0.2cm}
-Comparing this to $\thetah_{\text{ridge}}$ under orthonormal design we see qualitatively different behavior as $\lambda \uparrow$:
-$$\thetah_{\text{ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{uniform downscaling})$$
+% The function $S(\theta,\lambda):=\text{sign}(\theta)(|\theta|-\lambda)_{+}$ is called the \textbf{soft thresholding} operator: For $|\theta|<\lambda$ it returns $0$, whereas params $|\theta|>\lambda$ are shrunken toward $0$ by $\lambda$.\\
+% \vspace{0.2cm}
+% Comparing this to $\thetah_{\text{ridge}}$ under orthonormal design we see qualitatively different behavior as $\lambda \uparrow$:
+% $$\thetah_{\text{ridge}}= ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv=((1+\lambda)\id)^{-1}\thetah_{\text{OLS}} = \frac{\thetah_{\text{OLS}}}{1+\lambda}\quad (\text{uniform downscaling})$$
 
-\end{vbframe}
+% \end{vbframe}
 
-\begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
-\begin{itemize}
-    \item ridge regression results in a smooth solution path with non-sparse parameters
-    \item Lasso regression induces sparsity, but only for large enough $\lambda$
-\end{itemize}
- \lz
-\begin{figure}
-\includegraphics[width=0.9\textwidth]{figure_man/solution_paths_01.png}\\
-\end{figure}
+% \begin{vbframe}{Comparing Solution paths for $L1$/$L2$}
+% \begin{itemize}
+%     \item ridge regression results in a smooth solution path with non-sparse parameters
+%     \item Lasso regression induces sparsity, but only for large enough $\lambda$
+% \end{itemize}
+%  \lz
+% \begin{figure}
+% \includegraphics[width=0.9\textwidth]{figure_man/solution_paths_01.png}\\
+% \end{figure}
 
-\end{vbframe}
+% \end{vbframe}
 
-\begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
-Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
+% \begin{vbframe}{Effect of $L1$/$L2$ on Loss Surface}
+% Regularized empirical risk $\riskr(\theta_1,\theta_2)$ using squared loss for $\lambda \uparrow$. $L1$ penalty makes non-smooth kinks at coordinate axes more pronounced, while $L2$ penalty warps $\riskr$ toward a ``basin'' (elliptic paraboloid). 
 
-\begin{figure}
-    \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=0.3\textwidth]{figure/reg_surfaces_l1_lam0.png}}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam0.png}}
-    \end{minipage}
-   \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=0.3\textwidth]{figure/reg_surfaces_l1_lam1.png}}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam1.png}}
-    \end{minipage}
-    \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=0.3\textwidth]{figure/reg_surfaces_l1_lam10.png}}
-        \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam10.png}}
-   \end{minipage}
-\end{figure}
+% \begin{figure}
+%     \begin{minipage}{0.32\linewidth}
+%         \centerline{\includegraphics[width=0.3\textwidth]{figure/reg_surfaces_l1_lam0.png}}
+%         \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam0.png}}
+%     \end{minipage}
+%    \begin{minipage}{0.32\linewidth}
+%         \centerline{\includegraphics[width=0.3\textwidth]{figure/reg_surfaces_l1_lam1.png}}
+%         \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam1.png}}
+%     \end{minipage}
+%     \begin{minipage}{0.32\linewidth}
+%         \centerline{\includegraphics[width=0.3\textwidth]{figure/reg_surfaces_l1_lam10.png}}
+%         \centerline{\includegraphics[width=\textwidth]{figure/reg_surfaces_l2_lam10.png}}
+%    \end{minipage}
+% \end{figure}
 
 %\begin{figure}
 %\includegraphics[width=0.8\textwidth]{figure/reg_surfaces_l1_l2.png}\\
 %\end{figure}
 
-\end{vbframe}
-\end{comment}
+% \end{vbframe}
 
 \endlecture
 \end{document}

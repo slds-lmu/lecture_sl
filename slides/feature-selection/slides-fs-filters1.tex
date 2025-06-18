@@ -20,7 +20,7 @@
   \item Know filter methods based on correlation, test statistics, and mutual information.
 }
 
-\begin{vbframe}{Introduction}
+\begin{frame2}{Introduction}
   \vspace{0.4cm}
   \begin{itemize}
   \setlength{\itemsep}{0.8em}
@@ -35,11 +35,11 @@
   \footnotesize{Exemplary filter score ranking for Spam data}
   \end{center}
   
-  \end{vbframe}
+  \end{frame2}
 
 
 
-  \begin{vbframe}{$\chi^2$-statistic}
+  \begin{frame2}{$\chi^2$-statistic}
   \begin{itemize}
     \item Test for independence between categorical $x_j$ and cat. target $y$. Numeric features or targets can be discretized.
     \item Hypotheses: \\
@@ -54,10 +54,10 @@
     where $e_{mk}$ is observed relative frequency of pair $(m,k)$, $\tilde{e}_{mk} = \frac{e_{m \cdot} e_{\cdot k}}{n}$ is expected relative frequency, and $M,K$ are number of values $x_j$ and $y$ can take
     \item The larger $\chi_j^2$, the more dependent is the feature-target combination $\rightarrow$ higher relevance
   \end{itemize}
-  \end{vbframe}
+  \end{frame2}
 
 
-  \begin{vbframe}{Pearson \& Spearman correlation}
+  \begin{frame2}{Pearson \& Spearman correlation}
   \textbf{Pearson correlation $r(x_j, y)$: }
   \begin{itemize}
     \item For numeric features and targets only
@@ -85,7 +85,8 @@
   Use absolute values $|r(x_j, y)|$ for feature ranking:\\
   higher score indicates a higher relevance
 
-  \framebreak
+  \end{frame2}
+  \begin{frame2}{Pearson \& Spearman correlation}
 
   Only \textbf{linear} dependency structure, non-linear (non-monotonic) aspects are not captured:
 
@@ -123,55 +124,53 @@
     % \item A higher score indicates higher relevance of the feature.
   %   \end{itemize}
   % \end{vbframe}
-  \end{vbframe}
+  \end{frame2}
 
-\begin{comment}
-  \begin{vbframe}{Distance correlation}
-  % sources: 
-  %Szekely, G.J., Rizzo, M.L., and Bakirov, N.K. (2007), Measuring and Testing Dependence by Correlation of Distances, Annals of Statistics, Vol. 35 No. 6, pp. 2769-2794. 
-  % http://dx.doi.org/10.1214/009053607000000505
-  %Szekely, G.J. and Rizzo, M.L. (2009), Brownian Distance Covariance, Annals of Applied Statistics, Vol. 3, No. 4, 1236-1265. 
-  % http://dx.doi.org/10.1214/09-AOAS312 
-
-
-  $$
-    r_D(x_j, y) = \sqrt{\frac{c_{D}^2(x_j, y)}{\sqrt{c_{D}^2(x_j, x_j) c_{D}^2(y, y)}}}
-  $$
-  Normed version of \textbf{distance covariance}: 
-  $$c_{D}(x_j, y) = \frac{1}{n^2}\sum^n_{i=1}\sum^n_{k=1} D^{(ik)}_{x_j} D^{(ik)}_{y}$$
-  $$ D^{(ik)}_{x_j} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{x_j} + \bar{d}^{(\cdot k)}_{x_j} - \bar{d}^{(\cdot \cdot)}_{x_j}) $$
-  \begin{itemize}
-  \item $D^{(ik)}_{x_j}$ are the centered pairwise distances.
-  \item $d\left(x^{(i)}_j, x^{(k)}_j\right)$ represents the distances of observations.
-  \item $\bar{d}^{(i\cdot)}_{x_j} = \tfrac{1}{n} \sum^n_{k=1} d\left(x^{(i)}_j, x^{(k)}_j\right)$ represent the mean distances.
+%   \begin{vbframe}{Distance correlation}
+%   % sources: 
+%   %Szekely, G.J., Rizzo, M.L., and Bakirov, N.K. (2007), Measuring and Testing Dependence by Correlation of Distances, Annals of Statistics, Vol. 35 No. 6, pp. 2769-2794. 
+%   % http://dx.doi.org/10.1214/009053607000000505
+%   %Szekely, G.J. and Rizzo, M.L. (2009), Brownian Distance Covariance, Annals of Applied Statistics, Vol. 3, No. 4, 1236-1265. 
+%   % http://dx.doi.org/10.1214/09-AOAS312 
 
 
-  \end{itemize}
-
-  \framebreak
-
-  \begin{itemize}
-    \setlength{\itemsep}{1.6em}
-  \item $0 \leq r_D(x_j, y) \leq 1 \quad \forall  j \in \{1, …, p\}$
-  \item $r_D(x_j, y) = 0$ only if $\xv$ and $y$ are empirically independent (!)
-  \item $r_D(x_j, y) = 1$ for exact linear dependencies
-  \item Assesses strength of \textbf{non-monotonic}, \textbf{non-linear}  dependencies
-  \item Generally applicable, even for ranking multivariate features or non-tabular inputs (text, images, audio, etc.)
-  \item Expensive to compute for large data.
-  \end{itemize}
-
-  \begin{figure}
-  \includegraphics[width = 0.85\textwidth]{figure_man/distance-corre.png}
-  \end{figure}
-  {Comparison of Pearson, Spearman and distance correlation for different dependency structures.}
+%   $$
+%     r_D(x_j, y) = \sqrt{\frac{c_{D}^2(x_j, y)}{\sqrt{c_{D}^2(x_j, x_j) c_{D}^2(y, y)}}}
+%   $$
+%   Normed version of \textbf{distance covariance}: 
+%   $$c_{D}(x_j, y) = \frac{1}{n^2}\sum^n_{i=1}\sum^n_{k=1} D^{(ik)}_{x_j} D^{(ik)}_{y}$$
+%   $$ D^{(ik)}_{x_j} = d\left(x^{(i)}_j, x^{(k)}_j\right) - (\bar{d}^{(i\cdot)}_{x_j} + \bar{d}^{(\cdot k)}_{x_j} - \bar{d}^{(\cdot \cdot)}_{x_j}) $$
+%   \begin{itemize}
+%   \item $D^{(ik)}_{x_j}$ are the centered pairwise distances.
+%   \item $d\left(x^{(i)}_j, x^{(k)}_j\right)$ represents the distances of observations.
+%   \item $\bar{d}^{(i\cdot)}_{x_j} = \tfrac{1}{n} \sum^n_{k=1} d\left(x^{(i)}_j, x^{(k)}_j\right)$ represent the mean distances.
 
 
-  \end{vbframe}
-\end{comment}
+%   \end{itemize}
+
+%   \framebreak
+
+%   \begin{itemize}
+%     \setlength{\itemsep}{1.6em}
+%   \item $0 \leq r_D(x_j, y) \leq 1 \quad \forall  j \in \{1, …, p\}$
+%   \item $r_D(x_j, y) = 0$ only if $\xv$ and $y$ are empirically independent (!)
+%   \item $r_D(x_j, y) = 1$ for exact linear dependencies
+%   \item Assesses strength of \textbf{non-monotonic}, \textbf{non-linear}  dependencies
+%   \item Generally applicable, even for ranking multivariate features or non-tabular inputs (text, images, audio, etc.)
+%   \item Expensive to compute for large data.
+%   \end{itemize}
+
+%   \begin{figure}
+%   \includegraphics[width = 0.85\textwidth]{figure_man/distance-corre.png}
+%   \end{figure}
+%   {Comparison of Pearson, Spearman and distance correlation for different dependency structures.}
+
+
+%   \end{vbframe}
 
 
 
-  \begin{vbframe}{Welch's \MakeLowercase{t}-test}
+  \begin{frame2}{Welch's \MakeLowercase{t}-test}
   \begin{itemize}
   \setlength{\itemsep}{0.6em}
     \item For binary classification with $\Yspace = \{ 0, 1\}$ and numeric features
@@ -192,9 +191,9 @@
 %\footnotesize{Visualization of t-test scores.}
   \end{center}
   
-  \end{vbframe}
+  \end{frame2}
 
-  \begin{vbframe}{AUC/ROC}
+  \begin{frame2}{AUC/ROC}
   \begin{itemize}
     \item For binary classification with $\Yspace = \{ 0, 1\}$ and numeric features
     \item Classify samples using single feature (with thresholds), compute AUC per feature as proxy for its ability to separate classes 
@@ -209,10 +208,10 @@
 
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
    \end{center}
-   \end{vbframe}
+   \end{frame2}
 
 
-  \begin{vbframe}{F-Test}
+  \begin{frame2}{F-Test}
   \begin{itemize}
     \item For multiclass classification ($g \ge 2$) and numeric features
     \item Assesses whether the expected values of a feature $x_j$ within the classes of the target differ from each other
@@ -227,9 +226,9 @@
     where $\bar{x}_{j_k}$ is the sample mean of feature $x_j$ where $y = k$ and $\bar{x_{j}}$ is the overall sample mean of feature $x_j$
   \item A higher F-score indicates higher relevance of the feature
   \end{itemize}
-  \end{vbframe}
+  \end{frame2}
 
-  \begin{vbframe}{Mutual Information (MI)}
+  \begin{frame2}{Mutual Information (MI)}
   $$I(X ; Y) = \E_{p(x, y)} \left[ \log \frac{p(X, Y)}{p(X) p(Y)} \right]$$
 
   \begin{itemize}
@@ -241,7 +240,7 @@
   \item Unlike correlation, MI is defined for both numeric and categorical variables and provides a more general measure of dependence
   \item To estimate MI: for discrete features, use observed frequencies; for continuous features, binning, kernel density estimation is used
   \end{itemize}
-  \end{vbframe}
+  \end{frame2}
 
   \endlecture
 \end{document}
