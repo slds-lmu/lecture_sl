@@ -38,31 +38,29 @@
 
 \end{vbframe}
 
-\begin{comment}
 
-\begin{vbframe}{Introduction}
+% \begin{vbframe}{Introduction}
 
-    Wrappers have the following components:
-
-
-    \begin{itemize}
-      \item A set of starting values
-      \item Operators to create new points out of the given ones
-      \item A termination criterion
-    \end{itemize}
+%     Wrappers have the following components:
 
 
-    \begin{figure}
-      \includegraphics[width=8cm]{figure_man/varsel_space.png}
-      % \caption{Space of all feature sets for 4 features.
-      % The indicated relationships between the sets insinuate a greedy search strategy which either adds or removes a feature.}
-      % Übersetzung von:
-      % Raum aller Feature-Mengen bei 4 Features. Die eingezeichnete Nachbarschaftsbeziehung unterstellt eine Art ,,gierige'' Suchstrategie, bei der wir entweder ein Feature hinzufügen oder entfernen.}
-    \end{figure}
+%     \begin{itemize}
+%       \item A set of starting values
+%       \item Operators to create new points out of the given ones
+%       \item A termination criterion
+%     \end{itemize}
 
 
-  \end{vbframe}
-\end{comment}
+%     \begin{figure}
+%       \includegraphics[width=8cm]{figure_man/varsel_space.png}
+%       % \caption{Space of all feature sets for 4 features.
+%       % The indicated relationships between the sets insinuate a greedy search strategy which either adds or removes a feature.}
+%       % Übersetzung von:
+%       % Raum aller Feature-Mengen bei 4 Features. Die eingezeichnete Nachbarschaftsbeziehung unterstellt eine Art ,,gierige'' Suchstrategie, bei der wir entweder ein Feature hinzufügen oder entfernen.}
+%     \end{figure}
+
+
+%   \end{vbframe}
 
   \begin{vbframe}{Objective function}
 
@@ -91,51 +89,49 @@
   \end{vbframe}
 
 
-\begin{comment}
- \begin{vbframe}{How difficult is best-subset selection?}
+%  \begin{vbframe}{How difficult is best-subset selection?}
 
-    \begin{itemize}
-    \setlength{\itemsep}{1em}
-      \item Size of search space = $2^p$, i.e., grows exponentially in $p$ as it is the power set of $\{1,\ldots,p\}$
-      \item Finding best subset is discrete combinatorial optimization problem.
-      %also known as $L_0$ regularization.
-     \item It can be shown that this problem unfortunately can not be solved efficiently in general (NP hard; see, e.g., \furtherreading{NATARAJAN1995SPARSE})
-     \item We can avoid having to search the entire space by employing efficient search strategies, moving through the search space in a smart way that finds performant feature subsets
-     %\item By employing efficient search strategories, we can avoid searching the entire space.
-    %\item Of course this does not mean that we have to search the entire space, since there are more efficient search strategies.
-    %  \item Formally spoken: One can show that the problem is NP-hard!
-    %  \item This means that the problem cannot be solved in polynomial (P) time: ${\mathcal{O}} (p^c)$, where $c \in \N$ indicates the degree o the polynom.
-    % \end{blocki}
-    %
-    % \framebreak
-    %
-    % \begin{blocki}{How difficult is it to solve the introduced optimization problem, hence, to find the optimal feature set?}
-    %  \item More precisely, the proof demonstrates that this problem cannot be approximated within any constant, unless P = NP.
-    %
-    %   The latter means, that if you find an algorithm that solves a more difficult class of problems (than this optimization problem) in polynomial time, this implies that you found how to solve all easier problems (including our optimization problem) in polynomial time.
-    % \item \textbf{Attention}: This does not imply that it is useless trying to construct strategies which work in practice!
-    %\item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
-    \end{itemize}
-  \end{vbframe}
+%     \begin{itemize}
+%     \setlength{\itemsep}{1em}
+%       \item Size of search space = $2^p$, i.e., grows exponentially in $p$ as it is the power set of $\{1,\ldots,p\}$
+%       \item Finding best subset is discrete combinatorial optimization problem.
+%       %also known as $L_0$ regularization.
+%      \item It can be shown that this problem unfortunately can not be solved efficiently in general (NP hard; see, e.g., \furtherreading{NATARAJAN1995SPARSE})
+%      \item We can avoid having to search the entire space by employing efficient search strategies, moving through the search space in a smart way that finds performant feature subsets
+%      %\item By employing efficient search strategories, we can avoid searching the entire space.
+%     %\item Of course this does not mean that we have to search the entire space, since there are more efficient search strategies.
+%     %  \item Formally spoken: One can show that the problem is NP-hard!
+%     %  \item This means that the problem cannot be solved in polynomial (P) time: ${\mathcal{O}} (p^c)$, where $c \in \N$ indicates the degree o the polynom.
+%     % \end{blocki}
+%     %
+%     % \framebreak
+%     %
+%     % \begin{blocki}{How difficult is it to solve the introduced optimization problem, hence, to find the optimal feature set?}
+%     %  \item More precisely, the proof demonstrates that this problem cannot be approximated within any constant, unless P = NP.
+%     %
+%     %   The latter means, that if you find an algorithm that solves a more difficult class of problems (than this optimization problem) in polynomial time, this implies that you found how to solve all easier problems (including our optimization problem) in polynomial time.
+%     % \item \textbf{Attention}: This does not imply that it is useless trying to construct strategies which work in practice!
+%     %\item Thus our problem now consists of moving through the search space in a smart and efficient way, thereby finding a particularly good set of features.
+%     \end{itemize}
+%   \end{vbframe}
 
-\begin{frame}{Greedy forward search}
+% \begin{frame}{Greedy forward search}
 
-    \begin{blocki}{}
-      \item Let $S \subset \{1, \dots, p \}$, where $\{1, \dots p \}$ are feature indices
-      \item Start with the empty feature set $S = \emptyset$
-      \item For a given set $S$, generate all $S_j = S \cup \{j\}$ with $j \notin S$.
-      \item Evaluate the classifier on all $S_j$ and use the best $S_j$
-      \item Iterate over this procedure
-      \item Terminate if:
-        \begin{enumerate}
-          \item the performance measure doesn't improve enough
-          \item a maximum number of features is used
-          \item a given performance value is reached
-        \end{enumerate}
-    \end{blocki}
+%     \begin{blocki}{}
+%       \item Let $S \subset \{1, \dots, p \}$, where $\{1, \dots p \}$ are feature indices
+%       \item Start with the empty feature set $S = \emptyset$
+%       \item For a given set $S$, generate all $S_j = S \cup \{j\}$ with $j \notin S$.
+%       \item Evaluate the classifier on all $S_j$ and use the best $S_j$
+%       \item Iterate over this procedure
+%       \item Terminate if:
+%         \begin{enumerate}
+%           \item the performance measure doesn't improve enough
+%           \item a maximum number of features is used
+%           \item a given performance value is reached
+%         \end{enumerate}
+%     \end{blocki}
 
-    \end{frame}
-\end{comment}
+%     \end{frame}
 
 \begin{frame}{Greedy forward search}
 Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
@@ -285,24 +281,22 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 
 \end{vbframe}
 
-\begin{comment}
-    \begin{algorithm}[H]
-    \begin{algorithmic}[1]
-      \State Start with a random set of features $S$ (bit vector $b$).
-      \Repeat
-      \State Flip a couple of bits in $b$ with probability $p$
-      \State Generate set $S^\prime$ and bit vector $b^\prime$
-      \State Measure the classifier's performance on $S^\prime$
-      \State If $S^\prime$ performs better than $S$, update $S \leftarrow S^\prime$, otherwise $S \leftarrow S$.
-      \Until One of the following conditions is met:
-        \begin{itemize}
-          \item A given performance value is reached.
-          \item Budget is exhausted.
-        \end{itemize}
-        \caption{A simple 1+1 genetic algorithm}
-    \end{algorithmic}
-    \end{algorithm}
-\end{comment}
+    % \begin{algorithm}[H]
+    % \begin{algorithmic}[1]
+    %   \State Start with a random set of features $S$ (bit vector $b$).
+    %   \Repeat
+    %   \State Flip a couple of bits in $b$ with probability $p$
+    %   \State Generate set $S^\prime$ and bit vector $b^\prime$
+    %   \State Measure the classifier's performance on $S^\prime$
+    %   \State If $S^\prime$ performs better than $S$, update $S \leftarrow S^\prime$, otherwise $S \leftarrow S$.
+    %   \Until One of the following conditions is met:
+    %     \begin{itemize}
+    %       \item A given performance value is reached.
+    %       \item Budget is exhausted.
+    %     \end{itemize}
+    %     \caption{A simple 1+1 genetic algorithm}
+    % \end{algorithmic}
+    % \end{algorithm}
 
 %\framebreak
 %\end{vbframe}
@@ -317,27 +311,25 @@ Let $S \subset \{1, \dots, p \}$ be subset of feature indices.
 %Bit representation of the best variables included up to iteration $t$
 
 % this is in the optim slides regarding featsel using EA
-\begin{comment}
-\textbf{Aim:} Use a $(\mu + \lambda)$ selection strategy for feature selection.\\
-\vspace*{0.2cm}
-Our iterative algorithm with $100$ iterations is as follows:
-\begin{enumerate}
-\item Initialize the population and evaluate it. Therefore, encode a chromosome of an individual as a bit string of length $p$, i.e. $\textbf{z} \in \{0, 1\}^p$. Where $z_j =1$ means that variable $j$ is included in the model.
-\item Apply the variation and evaluate the fitness function. As fitness function, select BIC of the model belonging to the corresponding variable configuration $\textbf{z} \in \{0, 1\}^p$.
-\item Finally, use $(\mu + \lambda)$-selection strategy as the survival selection with population size of $\mu = 100$ and $\lambda =50$ offspring.
-\end{enumerate}
+% \textbf{Aim:} Use a $(\mu + \lambda)$ selection strategy for feature selection.\\
+% \vspace*{0.2cm}
+% Our iterative algorithm with $100$ iterations is as follows:
+% \begin{enumerate}
+% \item Initialize the population and evaluate it. Therefore, encode a chromosome of an individual as a bit string of length $p$, i.e. $\textbf{z} \in \{0, 1\}^p$. Where $z_j =1$ means that variable $j$ is included in the model.
+% \item Apply the variation and evaluate the fitness function. As fitness function, select BIC of the model belonging to the corresponding variable configuration $\textbf{z} \in \{0, 1\}^p$.
+% \item Finally, use $(\mu + \lambda)$-selection strategy as the survival selection with population size of $\mu = 100$ and $\lambda =50$ offspring.
+% \end{enumerate}
 
-In addition:
+% In addition:
 
-\begin{itemize}
-\item for the mutation, use bit flip with $p = 0.3$
-\item for the recombination, use Uniform crossover with $p=0.5$
-\end{itemize}
+% \begin{itemize}
+% \item for the mutation, use bit flip with $p = 0.3$
+% \item for the recombination, use Uniform crossover with $p=0.5$
+% \end{itemize}
 
-\lz
+% \lz
 
-By exploiting \textbf{Greedy} as a selection strategy, ensure that you always choose individuals with the best fitness.
-\end{comment}
+% By exploiting \textbf{Greedy} as a selection strategy, ensure that you always choose individuals with the best fitness.
 
 
 

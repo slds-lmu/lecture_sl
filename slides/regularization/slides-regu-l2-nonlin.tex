@@ -229,7 +229,7 @@ Chris: I think ChatGPT produced a lot of "almost correct" stuff that culminated 
     \item For fully-connected linear networks using $L$ weight matrices $f(x|W_L,\ldots,W_1)=W_L \cdot \ldots \cdot W_1 x$, adding $L2$ regularization with $\lambda$ to all $W_l$ produces equivalent minma to Schatten $2/L$-norm regularization of the the collapsed linear predictor $\Bar{W}x:=W_L \cdot \ldots \cdot W_1x$ with strength $L\lambda$
     \item I am fairly certain there is also no existence theorem for non-convex Schatten $2/L$-norm regularization, their success depends strongly on the low-rank nature of the problem
     \item For MLPs beyond linear DNNs there are also some results for the "induced regularizer" in specific cases, which is often a complex or non-analytical expression. For these, there are also no existence theorems
-    \item \citebutton{Neyshabur et al., 2015}{https://arxiv.org/pdf/1412.6614} derive equivalent optimization problems for $L2$ regularized shallow relu-networks:
+    \item \furtherreading{NEYSHABUR2015} derive equivalent optimization problems for $L2$ regularized shallow relu-networks:
     $$
 \underset{\boldsymbol{v} \in \mathbb{R}^H,\left(\boldsymbol{u}_h\right)_{h=1}^H}{\operatorname{argmin}}\left(\sum_{t=1}^n L\left(y_t, \sum_{h=1}^H v_h\left[\left\langle\boldsymbol{u}_h, \boldsymbol{x}_t\right\rangle\right]_{+}\right)+\frac{\lambda}{2} \sum_{h=1}^H\left(\left\|\boldsymbol{u}_h\right\|^2+\left|v_h\right|^2\right)\right),
 $$
