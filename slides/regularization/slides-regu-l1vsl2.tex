@@ -114,41 +114,39 @@ $\Sigma_{k,l}=0.7^{|k-l|}$
 
 \framebreak
 
-\begin{comment}
-\textbf{Example:}
-\begin{itemize}
-\item Let the true data generating process be
-$$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
-\item Let there be 5 features $x_1, \ldots, x_5 \sim \normal (0,1)$.
-\item Using the lasso (package \texttt{glmnet}), we get
-\footnotesize
-\vspace{0.2cm}
+% \textbf{Example:}
+% \begin{itemize}
+% \item Let the true data generating process be
+% $$ y = x_1 + \epsilon, \quad \epsilon \sim \normal \left(0, 1\right).$$
+% \item Let there be 5 features $x_1, \ldots, x_5 \sim \normal (0,1)$.
+% \item Using the lasso (package \texttt{glmnet}), we get
+% \footnotesize
+% \vspace{0.2cm}
 
-\begin{table}[]
-\begin{tabular}{lllll}
-(Intercept) & x1    & x2    & x3    & x4    \\
--0.056      & 0.489 & 0.000 & 0.000 & 0.000 
-\end{tabular}
-\end{table}
+% \begin{table}[]
+% \begin{tabular}{lllll}
+% (Intercept) & x1    & x2    & x3    & x4    \\
+% -0.056      & 0.489 & 0.000 & 0.000 & 0.000 
+% \end{tabular}
+% \end{table}
 
 
-\normalsize
-\item But if we rescale any of the noise features, say $x_2 = 10000 \cdot x_2$ and don't use standardization, we get
-\footnotesize
-\vspace{0.2cm}
+% \normalsize
+% \item But if we rescale any of the noise features, say $x_2 = 10000 \cdot x_2$ and don't use standardization, we get
+% \footnotesize
+% \vspace{0.2cm}
 
-\begin{table}[]
-\begin{tabular}{lllll}
-(Intercept) & x1       & x2        & x3       & x4       \\
--0.106830   & 0.000000 & -0.000013 & 0.000000 & 0.000000         
-\end{tabular}
-\end{table}
+% \begin{table}[]
+% \begin{tabular}{lllll}
+% (Intercept) & x1       & x2        & x3       & x4       \\
+% -0.106830   & 0.000000 & -0.000013 & 0.000000 & 0.000000         
+% \end{tabular}
+% \end{table}
 
-\normalsize
+% \normalsize
 
-\item This is due to the fact, that the coefficient of $x_2$ will live on a very small scale as the covariate itself is large. The feature will thus get less penalized by the $L1$-norm and is favored by lasso.
-\end{itemize}
-\end{comment}
+% \item This is due to the fact, that the coefficient of $x_2$ will live on a very small scale as the covariate itself is large. The feature will thus get less penalized by the $L1$-norm and is favored by lasso.
+% \end{itemize}
 
 \end{vbframe}
 
