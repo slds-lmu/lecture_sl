@@ -1,6 +1,12 @@
-library(ggplot2)
+# ------------------------------------------------------------------------------
+# losses properties
+# FIG: l2, l1 and huber loss
+# ------------------------------------------------------------------------------
 
+library(ggplot2)
 source("helpers/loss_functions.R")
+
+# ------------------------------------------------------------------------------
 
 df = data.frame(res = seq(-10L, 10L, length.out = 800L))
 
@@ -14,7 +20,7 @@ pl = plotLoss(df, losses) +
   scale_color_viridis_d() +
   theme_minimal() +
   theme(text = element_text(size = 20L))
+pl
 
-
-ggplot2::ggsave("../figure/loss_l2_l1_huber.png", pl)
+ggsave("../figure/loss_l2_l1_huber.png", pl)
 

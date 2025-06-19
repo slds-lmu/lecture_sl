@@ -1,4 +1,6 @@
 # ------------------------------------------------------------------------------
+# classification bernoulli
+
 # This script generates four plots for binary classification loss functions.
 # 1. The Brier score on probabilities, where for a given prob pi:
 #    - For y = 1, the loss is (1-pi)^2.
@@ -47,7 +49,7 @@ p <- ggplot(data = df, aes(x = x, y = pi, color = y)) +
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
 p
-ggsave("../figure/brier.png", p, height = 4, width = 9)
+ggsave("../figure/brier_and_l1_brier.png", p, height = 4, width = 9)
 
 p2 <- ggplot(data = df2, aes(x = x, y = pi, color = y)) + 
   geom_line(size = 1.2) + 
@@ -57,7 +59,7 @@ p2 <- ggplot(data = df2, aes(x = x, y = pi, color = y)) +
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
 p2
-ggsave("../figure/brier_on_score.png", p2, height = 4, width = 9)
+ggsave("../figure/brier_and_l1_brier_on_score.png", p2, height = 4, width = 9)
 # DATA FOR L1 LOSS ON PROBABILITIES --------------------------------------------
 
 # on prob
@@ -86,7 +88,7 @@ p_l1 <- ggplot(data = df_l1, aes(x = p, y = loss, color = y)) +
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
 p_l1
-ggsave("../figure/l1_loss.png", p_l1, height = 4, width = 9)
+ggsave("../figure/brier_and_l1_l1.png", p_l1, height = 4, width = 9)
 
 p_l1_score <- ggplot(data = df_l1_score, aes(x = f, y = loss, color = y)) + 
   geom_line(size = 1.2) + 
@@ -96,5 +98,5 @@ p_l1_score <- ggplot(data = df_l1_score, aes(x = f, y = loss, color = y)) +
   theme(text = element_text(size = 20)) +
   scale_color_viridis_d(end = 0.9)
 p_l1_score
-ggsave("../figure/l1_loss_on_score.png", p_l1_score, height = 4, width = 9)
+ggsave("../figure/brier_and_l1_l1_on_score.png", p_l1_score, height = 4, width = 9)
 
