@@ -33,7 +33,7 @@
   }{
     Training of a Gaussian Process
   }{
-  figure/gp_training/fit_vs_penalty.pdf
+  figure/gp_training/nll_components.pdf
   }{
   \item Training of GPs via Maximum Likelihood estimation of its hyperparameters
   \item Computational complexity is governed by matrix inversion of the covariance matrix
@@ -75,46 +75,31 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 \item Minimize NLL by trading off data fit \& complexity
 \vfill
 \splitV{
-\imageC[1]{figure/gp_training/fit_vs_penalty.pdf}
+\imageC[1]{figure/gp_training/nll_components.pdf}
 }{
 \imageC[1]{figure/gp_training/datapoints.pdf}
 }
 \end{framei}
 
-\begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$\item Minimize NLL by trading off data fit \& complexity
-\item $\ls = 0.2$: good fit but low smoothness term
-\vfill
-\splitV{
-\imageC[1]{figure/gp_training/fit_vs_penalty_0_2.pdf}
-}{
-\imageC[1]{figure/gp_training/datapoints_0_2.pdf}
-}
-\end{framei}
-
+\foreach \i [count=\idx from 1] in {0.2, 2, 0.5}{
 \begin{framei}[sep=L]{nll components: example}
 \item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
 \item Minimize NLL by trading off data fit \& complexity
-\item $\ls = 2$: high smoothness but poor fit
+\ifnum \idx=1
+\item $\ls = \i$: good fit but high complexity
+\fi \ifnum \idx=2
+\item $\ls = \i$: smooth but poor fit
+\fi \ifnum \idx=3
+\item $\ls = \i$: balancing data fit and smoothness
+\fi
 \vfill
 \splitV{
-\imageC[1]{figure/gp_training/fit_vs_penalty_2.pdf}
+\imageC[1]{figure/gp_training/nll_components_ls_\idx.pdf}
 }{
-\imageC[1]{figure/gp_training/datapoints_2.pdf}
+\imageC[1]{figure/gp_training/datapoints_pred_\idx.pdf}
 }
 \end{framei}
-
-\begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
-\item Minimize NLL by trading off data fit \& complexity
-\item $\ls = 0.5$: balancing fit and smoothness term
-\vfill
-\splitV{
-\imageC[1]{figure/gp_training/fit_vs_penalty_0_5.pdf}
-}{
-\imageC[1]{figure/gp_training/datapoints_0_5.pdf}
 }
-\end{framei}
 
 % ----------------------------------------------------
 

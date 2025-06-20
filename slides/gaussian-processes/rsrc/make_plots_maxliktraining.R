@@ -58,7 +58,7 @@ x = seq(-2, 2, length.out = num_obs)
 num_obs = length(x)
 y = c(rmvnorm(1, sigma = kernel_sqexp(x, x, 0.3)[seq_along(x), seq_along(x)]))
 x_new = seq(-2, 2, length.out = 100L)
-ls_plot = c(0.2, 0.5, 2)
+ls_plot = c(0.2, 2, 0.5)
 
 dt_nll = lapply(
     seq(0.01, 2, by = 0.01),
@@ -86,21 +86,22 @@ ggsave(
 )
 
 p_nll = ggplot(
-    dt_nll_long[variable != "norm_const"], aes(x = ls, y = value, color = variable)
+    dt_nll_long[variable != "norm_const"], 
+    aes(x = ls, y = value, color = variable)
 ) +
     geom_line() + 
     theme_bw() + 
     scale_color_manual(
         "",
         values = c("blue", "darkorange", "black"),
-        labels = c("residual variance", "complexity", "NLL (unnormalized)")
+        labels = c("fit penalty", "complexity", "NLL (unnorm.)")
     ) +
     theme(legend.position = "top")
 ggsave(
     "../figure/gp_training/nll_components.pdf",
     p_nll,
     height = 3,
-    width = 5
+    width = 4
 )
 
 for (idx in seq_along(ls_plot)) {
@@ -110,7 +111,7 @@ for (idx in seq_along(ls_plot)) {
         p_nll +
             geom_vline(xintercept = l, color = "darkgray"),
         height = 3,
-        width = 5
+        width = 4
     )
     ggsave(
         sprintf("../figure/gp_training/datapoints_pred_%i.pdf", idx),
@@ -124,9 +125,3 @@ for (idx in seq_along(ls_plot)) {
         width = 4
     )
 }
-
-
-
-
-p_points + 
-    geom_line(data = dt_post_pred[ls == 2], aes(x, m_post.V1))
