@@ -18,7 +18,7 @@ library(plotly)
 # pak::pak("slds-lmu/vistool")
 # library(vistool)
 
-source("covariance_functions.R")
+# source("covariance_functions.R")
 
 # FUNCTIONS --------------------------------------------------------------------
 
@@ -49,14 +49,16 @@ kmat = kmat + t(kmat) - diag(diag(kmat)) # complete symmetrically
 sample = rmvnorm(1, rep(0, n_tuples), kmat)
 surface_mat = matrix(sample, nrow = n_pts, byrow = FALSE)
 
-plot_ly(x = x1, y = x2, z = surface_mat) %>%
-    add_surface() %>%
+p = plot_ly(x = x1, y = x2, z = surface_mat) %>%
+    add_surface(showscale = FALSE) %>%
     layout(
         scene = list(
             xaxis = list(title = "x1"),
             yaxis = list(title = "x2"),
             zaxis = list(title = "f(x1, x2)"),
-            camera = list(x = 2, y = 2, z = 2)
+            camera = list(x = -15, y = -1.5, z = 1.5)
         )
     )
     
+# plotly::save_image(p, "../figure/cov_funs/brownian2d.pdf", format = "pdf")
+# only works with reticulate

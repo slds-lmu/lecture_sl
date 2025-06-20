@@ -12,6 +12,8 @@ library(data.table)
 library(ggplot2)
 library(mvtnorm)
 
+source("covariance_functions.R")
+
 # FUNCTIONS --------------------------------------------------------------------
 
 # Create identity covariance matrix
@@ -31,12 +33,7 @@ make_covmat_expdecay = function(n, min_cov = 0.99) {
 
 # Create covariance matrix with squared exponential kernel
 make_covmat_sqexp = function(n, length_scale = 0.1) {
-    sqexp_kernel = function(x1, x2, length_scale) {
-        dist_mat = as.matrix(dist(c(x1, x2), method = "euclidean"))
-        exp(-0.5 * dist_mat**2 / length_scale**2)
-    }
-    x = seq(0, 1, length.out = n)
-    sqexp_kernel(x, x, length_scale)[1:n, 1:n]
+    get_kmat(x, x, "squaredexp", length_scale = length_scale)
 }
 
 # Create covariance matrix of chosen type
