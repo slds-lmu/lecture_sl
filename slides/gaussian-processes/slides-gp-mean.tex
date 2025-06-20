@@ -8,6 +8,26 @@
 
 \begin{document}
 
+% \newcommand{\fvec}{[f(\xi[1], \dots, \xi[n]]}
+% \kxij ohne left right
+\newcommand{\nmk}{\normal(\zero, \Kmat)} % replause gaussmk
+\newcommand{\nzk}{\normal(\zero, \Kmat)}
+\newcommand{\xxtnorm}{\| \xv - \xtil \|}
+\newcommand{\kcc}{k(\cdot, \cdot)} 
+\newcommand{\kxxt}{k(\xv, \xtil)} % already in ml-svm
+\newcommand{\Xsubset}{\bm{X}}
+\newcommand{\fX}{f(\Xsubset)}
+\newcommand{\kXX}{k(\Xsubset, \Xsubset)}
+\newcommand{\mX}{m(\Xsubset)}
+\newcommand{\gpmk}{\mathcal{GP}(m(\cdot), k(\cdot, \cdot))}
+\newcommand{\gpzk}{\mathcal{GP}(\zero, k(\cdot, \cdot))}
+\newcommand{\Kmatinv}{\Kmat^{-1}}
+\newcommand{\xstar}{\xv_\ast}
+\newcommand{\ystar}{\yv_\ast}
+\newcommand{\fstar}{\fv_\ast}
+\newcommand{\Xstar}{\Xmat_\ast}
+\newcommand{\Ky}{\Kmat_y}
+
 \titlemeta{
     Gaussian Processes
   }{
@@ -23,10 +43,10 @@
 \begin{framei}[sep=L]{non-zero-mean functions}
 \item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
 \item Not necessarily drastic limitation: \textbf{posterior} mean can be $\neq 0$
-$$\fv_\ast | \Xmat_*, \Xmat, \fv \sim \normal(\Kmat_{*}^{T}\Kmat^{-1}\fv, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*)$$
+$$\fstar | \Xstar, \Xmat, \fv \sim \normal(\Kstar^{T}\Kmat^{-1}\fv, \Kstarstar - \Kstar^T \Kmat ^{-1}\Kstar)$$
 \item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
-\item Assuming $\mathcal{GP}(m(\cdot), k(\cdot, \cdot))$, the posterior mean becomes
-$$m(\Xmat_*) + \Kmat_* \Kmat_y^{-1} (\yv - m(\Xmat))$$
+\item Assuming $\gpmk$, the posterior mean becomes
+$$m(\Xstar) + \Kstar \Ky^{-1} (\yv - m(\Xmat))$$
 (posterior variance unchanged)
 \end{framei}
 
@@ -49,7 +69,7 @@ $$m(\Xmat_*) + \Kmat_* \Kmat_y^{-1} (\yv - m(\Xmat))$$
 \begin{framei}[sep=L]{basis function approach}
 \item Often difficult to come up with fixed mean function
 \item Possible solution: specify basis functions + infer coeffs from data
-\item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$$
+\item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \gpzk$$
 $\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
 \item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
 \end{framei}

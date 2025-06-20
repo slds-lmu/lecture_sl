@@ -9,15 +9,24 @@
 \begin{document}
 
 % \newcommand{\fvec}{[f(\xi[1], \dots, \xi[n]]}
+% \kxij ohne left right
+\newcommand{\nmk}{\normal(\zero, \Kmat)} % replause gaussmk
 \newcommand{\nzk}{\normal(\zero, \Kmat)}
-\newcommand{\kxxt}{k(\xv, \xtil)}
-\newcommand{\xxtnorm}{\| \xv - \xtil\|}
+\newcommand{\xxtnorm}{\| \xv - \xtil \|}
+\newcommand{\kcc}{k(\cdot, \cdot)} 
+\newcommand{\kxxt}{k(\xv, \xtil)} % already in ml-svm
 \newcommand{\Xsubset}{\bm{X}}
 \newcommand{\fX}{f(\Xsubset)}
 \newcommand{\kXX}{k(\Xsubset, \Xsubset)}
 \newcommand{\mX}{m(\Xsubset)}
 \newcommand{\gpmk}{\mathcal{GP}(m(\cdot), k(\cdot, \cdot))}
 \newcommand{\gpzk}{\mathcal{GP}(\zero, k(\cdot, \cdot))}
+\newcommand{\Kmatinv}{\Kmat^{-1}}
+\newcommand{\xstar}{\xv_\ast}
+\newcommand{\ystar}{\yv_\ast}
+\newcommand{\fstar}{\fv_\ast}
+\newcommand{\Xstar}{\Xmat_\ast}
+\newcommand{\Ky}{\Kmat_y}
 
 \titlemeta{
 Gaussian Processes
@@ -153,7 +162,7 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 }{
 \imageC{figure/discrete/discr_50_identity_1n.pdf}
 }
-\item More on covariance function, or \textbf{kernel}, $k(\cdot, \cdot)$ later on
+\item More on covariance function, or \textbf{kernel}, $\kcc$ later on
 \end{framei} 
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
@@ -273,20 +282,19 @@ there \textbf{exists} $f \sim \gpmk$ s.t. $\forall \xv, \xtil \in \Xspace$
 \end{eqnarray*}
 and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
 \item Intuition: for any mean \& cov structure we prescribe, there is a corresponding GP to generate $\fv$ with these characteristics
-\item Version of Kolmogorov consistency theorem  \\
-$\Rightarrow$ proof: \furtherreading{GRIMMETT2001PROC} (Thm. 8.6.3)
+\item Version of Kolmogorov consistency theorem \\$\Rightarrow$ proof \furtherreading{GRIMMETT2001PROC} (Thm. 8.6.3)
 \end{framei}
 
 \begin{framei}[sep=L]{implications of existence theorem}
 \item GPs completely specified by their mean \& cov function
 \begin{eqnarray*}
 m(\xv) &=& \E[f(\xv)] \\
-\kxxt &=& \cov(\fx, f(\xtil)) = \E \left[\left( f(\xv) - \E[f(\xv)] \right) \left( f(\xtil) - \E[f(\xtil)] \right) \right]
+\kxxt &=& \cov(\fx, f(\xtil)) = \E [( f(\xv) - \E[f(\xv)]) ( f(\xtil) - \E[f(\xtil)] )]
 \end{eqnarray*}
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
 $\Rightarrow$ common, not necessarily drastic assumption 
-\item Denote by $\gpzk$ $\Rightarrow$ properties mainly governed by $k(\cdot, \cdot)$
+\item Denote by $\gpzk$ $\Rightarrow$ properties mainly governed by $\kcc$
 \item By virtue of existence thm: sampling from GP priors gives us random functions with our properties of choice
 \end{framei}
 

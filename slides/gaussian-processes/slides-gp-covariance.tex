@@ -8,6 +8,26 @@
 
 \begin{document}
 
+% \newcommand{\fvec}{[f(\xi[1], \dots, \xi[n]]}
+% \kxij ohne left right
+\newcommand{\nmk}{\normal(\zero, \Kmat)} % replause gaussmk
+\newcommand{\nzk}{\normal(\zero, \Kmat)}
+\newcommand{\xxtnorm}{\| \xv - \xtil \|}
+\newcommand{\kcc}{k(\cdot, \cdot)} 
+\newcommand{\kxxt}{k(\xv, \xtil)} % already in ml-svm
+\newcommand{\Xsubset}{\bm{X}}
+\newcommand{\fX}{f(\Xsubset)}
+\newcommand{\kXX}{k(\Xsubset, \Xsubset)}
+\newcommand{\mX}{m(\Xsubset)}
+\newcommand{\gpmk}{\mathcal{GP}(m(\cdot), k(\cdot, \cdot))}
+\newcommand{\gpzk}{\mathcal{GP}(\zero, k(\cdot, \cdot))}
+\newcommand{\Kmatinv}{\Kmat^{-1}}
+\newcommand{\xstar}{\xv_\ast}
+\newcommand{\ystar}{\yv_\ast}
+\newcommand{\fstar}{\fv_\ast}
+\newcommand{\Xstar}{\Xmat_\ast}
+\newcommand{\Ky}{\Kmat_y}
+
 \titlemeta{
 Gaussian Processes
 }{
@@ -20,25 +40,25 @@ figure_man/covariance2D-2.png
 }
 
 \begin{framei}[sep=L]{valid covariance functions}
-\item Recall marginalization property of GPs: for any $\bm{X} = \xdat \subset \Xspace$,
-$$\fv = f(\bm{X}) \sim \gaussmk$$
-with $\mv = m(\bm{X})$, $\Kmat = k(\bm{X}, \bm{X})$
+\item Recall marginalization property of GPs: for any $\Xsubset = \xdat \subset \Xspace$,
+$$\fv = \fX \sim \nmk$$
+with $\mv = \mX$, $\Kmat = \kXX$
 \item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
-\item Cov function (or kernel) determines cov matrix: $\Kmat = k(\bm{X}, \bm{X})$
+\item Cov function (or kernel) determines cov matrix: $\Kmat = \kXX$
 \item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions \furtherreading{DUVENAUDKERNEL}
 \end{framei}
 
 \begin{framei}[sep=L]{stationary covariance functions}
 \item Recall concept of spatial correlation
-$$\xv, \tilde{\xv} \text{ close in } \Xspace \Rightarrow f(\xv), f(\tilde{\xv}) \text{ close in } \Yspace$$
-\item Measure ``closeness'' via $\bm{d} = \xv - \tilde{\xv}$
-\item $k(\cdot, \cdot)$ called \textbf{stationary} $\Leftrightarrow$ function of $\bm{d}$ 
-$$k(\xv, \tilde{\xv}) = k(\bm{d})$$
-\item Intuition: stationary $k(\cdot, \cdot)$ implies functions that vary smoothly regardless of where we are in input space
+$$\xv, \xtil \text{ close in } \Xspace \Rightarrow \fx, f(\xtil) \text{ close in } \Yspace$$
+\item Measure ``closeness'' via $\bm{d} = \xv - \xtil$
+\item $\kcc$ called \textbf{stationary} $\Leftrightarrow$ function of $\bm{d}$ 
+$$\kxxt = k(\bm{d})$$
+\item Intuition: stationary $\kcc$ implies functions that vary smoothly regardless of where we are in input space
 \end{framei}
 
 \begin{framei}{example: stationary covariance}
-\item Let $f \sim \mathcal{GP}(m(\cdot), k(\cdot, \cdot)$ with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
+\item Let $f \sim \gpmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
 \item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$
 \item If you want to know about the correlation between $f(\xi[1])$ and $f(\xi[2])$, compute $\bm{d}(\xi[1], \xi[2])$
 \vfill
@@ -74,33 +94,33 @@ $$k(\xv, \tilde{\xv}) = k(\bm{d})$$
 
 \begin{framei}[sep=L]{properties of covariance functions}
 \item Most cov functions belong to 3 common types
-\item \textbf{Stationary}: $k = k(\bm{d})$ with $\bm{d} = \xv - \tilde{\xv}$ \\
+\item \textbf{Stationary}: $k = k(\bm{d})$ with $\bm{d} = \xv - \xtil$ \\
 $\Rightarrow$ invariant to translations in $\Xspace$: $k(\xv, \xv + \bm{d}) = k(\zero, \bm{d})$
-\item \textbf{Isotropic}: $k = k(\bm{r})$ with $r = \| \xv - \tilde{\xv} \|$ \\
+\item \textbf{Isotropic}: $k = k(\bm{r})$ with $r = \xxtnorm$ \\
 $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Isotropy implies stationarity
-\item \textbf{Dot product}: $k = k(\xv^T \tilde{\xv})$
+\item \textbf{Dot product}: $k = k(\xv^T \xtil)$
 \end{framei}
 
 \begin{framei}{constant kernel}
-\item $k(\xv, \tilde{\xv}) = \sigma^2_0 \quad > 0$
+\item $\kxxt = \sigma^2_0 \quad > 0$
 \item Constant function priors
-\item Global correlation irresp of concrete inputs $\xv, \tilde{\xv}$
+\item Global correlation irresp of concrete inputs $\xv, \xtil$
 \item Use for: global-effect models
 \imageC[.9]{figure/cov_funs/cov_constant.pdf}
 \end{framei}
 
 \begin{framei}{linear kernel}
-\item $k(\xv, \tilde{\xv}) = \sigma^2_0 + \xv^T \tilde{\xv}$
+\item $\kxxt = \sigma^2_0 + \xv^T \xtil$
 \item Linear function priors
 \item Measures directional similarity: higher if vectors point in similar dirs
-\item In general, non-stationary $\Rightarrow$ depends on absolute location of $\xv, \tilde{\xv}$
+\item In general, non-stationary $\Rightarrow$ depends on absolute location of $\xv, \xtil$
 \item Use for: linear models
 \imageC[.9]{figure/cov_funs/cov_linear.pdf}
 \end{framei}
 
 \begin{framei}{polynomial kernel}
-\item $k(\xv, \tilde{\xv}) = (\sigma^2_0 + \xv^T \tilde{\xv} )^p, \quad p \in \N$
+\item $\kxxt = (\sigma^2_0 + \xv^T \xtil )^p, \quad p \in \N$
 \item Polynomial function priors
 \item Allows for non-linearity through higher-order monomials \& interaction terms
 \item Use for: polynomial trends
@@ -108,7 +128,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \end{framei}
 
 \begin{framei}{periodic kernel}
-\item E.g., $k(\xv, \tilde{\xv}) = \exp \left(\frac{-2\sin^2 (\pi \| \xv - \tilde{\xv}\| / m)}{\ls^2} \right)$
+\item E.g., $\kxxt = \exp \left(\frac{-2\sin^2 (\pi \xxtnorm / m)}{\ls^2} \right)$
 \item $m$: period, $\ls$: length-scale
 \item Implements idea that $\xv$ should be similar to $\xv + m$, similarity decaying quadratically in $\ls$
 \item Use for: periodic trends
@@ -116,7 +136,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \end{framei}
 
 \begin{framei}{matérn kernel}
-\item $k(\xv, \tilde{\xv}) = \frac{1}{2^\nu \Gamma(\nu)} \left( \sqrt{2 \nu} \frac{\| \xv - \tilde{\xv} \|}{\ls} \right)^\nu K_\nu \left( \sqrt{2 \nu} \frac{\| \xv - \tilde{\xv} \|}{\ls} \right)$
+\item $\kxxt = \frac{1}{2^\nu \Gamma(\nu)} \left( \sqrt{2 \nu} \frac{\xxtnorm}{\ls} \right)^\nu K_\nu \left( \sqrt{2 \nu} \frac{\xxtnorm}{\ls} \right)$
 \item $\nu$: smoothness param, $\Gamma$: gamma function, $\ls$: length scale, $K_\nu$: modified Bessel function
 \item Stationary \& isotropic
 \item Allows for controlled degree of smoothness via choice of $\nu$
@@ -127,7 +147,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 
 \begin{framei}{exponential kernel}
 \item Aka Ornstein-Uhlenbeck kernel
-\item $k(\xv, \tilde{\xv}) = \exp \left(-\frac{\| \xv - \tilde{\xv} \|}{\ls} \right)$
+\item $\kxxt = \exp \left(-\frac{\xxtnorm}{\ls} \right)$
 \item Special case of Matérn kernel with $\nu = 0.5$
 \item Non-smooth: continuous but not differentiable
 \item Cov decays exponentially with distance (dep on $\ls$)
@@ -137,7 +157,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 
 \begin{framei}{squared exponential kernel}
 \item Aka Gaussian kernel, RBF kernel
-\item $k(\xv, \tilde{\xv}) = \exp \left(-\frac{\| \xv - \tilde{\xv} \|^2}{2\ls^2} \right)$
+\item $\kxxt = \exp \left(-\frac{\xxtnorm^2}{2\ls^2} \right)$
 \item Special case of Matérn kernel with $\nu = \infty$
 \item Very smooth: continuous, $\infty$ differentiable (not always realistic)
 \item Cov decays quickly $\Rightarrow$ quadratic in $\ls$
@@ -148,8 +168,8 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \begin{framei}[sep=L]{non-standard kernels}
 \item Example: 2D Brownian motion
 \item Physics application: random fluctuations of particles
-\item $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with cov function
-$$ k(\xv, \tilde{\xv}) = \min (\xv, \tilde{\xv})$$
+\item $f \sim \gpzk$ with cov function
+$$ \kxxt = \min (\xv, \xtil)$$
 \item \textcolor{red}{TODO LW: plot}
 \end{framei}
 
@@ -165,7 +185,7 @@ $$ k(\xv, \tilde{\xv}) = \min (\xv, \tilde{\xv})$$
 \begin{framei}[sep=L]{choices for characteristic ls}
 \item Reparameterize squared exponential kernel (for $p \geq 2$ dims) as
 $$
-k(\xv, \tilde{\xv}) = \exp \left(- \tfrac{1}{2}(\xv - \tilde{\xv})^T\bm{M} (\xv - \tilde{\xv} )\right)
+\kxxt = \exp \left(- \tfrac{1}{2}(\xv - \xtil)^T\bm{M} (\xv - \xtil )\right)
 $$
 \item Possible choices for $\bm{M}$:
 $$

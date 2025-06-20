@@ -8,6 +8,26 @@
 
 \begin{document}
 
+% \newcommand{\fvec}{[f(\xi[1], \dots, \xi[n]]}
+% \kxij ohne left right
+\newcommand{\nmk}{\normal(\zero, \Kmat)} % replause gaussmk
+\newcommand{\nzk}{\normal(\zero, \Kmat)}
+\newcommand{\xxtnorm}{\| \xv - \xtil \|}
+\newcommand{\kcc}{k(\cdot, \cdot)} 
+\newcommand{\kxxt}{k(\xv, \xtil)} % already in ml-svm
+\newcommand{\Xsubset}{\bm{X}}
+\newcommand{\fX}{f(\Xsubset)}
+\newcommand{\kXX}{k(\Xsubset, \Xsubset)}
+\newcommand{\mX}{m(\Xsubset)}
+\newcommand{\gpmk}{\mathcal{GP}(m(\cdot), k(\cdot, \cdot))}
+\newcommand{\gpzk}{\mathcal{GP}(\zero, k(\cdot, \cdot))}
+\newcommand{\Kmatinv}{\Kmat^{-1}}
+\newcommand{\xstar}{\xv_\ast}
+\newcommand{\ystar}{\yv_\ast}
+\newcommand{\fstar}{\fv_\ast}
+\newcommand{\Xstar}{\Xmat_\ast}
+\newcommand{\Ky}{\Kmat_y}
+
 \titlemeta{
     Gaussian Processes
   }{
@@ -28,30 +48,30 @@
 \begin{framei}[sep=L]{Training via maximum likelihood}
 \item Let $$y = \fx + \epsilon, \quad \epsilon \sim \normal(0, \sigma^2)$$
 with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam config $\thetav$
-\item This yields $\yv \sim \normal(\zero, \Kmat_y )$ with  $\Kmat_y = \Kmat + \sigma^2 \id$
+\item This yields $\yv \sim \normal(\zero, \Ky )$ with  $\Ky = \Kmat + \sigma^2 \id$
 \item We get the \textbf{negative marginal log-likelihood / evidence}
 \begin{eqnarray*}
--\log p(\yv | \bm{X}, \thetav) &= -\log \left[(2 \pi )^{-n / 2} |\Kmat_y|^{-1 / 2} \exp(- \tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv) \right] \\
-&= \textcolor{blue}{\tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv} \textcolor{orange}{+ \tfrac{1}{2} \log | \Kmat_y |}  + \tfrac{n}{2} \log 2 \pi
+-\log p(\yv | \bm{X}, \thetav) &= -\log \left[(2 \pi )^{-n / 2} |\Ky|^{-1 / 2} \exp(- \tfrac{1}{2} \yv^T \Ky^{-1} \yv) \right] \\
+&= \textcolor{blue}{\tfrac{1}{2} \yv^T \Ky^{-1} \yv} \textcolor{orange}{+ \tfrac{1}{2} \log | \Ky |}  + \tfrac{n}{2} \log 2 \pi
 \end{eqnarray*}
-\item $-\log p(\yv | \bm{X}, \thetav)$ depends on $\thetav$ via $\Kmat_y$ $\Rightarrow$ optimize for $\thetav$
+\item $-\log p(\yv | \bm{X}, \thetav)$ depends on $\thetav$ via $\Ky$ $\Rightarrow$ optimize for $\thetav$
 \end{framei}
 
 \begin{framei}[sep=L]{negative log-likelihood components}
 \item Consider common cov type parameterized by length-scale: $\thetav = \ls$ (for simplicity: assume univariate rather than different for each dim) 
 % \item Recall: smaller $\ls$ $\Rightarrow$ more flexible model
-\item E.g., squared exponential kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
-\item For small $\ls$, cov decays quickly $\Rightarrow$ local model, $\Kmat_y$ approaches $\sigma^2 \id$
-\item \textbf{Data fit}: small $\ls$ $\Rightarrow$ small $\Kmat_y^{-1} \yv$ (cov structure aligns well with observed data; small residuals) $\Rightarrow$ small $\textcolor{blue}{\tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv}$
-% \item \textbf{Data fit} $- \tfrac{1}{2} \yv^T \Kmat_y^{-1} \yv$: better for smaller $\ls$
-\item \textbf{Complexity penalty}: small  $\ls$ $\Rightarrow$ large $\textcolor{orange}{\tfrac{1}{2} \log | \Kmat_y |}$
+\item E.g., squared exponential kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
+\item For small $\ls$, cov decays quickly $\Rightarrow$ local model, $\Ky$ approaches $\sigma^2 \id$
+\item \textbf{Data fit}: small $\ls$ $\Rightarrow$ small $\Ky^{-1} \yv$ (cov structure aligns well with observed data; small residuals) $\Rightarrow$ small $\textcolor{blue}{\tfrac{1}{2} \yv^T \Ky^{-1} \yv}$
+% \item \textbf{Data fit} $- \tfrac{1}{2} \yv^T \Ky^{-1} \yv$: better for smaller $\ls$
+\item \textbf{Complexity penalty}: small  $\ls$ $\Rightarrow$ large $\textcolor{orange}{\tfrac{1}{2} \log | \Ky |}$
 \item Normalization constant $\tfrac{n}{2} \log 2 \pi$
 \end{framei}
 
 % ----------------------------------------------------
 
 \begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
 \item Minimize NLL by trading off data fit \& complexity
 \vfill
 \splitV{
@@ -62,7 +82,7 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 \end{framei}
 
 \begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$\item Minimize NLL by trading off data fit \& complexity
+\item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$\item Minimize NLL by trading off data fit \& complexity
 \item $\ls = 0.2$: good fit but low smoothness term
 \vfill
 \splitV{
@@ -73,7 +93,7 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 \end{framei}
 
 \begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
 \item Minimize NLL by trading off data fit \& complexity
 \item $\ls = 2$: high smoothness but poor fit
 \vfill
@@ -85,7 +105,7 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 \end{framei}
 
 \begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot))$ with squared exp kernel $$k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2 \ls^2} \| \xv - \tilde{\xv} \|^2)$$
+\item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
 \item Minimize NLL by trading off data fit \& complexity
 \item $\ls = 0.5$: balancing fit and smoothness term
 \vfill
@@ -102,13 +122,13 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 \item Set partial derivatives wrt hyperparams to 0
 \begin{eqnarray*}
 \pd{}{\theta_j}
-\log p(\yv ~|~ \bm{X}, \thetav) &=& \pd{}{\theta_j}  \left(-\tfrac{1}{2}\yv^T\Kmat_y^{-1} \yv - \tfrac{1}{2} \log \left| \Kmat_y \right| - \tfrac{n}{2} \log 2\pi\right) \\ 
-&=&\tfrac{1}{2} \yv^T \Kmat^{-1} \pd{\Kmat}{\theta_j}\Kmat^{-1} \yv - \tfrac{1}{2} \text{tr}\left(\Kmat^{-1} \pd{\Kmat}{ \thetav} \right) \\
-&=& \tfrac{1}{2} \text{tr}\left((\Kmat^{-1}\yv\yv^T\Kmat^{-1} - \Kmat^{-1})\pd{\Kmat}{\theta_j}\right)
+\log p(\yv ~|~ \bm{X}, \thetav) &=& \pd{}{\theta_j}  \left(-\tfrac{1}{2}\yv^T\Ky^{-1} \yv - \tfrac{1}{2} \log \left| \Ky \right| - \tfrac{n}{2} \log 2\pi\right) \\ 
+&=&\tfrac{1}{2} \yv^T \Kmatinv \pd{\Kmat}{\theta_j}\Kmatinv \yv - \tfrac{1}{2} \text{tr}\left(\Kmatinv \pd{\Kmat}{ \thetav} \right) \\
+&=& \tfrac{1}{2} \text{tr}\left((\Kmatinv\yv\yv^T\Kmatinv - \Kmatinv)\pd{\Kmat}{\theta_j}\right)
 \end{eqnarray*}
-using $\pd{}{\theta_j} \Kmat^{-1} = - \Kmat^{-1}  \pd{\Kmat}{\theta_j}\Kmat^{-1}$ and $\pd{}{\thetav} \log  |\Kmat| = \text{tr}\left(\Kmat^{-1} \pd{\Kmat}{\thetav} \right)$
+using $\pd{}{\theta_j} \Kmatinv = - \Kmatinv  \pd{\Kmat}{\theta_j}\Kmatinv$ and $\pd{}{\thetav} \log  |\Kmat| = \text{tr}\left(\Kmatinv \pd{\Kmat}{\thetav} \right)$
 \item Bottleneck: inverting (or rather, decomposing) $\Kmat$ \\$\Rightarrow$ $\order(n^3)$ for standard methods
-\item Only $\order(n^2)$ per hyperparam / partial derivative once $\Kmat^{-1}$ is known $\Rightarrow$ small overhead, so use gradient-based optim 
+\item Only $\order(n^2)$ per hyperparam / partial derivative once $\Kmatinv$ is known $\Rightarrow$ small overhead, so use gradient-based optim 
 \end{framei}
 
 \begin{framei}[sep=L]{strategies for big data}

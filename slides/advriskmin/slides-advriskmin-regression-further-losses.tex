@@ -21,7 +21,7 @@ Advanced Risk Minimization
 }{
 Advanced Regression Losses
 }{
-figure/plot_loss_overview.png
+figure/loss_overview.png
 }{
 \item Huber loss
 \item Log-Cosh loss
@@ -41,7 +41,7 @@ figure/plot_loss_overview.png
 \vfill
 
 
-\imageC[0.55]{figure/plot_loss_overview.png}
+\imageC[0.55]{figure/loss_overview.png}
 
 % Examples:
 % \begin{itemize}
@@ -71,7 +71,7 @@ $$
 \end{itemize}
 
 
-\imageC[0.65]{figure/loss_huber_plot.png}
+\imageC[0.65]{figure/loss_huber.png}
 
 
 \begin{itemize}
@@ -158,7 +158,7 @@ is equivalent to MLE of $\text{cosh}(\theta,1)$ distribution
     \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh (\yi-\theta)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
 \end{itemizeM}
 }
-{\imageL[1.1]{figure/cosh-gaussian-densities.png}}
+{\imageL[1.1]{figure/logcosh-derivation-cosh-gaussian-densities.png}}
 
 
 \end{frame}
@@ -217,7 +217,6 @@ $$
 \vfill
 
 
-% \imageC[10cm, height = 4.7cm]{figure_man/2_6_loss_epsilon_plot1.png} \\
 \imageC[0.8]{figure/loss_eps_insensitive.png}
 
 
@@ -243,7 +242,6 @@ $$
 \vfill
 
 
-% \imageC[10cm, height = 4.7cm]{figure_man/2_3_loss_pinball_plot2.png}
 \imageC[0.8]{figure/loss_quantile.png}
 
 
