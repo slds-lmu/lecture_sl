@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -162,29 +155,6 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
   }
 
 \end{frame}
-
-
-% DO NOT REMOVE THIS BUT INCLUDE IT AGAIN WHEN COMMAND AVAILABLE
-%\begin{framei}[sep=M]{L2 loss means minimizing variance}
-%\splitVCentered[0.65]{
-%\splitVCC{
-
-%\begin{itemize}
-
-%\item Let's reconsider the previous
-%\item Optimized for const whose squared dist to points is minimal (on avg)
-%\item Result: $\thetah = \bar{y}$
-%\item What is the associated risk?
-%$\riske(\thetah) = \sumin (\yi - \bar{y})^2$
-%\item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
-%to obtain variance
-%\item Same holds for the pointwise construction / %conditional distribution considered before
-
-%\end{itemize}
-
-%}{\imageC{figure_man/plot_const_var.png}}
-
-%\end{framei}
 
 \begin{frame}{L1-Loss}
 

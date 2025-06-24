@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -84,34 +77,32 @@ $$
 %\item We want to find out if using a loss $\Lpixy$  incentivizes honest predictions $\pix=\eta$ for any $\eta \in [0,1]$
 
 \item For any binary prob. loss $L$:
-$$\E_{y}[L(y, \pi)]=\eta \cdot L(1, \pi) + (1-\eta) \cdot L(0, \pi)$$
+$$\E_{y}[\Lpiy]=\eta \cdot L(1, \pi) + (1-\eta) \cdot L(0, \pi)$$
 
-\item Let's check L1 loss $L(y, \pi)=|y-\pi|$
-$$\E_y[L(y, \pi)]=\eta |1-\pi| + (1-\eta) \pi = \eta+\pi(1-2\eta)$$
+\item Let's check L1 loss $\Lpiy=|y-\pi|$
+$$\E_y[\Lpiy]=\eta |1-\pi| + (1-\eta) \pi = \eta+\pi(1-2\eta)$$
 
 \item Linear in $\pi$, but with box constraints
 
 % \item The expected loss is linear in $\pi$, hence we minimize it by setting $\pi = 1$ for $p>0.5$ and $\pi = 0$ for $p<0.5$. 
 
-\item For $\eta > 0.5$: $\pi^{\ast} =1$ 
+\item For $\eta > 0.5$: $\pibayes =1$ 
 
-\item For $\eta < 0.5$: $\pi^{\ast} = 0$
+\item For $\eta < 0.5$: $\pibayes = 0$
 
-\item So $\pi^{\ast}$ usually not the same as $\eta$
+\item So $\pibayes$ usually not the same as $\eta$
 
-\item True $\eta$ is worse than RM $\pi^{\ast}$, so L1 not proper SR
-
-%\item The score $S(\pi,y)=-\Lpiy$ is therefore not proper.
+\item True $\eta$ is worse than RM $\pibayes$, so L1 not proper SR
 
 
 \end{framei}
 
 \begin{framei}[sep=M]{0/1 loss is proper -- but not strict}
 
-\item \textbf{0/1 loss} $L(y, \pi)=\mathds{1}_{\{y \neq h_\pi\}}$ using hard labeler  $h_{\pi}=\mathds{1}_{\{\pi\geq0.5\}}$ 
+\item \textbf{0/1 loss} $\Lpiy=\mathds{1}_{\{y \neq h_\pi\}}$ using hard labeler  $h_{\pi}=\mathds{1}_{\{\pi\geq0.5\}}$ 
 \item Expected loss:
 \begin{eqnarray*}
-\E_y[\L(y, \pi)] &=& \eta \cdot L(1,\pi) + (1-\eta) \cdot L(0,\pi)\\
+\E_y[\Lpiy] &=& \eta \cdot L(1,\pi) + (1-\eta) \cdot L(0,\pi)\\
 &=& \left\{
 \begin{array}{ll}
 \eta & \text{if } h_{\pi} = 0 \\
@@ -129,16 +120,13 @@ $$\E_y[L(y, \pi)]=\eta |1-\pi| + (1-\eta) \pi = \eta+\pi(1-2\eta)$$
 \item True $\eta$ among solutions $\rightarrow$ proper
 \item True $\eta$ is not unique minimizer $\rightarrow$ not strictly proper
 
-
-%$$\E_y[L(y, \pi)]=p L(1,\pi) + (1-p) L(0,\pi) = $$
 \end{framei}
 
 \begin{frame}{Discover proper scoring rules}
 
 \begin{itemizeL}
 
-\item How define $L$ such that $\E_y[L(y, \pi)]$ is minimized at $\pi^{\ast}=\eta$? 
-%$$\E_{y}[L(y, \pi)]=\eta \cdot L(1,\pi) + (1-\eta) \cdot L(0,\pi)$$
+\item How define $L$ such that $\E_y[\Lpiy]$ is minimized at $\pibayes=\eta$? 
 
 \item Assume symmetry: 
 $L(1,\pi)=L(\pi)$ and $L(0,\pi)=L(1-\pi)$ \\
@@ -151,11 +139,11 @@ $L(1,\pi)=L(\pi)$ and $L(0,\pi)=L(1-\pi)$ \\
 symmetric at $\pi=0.5$?
 \end{itemizeL}
 }
-{\imageL[0.6]{figure/bernoulli_prob.png}}
+{\imageL[0.9]{figure/bernoulli_prob.png}}
 
 \begin{itemizeL}
 \item Then, with $\eta = \P(y = 1)$
-$$\E_{y}[L(y, \pi)]=\eta \cdot L(\pi) + (1-\eta) \cdot L(1-\pi)$$
+$$\E_{y}[\Lpiy]=\eta \cdot L(\pi) + (1-\eta) \cdot L(1-\pi)$$
 \item First-order condition: Set $L'(\pi) = 0$, and $\pi=\eta$ at minimum 
 $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
 
@@ -164,20 +152,20 @@ $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
 
 \begin{framei}[sep=M]{Log loss / Brier are strictly proper}
 
-    \item First-order condition: 
-    $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
-    \item One solution is $L'(\eta)=-1/\eta$ % resulting in $-p/p=-(1-p)/(1-p)=-1$ and the
-    \item Antiderivative is $L(\eta)=-\log(\eta)$ 
-    \item Remember: 
-    $L(1, \pi) = L(\pi) \ \text{and} \ L(0, \pi) = L(1-\pi)$
-    \item This is \textbf{log loss} 
-    $$L(y, \pi)=-y \cdot \log(\pi) - (1-y) \cdot \log(1-\pi)$$
+\item First-order condition: 
+$$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
+\item One solution is $L'(\eta)=-1/\eta$ % resulting in $-p/p=-(1-p)/(1-p)=-1$ and the
+\item Antiderivative is $L(\eta)=-\log(\eta)$ 
+\item Remember: 
+$L(1, \pi) = L(\pi) \ \text{and} \ L(0, \pi) = L(1-\pi)$
+\item This is \textbf{log loss} 
+$$\Lpiy=-y \cdot \log(\pi) - (1-y) \cdot \log(1-\pi)$$
 
-    \item Second solution is $L'(\eta)=-2(1-\eta)$% resulting in $-2p(1-p)=-2(1-p)p$ and the 
-    \item Antiderivative $L(\eta)=(1-\eta)^2$%=\frac{1}{2}((1-\eta)^2+(0-(1-\eta))^2)$
-    \item So \textbf{Brier score} 
-    $$L(y, \pi)=(y - \pi)^2$$
-  
+\item Second solution is $L'(\eta)=-2(1-\eta)$% resulting in $-2p(1-p)=-2(1-p)p$ and the 
+\item Antiderivative $L(\eta)=(1-\eta)^2$%=\frac{1}{2}((1-\eta)^2+(0-(1-\eta))^2)$
+\item So \textbf{Brier score} 
+$$\Lpiy=(y - \pi)^2$$
+
 
 \item Both strictly proper (check 2nd derivative for strict convexity)
 
@@ -186,18 +174,18 @@ $$\eta \cdot L'(\eta) \overset{!}{=} (1-\eta) \cdot L'(1-\eta)$$
 
 \begin{framei}[sep=L]{Outlook}
 
-    \item Usually SRs are maximimized, I adapted notation a bit here
-    for us, to get a direct connection ERM
+\item Usually SRs are maximimized, I adapted notation a bit here
+for us, to get a direct connection ERM
 
-    \item Was easier to talk about binary classification here, 
-    but proper SRs are defined in general
+\item Was easier to talk about binary classification here, 
+but proper SRs are defined in general
 
-    \item There are other proper SRs, like ``generalized entropy score'' or ''continuous ranked probability score'' 
+\item There are other proper SRs, like ``generalized entropy score'' or ''continuous ranked probability score'' 
 
-    \item We only scratched surface of theory
+\item We only scratched surface of theory
 
-    \item  If you want to know more: start by reading the Gneiting paper
-    
+\item  If you want to know more: start by reading the Gneiting paper
+
 \end{framei}
 
 

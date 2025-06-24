@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 
 \input{../../style/preamble}
@@ -278,13 +271,13 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 
 \splitVCC{
   \raggedright {\footnotesize
-  \href{https://arxiv.org/pdf/1712.09913.pdf}{Li et al., 2018: 
-  \textit{Visualizing the Loss Landscape of Neural Nets}}. 
+  %\href{https://arxiv.org/pdf/1712.09913.pdf}{Li et al., 2018: 
+  %\textit{Visualizing the Loss Landscape of Neural Nets}}. 
   The problem on the bottom right is convex, the others are not (note that 
   very high-dimensional surfaces are coerced into 3D here).  
   \phantom{foo}}}
 {
-  \imageC[0.75]{
+  \imageC[0.75][LI2018VISUALIZING]{
   figure_man/convex-vs-nonconfex-landscape}}%
 
 \end{frame}

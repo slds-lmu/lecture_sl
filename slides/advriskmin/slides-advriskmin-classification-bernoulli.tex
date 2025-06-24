@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -19,14 +12,14 @@
 \begin{document}
     
 \titlemeta{
-    Advanced Risk Minimization
-  }{Bernoulli Loss
-  }{figure/bernoulli_prob.png
-  }{
-  \item Bernoulli (log, logistic, binomial, cross-entropy) loss
-  \item Risk minimizer
-  \item Optimal constant
-  \item Complete separation problem
+Advanced Risk Minimization
+}{Bernoulli Loss
+}{figure/bernoulli_prob.png
+}{
+\item Bernoulli (log, logistic, binomial, cross-entropy) loss
+\item Risk minimizer
+\item Optimal constant
+\item Complete separation problem
 }
 
 \begin{framei}[sep=L]{On probabilities}
@@ -54,7 +47,7 @@ $$
 \item Confidently wrong predictions are harshly penalized
 
 
-\imageC[0.35]{figure/bernoulli_prob.png}  
+\imageC[0.45]{figure/bernoulli_prob.png}  
 
 \item A.k.a. Binomial, log, or cross-entropy loss
 \item Can also write for $y \in \setmp $
@@ -68,11 +61,11 @@ $$
 
 \begin{framei}[sep=M]{On decision scores}
 
-    \item Transform probs into scores (log-odds): $\fx = \log(\frac{\pix}{1 - \pix})$
-    \item Then $\pix = (1 + \exp(-\fx))^{-1}$
-    \item Yields equivalent loss formulation
+\item Transform probs into scores (log-odds): $\fx = \log(\frac{\pix}{1 - \pix})$
+\item Then $\pix = (1 + \exp(-\fx))^{-1}$
+\item Yields equivalent loss formulation
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
-    \item For these and other simple derivations, see deep dive
+\item For these and other simple derivations, see deep dive
 
 \vfill
 
@@ -125,12 +118,12 @@ $$
 For fixed $\xv$, minimize inner part pointwise, use $c\in(0,1)$ for best value:
 
 {\footnotesize
-\begin{eqnarray*}
-  \frac{d }{d c} (- \log c  \cdot \eta(\xv)- \log (1 - c) \cdot (1 - \eta(\xv))) &=& 0 \\
-  - \frac{\eta(\xv)}{c} + \frac{1 - \eta(\xv)}{1 - c} &=& 0 \\
-  \frac{- \eta(\xv) + \eta(\xv) c + c - \eta(\xv) c}{c (1 - c)} &=& 0 \\
-  c &=& \eta(\xv)
-\end{eqnarray*}
+\begin{align*}
+  \frac{d }{d c} (- \log c  \cdot \eta(\xv)- \log (1 - c) \cdot (1 - \eta(\xv))) =& 0 \\
+  - \frac{\eta(\xv)}{c} + \frac{1 - \eta(\xv)}{1 - c} =& 0 \\
+  \frac{- \eta(\xv) + \eta(\xv) c + c - \eta(\xv) c}{c (1 - c)} =& 0 \\
+  c =& \eta(\xv)
+\end{align*}
 }
 
 \end{frame}
@@ -212,8 +205,8 @@ fail
 
 \splitV[0.6]{
 \item Loss strictly decreasing in margin
-$y \cdot \fx$: 
-$$\Lxy = \log ( 1 + \exp ( - y  \fx ))$$
+$\yf$: 
+$$L(\yf) = \log ( 1 + \exp ( - y  \fx ))$$
 \item $f$ linear in $\thetav$, e.g.,
 \textbf{log. regr.} with $\fxt = \thx$
 }
