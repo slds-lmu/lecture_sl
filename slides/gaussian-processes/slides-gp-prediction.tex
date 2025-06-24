@@ -42,7 +42,7 @@
 
 \begin{framei}[sep=L]{gp prediction}
 \item More interesting than drawing random samples from GP priors: predict at unseen test point $\xstar$ with $f_\ast = f(\xstar)$
-\item Given: training data with design matrix $\Xmat$, observed values $\fv = f(\Xmat) = \fvec$
+\item Given: training data with design matrix $\Xmat$, observed values $\fv = f(\Xmat) = \fvec^T$
 \item Goal: infer distribution of $f_\ast | \xstar, \Xmat, \fv$ \\$\Rightarrow$ update prior to posterior process
 \end{framei}
 
@@ -146,7 +146,9 @@ $y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
 \item Let $f \sim \gpmk$, $\Xmat = \xdat$
 \item Prior predictive distribution for $\yv$
 $$
-\yv = \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} \sim \normal\left(\mv, \Kmat + \sigma^2 \id_n \right),
+\yv = (\yi[1], \dots, \yi[n])^T
+% \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} 
+\sim \normal\left(\mv, \Kmat + \sigma^2 \id_n \right),
 $$
 with $\mv = m(\Xmat), \Kmat = k(\Xmat, \Xmat)$
 \item Consider joint distribution of training $(\Xmat, \yv$) and test points $(\Xmat_*, \fv_*)$
