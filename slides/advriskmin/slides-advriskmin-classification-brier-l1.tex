@@ -23,9 +23,9 @@ Advanced Risk Minimization
 }
 
 
-\begin{framei}[fs=footnotesize,sep=M]{Brier Score}
+\begin{framei}[fs=small,sep=M]{Brier Score}
 
-\item Binary Brier score defined on probabilities $\pix \in [0, 1]$ and labels $y \in \{0, 1\}$ is $L2$ loss on probabilities $$\Lpixy = (\pix - y)^2$$
+\item Binary Brier score defined on probabilities $\pix \in [0, 1]$ and labels $y \in \setzo$ is $L2$ loss on probabilities $$\Lpixy = (\pix - y)^2$$
 \item Despite convex in $\pix$ $$\Lxy=((1+\exp{(-\fx)})^{-1}-y)^2$$ as composite function not convex in $\fx$
 \item Exception would be so-called linear prob. model with $\pix = \thetav^T \xv$,\\
 but that is quite uncommon in ML 
@@ -42,10 +42,10 @@ but that is quite uncommon in ML
 
 \begin{framei}[sep=L]{Brier Score: Risk Minimizer}
 
-    \item Risk minimizer for (binary) Brier score is $$\piastxtil = \eta(\xtil) = \P(y=1~|~\xv = \xtil)$$
-    \item Attains minimum if prediction equals \enquote{true} prob $\eta(\xv)$ of outcome
-    \item Risk minimizer for multiclass Brier score is 
-$$\pi^{\ast}_k(\xtil) = \eta_k(\xtil) =  \P(y = k ~|~ \xv = \xtil) $$
+\item Risk minimizer for (binary) Brier score is $$\piastxtil = \eta(\xtil) = \P(y=1~|~\xv = \xtil)$$
+\item Attains minimum if prediction equals \enquote{true} prob $\eta(\xv)$ of outcome
+\item Risk minimizer for multiclass Brier score is 
+$$\piastkxtil = \eta_k(\xtil) =  \P(y = k ~|~ \xv = \xtil) $$
 
 \end{framei}
 
@@ -60,12 +60,12 @@ which we do pointwise for every $\xv$. We plug in the Brier score
 
 \vspace*{-0.3cm}
 
-\begin{eqnarray*}
-	&& \argmin_c \quad L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
-	&=&  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))  \quad |{\,+\eta(\xv)^2-\eta(\xv)^2}\\
-  &=&  \argmin_c \quad (c^2 -2c\eta(\xv) + \eta(\xv)^2)- \eta(\xv)^2 + \eta(\xv) \\
-	&=&  \argmin_c \quad (c - \eta(\xv))^2
-\end{eqnarray*}
+\begin{align*}
+& \argmin_c \quad L(1, c) \eta(\xv) + L(0, c) (1 - \eta(\xv)) \\ 
+=&  \argmin_c \quad (c - 1)^2 \eta(\xv) + c^2 (1 - \eta(\xv))  \quad |{\,+\eta(\xv)^2-\eta(\xv)^2}\\
+=&  \argmin_c \quad (c^2 -2c\eta(\xv) + \eta(\xv)^2)- \eta(\xv)^2 + \eta(\xv) \\
+=&  \argmin_c \quad (c - \eta(\xv))^2
+\end{align*}
 
 The expression is minimized for $c = \eta(\xv)$
 
@@ -73,31 +73,29 @@ The expression is minimized for $c = \eta(\xv)$
 
 \begin{framei}[sep=L]{Brier Score: Optimal constant Model}
 
-    \item Optimal constant probability model for labels $\Yspace = \setzo$ is 
-    $$\thetah=\argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin (\yi - \theta)^2 = \frac{1}{n} \sumin \yi$$
-    \item Fraction of class-1 observations in the observed data\\ (directly follows from $L2$ proof for regression)
-    \item Similarly, optimal constant for the multiclass Brier score is $$\thetah_k = \frac{1}{n}\sumin \I [\yi = k]$$
+\item Optimal constant probability model for labels $\Yspace = \setzo$ is 
+$$\thetah=\argmin_{\theta} \riske(\theta) = \argmin_{\theta} \sumin (\yi - \theta)^2 = \frac{1}{n} \sumin \yi$$
+\item Fraction of class-1 observations in the observed data\\ (directly follows from $L2$ proof for regression)
+\item Similarly, optimal constant for the multiclass Brier score is $$\thetah_k = \frac{1}{n}\sumin \I [\yi = k]$$
 
 \end{framei}
 
 \begin{framei}[sep=L]{Calibration and Brier Score}
 
-    \item As Brier score is proper scoring rule, it can be used for calibration
-    \item Prediction $\pi(\mathbf{x})\in[0,1]$ called \textbf{calibrated} if 
+\item As Brier score is proper scoring rule, it can be used for calibration
+\item Prediction $\pi(\mathbf{x})\in[0,1]$ called \textbf{calibrated} if 
 $$\P\bigl(y=1 \mid \pi(\mathbf{x})=p\bigr)=p \quad \forall\, p\in[0,1]$$
-    \item Means: if we predict $p$, then in $p \cdot 100\%$ of cases we observe $y=1$ (neither over- nor underconfident)
-    \item Recall RM for Brier score $\pi^*(\mathbf{x}) = \eta(\mathbf{x}) = \P(y=1 \mid \mathbf{x})$. As \(\pi^*(\mathbf{x})=\eta(\mathbf{x})\), optimal predictor satisfies $$\P\bigl(y=1 \mid \pi^*(\mathbf{x})=p\bigr)=p$$
+\item Means: if we predict $p$, then in $p \cdot 100\%$ of cases we observe $y=1$ (neither over- nor underconfident)
+\item Recall RM for Brier score $\pi^*(\mathbf{x}) = \eta(\mathbf{x}) = \P(y=1 \mid \mathbf{x})$. As \(\pi^*(\mathbf{x})=\eta(\mathbf{x})\), optimal predictor satisfies $$\P\bigl(y=1 \mid \pi^*(\mathbf{x})=p\bigr)=p$$
 i.e., is perfectly calibrated
-
 
 \end{framei}
 
 \begin{framei}[sep=M]{L1 loss on probabilities}
 
-    \item Binary L1 loss on probabilities $\pix \in [0, 1]$ and labels $y \in \setzo$: $$\Lpixy = |\pix - y|$$
-    \item As L1 loss not a proper scoring rule (see part on this), should not necessarily expect good calibration
-    \item Despite convex in $\pix$ $$\Lxy=|(1+\exp{(-\fx)})^{-1}-y|$$ as composite function not convex in $\fx$ 
-
+\item Binary L1 loss on probabilities $\pix \in [0, 1]$ and labels $y \in \setzo$: $$\Lpixy = |\pix - y|$$
+\item As L1 loss not a proper scoring rule (see part on this), should not necessarily expect good calibration
+\item Despite convex in $\pix$ $$\Lxy=|(1+\exp{(-\fx)})^{-1}-y|$$ as composite function not convex in $\fx$ 
 
 \vfill
 
@@ -108,8 +106,6 @@ i.e., is perfectly calibrated
 }
 
 \end{framei}
-
-
 
 
 
