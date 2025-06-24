@@ -54,7 +54,7 @@ with 0-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$; independent of $\
 
 $GE_n(\ind) =$  
 $$
- \underbrace{\sigma^2}_{\text{Var. of $\epsilon$}} + \E_{x}\underbrace{\left[\var_{\D_n}(\fh_{\D_n}(\xv) ~|~\xv)\right]}_{\text{Variance of learner at } \xv} + \E_{x}\underbrace{\left[(\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)))^2~|~\xv\right]}_{\text{Squared bias of learner at } \xv}  
+ \underbrace{\sigma^2}_{\text{Var. of $\epsilon$}} + \E_{x}\underbrace{\left[\var_{\D_n}(\fh_{\D_n}(\xv) ~|~\xv)\right]}_{\text{Variance of learner at } \xv} + \E_{x}\underbrace{\left[(\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)~|~\xv))^2\right]}_{\text{Squared bias of learner at } \xv}  
 $$
 
 \begin{enumerate}
