@@ -24,11 +24,11 @@
 \begin{framei}[sep=L]{non-zero-mean functions}
 \item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
 \item Not necessarily drastic limitation: \textbf{posterior} mean can be $\neq 0$
-$$\E(\fstar | \Xstar, \Xmat, \ystar) = \Kstar \Ky^{-1} \yv$$
-% $$\fstar | \Xstar, \Xmat, \fv \sim \normal(\Kstar^{T}\Kmat^{-1}\fv, \Kstarstar - \Kstar^T \Kmat ^{-1}\Kstar)$$
+$$\E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv$$
+% $$\fs | \Xs, \Xmat, \fv \sim \normal(\Ks^{T}\Kmat^{-1}\fv, \Ksstar - \Ks^T \Kmat ^{-1}\Ks)$$
 \item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
-\item Assuming $\gpmk$, the posterior mean becomes
-$$m(\Xstar) + \Kstar \Ky^{-1} (\yv - m(\Xmat))$$
+\item Assuming $\GPmk$, the posterior mean becomes
+$$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
 (posterior variance unchanged)
 \end{framei}
 
@@ -52,7 +52,7 @@ $$m(\Xstar) + \Kstar \Ky^{-1} (\yv - m(\Xmat))$$
 \item Often difficult to come up with fixed mean function
 \item Possible solution: specify basis functions + infer coeffs from data
 \item Aka semiparametric GP
-\item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \gpzk$$
+\item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \GPzk$$
 $\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
 \item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
 \end{framei}

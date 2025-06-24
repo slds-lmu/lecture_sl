@@ -22,39 +22,39 @@
 }
 
 \begin{framei}[sep=L]{gp prediction}
-\item More interesting than drawing random samples from GP priors: predict at unseen test point $\xstar$ with $f_\ast = f(\xstar)$
+\item More interesting than drawing random samples from GP priors: predict at unseen test point $\xs$ with $f_\ast = f(\xs)$
 \item Given: training data with design matrix $\Xmat$, observed values $\fv = f(\Xmat) = \fvec^T$
-\item Goal: infer distribution of $f_\ast | \xstar, \Xmat, \fv$ \\$\Rightarrow$ update prior to posterior process
+\item Goal: infer distribution of $f_\ast | \xs, \Xmat, \fv$ \\$\Rightarrow$ update prior to posterior process
 \end{framei}
 
 \begin{framei}[sep=M]{posterior process}
-\item Again assuming $f \sim \gpzk$, we get
+\item Again assuming $f \sim \GPzk$, we get
 $$\begin{bmatrix}
 \fv \\ f_\ast
 \end{bmatrix} \sim  
-\normal \left(\zero, \begin{bmatrix} \Kmat & \kstar \\ \kstar^T & \kstarstar\end{bmatrix}\right)$$
-with $\kstar = [k(\xstar, \xi[1]), \dots, k(\xstar, \xi[n])]$,  $ \kstarstar\ = k(\xstar, \xstar)$
+\normal \left(\zero, \begin{bmatrix} \Kmat & \ks \\ \ks^T & \kss\end{bmatrix}\right)$$
+with $\ks = [k(\xs, \xi[1]), \dots, k(\xs, \xi[n])]$,  $ \kss\ = k(\xs, \xs)$
 \item General rule for conditioning of Gaussian RVs
 \begin{itemize}
 \item $\bm{z} \sim \normal(\mu, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\mu = (\mu_1, \mu_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
 \item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is MV normal 
 $$\normal(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \mu_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
 \end{itemize}
-\item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xstar, \Xmat, \fv \sim \normal(\kstar^{T}\Kmatinv\fv, \kstarstar - \kstar^T \Kmat ^{-1}\kstar)$$
-\item \textbf{Maximum-a-posteriori (MAP)} estimate: $\kstar^{T}\Kmatinv\fv$
+\item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xs, \Xmat, \fv \sim \normal(\ks^{T}\Kinv\fv, \kss - \ks^T \Kmat ^{-1}\ks)$$
+\item \textbf{Maximum-a-posteriori (MAP)} estimate: $\ks^{T}\Kinv\fv$
 \end{framei}
 
 \begin{framei}[sep=L]{example: 2 points}
-\item Single training point $\xv = -0.5$, test point $\xstar = 0.5$
+\item Single training point $\xv = -0.5$, test point $\xs = 0.5$
 \item Zero-mean GP with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2} \| \xv - \tilde{\xv} \|^2)$ leads to 
 $$\begin{bmatrix} \fv \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\right)$$
 \item Assuming we observe $\fx = 1$, compute posterior distribution
 \begin{eqnarray*}
-    f_* ~|~ \xstar, \xv, \fv &\sim& \normal(\kstar^{T}\Kmatinv \fv, \kstarstar - \kstar^T \Kmatinv\kstar) \\
+    f_* ~|~ \xs, \xv, \fv &\sim& \normal(\ks^{T}\Kinv \fv, \kss - \ks^T \Kinv\ks) \\
     &\sim& \normal(0.61 \cdot 1 \cdot 1, 1 - 0.61 \cdot 1 \cdot 0.61) \\
     &\sim& \normal\left(0.61, 0.63\right) 
   \end{eqnarray*}
-\item MAP-estimate: $f(\xstar) = 0.61$, uncertainty estimate: $0.63$
+\item MAP-estimate: $f(\xs) = 0.61$, uncertainty estimate: $0.63$
 \end{framei}
 
 \foreach \i in {2, 4, 5, 6} {
@@ -79,18 +79,18 @@ $$\fv_* = [f(\xi[1]_*), ..., f(\xi[m]_*)]$$
 \item Joint distribution (under zero-mean GP) becomes
 $$
     \begin{bmatrix} \fv \\ \fv_* \end{bmatrix} \sim  
-    \normal\left(\zero, \begin{bmatrix} \Kmat & \Kstar \\ \Kstar^T & \Kstarstar \end{bmatrix}\right)
+    \normal\left(\zero, \begin{bmatrix} \Kmat & \Ks \\ \Ks^T & \Kss \end{bmatrix}\right)
   $$
-with $\Kstar = (k(\xi, \xstar^{(j)}))_{i,j}$, $\Kstarstar = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
+with $\Ks = (k(\xi, \xs^{(j)}))_{i,j}$, $\Kss = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
 \item Again, employ rule of conditioning for Gaussians to get \textbf{posterior}
-$$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Kstar^{T}\Kmatinv\fv, \Kstarstar - \Kstar^T \Kmat ^{-1}\Kstar)$$
+$$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Ks^{T}\Kinv\fv, \Kss - \Ks^T \Kmat ^{-1}\Ks)$$
 \item Allows to compute correlations between test points + draw samples from posterior process
 \end{framei}
 
 \begin{framei}[sep=L]{GP as interpolator}
 \item MAP ``prediction'' for training point is exact function value
 \begin{eqnarray*}
-\fv ~|~ \Xmat, \fv &\sim& \normal(\Kmat\Kmatinv\fv, \Kmat - \Kmat^T \Kmatinv \Kmat) \\ &\sim& \normal(\fv, \zero)
+\fv ~|~ \Xmat, \fv &\sim& \normal(\Kmat\Kinv\fv, \Kmat - \Kmat^T \Kinv \Kmat) \\ &\sim& \normal(\fv, \zero)
 \end{eqnarray*}
 \item Implication: GP is function \textbf{interpolator}
 \vfill
@@ -124,7 +124,7 @@ $y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
 \end{framei}
 
 \begin{framei}[sep=L]{predictive distribution for noisy GP}
-\item Let $f \sim \gpmk$, $\Xmat = \xdat$
+\item Let $f \sim \GPmk$, $\Xmat = \xdat$
 \item Prior predictive distribution for $\yv$
 $$
 \yv = (\yi[1], \dots, \yi[n])^T
@@ -135,9 +135,9 @@ with $\mv = m(\Xmat), \Kmat = k(\Xmat, \Xmat)$
 \item Consider joint distribution of training $(\Xmat, \yv$) and test points $(\Xmat_*, \fv_*)$
 $$
 \begin{bmatrix} \yv \\ \fv_* \end{bmatrix} \sim  
-\normal\left(\zero, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Kstar \\ \Kstar^T & \Kstarstar \end{bmatrix}\right)
+\normal\left(\zero, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Ks \\ \Ks^T & \Kss \end{bmatrix}\right)
 $$
-with (as before) $\Kstar = (k(\xi, \xstar^{(j)}))_{i,j}$, $\Kstarstar = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
+with (as before) $\Ks = (k(\xi, \xs^{(j)}))_{i,j}$, $\Kss = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
 \end{framei}
 
 \begin{framei}[sep=M]{predictive distribution for noisy GP}
@@ -146,8 +146,8 @@ with (as before) $\Kstar = (k(\xi, \xstar^{(j)}))_{i,j}$, $\Kstarstar = (k(\xi[i
 \fv_* ~|~ \Xmat_*, \Xmat, \yv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post})
 \end{eqnarray*}
 with 
-$\mv_{\text{post}} = \Kstar^{T} (\Kmat+ \sigma^2 \cdot \id)^{-1}\yv$, 
-$\Kmat_\text{post} = \Kstarstar - \Kstar^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\Kstar$
+$\mv_{\text{post}} = \Ks^{T} (\Kmat+ \sigma^2 \cdot \id)^{-1}\yv$, 
+$\Kmat_\text{post} = \Kss - \Ks^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\Ks$
 \item Recovers noise-free case for $\sigma^2 = 0$
 \item Noisy GP: no longer an interpolator 
 \item Posterior uncertainty increases with nugget (wider ``band'')
@@ -161,12 +161,12 @@ $$\riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy$$
 \item No access to $\Pxy$ $\Rightarrow$ compute empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
 \item For GPs, make use of posterior predictive distribution over $y$
 $$
-    \mathcal{R}(y_* ~|~ \xstar) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xstar, \D)d\tilde y_*. 
+    \mathcal{R}(y_* ~|~ \xs) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xs, \D)d\tilde y_*. 
   $$
 \item Intuition: expected loss weighted by posterior probability of each $\tilde y_*$ given observed data
 \item Optimal prediction wrt loss function
 $$
-    \yh_* | \xstar = \argmin_{y_*} \mathcal{R}(y_*~|~ \xstar).
+    \yh_* | \xs = \argmin_{y_*} \mathcal{R}(y_*~|~ \xs).
   $$
 \end{framei}
 

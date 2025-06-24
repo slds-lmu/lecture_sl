@@ -102,7 +102,7 @@ $$\fv = \fvec^T$$
 \begin{framei}[sep=L]{Distributions on Discrete Functions}
 \item Specify (discrete) probability function on functions $f \in \Hspace$ 
 \item Natural way: vector representation as $n$-dim RV, e.g.,
-$$\fv = \fvec^T \sim \gpmk$$
+$$\fv = \fvec^T \sim \GPmk$$
 \item For now: set $\mv = \zero$, assume $\Kmat$ to be given
 \end{framei}
 
@@ -111,9 +111,9 @@ $$\fv = \fvec^T \sim \gpmk$$
 \item Example ctd: $h: \Xspace \to \Yspace$ defined on $\i$ points
 \item Sample representatives by sampling from a $\i$-dim Gaussian
 \ifnum \i=2
-$$\fv = [f(\xi[1]), f(\xi[2])]^T \sim \nzk$$
+$$\fv = [f(\xi[1]), f(\xi[2])]^T \sim \Nzk$$
 \else 
-$$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \nzk$$
+$$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
 \fi
 \vfill
 \splitVCompact{.35}{.35}{
@@ -148,7 +148,7 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
 \item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
-$$\fv = \fvec^T \sim \gpmk$$
+$$\fv = \fvec^T \sim \GPmk$$
 \item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
 \item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
@@ -214,7 +214,7 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \item Consider finite set of inputs $\bm{X} = \xdat \subset \Xspace$
 \item Distinguishing feature of GPs: for any such $\bm{X}$,
     $$
-      \fv = f(\bm{X}) = \fvec^T \sim \gpmk
+      \fv = f(\bm{X}) = \fvec^T \sim \GPmk
     $$ 
 \item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
 \vfill
@@ -232,7 +232,7 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 
 \begin{framei}[sep=L]{definition: gaussian process}
 \item Formally, 
-$$f \sim \gpmk$$
+$$f \sim \GPmk$$
 iff for any finite set of inputs $\bm{X} \subset \Xspace$, 
 $$
 f(\bm{X}) \sim \normal(\mX, \kXX)
@@ -256,7 +256,7 @@ $$
 \item covariance function $k: \Xspace \times \Xspace \rightarrow \R^+_0$, 
 \end{itemize}
 \vfill
-there \textbf{exists} $f \sim \gpmk$ s.t. $\forall \xv, \xtil \in \Xspace$
+there \textbf{exists} $f \sim \GPmk$ s.t. $\forall \xv, \xtil \in \Xspace$
 \begin{eqnarray*}
 \E(\fx) &=& m(\xv) \\
 \cov(\fx, f(\xtil)) &=& \kxxt
@@ -275,18 +275,18 @@ m(\xv) &=& \E[f(\xv)] \\
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
 $\Rightarrow$ common, not necessarily drastic assumption 
-\item Denote by $\gpzk$ $\Rightarrow$ properties mainly governed by $\kcc$
+\item Denote by $\GPzk$ $\Rightarrow$ properties mainly governed by $\kcc$
 \item By virtue of existence thm: sampling from GP priors gives us random functions with our properties of choice
 \end{framei}
 
 \begin{framei}[sep=L]{sampling from gaussian process priors}
-\item Example: $f \sim \gpzk$ with cov function
+\item Example: $f \sim \GPzk$ with cov function
 $$ \kxxt = \exp\left(-\tfrac{1}{2}\xxtnorm^2\right)$$
 \item To visualize sample functions, 
 \begin{itemize}
 \item choose high number $n$ of (equidistant) points $\bm{X} = \xdat$
   \item compute $\Kmat = k(\bm{X}, \bm{X})$ from all pairs $\xi, \xi[j] \in \bm{X}$ 
-  \item draw $\fv \sim \nzk$ 
+  \item draw $\fv \sim \Nzk$ 
 \end{itemize}
 \item 10 randomly drawn functions (note 0 mean)
 \vfill

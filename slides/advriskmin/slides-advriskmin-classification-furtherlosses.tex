@@ -34,7 +34,7 @@ encourages confident predictions
 \item Often used in SVMs
 % \item A squared version exists for putting a sharper penalty on 
 % misclassifications:
-% $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
+% $$\Lxy = \max \{ 0, (1 - \yf)^2\}.$$
 \item Resembles a door hinge, hence the name
 
 \imageC[0.8]{figure/overview_classif_subset1.png}
@@ -45,11 +45,11 @@ encourages confident predictions
 \begin{framei}[sep=M]{Squared Hinge Loss}
 
 \item Can also define \textbf{squared hinge loss}:
-$$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
-\item $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
+$$\Lxy = \max \{ 0, (1 - \yf)\}^2$$
+\item $L2$ form punishes margins $\yf \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
 \item Cont. differentiable yet more outlier-sensitive than hinge loss
 
-\imageC[0.8]{figure/overview_classif_subset2.png}
+\imageC[0.9]{figure/overview_classif_subset2.png}
 
 
 \end{framei}
@@ -59,13 +59,13 @@ $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
 
 % Source: https://davidrosenberg.github.io/mlcourse/Archive/2017Fall/Lectures/04a.loss-functions.pdf
 
-  \item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
-  \begin{eqnarray*}
-  \Lxy &=&(y - \fx)^2 = y^2 - 2y\fx + \fx^2\\
-  &=&1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
-  \end{eqnarray*}
-  \item Like sq. hinge loss for $y\fx < 1$, but not clipped to $0$ for $y\fx>1$
-  \item Only 0 for $y\fx = 1$ and increasing again in $y\fx$ (undesirable!)
+\item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
+\begin{align*}
+\Lxy =&(y - \fx)^2 = y^2 - 2\yf + \fx^2\\
+=&1 - 2\yf + (\yf)^2 = (1 - \yf)^2
+\end{align*}
+\item Like sq. hinge loss for $\yf < 1$, but not clipped to $0$ for $\yf>1$
+\item Only 0 for $\yf = 1$ and increasing again in $\yf$ (undesirable!)
 
 \imageC[0.8]{figure/overview_classif_subset3.png}
 
@@ -78,7 +78,7 @@ $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
 
 \item Another smooth 
 approx. of 0-1-loss is \textbf{exponential loss}:
-$$\Lxy = \exp(-y\fx)$$ 
+$$\Lxy = \exp(-\yf)$$ 
 \item Used in AdaBoost
 \item Convex, differentiable (thus easier to optimize than 0-1-loss)
 \item Loss increases exponentially for wrong predictions with high confidence; low-confidence correct predictions have positive loss
@@ -90,7 +90,7 @@ $$\Lxy = \exp(-y\fx)$$
 
 \begin{frame}{AUC-loss}
 
-\begin{itemize}
+\begin{itemizeM}
 \item AUC often used as evaluation criterion for binary classifiers
 \item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples %$y_i, i = 1, \ldots, n_{-1} + n_1$.
 \item AUC can then be defined as
@@ -98,8 +98,7 @@ $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} \I [
 \item Not differentiable w.r.t $f$ due to indicator $\I [f^{(i)} > f^{(j)}]$
 \item Indicator can be approximated by distribution function of triangular distribution on $[-1, 1]$ with mean $0$
 \item Direct optimization of AUC numerically difficult, rather use common loss and tune for AUC in practice
-
-\end{itemize}
+\end{itemizeM}
 \vfill
 Comprehensive survey on advanced loss functions: \furtherreading{WANG2020COMPRE}
 

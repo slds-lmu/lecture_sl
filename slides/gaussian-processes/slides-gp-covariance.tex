@@ -22,7 +22,7 @@ figure_man/covariance2D-2.png
 
 \begin{framei}[sep=L]{valid covariance functions}
 \item Recall marginalization property of GPs: for any $\Xsubset = \xdat \subset \Xspace$,
-$$\fv = \fX \sim \nmk$$
+$$\fv = \fX \sim \Nmk$$
 with $\mv = \mX$, $\Kmat = \kXX$
 \item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
 \item Cov function (or kernel) determines cov matrix: $\Kmat = \kXX$
@@ -39,7 +39,7 @@ $$\kxxt = k(\bm{d})$$
 \end{framei}
 
 \begin{framei}{example: stationary covariance}
-\item Let $f \sim \gpmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
+\item Let $f \sim \GPmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
 \item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$
 \item If you want to know about the correlation between $f(\xi[1])$ and $f(\xi[2])$, compute $\bm{d}(\xi[1], \xi[2])$
 \vfill
@@ -149,7 +149,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \begin{framei}[sep=S]{non-standard kernels}
 \item Example: 2D Brownian motion
 \item Physics application: random fluctuations of particles
-\item $f \sim \gpzk$ with $ \kxxt = \min (\xv, \xtil)$
+\item $f \sim \GPzk$ with $ \kxxt = \min (\xv, \xtil)$
 \vfill
 \imageC[.8]{figure/cov_funs/brownian2d.png}
 \end{framei}

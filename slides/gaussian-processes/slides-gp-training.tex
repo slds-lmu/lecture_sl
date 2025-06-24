@@ -64,7 +64,7 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 
 \foreach \i [count=\idx from 1] in {0.2, 2, 0.5}{
 \begin{framei}[sep=L]{nll components: example}
-\item Let $f \sim \gpzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
+\item Let $f \sim \GPzk$ with squared exp kernel $$\kxxt = \exp(-\tfrac{1}{2 \ls^2} \xxtnorm^2)$$
 \item Minimize NLL by trading off data fit \& complexity
 \ifnum \idx=1
 \item $\ls = \i$: good fit but high complexity
@@ -89,12 +89,12 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 \begin{eqnarray*}
 \pd{}{\theta_j}
 \log p(\yv ~|~ \bm{X}, \thetav) &=& \pd{}{\theta_j}  \left(-\tfrac{1}{2}\yv^T\Ky^{-1} \yv - \tfrac{1}{2} \log \left| \Ky \right| - \tfrac{n}{2} \log 2\pi\right) \\ 
-&=&\tfrac{1}{2} \yv^T \Kmatinv \pd{\Kmat}{\theta_j}\Kmatinv \yv - \tfrac{1}{2} \text{tr}\left(\Kmatinv \pd{\Kmat}{ \thetav} \right) \\
-&=& \tfrac{1}{2} \text{tr}\left((\Kmatinv\yv\yv^T\Kmatinv - \Kmatinv)\pd{\Kmat}{\theta_j}\right)
+&=&\tfrac{1}{2} \yv^T \Kinv \pd{\Kmat}{\theta_j}\Kinv \yv - \tfrac{1}{2} \text{tr}\left(\Kinv \pd{\Kmat}{ \thetav} \right) \\
+&=& \tfrac{1}{2} \text{tr}\left((\Kinv\yv\yv^T\Kinv - \Kinv)\pd{\Kmat}{\theta_j}\right)
 \end{eqnarray*}
-using $\pd{}{\theta_j} \Kmatinv = - \Kmatinv  \pd{\Kmat}{\theta_j}\Kmatinv$ and $\pd{}{\thetav} \log  |\Kmat| = \text{tr}\left(\Kmatinv \pd{\Kmat}{\thetav} \right)$
+using $\pd{}{\theta_j} \Kinv = - \Kinv  \pd{\Kmat}{\theta_j}\Kinv$ and $\pd{}{\thetav} \log  |\Kmat| = \text{tr}\left(\Kinv \pd{\Kmat}{\thetav} \right)$
 \item Bottleneck: inverting (or rather, decomposing) $\Kmat$ \\$\Rightarrow$ $\order(n^3)$ for standard methods
-\item Only $\order(n^2)$ per hyperparam / partial derivative once $\Kmatinv$ is known $\Rightarrow$ small overhead, so use gradient-based optim 
+\item Only $\order(n^2)$ per hyperparam / partial derivative once $\Kinv$ is known $\Rightarrow$ small overhead, so use gradient-based optim 
 \end{framei}
 
 \begin{framei}[sep=L]{strategies for big data}
