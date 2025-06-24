@@ -1,6 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
 
-
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
@@ -12,44 +11,43 @@
 \begin{document}
     
 \titlemeta{
-    Advanced Risk Minimization
-  }{% Lecture title  
-    Advanced Classification Losses
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/overview_classif_all.png
-  }{
-  \item (squared) Hinge loss
-  \item $L2$ loss defined on scores
-  \item Exponential loss
-  \item AUC loss 
+Advanced Risk Minimization
+}{% Lecture title  
+Advanced Classification Losses
+}{% Relative path to title page image: Can be empty but must not start with slides/
+figure/overview_classif_all.png
+}{
+\item (squared) Hinge loss
+\item $L2$ loss defined on scores
+\item Exponential loss
+\item AUC loss 
 }
 
 \begin{framei}[sep=M]{Hinge Loss}
 
-  \item 0-1-loss intuitive but ill-suited for direct optimization
-  \item \textbf{Hinge loss} is continuous and convex 
-  upper bound on 0-1-loss 
-  $$\Lxy = \max \{ 0, 1 - y\fx \} \quad \text{for} \ y \in \setmp$$
-  \item Only zero for margin $y\fx\geq 1$, 
-  encourages confident predictions
-  \item Often used in SVMs %(cf. chapters on SVMs)
-  % \item A squared version exists for putting a sharper penalty on 
-  % misclassifications:
-  % $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
-  \item Resembles a door hinge, hence the name
+\item 0-1-loss intuitive but ill-suited for direct optimization
+\item \textbf{Hinge loss} is continuous and convex 
+upper bound on 0-1-loss 
+$$\Lxy = \max \{ 0, 1 - \yf \} \quad \text{for} \ y \in \setmp$$
+\item Only zero for margin $\yf\geq 1$, 
+encourages confident predictions
+\item Often used in SVMs
+% \item A squared version exists for putting a sharper penalty on 
+% misclassifications:
+% $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
+\item Resembles a door hinge, hence the name
 
 \imageC[0.8]{figure/overview_classif_subset1.png}
-
 
 \end{framei}
 
 
 \begin{framei}[sep=M]{Squared Hinge Loss}
 
-  \item Can also define \textbf{squared hinge loss}:
-  $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
-  \item $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
-  \item Cont. differentiable yet more outlier-sensitive than hinge loss
+\item Can also define \textbf{squared hinge loss}:
+$$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
+\item $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
+\item Cont. differentiable yet more outlier-sensitive than hinge loss
 
 \imageC[0.8]{figure/overview_classif_subset2.png}
 
