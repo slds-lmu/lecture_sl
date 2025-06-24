@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -36,19 +29,19 @@ To learn a model, we usually do ERM:
 $$\riskef = \sumin \Lxyi$$
 
 \begin{itemizeM}[small]
-    \item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
+\item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
 %    so from feature and target space
-    \item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
-    %$\fx$ is a model 
-    from hypothesis space $\Hspace$;
-    maps a feature vector to output score;
-    often we omit $\Hspace$ in index 
-    \item loss $L:\Yspace\times\R^g\rightarrow\R$ ,
-    %$\Lxy$ 
-    measures error between label and prediction
-    \item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
-    $(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$  
-    %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
+\item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
+%$\fx$ is a model 
+from hypothesis space $\Hspace$;
+maps a feature vector to output score;
+often we omit $\Hspace$ in index 
+\item loss $L:\Yspace\times\R^g\rightarrow\R$ ,
+%$\Lxy$ 
+measures error between label and prediction
+\item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
+$(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$  
+%\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
 \end{itemizeM}
 
 Minimizing theoretical risk, so expected loss over DGP, is major goal:
@@ -60,19 +53,19 @@ $$ \risk (f) := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy $$
 \begin{frame}{Two short examples}
 \textbf{Regression with linear model:}\\
 \begin{itemize}
-    \item Model: $f(\xv) = \thetav^\top \xv + \theta_0$
-    \item Squared loss:  
-    $\Lxy = (y-\fx)^2$
-    \item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetav^\top \xv + \theta_0 : \thetav \in \R^d, \theta_0 \in \R \right\}$$
+\item Model: $f(\xv) = \thetav^\top \xv + \theta_0$
+\item Squared loss:  
+$\Lxy = (y-\fx)^2$
+\item Hypothesis space: $$\Hspace_{\text{lin}} = \left\{ \xv \mapsto \thetav^\top \xv + \theta_0 : \thetav \in \R^d, \theta_0 \in \R \right\}$$
 \end{itemize}
 
 \vfill
 
 \textbf{Binary classification with shallow MLP:}\\
 \begin{itemize}
-    \item Model: $f(\xv) = \pi(\xv)= \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2)$
-    \item Bernoulli / Log / Cross-Entropy loss: $\Lpixy = -(y\log(\pix)+(1-y)\log(1-\pix))$\\ 
-    \item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \R^{h \times d}, \mathbf{b}_1 \in \R^h, \mathbf{w}_2 \in \R^h, b_2 \in \R \right\}$$}
+\item Model: $f(\xv) = \pi(\xv)= \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2)$
+\item Bernoulli / Log / Cross-Entropy loss: $\Lpixy = -(y\log(\pix)+(1-y)\log(1-\pix))$\\ 
+\item Hypothesis space: {\small $$\Hspace_{\text{MLP}} = \left\{ \xv \mapsto \sigma(\bm{w}_2^{\top} \text{ReLU}(\bm{W}_1 \xv + \bm{b}_1) + b_2): \mathbf{W}_1 \in \R^{h \times d}, \mathbf{b}_1 \in \R^h, \mathbf{w}_2 \in \R^h, b_2 \in \R \right\}$$}
 \end{itemize}
   
 \end{frame}
@@ -214,13 +207,13 @@ $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 
 \item To derive the RM, by law of total expectation 
 $$    \riskf = \E_{xy} \left[\Lxy\right] 
-    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right]$$
+= \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right]$$
 
-	\item We can choose $\fx$ as we want from $\Hall$ %(unrestricted hypothesis space, no assumed functional form)
-	\item Hence, for fixed feature vector $\xtil$ we can select \textbf{any} value $c$ to predict. So we construct the \textbf{point-wise optimizer} 
-        % (we are not restricted by any functional form, e.g., a linear function)
-	% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
- $$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
+\item We can choose $\fx$ as we want from $\Hall$ %(unrestricted hypothesis space, no assumed functional form)
+\item Hence, for fixed feature vector $\xtil$ we can select \textbf{any} value $c$ to predict. So we construct the \textbf{point-wise optimizer} 
+% (we are not restricted by any functional form, e.g., a linear function)
+% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
+$$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
 %        \item Under L2 loss, best point-wise prediction is simply cond. mean
 
 %$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
@@ -253,17 +246,17 @@ will not pursue this here
 
 \begin{framei}[sep=L]{Estimation and Approximation Error} 
 
-    \item Goal: Train model $\hat f_{\Hspace}$ with risk $\risk(\hat f_{\Hspace})$ close to Bayes risk $\riskbayes$ \\
-    \item Minimize \textbf{Bayes regret} or \textbf{excess risk}
+\item Goal: Train model $\hat f_{\Hspace}$ with risk $\risk(\hat f_{\Hspace})$ close to Bayes risk $\riskbayes$ \\
+\item Minimize \textbf{Bayes regret} or \textbf{excess risk}
 $$
-	\risk(\hat f_{\Hspace}) - \riskbayes
+\risk(\hat f_{\Hspace}) - \riskbayes
 $$ 
 
 \item Decompose: 
 
 \begin{align*}
-	\risk(\hat f_{\Hspace}) - \riskbayes &= \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
-    &= \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hall}) \right] 
+\risk(\hat f_{\Hspace}) - \riskbayes &= \underbrace{\left[\risk(\hat f_{\Hspace}) - \inf_{f \in \Hspace} \risk(f)\right]}_{\text{estimation error}} + \underbrace{\left[\inf_{f \in \Hspace} \risk(f) - \riskbayes\right]}_{\text{approximation error}} \\
+&= \left[\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})\right] + \left[\risk(\fbayes_{\Hspace}) - \risk(\fbayes_{\Hall}) \right] 
 \end{align*}
 
 \end{framei}
