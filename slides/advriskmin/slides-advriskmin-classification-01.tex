@@ -7,7 +7,7 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
@@ -60,9 +60,9 @@ $$
 \vspace*{-0.5cm}
 
 \begin{eqnarray*}
-  \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ~|~ \xv ] \right] \\
-          & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right] 
-          % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
+\riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ~|~ \xv ] \right] \\
+      & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right] 
+      % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
 \end{eqnarray*}
 
 \item $\eta_k(x) := \P(y = k| \xv)$ is true posterior probability for class $k$
@@ -77,13 +77,6 @@ $$
 \item Especially for hard labelers and arbitrary misclassif. costs, we see: produces cost-optimal decision, weighted by posterior probs; \\
 (we see this again in cost-senslearning)
 
-% The risk minimizer for a general loss function $\Lxy$ is
-
-% \vspace*{-0.3cm}
-
-% \begin{eqnarray*}
-%   \fxbayes &=& \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xtil)\right]\,.  \\
-% \end{eqnarray*}
 
 \end{framei}
 
@@ -96,7 +89,7 @@ $$
 =& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
 =& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
 =& \argmax_{k \in \Yspace} \P(y = k)
-  \end{align*}
+\end{align*}
 
 
 \item Translation: Predict most probable class
@@ -105,7 +98,7 @@ $$
 
 \item Risk minimizer / optim. cond. prediction / Bayes optim. classifier:
 
- $h^{\ast}(\xtil) = \argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ 
+$h^{\ast}(\xtil) = \argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ 
 
 \end{framei}
 
@@ -113,7 +106,7 @@ $$
 \begin{frame}{Bayes risk  / Bayes error rate}
 
 $$
-  \riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
+\riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
 $$
 
 \vfill
@@ -128,7 +121,7 @@ $$
 \riskbayes = \E_x\left[\min(\eta(\xv), 1 - \eta(\xv))\right] = 1 - \E_x\left[\max(\eta(\xv), 1 - \eta(\xv))\right] 
 $$
 
- 
+
 \end{frame}
 
 

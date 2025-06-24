@@ -8,7 +8,7 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
@@ -36,26 +36,15 @@ figure/loss_overview.png
 
 \imageC[0.55]{figure/loss_overview.png}
 
-% Examples:
-% \begin{itemize}
-% \item Quantile loss: Overestimating a clinical parameter might not be as bad as underestimating it.
-% \item Log-barrier loss: Extremely under- or overestimating demand in production would put company profit at risk.
-% \item $\eps$-insensitive loss: A certain amount of deviation in production does no harm, larger deviations do.
-% \end{itemize}
-% % \item Sometimes a custom loss must be designed specifically for the given application.
-% % \item Some learning algorithms use specific loss functions, e.g., the hinge loss for SVMs.
-% % \end{itemize}
 \end{framei}
 
 \begin{frame}{Huber Loss}
 
-% Description
-
 $$
 \Lxy = \begin{cases}
-  \frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
-  \epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
-  \end{cases} \quad \epsilon > 0
+\frac{1}{2}(y - \fx)^2  & \text{ if } |y - \fx| \le \epsilon \\
+\epsilon |y - \fx|-\frac{1}{2}\epsilon^2 \quad & \text{ otherwise }
+\end{cases} \quad \epsilon > 0
 $$
 
 \begin{itemize}
@@ -108,12 +97,12 @@ $\left|y - \fx\right| - \log 2$ for large residuals
 \splitV[0.4]{
 Essential idea:
 \begin{enumerate}
-    \item Derivative of $L1$ \\
-    w.r.t. residual 
-    %$\text{sign}(y-\fx)$ function
-    \item Approx. $\sign$ with $\tanh$
-    %$\text{sign}(y-\fx)$ using the cont. differentiable $\text{tanh}(y-\fx)$
-    \item Integrate ``up again'' 
+\item Derivative of $L1$ \\
+w.r.t. residual 
+%$\text{sign}(y-\fx)$ function
+\item Approx. $\sign$ with $\tanh$
+%$\text{sign}(y-\fx)$ using the cont. differentiable $\text{tanh}(y-\fx)$
+\item Integrate ``up again'' 
 \end{enumerate}
 }
 {\imageC{figure/logcosh-derivation.png}}
@@ -145,10 +134,10 @@ is equivalent to MLE of $\text{cosh}(\theta,1)$ distribution
 
 \splitV[0.52]{
 \begin{itemizeM}[small]\setlength{\itemsep}{0.32em}
-    \item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh (\frac{x-\theta}{\sigma})}$
-    \item $\E_{x \sim p}[x] = \theta$
-    \item $\var_{x \sim p}[x]=\frac{1}{4} \pi^2 \sigma^2 $
-    \item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh (\yi-\theta)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
+\item $p(x | \theta, \sigma)=\frac{1}{\pi \sigma \cosh (\frac{x-\theta}{\sigma})}$
+\item $\E_{x \sim p}[x] = \theta$
+\item $\var_{x \sim p}[x]=\frac{1}{4} \pi^2 \sigma^2 $
+\item {\footnotesize $\thetah^{MLE}=\argmax_{\theta} \prodin \frac{1}{\pi \cosh (\yi-\theta)} =$}\\{\footnotesize $\thetah = \argmin_{\theta}\sumin \log(\text{cosh}(\yi-\theta))$}
 \end{itemizeM}
 }
 {\imageL[1.1]{figure/logcosh-derivation-cosh-gaussian-densities.png}}
@@ -196,9 +185,9 @@ $$
 
 $$
 \Lxy =  \begin{cases}
-  0  & \text{if } |y - \fx| \le \epsilon \\
-  |y - \fx|-\epsilon & \text{otherwise }
-  \end{cases}, \quad \epsilon \in \R_{+}
+0  & \text{if } |y - \fx| \le \epsilon \\
+|y - \fx|-\epsilon & \text{otherwise }
+\end{cases}, \quad \epsilon \in \R_{+}
 $$
 
 \begin{itemize}
@@ -227,9 +216,8 @@ $$
 \begin{itemize}
 \item Extension of $L1$ loss (equal to $L1$ for $\alpha = 0.5$).
 \item Penalizes either over- or under-estimation more
-%\item $\alpha<0.5$ $(\alpha>0.5)$ penalty to over-estimation (under-estimation)
 \item Risk minimizer is (conditional) 
-    $\alpha$-quantile (median for $\alpha=0.5$)
+$\alpha$-quantile (median for $\alpha=0.5$)
 \end{itemize}
 
 \vfill

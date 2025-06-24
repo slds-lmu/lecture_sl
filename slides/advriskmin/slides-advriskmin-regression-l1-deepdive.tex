@@ -1,12 +1,4 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -15,32 +7,32 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
-    Advanced Risk Minimization
-  }{% Lecture title  
-    L1 Risk Minimizer (Deep-Dive)
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/loss_absolute_1.png
-  }{
-  \item Derive the risk minimizer of the L1-loss
-  \item Derive the optimal constant model for the L1-loss
+Advanced Risk Minimization
+}{% Lecture title  
+L1 Risk Minimizer (Deep-Dive)
+}{% Relative path to title page image: Can be empty but must not start with slides/
+figure/loss_absolute_1.png
+}{
+\item Derive the risk minimizer of the L1-loss
+\item Derive the optimal constant model for the L1-loss
 }
 
 \begin{frame2}[footnotesize]{L1-Loss: Risk Minimizer}
 
 \textbf{Proof:} Let $p(y)$ be the density function of $y$. Then: 
-  \begin{align*}
-   &\argmin_c \E\left[|y - c|\right] = \argmin_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
-  =& \argmin_c \int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y 
-  \end{align*}
+\begin{align*}
+&\argmin_c \E\left[|y - c|\right] = \argmin_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
+=& \argmin_c \int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y 
+\end{align*}
 
 We now compute the derivative of the above term and set it to $0$
 
 \begin{align*}
 0 &= \frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y) \\ &\overset{^\ast\text{Leibniz}}{=} \int_{-\infty}^c  ~p(y)~\text{d}y - \int_c^\infty ~p(y)~\text{d}y =   \P_y (y \le c) - (1 - \P_y (y \le c)) \\
 &= 2 \cdot \P_y (y \le c) - 1 \\
-\Leftrightarrow 0.5 &= \P_y (y \le c),
+\Leftrightarrow 0.5 &= \P_y (y \le c)
 \end{align*}
 
 which yields $c = \text{med}_y(y)$. 
@@ -49,11 +41,11 @@ which yields $c = \text{med}_y(y)$.
 
 \begin{frame2}[footnotesize]{L1-Loss: Risk Minimizer}
 
-$^\ast$ \textbf{Note} that since we are computing the derivative w.r.t. the integration boundaries, we need to use Leibniz integration rule 
+$^\ast$ \textbf{Note} that since we are computing the derivative w.r.t. the integration boundaries we need to use Leibniz integration rule 
 
 \begin{align*}
-  \frac{\partial}{\partial c} (\int_a^c g(c, y) ~\text{d}y) &= g(c, c) + \int_a^c \frac{\partial}{\partial c} g(c, y) ~\text{d}y \\
-  \frac{\partial}{\partial c} (\int_c^a g(c, y) ~\text{d}y) &= - g(c, c) + \int_c^a \frac{\partial}{\partial c} g(c, y) ~\text{d}y    
+\frac{\partial}{\partial c} (\int_a^c g(c, y) ~\text{d}y) &= g(c, c) + \int_a^c \frac{\partial}{\partial c} g(c, y) ~\text{d}y \\
+\frac{\partial}{\partial c} (\int_c^a g(c, y) ~\text{d}y) &= - g(c, c) + \int_c^a \frac{\partial}{\partial c} g(c, y) ~\text{d}y    
 \end{align*}
 
 We get 
@@ -61,7 +53,7 @@ We get
 &\frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y ) \\
 =& \frac{\partial}{\partial c} (\int_{-\infty}^c \underbrace{-(y - c)~p(y)}_{g_1(c, y)}~\text{d}y) + \frac{\partial}{\partial c} (\int_c^\infty \underbrace{(y - c)~p(y)}_{g_2(c, y)}~\text{d}y ) \\
 =& \underbrace{g_1(c, c)}_{=0} + \int_{-\infty}^c \frac{\partial}{\partial c}  (-(y - c))~p(y)~\text{d}y - \underbrace{g_2(c, c)}_{= 0} + \int_c^\infty \frac{\partial}{\partial c}  (y - c)~p(y)~\text{d}y \\
-=& \int_{-\infty}^c  ~p(y)~\text{d}y + \int_c^\infty -~p(y)~\text{d}y. 
+=& \int_{-\infty}^c  ~p(y)~\text{d}y + \int_c^\infty -~p(y)~\text{d}y
 \end{align*}
 
 \end{frame2}
@@ -74,22 +66,21 @@ We get
 
 \textbf{Proof}: 
 
-\begin{itemize}
-  \item Firstly note that for $n = 1$ the median $\thetah = \text{med}(\yi) = y^{(1)}$ obviously minimizes the emp. risk $\riske$ using the $L1$ loss. 
+\begin{itemizeL}
+\item Firstly note that for $n = 1$ the median $\thetah = \text{med}(\yi) = y^{(1)}$ obviously minimizes the emp. risk $\riske$ using the $L1$ loss 
 
-  \item Hence let $n > 1$ in the following For $a,b \in \mathbb{R}$, define 
-  $$S_{a,b}:\mathbb{R} \rightarrow \mathbb{R}^+_0, \theta \mapsto |a- \theta| + |b-\theta|$$
-  \vspace*{-0.3cm}
-  Any $\thetah \in [a,b]$ minimizes $S_{a,b}(\theta)$, because it holds that
-  \vspace*{-0.0cm}
-  \begin{align*}
-  S_{a,b}(\theta) = \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 2\cdot\min\{|a-\theta|,|b-\theta|\}
-  ,& \text{ otherwise. }\end{cases}
-  \end{align*}
+\item Hence let $n > 1$ in the following For $a,b \in \mathbb{R}$, define 
+$$S_{a,b}:\mathbb{R} \rightarrow \mathbb{R}^+_0, \theta \mapsto |a- \theta| + |b-\theta|$$
+\vspace*{-0.3cm}
+Any $\thetah \in [a,b]$ minimizes $S_{a,b}(\theta)$, because it holds that
+\vspace*{-0.0cm}
+\begin{align*}
+S_{a,b}(\theta) = \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 2\cdot\min\{|a-\theta|,|b-\theta|\}
+,& \text{ otherwise}\end{cases}
+\end{align*}
+\end{itemizeL}
 
-\imageC[0.4]{figure/S_function.png}
-
-\end{itemize}
+\imageC[0.37]{figure/S_function.png}
 
 \end{frame}
 
@@ -100,16 +91,16 @@ W.l.o.g. assume now that all $\yi$ are sorted in increasing order.
 
 Let us define $i_{\max} = n / 2$ for $n$ even and $i_{\max} = (n - 1) / 2$ for $n$ odd and consider the intervals 
 $$
-\mathcal{I}_i := [y^{(i)},y^{(n+1-i)}], i \in \{1, ..., i_{\max}\}. 
+\mathcal{I}_i := [y^{(i)},y^{(n+1-i)}], i \in \{1, ..., i_{\max}\}
 $$
 
-By construction $\mathcal{I}_{j+1} \subseteq \mathcal{I}_j$ for $j \in \{1,\dots,i_{\max}-1\}$ and $\mathcal{I}_{i_{\max}} \subseteq \mathcal{I}_i$. With this, $\riske$ can be expressed as
+By construction $\mathcal{I}_{j+1} \subseteq \mathcal{I}_j$ for $j \in \{1,\dots,i_{\max}-1\}$ and $\mathcal{I}_{i_{\max}} \subseteq \mathcal{I}_i$. With this $\riske$ can be expressed as
 \begin{footnotesize}
 \begin{align*}
 \riske(\theta) =& \sumin L(\yi,\theta) = \sumin|\yi - \theta| \\ 
 =& \underbrace{|\yi[1] - \theta| + |\yi[n] - \theta|}_{= S_{\yi[1], \yi[n]}(\theta)} + \underbrace{|\yi[2] - \theta| + |\yi[n - 1] - \theta|}_{= S_{\yi[2], \yi[n - 1]}(\theta)} + ...  \\
 =& \begin{cases} \sum\limits_{i = 1}^{i_{\max}} S_{\yi, \yi[n + 1 - i]}(\theta) & \text{ for } n \text{ is even} \\
-\sum\limits_{i = 1}^{i_{\max}} (S_{\yi, \yi[n + 1 - i]}(\theta)) + |\yi[(n + 1)/2] - \theta| & \text{ for } n \text{ is odd}. \end{cases}
+\sum\limits_{i = 1}^{i_{\max}} (S_{\yi, \yi[n + 1 - i]}(\theta)) + |\yi[(n + 1)/2] - \theta| & \text{ for } n \text{ is odd} \end{cases}
 \end{align*}
 \end{footnotesize}
 
@@ -132,14 +123,14 @@ From this follows that
 \vfill
 
 \begin{itemizeL}[sep=5]
-\item for \enquote{$n$ is even}: $\thetah \in  \mathcal{I}_{i_{\max}} = [y^{(n/2)},y^{(n/2+1)}]$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\} \; \Rightarrow$  it minimizes $\riske$,
+\item for \enquote{$n$ is even}: $\thetah \in  \mathcal{I}_{i_{\max}} = [y^{(n/2)},y^{(n/2+1)}]$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\} \; \Rightarrow$  it minimizes $\riske$
 \item for \enquote{$n$ is odd}: $\thetah = y^{(n+1)/2} \in \mathcal{I}_{i_{\max}}$ minimizes $S_i$ for all $i \in \{1,\dots, i_{\max}\}$ and it's minimal for
 $|\yi[(n + 1)/2] - \theta|$ \\ $\Rightarrow$
-it minimizes $\riske$.
+it minimizes $\riske$
 \end{itemizeL}
 \vfill
 Since the median fulfills these conditions, we can conclude that it minimizes 
-the $L1$ loss.
+the $L1$ loss
 
 \end{frame}
 

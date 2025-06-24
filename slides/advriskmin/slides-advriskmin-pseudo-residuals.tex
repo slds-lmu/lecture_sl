@@ -7,7 +7,7 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
@@ -77,9 +77,9 @@ $$
 
 \item This is effectively the PR 
 
-\begin{align*}
-\fx \leftarrow& \fx + \tilde{r}(\xv)\\ 
-\end{align*}
+$$
+\fx \leftarrow \fx + \tilde{r}(\xv)
+$$
 
 \item (Such iterative updates of $f$ like a loss-reducing GD in function space is the major underlying idea of GB)
 
@@ -124,7 +124,7 @@ Exponential loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
 \vfill
 
 NB: $\pi(\xv)=s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$ is the (sigmoidal) logistic function,
-and $\pi_k(\xv)$ its multi-class generalization, the softmax.
+and $\pi_k(\xv)$ its multi-class generalization, the softmax
 
 \end{frame}
 

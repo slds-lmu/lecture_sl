@@ -9,19 +9,19 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
-  Advanced Risk Minimization
-  }{
-  Risk Minimization Basics
-  }{
-  figure_man/optimization_steps.jpeg
-  }{
-  \item Risk minimization and ERM recap
-  \item Bayes optimal model, Bayes risk
-  \item Bayes regret, estimation and approximation error    
-  \item Optimal constant model
-  \item Consistency
+Advanced Risk Minimization
+}{
+Risk Minimization Basics
+}{
+figure_man/optimization_steps.jpeg
+}{
+\item Risk minimization and ERM recap
+\item Bayes optimal model, Bayes risk
+\item Bayes regret, estimation and approximation error    
+\item Optimal constant model
+\item Consistency
 }
 
 \begin{frame}{Empirical Risk Minimization}
@@ -30,15 +30,11 @@ $$\riskef = \sumin \Lxyi$$
 
 \begin{itemizeM}[small]
 \item observations $(\xi, \yi) \in  \Xspace \times \Yspace$
-%    so from feature and target space
 \item model $f_{\Hspace}:\Xspace \rightarrow \R^g$, 
-%$\fx$ is a model 
 from hypothesis space $\Hspace$;
 maps a feature vector to output score;
 often we omit $\Hspace$ in index 
-\item loss $L:\Yspace\times\R^g\rightarrow\R$ ,
-%$\Lxy$ 
-measures error between label and prediction
+\item loss $L:\Yspace\times\R^g\rightarrow\R$, measures error between label and prediction
 \item data generating process (DGP) $\Pxy$, we assume %$(\xv,y) \sim \Pxy$ and 
 $(\xi, \yi)  \overset{\text{i.i.d.}}{\sim} \Pxy$  
 %\item $f_{\Hspace}^{\ast}$ is the minimizer of the theoretical risk $\riskf$ over $\Hspace$ and $\hat{f}_{\Hspace}$ the minimizer of $\riskef$
@@ -141,8 +137,6 @@ $$\argminlim_{c \in \R} \sumin L(\yi,c)$$
 \item Goal: loss optimal, constant baseline predictor
 \item ``constant'': featureless ML model, always predicts same value
 \item ``baseline'': more complex model has to be better 
-%Can use it as baseline in experiments, if we don't beat this
-%with more complex model, that model is useless
 \item Also useful as optimal intercept
 
 
@@ -179,8 +173,6 @@ $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 
 \end{framei}
 
-
-
 % \begin{frame}[t]{optimal point-wise predictions}  
 
 % To derive the risk minimizer we usually make use of the following trick: 
@@ -209,14 +201,9 @@ $\fbayes_{\Hspace} = \argmin_{f \in \Hspace} \riskf$
 $$    \riskf = \E_{xy} \left[\Lxy\right] 
 = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv\right]\right]$$
 
-\item We can choose $\fx$ as we want from $\Hall$ %(unrestricted hypothesis space, no assumed functional form)
+\item We can choose $\fx$ as we want from $\Hall$ 
 \item Hence, for fixed feature vector $\xtil$ we can select \textbf{any} value $c$ to predict. So we construct the \textbf{point-wise optimizer} 
-% (we are not restricted by any functional form, e.g., a linear function)
-% \item Instead of looking for the optimal $f$ in function space (which is impossible), we compute the \textbf{point-wise optimizer} for every $\xv \in \Xspace$.
 $$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
-%        \item Under L2 loss, best point-wise prediction is simply cond. mean
-
-%$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 \end{itemize}
 
 \imageC[0.8]{figure/optimal_pointwise.png}
@@ -227,7 +214,7 @@ $$\fbayes(\xtil) = \argmin_c \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right] $$
 \begin{framei}[sep=M]{Theoretical and Empirical Risk}  
  
 \item Bayes risk minimizer is mainly a theoretical tool
-\item In practice, need to restrict $\Hspace$ for efficient search %so we efficiently search over it. 
+\item In practice, need to restrict $\Hspace$ for efficient search
 \item We don't normally know $\Pxy$. Instead, use ERM. 
 $$
 {\hat f}_{\Hspace} = \argmin_{f \in \Hspace} \riskef = \argmin_{f \in \Hspace} \sumin \Lxyi
@@ -265,10 +252,7 @@ $$
 
 % https://docs.google.com/presentation/d/1vXuX8P6p7TFlXnpVcInQM6PR3qHk9LqC2Z75_I4u4Lo/edit#slide=id.p
 
-
 \imageC[0.5]{figure_man/risk_minimization_diagram.png}
-
-
 
 
 $$
@@ -289,7 +273,7 @@ $\Hspace$ will often not contain Bayes optimal $\fbayes$
 
 
 \begin{frame}{(Universally) Consistent Learners \furtherreading{STNE1977CONS}}
-% https://mlweb.loria.fr/book/en/consistency.html
+%https://mlweb.loria.fr/book/en/consistency.html
 
 \textbf{Consistency} is an asymptotic property of a learning algorithm, which ensures the algorithm returns \textbf{the correct model} when given \textbf{unlimited data}.
 
@@ -320,10 +304,6 @@ More interesting is the stronger concept of \textbf{universal consistency}: An a
 \vfill 
 
 In Stone's famous consistency theorem (1977), the universal consistency of a weighted average estimator such as KNN was proven. Many other ML models have since then been proven to be universally consistent (SVMs, ANNs, etc.).
-
-%\vfill
-
-%\textbf{Note}: universal consistency is a desirable property - however, it does not tell us anything about convergence rates ...
 
 \end{frame}
 
