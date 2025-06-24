@@ -7,7 +7,7 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
@@ -54,17 +54,17 @@ with 0-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$; independent of $\
 
 $GE_n(\ind) =$  
 $$
- \underbrace{\sigma^2}_{\text{Var. of $\epsilon$}} + \E_{x}\underbrace{\left[\var_{\D_n}(\fh_{\D_n}(\xv) ~|~\xv)\right]}_{\text{Variance of learner at } \xv} + \E_{x}\underbrace{\left[(\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)~|~\xv))^2\right]}_{\text{Squared bias of learner at } \xv}  
+\underbrace{\sigma^2}_{\text{Var. of $\epsilon$}} + \E_{x}\underbrace{\left[\var_{\D_n}(\fh_{\D_n}(\xv) ~|~\xv)\right]}_{\text{Variance of learner at } \xv} + \E_{x}\underbrace{\left[(\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)~|~\xv))^2\right]}_{\text{Squared bias of learner at } \xv}  
 $$
 
 \begin{enumerate}
-  \item First: variance of ``pure''
-     \textbf{noise} $\epsilon$; aka Bayes, intrinsic or irreducible error; 
-    whatever we we do, will never be better
-  \item Second: how much \textbf{$\fh_{\D_n}(\xv)$ fluctuates} at test $\xv$ if we vary training data, averaged over feature space; = learner's tendency to learn random things irrespective of real signal (overfitting)
-  
-  \item Third: how ``off'' are we on average at test locations (underfitting); uses ``average model integrated out over all $\D_n$''; \\
-  models with high capacity have low \textbf{bias} and vice versa
+\item First: variance of ``pure''
+\textbf{noise} $\epsilon$; aka Bayes, intrinsic or irreducible error; 
+whatever we we do, will never be better
+\item Second: how much \textbf{$\fh_{\D_n}(\xv)$ fluctuates} at test $\xv$ if we vary training data, averaged over feature space; = learner's tendency to learn random things irrespective of real signal (overfitting)
+
+\item Third: how ``off'' are we on average at test locations (underfitting); uses ``average model integrated out over all $\D_n$''; \\
+models with high capacity have low \textbf{bias} and vice versa
 \end{enumerate}
 
 
@@ -77,7 +77,7 @@ $$y = x + \frac{x^2}{2} + \epsilon  \qquad \epsilon \sim
 N (0, 1)$$
 \item Split in train and test sets 
 
-\imageC[0.42]{figure/bias_variance_decomposition-train_test.png}
+\imageC[0.52]{figure/bias_variance_decomposition-train_test.png}
 
 \end{framei} 
 
@@ -94,8 +94,8 @@ BS slightly easier to visually explain)
 data $\D_n$
 
 \splitVCC
-  {\imageC[0.8]{figure/bias_variance_decomposition-bootstrap_1.png}}
-  {\imageC[0.8]{figure/bias_variance_decomposition-bootstrap_2.png}}
+{\imageC[0.8]{figure/bias_variance_decomposition-bootstrap_1.png}}
+{\imageC[0.8]{figure/bias_variance_decomposition-bootstrap_2.png}}
 
 \end{framei} 
 
@@ -104,7 +104,7 @@ data $\D_n$
 \item Average model over different training datasets
 \item This is $\E_{\D_n}[\fh_{\D_n}(\xv)]$ in the decomp
 
-  \imageC[0.5]{figure/bias_variance_decomposition-linear_model.png}
+\imageC[0.5]{figure/bias_variance_decomposition-linear_model.png}
 
 \end{framei} 
 
@@ -119,7 +119,7 @@ $
 $
 
 
-  \imageC[0.5]{figure/bias_variance_decomposition-linear_model_bias.png}
+\imageC[0.5]{figure/bias_variance_decomposition-linear_model_bias.png}
 
 
 \end{framei} 
@@ -134,7 +134,7 @@ $
 \E_{x} [\var_{\D_n} (\fh_{\D_n}(\xv) ~|~\xv ) ]
 $
 
-  \imageC[0.4]{figure/bias_variance_decomposition-linear_model_variance.png}
+\imageC[0.4]{figure/bias_variance_decomposition-linear_model_variance.png}
 
 \item Here, we know data variance $\sigma^2=1$;\\
 could also estimate it from residuals
@@ -142,12 +142,12 @@ could also estimate it from residuals
 \end{framei} 
 
 
-\begin{framei}[fs=footnotesize,sep=M]{Decomp Result and Comparison with MSE}
+\begin{framei}[fs=small,sep=M]{Decomp Result and Comparison with MSE}
 
 \item Decomp result; here bias is largest:
 $$GE_n(\ind) \approx 1 + 1.628 + 0.135 = 2.763 $$
 
-  \imageC[0.35]{figure/bias_variance_decomposition-linear_model_mse.png}
+\imageC[0.35]{figure/bias_variance_decomposition-linear_model_mse.png}
 
 \item Regular MSE: For each model, compute MSE on test set
 \item Then we average these MSEs over all models
@@ -162,16 +162,16 @@ better if we avg. over more models and test points
 
 \item Same procedure, but using a high-degree polynomial ($d=7$)
 
-  \imageC[0.55]{figure/bias_variance_decomposition-complex_model.png}
+\imageC[0.55]{figure/bias_variance_decomposition-complex_model.png}
 
 \end{framei} 
 
 \begin{frame}{Higher complexity learner}
 
-  \splitVThree
-  {\imageC{figure/bias_variance_decomposition-complex_model_bias.png}}
-  {\imageC{figure/bias_variance_decomposition-complex_model_variance.png}}
-  {\imageC{figure/bias_variance_decomposition-complex_model_mse.png}}
+\splitVThree
+{\imageC{figure/bias_variance_decomposition-complex_model_bias.png}}
+{\imageC{figure/bias_variance_decomposition-complex_model_variance.png}}
+{\imageC{figure/bias_variance_decomposition-complex_model_mse.png}}
 
 
 $$GE_n(\ind) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
@@ -182,71 +182,71 @@ $$GE_n(\ind) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
 \item GE higher than before, although hypo space now contains $\ftrue$
 \item Bias is lower, and variance higher 
 \item Higher capacity learner overfits (here).\\
-   We also do not regularize, that would be better
-   
+We also do not regularize, that would be better
+
 \item NB: There is an ``edge effect'' on LHS, Runge effect,\\
-  leads to higher bias as ``artifact'' here (ignore this)
+leads to higher bias as ``artifact'' here (ignore this)
 \end{itemize}
 
 \end{frame}
 
-\begin{framei}[sep=M]{Higher complexity learner}
+\begin{framei}[sep=M]{Correct complexity learner}
 
 \item What happens if we use a model with the same complexity as the true model (quadratic polynomial)? 
 
-\imageC[0.55]{figure/bias_variance_decomposition-correct_model.png}
+\imageC[0.6]{figure/bias_variance_decomposition-correct_model.png}
 
 \end{framei}
 
-\begin{frame}{Higher complexity learner}
+\begin{frame}{Correct complexity learner}
 
-  \splitVThree
-  {\imageC{figure/bias_variance_decomposition-correct_model_bias.png}}
-  {\imageC{figure/bias_variance_decomposition-correct_model_variance.png}}
-  {\imageC{figure/bias_variance_decomposition-correct_model_mse.png}}
+\splitVThree
+{\imageC{figure/bias_variance_decomposition-correct_model_bias.png}}
+{\imageC{figure/bias_variance_decomposition-correct_model_variance.png}}
+{\imageC{figure/bias_variance_decomposition-correct_model_mse.png}}
 
 \vfill
 
 $$GE_n(\ind) \approx 1 + 0.008 + 0.082 = 1.09 $$
 
 \begin{itemize}
-  \item Naturally: better result
-  \item Low bias, low variance
-  \item Bias should not be that much lower than
-  high degree polynomial; but see comment there
-  \item In any case, variance of the data is lower bound
+\item Naturally: better result
+\item Low bias, low variance
+\item Bias should not be that much lower than
+high degree polynomial; but see comment there
+\item In any case, variance of the data is lower bound
 \end{itemize}
 
 \end{frame}
 
 \begin{framei}[sep=L]{Capacity and overfitting}
 
-  \item Performance of a learner depends on its ability to 
-    \begin{enumerate}
-      \item \textbf{fit} the training data well
-      \item \textbf{generalize} to new data
-    \end{enumerate}  
-  \item Failure of the first point is called \textbf{underfitting}
-  \item Failure of the second point is called \textbf{overfitting}
-  
-  \imageC[0.6]{figure_man/lcurve_1.png}
-  \tiny \centering
-  Credit: Ian Goodfellow
+\item Performance of a learner depends on its ability to 
+\begin{enumerate}
+\item \textbf{fit} the training data well
+\item \textbf{generalize} to new data
+\end{enumerate}  
+\item Failure of the first point is called \textbf{underfitting}
+\item Failure of the second point is called \textbf{overfitting}
+
+\imageC[0.6]{figure_man/lcurve_1.png}
+\tiny \centering
+Credit: Ian Goodfellow
 
 \end{framei}
 
 \begin{framei}[sep=M]{Capacity and overfitting}
 
-  \item The tendency of a learner to underfit/overfit is a function of its capacity, determined by the type of hypotheses it can learn
-  \item Usually: high capacity $\rightarrow$ low bias $\rightarrow$ better fit on train
-  \item But: high capacity $\rightarrow$ high variance $\rightarrow$ high chance of overfitting
-  \item For such models, regularization (discussed later) is essential
-  \item Even for correctly specified models, the generalization error is lower-bounded by the irreducible noise $\sigma^2$
+\item Tendency of a learner to underfit/overfit is function of its capacity, determined by the type of hypotheses it can learn
+\item Usually: high capacity $\rightarrow$ low bias $\rightarrow$ better fit on train
+\item But: high capacity $\rightarrow$ high variance $\rightarrow$ high chance of overfitting
+\item For such models, regularization (discussed later) is essential
+\item Even for correctly specified models, generalization error is lower-bounded by the irreducible noise $\sigma^2$
 
-  \imageC[0.6]{figure_man/lcurve_1.png}
-  \tiny \centering
-  Credit: Ian Goodfellow
-  
+\imageC[0.6]{figure_man/lcurve_1.png}
+\tiny \centering
+Credit: Ian Goodfellow
+
 \end{framei}
 
 \endlecture

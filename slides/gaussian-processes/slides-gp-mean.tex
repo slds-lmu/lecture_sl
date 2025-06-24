@@ -21,19 +21,32 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{framei}[sep=L]{non-zero-mean functions}
+\begin{framei}[sep=L]{zero-mean functions}
 \item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
-\item Not necessarily drastic limitation: \textbf{posterior} mean can be $\neq 0$
-$$\E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv$$
+\item Prior knowledge + inference solely handled via $\kcc$
+\item Implication: $m(\cdot)$ not relevant for posterior process
+$$\mv_{\text{post}} = \E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv, \quad \Kmat_{\text{post}} = \Kss - \Ks^T \Ky^{-1} \Ks$$
+\item Not necessarily drastic limitation: \textbf{posterior} mean generally $\neq 0$
+\item If data follow some trend $\mX$, we can always center them by subtracting $\mX$ $\Rightarrow$ $\GPzk$ applicable again
+% $$\E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv$$
 % $$\fs | \Xs, \Xmat, \fv \sim \normal(\Ks^{T}\Kmat^{-1}\fv, \Ksstar - \Ks^T \Kmat ^{-1}\Ks)$$
-\item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
-\item Assuming $\GPmk$, the posterior mean becomes
-$$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
-(posterior variance unchanged)
+% \item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
+% \item Assuming $\GPmk$, the posterior mean becomes
+% $$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
+% (posterior variance unchanged)
 \end{framei}
 
-\begin{framei}[sep=L]{example: non-zero-mean prior}
-\item GPs with non-zero-mean priors: aka GPs with \textbf{trend}
+\begin{framei}[sep=L]{non-zero-mean functions}
+\item Still: can make sense to model $m(\cdot)$ explicitly
+\item Opportunity to incorporate prior knowledge (without confines of $\kcc$, which must be PSD)
+\item Enforce interpretability $\Rightarrow$ standard GP: pretty black-box
+\item Assuming $\GPmk$, the posterior mean becomes
+$$\mv_{\text{post}} = m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
+
+\end{framei}
+
+\begin{framei}[sep=M]{non-zero-mean functions}
+\item GPs with \textbf{trend}
 \vfill
 \splitVTT{
 \imageC[1]{figure/gp_sample/1_1.pdf}
@@ -48,14 +61,51 @@ $$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
 }
 \end{framei}
 
-\begin{framei}[sep=L]{basis function approach}
-\item Often difficult to come up with fixed mean function
-\item Possible solution: specify basis functions + infer coeffs from data
-\item Aka semiparametric GP
-\item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \GPzk$$
-$\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
-\item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
+\begin{framei}[sep=L]{semi-parametric gp}
+\item (Deterministic) mean functions $m(\cdot)$ often hard to specify
+\item Solution: \textbf{semi-parametric} GPs combining global (linear) model + zero-mean GP for residuals
+$$g(\xv) = m_{\bm{\beta}}(\xv) + \fx, \quad f  \sim \GPzk$$
+\item E.g., via basis functions $\Rightarrow$ infer coeffs from data
+$$m_{\bm{\beta}}(\xv) = b(\xv)^T\bm{\beta}$$
+\item Alternative: parameterize $m_{\bm{\beta}}(\cdot)$ with neural networks
+\item Estimation of $g(\xv)$: jointly optimizing over $\bm{\beta}$ and kernel hyperparams or via plug-in estimators \furtherreading{RASMUSSENWILLIAMS2006GPML}
 \end{framei}
+
+% \begin{framei}[sep=L]{non-zero-mean functions}
+% \item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
+% \item Not necessarily drastic limitation: \textbf{posterior} mean can be $\neq 0$
+% $$\E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv$$
+% % $$\fs | \Xs, \Xmat, \fv \sim \normal(\Ks^{T}\Kmat^{-1}\fv, \Ksstar - \Ks^T \Kmat ^{-1}\Ks)$$
+% \item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
+% \item Assuming $\GPmk$, the posterior mean becomes
+% $$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
+% (posterior variance unchanged)
+% \end{framei}
+
+% \begin{framei}[sep=L]{example: non-zero-mean prior}
+% \item GPs with non-zero-mean priors: aka GPs with \textbf{trend}
+% \vfill
+% \splitVTT{
+% \imageC[1]{figure/gp_sample/1_1.pdf}
+% }{
+% \imageC[1]{figure/gp_sample/2_1.pdf}
+% }
+% \vfill
+% \splitVTT{
+% \imageC[1]{figure/gp_sample/2_3.pdf}
+% }{
+% \imageC[1]{figure/gp_sample/2_4.pdf}
+% }
+% \end{framei}
+
+% \begin{framei}[sep=L]{basis function approach}
+% \item Often difficult to come up with fixed mean function
+% \item Possible solution: specify basis functions + infer coeffs from data
+% \item Aka semiparametric GP
+% \item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \GPzk$$
+% $\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
+% \item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
+% \end{framei}
 
 \endlecture
 \end{document}
