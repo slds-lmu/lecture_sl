@@ -1,34 +1,31 @@
 % ml - Gaussian Process
 
-\newcommand{\fvec}{[f(\xi[1]), \dots, f(\xi[n])]} % function vector
-\newcommand{\fv}{\mathbf{f}} % function vector
-\newcommand{\mv}{\mathbf{m}} % GP mean vector
-\newcommand{\kv}{\mathbf{k}} % cov matrix partition
-\newcommand{\kcc}{k(\cdot, \cdot)} % cov of arbitrary inputs
-\newcommand{\kxij}[2]{k(\xi, \xi[j])} % cov of x_i, x_j
-\newcommand{\Kmat}{\mathbf{K}} % GP cov matrix
-\newcommand{\nmk}{\normal(\mv, \Kmat)} % Gaussian w/ mean vec, cov mat
-\newcommand{\nzk}{\normal(\zero, \Kmat)} % zero-mean Gaussian
-\newcommand{\gpmk}{\mathcal{GP}(m(\cdot), \kcc)} % GP definition
-\newcommand{\gpzk}{\mathcal{GP}(\zero, \kcc)} % zero-mean GP
-\newcommand{\Xsubset}{\bm{X}} % finite subset from xspace
-\newcommand{\fX}{f(\Xsubset)} % Gaussian vector of finite subset
-\newcommand{\kXX}{k(\Xsubset, \Xsubset)} % kernel fun for finite subset
-\newcommand{\mX}{m(\Xsubset)} % mean fun for finite subset
+\newcommand{\fvec}{[f(\xi[1]), \dots, f(\xi[n])]} % {f(x1), ..., f(xn)}
+\newcommand{\fv}{\mathbf{f}} % bold f, function vector 
+\newcommand{\mv}{\mathbf{m}} % bold m, GP mean vector 
+\newcommand{\kv}{\mathbf{k}} % bold k, kernel mat partition 
+\newcommand{\kcc}{k(\cdot, \cdot)} % k(.,.), kernel for arbitrary inputs 
+\newcommand{\kxij}{k(\xi, \xi[j])} % k(xi, xj), cov of x_i, x_j
+\newcommand{\Kmat}{\mathbf{K}} % K, kernel mat
+\newcommand{\Nmk}{\normal(\mv, \Kmat)} % n(m,K), Gaussian w/ mean vec, cov mat
+\newcommand{\Nzk}{\normal(\zero, \Kmat)} % n(0,K), zero-mean Gaussian
+\newcommand{\GPmk}{\mathcal{GP}(m(\cdot), \kcc)} % GP(m(.), k(.,.)), GP definition
+\newcommand{\GPzk}{\mathcal{GP}(\zero, \kcc)} % GP(0, k(.,.)), zero-mean GP
+\newcommand{\Xsubset}{\bm{X}} % bold X, finite subset from xspace
+\newcommand{\fX}{f(\Xsubset)} % f(X), function vector of finite subset
+\newcommand{\kXX}{k(\Xsubset, \Xsubset)} % k(X,X), cov for finite subset
+\newcommand{\mX}{m(\Xsubset)} % m(X), mean for finite subset
 \newcommand{\ls}{\ell} % length-scale
-\newcommand{\xxtnorm}{\| \xv - \xtil\|} % norm of x minus x tilde
-\newcommand{\sqexpkernel}{\exp \left(- \frac{\| \xv - \xv^{\prime} \|^2}{2 \ls^2} \right)} % squared exponential kernel
+\newcommand{\xxtnorm}{\| \xv - \xtil\|} % ||x - xtilde||
 
 % GP prediction
-\newcommand{\xstar}{\xv_\ast} % x*, test obs features
-\newcommand{\ystar}{\yv_\ast} % test obs target
-\newcommand{\fstar}{\fv_\ast} % test obs fun vector
-\newcommand{\Xstar}{\Xmat_\ast} % test design matrix
-\newcommand{\fstarvec}{\left[f\left(\xi[1]_{\ast}\right), \dots, f\left(\xi[m]_{\ast}\right) \right]} % pred function vector
-\newcommand{\kstar}{\kv_{\ast}} % cov of new obs with x
-\newcommand{\kstarstar}{\kv_{\ast \ast}} % cov of new obs
-\newcommand{\Kstar}{\Kmat_{\ast}} % cov mat of new obs with x
-\newcommand{\Kstarstar}{\Kmat_{\ast \ast}} % cov mat of new obs
-\newcommand{\Kmatinv}{\Kmat^{-1}} % inverse cov mat
-\newcommand{\Ky}{\Kmat_y} % cov mat of y
-
+\newcommand{\xs}{\xv_\ast} % x_*, test obs features
+\newcommand{\ys}{\yv_\ast} % y_*, test obs target
+\newcommand{\fs}{\fv_\ast} % f_*, test obs fun vector
+\newcommand{\Xs}{\Xmat_\ast} % X_*, test design matrix
+\newcommand{\ks}{\kv_{\ast}} % k_*, cov vec of new obs with x
+\newcommand{\kss}{\kv_{\ast \ast}} % k_**, cov vec of new obs
+\newcommand{\Ks}{\Kmat_{\ast}} % K_*, cov mat of new obs with x
+\newcommand{\Kss}{\Kmat_{\ast \ast}} % K_**, cov mat of new obs
+\newcommand{\Kinv}{\Kmat^{-1}} % K^-1, inverse cov mat
+\newcommand{\Ky}{\Kmat_y} % K_y, cov mat of y
