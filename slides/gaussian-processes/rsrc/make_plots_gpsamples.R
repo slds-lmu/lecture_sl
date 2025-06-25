@@ -9,6 +9,7 @@
 library(data.table)
 library(ggplot2)
 library(mvtnorm)
+library(patchwork)
 
 source("covariance_functions.R")
 source("plot_functions.R")
@@ -87,16 +88,29 @@ ggsave(
     width = 8
 )
 
+p_10_ls_1 = plot_priors(
+  kernel_type = "squaredexp",
+  lengthscale = 1,
+  x_range = c(-10, 10),
+  n_samples = 10
+)
+p_10_ls_3 = plot_priors(
+  kernel_type = "squaredexp",
+  lengthscale = 3,
+  x_range = c(-10, 10),
+  n_samples = 10
+)
 ggsave(
     "../figure/gp_sample/zeromean_prior_10n.pdf",
-    plot_priors(
-        kernel_type = "squaredexp",
-        lengthscale = 1,
-        x_range = c(-10, 10),
-        n_samples = 10
-    ) + geom_hline(yintercept = 0, linetype = "dashed", color = "black"),
+    p_10_ls_1 + geom_hline(yintercept = 0, linetype = "dashed", color = "black"),
     height = 2,
     width = 8
+)
+ggsave(
+  "../figure/gp_sample/zeromean_prior_10n_varying_ls.pdf",
+  p_10_ls_3 + p_10_ls_1,
+  height = 2,
+  width = 8
 )
 
 x_range = c(-2, 2)
