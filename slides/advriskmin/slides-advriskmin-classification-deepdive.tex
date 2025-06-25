@@ -9,17 +9,106 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
-    Advanced Risk Minimization
-  }{% Lecture title  
-    Optimal constant model for the empirical log loss risk (Deep-Dive)
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/bernoulli_prob.png
-  }{
-  \item Derive the optimal constant model for the binary empirical log loss risk
-  \item Derive the optimal constant model for the empirical multiclass log loss risk
+Advanced Risk Minimization
+}{
+Classification (Deep-Dive)
+}{
+figure/bernoulli_prob.png
+}{
+\item Equivalence of different losses formulations
+\item Risk minimizer on scores
+\item Optimal constant model for the binary empirical log loss risk
+\item Optimal constant model for the empirical multiclass log loss risk
 }
+
+\begin{frame2}[small]{Equivalence of loss formulations}
+
+\begin{itemizeS}
+\item Starting point Bernoulli loss on probs: 
+$$
+\Lpixy = - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right)\,\,, \, y \in \setzo
+$$
+
+\item Loss on scores $\fx = \log\left(\frac{\pix}{1 - \pix}\right) \Leftrightarrow \pix = \left(1 + \exp(-\fx)\right)^{-1}$:
+
+\begin{align*}
+\Lpixy &= -y \big(\log \left(\pix\right) - \log \left(1 - \pix\right)\big) - \log \left(1 - \pix\right) \\
+&= -y \log\left(\frac{\pix}{1-\pix} \right) - \log \left(1-\frac{1}{1+ \exp(-\fx)} \right) \\
+&= -\yf - \log \left(\frac{\exp(-\fx)}{1+\exp(-\fx)} \right) \\
+&= -\yf - \log \left(\frac{1}{1+\exp(\fx)} \right) \\
+&= -\yf + \log \left(1+\exp(\fx) \right) 
+\end{align*}
+
+\item Yields equivalent loss formulation
+$$\Lxy = - \yf + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
+\end{itemizeS}
+
+\end{frame2}
+
+\begin{frame2}[small]{Equivalence of loss formulations}
+
+\begin{itemizeM}
+\item For $y \in \setmp$ convert labels using $y'=(y+1)/2$ %or $y=2y'-1$ for $y' \in \setzo$
+
+\item Bernoulli loss on probs with $y \in \setmp$: 
+$$
+\Lpixy  = - \frac{1 + y}{2} \log(\pix) - \frac{1 - y}{2} \log(1 - \pix), \quad y \in \setmp 
+$$
+
+\item For $y \in \setmp$ loss on scores becomes: 
+$$
+\Lxy = \log(1+\exp(-y \cdot \fx)) 
+$$
+\item For $y=-1$ plug $y'=0$ in old loss: $L(0,\fx)=\log(1+\exp(\fx) \, \checkmark$
+\item For $y=y'=1$: 
+\begin{align*}
+L(1,\fx)=&-1 \cdot \fx+\log(1+\exp(\fx))\\
+=&\log(1+\exp(\fx))-\log(\exp(\fx))\\
+=&\log(1+\exp(-\fx) \quad \checkmark
+\end{align*}
+\end{itemizeM}
+
+\end{frame2}
+
+\begin{vbframe}{Naming Conventions}
+
+We have seen several closely related loss functions: 
+
+\begin{alignat*}{3} \Lxy    &= \log(1+\exp(-y\fx)) &&\quad \text{for } y \in \setmp \\ \Lxy    &= - y \cdot \fx + \log(1 + \exp(\fx)) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - y \log \left(\pix\right) - (1 - y) \log \left(1 - \pix\right) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - \frac{1 + y}{2} \log\left(\pix\right) - \frac{1 - y}{2} \log\left(1 - \pix\right) &&\quad \text{for } y \in \setmp \end{alignat*}
+
+\vfill
+
+They are equally referred to as Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss
+
+\end{vbframe}
+
+\begin{frame2}[small]{Proof Risk Minimizer on Scores}
+
+\textbf{Proof: } As before we minimize 
+\begin{align*}
+\riskf =& \E_x \left[L(1, \fx) \cdot \eta(\xv) + L(-1, \fx) \cdot (1 - \eta(\xv)) \right] \\
+=& \E_x \left[ \log(1 + \exp(- \fx)) \eta(\xv)+ \log(1 + \exp(\fx)) (1 - \eta(\xv)) \right] 
+\end{align*}
+
+For a fixed $\xv$ we compute the point-wise optimal value $c$ by setting the derivative to $0$: 
+
+\begin{footnotesize}
+\begin{align*}
+\frac{\partial }{\partial c} \log(1 + \exp(-c)) \eta(\xv)+ \log(1 + \exp(c)) (1 - \eta(\xv)) &= 0 \\
+- \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{\exp(c)}{1 + \exp(c)} (1 - \eta(\xv)) &= 0 \\ 
+% - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{1}{1 + \exp(- c)} (1 - \eta(\xv)) &=& 0\\ 
+% &=& -  \frac{\exp(-c)}{1 + \exp(-c)} p + \frac{1}{1 + \exp(-c)} - \frac{1}{1 + \exp(-c)} p \\
+- \frac{\exp(-c) \eta(\xv) - 1 + \eta(\xv)}{1 + \exp(-c)} &= 0 \\
+- \eta(\xv) + \frac{1}{1 + \exp(-c)} &= 0\\
+% \eta(\xv) &=& \frac{1}{1 + \exp(-c)} \\
+c &= \log\left(\frac{\eta(\xv)}{1 - \eta(\xv)}\right)
+\end{align*}
+\end{footnotesize}
+
+\end{frame2}
+
 
 \begin{frame2}[small]{Binary log loss: Emp. Risk Minimizer}
 
@@ -27,21 +116,21 @@ Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{
 
 \vfill
 
-\begin{eqnarray*}
-  \argminl_{\theta \in (0, 1)}\riske  & = & 
-  \argminl_{\theta \in (0, 1)}-\sum^n_{i=1} y^{(i)}\log(\theta) + (1-y^{(i)})\log(1-\theta).
-\end{eqnarray*}
+$$
+\argminl_{\theta \in (0, 1)}\riske = 
+\argminl_{\theta \in (0, 1)}-\sum^n_{i=1} y^{(i)}\log(\theta) + (1-y^{(i)})\log(1-\theta).
+$$
 
 The minimizer can be found by setting the derivative to zero, i.e.,
 
 \vfill
 
 \begin{align*}
-  \frac{d}{d\theta}\riske\quad  & = & 
-  -\sum^n_{i=1} \frac{y^{(i)}}{\theta} - \frac{1-y^{(i)}}{1-\theta} & \overset{!}{=}  0\\
-  \quad&\iff&  -\sum^n_{i=1} y^{(i)}(1-\theta) - \theta(1-y^{(i)})  & \overset{!}{=} 0 \\
-   \quad &\iff&  -\sum^n_{i=1} (y^{(i)} - \theta)  & \overset{!}{=} 0 \\
-  \Rightarrow \hat{\theta} = \frac{1}{n}\sum^n_{i=1} y^{(i)}\quad &\quad\in& (0,1)\;\checkmark \text{(assuming both labels occur).}
+\frac{d}{d\theta}\riske\quad   = & 
+-\sum^n_{i=1} \frac{y^{(i)}}{\theta} - \frac{1-y^{(i)}}{1-\theta}  &\overset{!}{=}  0\\
+\quad\iff&  -\sum^n_{i=1} y^{(i)}(1-\theta) - \theta(1-y^{(i)})   &\overset{!}{=} 0\\
+\quad \iff&  -\sum^n_{i=1} (y^{(i)} - \theta)  & \overset{!}{=} 0 \\
+\Rightarrow \hat{\theta}& = \frac{1}{n}\sum^n_{i=1} y^{(i)}\quad \quad\in (0,1)\;\checkmark \text{(assuming both labels occur)}
 \end{align*}
 
 \end{frame2}
@@ -50,49 +139,49 @@ The minimizer can be found by setting the derivative to zero, i.e.,
 
 Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{1, \dots, g\}$ with $g\in\mathbb{N}_{>1}$ we want to determine the optimal constant model $\theta \in (0,1)^g$ for the empirical log loss risk
 
-\begin{eqnarray*}
-  \argminl_{\theta \in (0, 1)^g}\riske   &=& 
-  \argminl_{\theta \in (0, 1)^g}-\sum^n_{i=1}\sum^g_{j=1} \mathds{1}_{\{y^{(i)} = j\}}\log(\theta_j) \\
-  &\text{s.t.}& \sum^g_{j=1}\theta_j = 1.
-\end{eqnarray*}
+\begin{align*}
+\argminl_{\theta \in (0, 1)^g}\riske   =& 
+\argminl_{\theta \in (0, 1)^g}-\sum^n_{i=1}\sum^g_{j=1} \mathds{1}_{\{y^{(i)} = j\}}\log(\theta_j) \\
+\text{s.t.}& \sum^g_{j=1}\theta_j = 1
+\end{align*}
 
 We can solve this constrained optimization problem by plugging the constraint into the risk (we could also use Lagrange multipliers), i.e., we replace $\theta_g$ (this is an arbitrary choice) such that $
- \theta_g = 1 - \sum^{g-1}_{j=1}\theta_j.$
+\theta_g = 1 - \sum^{g-1}_{j=1}\theta_j.$
 
 \end{frame}
 \begin{frame}{Multiclass log loss: Emp. Risk Minimizer}
 With this, we find the equivalent optimization problem
-\begin{eqnarray*}
-  \argminl_{\theta \in (0, 1)^{g-1}}\riske  & = & \argminl_{\theta \in (0, 1)^{g-1}}
-  -\sum^n_{i=1}\sum^{g-1}_{j=1} \mathds{1}_{\{y^{(i)} = j\}}\log(\theta_j) \\ 
-  &&+ \mathds{1}_{\{y^{(i)} = g\}}\log(1 - \sum\nolimits^{g-1}_{j=1}\theta_j) \\
-  &\text{s.t.}&  \sum\nolimits^{g-1}_{j=1}\theta_j < 1.
-\end{eqnarray*}
+\begin{align*}
+\argminl_{\theta \in (0, 1)^{g-1}}\riske   = & \argminl_{\theta \in (0, 1)^{g-1}}
+-\sum^n_{i=1}\sum^{g-1}_{j=1} \mathds{1}_{\{y^{(i)} = j\}}\log(\theta_j) \\ 
+&+ \mathds{1}_{\{y^{(i)} = g\}}\log(1 - \sum\nolimits^{g-1}_{j=1}\theta_j) \\
+\text{s.t.}&  \sum\nolimits^{g-1}_{j=1}\theta_j < 1.
+\end{align*}
 
 For $j \in \{1,\dots,g-1\}$, the $j$-th partial derivative of our objective 
-\begin{eqnarray*}
- \frac{\partial}{\partial \theta_j}\riske  & = & 
-  -\sum^n_{i=1} \mathds{1}_{\{y^{(i)} = j\}}\frac{1}{\theta_j} - \mathds{1}_{\{y^{(i)} = g\}}\frac{1}{1 - \sum^{g-1}_{j=1}\theta_j} \\
-  & = & -\frac{n_j}{\theta_j} + \frac{n_g}{\theta_g}
-\end{eqnarray*}
-where $n_k$ with $k\in \{1,\dots, g\}$ is the number of label $k$ in $y$ and we assume that $n_k > 0.$
+\begin{align*}
+\frac{\partial}{\partial \theta_j}\riske   = & 
+-\sum^n_{i=1} \mathds{1}_{\{y^{(i)} = j\}}\frac{1}{\theta_j} - \mathds{1}_{\{y^{(i)} = g\}}\frac{1}{1 - \sum^{g-1}_{j=1}\theta_j} \\
+= & -\frac{n_j}{\theta_j} + \frac{n_g}{\theta_g}
+\end{align*}
+where $n_k$ with $k\in \{1,\dots, g\}$ is the number of label $k$ in $y$ and we assume that $n_k > 0$
 
 \end{frame}
 
 \begin{frame}{Multiclass log loss: Emp. Risk Minimizer}
 
 For the minimizer, it must hold for $j \in \{1,\dots,g-1\}$ that
-\begin{eqnarray*}
- \frac{\partial}{\partial \theta_j}\riske  & \overset{!}{=} & 0 \\
-  \iff  -n_j\theta_g + n_g\theta_j & \overset{!}{=} & 0 \\
- \Rightarrow \sum^{g-1}_{j=1}( -n_j\theta_g + n_g\theta_j) & \overset{!}{=} & 0 \\
-  \iff -(n-n_g)\theta_g + n_g(1-\theta_g) & \overset{!}{=} & 0 \\
-    \iff -n\theta_g + n_g & \overset{!}{=} & 0 \\
-    \Rightarrow \hat{\theta}_g  = \frac{n_g}{n}& &  \in (0,1)\; \checkmark \\
-    \Rightarrow   \forall j \in \{1,\dots,g-1\}:\quad \hat{\theta}_j =  \frac{\hat{\theta}_gn_j}{n_g} =  \frac{n_j}{n} &  &  \in (0,1)\; \checkmark. \\
-    (\Rightarrow \sum\nolimits^{g-1}_{j=1}\hat{\theta}_j = 1- \hat{\theta}_g = 1 - \frac{n_g}{n} < 1 \checkmark
+\begin{align*}
+\frac{\partial}{\partial \theta_j}\riske  & \overset{!}{=}  0 \\
+\iff  -n_j\theta_g + n_g\theta_j & \overset{!}{=}  0 \\
+\Rightarrow \sum^{g-1}_{j=1}( -n_j\theta_g + n_g\theta_j) & \overset{!}{=}  0 \\
+\iff -(n-n_g)\theta_g + n_g(1-\theta_g) & \overset{!}{=}  0 \\
+\iff -n\theta_g + n_g & \overset{!}{=}  0 \\
+\Rightarrow \hat{\theta}_g  &= \frac{n_g}{n}   \in (0,1)\; \checkmark \\
+\Rightarrow   \forall j \in \{1,\dots,g-1\}:\quad \hat{\theta}_j =  \frac{\hat{\theta}_gn_j}{n_g} &=  \frac{n_j}{n}     \in (0,1)\; \checkmark \\
+(\Rightarrow \sum\nolimits^{g-1}_{j=1}\hat{\theta}_j = 1- \hat{\theta}_g &= 1 - \frac{n_g}{n} < 1 \checkmark
 )
-\end{eqnarray*}
+\end{align*}
 
 \end{frame}
 
@@ -102,16 +191,18 @@ Finally, we check that we indeed found a minimizer by showing that $\riske$ is c
 \vfill
 
 The Hessian of $\riske$
-\begin{eqnarray*}
-\nabla^2_\theta\riske  & = & \begin{pmatrix}\frac{n_1}{\theta_1^2} & 0 & \dots & 0 \\
+$$
+\nabla^2_\theta\riske   =  \begin{pmatrix}\frac{n_1}{\theta_1^2} & 0 & \dots & 0 \\
 0 & \ddots & \ddots & \vdots \\
 \vdots & \ddots & \ddots & 0 \\
 0 & \dots & 0 & \frac{n_{g-1}}{\theta_{g-1}^2}
-\end{pmatrix} \\
-\end{eqnarray*}
+\end{pmatrix} 
+$$
 is positive definite since all its eigenvalues $$\lambda_j = \frac{n_j}{\theta_j^2} > 0 \quad \forall j \in\{1,\dots,g-1\}.$$ 
-From this, it follows that $\riske$ is (strictly) convex.
+From this, it follows that $\riske$ is (strictly) convex
 \end{frame}
+
+
 
 \endlecture
 
