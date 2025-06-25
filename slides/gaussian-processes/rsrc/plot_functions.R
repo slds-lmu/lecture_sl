@@ -26,7 +26,7 @@ sample_gp_prior = function(
   dt[, x := x]
 }
 
-# Plot random samples GP prior
+# Plot random samples from GP prior
 plot_priors = function(
     kernel_type, 
     n_samples = 5, 
@@ -49,16 +49,17 @@ plot_priors = function(
     )
 }
 
-compute_posterior_pred = function(x, x_new, y, length_scale, noise) {
-  num_obs = length(y)
+# Compute posterior process parameters for squaredexp kernel
+compute_posterior_pred_sqexp = function(x, x_new, y, length_scale, noise) {
+  num_obs = length(x)
   kmat = kernel_sqexp(x, x_new, length_scale)
   k = kmat[seq_len(num_obs), seq_len(num_obs)]
-  kx = kmat[seq_len(num_obs), (num_obs + 1):nrow(kmat)]
-  kxx = kmat[(num_obs + 1):nrow(kmat), (num_obs + 1):nrow(kmat)]
-  ky = k + diag(rep(noise, length(y)))
+  ks = kmat[seq_len(num_obs), (num_obs + 1):nrow(kmat)]
+  kss = kmat[(num_obs + 1):nrow(kmat), (num_obs + 1):nrow(kmat)]
+  ky = k + diag(rep(noise, length(x)))
   ky_inv = solve(ky)
-  m_post = crossprod(kx, ky_inv) %*% y
-  k_post = kxx - crossprod(kx, ky_inv) %*% kx
+  m_post = crossprod(ks, ky_inv) %*% y
+  k_post = kss - crossprod(ks, ky_inv) %*% ks
   data.table(
     ls = length_scale, 
     x = x_new, 

@@ -13,27 +13,50 @@ library(mvtnorm)
 source("covariance_functions.R")
 source("plot_functions.R")
 
-
-
-
 # FUNCTIONS --------------------------------------------------------------------
 
-compute_posterior_pred = function(x, x_new, y, length_scale, noise) {
-    num_obs = length(y)
-    kmat = kernel_sqexp(x, x_new, length_scale)
-    k = kmat[seq_len(num_obs), seq_len(num_obs)]
-    kx = kmat[seq_len(num_obs), (num_obs + 1):nrow(kmat)]
-    kxx = kmat[(num_obs + 1):nrow(kmat), (num_obs + 1):nrow(kmat)]
-    ky = k + diag(rep(noise, length(x_new)))
-    ky_inv = solve(ky)
-    m_post = crossprod(kx, ky_inv) %*% y
-    k_post = kxx - crossprod(kx, ky_inv) %*% kx
-    data.table(
-        ls = length_scale, 
-        x = x_new, 
-        m_post = m_post, 
-        sd_post = diag(k_post)
-    )
+# Update prior samples with observed data
+plot_prior_updates = function(x, x_obs, y, kmat, n_samples = 20) {
+  
+  num_obs = length(x)
+  kss = kmat[seq_len(num_obs), seq_len(num_obs)]
+  ks = kmat[seq_len(num_obs), (num_obs + 1):nrow(kmat)]
+  k = kmat[(num_obs + 1):nrow(kmat), (num_obs + 1):nrow(kmat)]
+  
+  lapply(
+    seq_along(x_obs),
+    function(i) {
+      k_inv = solve(k[seq_len(i), seq_len(i)])
+      ks_i = as.matrix(ks[, seq_len(i)])
+      ks_kinv = ks_i %*% k_inv
+      m_post = ks_kinv %*% y[seq_len(i)]
+      k_post = kss - tcrossprod(ks_i %*% k_inv, ks_i)
+      dt = lapply(
+        seq_len(n_samples),
+        function(j) {
+          set.seed(j)
+          data.table(
+            iteration = j, x = x, pred = c(rmvnorm(1, m_post, sigma = k_post))
+          )
+        }
+      )
+      dt = do.call(rbind, dt)
+      ggplot() +
+        geom_line(data = dt, aes(x = x, y = pred, col = as.factor(iteration))) +
+        geom_point(
+          data = data.table(x = x_obs[seq_len(i)], y = y[seq_len(i)]),
+          mapping = aes(x = x, y = y), 
+          size = 2
+        ) +
+        scale_color_viridis_d() +
+        theme_bw() +
+        labs(x = "x", y = "f(x)") +
+        theme(
+          legend.position = "none",
+          axis.text.y = element_blank()
+        )
+    }
+  )
 }
 
 # DATA -------------------------------------------------------------------------
@@ -44,19 +67,11 @@ x = seq(-2, 2, length.out = num_obs)
 y =  c(0, 1, 2, 1.5)
 x_new =  c(-1.5, 1/3, 4/3, -0.5)
 
-dt_post_pred = compute_posterior_pred(x, x_new, y, 0.1, noise)
-
-p_points = ggplot(data.table(x = xnew, y = y), aes(x, y)) +
+p_points = ggplot(data.table(x = x_new, y = y), aes(x, y)) +
   geom_point() +
   theme_bw()
-p_points +
-  geom_line(
-    data = dt_post_pred, 
-    aes(x, m_post.V1), 
-    color = "darkgray"
-  )
 
-
+plot_prior_updates(x, x_new, y, kernel_sqexp(x, x_new, 1))
 
 ls_plot = c(0.2, 2, 0.5)
 

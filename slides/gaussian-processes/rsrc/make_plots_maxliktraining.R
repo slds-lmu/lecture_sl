@@ -51,7 +51,7 @@ dt_nll_long = melt(dt_nll, id.vars = c("ls"))
 
 dt_post_pred = lapply(
     ls_plot,
-    function(l) compute_posterior_pred(x, x_new, y, l, noise)
+    function(l) compute_posterior_pred_sqexp(x, x_new, y, l, noise)
 )
 dt_post_pred = do.call(rbind, dt_post_pred)
 
