@@ -4,7 +4,7 @@
 
 # Purpose: create plots of discrete functions sampled from MV Gaussians, 
 # possibly along with visualizations of the corresponding covariance matrix
-
+source("plot_functions.R")
 # PREREQ -----------------------------------------------------------------------
 
 library(checkmate)
@@ -13,6 +13,7 @@ library(ggplot2)
 library(mvtnorm)
 
 source("covariance_functions.R")
+source("plot_functions.R")
 
 # FUNCTIONS --------------------------------------------------------------------
 
@@ -92,71 +93,6 @@ plot_discr_fun = function(x, y, group, draw_line = TRUE, vert_bars = FALSE) {
             legend.position = "none"
         )
     p
-}
-
-# Plot covariance as bivariate density or multivariate heatmap
-plot_cov = function(cov_mat, mu = NULL) {
-    
-    assert_matrix(
-        cov_mat, 
-        mode = "numeric", 
-        any.missing = FALSE, 
-        min.rows = 2, 
-        min.cols = 2
-    )
-    n = nrow(cov_mat)
-    if (is.null(mu)) mu = rep(0, n)
-    
-    if (n == 2) {
-        h1_min = mu[1] - 2 * cov_mat[1, 1]
-        h1_max = mu[1] + 2 * cov_mat[1, 1]
-        h2_min = mu[2] - 2 * cov_mat[2, 2]
-        h2_max = mu[2] + 2 * cov_mat[2, 2]
-        grid = expand.grid(
-            h1 = seq(h1_min, h1_max, length.out = 100), 
-            h2 = seq(h2_min, h2_max, length.out = 100)
-        )
-        probs = cbind(grid, density = dmvnorm(grid, mean = mu, sigma = cov_mat))
-        p = ggplot() +
-            labs(x = expression(h[1]), y = expression(h[2])) +
-            geom_raster(data = probs, aes(x = h1, y = h2, fill = density)) +
-            geom_contour(
-                data = probs,
-                aes(x = h1, y = h2, z = density),
-                colour = "white",
-                bins = 5
-            ) +
-            guides(fill = "none") +
-            scale_fill_gradientn(
-                colours = c(low = "black", high = "white")
-            ) +
-            theme_bw() +
-            theme(panel.grid = element_blank())
-    } else {
-        p = ggplot() +
-            geom_tile(
-                data = reshape2::melt(cov_mat), 
-                aes(x = Var1, y = Var2, fill = value)
-            ) +
-            scale_x_reverse() +
-            theme_bw() +
-            scale_fill_gradientn(
-                "covariance", colours = c(low = "white", high = "black")
-            ) +
-            theme(
-                axis.line = element_blank(),
-                axis.ticks = element_blank(),
-                axis.title.x = element_blank(),
-                axis.title.y = element_blank(),
-                panel.border = element_blank(),
-                axis.text.x = element_blank(),
-                axis.text.y = element_blank(),
-                panel.grid.major = element_blank(),
-                legend.position = "none"
-            )
-    }
-    p
-
 }
 
 # PLOTS ------------------------------------------------------------------------

@@ -17,11 +17,11 @@ source("plot_functions.R")
 
 # FUNCTIONS --------------------------------------------------------------------
 
-save_topdf = function(p, kernel_type) {
+save_topdf = function(p, kernel_type, width = 8) {
     ggsave(
         sprintf("../figure/cov_funs/cov_%s.pdf", kernel_type),
         p,
-        width = 6,
+        width = width,
         height = 2.5
     )
 }
@@ -29,9 +29,15 @@ save_topdf = function(p, kernel_type) {
 # PLOTS ------------------------------------------------------------------------
 
 set.seed(123)
+x = seq(-2, 2, length.out = 25)
 
 save_topdf(plot_priors(kernel_type = "constant", intercept = 2), "constant")
-save_topdf(plot_priors(kernel_type = "linear", intercept = 2), "linear")
+
+save_topdf(
+  plot_priors(kernel_type = "linear", intercept = 2) +
+    plot_cov(get_kmat(x, x, "linear")) + plot_layout(widths = c(0.75, 0.25)), 
+  "linear"
+)
 
 p_polynomial = lapply(
     c(1, 2, 5),
@@ -40,7 +46,13 @@ p_polynomial = lapply(
             ggtitle(sprintf("degree %i", i))
     }
 )
-save_topdf(Reduce("+", p_polynomial), "polynomial")
+save_topdf(
+  Reduce("+", p_polynomial) + 
+    plot_cov(get_kmat(x, x, "polynomial", degree = 2)) +
+    ggtitle("degree 2") +
+    plot_layout(widths = rep(0.25, 4)), 
+  "polynomial"
+)
 
 p_periodic = lapply(
     c(1, 2, 5),
@@ -49,7 +61,13 @@ p_periodic = lapply(
             ggtitle(sprintf("period %i", i))
     }
 )
-save_topdf(Reduce("+", p_periodic), "periodic")
+save_topdf(
+  Reduce("+", p_periodic) +
+    plot_cov(get_kmat(x, x, "periodic", period = 3, lengthscale = 1)) +
+    ggtitle("period 3") +
+    plot_layout(widths = rep(0.25, 4)), 
+  "periodic"
+)
 
 p_matern = lapply(
     c(0.5, 2, 10),
@@ -58,7 +76,13 @@ p_matern = lapply(
             ggtitle(bquote(nu == .(i)))
     }
 )
-save_topdf(Reduce("+", p_matern), "matern")
+save_topdf(
+  Reduce("+", p_matern) +
+    plot_cov(get_kmat(x, x, "matern", nu = 2, lengthscale = 1)) +
+    ggtitle(bquote(nu == 2)) +
+    plot_layout(widths = rep(0.25, 4)), 
+  "matern"
+)
 
 p_exponential = lapply(
     c(0.1, 1, 10),
@@ -67,7 +91,13 @@ p_exponential = lapply(
             ggtitle(sprintf("length scale %.1f", i))
     }
 )
-save_topdf(Reduce("+", p_exponential), "exponential")
+save_topdf(
+  Reduce("+", p_exponential) +
+    plot_cov(get_kmat(x, x, "exponential", lengthscale = 1)) +
+    ggtitle("length scale 1.0") +
+    plot_layout(widths = rep(0.25, 4)), 
+  "exponential"
+)
 
 p_squaredexp = lapply(
     c(0.1, 1, 10),
@@ -76,4 +106,11 @@ p_squaredexp = lapply(
             ggtitle(sprintf("length scale %.1f", i))
     }
 )
-save_topdf(Reduce("+", p_squaredexp), "squaredexp")
+save_topdf(
+  Reduce("+", p_exponential) +
+    plot_cov(get_kmat(x, x, "squaredexp", lengthscale = 1)) +
+    ggtitle("length scale 1.0") +
+    plot_layout(widths = rep(0.25, 4)), 
+  "squaredexp"
+)
+
