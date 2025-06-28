@@ -23,14 +23,35 @@ logging.debug("-" * 20)
 INSERT_PATTERN = re.compile(r"INSERT_(\w+)")
 # Todo: awful code duplication, I need to refactor this later
 
-def load_texts(json_path):
-    """
-    Load the replacement texts from a JSON file.
-    The JSON should map keys (e.g., "text1") to replacement strings.
-    """
-    with open(json_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
+def get_text_json_from_notebook(nb_path: str) -> dict[str, str]:
+    """Return {label: text, …} for every cell whose first non-blank line starts with 'label:'."""
+    LABEL_RE = re.compile(r'^\s*label:\s*(\S+)', re.IGNORECASE)
 
+    with open(nb_path, 'r', encoding='utf-8') as f:
+        nb = json.load(f)
+
+    out = {}
+    for cell in nb.get("cells", []):
+        lines = cell.get("source", [])
+        if not lines:
+            continue
+
+        # first non-empty line
+        for idx, line in enumerate(lines):
+            if line.strip():
+                break
+        else:
+            continue  # entirely blank
+
+        m = LABEL_RE.match(line)
+        if not m:
+            continue
+
+        label = m.group(1).strip()
+        body = "".join(lines[idx + 1 :]).strip()
+        out[label] = body
+
+    return out
 
 def process_file(path, texts, main_folder, save_folder="inserted"):
     """
@@ -152,7 +173,7 @@ def find_files(path):
         yield path
     elif os.path.isdir(path):
         for fname in os.listdir(path):
-            if fname.endswith(('.ipynb', '.qmd')):
+            if fname.endswith(('.ipynb', '.qmd')) and ('texts' not in fname):
                 yield os.path.join(path, fname)
 
 
@@ -164,8 +185,7 @@ def main():
         'folder', help='Folder containing .ipynb/.qmd files and the texts.json'
     )
     parser.add_argument(
-        '--texts', default='texts.json',
-        help='Name of the JSON file with replacement texts (default: texts.json)'
+        '--texts', help="path to the ipynb notebook with texts",
     )
     args = parser.parse_args()
 
@@ -176,13 +196,15 @@ def main():
 
     texts_path = os.path.join(main_folder, args.texts)
     if not os.path.isfile(texts_path):
-        logging.error(f"texts.json not found: {texts_path}")
+        logging.error(f"texts not found: {texts_path}")
         return
 
     logging.info(f"Starting processing in: `{args.folder}` | Path: {main_folder}")
-    texts = load_texts(texts_path)
+    texts = get_text_json_from_notebook(texts_path)
 
-    for file_path in find_files(main_folder):
+    files = list(find_files(main_folder))
+    logging.debug(f"Found {len(files)} files to process: {[os.path.basename(file) for file in files]}")
+    for file_path in files:
         process_file(file_path, texts, main_folder)
 
 
