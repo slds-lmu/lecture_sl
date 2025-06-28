@@ -50,7 +50,7 @@ Input folder structure:
         ├── latex-math.qmd
         └── i2ml_theme.scss
 ```
-running `python replace_texts.py <folder_name> --texts texts.ipynb` from the `exercises` folder will result in the following output:
+running `python replace_texts.py <folder_name> --texts sol_<chapter_name>_texts.ipynb` from the `exercises` folder will result in the following output:
 ```
 <folder_name>/
     ├── (all the original files, unchanged)
@@ -99,7 +99,8 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 ```
 
 # Notes
-If you want to ignore the `.qmd` files and only process `.ipynb` files, you can use the `--ignore_quarto` flag:
+1. If you want to ignore the `.qmd` files and only process `.ipynb` files, you can use the `--ignore_quarto` flag:
+2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). 
 
 # Overall workflow
 [] Copy R solutions and extend/improve them, add texts in between
@@ -115,3 +116,6 @@ If you want to ignore the `.qmd` files and only process `.ipynb` files, you can 
 [] Create PR 
 [] Once merged, add jupyter notebooks to Google Colab
 [] Check that the links work
+
+# Todo (internal comment)
+[] update docs to include the case of folder with multiple exercises
