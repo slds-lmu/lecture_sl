@@ -100,3 +100,18 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 
 # Notes
 If you want to ignore the `.qmd` files and only process `.ipynb` files, you can use the `--ignore_quarto` flag:
+
+# Overall workflow
+[] Copy R solutions and extend/improve them, add texts in between
+- name cells by adding `#| label: <key_name>` at the beginning of the cell
+[] Copy the notebook and translate R to Python (GPT helps a lot)
+[] Copy the notebook again, remove the code cells, add `label: <key_name>` to the first line of the markdown cells
+[] `cd ..`; `python replace_texts.py <folder_name> --texts texts.ipynb --ignore_quarto`
+[] Check the output in the `inserted` subfolder
+[] Add the solutions to Colab and share edit access links and wait for feedback
+[] Incorporate feedback and create the Quarto file
+[] `cd ..`; `python replace_texts.py <folder_name> --texts texts.ipynb`
+[] `cd <folder_name>/inserted`; `quarto render <chapter_name>.qmd --to html`
+[] Create PR 
+[] Once merged, add jupyter notebooks to Google Colab
+[] Check that the links work
