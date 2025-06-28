@@ -1,3 +1,5 @@
+THIS IS OUTDATED
+
 Since we will usually have the same texts in R, Python and Quarto, we need an approach that will allow to keep those texts in sync.
 
 Solution is putting placeholders in the .ipynb or .qmd files and then replacing them with the actual text from a JSON file.
