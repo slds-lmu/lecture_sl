@@ -185,7 +185,8 @@ def main():
         'folder', help='Folder containing .ipynb/.qmd files and the texts.json'
     )
     parser.add_argument(
-        '--texts', help="path to the ipynb notebook with texts",
+        '--texts', "-t", help="path to the ipynb notebook with texts",
+        default='texts.ipynb',
     )
     args = parser.parse_args()
 
@@ -197,6 +198,7 @@ def main():
     texts_path = os.path.join(main_folder, args.texts)
     if not os.path.isfile(texts_path):
         logging.error(f"texts not found: {texts_path}")
+        logging.debug(f"ipynb files available: {[i for i in os.listdir(main_folder) if i.endswith('.ipynb')]}")
         return
 
     logging.info(f"Starting processing in: `{args.folder}` | Path: {main_folder}")

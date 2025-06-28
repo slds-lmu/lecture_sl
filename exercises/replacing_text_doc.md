@@ -30,7 +30,7 @@ Run
    ```
    python replace_texts.py <folder> --texts <name_of_texts_file>.ipynb
    ```
-where `<folder>` is the path to the folder containing the `.ipynb` or `.qmd` files. The script will generate new files with the same names and put them in an “inserted” subfolder. .
+where `<folder>` is the path to the folder containing the `.ipynb` or `.qmd` files. If --texts is not specified, will default to `texts.ipynb`. The script will generate new files with the same names and put them in an “inserted” subfolder. 
 - It will search for all `.ipynb` and `.qmd` files in the folder (but not its subfolders).
 - It will replace all occurrences of `INSERT_text1`, `INSERT_text2`, etc. with the corresponding text from the ipynb file.
 - The code will also check that all the placeholders have corresponding entries in the ipynb file. Also, if not all the keys in the ipynb file are used, a warning will be printed.
@@ -90,7 +90,7 @@ Regular text here. INSERT_text1. Regular text here. INSERT_text2.
 ```
 ---
 Running 
-`python replace_texts.py replace_texts_example --texts texts.ipynb`
+`python replace_texts.py replace_texts_example`
 
 ---
 Resulting Jupyter Notebook cell in the `inserted` subfolder:
