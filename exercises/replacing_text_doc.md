@@ -97,3 +97,6 @@ Resulting Jupyter Notebook cell in the `inserted` subfolder:
 ```markdown
 Regular text here. This is a text to insert. Regular text here. This is another text to insert.
 ```
+
+# Notes
+If you want to ignore the `.qmd` files and only process `.ipynb` files, you can use the `--ignore_quarto` flag:

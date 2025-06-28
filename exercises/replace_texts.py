@@ -188,6 +188,10 @@ def main():
         '--texts', "-t", help="path to the ipynb notebook with texts",
         default='texts.ipynb',
     )
+    parser.add_argument(
+        "--ignore_quarto", action="store_true",
+        help="Ignore .qmd files and only process .ipynb files"
+    )
     args = parser.parse_args()
 
     main_folder = os.path.abspath(args.folder)
@@ -205,6 +209,10 @@ def main():
     texts = get_text_json_from_notebook(texts_path)
 
     files = list(find_files(main_folder))
+    if args.ignore_quarto:
+        logging.info("Ignoring .qmd files because of the --ignore_quarto flag")
+        files = [f for f in files if not f.endswith('.qmd')]
+
     logging.debug(f"Found {len(files)} files to process: {[os.path.basename(file) for file in files]}")
     for file_path in files:
         process_file(file_path, texts, main_folder)
