@@ -1,0 +1,75 @@
+BLOG POSTS / SLIDES
+
+https://distill.pub/2019/visual-exploration-gaussian-processes/
+- nice motivation for mv gaussians, leading to marginalization and conditioning properties
+- cool interactive visualizations for cov mats of different kernels
+- nice visualization for cov mat of posterior process with training and test points (partitioning into K, K* etc)
+
+https://gpss.cc/gpss21/slides/Wilkinson2021.pdf
+- extensive, math-heavy introduction
+
+http://mlss.tuebingen.mpg.de/2015/slides/lawrence/lawrence.pdf
+- examples for computing cov mats
+- non-gaussian gp variants
+
+https://www.infinitecuriosity.org/vizgp/
+- nice gif animation (could be shown in class)
+
+--------------------------------------------------------------------
+
+BOOKS
+
+@misc{DUVENAUDKERNEL,
+  title="Expressing Structure with Kernels",
+  author="David Duvenaud",
+  year={2014},
+  url={https://raw.githubusercontent.com/duvenaud/phd-thesis/master/kernels.pdf}
+}
+
+@book{GRIMMETT2001PROC,
+  title={Probability and {R}andom {P}rocesses},
+  author={Grimmett, Geoffrey R. and Stirzaker, David R.},
+  publisher={Oxford University Press},
+  year={2001},
+  edition={3},
+  url={http://old-eclass.uop.gr/modules/document/file.php/TST244/%5BGeoffrey_R._Grimmett%2C_David_R._Stirzaker%5D_Probabi(BookZZ.org).pdf}
+}
+
+@book{RASMUSSENWILLIAMS2006GPML,
+  title={Gaussian Processes for Machine Learning},
+  author={Rasmussen, Carl E. and Williams, Christopher K. I.},
+  publisher={MIT Press},
+  year={2006},
+  url={https://gaussianprocess.org/gpml/chapters/RW.pdf}
+}
+
+Kevin Murphy (2023): "Probabilistic machine learning. Advanced topics", ch 18
+
+--------------------------------------------------------------------
+
+VIDEOS
+
+ML tutorial by Nando de Freitas
+www.youtube.com/playlist?list=PL41qI9AD63BPlbRrpwAQfxLjGemejQOAX 
+
+GP intro by mathematicalmonk
+https://www.youtube.com/watch?app=desktop&v=vU6AiEYED9E
+
+--------------------------------------------------------------------
+
+PAPERS
+
+Schulz et al. (2017) "A tutorial on Gaussian process regression: Modelling, exploring, and exploiting functions"
+https://www.biorxiv.org/content/10.1101/095190v3.full.pdf
+
+--------------------------------------------------------------------
+
+THESES
+
+@phdthesis{SNELSON2001THESIS,
+  author    = {Edward Lloyd Snelson},
+  title     = {Flexible and efficient Gaussian process models for machine learning},
+  school    = {University of Cambridge},
+  year      = {2001},
+  url = {https://discovery.ucl.ac.uk/id/eprint/1445855/1/Snelson_thesis.pdf}
+}

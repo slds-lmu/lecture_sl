@@ -58,10 +58,9 @@ Let us consider the error $(*)$ conditioned on one fixed test observation $(\xv,
 \begin{align*}
 (*) =& \E_{\D_n}((y - \fh_{\D_n}(\xv))^2)\\
 =& \underbrace{\E_{\D_n}(y^2)}_{= y^2} + \underbrace{\E_{\D_n}(\fh_{\D_n}(\xv)^2)}_{(1)}  - 2\underbrace{\E_{\D_n}(y\fh_{\D_n}(\xv))}_{(2)} 
-
 \end{align*}
 
-by using the linearity of the expectation  %and $\var(y) = \E(y^2) - \E^2(y)$. 
+by using the linearity of the expectation %and $\var(y) = \E(y^2) - \E^2(y)$. 
 
 \end{frame2}
 
@@ -117,8 +116,6 @@ GE_n(\ind)
 =& \underbrace{\sigma^2}_{\text{Variance of the data}} + \E_{xy}\underbrace{\left[\var_{\D_n}(\fh_{\D_n}(\xv) ~|~\xv, y)\right]}_{\text{Variance of learner at } (\xv, y)} \\ 
 +& \E_{xy}\underbrace{\left[((\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)))^2~|~\xv, y)\right]}_{\text{Squared bias of learner at } (\xv, y)} + \underbrace{0}_{\text{As $\epsilon$ is zero-mean and independent}}
 \end{align*}
-
-
 
 \end{frame2}
 

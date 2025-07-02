@@ -24,11 +24,11 @@ figure/bernoulli_prob.png
 
 \begin{frame}{Logistic regression: Risk Problem}
 
-Given $n \in \mathbb{N}$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \setzo$ we want to minimize the risk 
+Given $n$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \setzo$ we want to minimize the risk 
 
 $$
 \riske   = 
--\sum^n_{i=1} \yi\log(\pixit) + (1-\yi\log(1-\pixit))
+-\sum^n_{i=1} \yi\log(\pixit) + (1-\yi)\log(1-\pixit))
 $$
 
 with respect to $\thetav$ where the probabilistic classifier
@@ -117,7 +117,7 @@ We find the Hessian via differentiation:
 \end{align*}
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
-$$(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]).$$
+$$(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n])$$
 }
 
 Can now be used in Newton-Raphson and other 2nd order optimizers
