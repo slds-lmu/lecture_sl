@@ -30,24 +30,34 @@ set.seed(1234)
 # PLOT FUNCTIONS ---------------------------------------------------------------
 
 # value for each weight
-plot_weights <- function (weights) {
+plot_weights <- function (weights, zero_lamb=TRUE) {
   weight_data <- data.frame(value = weights, weight_index = seq_along(weights))
+  
+  ylimit <- c(-30, 30)
+  if(zero_lamb){
+    ylimit <- c(-200, 200)
+  }
   
   ggplot(weight_data, aes(x=weight_index, y = value)) + 
     geom_bar(stat ="identity", color="black", fill="white") +
-    ylim(c(-75, 75)) +
+    ylim(ylimit) +
     ggtitle("Weights")
 }
 
 # histogram of weights
-plot_histogram <- function (weights) {
+plot_histogram <- function (weights, zero_lamb=TRUE) {
   weight_data <- data.frame(value = weights)
+  
+  xlimit <- c(-30, 30)
+  if(zero_lamb){
+    xlimit <- c(-200, 200)
+  }
   
   ggplot(weight_data, aes(x=weights)) + 
     geom_histogram (bins= 15, color="black", fill="white") +
     ggtitle("Histogram of weights") +
     xlab ("value of weights") +
-    xlim(c(-100, 100))
+    xlim(xlimit)
 }
 
 # classification model visualization
@@ -75,8 +85,12 @@ for(i in seq_along(decay_list)){
   learner <- lrn("classif.nnet", size = size, decay = decay_list[[i]])
   learner$train(spirals_task)
   weights <- learner$model$wts
-  weight_plot <- plot_weights(weights = weights) 
-  historgram_plot <-plot_histogram(weights = weights)
+  zero_lamb = FALSE
+  if(decay_list[[i]]==0){
+    zero_lamb = TRUE
+  }
+  weight_plot <- plot_weights(weights = weights, zero_lamb = zero_lamb) 
+  historgram_plot <-plot_histogram(weights = weights, zero_lamb = zero_lamb)
   
   prediction_plot <- plot_prediction(learner, spirals_task)
   
