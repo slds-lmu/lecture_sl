@@ -26,7 +26,7 @@
 
 %-------------------------------------------------------------------------------
 
-\begin{vbframe}{Summary: Regularized Risk Minimization}
+\begin{frame}{Summary: Regularized Risk Minimization}
 
 If we define (supervised) ML in one line, this might be it:
 
@@ -39,8 +39,7 @@ Can choose for task at hand:
 \begin{itemize}
   \item \textbf{hypothesis space} of $f$, controls how features influence prediction
   \item \textbf{loss} function $L$, measures how errors are treated
-  \item \textbf{regularizer} $J(\thetav)$, encodes inductive 
-  bias 
+  \item \textbf{regularizer} $J(\thetav)$, encodes inductive bias 
 \end{itemize}
 
 \vfill
@@ -49,13 +48,12 @@ By varying these choices one can construct a huge number of different ML models.
 Many ML models follow this construction principle or can be interpreted through 
 the lens of RRM.
 
-\end{vbframe}
+\end{frame}
 
 %-------------------------------------------------------------------------------
 
-\begin{vbframe}{Regularization in Nonlinear Models}
+\begin{framei}[sep=L]{Regularization in Nonlinear Models}
 
-\begin{itemize}
   \item So far we have mainly considered regularization in LMs
   \item Can in general also be applied to non-linear models; vector-norm penalties require numeric params 
 %    \item Often, non-linear models can be seen as LMs based on internally transformed features.  
@@ -64,39 +62,34 @@ the lens of RRM.
   \item For non-linear models, regularization is even more important / basically required to prevent overfitting
   \item Commonplace in methods such as NNs, SVMs, or boosting
   \item Prediction surfaces / decision boundaries become smoother
-\end{itemize}
 
-\end{vbframe}
+\end{framei}
 
 
 %-------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------
 \begin{frame}{Regularization in Nonlinear Models}
 
-\begin{center}
-\begin{minipage}{0.6\textwidth}
-{\small
+\splitVCC[0.65]
+{{\small
 Classification for \texttt{spirals} data.\\
-NN with single hidden layer, size 10, $L2$ penalty:}
-\end{minipage}%
-\begin{minipage}{0.3\textwidth}
-\includegraphics[width=1\textwidth]{figure/nn_size_10.png}
-\end{minipage}
-\end{center}
+NN with single hidden layer, size 10, $L2$ penalty:}}
+{
+\imageC[0.9]{figure/nn_size_10.png}
+}
 
+\only<1>{\imageC[0.9]{figure/classifi_nn_w_size_1.png}}
+\only<2>{\imageC[0.9]{figure/classifi_nn_w_size_2.png}}
+\only<3>{\imageC[0.9]{figure/classifi_nn_w_size_3.png}}
+\only<4>{\imageC[0.9]{figure/classifi_nn_w_size_4.png}}
 
-\vspace{-0.8cm}
-%\vfill
+%\only<5>{\imageC{figure/classifi_nn_w_size_5.png}}
+%\only<6>{\imageC{figure/classifi_nn_w_size_6.png}}
 
-\only<1>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_1.png}\end{center}}
-\only<2>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_2.png}\end{center}}
-\only<3>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_3.png}\end{center}}
-\only<4>{\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_4.png}\end{center}}
-
-%\only<5>{\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_5.png}}
-%\only<6>{\includegraphics[width=\textwidth]{figure/classifi_nn_w_size_6.png}}
-
-$\lambda$ affects smoothness of decision boundary and magnitude of weights
+{\small
+$\lambda$ affects smoothness of decision boundary and magnitude of weights.\\
+When $\lambda$ is 0 (no regularization), absolute weights could be extremely large.
+}
 
 \end{frame}
 
@@ -106,123 +99,118 @@ Prevention of overfitting can also be seen in CV.\\
 Same settings as before, but each $\lambda$ is evaluated with
 5x10 REP-CV
 
-\begin{center}\includegraphics[width=1\textwidth]{figure/classifi_nn_err_decay.png}\end{center}
+\imageC{figure/classifi_nn_err_decay.png}
 
 Typical U-shape with sweet spot between overfitting and underfitting
 \end{frame}
 
 
 %-------------------------------------------------------------------------------
-\begin{vbframe} {Structural Risk Minimization}
+\begin{framei}[sep=L]{Structural Risk Minimization}
 
-\begin{itemize}
   \item Can also see this as an iterative process;\\
   more a ``discrete'' view on things
   %\item Thus far, we only considered adding a complexity penalty to empirical risk minimization. 
   \item SRM assumes that $\Hspace$ can be decomposed into increasingly complex hypotheses: 
   $\Hspace = \cup_{k \geq 1 }\Hspace_{k}$
   \item Complexity parameters can be, e.g. the degree of polynomials in linear models or the size of hidden layers in neural networks
-\end{itemize}
 
-\lz
+\vfill
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{figure_man/fig-regu-srm-1}
+
+\imageC[0.6]{figure_man/fig-regu-srm-1}
 % FIGURE SOURCE:https://docs.google.com/drawings/d/1qFoFSyuY4glsNvgYgIZ96yRcznOdA5q3oogI5fVBQ1A/edit?usp=sharing
-\end{center}
-
-\framebreak
 
 
-\begin{itemize}
+\end{framei}
 
-    \item SRM chooses the smallest $k$ such that the optimal model from $\Hspace_k$ found by ERM or RRM cannot significantly
+\begin{framei}[sep=M]{Structural Risk Minimization}
+
+  \item SRM chooses the smallest $k$ such that the optimal model from $\Hspace_k$ found by ERM or RRM cannot significantly
         be outperformed by a model from a $\Hspace_m$ with $m > k$
   \item Principle of Occam's razor
   \item One challenge might be choosing an adequate complexity measure, as for some models, multiple exist
-\end{itemize}
 
-\begin{center}
-\includegraphics[width=0.6\textwidth]{figure_man/fig-regu-srm-2}
+\imageC[0.6]{figure_man/fig-regu-srm-2}
 % FIGURE SOURCE: https://docs.google.com/drawings/d/1mk_qVUbfOYwwmuE0AgmnPiNSMoX--pE_nZsWYND0IhQ/edit?usp=sharing
-\end{center}
 
-\end{vbframe}
+
+\end{framei}
 
 %-------------------------------------------------------------------------------
 \begin{frame} {Structural Risk Minimization}
 
-\small
-
+{\small
 Again \texttt{spirals}.\\
-NN with 1 hidden layer, and fixed (small) L2 penalty. 
+NN with 1 hidden layer, and fixed (small) L2 penalty.}
 
 \vfill
 
 
 \only<1>{
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/classifi_nn_size_1.png}
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/nn_size_1.png}
-\end{minipage}
-\end{center}
+
+\splitVCC[0.5]{
+\imageC{figure/classifi_nn_size_1.png}
+}
+{
+\imageC{figure/nn_size_1.png}
+}
+
 }
 \only<2>{
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/classifi_nn_size_2.png}
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/nn_size_2.png}
-\end{minipage}
-\end{center}
+
+\splitVCC[0.5]{
+\imageC{figure/classifi_nn_size_2.png}
+}
+{
+\imageC{figure/nn_size_2.png}
+}
+
 }
 \only<3>{
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/classifi_nn_size_3.png}
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/nn_size_3.png}
-\end{minipage}
-\end{center}
+
+\splitVCC[0.5]{
+\imageC{figure/classifi_nn_size_3.png}
+}
+{
+\imageC{figure/nn_size_3.png}
+}
+
 }
 \only<4>{
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/classifi_nn_size_4.png}
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/nn_size_5.png}
-\end{minipage}
-\end{center}
+
+\splitVCC[0.5]{
+\imageC{figure/classifi_nn_size_4.png}
+}
+{
+\imageC{figure/nn_size_5.png}
+}
+
 }
 \only<5>{
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/classifi_nn_size_5.png}
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/nn_size_10.png}
-\end{minipage}
-\end{center}
+
+\splitVCC[0.5]{
+\imageC{figure/classifi_nn_size_5.png}
+}
+{
+\imageC{figure/nn_size_10.png}
+}
+
 }
 
 \only<6>{
-\begin{center}
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/classifi_nn_size_6.png}
-\end{minipage}%
-\begin{minipage}{0.5\textwidth}
-\includegraphics[width=\linewidth]{figure/nn_size_100.png}
-\end{minipage}
-\end{center}
+
+\splitVCC[0.5]{
+\imageC{figure/classifi_nn_size_6.png}
+}
+{
+\imageC{figure/nn_size_100.png}
 }
 
-Size affects complexity and smoothness of decision boundary
+}
+
+{\small
+Size affects complexity and smoothness of decision boundary}
 
 
 \end{frame}
@@ -230,7 +218,7 @@ Size affects complexity and smoothness of decision boundary
 \begin{frame} {Structural Risk Minimization}
 Again, complexity vs CV score. 
 
-\begin{center}\includegraphics[width=\textwidth]{figure/classifi_nn_err_size.png}\end{center}
+\imageC{figure/classifi_nn_err_size.png}
 
 Minimal model with good generalization seems to size=10 
 
@@ -242,21 +230,17 @@ Minimal model with good generalization seems to size=10
 RRM can also be interpreted through SRM, \\
 if we rewrite it in constrained form:
 
-\begin{columns}
-\begin{column}{0.5\textwidth}
+\splitVCC[0.5]
+{
 \begin{eqnarray*}
 \min_{\thetav} && \sumin \Lxyit  \\
   \text{s.t. } && \|\thetav\|_2^2  \leq t \\
 \end{eqnarray*}
-\end{column}
-\begin{column}{0.5\textwidth}
-\begin{figure}
-\includegraphics[width=0.6\textwidth]{figure/ridge_perspectives_04.png}
-\end{figure}
-\end{column}
-\end{columns}
+}{
+\imageC[0.6]{figure/ridge_perspectives_04.png}
+}
 
-\vspace{0.5cm}
+\vfill
 
 Can interpret going through $\lambda$ from large to small as through $t$ from small to large.
 Constructs series of ERM problems with hypothesis spaces $\Hspace_\lambda$, 
