@@ -68,6 +68,7 @@ def process_file(path, texts, main_folder, save_folder="inserted"):
     updated_keys = []
     modified = False
 
+    path = os.path.join(main_folder, path)
     if ext == '.ipynb':
         # JSON notebook
         with open(path, 'r', encoding='utf-8') as f:
@@ -255,8 +256,8 @@ def main():
     files = filter_files(files, args.ignore_quarto, texts_file_path=args.texts)
     
     logging.debug(f"Found {len(files)} files to process: {[os.path.basename(file) for file in files]}")
-    # for file_path in files:
-    #     process_file(file_path, texts, main_folder)
+    for file_path in files:
+        process_file(file_path, texts, main_folder)
 
 
 if __name__ == '__main__':
