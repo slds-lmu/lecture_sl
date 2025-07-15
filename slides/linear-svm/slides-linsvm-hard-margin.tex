@@ -326,16 +326,15 @@ We will call this the \textbf{linear hard-margin SVM}.
 % \framebreak
 
   \begin{itemize}
-    \item There exist instances $(\xi, \yi)$ with minimal margin
+    \item Some $(\xi, \yi)$ will have minimal margin, 
     $\yi  \fxi = 1$, fulfilling the inequality constraints with equality.
-    \item They are called
-    \textbf{support vectors (SVs)}. They are located exactly at
-    a distance of $\gamma = 1 / \|\thetav\|$ from the separating hyperplane.
-    \item It is already geometrically obvious 
-      that the solution does not depend on the non-SVs! We could delete them from the data and would arrive at the same solution.
-    \vspace{0.5cm}
+    \item Implies a distance of $\gamma = 1 / \|\thetav\|$ from separating hyperplane.
+    \item Geometrically obvious 
+      that optimal hyperplane doesn't depend on observations with larger distance.
+    \item Hence, we call some of these minimal margin vectors (but not necessarily all) {support vectors}.
+    \item More formal definition: in upcoming section on duality. 
     
-
+    
 \begin{center}
 \includegraphics[width=0.3\textwidth]{figure/support_vectors.png} \\
 \end{center}
