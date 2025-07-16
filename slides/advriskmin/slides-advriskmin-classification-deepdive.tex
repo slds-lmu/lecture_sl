@@ -86,6 +86,9 @@ They are equally referred to as Bernoulli-, Binomial-, logistic-, log-, or cross
 
 \begin{frame2}[small]{Proof Risk Minimizer on Scores}
 
+For $y \in \setzo$ the pointwise RM on scores is 
+$$\fxbayes =  \log \big(\eta(\xv)/(1-\eta(\xv) )\big)$$
+
 \textbf{Proof: } As before we minimize 
 \begin{align*}
 \riskf =& \E_x \left[L(1, \fx) \cdot \eta(\xv) + L(-1, \fx) \cdot (1 - \eta(\xv)) \right] \\
