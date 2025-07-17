@@ -25,7 +25,7 @@ figure_man/covariance2D-2.png
 $$\fv = \fX \sim \Nmk$$
 with $\mv = \mX$, $\Kmat = \kXX$
 \item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
-\item Cov function (or kernel) determines cov matrix: $\Kmat = \kXX$
+\item Cov function (or kernel) determines cov / kernel / Gram matrix: $\Kmat = \kXX$
 \item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions \furtherreading{DUVENAUDKERNEL}
 \end{framei}
 
@@ -35,7 +35,7 @@ $$\xv, \xtil \text{ close in } \Xspace \Rightarrow \fx, f(\xtil) \text{ close in
 \item Measure ``closeness'' via $\bm{d} = \xv - \xtil$
 \item $\kcc$ called \textbf{stationary} $\Leftrightarrow$ function of $\bm{d}$ 
 $$\kxxt = k(\bm{d})$$
-\item Intuition: stationary $\kcc$ implies functions that vary smoothly regardless of where we are in input space
+\item Intuition: stationary $\kcc$ implies functions that do not depend on where we are in input space
 \end{framei}
 
 \begin{framei}{example: stationary covariance}
@@ -86,8 +86,8 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \begin{framei}{constant kernel}
 \item $\kxxt = \theta_0 \quad > 0$
 \item Constant function priors
-\item Global correlation irresp of concrete inputs $\xv, \xtil$
-\item Use for: global-effect models
+\item Global correlation irresp. of concrete inputs $\xv, \xtil$
+\item Practically pretty useless
 \vfill
 \imageC[1]{figure/cov_funs/cov_constant.pdf}
 \end{framei}
@@ -97,7 +97,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Linear function priors
 \item Measures directional similarity: higher if vectors point in similar dirs
 \item In general, non-stationary $\Rightarrow$ depends on absolute location of $\xv, \xtil$
-\item Use for: linear models
+\item See Bayesian linear model part
 \vfill
 \imageC[1]{figure/cov_funs/cov_linear.pdf}
 \end{framei}
@@ -106,7 +106,6 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item $\kxxt = (\theta_0 + \xv^T \xtil )^p, \quad p \in \N$
 \item Polynomial function priors
 \item Allows for non-linearity through higher-order monomials \& interaction terms
-\item Use for: polynomial trends
 \vfill
 \imageC[1]{figure/cov_funs/cov_polynomial.pdf}
 \end{framei}
@@ -135,9 +134,9 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Aka Ornstein-Uhlenbeck kernel
 \item $\kxxt = \exp \left(-\frac{\xxtnorm}{\ls} \right)$
 \item Special case of Matérn kernel with $\nu = 0.5$
-\item Non-smooth: continuous but not differentiable
+\item Non-smooth: continuous but not differentiable, can model functions with abrupt variations
 \item Cov decays exponentially with distance (dep on $\ls$)
-\item Use for: non-linear trend with abrupt variations
+\item Use for: 
 \imageC[1]{figure/cov_funs/cov_exponential.pdf}
 \end{framei}
 
@@ -147,7 +146,6 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Special case of Matérn kernel with $\nu = \infty$
 \item Very smooth: continuous, $\infty$ differentiable (not always realistic)
 \item Cov decays quickly $\Rightarrow$ quadratic in $\ls$
-\item Use for: smooth, non-linear trend
 \imageC[1]{figure/cov_funs/cov_squaredexp.pdf}
 \end{framei}
 
@@ -160,7 +158,7 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \end{framei}
 
 \begin{framei}[sep=L]{characteristic length-scale}
-\item Key hyperparameter of many (isotropic) kernels
+\item Key (hyper)parameter of many (isotropic) kernels
 \item Controls how quickly function values become uncorrelated
 \item High (low) $\ls$: smooth (wiggly) functions
 \vfill

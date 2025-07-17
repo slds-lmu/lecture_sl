@@ -16,10 +16,9 @@ Stochastic Processes and Distributions on Functions
 }{
 figure_man/discrete/marginalization-more.png
 }{
-\item GPs model distributions over functions 
-\item The marginalization property makes this distribution easily tractable
-\item GPs are fully specified by mean and covariance function 
-\item GPs are indexed families
+\item GPs = distributions over functions 
+\item Marginalization property 
+\item Mean and covariance function 
 }
 
 \begin{framei}[sep=L]{Weight-Space View}
@@ -88,7 +87,7 @@ $$
 \item Let $\Xspace = \xdat$, $\Hspace = \{f ~|~ f: \Xspace \rightarrow \R\}$
 \item Any $f \in \Hspace$ has finite domain with $n < \infty$ elements \\$\Rightarrow$ neat representation with $n$-dim vector 
 $$\fv = \fvec^T$$
-\item Example functions living in this space for $|\Hspace| \in \{2, 5, 10\}$
+\item Example functions living in this space for $|\Xspace| \in \{2, 5, 10\}$
 \vfill
 \splitVThree{
 \imageC{figure/discrete/discr_2_expdecay_1n.pdf}
@@ -97,12 +96,15 @@ $$\fv = \fvec^T$$
 }{
 \imageC{figure/discrete/discr_10_expdecay_1n.pdf}
 }
+
+\item \footnotesize{NB: The $\xi$ in the above are not really training points, we don't even consider training here. They are the points where we measure our (here: 1D) discrete functions. However, to avoid inventing too many symbols, and since the whole notation leads nicely into what follows next, we accept this ``abuse'' here.}  
+
 \end{framei}
 
 \begin{framei}[sep=L]{Distributions on Discrete Functions}
-\item Specify (discrete) probability function on functions $f \in \Hspace$ 
+\item Specify density on vectors / functions on finite domain $f \in \Hspace$ 
 \item Natural way: vector representation as $n$-dim RV, e.g.,
-$$\fv = \fvec^T \sim \GPmk$$
+$$\fv = \fvec^T \sim \Nmk$$
 \item For now: set $\mv = \zero$, assume $\Kmat$ to be given
 \end{framei}
 
@@ -115,14 +117,15 @@ $$\fv = [f(\xi[1]), f(\xi[2])]^T \sim \Nzk$$
 \else 
 $$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
 \fi
+\item Where points are not (top) or (strongly) correlated
 \vfill
-\splitVCompact{.35}{.35}{
+\splitVCompact{.33}{.33}{
 \imageL[1]{figure/discrete/discr_\i_identity_10n.pdf}
 }{
 \imageL[.8]{figure/discrete/discr_\i_identity_cov.pdf}
 }
 \vfill
-\splitVCompact{.35}{.35}{
+\splitVCompact{.33}{.33}{
 \imageL[1]{figure/discrete/discr_\i_expdecay_10n.pdf}
 }{
 \imageL[.8]{figure/discrete/discr_\i_expdecay_cov.pdf}
@@ -148,7 +151,7 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
 \item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
-$$\fv = \fvec^T \sim \GPmk$$
+$$\fv = \fvec^T \sim \Nmk$$
 \item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
 \item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
@@ -195,59 +198,62 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 
 % \begin{frame}{example: stochastic processes}
 
-\begin{framei}[sep=L]{intuition: gaussian processes}
-\item Special kind of SP ~~ \furtherreading{RASMUSSENWILLIAMS2006GPML}~~ \furtherreading{SNELSON2001THESIS}
-\item Index set: $\Xspace$, distr assumption + cov structure: Gaussian 
-\item Corollary: any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
+\begin{framei}[sep=M]{Def.: Gaussian Process \furtherreading{RASMUSSENWILLIAMS2006GPML}~~ \furtherreading{SNELSON2001THESIS}
+}
+\item Special kind of SP with index set: $\Xspace$; often $\Xspace = \R^p$, but as in SVMs, feature vectors only enter the model via the kernel, so we can work on arbitrary spaces
+\item We write formally $f \sim \GPmk$ %~~ \item
+% \item Defining  : any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
+
+\item Defining marginalization property: we have a GP 
+iff for any finite set of inputs $\bm{X} \subset \Xspace$, 
+$$
+f(\bm{X}) \sim \normal(\mX, \kXX)
+$$
+\item With \textbf{mean function} $m: \Xspace \rightarrow \R$ and \\
+\textbf{cov function} $k: \Xspace \times \Xspace \rightarrow \R^+_0$
+\item With slight abuse of notation, we allow matrix args and write:
 \vfill
+\begin{itemizeM}
+\item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]^T$
+\item $\Kmat = k(\bm{X}, \bm{X}) = \left(\kxxt \right)_{\xv, \xtil \in \bm{X}}$
+\end{itemizeM}
+%\item The output is random with $\fv \sim \normal(\mv, \Kmat)$
+
+\end{framei}
+
+% \foreach \i in {10, 50}{
+\begin{framei}[sep=M]{marginalization property}
+\item For any finite set of inputs $\bm{X} = \xdat \subset \Xspace:$
+    $$
+      \fv = f(\bm{X}) = \fvec^T \sim \Nmk
+    $$ 
+%\item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
+
+\splitV{
+\imageC[.8]{figure/discrete/discr_50_squaredexp_1n.pdf}
+}{
+% \ifnum \i=5
+% \imageC[.9]{figure_man/discrete/marginalization-5.png}
+% \else
+\imageC[.8]{figure_man/discrete/marginalization-more.png}
+% \fi
+}
+
+\item Example with 1D (left) and 2D (right) index set $\Xspace$: Dimension of $\fv$ depends on $n$, not on dimension of $\Xspace$:
 \splitV{
 \imageC{figure_man/indexed_family/indexed_family_5.png}
 }{
 \imageC[.8]{figure_man/indexed_family/indexed_family_6.png}
 }
 \vfill
-\item Precisely what we were looking for: process to generate arbitrarily long Gaussian random vectors!
-\end{framei}
 
-% \foreach \i in {10, 50}{
-\begin{framei}[sep=L]{marginalization property}
-\item Consider finite set of inputs $\bm{X} = \xdat \subset \Xspace$
-\item Distinguishing feature of GPs: for any such $\bm{X}$,
-    $$
-      \fv = f(\bm{X}) = \fvec^T \sim \GPmk
-    $$ 
-\item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
-\vfill
-\splitV{
-\imageC[1]{figure/discrete/discr_50_squaredexp_1n.pdf}
-}{
-% \ifnum \i=5
-% \imageC[.9]{figure_man/discrete/marginalization-5.png}
-% \else
-\imageC[1]{figure_man/discrete/marginalization-more.png}
-% \fi
-}
 \end{framei}
 % }
 
-\begin{framei}[sep=L]{definition: gaussian process}
-\item Formally, 
-$$f \sim \GPmk$$
-iff for any finite set of inputs $\bm{X} \subset \Xspace$, 
-$$
-f(\bm{X}) \sim \normal(\mX, \kXX)
-$$
-\item Depends on \textbf{mean function} $m: \Xspace \rightarrow \R$ and \textbf{covariance function} $k: \Xspace \times \Xspace \rightarrow \R^+_0$
-\item For specific set $\bm{X}$ we get deterministic vectors / matrices (with slight abuse of notation for argument $\bm{X}$)
-\vfill
-\begin{itemizeM}
-\item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]^T$
-\item $\Kmat = k(\bm{X}, \bm{X}) = \left(\kxxt \right)_{\xv, , \xtil \in X}$
-\item $\fv \sim \normal(\mv, \Kmat)$
-\end{itemizeM}
-\end{framei}
+% \begin{framei}[sep=L]{definition: gaussian process}
+% \end{framei}
 
-\begin{framei}[sep=L]{existence theorem}
+\begin{framei}[sep=L]{GP existence theorem}
 % \item Idea: for any particular finite-dim distributions, the corresponding GP exists
 \item For \textbf{any} 
 \begin{itemize}
