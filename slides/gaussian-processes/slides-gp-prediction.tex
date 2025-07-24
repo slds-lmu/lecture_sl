@@ -36,9 +36,9 @@ $$\begin{bmatrix}
 with $\ks = [k(\xs, \xi[1]), \dots, k(\xs, \xi[n])]$,  $ \kss\ = k(\xs, \xs)$
 \item General rule for conditioning of Gaussian RVs
 \begin{itemize}
-\item $\bm{z} \sim \normal(\mu, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\mu = (\mu_1, \mu_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
-\item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is MV normal 
-$$\normal(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \mu_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
+\item $\bm{z} \sim \normal(\muv, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\muv = (\muv_1, \muv_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
+\item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is also Gaussian 
+$$\normal(\muv_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \muv_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
 \end{itemize}
 \item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xs, \Xmat, \fv \sim \normal(\ks^{T}\Kinv\fv, \kss - \ks^T \Kmat ^{-1}\ks)$$
 \item \textbf{Maximum-a-posteriori (MAP)} estimate: $\ks^{T}\Kinv\fv$
@@ -46,7 +46,7 @@ $$\normal(\mu_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \mu_1), \Sigma_{22} - \
 
 \begin{framei}[sep=L]{example: 2 points}
 \item Single training point $\xv = -0.5$, test point $\xs = 0.5$
-\item Zero-mean GP with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2} \| \xv - \tilde{\xv} \|^2)$ leads to 
+\item 0-mean GP with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2} \| \xv - \tilde{\xv} \|^2)$ leads to 
 $$\begin{bmatrix} \fv \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\right)$$
 \item Assuming we observe $\fx = 1$, compute posterior distribution
 \begin{eqnarray*}
@@ -110,7 +110,7 @@ $$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Ks^{T}\Kinv\fv, \Kss - \Ks^T \Kmat
 }
 \end{framei}
 
-\begin{framei}[sep=L]{noisy GP}
+\begin{framei}[sep=M]{noisy GP}
 \item GP as interpolator: implicitly assumed access to true function value $\fx$ $\Rightarrow$ 0 uncertainty at training points
 \item Reality: noisy version
 $y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
@@ -120,6 +120,10 @@ $y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
 &=& \cov(f(\xi), f(\xi[j])) + 2 \cdot \cov(f(\xi), \epsilon^{(j)}) + \cov(\epsilon^{(i)}, \epsilon^{(j)}) 
 \\ &=& \kxij + \sigma^2 \delta_{ij}
 \end{eqnarray*}
+\item $\delta_{ij} = \begin{cases}
+1 & \text{if } i = j \\
+0 & \text{if } i \neq j
+\end{cases}$ is the kronecker delta
 \item $\sigma^2$ often called \textbf{nugget} $\Rightarrow$ estimate during training
 \end{framei}
 
@@ -161,12 +165,12 @@ $$\riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy$$
 \item No access to $\Pxy$ $\Rightarrow$ compute empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
 \item For GPs, make use of posterior predictive distribution over $y$
 $$
-    \mathcal{R}(y_* ~|~ \xs) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xs, \D)d\tilde y_*. 
+    \mathcal{R}(y_* ~|~ \xs) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xs, \D)d\tilde y_*
   $$
 \item Intuition: expected loss weighted by posterior probability of each $\tilde y_*$ given observed data
 \item Optimal prediction wrt loss function
 $$
-    \yh_* | \xs = \argmin_{y_*} \mathcal{R}(y_*~|~ \xs).
+    \yh_* | \xs = \argmin_{y_*} \mathcal{R}(y_*~|~ \xs)
   $$
 \end{framei}
 
