@@ -119,3 +119,6 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 
 # Todo (internal comment)
 [] update docs to include the case of folder with multiple exercises
+[] cleanup unnecessary files fro I2ML lecture
+[] go over older files and retire the approach of putting texts in a json file
+[] write a script to extract the texts from the ipynb files and put them in a separate ipynb just for texts
