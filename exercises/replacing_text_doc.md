@@ -103,6 +103,7 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). 
 
 # Overall workflow
+
 [] Copy R solutions and extend/improve them, add texts in between
 - name cells by adding `#| label: <key_name>` at the beginning of the cell
 [] Copy the notebook and translate R to Python (GPT helps a lot)
@@ -118,8 +119,10 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 [] Check that the links work
 
 # Todo (internal comment)
+
 [] update docs to include the case of folder with multiple exercises
 [] cleanup unnecessary files fro I2ML lecture
 [] go over older files and retire the approach of putting texts in a json file
 [] write a script to extract the texts from the ipynb files and put them in a separate ipynb just for texts
 [] Fix the issue with the `keras` package in R, Regu 1
+[] Regu 1 R - has unique markdown cell (underdetermined problem)
