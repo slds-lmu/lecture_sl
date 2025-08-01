@@ -14,7 +14,7 @@ Advanced Risk Minimization
 Bias-Variance 1: \\
 Bias-Variance Decomposition
 }{
-figure/bias_variance_decomposition-linear_model_bias.png
+figure/plots_bias_var_deg1_bias.png
 }{
 \item Decompose GE of learner into 
 \begin{itemize}
@@ -75,27 +75,27 @@ models with high capacity have low \textbf{bias} and vice versa
 \item True model:
 $$y = x + \frac{x^2}{2} + \epsilon  \qquad \epsilon \sim 
 N (0, 1)$$
-\item Split in train and test sets 
+\item Split each draw of samples into train and test sets 
 
-\imageC[0.52]{figure/bias_variance_decomposition-train_test.png}
+\imageC[0.7]{figure/plots_bias_var_aux_3.png}
 
 \end{framei} 
 
 
 \begin{framei}[sep=M]{Simulation Example}
 
-\item Let's estimate bias and variance via bootstrapping
+\item Let's estimate bias and variance via by drawing independent data sets from the DGP and averaging.
 
-\item (Could have also used Monte Carlo integration of the above quantities,
-BS slightly easier to visually explain)
 
-\item First, train several (low capacity) LMs
+\item First, we train several (low capacity) LMs
 \item These are the $\fh_{\D_n}(\xv)$, seen as a RV, based on the random
 data $\D_n$
 
+\hfill
+
 \splitVCC
-{\imageC[0.8]{figure/bias_variance_decomposition-bootstrap_1.png}}
-{\imageC[0.8]{figure/bias_variance_decomposition-bootstrap_2.png}}
+{\imageC[0.99]{figure/plots_bias_var_aux_1.png}}
+{\imageC[0.99]{figure/plots_bias_var_aux_2.png}}
 
 \end{framei} 
 
@@ -104,7 +104,9 @@ data $\D_n$
 \item Average model over different training datasets
 \item This is $\E_{\D_n}[\fh_{\D_n}(\xv)]$ in the decomp
 
-\imageC[0.5]{figure/bias_variance_decomposition-linear_model.png}
+\hfill
+
+\imageC[0.7]{figure/plots_bias_var_deg1_fits.png}
 
 \end{framei} 
 
@@ -119,7 +121,7 @@ $
 $
 
 
-\imageC[0.5]{figure/bias_variance_decomposition-linear_model_bias.png}
+\imageC[0.7]{figure/plots_bias_var_deg1_bias.png}
 
 
 \end{framei} 
@@ -134,9 +136,9 @@ $
 \E_{x} [\var_{\D_n} (\fh_{\D_n}(\xv) ~|~\xv ) ]
 $
 
-\imageC[0.4]{figure/bias_variance_decomposition-linear_model_variance.png}
+\imageC[0.7]{figure/plots_bias_var_deg1_variance.png}
 
-\item Here, we know data variance $\sigma^2=1$;\\
+\item For irreducible noise component, we know data variance $\sigma^2=1$;\\
 could also estimate it from residuals
 
 \end{framei} 
@@ -145,36 +147,37 @@ could also estimate it from residuals
 \begin{framei}[fs=small,sep=M]{Decomp Result and Comparison with MSE}
 
 \item Decomp result; here bias is largest:
-$$GE_n(\ind) \approx 1 + 1.628 + 0.135 = 2.763 $$
+$$GE_n(\ind) \approx 1 + 1.572 + 0.288 = 2.86 $$
 
-\imageC[0.35]{figure/bias_variance_decomposition-linear_model_mse.png}
+\imageC[0.6]{figure/plots_bias_var_deg1_mse.png}
 
 \item Regular MSE: For each model, compute MSE on test set
 \item Then we average these MSEs over all models
-\item Result = 2.72; checks out; \\
-better if we avg. over more models and test points 
-\item In general: Error quite high as we underfitted
+\item Result = 2.86; checks out; \\
+\item In general: Error is quite high as we underfitted
 
 \end{framei}
 
 
 \begin{framei}[sep=M]{Higher complexity learner}
 
-\item Same procedure, but using a high-degree polynomial ($d=7$)
+\item Same procedure, but using a high-degree polynomial ($d=7$). Average model looks good now (low bias)
 
-\imageC[0.55]{figure/bias_variance_decomposition-complex_model.png}
+\hfill
+
+\imageC[0.7]{figure/plots_bias_var_deg7_fits.png}
 
 \end{framei} 
 
 \begin{frame}{Higher complexity learner}
 
 \splitVThree
-{\imageC{figure/bias_variance_decomposition-complex_model_bias.png}}
-{\imageC{figure/bias_variance_decomposition-complex_model_variance.png}}
-{\imageC{figure/bias_variance_decomposition-complex_model_mse.png}}
+{\imageC{figure/plots_bias_var_deg7_bias.png}}
+{\imageC{figure/plots_bias_var_deg7_variance.png}}
+{\imageC{figure/plots_bias_var_deg7_mse.png}}
 
 
-$$GE_n(\ind) \approx 1 + 0.139 + 1.963 \approx 3.103 $$
+$$GE_n(\ind) \approx 1 + 9.422 + 0.037 \approx 10.458 $$
 
 \vfill
 
@@ -194,27 +197,27 @@ leads to higher bias as ``artifact'' here (ignore this)
 
 \item What happens if we use a model with the same complexity as the true model (quadratic polynomial)? 
 
-\imageC[0.6]{figure/bias_variance_decomposition-correct_model.png}
+\hfill
+
+\imageC[0.7]{figure/plots_bias_var_deg2_fits.png}
 
 \end{framei}
 
 \begin{frame}{Correct complexity learner}
 
 \splitVThree
-{\imageC{figure/bias_variance_decomposition-correct_model_bias.png}}
-{\imageC{figure/bias_variance_decomposition-correct_model_variance.png}}
-{\imageC{figure/bias_variance_decomposition-correct_model_mse.png}}
+{\imageC{figure/plots_bias_var_deg2_bias.png}}
+{\imageC{figure/plots_bias_var_deg2_variance.png}}
+{\imageC{figure/plots_bias_var_deg2_mse.png}}
 
 \vfill
 
-$$GE_n(\ind) \approx 1 + 0.008 + 0.082 = 1.09 $$
+$$GE_n(\ind) \approx 1 + 0.004 + 0.081 = 1.085 $$
 
 \begin{itemize}
 \item Naturally: better result
-\item Low bias, low variance
-\item Bias should not be that much lower than
-high degree polynomial; but see comment there
-\item In any case, variance of the data is lower bound
+\item Lowest bias, low variance
+\item In any case, variance of the data (irreducible noise) is lower bound
 \end{itemize}
 
 \end{frame}
