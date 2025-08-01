@@ -33,7 +33,6 @@ $$
 \end{framei}
 
 \begin{framei}[sep=L]{Function-Space View}
-\item \show\muv
 \item New POV: rather than finding $\thetav$ which parameterizes $\fxt$,  search in space of admissible functions directly
 \item Sticking to Bayesian inference, specify prior distribution \textbf{over functions} and update according to observed data points
 \end{framei}
@@ -111,14 +110,14 @@ $$\fv = \fvec^T \sim \Nmk$$
 
 \foreach \i [count=\idx from 1] in {2, 5, 10} {
 \begin{framei}{example: random discrete functions}
-\item Example ctd: \fv on $\i$ points
+\item Example ctd: $\fv$ on $\i$ points
 \item Sample representatives by sampling from a $\i$-dim Gaussian
 \ifnum \i=2
 $$\fv = [f(\xi[1]), f(\xi[2])]^T \sim \Nzk$$
 \else 
 $$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
 \fi
-\item Where points are not (top) or (strongly) correlated
+\item Where points are not (top) or strongly (bottom) correlated
 \vfill
 \splitVCompact{.33}{.33}{
 \imageL[1]{figure/discrete/discr_\i_identity_10n.pdf}
@@ -136,7 +135,7 @@ $$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
 
 \begin{framei}{spatial correlation}
 \item ``Meaningful'' functions (on numeric $\Xspace$) often have spatial property:
-$$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ close in } \Yspace$$
+$$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ close / strongly correlated in } \Yspace$$
 \item In other words: fun values of nearby points should be correlated
 \item Enforce this by choosing dist-based covariance function
 $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ high }$$
@@ -166,12 +165,12 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \item Gives rise to collection $\{s_t: t \in T\}$
 \item Can assume many forms depending on $T$ and $\mathcal{S}$
 \item Example: real-valued $\mathcal{S}$ 
-\splitV{
+\splitV[0.55]{
 \begin{itemizeM}
 \item $\mathcal{S} = \R$, $t \mapsto s_t$
-\item Finite index set, e.g., $T = \nset$ $\Rightarrow$ list
-\item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ sequence 
-\item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ \\example: $\{\sin(t): t \in \R\}$
+\item Finite index set, e.g., $T = \nset$ $\Rightarrow$ vector
+\item Countable, infinite index set, e.g., $T = \N$ $\Rightarrow$ sequence 
+\item Uncountable index set, e.g., $T = \R$ $\Rightarrow$  function %\\example: $\{\sin(t): t \in \R\}$
 \end{itemizeM}
 }{
 \imageR[.8]{figure_man/indexed_family/indexed_family_1.png}
@@ -184,12 +183,12 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 % \item $\{Y_t: t \in T\}$ $\Rightarrow$ often temporal interpretation of $T$
 \item Intuition: probability distributions describe random vectors, SP describe random functions
 \item Examples
-\splitV{
+\splitV[0.55]{
 \begin{itemizeM}
 \item $\mathcal{S}$: space of RVs, $t \mapsto Y_t$
 \item Finite index set, e.g., $T = \{1, \dots, m\}$ \\$\Rightarrow$ random vector
-\item Countably $\infty$ index set, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
-\item Uncountably $\infty$ index set, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
+\item Countable, infinite index set, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
+\item Uncountable index set, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
 \end{itemizeM}
 }{
 \imageR[.8]{figure_man/indexed_family/indexed_family_4.png}
@@ -269,7 +268,6 @@ there \textbf{exists} $f \sim \GPmk$ s.t. $\forall \xv, \xtil \in \Xspace$
 \cov(\fx, f(\xtil)) &=& \kxxt
 \end{eqnarray*}
 and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
-\item Intuition: for any mean \& cov structure we prescribe, there is a corresponding GP to generate $\fv$ with these characteristics
 \item Version of Kolmogorov consistency theorem \\$\Rightarrow$ proof \furtherreading{GRIMMETT2001PROC} (Thm. 8.6.3)
 \end{framei}
 
@@ -291,7 +289,7 @@ $\Rightarrow$ common, not necessarily drastic assumption
 $$ \kxxt = \exp\left(-\tfrac{1}{2}\xxtnorm^2\right)$$
 \item To visualize sample functions, 
 \begin{itemize}
-\item choose high number $n$ of (equidistant) points $\bm{X} = \xdat$
+\item choose high number $n$ of points $\bm{X} = \xdat$
   \item compute $\Kmat = k(\bm{X}, \bm{X})$ from all pairs $\xi, \xi[j] \in \bm{X}$ 
   \item draw $\fv \sim \Nzk$ 
 \end{itemize}
@@ -302,8 +300,9 @@ $$ \kxxt = \exp\left(-\tfrac{1}{2}\xxtnorm^2\right)$$
 
 \begin{framei}[sep=L]{Further reading}
 
-\item If you want to read more on Gaussian processes, we recommend these ressources: \furtherreading{SNELSON2001THESIS}
-\furtherreading{RASMUSSENWILLIAMS2006GPML}
+\item Will go thru many details now, but some general refs already
+
+\item The standard book: \furtherreading{RASMUSSENWILLIAMS2006GPML}
 
 \item Good videos can be found here:
 \furtherreading{MATHEMATICALMONK2011}
