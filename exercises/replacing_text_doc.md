@@ -103,23 +103,45 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). 
 
 # Overall workflow
-[] Copy R solutions and extend/improve them, add texts in between
-- name cells by adding `#| label: <key_name>` at the beginning of the cell
-[] Copy the notebook and translate R to Python (GPT helps a lot)
-[] Copy the notebook again, remove the code cells, add `label: <key_name>` to the first line of the markdown cells
-[] `cd ..`; `python replace_texts.py <folder_name> --texts texts.ipynb --ignore_quarto`
-[] Check the output in the `inserted` subfolder
-[] Add the solutions to Colab and share edit access links and wait for feedback
-[] Incorporate feedback and create the Quarto file
-[] `cd ..`; `python replace_texts.py <folder_name> --texts texts.ipynb`
-[] `cd <folder_name>/inserted`; `quarto render <chapter_name>.qmd --to html`
-[] Create PR 
-[] Once merged, add jupyter notebooks to Google Colab
-[] Check that the links work
+## 1. Setup
+1. Create a new branch `ex_<chapter_name>_quarto`
+2. Create a new folder `<chapter_name>-quarto` in the `exercises` folder
+
+## 2. R
+1. For speeding up the process Github Copilot agent mode with Claude Sonnet 4 is quite helpful.
+2. Copy R solutions (fastest way to find the solution is to just ctrl F the entire project for a segment of text (manually finding the file is slow))
+3. Extend/improve them, add texts in between.
+You can use the following prompt to get a draft:
+*Prompt example:* "Please go over the code and split it into cells and add in between texts. Please also add labels to code cells via `#| label: some name` and for markdown cells just do `label: some name`"
+4. Label code cells by adding `#| label: <key_name>` in the first line. And for markdown cells just do `label: <key_name>`.
+
+## 3. Python
+1. Copy the notebook and translate R to Python. Maybe use the following prompt to quickly get a draft:
+*Prompt example:* "Please go over the R codes and translate them to Python. Try to not change the markdown cells, but if you need to change them, specifically state that. Keep the Python code understandable."
+
+## 4. Text Sync
+1.  Copy the notebook again, remove the code cells, remove all the text from markdown cells except for the first line (`label: <key_name>`)
+2. `cd ..`; `python replace_texts.py <folder_name> --texts texts.ipynb --ignore_quarto`
+3. Check the output in the `inserted` subfolder
+
+## 5. Feedback
+4. Add the solutions to Colab and share edit access links and wait for feedback
+5. Incorporate feedback and create the Quarto file
+
+## 6. Rendering
+6.  `cd ..`; `python replace_texts.py <folder_name> --texts texts.ipynb`
+8.  `cd <folder_name>/inserted`; `quarto render <chapter_name>.qmd --to html`
+
+## 7. GitHub + Colab
+9.  Create PR
+10. Once merged, add jupyter notebooks to Google Colab
+11. Check that the links work
+12. Some tex macros may fail, may need to add e.g. `$$\newcommand{\bm}{\boldsymbol}$$`
+
 
 # Todo (internal comment)
 [] update docs to include the case of folder with multiple exercises
-[] cleanup unnecessary files fro I2ML lecture
+[] cleanup unnecessary files from I2ML lecture
 [] go over older files and retire the approach of putting texts in a json file
 [] write a script to extract the texts from the ipynb files and put them in a separate ipynb just for texts
 [] Fix the issue with the `keras` package in R, Regu 1
