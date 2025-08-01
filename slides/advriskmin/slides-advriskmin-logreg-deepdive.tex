@@ -117,7 +117,7 @@ We find the Hessian via differentiation:
 \end{align*}
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
-$$(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n])$$
+$$\Big(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]\Big)$$
 }
 
 Can now be used in Newton-Raphson and other 2nd order optimizers
@@ -130,7 +130,7 @@ Finally, we check that logistic regression is a convex problem:
 \vfill
 
 We define the diagonal matrix $\bar{\mathbf{D}} \in \mathbb{R}^{n \times n}$ with diagonal 
-$$(\sqrt{\pixit[1])(1-\pixit[1]}, \dots, \sqrt{\pixit[n](1-\pixit[n]}) $$
+$$\Big(\sqrt{\pixit[1])(1-\pixit[1]}, \dots, \sqrt{\pixit[n](1-\pixit[n]}\Big) $$
 which is possible since $\pi$ maps into (0, 1) \\
 \vfill
 With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that
