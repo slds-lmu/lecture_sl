@@ -70,15 +70,15 @@ plot_sample_fit <- function(idx, train_size, test_size, poly_degree, error_std, 
     coord_cartesian(ylim = c(-2, 10)) +
     theme_minimal() +
     theme(
-      axis.title.x = element_text(size = 16),
-      axis.title.y = element_text(size = 16),
-      panel.grid.major = element_blank(),  
+      axis.title.x = element_text(size = 25),
+      axis.title.y = element_text(size = 25),
+      #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
-      plot.title = element_text(hjust = 0.5),
+      plot.title = element_text(size = 25, hjust = 0.5),
       plot.title.position = "plot",
       legend.position = "bottom",
-      legend.title = element_text(size = 14),
-      legend.text = element_text(size = 12)
+      legend.title = element_text(size = 22),
+      legend.text = element_text(size = 20)
     )
   
   if (show_fit) {

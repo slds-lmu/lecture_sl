@@ -82,20 +82,20 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
   # 1: Fits 
   g <- ggplot(df_test, aes(x = x)) +
     #geom_point(aes(y = y_obs), shape = 17, color = "orange", size = 2) +
-    geom_line(data = df_all_models, aes(x = x, y = y, group = model), color = "darkgrey", alpha = alpha*1.25, inherit.aes = FALSE) +
+    geom_line(data = df_all_models, aes(x = x, y = y, group = model), color = "darkgrey", alpha = alpha*1.5, inherit.aes = FALSE) +
     geom_line(data = df_mean_model, aes(x = x, y = y), color = "blue", linetype="dashed", linewidth = lwidth, inherit.aes = FALSE) +
-    labs(title = paste0("Fits (degree = ", poly_degree, ")"), x = "x", y = "y") +
+    labs(title = paste0("Model fits (degree = ", poly_degree, ")"), x = "x", y = "y") +
     coord_cartesian(ylim = c(-2, 10)) +
     theme_minimal() +
     theme(
-      axis.title.x = element_text(size = 20),
-      axis.title.y = element_text(size = 20),
-      panel.grid.major = element_blank(),  
+      axis.title.x = element_text(size = 25),
+      axis.title.y = element_text(size = 25),
+      #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size=20, hjust = 0.5),
+      plot.title = element_text(size=25, hjust = 0.5),
       plot.title.position = "plot",
       legend.position = "bottom",
-      legend.title = element_text(size = 20),
+      legend.title = element_text(size = 22),
       legend.text = element_text(size = 20)
     )
   ggsave(paste0(prefix_path, "_fits.png"), g, width = 6, height = 4)
@@ -106,19 +106,19 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     geom_line(aes(y = y_true), color = "black", linewidth = lwidth) +
     geom_line(aes(y = y_pred), color = "blue", linetype = "dashed", linewidth = lwidth) +
     geom_segment(aes(xend = x, y = y_true, yend = y_pred), color = "blue", size = 1) +
-    annotate("text", x = 0, y = 9.5, label = paste("Bias² =", round(bias_total, 3)), size = 5) +
+    annotate("text", x = 0.1, y = 8.6, label = paste("Bias² =", round(bias_total, 3)), size = 9) +
     labs(title = paste("Degree = ", poly_degree), x = "x", y = "y") +
     coord_cartesian(ylim = c(-2, 10)) +
     theme_minimal() +
     theme(
-      axis.title.x = element_text(size = 20),
-      axis.title.y = element_text(size = 20),
-      panel.grid.major = element_blank(),  
+      axis.title.x = element_text(size = 25),
+      axis.title.y = element_text(size = 25),
+      #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size=20, hjust = 0.5),
+      plot.title = element_text(size=25, hjust = 0.5),
       plot.title.position = "plot",
       legend.position = "bottom",
-      legend.title = element_text(size = 20),
+      legend.title = element_text(size = 22),
       legend.text = element_text(size = 20)
     )
   ggsave(paste0(prefix_path, "_bias.png"), g, width = 6, height = 4)
@@ -126,25 +126,25 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
   # 3: Variance
   g <- ggplot(df_test, aes(x = x)) +
     geom_line(data = df_all_models, aes(x = x, y = y, group = model),
-              color = "grey", alpha = alpha, inherit.aes = FALSE) +
+              color = "grey", alpha = 1.5*alpha, inherit.aes = FALSE) +
     geom_line(data = df_mean_model, aes(x = x, y = y),
               color = "blue", linetype = "dashed", linewidth = lwidth, inherit.aes = FALSE) +
     geom_errorbar(aes(ymin = y_pred - sqrt(var), ymax = y_pred + sqrt(var)),
-                  width = error_width, color = "black", linewidth = 0.4*lwidth) +
-    annotate("text", x = 0, y = 9.5,
-             label = paste("Variance =", round(var_total, 3)), size = 5) +
+                  width = error_width, color = "black", linewidth = 0.6*lwidth) +
+    annotate("text", x = 0.1, y = 8.6,
+             label = paste("Variance =", round(var_total, 3)), size = 9) +
     labs(title = paste0("Degree = ", poly_degree), x = "x", y = "y") +
     coord_cartesian(ylim = c(-2, 10)) +
     theme_minimal() +
     theme(
-      axis.title.x = element_text(size = 20),
-      axis.title.y = element_text(size = 20),
-      panel.grid.major = element_blank(),  
+      axis.title.x = element_text(size = 25),
+      axis.title.y = element_text(size = 25),
+      #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size=20, hjust = 0.5),
+      plot.title = element_text(size=25, hjust = 0.5),
       plot.title.position = "plot",
       legend.position = "bottom",
-      legend.title = element_text(size = 20),
+      legend.title = element_text(size = 22),
       legend.text = element_text(size = 20)
     )
   
@@ -160,31 +160,32 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     geom_segment(aes(xend = x, y = y_true, yend = y_pred), color = "blue", size = 1) +
     
     # Variance: error bars around mean prediction
-    geom_errorbar(aes(ymin = y_pred - sqrt(var), ymax = y_pred + sqrt(var)), width = error_width, color = "black", linewidth=0.4*lwidth) +
+    geom_errorbar(aes(ymin = y_pred - sqrt(var), ymax = y_pred + sqrt(var)), width = error_width, 
+                  color = "black", linewidth=0.6*lwidth) +
     
     # irreducible noise band (visualization)
     geom_ribbon(aes(ymin = y_true - error_std, ymax = y_true + error_std),
                 fill = "gray", alpha = 0.5*alpha, inherit.aes = TRUE) +
     
     
-    annotate("text", x = 0, y = 9.3, label = paste("MSE =", round(mse_total, 3)), size = 7) +
-    annotate("text", x = -1.5, y = 8.1, label = paste("Bias² =", round(bias_total, 3)), size = 5) +
-    annotate("text", x = 0, y = 8.1, label = paste("Var =", round(var_total, 3)), size = 5) +
-    annotate("text", x = 1.4, y = 8.1, label = paste("Noise =", round(error_std^2, 3)), size = 5) +
+    annotate("text", x = 0, y = 9.3, label = paste("MSE =", round(mse_total, 3)), size = 8) +
+    annotate("text", x = -1.6, y = 8.1, label = paste("Bias² =", round(bias_total, 3)), size = 6) +
+    annotate("text", x = 0.2, y = 8.1, label = paste("Var =", round(var_total, 3)), size = 6) +
+    annotate("text", x = 1.8, y = 8.1, label = paste("Noise =", round(error_std^2, 3)), size = 6) +
     
     labs(title = paste0("Degree = ", poly_degree),
          x = "x", y = "y") +
     coord_cartesian(ylim = c(-2, 10)) +
     theme_minimal() +
     theme(
-      axis.title.x = element_text(size = 20),
-      axis.title.y = element_text(size = 20),
-      panel.grid.major = element_blank(),  
+      axis.title.x = element_text(size = 25),
+      axis.title.y = element_text(size = 25),
+      #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
-      plot.title = element_text(size=20, hjust = 0.5),
+      plot.title = element_text(size=25, hjust = 0.5),
       plot.title.position = "plot",
       legend.position = "bottom",
-      legend.title = element_text(size = 20),
+      legend.title = element_text(size = 22),
       legend.text = element_text(size = 20)
     )
   
