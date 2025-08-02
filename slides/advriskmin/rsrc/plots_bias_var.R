@@ -168,7 +168,7 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
                 fill = "gray", alpha = 0.5*alpha, inherit.aes = TRUE) +
     
     
-    annotate("text", x = 0, y = 9.3, label = paste("MSE =", round(mse_total, 3)), size = 8) +
+    annotate("text", x = 0, y = 9.5, label = paste("mean(MSE) =", round(mse_total, 3)), size = 8) +
     annotate("text", x = -1.6, y = 8.1, label = paste("Bias² =", round(bias_total, 3)), size = 6) +
     annotate("text", x = 0.2, y = 8.1, label = paste("Var =", round(var_total, 3)), size = 6) +
     annotate("text", x = 1.8, y = 8.1, label = paste("Noise =", round(error_std^2, 3)), size = 6) +
