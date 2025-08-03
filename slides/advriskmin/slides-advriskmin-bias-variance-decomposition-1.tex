@@ -84,7 +84,7 @@ N (0, 1)$$
 
 \begin{framei}[sep=M]{Simulation Example}
 
-\item Let's estimate bias and variance via by drawing independent data sets from the DGP and averaging.
+\item Let's estimate bias and variance by drawing independent data sets from the DGP and averaging.
 
 
 \item First, we train several (low capacity) LMs
@@ -217,8 +217,30 @@ $$GE_n(\ind) \approx 1 + 0.004 + 0.081 = 1.085 $$
 \begin{itemize}
 \item Naturally: better result
 \item Lowest bias, low variance
-\item In any case, variance of the data (irreducible noise) is lower bound
+\item In any case, variance of the data (irreducible noise) is lower bound of GE
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Point-wise decomposition}
+
+We can also compute these quantities point-wise, showing how each component varies over the domain of $x$
+
+\vfill
+
+\splitVThree
+{\imageC{figure/plots_bias_var_deg1_decomp.png}}
+{\imageC{figure/plots_bias_var_deg2_decomp.png}}
+{\imageC{figure/plots_bias_var_deg7_decomp.png}}
+
+\vfill
+
+\begin{itemize}
+\item For LM there is significant bias depending on $x$
+\item GE for degree 2 is dominated by irreducible noise and model var. at boundaries
+\item GE for degree 7 is dominated by exploding variance terms near boundaries
+\end{itemize}
+
 
 \end{frame}
 

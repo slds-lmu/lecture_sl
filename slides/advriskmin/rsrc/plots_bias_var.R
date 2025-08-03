@@ -5,6 +5,9 @@
 
 library(ggplot2)
 library(dplyr)
+library(tidyr)
+
+prefix_path = "../figure/"
 
 # Core definitions
 generate_dataset <- function(n, error_std = 1) {
@@ -90,6 +93,8 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     theme(
       axis.title.x = element_text(size = 25),
       axis.title.y = element_text(size = 25),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
       #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
       plot.title = element_text(size=25, hjust = 0.5),
@@ -113,6 +118,8 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     theme(
       axis.title.x = element_text(size = 25),
       axis.title.y = element_text(size = 25),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
       #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
       plot.title = element_text(size=25, hjust = 0.5),
@@ -139,6 +146,8 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     theme(
       axis.title.x = element_text(size = 25),
       axis.title.y = element_text(size = 25),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
       #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
       plot.title = element_text(size=25, hjust = 0.5),
@@ -180,6 +189,8 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     theme(
       axis.title.x = element_text(size = 25),
       axis.title.y = element_text(size = 25),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
       #panel.grid.major = element_blank(),  
       panel.grid.minor = element_blank(),
       plot.title = element_text(size=25, hjust = 0.5),
@@ -190,7 +201,53 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     )
   
   ggsave(paste0(prefix_path, "_mse.png"), g, width = 6, height = 4)
+  
+  # 5: Pointwise MSE Decomposition (Variance, Bias², Noise) as Stacked Area
+  df_decomp <- df_test %>%
+    mutate(
+      noise_cum = error_std^2,
+      var_cum = error_std^2 + var,
+      bias_cum = error_std^2 + var + (y_pred - y_true)^2
+    ) %>%
+    arrange(x)
+  
+  g <- ggplot(df_decomp, aes(x = x)) +
+    geom_ribbon(aes(ymin = 0, ymax = noise_cum, fill = "Noise")) +
+    geom_ribbon(aes(ymin = noise_cum, ymax = var_cum, fill = "Variance")) +
+    geom_ribbon(aes(ymin = var_cum, ymax = bias_cum, fill = "Bias²")) +
+    scale_fill_manual(values = c("Noise" = "grey",
+                                 "Variance" = "black",
+                                 "Bias²" = "blue")) +
+    labs(title = paste0("Decomposition (degree = ", poly_degree, ")"),
+         x = "x", y = "Generalization Error", fill = "Component") +
+    theme_minimal() +
+    theme(
+      axis.title.x = element_text(size = 25),
+      axis.title.y = element_text(size = 22),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(size = 25, hjust = 0.5),
+      plot.title.position = "plot",
+      legend.position = "bottom",
+      legend.title = element_text(size = 22),
+      legend.text = element_text(size = 20)
+    )
+  
+  # Append appropriate coord_cartesian
+  if (poly_degree == 7) {
+    g <- g + coord_cartesian(ylim = c(0, 10))
+  } else if (poly_degree == 2) {
+    g <- g + coord_cartesian(ylim = c(0.75, 1.3))
+  } else {
+    g <- g + coord_cartesian(ylim = c(0, 5))
+  }
+  # Save the plot
+  ggsave(paste0(prefix_path, "_decomp.png"), g, width = 6, height = 4)
 }
+
+  
+
 
 ### RUN FUNCTIONS
 

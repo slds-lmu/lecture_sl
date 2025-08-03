@@ -41,7 +41,11 @@ the sigmoid function $s(f) = \frac{1}{1 + \exp(-f)}$ and the score $\fxit = \thx
 
 \vfill
 
-NB: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top$
+\textbf{NB}: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top$\\
+
+\vfill
+
+From now on we abbreviate $\pixit$ as $\pi^{(i)}_{\thetav}$
 
 \end{frame}
 
@@ -54,14 +58,14 @@ We find the gradient of logistic regression with the chain rule:
 {\small
 \begin{align*}
 \frac{\partial}{\partial\thetav}\riske  & =  
--\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetav} +  \\
-& \qquad \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetav}\\
+-\sumin \frac{\partial}{\partial \pi^{(i)}_{\thetav}  }\yi\log( \pi^{(i)}_{\thetav} )\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav} +  \\
+& \qquad \frac{\partial}{\partial \pi^{(i)}_{\thetav} } (1-\yi)\log(1- \pi^{(i)}_{\thetav} )\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav}\\
 & =  
--\sumin \frac{\yi}{\pixit}\frac{\partial\pixit}{\partial \thetav} -  \frac{1-\yi}{1-\pixit}\frac{\partial\pixit}{\partial \thetav}\\
+-\sumin \frac{\yi}{ \pi^{(i)}_{\thetav} }\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav} -  \frac{1-\yi}{1- \pi^{(i)}_{\thetav} }\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav}\\
 &=  
--\sumin (\frac{\yi}{\pixit} -  \frac{1-\yi}{1-\pixit})\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetav}\\
+-\sumin (\frac{\yi}{ \pi^{(i)}_{\thetav} } -  \frac{1-\yi}{1- \pi^{(i)}_{\thetav} })\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetav}\\
 &=  
--\sum^n_{i=1} (\yi(1-\pixit)  -  (1-\yi)\pixit )(\xi)^\top\\
+-\sum^n_{i=1} (\yi(1- \pi^{(i)}_{\thetav} )  -  (1-\yi) \pi^{(i)}_{\thetav}  )(\xi)^\top\\
 \end{align*}
 }
 
@@ -72,7 +76,7 @@ We find the gradient of logistic regression with the chain rule:
 
 \begin{align*}
 \quad &=& 
-\sumin (\pixit - \yi)(\xi)^\top\\
+\sumin ( \pi^{(i)}_{\thetav}  - \yi)(\xi)^\top\\
 \quad &=& 
 (\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y})^\top\mathbf{X}\\
 \end{align*}
@@ -86,8 +90,8 @@ where
 \item $\mathbf{y} = (
 \yi[1], \dots,\yi[n])^\top$
 \item $\pi(\mathbf{X}\vert\;\thetav) = (
-\pixit[1], \dots,
-\pixit[n]
+ \pi^{(i)}_{\thetav} [1], \dots,
+\pi^{(i)}_{\thetav}[n]
 )^\top \in \R^{n}$
 \end{itemizeM}
 
@@ -109,15 +113,15 @@ We find the Hessian via differentiation:
 {\small
 \begin{align*}
 \nabla^2_{\thetav}\riske  = \frac{\partial^2}{\partial{\thetav^\top}\partial\thetav}\riske  & =  
-\frac{\partial}{\partial{\thetav^\top}} \sumin (\pixit - \yi)(\xi)^\top\\
+\frac{\partial}{\partial{\thetav^\top}} \sumin ( \pi^{(i)}_{\thetav} - \yi)(\xi)^\top\\
 & =  
-\sum^n_{i=1}\xi (\pixit(1-\pixit))(\xi)^\top\\
+\sum^n_{i=1}\xi ( \pi^{(i)}_{\thetav}(1- \pi^{(i)}_{\thetav}))(\xi)^\top\\
 & =  
 \mathbf{X}^\top \mathbf{D} \mathbf{X}\\
 \end{align*}
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
-$$\Big(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]\Big)$$
+$$\Big( \pi^{(i)}_{\thetav}[1](1- \pi^{(i)}_{\thetav}[1], \dots,  \pi^{(i)}_{\thetav}[n](1- \pi^{(i)}_{\thetav}[n]\Big)$$
 }
 
 Can now be used in Newton-Raphson and other 2nd order optimizers
@@ -130,7 +134,7 @@ Finally, we check that logistic regression is a convex problem:
 \vfill
 
 We define the diagonal matrix $\bar{\mathbf{D}} \in \mathbb{R}^{n \times n}$ with diagonal 
-$$\Big(\sqrt{\pixit[1])(1-\pixit[1]}, \dots, \sqrt{\pixit[n](1-\pixit[n]}\Big) $$
+$$\Big(\sqrt{ \pi^{(i)}_{\thetav}[1])(1- \pi^{(i)}_{\thetav}[1]}, \dots, \sqrt{ \pi^{(i)}_{\thetav}[n](1- \pi^{(i)}_{\thetav}[n]}\Big) $$
 which is possible since $\pi$ maps into (0, 1) \\
 \vfill
 With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that

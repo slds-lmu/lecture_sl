@@ -82,13 +82,18 @@ $$
 
 $$\fbayes(\xtil) = \argmin_{c \in \R} \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right]$$ 
 
-\item Again from the previous, \\
-we know the minimizer for $L2$ is the conditional expectation 
+\item We know from previously that $L2$ RM is the cond. exp. 
 
 $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
 
 \imageC[0.7]{figure/optimal_pointwise.png}
+
+\item For $L2$ loss, Bayes risk therefore reduces to 
+\begin{align*}
+    \risk(\fbayes(\xtil)) &= \Exy\left[(y-\fbayes(\xtil))^2\right] = \E_x \left[ \E_{y|x} \left[(y-\fbayes(\xtil))^2 \right] \right]\\
+    &= \E_x \left[ \E_{y|x} \left[(y-\E_{y|x} \left[y ~|~ \xv = \xtil \right])^2 \right] \right] = \E_x \left[ \var(y | \xv = \xtil) \right]
+\end{align*}
 
 \end{framei}
 
