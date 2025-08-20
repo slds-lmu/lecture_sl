@@ -24,7 +24,7 @@ figure_man/covariance2D-2.png
 \item Recall marginalization property of GPs: for any $\Xsubset = \xdat \subset \Xspace$,
 $$\fv = \fX \sim \Nmk$$
 with $\mv = \mX$, $\Kmat = \kXX$
-\item Cov function (or kernel) determines cov / kernel / Gram matrix: $\Kmat = \kXX$
+\item Cov. function (or kernel) determines cov / kernel / Gram matrix: $\Kmat = \kXX$
 \item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
 \item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions 
 
@@ -79,7 +79,7 @@ $$\kxxt = k(\bm{d})$$
 \end{framei}
 
 \begin{framei}[sep=L]{properties of covariance functions}
-\item Most cov functions belong to 3 common types
+\item Most cov. functions have 3 common properties
 \item \textbf{Stationary}: $k = k(\bm{d})$ with $\bm{d} = \xv - \xtil$ \\
 $\Rightarrow$ invariant to translations in $\Xspace$: $k(\xv, \xv + \bm{d}) = k(\zero, \bm{d})$\\
 (so we sometimes abuse notation and write $k(\bm{d})$)
@@ -121,7 +121,7 @@ $\Rightarrow$ invariant to rotations\\
 \item E.g., radial periodic kernel: $\kxxt = \exp \left(\frac{-2\sin^2 (\pi \xxtnorm / m)}{\ls^2} \right)$
 \item $m$: period, $\ls$: length-scale
 \item $f(\xv)$ should be periodically similar to points with a distance which is a multiple of $m$;\\
-for distances in between, this is again modulated by $\ls$
+for distances in between, this is modulated by $\ls$
 \item Alternative: Product of 1D periodic kernels, with $m_j$ period in dimension $j$: $\kxxt =  \exp \left(\sum_j\frac{-2\sin^2 (\pi |x_j - \tilde{x}_j| / m_j)}{\ls^2} \right)$
 \vfill
 \imageC[1]{figure/cov_funs/cov_periodic.pdf}
@@ -166,7 +166,7 @@ for distances in between, this is again modulated by $\ls$
 \end{framei}
 
 \begin{framei}[sep=M]{characteristic LS : isotropic case}
-\item Key (hyper)parameter of many (isotropic) kernels $k(r)$ 
+\item Every (isotropic) kernel can be written as $k(r)$ where %Key (hyper)parameter of many (isotropic) kernels $k(r)$ 
 \item $r=||\xv-\xtil||$
 \item E.g. $\kxxt = \exp \left(-\frac{\xxtnorm^2}{2\ls^2} \right)$ or $k(r) = \exp \left(-\frac{1}{2}(\frac{r}{\ls})^2\right)$ 
 \item Controls how quickly function values become uncorrelated
@@ -193,7 +193,7 @@ $$
 
 \begin{framei}[sep=L]{benefits of dim-wise length-scales}
 \item $\ls_1,\dots, \ls_p$: characteristic length-scales
-\item Intuition for $\ls_i$: how far to move along $i$-th axis for fun values to become uncorrelated?
+\item Intuition for $\ls_i$: how far to move along $i$-th axis for fun. values to become uncorrelated?
 \item Implements \textbf{automatic relevance determination} (ARD): inverse of $\ls_i$ determines importance of $i$-th feature
 \item Very large $\ls_i$ $\Rightarrow$ cov effectively independent of $i$-th feature
 \item For features on different scales: rescale automatically by estimating $\ls_1,\dots, \ls_p$ 
@@ -224,7 +224,7 @@ where $\bm{\ls} \in \R^p_+$, $\Gamma \in \R^{p \times k}$
 
 \item Left: $\bm{M} = \id$ $\Rightarrow$ same variation in all directions
 \item Middle: $\bm{M} = \diag(\bm{\ls})^{-2}$ $\Rightarrow$ less variation in $x_2$ direction ($\ls_2 > \ls_1$)
-\item Right: $\bm{M} = \Gamma \Gamma^T + \diag(\bm{\ls})^{-2}$ with $\Gamma = (1, -1)^T$ and $\bm{\ls} = (6, 6)^T$ $\Rightarrow$ $\Gamma$ determines dir of most rapid variation
+\item Right: $\bm{M} = \Gamma \Gamma^T + \diag(\bm{\ls})^{-2}$ with $\Gamma = (1, -1)^T$ and $\bm{\ls} = (6, 6)^T$ $\Rightarrow$ $\Gamma$ determines dir. of most rapid variation
 \vfill
 \imageC[1]{figure_man/covariance2D.png}
 

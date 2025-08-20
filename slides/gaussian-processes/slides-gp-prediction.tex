@@ -45,7 +45,7 @@ $$\normal(\muv_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \muv_1), \Sigma_{22} -
 \end{framei}
 
 \begin{framei}[sep=L]{example: 2 points}
-\item Single training point $\xv = -0.5$, test point $\xs = 0.5$
+\item Single training point $(\xv, f(\xv)) = (-0.5,1)$, test point $\xs = 0.5$
 \item 0-mean GP with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2} \| \xv - \tilde{\xv} \|^2)$ leads to 
 $$\begin{bmatrix} \fv \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\right)$$
 \item Assuming we observe $\fx = 1$, compute posterior distribution

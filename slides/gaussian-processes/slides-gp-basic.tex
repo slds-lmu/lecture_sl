@@ -136,10 +136,10 @@ $$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
 \begin{framei}{spatial correlation}
 \item ``Meaningful'' functions (on numeric $\Xspace$) often have spatial property:
 $$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ close / strongly correlated in } \Yspace$$
-\item In other words: fun values of nearby points should be correlated
-\item Enforce this by choosing dist-based covariance function
+\item In other words: fun. values of nearby points should be correlated
+\item Enforce this by choosing dist.-based covariance function
 $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ high }$$
-\item E.g., $\Kmat_{ij} = \kxij = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$ vs identity cov
+\item E.g., $\Kmat_{ij} = \kxij = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$ vs identity cov.
 \vfill
 \splitVCompact{.35}{.35}{
 \imageC{figure/discrete/discr_50_squaredexp_1n.pdf}
@@ -150,7 +150,7 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 \end{framei} 
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
-\item Recall: we defined distributions on functions by (Gaussian) random vector of corresponding function values 
+\item Recall: we defined distributions on functions as (Gaussian) random vector of corresponding function values 
 $$\fv = \fvec^T \sim \Nmk$$
 \item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
@@ -300,7 +300,7 @@ $$ \kxxt = \exp\left(-\tfrac{1}{2}\xxtnorm^2\right)$$
 
 \begin{framei}[sep=L]{Further reading}
 
-\item Will go thru many details now, but some general refs already
+\item Will go through many details now, but some general refs already
 
 \item The standard book: \furtherreading{RASMUSSENWILLIAMS2006GPML}
 
