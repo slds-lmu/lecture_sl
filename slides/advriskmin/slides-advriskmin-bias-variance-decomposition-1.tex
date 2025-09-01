@@ -72,19 +72,22 @@ models with high capacity have low \textbf{bias} and vice versa
 
 \begin{framei}[sep=L]{Simulation Example}
 
-\item True model:
+\item DGP with true model:
 $$y = x + \frac{x^2}{2} + \epsilon  \qquad \epsilon \sim 
 N (0, 1)$$
-\item Split each draw of samples into train and test sets 
+\item We will later draw multiple training sets $\D_n$, but only generate one
+large test set to set to approx. integrate our loss\\
+(can nicely do this with simul data)
 
-\imageC[0.7]{figure/plots_bias_var_aux_3.png}
 
+\imageC[0.5]{figure/plots_bias_var_aux_3.png}
+(only part of large test set used here and in future plots)
 \end{framei} 
 
 
 \begin{framei}[sep=M]{Simulation Example}
 
-\item Let's estimate bias and variance by drawing independent data sets from the DGP and averaging.
+\item Let's estimate bias and variance by drawing independent data sets from the DGP and averaging
 
 
 \item First, we train several (low capacity) LMs
@@ -114,7 +117,7 @@ data $\D_n$
 \begin{framei}[sep=M]{Squared Bias Computation / Estimation}
 
 \item Compute sq. diff. between avg. and true model at each test $x$
-\item Then average over all test points
+\item Then average over all test points (plot only shows subset)
 \item This is 
 $ 
 \E_x[ ( \ftrue(\xv)-\E_{\D_n} (\fh_{\D_n}(\xv) )~|~\xv)^2]
@@ -130,7 +133,7 @@ $
 \begin{framei}[sep=M]{Variance Computation}
 
 \item Compute variance of model predictions at each test $x$
-\item Then average over all test points
+\item Then average over all test points (plot only shows subset)
 \item This is 
 $
 \E_{x} [\var_{\D_n} (\fh_{\D_n}(\xv) ~|~\xv ) ]
@@ -147,13 +150,13 @@ could also estimate it from residuals
 \begin{framei}[fs=small,sep=M]{Decomp Result and Comparison with MSE}
 
 \item Decomp result; here bias is largest:
-$$GE_n(\ind) \approx 1 + 1.572 + 0.288 = 2.86 $$
+$$GE_n(\ind) \approx 1 + 1.824 + 0.270 = 3.094 $$
 
 \imageC[0.6]{figure/plots_bias_var_deg1_mse.png}
 
-\item Regular MSE: For each model, compute MSE on test set
+\item Regular MSE: For each model, compute MSE on whole test set
 \item Then we average these MSEs over all models
-\item Result = 2.86; checks out; \\
+\item Result = 3.094; checks out; \\
 \item In general: Error is quite high as we underfitted
 
 \end{framei}
@@ -177,18 +180,18 @@ $$GE_n(\ind) \approx 1 + 1.572 + 0.288 = 2.86 $$
 {\imageC{figure/plots_bias_var_deg7_mse.png}}
 
 
-$$GE_n(\ind) \approx 1 + 9.422 + 0.037 \approx 10.458 $$
+$$GE_n(\ind) \approx 1 + 0.09 + 0.568 = 1.658 $$
 
 \vfill
 
 \begin{itemize}
-\item GE higher than before, although hypo space now contains $\ftrue$
-\item Bias is lower, and variance higher 
+\item GE lower than before and hypo space now contains $\ftrue$
+\item Bias is much lower, and variance higher 
 \item Higher capacity learner overfits (here).\\
 We also do not regularize, that would be better
 
 \item NB: There is an ``edge effect'' on LHS, Runge effect,\\
-leads to higher bias as ``artifact'' here (ignore this)
+leads to some bias as ``artifact'' here (ignore this)
 \end{itemize}
 
 \end{frame}
@@ -212,12 +215,13 @@ leads to higher bias as ``artifact'' here (ignore this)
 
 \vfill
 
-$$GE_n(\ind) \approx 1 + 0.004 + 0.081 = 1.085 $$
+$$GE_n(\ind) \approx 1 + 0.014 + 0.094 = 1.108 $$
 
 \begin{itemize}
 \item Naturally: better result
 \item Lowest bias, low variance
-\item In any case, variance of the data (irreducible noise) is lower bound of GE
+\item In any case, variance of the data (irreducible noise, here 1) is a lower bound of GE
+\item This part remains even when using true model and infinite data
 \end{itemize}
 
 \end{frame}

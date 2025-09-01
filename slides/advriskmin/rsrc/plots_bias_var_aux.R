@@ -7,6 +7,7 @@
 library(ggplot2)
 library(mlr3)
 library(mlr3extralearners)
+library(dplyr)
 
 # Core definitions
 generate_dataset <- function(n, error_std = 1) {
@@ -21,9 +22,10 @@ set.seed(1)
 error_std <- 1
 lwidth <- 1.4
 
-# Auxiliary plot using mlr3 for the fit
+# Auxiliary plot using mlr3 for the fit                                                                                                                                                                                        
 plot_sample_fit <- function(idx, train_size, test_size, poly_degree, error_std, prefix_path, show_fit = TRUE, show_test = TRUE) {
   train_data <- generate_dataset(train_size, error_std)
+  set.seed(1)
   test_data  <- generate_dataset(test_size,  error_std)
   
   x_plot <- seq(-3, 3, length.out = 100)
@@ -40,14 +42,32 @@ plot_sample_fit <- function(idx, train_size, test_size, poly_degree, error_std, 
   
   df_train  <- data.frame(x = train_data$x, y = train_data$y, set = "Train")
   df_test   <- data.frame(x = test_data$x,  y = test_data$y,  set = "Test")
-  df_points <- rbind(df_train, df_test)
+  
+  # thin out x values in test set by keepigng only every 5th entry for plotting test points
+  if (idx==3) {
+    df_test_plt <- df_test %>% slice(seq(1, n(), by = 5))
+  } else {
+    df_test_plt <- df_test
+  }
+  
+  if (show_test) {
+    df_points <- rbind(df_train, df_test_plt)
+  } else {
+    df_points <- df_train
+  }
+  
+  #df_points <- rbind(df_train, df_test_plt)
   
   df_true <- data.frame(x = x_plot, y = y_true_plot)
   
   title_str <- if (show_fit) paste("Individual Sample Fit (degree =", poly_degree, ")") else "Individual Sample Draw"
   
   g <- ggplot() +
-    geom_point(data = df_points, aes(x = x, y = y, shape = set, color = set), size = 2.5) +
+
+    geom_point(data = subset(df_points, set == "Test"),
+               aes(x = x, y = y, color = set, shape = set), size = 2.5) +
+    geom_point(data = subset(df_points, set == "Train"),
+               aes(x = x, y = y, color = set, shape = set), size = 2.5) +
     scale_shape_manual(values = c("Train" = 16, "Test" = 17)) +
     scale_color_manual(values = c("Train" = "blue", "Test" = "orange")) +
     geom_line(data = df_true, aes(x = x, y = y), color = "black", linewidth = 0.9 * lwidth) +
@@ -77,5 +97,5 @@ plot_sample_fit(1, train_size = 32, test_size = 40, poly_degree = 1, error_std =
                 prefix_path = "../figure/", show_test = FALSE)
 plot_sample_fit(2, train_size = 32, test_size = 40, poly_degree = 1, error_std = error_std,
                 prefix_path = "../figure/", show_test = FALSE)
-plot_sample_fit(3, train_size = 32, test_size = 40, poly_degree = 1, error_std = error_std,
+plot_sample_fit(3, train_size = 32, test_size = 1000, poly_degree = 1, error_std = error_std,
                 prefix_path = "../figure/", show_fit = FALSE, show_test = TRUE)

@@ -97,7 +97,8 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
   ggsave(paste0(prefix_path, "_fits.png"), g, width = 6, height = 4)
   
   # 2: Bias
-  g <- ggplot(df_test, aes(x = x)) +
+  df_test_bias <- df_test %>% slice(seq(1, n(), by = 20))
+  g <- ggplot(df_test_bias, aes(x = x)) +
     geom_line(aes(y = y_true), color = "black", linewidth = lwidth) +
     geom_line(aes(y = y_pred), color = "blue", linetype = "dashed", linewidth = lwidth) +
     geom_segment(aes(xend = x, y = y_true, yend = y_pred), color = "blue", size = 1) +
@@ -120,7 +121,9 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
   ggsave(paste0(prefix_path, "_bias.png"), g, width = 6, height = 4)
   
   # 3: Variance
-  g <- ggplot(df_test, aes(x = x)) +
+  # thin out x values to every tenth value
+  df_test_var <- df_test %>% slice(seq(1, n(), by = 20))
+  g <- ggplot(df_test_var, aes(x = x)) +
     geom_line(data = df_all_models, aes(x = x, y = y, group = model),
               color = "grey", alpha = 1.5 * alpha, inherit.aes = FALSE) +
     geom_line(data = df_mean_model, aes(x = x, y = y),
@@ -146,7 +149,8 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
   ggsave(paste0(prefix_path, "_variance.png"), g, width = 6, height = 4)
   
   # 4: MSE
-  g <- ggplot(df_test, aes(x = x)) +
+  df_test_mse <- df_test %>% slice(seq(1, n(), by = 20))
+  g <- ggplot(df_test_mse, aes(x = x)) +
     geom_line(aes(y = y_true), color = "black", linewidth = lwidth) +
     geom_line(aes(y = y_pred), color = "blue", linetype = "dashed", linewidth = lwidth) +
     geom_segment(aes(xend = x, y = y_true, yend = y_pred), color = "blue", size = 1) +
@@ -155,9 +159,9 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     geom_ribbon(aes(ymin = y_true - error_std, ymax = y_true + error_std),
                 fill = "gray", alpha = 0.5 * alpha, inherit.aes = TRUE) +
     annotate("text", x = 0,   y = 9.5, label = paste("mean(MSE) =", round(mse_total, 3)), size = 8) +
-    annotate("text", x = -1.6, y = 8.1, label = paste("Bias² =", round(bias_total, 3)), size = 6) +
-    annotate("text", x = 0.2,  y = 8.1, label = paste(" Var =", round(var_total, 3)), size = 6) +
-    annotate("text", x = 1.8,  y = 8.1, label = paste(" Noise =", round(error_std^2, 3)), size = 6) +
+    annotate("text", x = -1.6, y = 8.1, label = paste("Bias² =", round(bias_total, 3), " "), size = 6) +
+    annotate("text", x = 0.2,  y = 8.1, label = paste(" , Var =", round(var_total, 3), " "), size = 6) +
+    annotate("text", x = 1.8,  y = 8.1, label = paste(" , Noise =", round(error_std^2, 3)), size = 6) +
     labs(title = paste0("Degree = ", poly_degree), x = "x", y = "y") +
     coord_cartesian(ylim = c(-2, 10)) +
     theme_minimal() +
@@ -208,9 +212,9 @@ simulate_and_plot <- function(poly_degree, test_data, n_models, train_size, erro
     )
   
   if (poly_degree == 7) {
-    g <- g + coord_cartesian(ylim = c(0, 10))
+    g <- g + coord_cartesian(ylim = c(0, 5))
   } else if (poly_degree == 2) {
-    g <- g + coord_cartesian(ylim = c(0.75, 1.3))
+    g <- g + coord_cartesian(ylim = c(0, 5)) #0.75, 1.3
   } else {
     g <- g + coord_cartesian(ylim = c(0, 5))
   }
@@ -228,7 +232,7 @@ lwidth <- 1.2
 training_length <- round(training_fraction * data_length)
 number_of_models <- 10
 
-test_data <- generate_dataset(data_length, error_std)
+test_data <- generate_dataset(data_length*25, error_std) #n_test=100
 
 simulate_and_plot(1, test_data, number_of_models, training_length, error_std,
                   "../figure/plots_bias_var_deg1")
