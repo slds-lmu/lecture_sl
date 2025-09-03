@@ -39,7 +39,7 @@ $$\mv_{\text{post}} = \E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv, \quad \Kmat_
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{framei}[sep=L]{trend via covariance structure}
+\begin{framei}[sep=S]{trend via covariance structure}
 \item For zero-mean GPs with stationary kernels posterior mean reverts to the prior further outside the training domain (no extrapolation)
 \item But trend-like behaviour could be directly encoded in $\kcc$:
 \begin{itemize}
@@ -47,8 +47,16 @@ $$\mv_{\text{post}} = \E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv, \quad \Kmat_
   \item Polynomial kernels for global polynomial trends
   \item Composite kernels: $k = k_{\text{long}} + k_{\text{short}}$
 \end{itemize}
-\item Produces non-flat priors even with $m(\xv)=0$
-\item \textbf{Downside}: interpretability lower, extrapolation tied to kernel choice
+\item Produces non-flat priors even with $m(\xv)=0$, but lower interpretability and kernel-dependent extrapolation
+
+\vfill
+
+\splitV{
+\imageC[1.0]{figure/plot_extrapol_matern.png}
+}{
+\imageC[1.0]{figure/plot_extrapol_linear.png}
+}
+
 \end{framei}
 
 
