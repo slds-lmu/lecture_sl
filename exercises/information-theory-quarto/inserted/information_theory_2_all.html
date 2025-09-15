@@ -3530,7 +3530,77 @@ Tip
 <section id="interpretation-1" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
 <p>We can see that by adding smoothing we have changed the labels matrix (1’s have decrease to 0.86 and zeros ent up to 0.06) which resulted in average loss increased from around 0.29 to 0.61 (~2.13x increase).</p>
-<p>Let’s observe the changes in the loss for each sample: | Sample ID | Prediction distribution | Prediction true label | Standard CE | Smoothed CE | Change factor | | :——-: | ————————————– | :——: | ———: | ———-: | ————: | | 1 | (0.850, 0.100, 0.050) | 0.85 | 0.163 | 0.494 | 3.040 | | 2 | (0.050, 0.900, 0.050) | 0.90 | 0.105 | 0.491 | 4.658 | | 3 | (0.020, 0.950, 0.030) | 0.95 | 0.051 | 0.539 | 10.509 | | 4 | (0.130, 0.020, 0.850) | 0.85 | 0.163 | 0.538 | 3.308 | | 5 | (0.860, 0.040, 0.100) | 0.86 | 0.151 | 0.499 | 3.307 | | 6 | (0.340, 0.330, 0.330) | 0.34 | 1.079 | 1.083 | 1.004 |</p>
+<p>Let’s observe the changes in the loss for each sample:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 42%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Sample ID</th>
+<th>Prediction distribution</th>
+<th style="text-align: center;">Prediction true label</th>
+<th style="text-align: right;">Standard CE</th>
+<th style="text-align: right;">Smoothed CE</th>
+<th style="text-align: right;">Change factor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td>(0.850, 0.100, 0.050)</td>
+<td style="text-align: center;">0.85</td>
+<td style="text-align: right;">0.163</td>
+<td style="text-align: right;">0.494</td>
+<td style="text-align: right;">3.040</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td>(0.050, 0.900, 0.050)</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: right;">0.105</td>
+<td style="text-align: right;">0.491</td>
+<td style="text-align: right;">4.658</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td>(0.020, 0.950, 0.030)</td>
+<td style="text-align: center;">0.95</td>
+<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">0.539</td>
+<td style="text-align: right;">10.509</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td>(0.130, 0.020, 0.850)</td>
+<td style="text-align: center;">0.85</td>
+<td style="text-align: right;">0.163</td>
+<td style="text-align: right;">0.538</td>
+<td style="text-align: right;">3.308</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td>(0.860, 0.040, 0.100)</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: right;">0.151</td>
+<td style="text-align: right;">0.499</td>
+<td style="text-align: right;">3.307</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td>(0.340, 0.330, 0.330)</td>
+<td style="text-align: center;">0.34</td>
+<td style="text-align: right;">1.079</td>
+<td style="text-align: right;">1.083</td>
+<td style="text-align: right;">1.004</td>
+</tr>
+</tbody>
+</table>
 <p>We can observe that the loss for the not confident prediction (sample 6) has remained practically unchanged, but for the confident predictions (samples 1-5) the loss has increased significantly. The increase is especially noticeable for the 3rd sample, for which the prediction was very confident (0.95) and the loss has increased by a factor of 10.5.</p>
 </section>
 </section>
