@@ -1,0 +1,108 @@
+---
+title: "Exercise -- Curse of Dimensionality"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+  # - notebook: sol_cod_R.ipynb
+  #   title: "Exercise sheet for R"
+  #   url: "https://github.com/slds-lmu/lecture_sl/blob/main/exercises/cod-quarto/sol_cod_R.ipynb"
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/cod-quarto/inserted/sol_cod_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/cod-quarto/inserted/sol_cod_py.ipynb).
+:::
+
+# Curse of Dimensionality Exercise
+
+In this exercise, we will explore the curse of dimensionality by analyzing the behavior of Gaussian vectors in high-dimensional spaces. We'll implement functions to calculate:
+
+1. Euclidean lengths of vectors
+2. Euclidean distances between vectors  
+3. Inner products between vectors
+
+Then we'll analyze how these measures behave as dimensionality increases.
+
+::: {.content-visible when-profile="solution"}
+
+# Importing necessary libraries
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#imports echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#imports echo=true >}}
+:::
+
+# Defining the functions
+
+## Euclidean length (L2 norm) of the sampled set
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#euclidean_length echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#euclidean_length echo=true >}}
+:::
+
+## Euclidean distance (L2 norm) between the sampled sets
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#euclidean_distance echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#euclidean_distance echo=true >}}
+:::
+
+## Inner product between the sampled sets
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#inner_product echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#inner_product echo=true >}}
+:::
+
+# Looping over various dimensionality options
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#loop_over_p echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#loop_over_p echo=true >}}
+:::
+
+# Visual inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#plots echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#plots echo=true >}}
+:::
+
+# Interpretation of plots
+
+The plots confirm our results from the previous subpoints.
+
+1. Average Euclidean Length - matches almost perfectly with $\sqrt{p}$, showing that as dimensionality increases, the average length of a Gaussian vector grows on the order of $\sqrt{p}$. 
+2. Variance Euclidean Length - unlike the average, the variance does not grow with dimensionality, and never exceeds 2, indicating that the distribution of lengths remains stable regardless of dimensionality.
+3. Average Euclidean distance - aligns almost exactly with $\sqrt{2p}$, showing that as dimensionality increases, two independent Gaussian vectors move apart on the order of $\sqrt{2p}$.
+4. Variance Euclidean distance - as we saw for the variance of the lengths, the variance of the distances does not grow with dimensionality as well and never exceeds 2.
+5. Average inner product - the average inner product is close to 0, some fluctuations still appear due to randomness, but the range of values on the y-axis is quite small.
+6. Variance inner product - unlike the other variances, the variance of the inner product grows with dimensionality (in a perfect linear way)
+
+# Full code
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#full_code echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#full_code echo=true >}}
+:::
+
+:::

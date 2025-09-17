@@ -1,0 +1,93 @@
+---
+title: "Exercise -- Curse of Dimensionality"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+  # - notebook: sol_cod_R.ipynb
+  #   title: "Exercise sheet for R"
+  #   url: "https://github.com/slds-lmu/lecture_sl/blob/main/exercises/cod-quarto/sol_cod_R.ipynb"
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
+
+INSERT_exercise
+
+::: {.content-visible when-profile="solution"}
+
+INSERT_importing_libraries
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#imports echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#imports echo=true >}}
+:::
+
+INSERT_defining_functions
+
+INSERT_euclidean_length_header
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#euclidean_length echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#euclidean_length echo=true >}}
+:::
+
+INSERT_euclidean_distance_header
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#euclidean_distance echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#euclidean_distance echo=true >}}
+:::
+
+INSERT_inner_product_header
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#inner_product echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#inner_product echo=true >}}
+:::
+
+INSERT_looping_header
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#loop_over_p echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#loop_over_p echo=true >}}
+:::
+
+INSERT_visual_inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#plots echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#plots echo=true >}}
+:::
+
+INSERT_interpretation_header
+
+INSERT_interpretation_text
+
+INSERT_full_code_header
+
+::: {.panel-tabset}
+### R
+{{< embed sol_cod_R.ipynb#full_code echo=true >}}
+### Python
+{{< embed sol_cod_py.ipynb#full_code echo=true >}}
+:::
+
+:::
