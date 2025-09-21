@@ -134,14 +134,6 @@ You can use the following prompt to get a draft:
 
 ## 7. GitHub + Colab
 9.  Create PR
-10. Once merged, add jupyter notebooks to [Google Colab](https://colab.research.google.com/). File -> Open notebook -> GitHub -> search for "slds-lmu", then select the notebook you want to add, or alternatively paste the full link, for example https://github.com/slds-lmu/lecture_sl/blob/ex_gp_quarto/exercises/gaussian-processes-quarto/sol_gp_2_R.ipynb (this example is not from the `main` branch, this steps assumes that PR is merged, so the url will actuall be from the `main` branch). The created notebook's URL will have the following structure "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/<exercise_chunk>/<file_name>.ipynb".
+10. Once merged, add jupyter notebooks to [Google Colab](https://colab.research.google.com/). File -> Open notebook -> GitHub -> search for "slds-lmu", then select the notebook you want to add, or alternatively paste the full link, for example https://github.com/slds-lmu/lecture_sl/blob/ex_gp_quarto/exercises/gaussian-processes-quarto/sol_gp_2_R.ipynb (this example is not from the `main` branch, this steps assumes that PR is merged, so the url will actually be from the `main` branch). The created notebook's URL will have the following structure "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/<exercise_chunk>/<file_name>.ipynb".
 11. Check that the links work
 12. Some tex macros may fail, may need to add e.g. `$$\newcommand{\bm}{\boldsymbol}$$`
-
-
-# Todo (internal comment)
-[] update docs to include the case of folder with multiple exercises
-[] cleanup unnecessary files from I2ML lecture
-[] go over older files and retire the approach of putting texts in a json file
-[] write a script to extract the texts from the ipynb files and put them in a separate ipynb just for texts
-[] Fix the issue with the `keras` package in R, Regu 1
