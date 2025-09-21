@@ -1,0 +1,227 @@
+---
+title: "Regularization - Exercise 1"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
+
+INSERT_exercise_2_a
+
+INSERT_install_packages
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#install_packages_cell echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#install_packages_cell echo=true >}}
+:::
+
+INSERT_generating_data
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#data_generation echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#data_generation echo=true >}}
+:::
+
+INSERT_vis_relationship
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#visualizing_relationships echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#visualizing_relationships echo=true >}}
+:::
+
+INSERT_exercise_2_b
+
+INSERT_under_over_fitting_intro
+
+INSERT_imports_and_splitting
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#imports_and_splitting echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#imports_and_splitting echo=true >}}
+:::
+
+INSERT_underfitting_demo
+
+INSERT_lin_reg_fit_and_eval
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#lin_reg_fit_and_eval echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#lin_reg_fit_and_eval echo=true >}}
+:::
+
+INSERT_lin_reg_interpretation
+
+INSERT_lin_reg_visual_inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#lin_reg_visual_inspection echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#lin_reg_visual_inspection echo=true >}}
+:::
+
+INSERT_lin_reg_plot_interpretation
+
+INSERT_overfitting_demo
+
+INSERT_poly_reg_fit_and_eval
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#poly_reg_fit_and_eval echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#poly_reg_fit_and_eval echo=true >}}
+:::
+
+INSERT_poly_reg_interpretation
+
+INSERT_poly_reg_visual_inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#poly_reg_visual_inspection echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#poly_reg_visual_inspection echo=true >}}
+:::
+
+INSERT_poly_reg_plot_interpretation
+
+::: {.panel-tabset}
+### Python
+INSERT_poly_reg_plot_interpretation_py
+:::
+
+INSERT_regularization_demo
+
+::: {.panel-tabset}
+### R
+INSERT_regularization_helper_function_R
+### Python
+INSERT_regularization_helper_function_py
+:::
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#regularization_helper_function echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#regularization_helper_function echo=true >}}
+:::
+
+INSERT_l1_lasso_regularization
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#l1_lasso_plot echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#l1_lasso_plot echo=true >}}
+:::
+
+INSERT_l2_ridge_regularization
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#l2_ridge_plot echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#l2_ridge_plot echo=true >}}
+:::
+
+INSERT_elastic_net_regularization
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#elastic_net_plot echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#elastic_net_plot echo=true >}}
+:::
+
+INSERT_regularization_comparison_note
+
+INSERT_underdetermined_problem
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#check_x_shape_determinant echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#check_x_shape_determinant echo=true >}}
+:::
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#underdetermined_fewer_samples echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#underdetermined_fewer_samples echo=true >}}
+:::
+
+INSERT_calc_xt_x_determinant
+
+::: {.panel-tabset}
+### R
+<!-- TODO: inverse_x_t_x cell doesn't exist in R notebook -->
+<!-- {{< embed sol_regularization_1_R.ipynb#inverse_x_t_x echo=true >}} -->
+### Python
+{{< embed sol_regularization_1_py.ipynb#inverse_x_t_x echo=true >}}
+:::
+
+::: {.panel-tabset}
+### R
+INSERT_inverse_existence_explanation_R
+### Python
+INSERT_inverse_existence_explanation
+:::
+
+::: {.panel-tabset}
+### Python
+{{< embed sol_regularization_1_py.ipynb#singular_matrix_example echo=true >}}
+### R
+<!-- TODO: singular_matrix_example cell doesn't exist in R notebook -->
+<!-- {{< embed sol_regularization_1_R.ipynb#singular_matrix_example echo=true >}} -->
+:::
+
+INSERT_bias_variance_tradeoff
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#bias_variance_visualization echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#bias_variance_visualization echo=true >}}
+:::
+
+INSERT_bias_variance_interpretation
+
+INSERT_early_stopping_neural_network
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#neural_network_early_stopping echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#neural_network_early_stopping echo=true >}}
+:::
+
+INSERT_no_early_stopping_interpretation
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#early_stopping echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#early_stopping echo=true >}}
+:::
+
+INSERT_early_stopping_interpretation

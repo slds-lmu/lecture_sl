@@ -1,0 +1,308 @@
+---
+title: "Regularization - Exercise 1"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_quarto_1_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_1_py.ipynb).
+:::
+
+# Exercise 2 (a)
+Simulate a data set with $n = 100$ observations based on the relationship $y = \sin(x_1) + \varepsilon$ with noise term $\varepsilon$ following some distribution. Simulate $p=100$ additional covariates $x_2,\ldots,x_{101}$ that are not related to $y$.
+
+## Packages
+If you want to reproduce the results, you may need to run the cell below
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#install_packages_cell echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#install_packages_cell echo=true >}}
+:::
+
+## Generating the data
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#data_generation echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#data_generation echo=true >}}
+:::
+
+### Visualizing the relationships
+Let's see the relationships of $Y$ with $x_1$ and an unrelated covariate $x_2$
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#visualizing_relationships echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#visualizing_relationships echo=true >}}
+:::
+
+# Exercise 2 (b)
+On this data set, use different models (and software packages) of your choice to demonstrate
+
+* overfitting and underfitting;
+* L1, L2 and elastic net regularization;
+* the underdetermined problem;
+* the bias-variance trade-off;
+* early stopping using a simple neural network.
+
+## Underfitting and Overfitting
+Let's try to approximate the (sinusoidal) relationship between $y$ and $x_1$ with:
+
+1) a simple linear model
+2) a polynomial model of degree 50.
+
+Also, in order for us to see the effects of under/over-fitting not only visually but also numerically, lets split the data into training and test sets and calculate the training and test errors for each model.
+
+### Imports and Splitting the Data
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#imports_and_splitting echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#imports_and_splitting echo=true >}}
+:::
+
+### Underfitting demonstration
+
+#### Fitting Linear Regression and Evaluating the Model
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#lin_reg_fit_and_eval echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#lin_reg_fit_and_eval echo=true >}}
+:::
+
+#### Linear Regression Train/Test Error Interpretation
+
+The error on the unseen data is significantly higher then the error on the training set which may indicate that the model is overfitting, but we must first ask ourselves whether or not the results on the training set are actually good. If the training error is significantly higher than the Bayes risk (i.e. the minimum possible error), then we may be underfitting the data.
+
+Visual inspection will help us here as well:
+
+#### Linear Regression Visual Inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#lin_reg_visual_inspection echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#lin_reg_visual_inspection echo=true >}}
+:::
+
+#### Linear Regression Plot Interpretation
+By plotting the predictions against the actual data and the $\sin x$ function (noiseless DGP) we can see that the model lacks complexity $\Rightarrow$ suffers from underfitting problem.
+
+### Overfitting demonstration
+
+#### Fitting Polynomial Regression and Evaluating the Model
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#poly_reg_fit_and_eval echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#poly_reg_fit_and_eval echo=true >}}
+:::
+
+#### Polynomial Regression Train/Test Error Interpretation
+
+Test error is undescribably higher than the training error, this is a clear sign of overfitting. The model is too complex for the data and it has learned the noise in the training set.
+
+Let's see this visually:
+
+#### Polynomial Regression Visual Inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#poly_reg_visual_inspection echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#poly_reg_visual_inspection echo=true >}}
+:::
+
+#### Polynomial Regression Plot Interpretation
+By looking at the predictions for the points around -1.3 we can nicely see how much the model bends to pass through the training data points, and learns the noise instead of the actual pattern.
+
+The reader may find it interesting to decrease the degree of the polynomial to make the demonstration less extreme, and for degree = 7 you may even notice that the train/test errors alone indicate less overfitting than in the case of simple linear regression.
+
+Also, we encourage the reader to try to find the optimal degree of the polynomial.
+
+::: {.panel-tabset}
+### Python
+*Additional note:*
+We can observe that the model outputs ~0 for $x \in [1,1]$. We encourage the reader to try understanding why this happens.
+
+Hints:
+1. Look into model coefficients using `.coef_` attribute
+2. Think about the plot of $x$ raised to power of (for example) 42.
+:::
+
+## L1, L2 and Elastic Net Regularization
+
+Now let's demonstrate different types of regularization techniques and observe how they affect the coefficient paths (for each hyperparameter lambda the resulting model's coefficients).
+
+### Helper Function for Plotting Regularization Paths in R
+
+The R implementation uses the `glmnet` package which provides the `glmnet()` function for fitting regularized models and `plot.glmnet()` for visualizing the coefficient paths.
+
+### Helper Function for Plotting Regularization Paths
+
+Here `sklearn`'s `enet_path` function is used which under the hood fits a `ElasticNet` model. This makes the code much shorter since by passing 1, 0 or something in between as the `l1_ratio` parameter we can get the Lasso, Ridge or Elastic Net regularization paths respectively.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#regularization_helper_function echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#regularization_helper_function echo=true >}}
+:::
+
+## L1 (Lasso) Regularization
+
+For small lambda values (weak penalization) we can see that the uninformative covariates do have non-zero coefficients, but by increasing the lambda they eventually go to **exactly** zero. However, when we penalize the coefficients too strongly, the coefficient of $x_1$ also goes to zero, which is bad, since $x_1$ is actually informative.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#l1_lasso_plot echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#l1_lasso_plot echo=true >}}
+:::
+
+## L2 (Ridge) Regularization
+
+A few differences from the Lasso plot above:
+
+- The lambda values are much bigger here (smallest being around $10^4$ instead of $10^{-3}$)
+- As a result we also see that the coefficients are much smaller (0.0001 instead of 0.65)
+- Also, most importantly the coefficients **do not go to zero**, but rather to very small values. The Lasso performs feature selection, while the Ridge does not.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#l2_ridge_plot echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#l2_ridge_plot echo=true >}}
+:::
+
+## Elastic Net Regularization (with l1_ratio = 0.3)
+
+This approach is somewhere in-between the two above - lambda values are bigger than Lasso, but not as big as Ridge.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#elastic_net_plot echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#elastic_net_plot echo=true >}}
+:::
+
+### Comparing Regularization Methods
+
+The reader may find it interesting to compare the plots for the same lambda values across different regularization techniques.
+
+## The Underdetermined Problem
+
+As a reminder, we can obtain an analytic solution for a linear regression model with Mean Squared Error (MSE) loss by solving the normal equations
+$$
+\beta = (X^TX)^{-1}X^TY
+$$
+
+The **underdetermined problem** arises when we have more covariates than observations, because in that case then the design matrix ($X$) is not full rank $\Rightarrow$ the inverse of the $X^T X$ does not exist $\Rightarrow$ we cannot solve the normal equations.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#check_x_shape_determinant echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#check_x_shape_determinant echo=true >}}
+:::
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#underdetermined_fewer_samples echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#underdetermined_fewer_samples echo=true >}}
+:::
+
+Although we see that the determinant is zero, let's try to compute the inverse (although in practice we would obtain the analytic solution (for the normal equation) by solving the System of Linear Equations $X^TX\beta = X^TY$, and avoiding the inverse altogether).
+
+::: {.panel-tabset}
+### R
+<!-- TODO: inverse_x_t_x cell doesn't exist in R notebook -->
+<!-- {{< embed sol_regularization_1_R.ipynb#inverse_x_t_x echo=true >}} -->
+### Python
+{{< embed sol_regularization_1_py.ipynb#inverse_x_t_x echo=true >}}
+:::
+
+::: {.panel-tabset}
+### R
+The code throws the error "Error in solve.default(t(X_head) %*% X_head): system is computationally singular: reciprocal condition number = 2.59398e-20" because the matrix is singular, meaning it does not have an inverse.
+
+The reader may find it interesting that the equivalent code in Python does produce an output (although it is mathematically impossible), since from the machine's perspective the matrix is not singular, because of the floating point approximations. The reader may dug deeper into the topic by following [this](https://stackoverflow.com/questions/28712734/numpy-possible-for-zero-determinant-matrix-to-be-inverted) Stack Overflow post.
+### Python
+The code above does produce an output (although it is mathematically impossible), since from the machine's perspective the matrix is not singular, because of the floating point approximations. The reader may dug deeper into the topic by following [this](https://stackoverflow.com/questions/28712734/numpy-possible-for-zero-determinant-matrix-to-be-inverted) Stack Overflow post.
+
+We'll demonstrate the underdetermined problem with a manually created example.
+:::
+
+::: {.panel-tabset}
+### Python
+{{< embed sol_regularization_1_py.ipynb#singular_matrix_example echo=true >}}
+### R
+<!-- TODO: singular_matrix_example cell doesn't exist in R notebook -->
+<!-- {{< embed sol_regularization_1_R.ipynb#singular_matrix_example echo=true >}} -->
+:::
+
+## The Bias-Variance Trade-off
+
+Let's demonstrate the bias-variance trade-off by comparing polynomial models of different degrees.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#bias_variance_visualization echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#bias_variance_visualization echo=true >}}
+:::
+
+### Interpreting the Bias-Variance Trade-off
+
+We can see that the green line (degree=1) is too simple and will have a underfitting (high bias) problem. On the other hand, the purple line (degree=15) is too complex and will have a overfitting (high variance) problem. The yellow line (degree=3) serves as a good compromise between the two.
+
+We invite the reader to experiment with different degrees of the polynomial, maybe additionally looking at train/test errors and tring to find the optimal degree.
+
+## Early Stopping using a Simple Neural Network
+
+First of all let's see how the model performs without early stopping.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#neural_network_early_stopping echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#neural_network_early_stopping echo=true >}}
+:::
+
+### Interpreting Results Without Early Stopping
+
+We can see that starting from epoch 15 model did not make any significant improvements. That's not the case here, but usually the model also starts to overfit to the training data, and the validation loss rises when we let it run for too many epochs.
+
+In order to avoid overfitting and use our computational resources more efficiently, we can use early stopping. We will track the validation loss and if for a given `patience` period (e. g. 5 epochs) the validation loss (`monitor`) does not improve by a given threshold (`min_delta`) (e. g. 0.01), we stop the training.
+
+*Side note:*
+
+In our case the validation loss did not start rising because the model had already achieved perfect fit (loss = 0) to the training data, so the weights were not updating anymore, and the validation loss did not change. Usually, for more complex DGP's achieving perfect fit is not possible.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_1_R.ipynb#early_stopping echo=true >}}
+### Python
+{{< embed sol_regularization_1_py.ipynb#early_stopping echo=true >}}
+:::
+
+### Interpreting Early Stopping Results
+
+We see that the neural network ran only for 16 epochs, although we specified 100 epochs. This is because we used early stopping and the optimizer stopped after 6 epochs without significant improvement in the validation loss.
+
+We encourage the reader to split the data and look into train/test errors for the same neural network with and without early stopping. What do you observe regarding overfitting?
