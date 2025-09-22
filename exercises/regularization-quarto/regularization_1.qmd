@@ -10,12 +10,15 @@ notebook-view:  false
 :::
 :::
 
+::: {.content-visible when-profile="solution"}
 ::: callout-tip
 You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
 :::
 
 INSERT_exercise_2_a
 
+::: {.content-visible when-profile="solution"}
 INSERT_install_packages
 
 ::: {.panel-tabset}
@@ -43,8 +46,11 @@ INSERT_vis_relationship
 {{< embed sol_regularization_1_py.ipynb#visualizing_relationships echo=true >}}
 :::
 
+::: 
+
 INSERT_exercise_2_b
 
+::: {.content-visible when-profile="solution"}
 INSERT_under_over_fitting_intro
 
 INSERT_imports_and_splitting
@@ -100,28 +106,21 @@ INSERT_poly_reg_visual_inspection
 {{< embed sol_regularization_1_R.ipynb#poly_reg_visual_inspection echo=true >}}
 ### Python
 {{< embed sol_regularization_1_py.ipynb#poly_reg_visual_inspection echo=true >}}
+INSERT_poly_reg_plot_interpretation_py
 :::
 
 INSERT_poly_reg_plot_interpretation
 
-::: {.panel-tabset}
-### Python
-INSERT_poly_reg_plot_interpretation_py
-:::
 
 INSERT_regularization_demo
+
 
 ::: {.panel-tabset}
 ### R
 INSERT_regularization_helper_function_R
-### Python
-INSERT_regularization_helper_function_py
-:::
-
-::: {.panel-tabset}
-### R
 {{< embed sol_regularization_1_R.ipynb#regularization_helper_function echo=true >}}
 ### Python
+INSERT_regularization_helper_function_py
 {{< embed sol_regularization_1_py.ipynb#regularization_helper_function echo=true >}}
 :::
 
@@ -174,25 +173,13 @@ INSERT_calc_xt_x_determinant
 
 ::: {.panel-tabset}
 ### R
-<!-- TODO: inverse_x_t_x cell doesn't exist in R notebook -->
-<!-- {{< embed sol_regularization_1_R.ipynb#inverse_x_t_x echo=true >}} -->
+{{< embed sol_regularization_1_R.ipynb#underdetermined_inv_solve echo=true >}}
+INSERT_inverse_existence_explanation_R
+
 ### Python
 {{< embed sol_regularization_1_py.ipynb#inverse_x_t_x echo=true >}}
-:::
-
-::: {.panel-tabset}
-### R
-INSERT_inverse_existence_explanation_R
-### Python
-INSERT_inverse_existence_explanation
-:::
-
-::: {.panel-tabset}
-### Python
+INSERT_inverse_existence_explanation_py
 {{< embed sol_regularization_1_py.ipynb#singular_matrix_example echo=true >}}
-### R
-<!-- TODO: singular_matrix_example cell doesn't exist in R notebook -->
-<!-- {{< embed sol_regularization_1_R.ipynb#singular_matrix_example echo=true >}} -->
 :::
 
 INSERT_bias_variance_tradeoff
@@ -210,6 +197,7 @@ INSERT_early_stopping_neural_network
 
 ::: {.panel-tabset}
 ### R
+{{< embed sol_regularization_1_R.ipynb#early_stopping_package_install_R echo=true >}}
 {{< embed sol_regularization_1_R.ipynb#neural_network_early_stopping echo=true >}}
 ### Python
 {{< embed sol_regularization_1_py.ipynb#neural_network_early_stopping echo=true >}}
@@ -225,3 +213,4 @@ INSERT_no_early_stopping_interpretation
 :::
 
 INSERT_early_stopping_interpretation
+:::

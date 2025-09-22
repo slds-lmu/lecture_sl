@@ -10,13 +10,16 @@ notebook-view:  false
 :::
 :::
 
+::: {.content-visible when-profile="solution"}
 ::: callout-tip
 You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_quarto_1_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_1_py.ipynb).
+:::
 :::
 
 # Exercise 2 (a)
 Simulate a data set with $n = 100$ observations based on the relationship $y = \sin(x_1) + \varepsilon$ with noise term $\varepsilon$ following some distribution. Simulate $p=100$ additional covariates $x_2,\ldots,x_{101}$ that are not related to $y$.
 
+::: {.content-visible when-profile="solution"}
 ## Packages
 If you want to reproduce the results, you may need to run the cell below
 
@@ -46,6 +49,8 @@ Let's see the relationships of $Y$ with $x_1$ and an unrelated covariate $x_2$
 {{< embed sol_regularization_1_py.ipynb#visualizing_relationships echo=true >}}
 :::
 
+::: 
+
 # Exercise 2 (b)
 On this data set, use different models (and software packages) of your choice to demonstrate
 
@@ -55,6 +60,7 @@ On this data set, use different models (and software packages) of your choice to
 * the bias-variance trade-off;
 * early stopping using a simple neural network.
 
+::: {.content-visible when-profile="solution"}
 ## Underfitting and Overfitting
 Let's try to approximate the (sinusoidal) relationship between $y$ and $x_1$ with:
 
@@ -125,6 +131,13 @@ Let's see this visually:
 {{< embed sol_regularization_1_R.ipynb#poly_reg_visual_inspection echo=true >}}
 ### Python
 {{< embed sol_regularization_1_py.ipynb#poly_reg_visual_inspection echo=true >}}
+*Additional note:*
+We can observe that the model outputs ~0 for $x \in [1,1]$. We encourage the reader to try understanding why this happens.
+
+Hints:
+
+1. Look into model coefficients using `.coef_` attribute
+2. Think about the plot of $x$ raised to power of (for example) 42.
 :::
 
 #### Polynomial Regression Plot Interpretation
@@ -134,32 +147,22 @@ The reader may find it interesting to decrease the degree of the polynomial to m
 
 Also, we encourage the reader to try to find the optimal degree of the polynomial.
 
-::: {.panel-tabset}
-### Python
-*Additional note:*
-We can observe that the model outputs ~0 for $x \in [1,1]$. We encourage the reader to try understanding why this happens.
-
-Hints:
-1. Look into model coefficients using `.coef_` attribute
-2. Think about the plot of $x$ raised to power of (for example) 42.
-:::
 
 ## L1, L2 and Elastic Net Regularization
 
 Now let's demonstrate different types of regularization techniques and observe how they affect the coefficient paths (for each hyperparameter lambda the resulting model's coefficients).
 
-### Helper Function for Plotting Regularization Paths in R
-
-The R implementation uses the `glmnet` package which provides the `glmnet()` function for fitting regularized models and `plot.glmnet()` for visualizing the coefficient paths.
-
-### Helper Function for Plotting Regularization Paths
-
-Here `sklearn`'s `enet_path` function is used which under the hood fits a `ElasticNet` model. This makes the code much shorter since by passing 1, 0 or something in between as the `l1_ratio` parameter we can get the Lasso, Ridge or Elastic Net regularization paths respectively.
 
 ::: {.panel-tabset}
 ### R
+**Helper Function for Plotting Regularization Paths in R**
+
+The R implementation uses the `glmnet` package which provides the `glmnet()` function for fitting regularized models and `plot.glmnet()` for visualizing the coefficient paths.
 {{< embed sol_regularization_1_R.ipynb#regularization_helper_function echo=true >}}
 ### Python
+**Helper Function for Plotting Regularization Paths**
+
+Here `sklearn`'s `enet_path` function is used which under the hood fits a `ElasticNet` model. This makes the code much shorter since by passing 1, 0 or something in between as the `l1_ratio` parameter we can get the Lasso, Ridge or Elastic Net regularization paths respectively.
 {{< embed sol_regularization_1_py.ipynb#regularization_helper_function echo=true >}}
 :::
 
@@ -231,29 +234,17 @@ Although we see that the determinant is zero, let's try to compute the inverse (
 
 ::: {.panel-tabset}
 ### R
-<!-- TODO: inverse_x_t_x cell doesn't exist in R notebook -->
-<!-- {{< embed sol_regularization_1_R.ipynb#inverse_x_t_x echo=true >}} -->
-### Python
-{{< embed sol_regularization_1_py.ipynb#inverse_x_t_x echo=true >}}
-:::
-
-::: {.panel-tabset}
-### R
+{{< embed sol_regularization_1_R.ipynb#underdetermined_inv_solve echo=true >}}
 The code throws the error "Error in solve.default(t(X_head) %*% X_head): system is computationally singular: reciprocal condition number = 2.59398e-20" because the matrix is singular, meaning it does not have an inverse.
 
 The reader may find it interesting that the equivalent code in Python does produce an output (although it is mathematically impossible), since from the machine's perspective the matrix is not singular, because of the floating point approximations. The reader may dug deeper into the topic by following [this](https://stackoverflow.com/questions/28712734/numpy-possible-for-zero-determinant-matrix-to-be-inverted) Stack Overflow post.
+
 ### Python
+{{< embed sol_regularization_1_py.ipynb#inverse_x_t_x echo=true >}}
 The code above does produce an output (although it is mathematically impossible), since from the machine's perspective the matrix is not singular, because of the floating point approximations. The reader may dug deeper into the topic by following [this](https://stackoverflow.com/questions/28712734/numpy-possible-for-zero-determinant-matrix-to-be-inverted) Stack Overflow post.
 
 We'll demonstrate the underdetermined problem with a manually created example.
-:::
-
-::: {.panel-tabset}
-### Python
 {{< embed sol_regularization_1_py.ipynb#singular_matrix_example echo=true >}}
-### R
-<!-- TODO: singular_matrix_example cell doesn't exist in R notebook -->
-<!-- {{< embed sol_regularization_1_R.ipynb#singular_matrix_example echo=true >}} -->
 :::
 
 ## The Bias-Variance Trade-off
@@ -279,6 +270,7 @@ First of all let's see how the model performs without early stopping.
 
 ::: {.panel-tabset}
 ### R
+{{< embed sol_regularization_1_R.ipynb#early_stopping_package_install_R echo=true >}}
 {{< embed sol_regularization_1_R.ipynb#neural_network_early_stopping echo=true >}}
 ### Python
 {{< embed sol_regularization_1_py.ipynb#neural_network_early_stopping echo=true >}}
@@ -306,3 +298,4 @@ In our case the validation loss did not start rising because the model had alrea
 We see that the neural network ran only for 16 epochs, although we specified 100 epochs. This is because we used early stopping and the optimizer stopped after 6 epochs without significant improvement in the validation loss.
 
 We encourage the reader to split the data and look into train/test errors for the same neural network with and without early stopping. What do you observe regarding overfitting?
+:::

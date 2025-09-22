@@ -1,0 +1,71 @@
+---
+title: "Exercise 1 -- Information Theory I"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+  # - notebook: sol_information_theory_1_R.ipynb
+  #   title: "Exercise sheet for R"
+  #   url: "https://github.com/slds-lmu/lecture_sl/blob/main/exercises/information-theory-quarto/sol_information_theory_1_R.ipynb"
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
+
+INSERT_exercise_1_b
+
+::: {.content-visible when-profile="solution"}
+
+INSERT_heading_sampling_binomial
+
+::: {.panel-tabset}
+### R
+{{< embed sol_information_theory_1_R.ipynb#sampling_binomial echo=true >}}
+### Python
+{{< embed sol_information_theory_1_py.ipynb#sampling_binomial echo=true >}}
+:::
+
+INSERT_heading_various_gaussian_distributions
+
+::: {.panel-tabset}
+### R
+{{< embed sol_information_theory_1_R.ipynb#defining_densities echo=true >}}
+### Python
+{{< embed sol_information_theory_1_py.ipynb#defining_densities echo=true >}}
+:::
+
+INSERT_plotting
+
+::: {.panel-tabset}
+### R
+{{< embed sol_information_theory_1_R.ipynb#plotting echo=true >}}
+### Python
+{{< embed sol_information_theory_1_py.ipynb#plotting echo=true >}}
+:::
+
+INSERT_kl_divergence
+
+::: {.panel-tabset}
+### R
+{{< embed sol_information_theory_1_R.ipynb#kld_value echo=true >}}
+### Python
+{{< embed sol_information_theory_1_py.ipynb#kld_value echo=true >}}
+:::
+
+INSERT_conclusion_1_b
+
+INSERT_exercise_1_c
+
+::: {.panel-tabset}
+### R
+{{< embed sol_information_theory_1_R.ipynb#kld_value_varied_p_n echo=true >}}
+### Python
+{{< embed sol_information_theory_1_py.ipynb#kld_value_varied_p_n echo=true >}}
+:::
+
+:::
