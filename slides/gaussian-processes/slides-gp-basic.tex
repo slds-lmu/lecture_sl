@@ -102,7 +102,7 @@ $$\fv = \fvec^T$$
 \end{framei}
 
 \begin{framei}[sep=L]{Distributions on Discrete Functions}
-\item Specify density on vectors / functions on finite domain $f \in \Hspace$ 
+\item Specify density on vectors / functions with finite domain $f \in \Hspace$ 
 \item Natural way: vector representation as $n$-dim RV, e.g.,
 $$\fv = \fvec^T \sim \Nmk$$
 \item For now: set $\mv = \zero$, assume $\Kmat$ to be given
@@ -118,17 +118,23 @@ $$\fv = [f(\xi[1]), f(\xi[2])]^T \sim \Nzk$$
 $$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
 \fi
 \item Where points are not (top) or strongly (bottom) correlated
+\ifnum \i=2
+\item RHS shows 2D density 
+\else 
+ \item RHS shows correlation matrix / structure
+\fi
+
 \vfill
 \splitVCompact{.33}{.33}{
-\imageL[1]{figure/discrete/discr_\i_identity_10n.pdf}
+\imageL[0.9]{figure/discrete/discr_\i_identity_10n.pdf}
 }{
-\imageL[.8]{figure/discrete/discr_\i_identity_cov.pdf}
+\imageL[.7]{figure/discrete/discr_\i_identity_cov.pdf}
 }
 \vfill
 \splitVCompact{.33}{.33}{
-\imageL[1]{figure/discrete/discr_\i_expdecay_10n.pdf}
+\imageL[0.9]{figure/discrete/discr_\i_expdecay_10n.pdf}
 }{
-\imageL[.8]{figure/discrete/discr_\i_expdecay_cov.pdf}
+\imageL[.7]{figure/discrete/discr_\i_expdecay_cov.pdf}
 }
 \end{framei}
 }
@@ -150,9 +156,9 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 \end{framei} 
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
-\item Recall: we defined distributions on functions as (Gaussian) random vector of corresponding function values 
+\item Until now we used multivar Gaussians to model the outputs of our discrete functions
 $$\fv = \fvec^T \sim \Nmk$$
-\item No matter how large $n$ is: still functions over discrete domains
+%\item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
 \item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
 \item Observation: random vectors $\fv$ are collections of RVs enumerated by $\nset$ $\Rightarrow$ \textbf{indexed family} 
@@ -160,10 +166,9 @@ $$\fv = \fvec^T \sim \Nmk$$
 \end{framei}
 
 \begin{framei}{definition: indexed family}
-\item Mathematical ``rule'' to map indices to some state space %$\mathcal{S}$
+\item Index $T$ allows us to identify objects in arbitrary sets $\mathcal{S}$
 $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
-\item Gives rise to collection $\{s_t: t \in T\}$
-\item Can assume many forms depending on $T$ and $\mathcal{S}$
+\item Mapping above is actually the formal definition of writing this notation $\{s_t: t \in T\}$
 \item Example: real-valued $\mathcal{S}$ 
 \splitV[0.55]{
 \begin{itemizeM}
@@ -179,7 +184,7 @@ $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
 \end{framei}
 
 \begin{framei}[sep=M]{definition: stochastic process}
-\item Special kind of indexed family: RVs with specific distributional assumption + cov structure $\Rightarrow$ $\{Y_t: t \in T\}$
+\item Collection (potentially infinite) of RVs as indexed family $\{Y_t: t \in T\}$; further distributional assumptions give rise to important subclasses
 % \item $\{Y_t: t \in T\}$ $\Rightarrow$ often temporal interpretation of $T$
 \item Intuition: probability distributions describe random vectors, SP describe random functions
 \item Examples

@@ -163,12 +163,16 @@ Avg. Brier-risk $\riskeb(\Np)$ of the node is equal to its gini-impurity $\text{
 & = n_0 (\frac{n_1}{n_0} \text{Imp}(\Np_1) + \frac{n_2}{n_0} \text{Imp}(\Np_2))
 \end{align*}
 
+\item As you can see above: if working with average risk, we need to reweight in the addition (as the averages are computed on subsets of potentially unequal sizes) 
+
+\item Average risks are used in impurity formulas,we so simply have to adhere to that slight modification in split finding with them
+
 \item The impurity of a split is defined as a weighted average
 $$\text{Imp(split)} = \frac{n_1}{n_0} \text{Imp}(\Np_1) + \frac{n_2}{n_0} \text{Imp}(\Np_2)$$
 
-\item Emp. risk of the split $\riske(\text{split})$ is then proportional to its impurity $\text{Imp(split)}$, i.e., $\argmin_\text{split} \riske(\text{split}) = \argmin_\text{split} \text{Imp(split)}$ 
+%\item Emp. risk of the split $\riske(\text{split})$ is then proportional to its impurity $\text{Imp(split)}$, i.e., $\argmin_\text{split} \riske(\text{split}) = \argmin_\text{split} \text{Imp(split)}$ 
 
-\item \textbf{Intuition}: we need to re-weight the per-node impurities as they are already (per-sample) average risks
+%\item \textbf{Intuition}: we need to re-weight the per-node impurities as they are already (per-sample) average risks
 
 %\item $\Rightarrow \riske(\text{split}) = \riske(\Np_1) + \riske(\Np_2)  = n_1 \text{Imp}(\Np_1) + n_2 \text{Imp}(\Np_2)
 %=n_0 (\frac{n_1}{n_0} \text{Imp}(\Np_1) + \frac{n_2}{n_0} \text{Imp}(\Np_2)) = n_0\text{Imp(split)}$

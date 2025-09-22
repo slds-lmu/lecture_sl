@@ -26,7 +26,7 @@
 \item Nice GP property: numerical hyperparams of given cov function can be learned during training
 \end{framei}
 
-\begin{framei}[sep=L]{Training via maximum likelihood}
+\begin{framei}[sep=L]{Training via marginal likelihood}
 \item Let $$y = \fx + \epsilon, \quad \epsilon \sim \normal(0, \sigma^2)$$
 with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam config $\thetav$
 \item This yields $\yv \sim \normal(\zero, \Ky )$ with  $\Ky = \Kmat + \sigma^2 \id$
