@@ -43,40 +43,30 @@ $$\kxxt = k(\bm{d})$$
 
 \end{framei}
 
-\begin{framei}{example: stationary covariance}
-\item Let $f \sim \GPmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
-\item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$
-\item If you want to know about the correlation between $f(\xi[1])$ and $f(\xi[2])$, compute $\bm{d}(\xi[1], \xi[2])$
-\vfill
-\splitV{
-\imageC[.9]{figure/cov_funs/example_covariance_1.pdf}
-}{
-\imageC[.9]{figure/cov_funs/example_function_1_1.pdf}
-}
-\end{framei}
+\begin{framei}{example: stationary covariance} 
+\item Let $f \sim \GPmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$ 
+\item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$ 
+\item To get corr. between $f(\xi[1])$ and $f(\xi[2])$ look at $\bm{d}(\xi[1], \xi[2])$ 
+\vfill 
+\splitV{ \imageC[.9]{figure/cov_funs/example_covariance_1.pdf} }{ \imageC[.9]{figure/cov_funs/example_function_1_1.pdf} } 
+\end{framei} 
 
-\begin{framei}{example: stationary covariance}
-\item Suppose we observe $\yi[1] = -0.8$
-\item $\xi[1], \xi[2]$ are close in $\Xspace$ space
+\begin{framei}{example: stationary covariance} 
+\item Suppose we observe $\yi[1] = -0.8$ 
+\item $\xi[1], \xi[2]$ are close in $\Xspace$ space 
 \item Under the above GP assumption, $\yi[2]$ should be close to $\yi[1]$ 
-\vfill
-\splitV{
-\imageC[.9]{figure/cov_funs/example_covariance_1.pdf}
-}{
-\imageC[.9]{figure/cov_funs/example_function_1_2.pdf}
-}
+\vfill 
+\splitV{ \imageC[.9]{figure/cov_funs/example_covariance_1.pdf} }{ \imageC[.9]{figure/cov_funs/example_function_1_2.pdf} } 
+\end{framei} 
+
+\begin{framei}{example: stationary covariance} 
+\item Consider now $\xi[3] = 5$ 
+\item This is now further from $\xi[1]$
+\item $\Rightarrow$ expect lower correlation between $\yi[3]$, $\yi[1]$ 
+\vfill 
+\splitV{ \imageC[.9]{figure/cov_funs/example_covariance_2.pdf} }{ \imageC[.9]{figure/cov_funs/example_function_2_1.pdf} } 
 \end{framei}
 
-\begin{framei}{example: stationary covariance}
-\item Consider now $\xi[3] = 5$
-\item Further from $\xi[1]$ $\Rightarrow$ expect lower correlation between $\yi[3]$, $\yi[1]$ 
-\vfill
-\splitV{
-\imageC[.9]{figure/cov_funs/example_covariance_2.pdf}
-}{
-\imageC[.9]{figure/cov_funs/example_function_2_1.pdf}
-}
-\end{framei}
 
 \begin{framei}[sep=L]{properties of covariance functions}
 \item Most cov. functions have 3 common properties
