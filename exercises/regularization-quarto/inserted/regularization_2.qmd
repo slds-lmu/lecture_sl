@@ -54,8 +54,6 @@ You are given the code below to compare the quality of the projected Lasso regre
 
 Complete the missing code of the algorithms and interpret the result.
 
-Small note: the y label of the plot should shows the Root Mean Squared Error (RMSE) of the parameter estimation $\sqrt{\dfrac{1}{p}\sum_{j=1}^{p}(\hat{\theta}_j-\theta_{j,\mathrm{true}})^2}$
-
 ::: {.panel-tabset}
 ### R
 {{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_exercise_code_part_1 echo=true >}}
@@ -63,7 +61,9 @@ Small note: the y label of the plot should shows the Root Mean Squared Error (RM
 {{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_exercise_code_part_1 echo=true >}}
 :::
 
-No need to make changes in the code below
+No need to make changes in the code below. 
+
+Small note: the y label of the plot should shows the Root Mean Squared Error (RMSE) of the parameter estimation $\sqrt{\dfrac{1}{p}\sum_{j=1}^{p}(\hat{\theta}_j-\theta_{j,\mathrm{true}})^2}$
 
 ::: {.panel-tabset}
 ### R
