@@ -58,6 +58,7 @@ INSERT_no_need_for_changes
 {{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_exercise_code_part_2 echo=true >}}
 :::
 
+
 ::: {.content-visible when-profile="solution"}
 
 
@@ -69,6 +70,7 @@ INSERT_lasso_vs_projected_solution
 ### Python
 {{< embed sol_regularization_2_py.ipynb#installing_packages echo=true >}}
 :::
+
 
 INSERT_lasso_vs_projected_math_reminder
 
@@ -108,5 +110,4 @@ INSERT_full_code
 {{< embed sol_regularization_2_py.ipynb#full_code echo=true >}}
 :::
 
-::: {.content-visible when-profile="solution"}
-
+:::

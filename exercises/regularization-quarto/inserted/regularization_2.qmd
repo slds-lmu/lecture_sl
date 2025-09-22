@@ -46,11 +46,15 @@ Plotting
 ## Interpretation of the Soft Thresholding Operator
 As we can see from the plot the coefficient $\theta^*_j$ is equal to zero when $\rho_j$ is between $-\lambda$ and $\lambda$, and therefore performs feature selection.
 
+::: 
+
 # Exercise 1 (d): Lasso vs. Projected Lasso Comparison
 
 You are given the code below to compare the quality of the projected Lasso regression vs. the regular Lasso regression.
 
 Complete the missing code of the algorithms and interpret the result.
+
+Small note: the y label of the plot should shows the Root Mean Squared Error (RMSE) of the parameter estimation $\sqrt{\dfrac{1}{p}\sum_{j=1}^{p}(\hat{\theta}_j-\theta_{j,\mathrm{true}})^2}$
 
 ::: {.panel-tabset}
 ### R
@@ -69,5 +73,93 @@ No need to make changes in the code below
 :::
 
 
-::: 
+::: {.content-visible when-profile="solution"}
 
+
+## Solution
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#installing_packages echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#installing_packages echo=true >}}
+:::
+
+
+### Projected Orthogonal Lasso
+Please refer to subexercises above for more details
+
+Line 10 - Eigenvalue Decomposition: $\mathbf{X}^T \mathbf{X} = \mathbf{V} \mathbf{D} \mathbf{V}^T$
+
+Line 13 - Transformation Matrix: $\mathbf{A} = \mathbf{V} \mathbf{D}^{-0.5}$
+
+Line 14 - Transformed Design Matrix: $\tilde{\mathbf{X}} = \mathbf{X} \mathbf{A}$
+
+Line 18 - OLS Solution in Projected Space : $\hat{\boldsymbol{\theta}}_{\text{OLS}} = \tilde{\mathbf{X}}^T \mathbf{y}$
+
+Line 19-20 - Soft Thresholding in Projected Space: 
+$$\hat{\boldsymbol{\theta}}_{\text{proj},j}^* = \begin{cases}
+    \hat{\boldsymbol{\theta}}_{\text{OLS},j} - \lambda & \text{if } \hat{\boldsymbol{\theta}}_{\text{OLS},j} > \lambda \\
+    0 & \text{if } |\hat{\boldsymbol{\theta}}_{\text{OLS},j}| \leq \lambda \\
+    \hat{\boldsymbol{\theta}}_{\text{OLS},j} + \lambda & \text{if } \hat{\boldsymbol{\theta}}_{\text{OLS},j} < -\lambda
+\end{cases}$$
+
+Line 22 - Back-transformation to Original Space: $\boldsymbol{\theta}^* = \mathbf{A} \hat{\boldsymbol{\theta}}_{\text{proj}}^*$
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_solution_code_proj_orth echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_solution_code_proj_orth echo=true >}}
+:::
+
+### Coordinate Descent Lasso 
+Please refer to subexercises above for more details
+
+
+Line 15 - Partial Residual: $r^{(j)} = \mathbf{y} - \mathbf{X}_{-j} \boldsymbol{\theta}_{-j}$
+
+Line 16 - Residual Correlation: $\rho_j = \mathbf{X}_j^T r^{(j)} = \sum\limits_{i=1}^n X_{ij} \left( y_i - \sum\limits_{k \neq j} X_{ik} \theta_k \right)$
+
+Line 17 - Feature Norm Squared: $z_j = \|\mathbf{X}_j\|_2^2 = \sum\limits_{i=1}^n X_{ij}^2$
+
+From line 19 - Soft Thresholding Update:
+$$\theta_j^{(t+1)} = \begin{cases}
+    \frac{\rho_j + \lambda}{z_j} & \text{if } \rho_j < -\lambda \\
+    0 & \text{if } |\rho_j| \leq \lambda \\
+    \frac{\rho_j - \lambda}{z_j} & \text{if } \rho_j > \lambda
+\end{cases}$$
+
+Please note that we avoid additional sum loops by vectorization in the implementation
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_solution_code_lasso echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_solution_code_lasso echo=true >}}
+:::
+
+### Comparison of Lasso and Projected Lasso
+The code below was provided in the exercise for comparing the 2 approaches in true parameter identification
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_solution_code_comparison echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_solution_code_comparison echo=true >}}
+:::
+
+### Interpretation of Results
+
+In this simulation, the true parameter vector is sparse in its original coordinate system. Hence, as expected, the regular Lasso regression outperforms the projected approach on average when identifying the true parameters in this scenario.
+
+### Full code
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#full_code echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#full_code echo=true >}}
+:::
+
+:::
