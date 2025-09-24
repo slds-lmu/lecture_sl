@@ -1,0 +1,113 @@
+---
+title: "Regularization - Exercise 2"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: {.content-visible when-profile="solution"}
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
+:::
+
+INSERT_exercise_1_a_vi
+
+::: {.content-visible when-profile="solution"}
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#soft_thresholding_plot_data echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#soft_thresholding_plot_data echo=true >}}
+:::
+
+INSERT_plotting_text
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#soft_thresholding_plot echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#soft_thresholding_plot echo=true >}}
+:::
+
+INSERT_soft_thresholding_plot_interpretation
+
+::: 
+
+INSERT_lasso_vs_projected_exercise
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_exercise_code_part_1 echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_exercise_code_part_1 echo=true >}}
+:::
+
+INSERT_no_need_for_changes
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_exercise_code_part_2 echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_exercise_code_part_2 echo=true >}}
+:::
+
+
+::: {.content-visible when-profile="solution"}
+
+
+INSERT_lasso_vs_projected_solution
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#installing_packages echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#installing_packages echo=true >}}
+:::
+
+
+INSERT_lasso_vs_projected_math_reminder
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_solution_code_proj_orth echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_solution_code_proj_orth echo=true >}}
+:::
+
+INSERT_lasso_coordinate_descent_math_reminder
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_solution_code_lasso echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_solution_code_lasso echo=true >}}
+:::
+
+INSERT_comparison
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#lasso_vs_projected_solution_code_comparison echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#lasso_vs_projected_solution_code_comparison echo=true >}}
+:::
+
+INSERT_lasso_vs_projected_interpretation
+
+INSERT_full_code
+
+::: {.panel-tabset}
+### R
+{{< embed sol_regularization_2_R.ipynb#full_code echo=true >}}
+### Python
+{{< embed sol_regularization_2_py.ipynb#full_code echo=true >}}
+:::
+
+:::
