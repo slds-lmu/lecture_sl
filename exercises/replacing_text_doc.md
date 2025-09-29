@@ -2,6 +2,9 @@ Since we will usually have the same texts in R, Python and Quarto, we need an ap
 
 Solution is putting placeholders in the .ipynb or .qmd files and then replacing them with the actual text stored in another .ipynb file.
 
+# Requirements
+Assumes python 3.10+
+
 # Steps
 ## Step 1
 Create an ipynb file with cells containing texts you want to insert later (let's call it `texts.ipynb`):
