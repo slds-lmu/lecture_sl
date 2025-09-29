@@ -2,6 +2,9 @@ Since we will usually have the same texts in R, Python and Quarto, we need an ap
 
 Solution is putting placeholders in the .ipynb or .qmd files and then replacing them with the actual text stored in another .ipynb file.
 
+# Requirements
+Assumes python 3.10+
+
 # Steps
 ## Step 1
 Create an ipynb file with cells containing texts you want to insert later (let's call it `texts.ipynb`):
@@ -44,7 +47,7 @@ Input folder structure:
     ├── <chapter_name>.qmd
     ├── sol_<chapter_name>_py.ipynb
     ├── sol_<chapter_name>_r.qmd
-    ├── texts.ipynb
+    ├── sol_<chapter_name>_texts.ipynb (if there is only one exercise you can also just name the file `texts.ipynb`)
     ├── Makefile (containing the line `include ../quarto.mk`) (optional)
     └── _quarto (copied from the `exercises` folder, duplication is a temporary solution and will be removed in the future)
         ├── latex-math.qmd
@@ -69,7 +72,7 @@ To keep the naming consistent with the [guideline](https://github.com/slds-lmu/l
 
 
 # Example
-Please see the [`information-theory-quarto`](https://github.com/slds-lmu/lecture_sl/tree/ex_info_theory_quarto/exercises/information-theory-quarto) (internal comment: the link will break once we merge the branch) folder for an actual example. Below is a toy example: 
+Please see the [`Advanced risk minimization`](https://github.com/slds-lmu/lecture_sl/tree/main/exercises/advriskmin-quarto)  folder for an actual example. Below is a toy example: 
 
 Folder name: `replace_texts_example`
 `texts.ipynb` file
@@ -100,7 +103,7 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 
 # Notes
 1. If you want to ignore the `.qmd` files and only process `.ipynb` files, you can use the `--ignore_quarto` flag:
-2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). 
+2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). For exercise `k` you will need to run `python replace_texts.py <folder_name> --texts sol_<chapter_name>_k_texts.ipynb`.
 
 # Overall workflow
 ## 1. Setup
@@ -137,11 +140,3 @@ You can use the following prompt to get a draft:
 10. Once merged, add jupyter notebooks to Google Colab
 11. Check that the links work
 12. Some tex macros may fail, may need to add e.g. `$$\newcommand{\bm}{\boldsymbol}$$`
-
-
-# Todo (internal comment)
-[] update docs to include the case of folder with multiple exercises
-[] cleanup unnecessary files from I2ML lecture
-[] go over older files and retire the approach of putting texts in a json file
-[] write a script to extract the texts from the ipynb files and put them in a separate ipynb just for texts
-[] Fix the issue with the `keras` package in R, Regu 1
