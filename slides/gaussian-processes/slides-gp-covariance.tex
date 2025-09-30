@@ -68,15 +68,24 @@ $$\kxxt = k(\bm{d})$$
 \end{framei}
 
 
-\begin{framei}[sep=L]{properties of covariance functions}
-\item Most cov. functions have 3 common properties
+\begin{framei}[sep=L]{properties of covariance functions I}
+%\item Most cov. functions have 3 common properties
 \item \textbf{Stationary}: $k = k(\bm{d})$ with $\bm{d} = \xv - \xtil$ \\
 $\Rightarrow$ invariant to translations in $\Xspace$: $k(\xv, \xv + \bm{d}) = k(\zero, \bm{d})$\\
 (so we sometimes abuse notation and write $k(\bm{d})$)
+\item Consider $\xv, \xtil \in \mathbb{R}$ and plot contours of $k(\xv,\xtil)$: 
+\imageC[0.9]{figure/stationary_vs_nonstationary.pdf}
+\item Contour set of $\xv \to k(\xv,\xtil_1)$ must be same as for $\xv \to k(\xv, \xtil_2)$ translated by $\xtil_1-\xtil_2$
+\end{framei}
+
+\begin{framei}[sep=L]{properties of covariance functions II}
+%\item Most cov. functions have 3 common properties
 \item \textbf{Isotropic}: $k = k(\bm{r})$ with $r = \xxtnorm$ \\
-$\Rightarrow$ invariant to rotations\\
+$\Rightarrow$ invariant to rotations, implies stationarity\\
 (again slight notational abuse)
-\item Isotropy implies stationarity
+\item Consider $\xv, \xtil \in \mathbb{R}^2$
+\imageC[0.9]{figure/isotropic_vs_anisotropic.pdf}
+\item Isotropic = circular/concentric contours, anisotropic = elliptic
 \item \textbf{Dot product}: $k = k(\xv^T \xtil)$
 \end{framei}
 
@@ -171,13 +180,13 @@ for distances in between, this is modulated by $\ls$
 \item We modulate every distance component $d_j$ by an individual $\ls_j$
 \item We can turn the isotropic examples from above into 
 stationary ones -- with individual length scales
-\item Write $||\bm{d}|| = \sum d_j^2$ and put an $1/\ls_j$ before each $d_j$
+\item Write $||\bm{d}||^2 = \sum d_j^2$ and put an $1/\ls_j$ before each $d_j$
 %\item Write $(\frac{r}{\ls})^2 = \frac{1}{\ls^2}\sum d_j^2 = \sum \frac{d_j^2}{\ls^2} $ and use dim-specific $\ls_j$
 \item E.g. for squared exp:
 $$
   k(\bm{d}) = \exp \left(- \tfrac{1}{2} \sumjp \frac{d_j^2}{\ell_j^2} \right)
 $$
-\item Also note: this is a product of 1D kernels, one for each input dim, the correlation in each dim is described by the 1D kernel and in it distance component modulated by $\ls_j$
+\item Also note: this is a product of 1D kernels, one for each input dim. The correlation in each dim is described by the 1D kernel and its distance component is modulated by $\ls_j$
 \end{framei}
 
 

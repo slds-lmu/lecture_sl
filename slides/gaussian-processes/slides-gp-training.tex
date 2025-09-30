@@ -36,6 +36,7 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 &= \textcolor{blue}{\tfrac{1}{2} \yv^T \Ky^{-1} \yv} \textcolor{orange}{+ \tfrac{1}{2} \log | \Ky |}  + \tfrac{n}{2} \log 2 \pi
 \end{eqnarray*}
 \item $-\log p(\yv | \bm{X}, \thetav)$ depends on $\thetav$ via $\Ky$ $\Rightarrow$ optimize for $\thetav$
+\item GP training optimizes kernel hyperparams by minimizing the neg. marginal likelihood, balancing data fit ($\tfrac{1}{2}\yv^\top \Ky^{-1}\yv$) and model complexity ($\tfrac{1}{2}\log|\Ky|$)
 \end{framei}
 
 \begin{framei}[sep=L]{negative log-likelihood components}

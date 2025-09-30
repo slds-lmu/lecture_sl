@@ -14,7 +14,7 @@ Gaussian Processes
 }{
 Stochastic Processes and Distributions on Functions
 }{
-figure_man/discrete/marginalization-more2.png
+figure_man/discrete/marginalization-more3.png
 }{
 \item GPs = distributions over functions 
 \item Marginalization property 
@@ -156,7 +156,7 @@ $$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ hi
 \end{framei} 
 
 \begin{framei}[sep=L]{From Discrete to Continuous Functions}
-\item Until now we used multivar Gaussians to model the outputs of our discrete functions
+\item So far: Multivar Gaussians to model outputs of discrete functions
 $$\fv = \fvec^T \sim \Nmk$$
 %\item No matter how large $n$ is: still functions over discrete domains
 \item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
@@ -168,7 +168,7 @@ $$\fv = \fvec^T \sim \Nmk$$
 \begin{framei}{definition: indexed family}
 \item Index $T$ allows us to identify objects in arbitrary sets $\mathcal{S}$
 $$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
-\item Mapping above is actually the formal definition of writing this notation $\{s_t: t \in T\}$
+\item This mapping is the formal definition of notation $\{s_t: t \in T\}$
 \item Example: real-valued $\mathcal{S}$ 
 \splitV[0.55]{
 \begin{itemizeM}
@@ -240,15 +240,15 @@ $$
 % \ifnum \i=5
 % \imageC[.9]{figure_man/discrete/marginalization-5.png}
 % \else
-\imageC[.8]{figure_man/discrete/marginalization-more2.png}
+\imageC[.8]{figure_man/discrete/marginalization-more3.png}
 % \fi
 }
 
 \item Example with 1D (left) and 2D (right) index set $\Xspace$: Dimension of $\fv$ depends on $n$, not on dimension of $\Xspace$:
 \splitV{
-\imageC{figure_man/indexed_family/indexed_family_52.png}
+\imageC{figure_man/indexed_family/indexed_family_53.png}
 }{
-\imageC[.8]{figure_man/indexed_family/indexed_family_62.png}
+\imageC[.8]{figure_man/indexed_family/indexed_family_63.png}
 }
 \vfill
 

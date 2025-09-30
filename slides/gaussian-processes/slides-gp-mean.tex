@@ -40,15 +40,15 @@ $$\mv_{\text{post}} = \E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv, \quad \Kmat_
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{framei}[sep=S]{trend via covariance structure}
-\item For zero-mean GPs with stationary kernels posterior mean reverts to the prior further outside the training domain (no extrapolation)
+\item For zero-mean GPs with stationary kernels, posterior mean reverts to the prior further outside the training domain (no extrapolation)
 \item But trend-like behaviour could be directly encoded in $\kcc$:
 \begin{itemize}
   \item Linear kernel: $k(\xv,\xv')=\sigma^2 \xv^\top \xv'$
   \item Polynomial kernels for global polynomial trends
   \item Composite kernels: $k = k_{\text{long}} + k_{\text{short}}$
 \end{itemize}
-\item Produces non-flat priors even with $m(\xv)=0$, but lower interpretability and kernel-dependent extrapolation
-\item Consider GP for DGP with linear trend (after centering):
+\item Produces non-reverting priors even with $m(\xv)=0$, but lower interpretability and kernel-dependent extrapolation
+\item Consider GP for DGP with linear trend:
 
 \vfill
 
@@ -113,8 +113,8 @@ $$g(\xv) = m_{\bm{\beta}}(\xv) + \fx, \quad f  \sim \GPzk$$
   \item Flexible ML models: GLMs, boosting, neural nets, \dots
 \end{itemize}
 
-\item Semi-parametric GPs combine global model + GP residual:
-$$g(\xv) = m_{\bm{\beta}}(\xv) + f(\xv), \quad f\sim\GPzk$$
+% \item Semi-parametric GPs combine global model + GP residual:
+% $$g(\xv) = m_{\bm{\beta}}(\xv) + f(\xv), \quad f\sim\GPzk$$
 
 \end{framei}
 
