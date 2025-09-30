@@ -3366,7 +3366,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can run the notebooks in Google Colab here: <a href="https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_R.ipynb">R</a>, <a href="https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises_quarto/advriskmin_3/inserted/sol_advriskmin_3_py.ipynb">Python</a>.</p>
+<p>You can run the notebooks in Google Colab here: <a href="https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/advriskmin-quarto/inserted/sol_advriskmin_3_R.ipynb">R</a>, <a href="https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/advriskmin-quarto/inserted/sol_advriskmin_3_py.ipynb">Python</a>.</p>
 </div>
 </div>
 <section id="exercise" class="level1">
@@ -3441,17 +3441,17 @@ Tip
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return a predicted label y_hat for x</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, theta):</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &gt;&gt;&gt; do something &lt;&lt;&lt;</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y_hat </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &gt;&gt;&gt; do something &lt;&lt;&lt;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y_hat </span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return a vector consisting of the optimal  parameter vector </span></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optim_coeff(X,y):</span>
 <span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &gt;&gt;&gt; do something &lt;&lt;&lt;</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> theta</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># &gt;&gt;&gt; do something &lt;&lt;&lt;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta</span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt;&gt;&gt;  Do something here to check Forbes&#39; conjecture &lt;&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3500,14 +3500,14 @@ y = \theta_1 \exp(\theta_2 x)
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl\exercises\advriskmin-quarto\inserted\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-model_equation">
-<div id="model_equation" class="cell" data-execution_count="2">
+<div id="model_equation" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; function to represent your models via the parameter vector theta = [theta_1, theta_2]</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return a predicted label y_hat for x</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, theta):</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recall that x[1] is always 1 and x[2] is the feature value (bp)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  y_hat <span class="op">=</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x[<span class="dv">1</span>]) </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recall that x[1] is always 1 and x[2] is the feature value (bp)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x[<span class="dv">1</span>]) </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -3556,28 +3556,28 @@ L\left(y, f(\mathbf{x ~|~ \boldsymbol{\theta} })\right)= \big(\log(y)-\log(f(\ma
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl\exercises\advriskmin-quarto\inserted\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-optim_coeff">
-<div id="optim_coeff" class="cell" data-execution_count="3">
+<div id="optim_coeff" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return a vector consisting of the optimal parameter vector </span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optim_coeff(X,y):</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; @return the empirical risk of a parameter vector theta</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> emp_risk(theta):</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#&#39; @return the empirical risk of a parameter vector theta</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> emp_risk(theta):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>((np.log(y) <span class="op">-</span> np.log(y_hat))<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># `theta_init` can be replaced by any other theta vector </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># satisfying the constraint theta[1]&gt;0</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  theta_init <span class="op">=</span> np.array([<span class="fl">0.4</span>, <span class="fl">0.5</span>])</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta[0] &gt; 0, theta[1] unbounded</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  bounds <span class="op">=</span> [(<span class="dv">0</span>, <span class="va">None</span>), (<span class="va">None</span>, <span class="va">None</span>)]</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  result <span class="op">=</span> minimize(emp_risk, </span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                   theta_init, </span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                   method<span class="op">=</span><span class="st">&#39;L-BFGS-B&#39;</span>,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                   bounds<span class="op">=</span>bounds)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> result.x</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.<span class="bu">sum</span>((np.log(y) <span class="op">-</span> np.log(y_hat))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># `theta_init` can be replaced by any other theta vector </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># satisfying the constraint theta[1]&gt;0</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    theta_init <span class="op">=</span> np.array([<span class="fl">0.4</span>, <span class="fl">0.5</span>])</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># theta[0] &gt; 0, theta[1] unbounded</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    bounds <span class="op">=</span> [(<span class="dv">0</span>, <span class="va">None</span>), (<span class="va">None</span>, <span class="va">None</span>)]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> minimize(emp_risk, </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                    theta_init, </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                    method<span class="op">=</span><span class="st">&#39;L-BFGS-B&#39;</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                    bounds<span class="op">=</span>bounds)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.x</span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># optimal coefficients</span></span>
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>hat_theta <span class="op">=</span> optim_coeff(X,y)</span>
@@ -3622,9 +3622,9 @@ L\left(y, f(\mathbf{x ~|~ \boldsymbol{\theta} })\right)= \big(\log(y)-\log(f(\ma
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl\exercises\advriskmin-quarto\inserted\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-forbes_visually">
-<div id="cell-forbes_visually" class="cell" data-execution_count="4">
+<div id="cell-forbes_visually" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f_x(x, theta):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>x_curve <span class="op">=</span> np.linspace(forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">min</span>(), forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y_curve <span class="op">=</span> f_x(x_curve, hat_theta)</span>
@@ -3672,11 +3672,11 @@ L\left(y, f(\mathbf{x ~|~ \boldsymbol{\theta} })\right)= \big(\log(y)-\log(f(\ma
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl\exercises\advriskmin-quarto\inserted\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-forbes_mape">
-<div id="forbes_mape" class="cell" data-execution_count="5">
+<div id="forbes_mape" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mape(X, y, theta):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  perc_error <span class="op">=</span> np.<span class="bu">abs</span>((y <span class="op">-</span> y_hat)<span class="op">/</span>y) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.mean(perc_error)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    perc_error <span class="op">=</span> np.<span class="bu">abs</span>((y <span class="op">-</span> y_hat)<span class="op">/</span>y) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(perc_error)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Mean Absolute Percentage Error (MAPE): </span><span class="sc">{</span>mape(X, y, hat_theta)<span class="sc">}</span><span class="ss">%&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3717,7 +3717,7 @@ L\left(y, f(\mathbf{x ~|~ \boldsymbol{\theta} })\right)= \big(\log(y)-\log(f(\ma
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\hayk_\OneDrive\Desktop\lecture_sl\exercises\advriskmin-quarto\inserted\sol_advriskmin_3_py.ipynb" data-notebook-title="Python - ARM - Exercise 3" data-notebook-cellid="cell-analytical_solution">
-<div id="cell-analytical_solution" class="cell" data-execution_count="6">
+<div id="cell-analytical_solution" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hat_theta_2 <span class="op">=</span> np.cov(forbes[<span class="st">&#39;bp&#39;</span>], np.log(forbes[<span class="st">&#39;pres&#39;</span>]))[<span class="dv">0</span>,<span class="dv">1</span>] <span class="op">/</span> np.var(forbes[<span class="st">&#39;bp&#39;</span>])</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>hat_theta_1 <span class="op">=</span> np.exp(np.mean(np.log(forbes[<span class="st">&#39;pres&#39;</span>])) <span class="op">-</span> hat_theta_2 <span class="op">*</span> np.mean(forbes[<span class="st">&#39;bp&#39;</span>]))</span>
@@ -3881,82 +3881,81 @@ Mean Absolute Percentage Error (MAPE): 0.4106409 %</code></pre>
 <span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; function to represent your models via the parameter vector theta = [theta_1, theta_2]</span></span>
 <span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return a predicted label y_hat for x</span></span>
 <span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, theta):</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recall that x[0] is always 1 and x[1] is the feature value (bp)</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>  y_hat <span class="op">=</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x[<span class="dv">1</span>]) </span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> y_hat</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>        <span class="co">#&#39; @return a vector consisting of the optimal parameter vector </span></span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recall that x[0] is always 1 and x[1] is the feature value (bp)</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x[<span class="dv">1</span>]) </span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y_hat</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return a vector consisting of the optimal parameter vector   </span></span>
 <span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------- optim_coeff ------------</span></span>
 <span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> optim_coeff(X,y):</span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">#&#39; @return the empirical risk of a parameter vector theta</span></span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> emp_risk(theta):</span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">#&#39; @return the empirical risk of a parameter vector theta</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> emp_risk(theta):</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>        y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
 <span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>((np.log(y) <span class="op">-</span> np.log(y_hat))<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>  <span class="co"># `theta_init` can be replaced by any other theta vector </span></span>
-<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># satisfying the constraint theta[1]&gt;0</span></span>
-<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>  theta_init <span class="op">=</span> np.array([<span class="fl">0.4</span>, <span class="fl">0.5</span>])</span>
-<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta[0] &gt; 0, theta[1] unbounded</span></span>
-<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>  bounds <span class="op">=</span> [(<span class="dv">0</span>, <span class="va">None</span>), (<span class="va">None</span>, <span class="va">None</span>)]</span>
-<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>  result <span class="op">=</span> minimize(emp_risk, </span>
-<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>                   theta_init, </span>
-<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>                   method<span class="op">=</span><span class="st">&#39;L-BFGS-B&#39;</span>,</span>
-<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>                   bounds<span class="op">=</span>bounds)</span>
-<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> result.x</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.<span class="bu">sum</span>((np.log(y) <span class="op">-</span> np.log(y_hat))<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># `theta_init` can be replaced by any other theta vector </span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># satisfying the constraint theta[1]&gt;0</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>    theta_init <span class="op">=</span> np.array([<span class="fl">0.4</span>, <span class="fl">0.5</span>])</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># theta[0] &gt; 0, theta[1] unbounded</span></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>    bounds <span class="op">=</span> [(<span class="dv">0</span>, <span class="va">None</span>), (<span class="va">None</span>, <span class="va">None</span>)]</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> minimize(emp_risk, </span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>                    theta_init, </span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>                    method<span class="op">=</span><span class="st">&#39;L-BFGS-B&#39;</span>,</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>                    bounds<span class="op">=</span>bounds)</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.x</span>
 <span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="co"># optimal coefficients</span></span>
 <span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>hat_theta <span class="op">=</span> optim_coeff(X,y)</span>
 <span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>hat_theta <span class="op">=</span> <span class="sc">}</span><span class="ss">&quot;</span>)</span>
 <span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a><span class="co"># ------- forbes_visually ------------</span></span>
-<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f_x(x, theta):</span>
-<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x)</span>
-<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>x_curve <span class="op">=</span> np.linspace(forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">min</span>(), forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
-<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>y_curve <span class="op">=</span> f_x(x_curve, hat_theta)</span>
-<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>plt.plot(x_curve, y_curve, <span class="st">&#39;b-&#39;</span>, label<span class="op">=</span><span class="st">&#39;Fitted Curve&#39;</span>)</span>
-<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>plt.scatter(forbes[<span class="st">&#39;bp&#39;</span>], forbes[<span class="st">&#39;pres&#39;</span>], color<span class="op">=</span><span class="st">&#39;red&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data Points&#39;</span>)</span>
-<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x (bp)&#39;</span>)</span>
-<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y (pres)&#39;</span>)</span>
-<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------- forbes_mape --------------</span></span>
-<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mape(X, y, theta):</span>
-<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>  y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
-<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>  perc_error <span class="op">=</span> np.<span class="bu">abs</span>((y <span class="op">-</span> y_hat)<span class="op">/</span>y) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.mean(perc_error)</span>
-<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Mean Absolute Percentage Error (MAPE): </span><span class="sc">{</span>mape(X, y, hat_theta)<span class="sc">}</span><span class="ss">%&quot;</span>)</span>
-<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| -------------- analytical_solution -----------</span></span>
-<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>hat_theta_2 <span class="op">=</span> np.cov(forbes[<span class="st">&#39;bp&#39;</span>], np.log(forbes[<span class="st">&#39;pres&#39;</span>]))[<span class="dv">0</span>,<span class="dv">1</span>] <span class="op">/</span> np.var(forbes[<span class="st">&#39;bp&#39;</span>])</span>
-<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a>hat_theta_1 <span class="op">=</span> np.exp(np.mean(np.log(forbes[<span class="st">&#39;pres&#39;</span>])) <span class="op">-</span> hat_theta_2 <span class="op">*</span> np.mean(forbes[<span class="st">&#39;bp&#39;</span>]))</span>
-<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a>hat_theta <span class="op">=</span> [hat_theta_1, hat_theta_2]</span>
-<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a>x_curve <span class="op">=</span> np.linspace(forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">min</span>(), forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
-<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a>y_curve <span class="op">=</span> f_x(x_curve, hat_theta)</span>
-<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a>plt.plot(x_curve, y_curve, <span class="st">&#39;b-&#39;</span>, label<span class="op">=</span><span class="st">&#39;Fitted Curve&#39;</span>)</span>
-<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a>plt.scatter(forbes[<span class="st">&#39;bp&#39;</span>], forbes[<span class="st">&#39;pres&#39;</span>], color<span class="op">=</span><span class="st">&#39;red&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data Points&#39;</span>)</span>
-<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x (bp)&#39;</span>)</span>
-<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y (pres)&#39;</span>)</span>
-<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb19-103"><a href="#cb19-103" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a><span class="co"># ------- forbes_visually ------------</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f_x(x, theta):</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta[<span class="dv">0</span>] <span class="op">*</span> np.exp(theta[<span class="dv">1</span>] <span class="op">*</span> x)</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>x_curve <span class="op">=</span> np.linspace(forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">min</span>(), forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>y_curve <span class="op">=</span> f_x(x_curve, hat_theta)</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>plt.plot(x_curve, y_curve, <span class="st">&#39;b-&#39;</span>, label<span class="op">=</span><span class="st">&#39;Fitted Curve&#39;</span>)</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>plt.scatter(forbes[<span class="st">&#39;bp&#39;</span>], forbes[<span class="st">&#39;pres&#39;</span>], color<span class="op">=</span><span class="st">&#39;red&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data Points&#39;</span>)</span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x (bp)&#39;</span>)</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y (pres)&#39;</span>)</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------- forbes_mape --------------</span></span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mape(X, y, theta):</span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> np.array([f(x, theta) <span class="cf">for</span> x <span class="kw">in</span> X])</span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>    perc_error <span class="op">=</span> np.<span class="bu">abs</span>((y <span class="op">-</span> y_hat)<span class="op">/</span>y) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(perc_error)</span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Mean Absolute Percentage Error (MAPE): </span><span class="sc">{</span>mape(X, y, hat_theta)<span class="sc">}</span><span class="ss">%&quot;</span>)</span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a><span class="co">#| -------------- analytical_solution -----------</span></span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>hat_theta_2 <span class="op">=</span> np.cov(forbes[<span class="st">&#39;bp&#39;</span>], np.log(forbes[<span class="st">&#39;pres&#39;</span>]))[<span class="dv">0</span>,<span class="dv">1</span>] <span class="op">/</span> np.var(forbes[<span class="st">&#39;bp&#39;</span>])</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a>hat_theta_1 <span class="op">=</span> np.exp(np.mean(np.log(forbes[<span class="st">&#39;pres&#39;</span>])) <span class="op">-</span> hat_theta_2 <span class="op">*</span> np.mean(forbes[<span class="st">&#39;bp&#39;</span>]))</span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a>hat_theta <span class="op">=</span> [hat_theta_1, hat_theta_2]</span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-92"><a href="#cb19-92" aria-hidden="true" tabindex="-1"></a>x_curve <span class="op">=</span> np.linspace(forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">min</span>(), forbes[<span class="st">&#39;bp&#39;</span>].<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb19-93"><a href="#cb19-93" aria-hidden="true" tabindex="-1"></a>y_curve <span class="op">=</span> f_x(x_curve, hat_theta)</span>
+<span id="cb19-94"><a href="#cb19-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-95"><a href="#cb19-95" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb19-96"><a href="#cb19-96" aria-hidden="true" tabindex="-1"></a>plt.plot(x_curve, y_curve, <span class="st">&#39;b-&#39;</span>, label<span class="op">=</span><span class="st">&#39;Fitted Curve&#39;</span>)</span>
+<span id="cb19-97"><a href="#cb19-97" aria-hidden="true" tabindex="-1"></a>plt.scatter(forbes[<span class="st">&#39;bp&#39;</span>], forbes[<span class="st">&#39;pres&#39;</span>], color<span class="op">=</span><span class="st">&#39;red&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data Points&#39;</span>)</span>
+<span id="cb19-98"><a href="#cb19-98" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;x (bp)&#39;</span>)</span>
+<span id="cb19-99"><a href="#cb19-99" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;y (pres)&#39;</span>)</span>
+<span id="cb19-100"><a href="#cb19-100" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb19-101"><a href="#cb19-101" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb19-102"><a href="#cb19-102" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>hat_theta = array([0.39999971, 0.02035366])</code></pre>
 </div>
