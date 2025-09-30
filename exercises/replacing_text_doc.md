@@ -2,6 +2,9 @@ Since we will usually have the same texts in R, Python and Quarto, we need an ap
 
 Solution is putting placeholders in the .ipynb or .qmd files and then replacing them with the actual text stored in another .ipynb file.
 
+# Requirements
+Assumes python 3.10+
+
 # Steps
 ## Step 1
 Create an ipynb file with cells containing texts you want to insert later (let's call it `texts.ipynb`):
@@ -14,7 +17,7 @@ This is a text to insert
 ```
 Another cell:
 ```markdown
-label: text2
+label: text
 This is another text to insert
 ```
 ## Step 2
@@ -44,7 +47,7 @@ Input folder structure:
     ├── <chapter_name>.qmd
     ├── sol_<chapter_name>_py.ipynb
     ├── sol_<chapter_name>_r.qmd
-    ├── texts.ipynb
+    ├── sol_<chapter_name>_texts.ipynb (if there is only one exercise you can also just name the file `texts.ipynb`)
     ├── Makefile (containing the line `include ../quarto.mk`) (optional)
     └── _quarto (copied from the `exercises` folder, duplication is a temporary solution and will be removed in the future)
         ├── latex-math.qmd
@@ -69,7 +72,7 @@ To keep the naming consistent with the [guideline](https://github.com/slds-lmu/l
 
 
 # Example
-Please see the [`information-theory-quarto`](https://github.com/slds-lmu/lecture_sl/tree/ex_info_theory_quarto/exercises/information-theory-quarto) (internal comment: the link will break once we merge the branch) folder for an actual example. Below is a toy example: 
+Please see the [`Advanced risk minimization`](https://github.com/slds-lmu/lecture_sl/tree/main/exercises/advriskmin-quarto)  folder for an actual example. Below is a toy example: 
 
 Folder name: `replace_texts_example`
 `texts.ipynb` file
@@ -100,7 +103,7 @@ Regular text here. This is a text to insert. Regular text here. This is another 
 
 # Notes
 1. If you want to ignore the `.qmd` files and only process `.ipynb` files, you can use the `--ignore_quarto` flag:
-2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). 
+2. In case of chapters with multiple exercises, for the text files the code expects the structure `sol_<exercise_name>_texts.ipynb` (e.g. `sol_information_theory_1_texts.ipynb`). For exercise `k` you will need to run `python replace_texts.py <folder_name> --texts sol_<chapter_name>_k_texts.ipynb`.
 
 # Overall workflow
 ## 1. Setup
@@ -137,3 +140,4 @@ You can use the following prompt to get a draft:
 10. Once merged, add jupyter notebooks to [Google Colab](https://colab.research.google.com/). File -> Open notebook -> GitHub -> search for "slds-lmu", then select the notebook you want to add, or alternatively paste the full link, for example https://github.com/slds-lmu/lecture_sl/blob/ex_gp_quarto/exercises/gaussian-processes-quarto/sol_gp_2_R.ipynb (this example is not from the `main` branch, this steps assumes that PR is merged, so the url will actually be from the `main` branch). The created notebook's URL will have the following structure "https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/<exercise_chunk>/<file_name>.ipynb".
 11. Check that the links work
 12. Some tex macros may fail, may need to add e.g. `$$\newcommand{\bm}{\boldsymbol}$$`
+

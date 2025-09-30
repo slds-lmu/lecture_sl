@@ -7,32 +7,32 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
 Bias-Variance 2: \\
 Approximation and Estimation error
 }{
-figure/bias_variance_decomposition-linear_model_bias.png
+figure_man/expected-risk-decomp.png
 }{
 \item Decomposing excess risk
 \item Into estimation, approx. and optim. error
 }
 
 
-\begin{framei}[sep=M]{Approx./Estimation Error \citelink{BROWN2024BIAS}}
+\begin{framei}[sep=M]{Approx./Estimation Error \furtherreading{BROWN2024BIAS}}
 
 \item BV decomp often confused with related (but different) decomp: 
 %\textbf{excess risk} into \textbf{estimation} and \textbf{approximation} error
 
 $$
-    \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} = \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
+\underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} = \underbrace{\risk(\hat f_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
 $$
 
 \item Both commonly described using same figure and analogies
 
-    \imageC[0.7][BROWN2024BIAS]{figure_man/biasvar-vs-estapprox-tradeoff.png}
+\imageC[0.7][BROWN2024BIAS]{figure_man/biasvar-vs-estapprox-tradeoff.png}
 
 \vfill
 
@@ -42,11 +42,11 @@ $$
 
 \end{framei}
 
-\begin{framei}[sep=M]{Approx./Estimation Error \citelink{BROWN2024BIAS}}
+\begin{framei}[sep=M]{Approx./Estimation Error \furtherreading{BROWN2024BIAS}}
 
-    \item Approx. error is a structural property of $\Hspace$
-    \item Estimation error is random due to dependence on data in $\fh$
-    \item Estimation error occurs as we choose $f \in \Hspace$ with limited train data minimizing $\riske$ instead of $\risk$
+\item Approx. error is a structural property of $\Hspace$
+\item Estimation error is random due to dependence on data in $\fh$
+\item Estimation error occurs as we choose $f \in \Hspace$ with limited train data minimizing $\riske$ instead of $\risk$
 
 \item Knowing $\fh_{\Hspace} \in \arg\inf_{f \in \Hspace} \riske(f)$ assumes we found a global minimizer of $\riske$, which is often impossible (e.g. ANNs) 
 
@@ -54,16 +54,16 @@ $$
 
 \item Can now decompose its excess risk finer as
 
-\begin{eqnarray*}
-    \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} &=& \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
-\end{eqnarray*}
+$$
+\underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fbayes_{\Hspace_{all}})}_{\text{excess risk}} = \underbrace{\risk(\tilde{f}_{\Hspace}) - \risk(\fh_{\Hspace})}_{\text{optim. error}} + \underbrace{\risk(\hat{f}_{\Hspace}) - \risk(\fbayes_{\Hspace})}_{\text{estimation error}} + \underbrace{\risk(\fbayes_{\Hspace}) -  \risk(\fbayes_{\Hspace_{all}})}_{\text{approx. error}} 
+$$
 
 \item NB: Optim err. can be $< 0$, but $\riske(\tilde{f}_{\Hspace}) \geq \riske(\fh_{\Hspace})$ always
 
-
 \end{framei}
 
-\begin{framei}[sep=M]{Approx./Estimation Error \citelink{BROWN2024BIAS}}
+
+\begin{framei}[sep=M]{Approx./Estimation Error \furtherreading{BROWN2024BIAS}}
 
 \item We can further decompose estimation error more finely by defining the \textit{centroid} model or ``systematic'' model part
 
@@ -71,17 +71,16 @@ $$
 
 \item With $f^{\circ}_{\Hspace}$, can decompose expected estimation error as
 $$
- \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f ^{\ast}_{\Hspace})\right]}_{\text{expected estimation error}} = \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f^{\circ}_{\Hspace}) \right]}_{\text{estimation variance}} + \underbrace{\risk(f^{\circ}_{\Hspace})-\risk(f^{\ast}_{\Hspace})}_{\text{estimation bias}}   
+\underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f ^{\ast}_{\Hspace})\right]}_{\text{expected estimation error}} = \underbrace{\E_{\D_n \sim \Pxy^n}\left[\risk(\hat{f}_{\Hspace}) - \risk(f^{\circ}_{\Hspace}) \right]}_{\text{estimation variance}} + \underbrace{\risk(f^{\circ}_{\Hspace})-\risk(f^{\ast}_{\Hspace})}_{\text{estimation bias}}   
 $$
-
 
 \item Estimation bias measures distance of centroid model to risk minimizer over $\Hspace$
 \item Estimation var. spread of ERM around centroid model induced by randomness due to $\D_n$
 
 \end{framei}
 
-\begin{framei}[sep=M]{Approx./Estimation Error \citelink{BROWN2024BIAS}}
 
+\begin{framei}[sep=M]{Approx./Estimation Error \furtherreading{BROWN2024BIAS}}
 
 \item Can now connect derived quantities back to bias and variance 
 \item Bias is not only approx. error and variance is not estimation error
@@ -90,7 +89,7 @@ $$
 $$ \text{bias} = \text{approximation error} + \text{estimation bias} $$
 $$\text{variance} = \text{optimization error} + \text{estimation variance}$$
 
-    \imageC[0.45][BROWN2024BIAS]{figure_man/expected-risk-decomp.png}
+\imageC[0.45][BROWN2024BIAS]{figure_man/expected-risk-decomp.png}
 
 \item \textbf{NB}: For special case of LM and L2 loss, we have very small optim / numerical error and estimation bias; so both decomps agree
 

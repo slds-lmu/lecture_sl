@@ -43,72 +43,70 @@
 %
 %\end{vbframe}
 
-\begin{comment}
 
-  \begin{vbframe}{Minimum Redundancy Maximum Relevancy}
-  \begin{itemize}
-    \setlength{\itemsep}{2em}
-    \item Most filter-type methods rank features based on a univariate association score without considering relationships among the features.
-    \begin{itemize}
-    \setlength{\itemsep}{1.5em}
-      \item Features may be correlated and hence, may cause redundancy.
-      \item Selected features cover narrow regions in space.
-    \end{itemize}
-    \item We want the features to be relevant and maximally dissimilar to each other (minimum redundancy).
-    \item Features can be either continuous or categorical.
-  \end{itemize}
-  \end{vbframe}
+  % \begin{vbframe}{Minimum Redundancy Maximum Relevancy}
+  % \begin{itemize}
+  %   \setlength{\itemsep}{2em}
+  %   \item Most filter-type methods rank features based on a univariate association score without considering relationships among the features.
+  %   \begin{itemize}
+  %   \setlength{\itemsep}{1.5em}
+  %     \item Features may be correlated and hence, may cause redundancy.
+  %     \item Selected features cover narrow regions in space.
+  %   \end{itemize}
+  %   \item We want the features to be relevant and maximally dissimilar to each other (minimum redundancy).
+  %   \item Features can be either continuous or categorical.
+  % \end{itemize}
+  % \end{vbframe}
 
-  \begin{vbframe}{\MakeLowercase{M}RMR: Criterion functions}
-  \begin{itemize}
-  \item Let $S \subset \{1, \dots, p \}$ be a subset of features we want to find.
+  % \begin{vbframe}{\MakeLowercase{M}RMR: Criterion functions}
+  % \begin{itemize}
+  % \item Let $S \subset \{1, \dots, p \}$ be a subset of features we want to find.
 
-  $$\min \text{Red}(S), \;\;\;\; \text{Red}(S) = \frac{1}{|S|^2} \sum_{j, l \in S} I_{xx}(x_j, x_l)$$
+  % $$\min \text{Red}(S), \;\;\;\; \text{Red}(S) = \frac{1}{|S|^2} \sum_{j, l \in S} I_{xx}(x_j, x_l)$$
 
-  $$\max \text{Rel}(S), \;\;\;\; \text{Rel}(S) = \frac{1}{|S|} \sum_{j \in S} I_{xy}(x_j, \ydat)$$
+  % $$\max \text{Rel}(S), \;\;\;\; \text{Rel}(S) = \frac{1}{|S|} \sum_{j \in S} I_{xy}(x_j, \ydat)$$
 
-  \item $I_{xx}$ measures the strength of the dependency between two features.
-  \item $I_{xy}$ measures the strength of the dependency between a feature and the target.
-  \item They could be mutual information, correlation, F-statistic, etc.
-  \end{itemize}
+  % \item $I_{xx}$ measures the strength of the dependency between two features.
+  % \item $I_{xy}$ measures the strength of the dependency between a feature and the target.
+  % \item They could be mutual information, correlation, F-statistic, etc.
+  % \end{itemize}
 
 
-  \framebreak
+  % \framebreak
 
-  \begin{itemize}
-  \item To optimize simultainously, the criteria is combined into a single objective function:
-  $$\Psi(S) = (\text{Rel}(S) - \text{Red}(S)) \;\;\;\; \text{ or } \;\;\;\; \Psi(S) = (\text{Rel}(S)/\text{Red}(S))$$
+  % \begin{itemize}
+  % \item To optimize simultainously, the criteria is combined into a single objective function:
+  % $$\Psi(S) = (\text{Rel}(S) - \text{Red}(S)) \;\;\;\; \text{ or } \;\;\;\; \Psi(S) = (\text{Rel}(S)/\text{Red}(S))$$
 
-  \item Exact solution requires $ \order (|\Xspace|^{|S|})$ searches, where $|\Xspace|$ is the number of features and $|S|$ is the number of selected features.
-  \end{itemize}
-  In practice, incremental search methods are used to find near-optimal feature sets defined by $\Psi$:
-  \begin{itemize}
-  \item Suppose we already have a feature set with $m-1$ features $S_{m-1}$.
-  \item Next, we select the $m$-th feature from the set $\bar{S}_{m-1}$ by selecting the feature that maximizes:
-  $$\max_{j \, \in \, \bar{S}_{m-1}} [ I_{xy} (x_j, \ydat) - \frac{1}{|S_{m-1}|} \sum_{l \, \in \, S_{m-1}} I_{xx}(x_j, x_l)  ]$$
-  \item The complexity of this incremental algorithm is $\mathcal{O}(|p| \cdot| S|)$.
-  \end{itemize}
-  \end{vbframe}
+  % \item Exact solution requires $ \order (|\Xspace|^{|S|})$ searches, where $|\Xspace|$ is the number of features and $|S|$ is the number of selected features.
+  % \end{itemize}
+  % In practice, incremental search methods are used to find near-optimal feature sets defined by $\Psi$:
+  % \begin{itemize}
+  % \item Suppose we already have a feature set with $m-1$ features $S_{m-1}$.
+  % \item Next, we select the $m$-th feature from the set $\bar{S}_{m-1}$ by selecting the feature that maximizes:
+  % $$\max_{j \, \in \, \bar{S}_{m-1}} [ I_{xy} (x_j, \ydat) - \frac{1}{|S_{m-1}|} \sum_{l \, \in \, S_{m-1}} I_{xx}(x_j, x_l)  ]$$
+  % \item The complexity of this incremental algorithm is $\mathcal{O}(|p| \cdot| S|)$.
+  % \end{itemize}
+  % \end{vbframe}
 
-  \begin{vbframe}{\MakeLowercase{m}RMR: Algorithm}
+  % \begin{vbframe}{\MakeLowercase{m}RMR: Algorithm}
 
-  \begin{algorithm}[H]
-  \footnotesize
-    \begin{algorithmic}[1]
-      \State Set $S = \emptyset$, $R = \{ 1, \dots, p \}$
-      \State Find the feature with maximum relevancy:
-      $$j^* := \argmax_{j} I_{xy} (x_j, \ydat)$$
-      \State Set $S = \{ j^* \}$ and update $R \leftarrow R \setminus \{j^* \}$
-      \Repeat
-        \State Find feature $x_j$ that maximizes:
-        $$\max_{j \, \in \, R} [ I_{xy} (x_j, \ydat) - \frac{1}{|S|} \sum_{l \, \in \, S} I_{xx}(x_j, x_l)  ]$$
-        \State Update $S \leftarrow S \cup \{j^* \}$ and $R \leftarrow R \setminus \{ j^* \}$
-      \Until{Expected number of features have been obtained or some other constraints are satisfied.}
-      \caption{mRMR algorithm}
-    \end{algorithmic}
-  \end{algorithm}
-  \end{vbframe}
-\end{comment}
+  % \begin{algorithm}[H]
+  % \footnotesize
+  %   \begin{algorithmic}[1]
+  %     \State Set $S = \emptyset$, $R = \{ 1, \dots, p \}$
+  %     \State Find the feature with maximum relevancy:
+  %     $$j^* := \argmax_{j} I_{xy} (x_j, \ydat)$$
+  %     \State Set $S = \{ j^* \}$ and update $R \leftarrow R \setminus \{j^* \}$
+  %     \Repeat
+  %       \State Find feature $x_j$ that maximizes:
+  %       $$\max_{j \, \in \, R} [ I_{xy} (x_j, \ydat) - \frac{1}{|S|} \sum_{l \, \in \, S} I_{xx}(x_j, x_l)  ]$$
+  %       \State Update $S \leftarrow S \cup \{j^* \}$ and $R \leftarrow R \setminus \{ j^* \}$
+  %     \Until{Expected number of features have been obtained or some other constraints are satisfied.}
+  %     \caption{mRMR algorithm}
+  %   \end{algorithmic}
+  % \end{algorithm}
+  % \end{vbframe}
 
   \begin{vbframe}{Filter methods can be misleading}
 
@@ -134,7 +132,7 @@
     \end{figure}
 \vspace{0.3cm}
 \footnotesize{\textbf{Information gain from presumably redundant variables}. 2 class problem with indep features. Each class has Gaussian distribution with no covariance. While filter methods suggest redundancy, combination of both vars yields improvement, showing indep vars are not truly redundant. %Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. 
-For further details, see \citelink{GUYON2003INTRODUCTION}.}
+For further details, see \furtherreading{GUYON2003INTRODUCTION}.}
 %\footnotesize{\textbf{IG from presumably redundant variables}. Left: 2 class problem with i.i.d. variables. Each class has Gaussian distr. with no covariance. Right: After 45 degree rotation, showing combination of 2 vars yields separation improvement by factor $\sqrt{2}$, showing i.i.d. vars are not truly redundant. For further details, see Guyon and Elisseeff, 2003.}
    %\footnotesize{Isabelle Guyon, André Elisseeff (2003). An Introduction to Variable and Feature Selection.  Journal of Machine Learning Research (3) p. 1157-1182.}
 

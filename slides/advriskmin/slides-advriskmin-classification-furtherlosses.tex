@@ -1,64 +1,54 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-eval}
-\input{../../latex-math/ml-trees} % For the comparison of Brier and Gini index
-
+\input{../../latex-math/ml-trees} 
 \title{Introduction to Machine Learning}
 
 \begin{document}
     
 \titlemeta{
-    Advanced Risk Minimization
-  }{% Lecture title  
-    Advanced Classification Losses
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/overview_classif_all.png
-  }{
-  \item (squared) Hinge loss
-  \item $L2$ loss defined on scores
-  \item Exponential loss
-  \item AUC loss 
+Advanced Risk Minimization
+}{
+Advanced Classification Losses
+}{
+figure/overview_classif_all.png
+}{
+\item (squared) Hinge loss
+\item $L2$ loss defined on scores
+\item Exponential loss
+\item AUC loss 
 }
 
 \begin{framei}[sep=M]{Hinge Loss}
 
-  \item 0-1-loss intuitive but ill-suited for direct optimization
-  \item \textbf{Hinge loss} is continuous and convex 
-  upper bound on 0-1-loss 
-  $$\Lxy = \max \{ 0, 1 - y\fx \} \quad \text{for} \ y \in \setmp$$
-  \item Only zero for margin $y\fx\geq 1$, 
-  encourages confident predictions
-  \item Often used in SVMs %(cf. chapters on SVMs)
-  % \item A squared version exists for putting a sharper penalty on 
-  % misclassifications:
-  % $$\Lxy = \max \{ 0, (1 - y\fx)^2\}.$$
-  \item Resembles a door hinge, hence the name
+\item 0-1-loss intuitive but ill-suited for direct optimization
+\item \textbf{Hinge loss} is continuous and convex 
+upper bound on 0-1-loss 
+$$\Lxy = \max \{ 0, 1 - \yf \} \quad \text{for} \ y \in \setmp$$
+\item Only zero for margin $\yf\geq 1$, 
+encourages confident predictions
+\item Often used in SVMs
+% \item A squared version exists for putting a sharper penalty on 
+% misclassifications:
+% $$\Lxy = \max \{ 0, (1 - \yf)^2\}.$$
+\item Resembles a door hinge, hence the name
 
 \imageC[0.8]{figure/overview_classif_subset1.png}
-
 
 \end{framei}
 
 
 \begin{framei}[sep=M]{Squared Hinge Loss}
 
-  \item Can also define \textbf{squared hinge loss}:
-  $$\Lxy = \max \{ 0, (1 - y\fx)\}^2$$
-  \item $L2$ form punishes margins $y\fx \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
-  \item Cont. differentiable yet more outlier-sensitive than hinge loss
+\item Can also define \textbf{squared hinge loss}:
+$$\Lxy = \max \{ 0, (1 - \yf)\}^2$$
+\item $L2$ form punishes margins $\yf \in (0, 1)$ less severely but puts high penalty on confidently wrong predictions
+\item Cont. differentiable yet more outlier-sensitive than hinge loss
 
-\imageC[0.8]{figure/overview_classif_subset2.png}
+\imageC[0.9]{figure/overview_classif_subset2.png}
 
 
 \end{framei}
@@ -68,13 +58,13 @@
 
 % Source: https://davidrosenberg.github.io/mlcourse/Archive/2017Fall/Lectures/04a.loss-functions.pdf
 
-  \item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
-  \begin{eqnarray*}
-  \Lxy &=&(y - \fx)^2 = y^2 - 2y\fx + \fx^2\\
-  &=&1 - 2y\fx + (y\fx)^2 = (1 - y\fx)^2
-  \end{eqnarray*}
-  \item Like sq. hinge loss for $y\fx < 1$, but not clipped to $0$ for $y\fx>1$
-  \item Only 0 for $y\fx = 1$ and increasing again in $y\fx$ (undesirable!)
+\item Analogous to Brier score on probs, can specify \textbf{squared loss on classification scores} with $y \in \setmp$ using $y^2=1$:
+\begin{align*}
+\Lxy =&(y - \fx)^2 = y^2 - 2\yf + \fx^2\\
+=&1 - 2\yf + (\yf)^2 = (1 - \yf)^2
+\end{align*}
+\item Like sq. hinge loss for $\yf < 1$, but not clipped to $0$ for $\yf>1$
+\item Only 0 for $\yf = 1$ and increasing again in $\yf$ (undesirable!)
 
 \imageC[0.8]{figure/overview_classif_subset3.png}
 
@@ -87,7 +77,7 @@
 
 \item Another smooth 
 approx. of 0-1-loss is \textbf{exponential loss}:
-$$\Lxy = \exp(-y\fx)$$ 
+$$\Lxy = \exp(-\yf)$$ 
 \item Used in AdaBoost
 \item Convex, differentiable (thus easier to optimize than 0-1-loss)
 \item Loss increases exponentially for wrong predictions with high confidence; low-confidence correct predictions have positive loss
@@ -99,18 +89,17 @@ $$\Lxy = \exp(-y\fx)$$
 
 \begin{frame}{AUC-loss}
 
-\begin{itemize}
+\begin{itemizeM}
 \item AUC often used as evaluation criterion for binary classifiers
-\item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples %$y_i, i = 1, \ldots, n_{-1} + n_1$.
+\item Let $y \in \setmp$ with $\nn$ negative and $\np$ positive samples 
 \item AUC can then be defined as
 $$AUC = \frac{1}{\np} \frac{1}{\nn} \sum_{i: \yi = 1} \sum_{j: \yi[j] = -1} \I [f^{(i)} > f^{(j)}]$$
 \item Not differentiable w.r.t $f$ due to indicator $\I [f^{(i)} > f^{(j)}]$
 \item Indicator can be approximated by distribution function of triangular distribution on $[-1, 1]$ with mean $0$
 \item Direct optimization of AUC numerically difficult, rather use common loss and tune for AUC in practice
-
-\end{itemize}
+\end{itemizeM}
 \vfill
-Comprehensive survey on advanced loss functions: \citelink{WANG2020COMPRE}
+Comprehensive survey on advanced loss functions: \furtherreading{WANG2020COMPRE}
 
 \end{frame}
 

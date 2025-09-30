@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
@@ -14,7 +7,7 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
@@ -35,7 +28,7 @@ figure/zero_one.png
 \item Discrete classifier $h: \Xspace \to \Yspace$
 \item Maybe most ``natural'': 0-1-loss 
 $$
-\Lhxy = \mathds{1}_{\{y \ne \hx\}} 
+\Lhxy = \I_{\{y \ne \hx\}} 
 $$
 \end{itemize}
 }
@@ -49,28 +42,28 @@ $$
 \item For $\Yspace \in \setmp$ and scoring classifier $\fx$\\
 can write it in terms of margin $\nu = y\fx$
 $$
-\Lxy = \mathds{1}_{\{\nu < 0\}} = \mathds{1}_{\{y\fx < 0\}}
+\Lxy = \I_{\{\nu < 0\}} = \I_{\{y\fx < 0\}}
 $$
 \item For $\Yspace \in \setzo$ and prob. classifier $\pix$
 $$
-\Lpixy = y \mathds{1}_{\{\pix < 0.5\}} + (1-y) \mathds{1}_{\{\pix \geq 0.5\}} = \mathds{1}_{\{(2y-1)(\pix - 0.5) < 0 \}} 
+\Lpixy = y \I_{\{\pix < 0.5\}} + (1-y) \I_{\{\pix \geq 0.5\}} = \I_{\{(2y-1)(\pix - 0.5) < 0 \}} 
 $$
-\item Analytical properties:  Not continuous, even for linear $\fx$ optim. problem NP-hard = close to intractable \citelink{FELDMAN2012AGNOSTIC}
+\item Analytical properties:  Not continuous, even for linear $\fx$ optim. problem NP-hard = close to intractable \furtherreading{FELDMAN2012AGNOSTIC}
 \end{itemize}
 \end{frame}
 
 
 \begin{framei}[sep=M]{Risk Minimizer for discrete classifiers}
 
-\item Again, unravel with law of total expectation (works for multiclass)
+\item Again, unravel with law of total expectation (here for multiclass)
 
 \vspace*{-0.5cm}
 
-\begin{eqnarray*}
-  \riskf  & = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ~|~ \xv ] \right] \\
-          & = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right] 
-          % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
-\end{eqnarray*}
+\begin{align*}
+\riskf  = & \Exy\left[\Lxy\right] = \E_x \left[ \E_{y|x} [ \Lxy ~|~ \xv ] \right] \\
+      = & \E_x \left[\sum_{k \in \Yspace} L(k, \fx) \P(y = k~|~ \xv)\right] 
+      % & = & E_x \sum_{k \in \Yspace} L(k, \fx) \pikx,
+\end{align*}
 
 \item $\eta_k(x) := \P(y = k| \xv)$ is true posterior probability for class $k$
 
@@ -84,13 +77,6 @@ $$
 \item Especially for hard labelers and arbitrary misclassif. costs, we see: produces cost-optimal decision, weighted by posterior probs; \\
 (we see this again in cost-senslearning)
 
-% The risk minimizer for a general loss function $\Lxy$ is
-
-% \vspace*{-0.3cm}
-
-% \begin{eqnarray*}
-%   \fxbayes &=& \argmin_{f: \Xspace \to \R^g} \E_x \left[\sum_{k \in \Yspace} L(k, f(\bm{x})) \P(y = k| \xv = \xtil)\right]\,.  \\
-% \end{eqnarray*}
 
 \end{framei}
 
@@ -99,11 +85,11 @@ $$
 
 \item For multiclass and hard labeler $\hx$
 \item Optimal constant
-\begin{eqnarray*}   h_{c}^{\ast}  &=& \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
-&=& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
-  &=& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
-  &=& \argmax_{k \in \Yspace} \P(y = k)
-  \end{eqnarray*}
+\begin{align*}   h_{c}^{\ast}  =& \argmin_{k \in \Yspace} \sum_{l \in \Yspace} L(l, k) \cdot \P(y = l) \\
+=& \argmin_{k \in \Yspace} \sum_{k \ne l} \P(y = l) \\ 
+=& \argmin_{k \in \Yspace} 1 - \P(y = k) \\
+=& \argmax_{k \in \Yspace} \P(y = k)
+\end{align*}
 
 
 \item Translation: Predict most probable class
@@ -112,7 +98,7 @@ $$
 
 \item Risk minimizer / optim. cond. prediction / Bayes optim. classifier:
 
- $h^{\ast}(\xtil) = \argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ 
+$h^{\ast}(\xtil) = \argmaxlim_{k \in \Yspace} \P(y = k~|~ \xv = \xtil)$ 
 
 \end{framei}
 
@@ -120,7 +106,7 @@ $$
 \begin{frame}{Bayes risk  / Bayes error rate}
 
 $$
-  \riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
+\riskbayes = 1 - \E_{x} \left[\max_{k \in \Yspace} \P(y = k~|~ \xv)\right]
 $$
 
 \vfill
@@ -128,14 +114,14 @@ $$
 For binary case, can write risk minimizer and Bayes risk as:  
 
 $$
-  \hxbayes = \begin{cases} 1 & \eta(\xv) \ge \frac{1}{2} \\ 0 & \eta(\xv) < \frac{1}{2}\end{cases} 
+\hxbayes = \begin{cases} 1 & \eta(\xv) \ge \frac{1}{2} \\ 0 & \eta(\xv) < \frac{1}{2}\end{cases} 
 $$
 
 $$
 \riskbayes = \E_x\left[\min(\eta(\xv), 1 - \eta(\xv))\right] = 1 - \E_x\left[\max(\eta(\xv), 1 - \eta(\xv))\right] 
 $$
 
- 
+
 \end{frame}
 
 
@@ -172,7 +158,7 @@ $$
 
 \item Bayes optimal classifier = orange; Bayes error = red 
 
-\imageC[0.8]{figure/bayes_error_5.png} 
+\imageC[0.8]{figure/bayes_error.png} 
 
 \end{framei}
 

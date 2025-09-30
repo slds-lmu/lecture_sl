@@ -49,16 +49,16 @@ We derived this QP for the soft-margin SVM:
   In the optimum, the inequalities will hold with equality (as we minimize the slacks), so $\sli = 1 - \yi \fxi$, but the lowest value $\sli$ can take is 0 (we do no get a bonus for points beyond the margin on the correct side).
   So we can rewrite the above: 
 \begin{align*} 
-    \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lyf = 
+    \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lxy = 
     \begin{cases} 
       1 - y f & \text{ if } y f \leq 1 \\ 
       0       & \text{ if } y f > 1 
     \end{cases}
 \end{align*} 
-We can also write $\Lyf = \max(1-yf, 0)$.
+We can also write $\Lxy = \max(1-yf, 0)$.
 
 \framebreak
-  $$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lyf = \max(1-yf, 0)$$
+  $$ \risket = \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lxy = \max(1-yf, 0)$$
   \begin{itemize}
     \item This now obviously L2-regularized empirical risk minimization.
     \item Actually, a lot of ERM theory was established when Vapnik (co-)invented the SVM in the beginning of the 90s.
@@ -74,7 +74,7 @@ We can also write $\Lyf = \max(1-yf, 0)$.
 
 \framebreak
 
-  $$ \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lyf = \max(1-yf, 0)$$
+  $$ \frac{1}{2} \|\thetav\|^2 + C \sumin \Lxyi ;\; \Lxy = \max(1-yf, 0)$$
 \begin{itemize}
  \item  The ERM interpretation does not require any of the terms -- the loss or the regularizer -- to be geometrically meaningful.
   \item The above form is a very compact form to define the convex optimization problem of the SVM. 
@@ -89,7 +89,7 @@ We can also write $\Lyf = \max(1-yf, 0)$.
 
   SVMs can easily be generalized by changing the loss function.
   \begin{itemize}
-    \item Squared hinge loss / Least Squares SVM: $\Lyf = \max(0, (1 - yf)^2)$ 
+    \item Squared hinge loss / Least Squares SVM: $\Lxy = \max(0, (1 - yf)^2)$ 
     \item Huber loss (smoothed hinge loss)
     \item Bernoulli/Log loss. This is L2-regularized logistic regression!
     \item NB: These other losses usually do not generate sparse solutions in terms of 

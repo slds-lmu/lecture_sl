@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -40,16 +33,7 @@ $$
 If residual is twice as large, loss is 4 times as large\\
 Hence, sensitive to outliers in $y$
 \item Analytic properties: convex, differentiable 
-%$\Rightarrow$ gradient no problem in loss minimization\\ {\small (\textbf{Warning}: $\riskef$ can still be non-smooth/non-convex due to $f(\xv)$)}
-%\item Residuals = Pseudo-residuals: \begin{footnotesize} $\tilde r = - \pd{0.5 (y-\fx)^2}{\fx} = y - \fx = r$\end{footnotesize}
 \end{itemize}
-
-% <<loss-quadratic-plot, echo=FALSE, results='hide', fig.height=3>>=
-% x = seq(-2, 2, by = 0.01); y = x^2
-% qplot(x, y, geom = "line", xlab = expression(y-f(x)), ylab = expression(L(y-f(x))))
-% @
-
-% \framebreak
 
 \imageC[0.8]{figure/loss_quadratic_2.png}
 
@@ -58,22 +42,15 @@ Hence, sensitive to outliers in $y$
 
 \begin{framei}[sep=L]{L2: Optimal value is expectation}
 
-%\item Let's consider L2 here as simplest case
 \item Can derive a general result now for any $z ~ \sim Q$
 \item Consider 
-$$ 
-\argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] 
-$$
-$$
-\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   
-$$
+$$ \argmin_{c \in \R}  \E_{z} [L(z, c)] = \argmin_{c \in \R}  \E [(z - c)^2] $$
+$$\E [(z - c)^2] =  \E [z^2 - 2zc + c^2 ] = \E[z^2] -2c\E[z] + c^2   $$
 
 \item The RHS is minimized by $c = \E[z]$\\
 (simple quadratic, or take derivative and set to 0)
 
 \end{framei}
-
-
 
 
 \begin{framei}[sep=S]{L2: Optimal Constant Model}
@@ -86,18 +63,10 @@ $$
 $$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c)$$
 
 And later we will proceed like that
-\item But we can get the result for free from our previous 
-  consideration
+\item But we can get the result for free from our previous consideration
   
 \item For data $y^{(1)}, \ldots, y^{(n)}$, empirical distribution is $P_n = \meanin \delta_{\yi}$
-%Thus, for the minimization problem
-%\[
-% \argmin_{c \in \R} \mathbb{E}_{z\sim P_n}\bigl[L(z,c)\bigr] = \argmin_{c %\in \R} \mathbb{E}_{z\sim P_n}\bigl[(z-c)^2\bigr] =  \argmin_{c \in \R} %\frac{1}{n}\sum_{i=1}^n (y^{(i)}-c)^2,
-%\]
-%taking the derivative with respect to \(c\) yields
-%\[
-%\frac{d}{dc}(\frac{1}{n}\sum_{i=1}^n (y^{(i)}-c)^2) = \frac{1}{n}\sum_{i=1}^n 2\,(c-y^{(i)}) = 2(c-\frac{1}{n}\sum_{i=1}^n y^{(i)})=0.
-%\]
+
 \item Hence: Optimal constant is sample mean
 $$\hat{f}_c = \argminlim_{c \in \R} \sumin L(\yi,c) = 
 \E_{z \sim P_n} (z-c)^2 = \E[z] = \meanin \yi = \bar{y}
@@ -113,39 +82,18 @@ $$
 
 $$\fbayes(\xtil) = \argmin_{c \in \R} \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right]$$ 
 
-\item Again from the previous, \\
-we know the minimizer for $L2$ is the conditional expectation 
+\item We know from previously that $L2$ RM is the cond. exp. 
 
 $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
 
 \imageC[0.7]{figure/optimal_pointwise.png}
 
-
-%\begin{itemize}
-%\item By the law of total expectation
-%  \begin{eqnarray*}
-%    \risk_L(f) &=& \E_{xy} \left[\Lxy\right] 
-%    = \E_x \left[\E_{y|x}\left[\Lxy~|~\xv = \xtil\right]\right] \\
-%  &=& \E_x
-%  \left[\E_{y|x}\left[(y-\fx)^2~|\xv = \xtil\right]\right]. 
-%  \end{eqnarray*}
-% \item As our hypothesis space is not restricted at all, we can proceed quite \enquote{arbitrarily} when constructing our model $\hat f$.  
-
-%\item Since $\Hspace$ is unrestricted, at any point $\xv = \xtil$, we can predict any value $c$ we want. The best point-wise prediction is the cond. mean
-%$$
-%  \fxbayes = \argmin_c \E_{y|x}\left[(y - c)^2 ~|~ \xv = \xtil \right]\overset{(*)}{=} \E_{y|x} \left[y ~|~ \xv \right]. 
-%$$
-
-%\begin{footnotesize}
-%$^{(*)}$ follows from the drivation of $f_{c}^{\ast}$
-%  \begin{eqnarray*}
-%  && \mbox{argmin}_c \E\left[(y - c)^2\right] = \mbox{argmin}_c \underbrace{\E\left[(y - c)^2\right] - (\E[y] - c)^2}_{= \var[y - c] = \var[y]} + (\E[y] - c)^2 \\ &=& \mbox{argmin}_c \var[y] + (\E[y] - c)^2 = \E[y]. 
-%  \end{eqnarray*}
-%\end{footnotesize}
-
-%\end{itemize}
-
+\item For $L2$ loss, the pointwise loss is the (conditional) variance
+$$
+\E_{y|x}[(L(y, \fbayes(\xv)) | \xv = \xtil ] =  \E_{y|x}[(y-\fbayes(\xv))^2 | \xv = \xtil ] =  \var(y | \xv = \xtil) 
+$$
+This is trivially true, as we know $f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 
 \end{framei}
 
@@ -153,9 +101,8 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
   \vfill
 
-\splitV[0.65]
-{
-    \begin{itemize}
+\splitVCC[0.55]{
+  \begin{itemizeM}[fs=normal]
       \item Let's reconsider the previous
       \item Optimized for const whose squared dist to points is minimal (on avg)
       \item Result: $\hat{\theta} = \bar{y}$
@@ -164,33 +111,12 @@ $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
       \item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
         to obtain variance
       \item Same holds for the pointwise construction / conditional distribution considered before
-    \end{itemize}
-}{\imageC[]{figure_man/plot_const_var.png}}
+    \end{itemizeM}
+  }{
+  \imageC[]{figure_man/plot_const_var.png}
+  }
 
 \end{frame}
-
-
-% DO NOT REMOVE THIS BUT INCLUDE IT AGAIN WHEN COMMAND AVAILABLE
-%\begin{framei}[sep=M]{L2 loss means minimizing variance}
-%\splitVCentered[0.65]{
-%\splitVCC{
-
-%\begin{itemize}
-
-%\item Let's reconsider the previous
-%\item Optimized for const whose squared dist to points is minimal (on avg)
-%\item Result: $\thetah = \bar{y}$
-%\item What is the associated risk?
-%$\riske(\thetah) = \sumin (\yi - \bar{y})^2$
-%\item Average this by $\frac{1}{n}$ or $\frac{1}{n-1}$\\
-%to obtain variance
-%\item Same holds for the pointwise construction / %conditional distribution considered before
-
-%\end{itemize}
-
-%}{\imageC{figure_man/plot_const_var.png}}
-
-%\end{framei}
 
 \begin{frame}{L1-Loss}
 
@@ -221,9 +147,8 @@ $f_{c}^{\ast} = \text{med} [y]$
 \item Derivations slightly harder and in deep-dive
 
 \item Risk minimizer / optimal conditional prediction:
-  $$
-    f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv = \xtil \right]
-  $$
+$$f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c| ~|~ \xv = \xtil\right]= \text{med} \left[y ~|~ \xv = \xtil \right]
+$$
 
 \end{framei}
 

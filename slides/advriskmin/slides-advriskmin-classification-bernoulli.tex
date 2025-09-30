@@ -1,36 +1,29 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-eval}
-\input{../../latex-math/ml-trees} % For the comparison of Brier and Gini index
+\input{../../latex-math/ml-trees} 
 
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
-    Advanced Risk Minimization
-  }{Bernoulli Loss
-  }{figure/bernoulli_prob.png
-  }{
-  \item Bernoulli (log, logistic, binomial, cross-entropy) loss
-  \item Risk minimizer
-  \item Optimal constant
-  \item Complete separation problem
+Advanced Risk Minimization
+}{Bernoulli Loss
+}{figure/bernoulli_prob.png
+}{
+\item Bernoulli (log, logistic, binomial, cross-entropy) loss
+\item Risk minimizer
+\item Optimal constant
+\item Complete separation problem
 }
 
 \begin{framei}[sep=L]{On probabilities}
- 
+
 \item  Likelihood of Bernoulli RV:
 $$
 \LLt = \prodin \pixit^{\yi} (1-\pixit)^{1-\yi} \qquad  y \in \setzo
@@ -54,7 +47,7 @@ $$
 \item Confidently wrong predictions are harshly penalized
 
 
-\imageC[0.35]{figure/bernoulli_prob.png}  
+\imageC[0.45]{figure/bernoulli_prob.png}  
 
 \item A.k.a. Binomial, log, or cross-entropy loss
 \item Can also write for $y \in \setmp $
@@ -68,18 +61,17 @@ $$
 
 \begin{framei}[sep=M]{On decision scores}
 
-    \item Transform probs into scores (log-odds): $\fx = \log(\frac{\pix}{1 - \pix})$
-    \item Then $\pix = (1 + \exp(-\fx))^{-1}$
-    \item Yields equivalent loss formulation
+\item Transform probs into scores (log-odds): $\fx = \log(\frac{\pix}{1 - \pix})$
+\item Then $\pix = (1 + \exp(-\fx))^{-1}$
+\item Yields equivalent loss formulation
 $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
-    \item For these and other simple derivations, see deep dive
+\item For these and other simple derivations, see deep dive
 
 \vfill
 
 
-% \imageC[10cm ]{figure_man/bernoulli-loss.png} \\
 \splitVCC{\imageC[0.9]{figure/logistic.png}}
-  {\imageC[0.9]{figure/bernoulli_logloss.png}}
+{\imageC[0.9]{figure/bernoulli_logloss.png}}
 
 \end{framei}
 
@@ -87,19 +79,11 @@ $$\Lxy = - y \cdot \fx + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 
 \item For $y \in \setmp$, loss becomes: 
 $$
-  \Lxy = \log(1+\exp(-y \cdot \fx)) 
+\Lxy = \log(1+\exp(-y \cdot \fx)) 
 $$
-%  \item For $y=-1$ plug $y'=0$ in old loss: $L(0,\fx)=\log(1+\exp(\fx)$
-%  \item For $y=y'=1$: 
-%  \begin{eqnarray*}
-%   L(1,\fx)=-\fx+\log(1+\exp(\fx))&=&\log(1+\exp(\fx))-\log(\exp(\fx))\\
-%   &=&\log(1+\exp(-\fx)
-% \end{eqnarray*}
- 
-%  \item Convert between 2 encodings using $y=2y'-1$ for $y' \in \setzo$
 \item All loss variants convex, differentiable
 
- \vfill
+\vfill
 
 \imageC[0.8]{figure/bernoulli_margin.png}
 
@@ -110,9 +94,9 @@ $$
 \begin{frame}{Risk Minimizer on Probs}
 
 \begin{itemize}
-    \item For probs and $y \in \setzo$, the risk minimizer is
+\item For probs and $y \in \setzo$, the risk minimizer is
 $$
-  \piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil) 
+\piastxtil = \eta(\xtil) = \P(y = 1 ~|~ \xv = \xtil) 
 $$
 \end{itemize}
 
@@ -120,18 +104,18 @@ $$
 
 \textbf{Proof:} We have seen before
 $$
-  \riskf = \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right]
+\riskf = \E_x \left[L(1, \pix) \cdot \eta(\xv) + L(0, \pix) \cdot (1 - \eta(\xv)) \right]
 $$
 
 For fixed $\xv$, minimize inner part pointwise, use $c\in(0,1)$ for best value:
 
 {\footnotesize
-\begin{eqnarray*}
-  \frac{d }{d c} (- \log c  \cdot \eta(\xv)- \log (1 - c) \cdot (1 - \eta(\xv))) &=& 0 \\
-  - \frac{\eta(\xv)}{c} + \frac{1 - \eta(\xv)}{1 - c} &=& 0 \\
-  \frac{- \eta(\xv) + \eta(\xv) c + c - \eta(\xv) c}{c (1 - c)} &=& 0 \\
-  c &=& \eta(\xv)
-\end{eqnarray*}
+\begin{align*}
+\frac{d }{d c} (- \log c  \cdot \eta(\xv)- \log (1 - c) \cdot (1 - \eta(\xv))) =& 0 \\
+- \frac{\eta(\xv)}{c} + \frac{1 - \eta(\xv)}{1 - c} =& 0 \\
+\frac{- \eta(\xv) + \eta(\xv) c + c - \eta(\xv) c}{c (1 - c)} =& 0 \\
+c =& \eta(\xv)
+\end{align*}
 }
 
 \end{frame}
@@ -147,27 +131,6 @@ $$\fxbayes =  \log (\frac{\eta(\xv) }{1-\eta(\xv) })$$
 
 \imageC[0.5]{figure/logistic_inverse.png}
 
-
-% \textbf{Proof: } As before we minimize 
-% \begin{eqnarray*}
-%   \riskf &=& \E_x \left[L(1, \fx) \cdot \eta(\xv) + L(-1, \fx) \cdot (1 - \eta(\xv)) \right] \\
-%   &=& \E_x \left[ \log(1 + \exp(- \fx)) \eta(\xv)+ \log(1 + \exp(\fx)) (1 - \eta(\xv)) \right] 
-% \end{eqnarray*}
-
-% For fixed $\xv$ we get pointwise optimal value $c$ by setting derivative to $0$: 
-
-% \begin{footnotesize}
-%   \begin{eqnarray*}
-%   \frac{d }{d c} \log(1 + \exp(-c)) \eta(\xv)+ \log(1 + \exp(c)) (1 - \eta(\xv)) &=& 0 \\
-%   - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{\exp(c)}{1 + \exp(c)} (1 - \eta(\xv)) &=& 0 \\ 
-%   % - \frac{\exp(-c)}{1 + \exp(-c)} \eta(\xv) + \frac{1}{1 + \exp(- c)} (1 - \eta(\xv)) &=& 0\\ 
-%   % &=& -  \frac{\exp(-c)}{1 + \exp(-c)} p + \frac{1}{1 + \exp(-c)} - \frac{1}{1 + \exp(-c)} p \\
-%   - \frac{\exp(-c) \eta(\xv) - 1 + \eta(\xv)}{1 + \exp(-c)} &=& 0 \\
-%   - \eta(\xv) + \frac{1}{1 + \exp(-c)} &=& 0\\
-%   % \eta(\xv) &=& \frac{1}{1 + \exp(-c)} \\
-%    c &=& \log(\frac{\eta(\xv)}{1 - \eta(\xv)})
-%   \end{eqnarray*}
-% \end{footnotesize}
 
 \end{framei}
 
@@ -187,20 +150,6 @@ $\nn$ and $\np$ are nr.  of neg. and pos. observations
 
 \end{framei}
 
-%% BB: we dont need summary slides
-% \begin{framei}[sep=M]{Naming Conventions}
-
-% \begin{itemize}
-    
-% \item We have seen several closely related loss functions: 
-% \begin{alignat*}{3} \Lxy    &= \log(1+\exp(-y\fx)) &&\quad \text{for } y \in \setmp \\ \Lxy    &= - y \cdot \fx + \log(1 + \exp(\fx)) &&\quad \text{for } y \in \setzo \\ \Lpixy  &= - y \log (\pix) - (1 - y) \log (1 - \pix) &&\quad \text{for } y \in \setzo \\ 
-% \Lpixy  &= - \frac{1 + y}{2} \log(\pix) - \frac{1 - y}{2} \log(1 - \pix) &&\quad \text{for } y \in \setmp \end{alignat*}
-
-% \item Names that are used interchangeably: Bernoulli-, Binomial-, logistic-, log-, or cross-entropy loss
-% \end{itemize}
-
-% \end{framei}
-
 
 \begin{frame2}[footnotesize]{Optimization Properties: Convergence}
 
@@ -213,13 +162,13 @@ fail
 
 \splitV[0.6]{
 \item Loss strictly decreasing in margin
-$y \cdot \fx$: 
-$$\Lxy = \log ( 1 + \exp ( - y  \fx ))$$
+$\yf$: 
+$$L(\yf) = \log ( 1 + \exp ( - y  \fx ))$$
 \item $f$ linear in $\thetav$, e.g.,
 \textbf{log. regr.} with $\fxt = \thx$
 }
 {
-  \imageR{figure/bernoulli.png}
+\imageR{figure/bernoulli.png}
 }
 
 \item Assume data separable, so we can find $\thetav$:
@@ -248,10 +197,10 @@ logistic/softmax function, i.e., increasingly sharp discrimination:
 
 \splitVCC{
 \imageC[0.8]{figure/softmax_1}
-}%
+}
 {
 \imageC[0.8]{figure/softmax_2}
-}%
+}
 \item In practice, data are rarely linearly separable and misclassified 
 examples act as counterweights to increasing parameter values
 \item Can also use \textbf{regularization} for  robust solutions

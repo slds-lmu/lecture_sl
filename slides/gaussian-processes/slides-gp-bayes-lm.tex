@@ -3,6 +3,7 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-gp}
+\input{../../latex-math/ml-svm}
 
 \title{Introduction to Machine Learning}
 
@@ -33,15 +34,15 @@ figure/bayes_lm/posterior_5_3.pdf
 \item Standard linear regression model for $i$-th observation, with $\thetav \in \R^p$ fixed but unknown
 $$\yi = \fxi + \epsi = \thetav^T \xi + \epsi \quad \forall i$$
 \item Assumption: function outputs $\fxi$ differ from observed values $\yi$ by additive, i.i.d. Gaussian noise (ind of $\xv, \thetav$)
-$$\epsi \sim \mathcal{N}(0, \sigma^2) \quad \forall i$$ 
+$$\epsi \sim \normal(0, \sigma^2) \quad \forall i$$ 
 \item Bayesian perspective: $\thetav$ also RV with associated (prior) distribution, e.g., $\thetav \sim \normal(\zero, \tau^2 \id_p)$
 \end{framei}
 
 \begin{framei}{gp perspective}
 \item Weight-space view: prior over $\thetav$, function-space view: prior over linear functions
 \item Example: random lines with intercept 0, slope $\thetav \sim \normal(0, 1)$
-
-\textcolor{red}{TODO LW: random slopes plot}
+\imageL[.5]{figure/bayes_lm/random_slopes.pdf}
+\vfill
 \item Random lines = draws from GP with linear kernel
 \item Collection of RVs $\{ \fx = \thetav \xv: \xv \in \R\}$\item $f(\Xmat)$ is mv Gaussian for any finite input with design matrix $\Xmat$
 \end{framei}
@@ -55,7 +56,7 @@ p(\thetav | \Xmat, \yv)
 $$
 \item Gaussian family is ``self-conjugate'': Gaussian prior \& Gaussian likelihood $\Rightarrow$ Gaussian posterior 
 $$
-\thetav ~|~ \Xmat, \yv \sim \mathcal{N}(\sigma^{-2} \Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})
+\thetav ~|~ \Xmat, \yv \sim \normal(\sigma^{-2} \Kinv\Xmat^T\yv, \Kinv)
 $$
 with $\Kmat:= \sigma^{-2}\Xmat^T\Xmat + \tau^{-2} \id_p$
 \item Intuitively: quantifies posterior (i.e., after seeing data) probability of $\thetav$ having generated the observed data
@@ -87,7 +88,7 @@ with $\Kmat:= \sigma^{-2}\Xmat^T\Xmat + \tau^{-2} \id_p$
   \item Gaussian prior $\thetav \sim \normal(\zero, \tau^2 \id_p)$ and 
   \item Gaussian likelihood $\yv ~|~ \Xmat, \thetav \sim \normal(\Xmat^T \thetav, \sigma^2 \id_n)$ 
 \end{itemize}
-the resulting posterior is Gaussian: $\thetav ~|~ \Xmat, \yv \sim \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})$ 
+the resulting posterior is Gaussian: $\thetav ~|~ \Xmat, \yv \sim \normal(\sigma^{-2}\Kinv\Xmat^T\yv, \Kinv)$ 
 \vfill
 \item Plug in Bayes' rule and keep only terms depending on $\thetav$
 \begin{eqnarray*}
@@ -110,34 +111,34 @@ p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \quad \prop
 $\textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} = 0$ 
 leads to 
 % $p(\thetav | \Xmat, \yv) \propto \exp [-\tfrac{1}{2}(\thetav - c)^T\Kmat  (\thetav -c) ]$
-$\thetav ~|~ \Xmat, \yv \sim \normal(c, \Kmat^{-1})$
+$\thetav ~|~ \Xmat, \yv \sim \normal(c, \Kinv)$
 \item Using that $\Kmat$ is symmetric, this implies 
 \begin{eqnarray*}
 && \sigma^{-2} \yv^T \Xmat = c^T\Kmat \\
-&\Leftrightarrow & \sigma^{-2} \yv^T \Xmat \Kmat^{-1} = c^T \\
-&\Leftrightarrow& c = \sigma^{-2} \Kmat^{-1} \Xmat^T \yv
+&\Leftrightarrow & \sigma^{-2} \yv^T \Xmat \Kinv = c^T \\
+&\Leftrightarrow& c = \sigma^{-2} \Kinv \Xmat^T \yv
 \end{eqnarray*}
-\item Finally: $\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1}) \qed$
+\item Finally: $\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kinv\Xmat^T\yv, \Kinv) \qed$
 \end{framei}
 
 \begin{framei}[sep=L]{posterior predictive distribution}
 \item How does prediction change w.r.t. classical (non-Bayesian) LM?
 \item Gaussian posterior   
 $$
-\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kmat^{-1}\Xmat^T\yv, \Kmat^{-1})
+\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kinv\Xmat^T\yv, \Kinv)
 $$
 induces (Gaussian) predictive distribution
-\item For a new observation $\xv_*$ we get
+\item For a new observation $\xs$ we get
 $$
-y_* ~|~ \Xmat, \yv, \xv_* \sim \mathcal{N}(\sigma^{-2}\yv^T \Xmat \Kmat^{-1}\xv_*, \xv_*^T\Kmat^{-1}\xv_*)
+y_* ~|~ \Xmat, \yv, \xs \sim \normal(\sigma^{-2}\yv^T \Xmat \Kinv\xs, \xs^T\Kinv\xs)
 $$
-\item Intuitively: expectation over all $\thetav$-parameterized LMs, weighted acc to posterior prob $\leftrightarrow$ classical LM: only max-prob $\thetav^{\text{MAP}}$
+\item Intuitively: expectation over all $\thetav$-parameterized LMs, weighted according to posterior prob $\leftrightarrow$ classical LM: only max-prob $\thetav^{\text{MAP}}$
 \item Entire distribution with built-in uncertainty quantification!
 \end{framei}
 
 \foreach \i in{5, 10, 20} {
 \begin{framei}{posterior mean and variance}
-\item For every test input $\xv_*$, we get a posterior mean (orange) \& variance (grey region; $\pm 2\times$ standard deviation)
+\item For every test input $\xs$, we get a posterior mean (orange) \& variance (grey region; $\pm 2\times$ standard deviation)
 \vfill
 \imageC[.5]{figure/bayes_lm/posterior_\i_3.pdf}
 \end{framei}
@@ -145,9 +146,8 @@ $$
 
 \begin{framei}[sep=L]{summary: bayesian lm}
 \item Bayesian perspective: entire distributions, rather than just point estimates, for $\thetav$
-\item From posterior distribution of $\thetav$ we can derive a predictive distribution for $y_* = \thetav^T \xv_*$
-\item Online updates: after observing new data points, recompute posterior $\Rightarrow$ decreasing uncertainty
-% \item Next up: generalize this idea to nonlinear functions
+\item From posterior distribution of $\thetav$ we can derive a predictive distribution for $y_* = \thetav^T \xs$
+\item Online updates: after observing new data points, update posterior $\Rightarrow$ decreasing uncertainty
 \end{framei}
 
 \endlecture

@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -34,30 +27,26 @@ figure/residuals_plot_L2_title.png
 \item Regression from a maximum likelihood perspective
 \item Assume data comes from $\Pxy$ 
 \item Conditional perspective: 
-
 $$
-	y~|~ \xv \sim p(y~|~\xv, \thetav)
+y~|~ \xv \sim p(y~|~\xv, \thetav)
 $$
-
-\item
-Common case:
-true underlying relationship $\ftrue$ with additive noise (surface plus noise model): 
+\item Common case: true underlying relationship $\ftrue$ with additive noise (surface plus noise model): 
 
 \splitVCC{
 $$
 y = \ftrue(\xv) + \eps
 $$
-}%
+}
 {
-\imageL[0.75]{figure/ftrue.pdf}
+\imageL[0.85]{figure/ftrue.pdf}
 }
 
 \item $\ftrue$ has params $\thetav$ and $\eps \sim\P_\eps$, with $\E[\eps] = 0, \epsilon \perp \!\!\! \perp \xv$
-
 \item We now want to learn $\ftrue$ (or its params)
 
-
 \end{framei}
+
+
 \begin{framei}[sep=M]{Maximum Likelihood}
 
 \item Given i.i.d data $\D = \Dset$ from $\Pxy$ 
@@ -65,18 +54,18 @@ $$
 
 \splitVCC{
 $$ \LLt = \prod_{i=1}^n \pdfyigxit $$
-}%
+}
 {
-\imageL[0.75]{figure/log_reg_ml.pdf}
+\imageL[0.9]{figure/log_reg_ml.pdf}
 }
 
 \item Equivalent: minimize \textbf{negative log-likelihood (NLL)}
 
 \splitVCC{
-$$ -\loglt = -\sumin \lpdfyigxit. $$
-}%
+$$ -\loglt = -\sumin \lpdfyigxit $$
+}
 {
-\imageL[0.75]{figure/log_reg_erm.pdf}
+\imageL[0.9]{figure/log_reg_erm.pdf}
 }
 
 \end{framei}
@@ -85,15 +74,13 @@ $$ -\loglt = -\sumin \lpdfyigxit. $$
 \begin{framei}[sep=M]{Risk Minimization} 
 
 \item In ML / ERM: instead of conditional distribution, pick a loss 
-\item Our admissible functions come from hypothesis space 
+\item Our admissible functions $\fx$ come from hypothesis space $\Hspace$
 \item But in stats, must assume some form of $\ftrue$, no difference
-
 \item Simply define neg. log-likelihood as \textbf{loss function} 
 $$ \Lxyt := - \lpdfygxt $$
 \item Then, maximum-likelihood 
  = ERM
 $$- \loglt = \risket = \sumin \Lxyit$$
-
 \item NB: When only interested in minimizer, we use $\propto$ as \enquote{proportional up to pos. multiplicative and general additive constants}
 
 \end{framei}
@@ -104,31 +91,32 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 \item Assume $y = \ftrue(\xv) + \eps$ with $\eps \sim \normal(0, \sigma^2)$ 
 \item Then $y~|~\xv \sim \normal(\ftrue(\xv), \sigma^2)$ and likelihood is 
 {\small
-\begin{eqnarray*}
-\LL(\thetav) &=& \prodin \pdf(\yi ~\bigg|~ \fxit, \sigma^2) \\ &\propto& \prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)
-\end{eqnarray*}
+\begin{align*}
+\LL(\thetav) =& \prodin \pdf(\yi ~\bigg|~ \fxit, \sigma^2) \\ 
+\propto& \prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)
+\end{align*}
 }
-
-
 \item Minimizing Gaussian NLL is ERM with $L2$-loss
-{\small
-\begin{eqnarray*}
-- \loglt &=& - \log(\LL(\thetav)) \\
-&\propto& - \log(\prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)) \\
-&\propto& \sumin (\yi - \fxit)^2
-\end{eqnarray*}
-}
+\begin{align*}
+- \loglt =& - \log(\LL(\thetav)) \\
+\propto& - \log(\prodin \exp(-\frac{1}{2\sigma^2} (\yi - \fxit)^2)) \\
+\propto& \sumin (\yi - \fxit)^2
+\end{align*}
 
 \end{framei}
+
+
 \begin{framei}[sep=M]{Gaussian Errors - L2-Loss} 
 
 \item Simulate data $y ~|~x \sim \mathcal{N}(\ftrue(x), 1)$ with $\ftrue = 0.2 \cdot x$ 
 \item Plot residuals as histogram, after fitting LM with $L2$-loss (blue)
 \item Compare emp. residuals vs. theor. quantiles via Q-Q-plot
 
+\vfill
 
 \imageC[0.8]{figure/residuals_plot_L2.pdf}
 
+\vfill
 
 \item Residuals are approximately Gaussian!
 
@@ -141,18 +129,13 @@ $$- \loglt = \risket = \sumin \Lxyit$$
 \vfill
 
 \splitVCC[0.4]{
-%\begin{minipage}{0.5}
 $$
- \frac{1}{2\sigma} \exp(-\frac{|\eps|}{\sigma})\,, \sigma > 0
+\frac{1}{2\sigma} \exp(-\frac{|\eps|}{\sigma})\,, \sigma > 0
 $$
 }{
-%\end{minipage}%
-%\begin{minipage}{0.5}
 {\small $\qquad$ Laplace density, $x \sim \text{LP}(0,1)$}
 \imageL[0.9]{figure/laplace-plot.png}
-%\end{minipage}
 }
-
 \item Then
 $$
 y = \ftrue(\xv) + \eps 
@@ -160,21 +143,21 @@ $$
 also follows Laplace distribution with mean $\fxit$ and scale  $\sigma$ 
 
 \end{framei}
+
+
 \begin{framei}[sep=M]{Laplace Errors - L1-Loss}
 
-    \item The likelihood is then 
-\begin{eqnarray*}
-\LL(\thetav) &=& \prod_{i=1}^n \pdf(\yi ~\bigg|~ \fxit, \sigma) \\ &\propto& \exp(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|)\,
-\end{eqnarray*}
+\item The likelihood is then 
+\begin{align*}
+\LL(\thetav) =& \prod_{i=1}^n \pdf(\yi ~\bigg|~ \fxit, \sigma) \\ 
+\propto& \exp(-\frac{1}{\sigma}\sumin \left|\yi - \fxit\right|)\,
+\end{align*}
 \item The negative log-likelihood is
 $$
 - \loglt \propto \sumin \left|\yi - \fxit\right|
 $$
-
 \item MLE for Laplacian errors = ERM with L1-loss 
-
-\item Some losses correspond to more complex or less known error densities, like the Huber loss \citelink{MEYER2021ALTERNATIVE}
-
+\item Some losses correspond to more complex or less known error densities, like the Huber loss \furtherreading{MEYER2021ALTERNATIVE}
 \item Huber density is (unsurprisingly) a hybrid of Gaussian and Laplace
 
 \end{framei}
@@ -187,12 +170,9 @@ $$
 
 \imageC{figure/residuals_plot_L1.pdf}
 
-
 \item Again, residuals approximately match quantiles!
 
-
 \end{framei}
-
 
 
 \begin{framei}[sep=M]{Maximum Likelihood in Classification}
@@ -200,20 +180,17 @@ $$
 \item Now binary classification
 \item $y \in \setzo$ is Bernoulli, $y ~|~ \xv \sim \text{Bern}(\pi_\text{true}(\xv))$
 \item  NLL:
-\begin{eqnarray*}
-- \loglt &=& -\sumin \lpdfyigxit \\ 
-&=& - \sumin \log \big[\pi(\xi)^{y^{(i)}} \cdot (1 - \pi(\xi))^{(1 - y^{(i)})} \big]\\
-&=& \sumin -\yi \log[\pi(\xi)] - (1-\yi) \log [1 - \pi(\xi)]
-\end{eqnarray*}
+\begin{align*}
+- \loglt =& -\sumin \lpdfyigxit \\ 
+=& - \sumin \log \big[\pi(\xi)^{y^{(i)}} \cdot (1 - \pi(\xi))^{(1 - y^{(i)})} \big]\\
+=& \sumin -\yi \log[\pi(\xi)] - (1-\yi) \log [1 - \pi(\xi)]
+\end{align*}
 \item Results in Bernoulli / log loss:
 $$
-  L(y, \pix) = -y\log(\pix)-(1-y)\log(1-\pix)
+\Lpixy = -y\log(\pix)-(1-y)\log(1-\pix)
 $$
 
-
 \end{framei}
-
-
 
 
 \begin{framei}[sep=L]{Distributions and losses}
@@ -225,13 +202,13 @@ $$
 \thetah \in \argmax_{\thetav} \LL(\thetav) \Leftrightarrow \thetah \in \argmin_{\thetav}-\log(\LL(\thetav))
 $$
     
-\item But \textbf{cannot} derive a pdf/error distrib. for every loss, e.g., Hinge loss; some prob. interpretation still possible \citelink{SOLLICH1999NINTH}
+\item But \textbf{cannot} derive a pdf/error distrib. for every loss, e.g., Hinge loss; some prob. interpretation still possible \furtherreading{SOLLICH1999NINTH}
 
-\item For dist.-based loss on residual $L(y,\fx)=L_{\mathbb{P}}(r)$, ERM is fully equiv. to max. conditional log-likelihood $\log(p(r))$ if
+\item For dist.-based loss on residual $\Lxy=L_{\mathbb{P}}(r)$, ERM is fully equiv. to max. conditional log-likelihood $\log(p(r))$ if
 \begin{enumerate}
-    \item $\log(p(r))$ is affine trafo of $L_{\mathbb{P}}$ (undoing the $\propto$):
-    $\log(p(r)) = a - bL_{\mathbb{P}}(r),\,\,a \in \mathbb{R}, b>0$
-    \item  $p$ is a pdf (non-negative and integrates to one)
+\item $\log(p(r))$ is affine trafo of $L_{\mathbb{P}}$ (undoing the $\propto$):
+$\log(p(r)) = a - bL_{\mathbb{P}}(r),\,\,a \in \mathbb{R}, b>0$
+\item  $p$ is a pdf (non-negative and integrates to one)
 \end{enumerate}
 
 \end{framei}

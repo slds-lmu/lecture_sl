@@ -1,12 +1,4 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -15,7 +7,7 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
 Advanced Risk Minimization
 }{
@@ -32,7 +24,6 @@ figure/pseudo_residual_1.png
 \item In regression, residuals are defined as 
 $\rx := y - \fx$
 \item Generalize concept to \textbf{pseudo-residuals}: 
-%as the negative first derivatives of loss functions w.r.t. $\fx$
 $$
 \tilde{r}(\xv) := - \frac{d \Lxy}{d \fx}
 $$
@@ -42,8 +33,7 @@ $$
 
 \vfill
 
-% \imageC[0.7]{figure_man/loss.png}
-\imageC[0.7]{figure/plot_quad_pseudores.png}
+\imageC[0.7]{figure/quad_pseudores.png}
 
 \end{framei}
 
@@ -72,24 +62,23 @@ $$
 \only<2>{\imageC[0.4]{figure/pseudo_residual_2.png}}
 \only<3>{\imageC[0.4]{figure/pseudo_residual_3.png}}
 
-
 \end{overlayarea} 
 
 \end{frame}
 
-\begin{framei}[sep=M]{Approximate Best point-wise update}
+\begin{framei}[sep=M, fs=normal]{Approximate Best point-wise update}
 
 \item Best local change of $f$ at $\xv$ to reduce loss most:
 
 $$
-	\fx \leftarrow \fx - \frac{d \Lxy}{d \fx} 
+\fx \leftarrow \fx - \frac{d \Lxy}{d \fx} 
 $$
 
 \item This is effectively the PR 
 
-\begin{eqnarray*}
-	\fx &\leftarrow& \fx + \tilde{r}(\xv)\\ 
-\end{eqnarray*}
+$$
+\fx \leftarrow \fx + \tilde{r}(\xv)
+$$
 
 \item (Such iterative updates of $f$ like a loss-reducing GD in function space is the major underlying idea of GB)
 
@@ -98,34 +87,21 @@ $$
 
 \begin{framei}[sep=M]{GD in ML and Pseudo-Residuals}
 
-	\item In GD, we move in the direction of the negative gradient by updating the parameters: 
-	$$
-	 \thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	
-	$$
-	% with step size $\alpha^{[t]}$. 
-	% \framebreak 
-	\item Using the chain rule:
-        % mwe see that the pseudo-residuals are input to the update direction
-	\begin{eqnarray*}
-	\nabla_{\thetav} \risket &=&\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
-        % _{= - \tilde r^{(i)}}
-	\cdot \nabla_{\thetav} \fxit \\ 
-	&=& - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
-	\end{eqnarray*}
-	\item Update is loss-optimal directional change of model output 
-        and a loss-independent derivative of $\fx$
-        \item This is a flexible, nearly loss-independent variant of GD
-        % The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
+\item In GD, we move in the direction of the negative gradient by updating the parameters: 
+$$\thetav^{[t + 1]} = \thetav^{[t]} - \alpha^{[t]} \cdot \nabla_{\thetav} \left.\risket\right|_{\thetav = \thetav^{[t]}}	$$
 
+\item Using the chain rule:
 
-% For risk minimization, the update rule for the parameter $\thetav$ is 
-% \begin{footnotesize}
-% \begin{eqnarray*}
-% \thetav^{[t+1]} &\leftarrow & \thetav^{[t]} - \alpha^{[t]}  \sumin \nabla_{\thetav} \left. \Lxyit \right|_{\thetav = \thetav^{[t]}} \\
-% \thetav^{[t+1]} &\leftarrow & \thetav^{[t]} + \alpha^{[t]} \sumin \tilde r^{(i)} \cdot \left. \nabla_{\thetav} \fxit \right|_{\thetav = \thetav^{[t]}} 
-% \end{eqnarray*}
-% \end{footnotesize}
-% $\alpha^{[t]} \in [0,1]$ is called \enquote{learning rate} in this context.
+\begin{align*}
+\nabla_{\thetav} \risket &=\sumin \left.\frac{d L(\yi, \fx)}{d \fx} \right|_{f = \fxit} 
+\cdot \nabla_{\thetav} \fxit \\ 
+&= - \sumin \tilde r^{(i)} \cdot \nabla_{\thetav} \fxit.
+\end{align*}
+\item Update is loss-optimal directional change of model output 
+and a loss-independent derivative of $\fx$
+\item This is a flexible, nearly loss-independent variant of GD
+% The unexplained information -- the negative gradient -- can be thought of as residuals, which is therefore also called pseudo-residuals. 
+
 \end{framei}
 
 \begin{frame}{Pseudo-residuals for common losses}
@@ -147,7 +123,7 @@ Exponential loss & $y \in \{-1,1\}$ & $y\,\exp(-yf(\xv))$ \\ \hline
 \vfill
 
 NB: $\pi(\xv)=s(f(\xv))=\frac{\exp(f(\xv))}{1+\exp(f(\xv))}$ is the (sigmoidal) logistic function,
-and $\pi_k(\xv)$ its multi-class generalization, the softmax.
+and $\pi_k(\xv)$ its multi-class generalization, the softmax
 
 \end{frame}
 

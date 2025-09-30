@@ -305,7 +305,7 @@ plot(p_range,var_eucl_length,type="l",main="Variance Euclidean Length",xlab="p",
 abline(h=2,col=2)
 
 plot(p_range,var_eucl_dist,type="l",main="Variance Euclidean Distances",xlab="p",ylab="",ylim=c(0,4))
-abline(h=2,col=2)
+abline(h=4,col=2)
 
 plot(p_range,var_inner_prod,type="l",main="Variance Inner Products",xlab="p",ylab="")
 lines(p_range,p_range,col=2,lty=2)

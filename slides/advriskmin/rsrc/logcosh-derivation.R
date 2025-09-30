@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------------
+# FIG: LOG-COSH
+# ------------------------------------------------------------------------------
+
 library(ggplot2)
 library(ggpubr)
 
@@ -72,4 +76,4 @@ p1 <- ggplot(data_to_plot, aes(x)) +
   theme(legend.text = element_text(size=16))
 
 p1
-ggsave("../figure/cosh-gaussian-densities.png", p1, width = 6L, height = 3L)
+ggsave("../figure/logcosh-derivation-cosh-gaussian-densities.png", p1, width = 6L, height = 3L)

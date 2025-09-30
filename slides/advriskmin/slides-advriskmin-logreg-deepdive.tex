@@ -1,12 +1,5 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
+
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
@@ -16,60 +9,63 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
-    Advanced Risk Minimization
-  }{% Lecture title  
-    Logistic regression (Deep-Dive)
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/bernoulli_prob.png
-  }{
-  \item Derive the gradient of the logistic regression
-  \item Derive the Hessian of the logistic regression
-  \item Show that the logistic regression is a convex problem
+Advanced Risk Minimization
+}{
+Logistic regression (Deep-Dive)
+}{
+figure/bernoulli_prob.png
+}{
+\item Derive the gradient of the logistic regression
+\item Derive the Hessian of the logistic regression
+\item Show that the logistic regression is a convex problem
 }
 
 \begin{frame}{Logistic regression: Risk Problem}
 
-Given $n \in \mathbb{N}$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \{0, 1\}$ we want to minimize the following risk 
+Given $n$ observations $(\xi, \yi) \in \Xspace \times \Yspace$ with  $\Xspace = \R^d, \Yspace = \setzo$ we want to minimize the risk 
 
-\begin{eqnarray*}
-  \riske  & = & 
-  -\sum^n_{i=1} \yi\log(\pixit) + (1-\yi\log(1-\pixit))
-\end{eqnarray*}
+$$
+\riske   = 
+-\sum^n_{i=1} \yi\log(\pixit) + (1-\yi)\log(1-\pixit))
+$$
 
 with respect to $\thetav$ where the probabilistic classifier
 
-\begin{eqnarray*}
-  \pixit  & = & 
- s(\fxit),
-\end{eqnarray*}
+$$
+\pixit = s(\fxit)
+$$
 
-the sigmoid function $s(f) = \frac{1}{1 + \exp(-f)}$ and the score $\fxit = \thx.$
+the sigmoid function $s(f) = \frac{1}{1 + \exp(-f)}$ and the score $\fxit = \thx$
 
 \vfill
 
-NB: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top.$
+\textbf{NB}: Note that $\frac{\partial}{\partial f} s(f) = s(f)(1-s(f))$ and $\frac{\partial \fxit}{\partial \thetav} = (\xi)^\top$\\
+
+\vfill
+
+From now on we abbreviate $\pixit$ as $\pi^{(i)}_{\thetav}$
 
 \end{frame}
 
 \begin{frame}{Logistic regression: Gradient}
 
-We find the gradient of logistic regression with the chain rule, s.t., 
+We find the gradient of logistic regression with the chain rule:
 
 \vfill
 
 {\small
 \begin{align*}
-  \frac{\partial}{\partial\thetav}\riske  & =  
- -\sumin \frac{\partial}{\partial\pixit }\yi\log(\pixit)\frac{\partial\pixit}{\partial \thetav} +  \\
- & \qquad \frac{\partial}{\partial\pixit} (1-\yi)\log(1-\pixit)\frac{\partial\pixit}{\partial \thetav}\\
- & =  
- -\sumin \frac{\yi}{\pixit}\frac{\partial\pixit}{\partial \thetav} -  \frac{1-\yi}{1-\pixit}\frac{\partial\pixit}{\partial \thetav}\\
- &=  
-  -\sumin (\frac{\yi}{\pixit} -  \frac{1-\yi}{1-\pixit})\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetav}\\
-  &=  
-  -\sum^n_{i=1} (\yi(1-\pixit)  -  (1-\yi)\pixit )(\xi)^\top.\\
+\frac{\partial}{\partial\thetav}\riske  & =  
+-\sumin \frac{\partial}{\partial \pi^{(i)}_{\thetav}  }\yi\log( \pi^{(i)}_{\thetav} )\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav} +  \\
+& \qquad \frac{\partial}{\partial \pi^{(i)}_{\thetav} } (1-\yi)\log(1- \pi^{(i)}_{\thetav} )\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav}\\
+& =  
+-\sumin \frac{\yi}{ \pi^{(i)}_{\thetav} }\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav} -  \frac{1-\yi}{1- \pi^{(i)}_{\thetav} }\frac{\partial \pi^{(i)}_{\thetav} }{\partial \thetav}\\
+&=  
+-\sumin (\frac{\yi}{ \pi^{(i)}_{\thetav} } -  \frac{1-\yi}{1- \pi^{(i)}_{\thetav} })\frac{\partial s(\fxit)}{\partial  \fxit}\frac{\partial  \fxit}{\partial\thetav}\\
+&=  
+-\sum^n_{i=1} (\yi(1- \pi^{(i)}_{\thetav} )  -  (1-\yi) \pi^{(i)}_{\thetav}  )(\xi)^\top\\
 \end{align*}
 }
 
@@ -79,21 +75,25 @@ We find the gradient of logistic regression with the chain rule, s.t.,
 \begin{frame}{Logistic regression: Gradient}
 
 \begin{align*}
-  \quad &=& 
-  \sumin (\pixit - \yi)(\xi)^\top\\
-    \quad &=& 
-  (\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y})^\top\mathbf{X}\\
+\quad &=& 
+\sumin ( \pi^{(i)}_{\thetav}  - \yi)(\xi)^\top\\
+\quad &=& 
+(\pi(\mathbf{X}\vert\;\thetav) - \mathbf{y})^\top\mathbf{X}\\
 \end{align*}
 
-where  $\mathbf{X} = (
-    \xi[1], \dots, 
-    \xi[n])^\top \in \R^{n\times d}, \mathbf{y} = (
-    \yi[1], \dots,
-    \yi[n]
-)^\top,$ \\ $\pi(\mathbf{X}\vert\;\thetav) = (
-    \pixit[1], \dots,
-    \pixit[n]
-)^\top \in \R^{n}$.
+where
+
+\begin{itemizeM}
+\item $\mathbf{X} = (
+\xi[1], \dots, 
+\xi[n])^\top \in \R^{n\times d}$
+\item $\mathbf{y} = (
+\yi[1], \dots,\yi[n])^\top$
+\item $\pi(\mathbf{X}\vert\;\thetav) = (
+ \pi^{(i)}_{\thetav} [1], \dots,
+\pi^{(i)}_{\thetav}[n]
+)^\top \in \R^{n}$
+\end{itemizeM}
 
 \vfill
 
@@ -101,30 +101,30 @@ $\implies$ The gradient $\nabla_{\thetav}\riske = (\frac{\partial}{\partial\thet
 
 \vfill
 
-This formula can now be used in gradient descent and its friends.
+This formula can now be used in gradient descent and its friends
 
 \end{frame}
 
 
 \begin{frame}{Logistic regression: Hessian}
 
-We find the Hessian via differentiation, s.t.,
+We find the Hessian via differentiation:
 
 {\small
 \begin{align*}
-  \nabla^2_{\thetav}\riske  = \frac{\partial^2}{\partial{\thetav^\top}\partial\thetav}\riske  & =  
- \frac{\partial}{\partial{\thetav^\top}} \sumin (\pixit - \yi)(\xi)^\top\\
- & =  
-  \sum^n_{i=1}\xi (\pixit(1-\pixit))(\xi)^\top\\
-  & =  
+\nabla^2_{\thetav}\riske  = \frac{\partial^2}{\partial{\thetav^\top}\partial\thetav}\riske  & =  
+\frac{\partial}{\partial{\thetav^\top}} \sumin ( \pi^{(i)}_{\thetav} - \yi)(\xi)^\top\\
+& =  
+\sum^n_{i=1}\xi ( \pi^{(i)}_{\thetav}(1- \pi^{(i)}_{\thetav}))(\xi)^\top\\
+& =  
 \mathbf{X}^\top \mathbf{D} \mathbf{X}\\
 \end{align*}
 
 where $\mathbf{D} \in \mathbb{R}^{n\times n}$ is a diagonal matrix with diagonal 
-$$(\pixit[1](1-\pixit[1], \dots, \pixit[n](1-\pixit[n]).$$
+$$\Big( \pi^{(i)}_{\thetav}[1](1- \pi^{(i)}_{\thetav}[1], \dots,  \pi^{(i)}_{\thetav}[n](1- \pi^{(i)}_{\thetav}[n]\Big)$$
 }
 
-Can now be used in Newton-Raphson and other 2nd order optimizers.
+Can now be used in Newton-Raphson and other 2nd order optimizers
 
 
 \end{frame}
@@ -134,16 +134,16 @@ Finally, we check that logistic regression is a convex problem:
 \vfill
 
 We define the diagonal matrix $\bar{\mathbf{D}} \in \mathbb{R}^{n \times n}$ with diagonal 
-$$(\sqrt{\pixit[1])(1-\pixit[1]}, \dots, \sqrt{\pixit[n](1-\pixit[n]}) $$
-which is possible since $\pi$ maps into (0, 1). \\
+$$\Big(\sqrt{ \pi^{(i)}_{\thetav}[1])(1- \pi^{(i)}_{\thetav}[1]}, \dots, \sqrt{ \pi^{(i)}_{\thetav}[n](1- \pi^{(i)}_{\thetav}[n]}\Big) $$
+which is possible since $\pi$ maps into (0, 1) \\
 \vfill
 With this, we get for any $\mathbf{w} \in \mathbb{R}^d$ that
 
 $$\mathbf{w}^\top  \nabla^2_{\thetav}\riske \mathbf{w} =   \mathbf{w}^\top  \mathbf{X}^\top \bar{\mathbf{D}}^\top \bar{\mathbf{D}}\mathbf{X} \mathbf{w} = (\bar{\mathbf{D}}\mathbf{X} \mathbf{w})^\top\bar{\mathbf{D}}\mathbf{X} \mathbf{w} = \Vert \bar{\mathbf{D}}\mathbf{X} \mathbf{w} \Vert^2_2 \geq 0$$
 
-since obviously $\mathbf{D} = \bar{\mathbf{D}}^\top \bar{\mathbf{D}}.$ \\
+since obviously $\mathbf{D} = \bar{\mathbf{D}}^\top \bar{\mathbf{D}}$ \\
 \vfill
-$\Rightarrow \nabla^2_{\thetav}\riske$ is positive semi-definite $\Rightarrow \riske$ is convex.
+$\implies \nabla^2_{\thetav}\riske$ is positive semi-definite $\implies \riske$ is convex
 
 \end{frame}
 

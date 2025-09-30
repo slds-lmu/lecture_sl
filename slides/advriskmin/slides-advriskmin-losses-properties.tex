@@ -1,13 +1,4 @@
 \documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%<<setup-child, include = FALSE>>=
-%library(knitr)
-%library(qrmix)
-%library(mlr)
-%library(quantreg)
-%library(reshape2)
-%set_parent("../style/preamble.Rnw")
-%@
-
 
 \input{../../style/preamble}
 \input{../../latex-math/basic-math}
@@ -18,18 +9,18 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{
-    Advanced Risk Minimization
-  }{
-    Properties of Loss Functions
-  }{
-  figure_man/vgg_example.png
-  }{
-  \item Statistical properties 
-  \item Robustness 
-  \item Optimization properties
-  \item Some fundamental terminology
+Advanced Risk Minimization
+}{
+Properties of Loss Functions
+}{
+figure_man/vgg_example.png
+}{
+\item Statistical properties 
+\item Robustness 
+\item Optimization properties
+\item Some fundamental terminology
 }
 
 \begin{framei}[sep=L]{The role of Loss Functions}
@@ -46,9 +37,6 @@ $$
 $$
 is influenced by choice of the loss 
 
-%\vspace{0.5cm}
-%\textbf{NB}: We use some losses as examples which are only introduced later in the chapter.
-
 \end{framei}
 
 % ------------------------------------------------------------------------------
@@ -62,18 +50,18 @@ is influenced by choice of the loss
 $\rx := y - \fx$
 
 \item Classif. losses usually in terms of 
-  \textbf{margin}: $\nu(\xv) := y \cdot \fx$
+\textbf{margin}: $\nux  := y \cdot \fx$
 
 \vfill
 
 \splitVCC[0.4]{
-  \imageC{figure/loss_dist_based}
-  \tiny \centering
-  Distance-based: $L1$
+\imageC{figure/loss_properties_dist_based}
+\small \centering
+Distance-based: $L1$
 }{
-\imageC{figure/overview_classif.png}
-  \tiny \centering
-  %Margin-based losses
+\imageC{figure/overview_classif_all.png}
+\small \centering
+%Margin-based losses
 }
 
 \end{framei}
@@ -84,37 +72,32 @@ $\rx := y - \fx$
 % https://davidrosenberg.github.io/mlcourse/Archive/2017/Lectures/3b.loss-functions.pdf
 A loss is  
 \begin{itemize}
-  \item \textbf{symmetric} if $\Lxy = L(\fx, y)$
-  \item \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
-  $a \in \R$
-  \item \textbf{distance-based} if it can be written in terms of residual 
-    $\Lxy = \psi (r)$ for some $\psi: \R \to \R$, and 
-    $\psi(r) = 0 \Leftrightarrow r = 0$
- \end{itemize}
+\item \textbf{symmetric} if $\Lxy = L(\fx, y)$
+\item \textbf{translation-invariant} if $L(y + a, \fx + a) = \Lxy$, 
+$a \in \R$
+\item \textbf{distance-based} if it can be written in terms of residual 
+$\Lxy = \psi (r)$ for some $\psi: \R \to \R$, and 
+$\psi(r) = 0 \Leftrightarrow r = 0$
+\end{itemize}
 
 
 \vfill
 
-%\begin{minipage}[b]{0.25}
-%  \imageC[]{figure/plot_loss_overview_classif_2}
-%  \tiny \centering
-%  Margin-based losses
-%\end{minipage}%
 \splitVThree
 {
-  \imageC{figure/loss_dist_based}
-  \tiny \centering
-  Distance-based: $L1$
+\imageC{figure/loss_properties_dist_based}
+\small \centering
+Distance-based: $L1$
 }%
 {
-  \imageC{figure/loss_transl_inv.png}
-  \tiny \centering
-  Translation-invariant: $L2$
+\imageC{figure/loss_properties_transl_inv.png}
+\small \centering
+Transl.-invariant.: $L2$
 }%
 {
-  \imageC{figure/loss_symmetric}
-  \tiny \centering
-  Symmetric: Brier score
+\imageC{figure/loss_properties_symmetric}
+\small \centering
+Symmetric: Brier score
 }
 
 \end{frame}
@@ -124,27 +107,27 @@ A loss is
 \begin{frame2}[small]{Robustness}
 
 Outliers (in $y$) have large residuals $\rx = y - \fx$. Some losses are more
-affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2) it is not robust, linear (L1) or even sublinear losses are more robust.
+affected by large residuals than others. If loss goes up superlinearly (e.g. L2) it is not robust, linear (L1) or even sublinear losses are more robust.
 
 \vfill
 
 \splitVCC{
-  {\footnotesize
-  \begin{table}[]
-  \begin{tabular}{r|r|r|r}
-  \toprule
-  $y - \fx$ & $L1$ & $L2$ & Huber ($\eps = 5$) \\ \hline
-  1 & 1 & 1 & 0.5 \\
-  5 & 5 & 25 & 12.5 \\
-  10 & 10 & 100 & 37.5 \\
-  50 & 50 & 2500  & 237.5
+{\footnotesize
+\begin{table}[]
+\begin{tabular}{r|r|r|r}
+\toprule
+$y - \fx$ & $L1$ & $L2$ & Huber ($\eps = 5$) \\ \hline
+1 & 1 & 1 & 0.5 \\
+5 & 5 & 25 & 12.5 \\
+10 & 10 & 100 & 37.5 \\
+50 & 50 & 2500  & 237.5
 \end{tabular}
 \end{table}}
 }%
 {
-  As a consequence, a model is less influenced by outliers than by ``inliers'' if 
-  the loss is \textbf{robust}.\\
-  Outliers e.g.\ strongly influence $L2$.
+As a consequence, a model is less influenced by outliers than by ``inliers'' if 
+the loss is \textbf{robust}.\\
+Outliers e.g.\ strongly influence $L2$.
 }%
 
 \vfill
@@ -154,28 +137,6 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 }{
 \imageC[0.9]{figure/robustness}
 }
-% \begin{minipage}[c]{0.45}
-%   \imageC[]{figure/loss_l2_l1_huber.png}
-%   \footnotesize \centering
-% \end{minipage}%
-% \begin{minipage}[c]{0.05}
-%   \phantom{foo}
-% \end{minipage}%
-% \begin{minipage}[c]{0.45}
-% \imageC[]{figure/robustness}
-%   %\small \raggedright
-%   %is an example for a loss function that is not very robust towards
-%   %outliers. It penalizes large residuals more than $L1$ or Huber loss, which are
-%   %considered robust.
-% \end{minipage}%
-
-% \framebreak 
-% 
-% The L2 loss is an example for a loss function that is not very robust towards outliers. It penalizes large residuals more than the L1 or the Huber loss. The L1 and the Huber loss are thus regarded robust. 
-% 
-% 
-% \imageC[0.8]{figure/robustness.png}
-% 
 
 \end{frame2}
 
@@ -186,7 +147,7 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 % \textcolor{blue}{LW: points 1-3 together w/ plot on subsequent slide; scnd slide w/ concrete examples (e.g., gd failing w/ lasso}
 
 \begin{itemize}
-\item Measured by number of continuous derivatives
+\item Measured by number of continuous derivatives. $f \in \mathcal{C}^k$ for $k$-times cont. differentiable. $f$ and smooth for $f \in \mathcal{C}^{\infty}$
 \item Usually want to have at least gradients in optimization of $\risket$
 \item If loss is not differentiable, might have to use derivative-free optimization (or worse, in case of 0-1)
 \item Smoothness of $\risket$ not only depends on $L$, but also requires smoothness of $\fx$! 
@@ -194,14 +155,14 @@ affected by large residuals than others. If loss goes up superlinearly (e.g.\ L2
 
 \vfill
 
-\splitVCC{
-  \imageC[0.9]{figure/overview_classif.png}
+\splitVCC[0.65]{
+\imageC[0.9]{figure/overview_classif_all.png}
 }%
 {
-  \raggedright {\footnotesize
-  Squared loss, exponential loss and squared hinge loss are continuously 
-  differentiable. Hinge loss is continuous but not differentiable. 
-  0-1 loss is not even continuous.}
+\raggedright {\footnotesize
+Squared, exponential and squared hinge losses are continuously 
+differentiable. Hinge loss is continuous but not differentiable. 
+0-1 loss is not even continuous.}
 }%
 
 % \small
@@ -274,28 +235,22 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 
 \begin{itemizeL}
 \item Convexity of $\risket$ depends both on convexity of $L(\cdot)$ (given in most cases) and $\fxt$ (often problematic)
-\item If we model our data using an exponential family distribution, we always get convex losses \citelink{WEDDERBURN1976MAX}
+\item If we model our data using an exponential family distribution, we always get convex losses \furtherreading{WEDDERBURN1976MAX}
 \item For $\fxt$ linear in $\thetav$, linear/logistic/softmax/poisson/$\ldots$ regression are convex problems (all GLMs)! 
 \end{itemizeL} 
 
 \vfill
 
 \splitVCC{
-  \raggedright {\footnotesize
-  \href{https://arxiv.org/pdf/1712.09913.pdf}{Li et al., 2018: 
-  \textit{Visualizing the Loss Landscape of Neural Nets}}. 
-  The problem on the bottom right is convex, the others are not (note that 
-  very high-dimensional surfaces are coerced into 3D here).  
-  \phantom{foo}}}
+\raggedright {\footnotesize
+The problem on the bottom right is convex, the others are not (note that 
+very high-dimensional surfaces are coerced into 3D here).  
+\phantom{foo}}}
 {
-  \imageC[0.75]{
-  figure_man/convex-vs-nonconfex-landscape}}%
+\imageC[0.75][LI2018VISUALIZING]{
+figure_man/convex-vs-nonconfex-landscape}}%
 
 \end{frame}
-
-% ------------------------------------------------------------------------------
-
-
 
 % ------------------------------------------------------------------------------
 
@@ -321,12 +276,8 @@ $\forall$ $t \in [0, 1], ~\thetav, \tilde \thetav \in \Theta$\\
 %   \phantom{foo}
 % \end{minipage}%
 % \begin{minipage}[b]{0.25}
-%   \imageC[]{figure/plot_bernoulli}
+%   \imageC[]{figure/bernoulli}
 % \end{minipage}%
-% 
-% % \vfill
-% % \imageC[0.4]{figure_man/snap_bernoulli_loss}
-% % \vfill
 % 
 % \begin{itemize} 
 %   \item In the case of complete separation, we have

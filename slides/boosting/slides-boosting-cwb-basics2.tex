@@ -26,7 +26,7 @@
   %\item Fair base learner selection
 }
 
-\begin{vbframe}{Handling of categorical features}
+\begin{frame2}{Handling of categorical features}
 
 Feature $x_j$ with $G$ categories. Two options for encoding:
 
@@ -44,7 +44,8 @@ Feature $x_j$ with $G$ categories. Two options for encoding:
   %\item The \texttt{compboost} package currently implements the first variant.
 
 % ------------------------------------------------------------------------------
-\framebreak
+\end{frame2}
+\begin{frame2}{Handling of categorical features}
 
 Advantages of simultaneously handling all categories in CWB: 
 \begin{itemize}
@@ -69,7 +70,8 @@ Advantages of simultaneously handling all categories in CWB:
 %\end{itemize}
 
 % ------------------------------------------------------------------------------
-\framebreak
+\end{frame2}
+\begin{frame2}{Handling of categorical features}
 
 Advantages of including categories individually in CWB: 
 \begin{itemize}
@@ -92,11 +94,11 @@ Disadvantage of individually handling all categories in CWB:
         Penalization and selection become difficult since base learner has exactly one degree of freedom.
 \end{itemize}
 
-\end{vbframe}
+\end{frame2}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{intercept handling}
+\begin{frame2}{intercept handling}
 %\vspace{0.2cm}
 There are two options to handle the intercept in CWB. In both, the loss-optimal constant $\fm[0](\xv)$ is an initial model intercept. \\
 %\vspace{0.3cm}
@@ -106,7 +108,7 @@ There are two options to handle the intercept in CWB. In both, the loss-optimal 
   \begin{itemize}
     \setlength{\itemsep}{0.8em}
     \item {\footnotesize Add BL $b_{\text{int}} = \theta$ as potential candidate considered in each iteration and remove intercept from all linear BLs, i.e., $b_j(\xv) = \theta_j x_j$.}
-    \item {\footnotesize Final intercept is given as $\fm[0](\xv) + \hat{\theta}$. Linear BLs without intercept only make sense if covariates are centered (see \citelink{HOFNER2014MODEL} tutorial, p.~7)}
+    \item {\footnotesize Final intercept is given as $\fm[0](\xv) + \hat{\theta}$. Linear BLs without intercept only make sense if covariates are centered (see \furtherreading{HOFNER2014MODEL} tutorial, p.~7)}
   \end{itemize}
   
 %\framebreak
@@ -125,28 +127,25 @@ There are two options to handle the intercept in CWB. In both, the loss-optimal 
 
 %-----------------------------------
 
-\begin{comment}
     
-\begin{itemize}
+% \begin{itemize}
   %\item The loss-optimal constant $\fm[0](\xv)$ is an initial model intercept.
   %\item An intercept is often referred to as part of a model which contains information independent of the features.
-  \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ %per base learner
-  and slope $\theta_{j2}$.
-  \item If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
-  \item Over the fitting process, the intercept is adjusted $M$ times to its final form:
-    $$
-    \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
-    $$
-\end{itemize}
-$\Rightarrow$ All intercepts in the base learners are collected and aggregated in the model intercept.
+%   \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ %per base learner
+%   and slope $\theta_{j2}$.
+%   \item If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
+%   \item Over the fitting process, the intercept is adjusted $M$ times to its final form:
+%     $$
+%     \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
+%     $$
+% \end{itemize}
+% $\Rightarrow$ All intercepts in the base learners are collected and aggregated in the model intercept.
+
+% % ------------------------------------------------------------------------------
+% % \framebreak
 
 % ------------------------------------------------------------------------------
-\framebreak
-\end{comment}
 
-% ------------------------------------------------------------------------------
-
-\framebreak
 
 % The following figure shows a comparison of the parameter updates with different intercept handlings:
 % \vspace{0.2cm}
@@ -157,15 +156,15 @@ $\Rightarrow$ All intercepts in the base learners are collected and aggregated i
 % The parameter estimates converge to the same value. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
 
 
-\end{vbframe}
+\end{frame2}
 
 %\input{tex/cwb-bl-sel}
 
 % ------------------------------------------------------------------------------
 
-\begin{vbframe}{Example: Life expectancy}
+\begin{frame2}{Example: Life expectancy}
 
-Consider the \texttt{life expectancy} data set (WHO, available on \citelink{KUMAR2019KAGGLE})\,: regression task to predict life expectancy. \\
+Consider the \texttt{life expectancy} data set (WHO, available on \sourceref{KUMAR2019KAGGLE})\,: regression task to predict life expectancy. \\
 \vspace{0.1cm}
 We fit a CWB model with linear BLs (with intercept) 
 
@@ -186,7 +185,7 @@ We fit a CWB model with linear BLs (with intercept)
 \end{table}
 \vspace{0.4cm}
 Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL was selected when and how the estimated feature effects evolve over time.
-\end{vbframe}
+\end{frame2}
 
 % tex file and figures are created automatically by: rsrc/fig-cwb-anim.R
 \input{tex/fig-cwb-anim}
@@ -194,7 +193,7 @@ Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL wa
 %%%%% BLIND OUT, include with removing `\if1` and  \fi
 \if1
 
-\begin{vbframe}{example: boston housing}
+\begin{frame2}{example: boston housing}
 
 \begin{minipage}[c]{0.4\textwidth}
   \small
@@ -231,13 +230,15 @@ Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL wa
   \end{tabular}
 \end{minipage}%
 
-\vfill
+\end{frame2}
+\begin{frame2}{example: boston housing}
 
 \begin{center}
 \includegraphics[width = \textwidth]{figure/compboost-illustration-1.png}
 \end{center}
 
-\framebreak
+\end{frame2}
+\begin{frame2}{example: boston housing}
 
 % ------------------------------------------------------------------------------
 
@@ -252,7 +253,7 @@ $\rightarrow$ A sparse linear regression is fitted.
 
 \includegraphics[width = \textwidth]{figure/compboost-illustration-2.png}
 
-\end{vbframe}
+\end{frame2}
 
 
 \fi

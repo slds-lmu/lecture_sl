@@ -1,0 +1,97 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{../../style/preamble}
+\input{../../latex-math/basic-math}
+\input{../../latex-math/basic-ml}
+
+
+\title{Introduction to Machine Learning}
+
+\begin{document}
+
+\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+    Regularization 
+  }{% Lecture title  
+    Bias-Variance Decomposition for Ridge Regression (Deep-Dive)
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/bias_var_decomp.png
+  }{
+  \item Bias-Variance trade-off for ridge regression
+}
+
+
+
+\begin{vbframe}{Bias-Variance Decomposition for Ridge}
+For a linear model $\yv = \Xmat \thetav + \bm{\varepsilon}$ with fixed design $\Xmat \in \mathbb{R}^{n \times p}\,\text{and}\,\bm{\varepsilon} \sim (\bm{0},\sigma^2 \bm{I}_n)$, bias of ridge estimator $\thetah_{\text{ridge}}$ is given by 
+\begin{equation*}
+    \begin{aligned}
+        \text{Bias}(\thetah_{\text{ridge}}) := \mathbb{E}[\thetah_{\text{ridge}}-\bm{\theta}] &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}] - \bm{\theta}\\
+        &= \mathbb{E}[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}(\bm{X}\bm{\theta}+\bm{\varepsilon})] - \bm{\theta} \\
+        &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} \bm{\theta} + (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \underbrace{\mathbb{E}[\bm{\varepsilon}]}_{=0} - \bm{\theta} \\
+        &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} \bm{\theta} - \bm{\theta} \\
+        &= \left[(\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} - (\bm{X}^{\top} \bm{X})^{-1} \right] \bm{X}^{\top} \bm{X} \bm{\theta}
+        \end{aligned}
+    \end{equation*}
+
+\begin{itemize}
+    \item Last expression shows bias of ridge estimator only vanishes for $\lambda=0$, which is simply (unbiased) OLS solution
+    \item It follows $\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2>0$ for all $\lambda>0$
+\end{itemize}
+
+    For the variance of $\thetah_{\text{ridge}}$, we have
+    \begin{equation*}
+        \begin{aligned}
+            \text{Var}(\thetah_{\text{ridge}})  &= \text{Var}\left((\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top}\bm{y}\right) \quad \quad \big| \;\; \text{apply} \;\; \text{Var}_u(\bm{A}\bm{u}) = \bm{A} \text{Var}(\bm{u}) \bm{A}^{\top} \\
+            &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \text{Var}(\bm{y}) \left( (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \right)^{\top} \\
+            &= (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \text{Var}(\bm{\varepsilon}) \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
+            &=  (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \sigma^2 \bm{I}_n \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
+            &= \sigma^2 (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1} \bm{X}^{\top} \bm{X} (\bm{X}^{\top}\bm{X} +\lambda\bm{I}_p )^{-1}  \\
+        \end{aligned}
+    \end{equation*}
+
+\begin{itemize}
+    \item $\text{Var}(\thetah_{\text{ridge}})$ is strictly smaller than $\text{Var}(\thetah_{\text{OLS}})=\sigma^2 (\Xmat^{\top}\Xmat)^{-1}$ for any $\lambda>0$, meaning matrix of their difference $\text{Var}(\thetah_{\text{OLS}})-\text{Var}(\thetah_{\text{ridge}})$ is positive definite (bit tedious derivation)
+    \item This further means $\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{ridge}})}\big)>0 \, \forall \lambda>0$
+\end{itemize}
+
+\framebreak
+
+Having obtained the bias and variance of the ridge estimator, we can decompose its mean squared error as follows:
+
+$$\text{MSE}(\thetah_{\text{ridge}})=\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2 + \text{trace}\big(\text{Var}(\thetah_{\text{ridge}})\big)$$
+
+Comparing MSEs of $\thetah_{\text{ridge}}$ and $\thetah_{\text{OLS}}$ and using $\text{Bias}(\thetah_{\text{OLS}})=0$ we find 
+$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}}) = \underbrace{\text{trace}\big({\text{Var}(\thetah_{\text{OLS}})}-{\text{Var}(\thetah_{\text{ridge}})}\big)}_{>0} - \underbrace{\Vert \text{Bias}(\thetah_{\text{ridge}})\Vert_2^2}_{>0}$$
+
+Since both terms are positive, sign of their diff is \textit{a priori} undetermined. \furtherreading {THEOBALD1974} and \furtherreading {FAREBROTHER1976} prove there always exists some $\lambda^{\ast}>0$ so that
+$$\text{MSE}(\thetah_{\text{OLS}})-\text{MSE}(\thetah_{\text{ridge}})>0$$
+\textbf{Important theoretical result}: While Gauss-Markov guarantuees $\thetah_{\text{OLS}}$ is best linear unbiased estimator (BLUE), there are biased estimators with lower MSE.
+
+\end{vbframe}
+
+\begin{vbframe}{Bias-Variance in Predictions for ridge}
+
+In supervised learning, our goal is typically not to learn an unknown parameter $\thetav$, but to learn a function $f(\xv)$ that can predict $y$ given $\xv$.
+
+%Assume that our targets are generated by $y=f(\xv)+\varepsilon$ where $\varepsilon \sim (0,\sigma^2)$ and $f(\xv)=\thetav^{\top}\xv$.
+\vspace{0.2cm}
+
+The bias and variance of predictions $\hat{f}:=\fh(\xv)=\thetah_{\text{ridge}}^{\top} \xv$ is obtained as:
+
+\begin{align*}
+\text{Bias}(\fh)&=\E[\hat{f}-f]=\E[\thetah_{\text{ridge}}^{\top} \xv - \thetav^{\top} \xv]=\E[\thetah_{\text{ridge}}-\thetav]^{\top} \xv\\ 
+&= \text{Bias}(\thetah_{\text{ridge}})^{\top} \xv \\
+\text{Var}(\fh)&=\text{Var}(\thetah_{\text{ridge}}^{\top} \xv) = \xv^{\top} \text{Var}(\thetah_{\text{ridge}}) \xv
+\end{align*}
+
+The MSE of $\fh$ given a fresh sample $(y,\xv)$ can now be decomposed as
+
+$$\text{MSE}(\fh)=\E[(y-\fh(\xv))^2]=\text{Bias}^{2}(\fh) + \text{Var}(\fh) + \sigma^2$$
+
+This decomposition is similar to the statistical inference setting before, however, the irreducible error $\sigma^2$ only appears for predictions as an artifact
+of the noise in the test sample.
+
+\end{vbframe}
+
+
+\endlecture
+\end{document}

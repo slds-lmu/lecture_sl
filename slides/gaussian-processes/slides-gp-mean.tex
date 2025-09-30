@@ -3,115 +3,192 @@
 \input{../../latex-math/basic-math}
 \input{../../latex-math/basic-ml}
 \input{../../latex-math/ml-gp}
+\input{../../latex-math/ml-svm}
 
 \title{Introduction to Machine Learning}
 
 \begin{document}
 
-\titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
+\titlemeta{
     Gaussian Processes
-  }{% Lecture title  
+  }{
     Mean functions for GPs
-  }{% Relative path to title page image: Can be empty but must not start with slides/
-  figure/gp_sample/2_4.pdf
+  }{
+  figure/gp_sample/linmean_prior_updates_1.pdf
   }{
   \item Trends can be modeled via specification of the mean function
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
-%\input{../../style/preamble}
-%\input{../../latex-math/basic-math}
-%\input{../../latex-math/basic-ml}
-%\input{../../latex-math/ml-gp}
-
-%\newcommand{\titlefigure}{figure/gp_sample/2_4.pdf} %does not fit
-%\newcommand{\learninggoals}{
-%  \item Trends can be modeled via specification of the mean function 
-%}
-
-%\title{Introduction to Machine Learning}
-%\date{}
-
-%\begin{document}
-
-%\lecturechapter{Mean Functions for Gaussian Processes}
-%\lecture{Introduction to Machine Learning}
+\begin{framei}[sep=L]{zero-mean functions}
+\item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
+\item Prior knowledge + inference solely handled via $\kcc$
+\item Implication: $m(\cdot)$ not relevant for posterior process
+$$\mv_{\text{post}} = \E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv, \quad \Kmat_{\text{post}} = \Kss - \Ks^T \Ky^{-1} \Ks$$
+\item Not necessarily drastic limitation: \textbf{posterior} mean generally $\neq 0$
+\item If data follow some trend $\mX$, we can always center them by subtracting $\mX$ $\Rightarrow$ $\GPzk$ applicable again
+% $$\E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv$$
+% $$\fs | \Xs, \Xmat, \fv \sim \normal(\Ks^{T}\Kmat^{-1}\fv, \Ksstar - \Ks^T \Kmat ^{-1}\Ks)$$
+% \item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
+% \item Assuming $\GPmk$, the posterior mean becomes
+% $$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
+% (posterior variance unchanged)
+\end{framei}
 
 
-\begin{vbframe}{The Role of Mean Functions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{framei}[sep=S]{trend via covariance structure}
+\item For zero-mean GPs with stationary kernels posterior mean reverts to the prior further outside the training domain (no extrapolation)
+\item But trend-like behaviour could be directly encoded in $\kcc$:
 \begin{itemize}
-  \item It is common but by no means necessary to consider GPs with a zero-mean function 
-  $$
-    m(\xv) \equiv 0
-  $$
-  \item Note that this is not necessarily a drastic limitation, since the mean of the posterior process is not confined to be zero 
-  $$
-    \bm{f}_* | \Xmat_*, \Xmat, \bm{f} \sim \mathcal{N}(\Kmat_{*}^{T}\Kmat^{-1}\bm{f}, \Kmat_{**} - \Kmat_*^T \Kmat ^{-1}\Kmat_*).
-  $$
-  \item Yet there are several reasons why one might wish to explicitly model a mean function, including interpretability, convenience of expressing prior informations, ... 
-  \item When assuming a non-zero mean GP prior $\gp$ with mean $m(\xv)$, the predictive mean becomes 
-  $$
-    m(\Xmat_*) + \Kmat_*\Kmat_y^{-1}\left(\bm{y} - m(\Xmat)\right)
-  $$
-  while the predictive variance remains unchanged. 
-  
-  \framebreak
-  
-  \item Gaussian processes with non-zero mean Gaussian process priors are also called Gaussian processes with trend.  
-\vspace{.3cm}
+  \item Linear kernel: $k(\xv,\xv')=\sigma^2 \xv^\top \xv'$
+  \item Polynomial kernels for global polynomial trends
+  \item Composite kernels: $k = k_{\text{long}} + k_{\text{short}}$
+\end{itemize}
+\item Produces non-flat priors even with $m(\xv)=0$, but lower interpretability and kernel-dependent extrapolation
+\item Consider GP for DGP with linear trend (after centering):
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/1_1.pdf}
-\end{figure}
+\vfill
 
-\framebreak
+\splitV{
+\imageC[1.0]{figure/plot_extrapol_matern.png}
+}{
+\imageC[1.0]{figure/plot_extrapol_linear.png}
+}
+
+\end{framei}
 
 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_1.pdf}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\framebreak
- 
-
-
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_2.pdf}
-\end{figure}
-
- \framebreak
- 
- 
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_3.pdf}
-\end{figure}
-
-\framebreak
-
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{figure/gp_sample/2_4.pdf}
-\end{figure}
-
-\framebreak
+\begin{framei}[sep=L]{why model a trend explicitly?}
+\item Still: can make sense to model $m(\cdot)$ explicitly as potentially nonzero
+\begin{itemize}
+  \item \textbf{Efficiency:} kernel $\kcc$ need not mimic global structure via very long lengthscales
+  \item \textbf{Extrapolation:} outside data range, $\GPzk$ reverts to flat mean \\ $\Rightarrow$ often unrealistic
+  \item \textbf{Interpretability:} clear separation between systematic trend and stochastic fluctuations
+  \item \textbf{Prior knowledge:} encode known effects (linear, seasonal, additive)
+\end{itemize}
+\item Assuming $\GPmk$, posterior mean with $m(\cdot)$ becomes
+$$\mv_{\text{post}}(\Xs) = m(\Xs) + \Ks \Ky^{-1}(\yv - m(\Xmat))$$
+\item Trend $m(\Xs)$ = interpretable global component; Correction = GP adjustment around this trend; Variance stays = $\Kss - \Ks^\top \Ky^{-1}\Ks$
+\end{framei}
 
 
-\item In practice it can often be difficult to specify a fixed mean function
-\item In many cases it may be more convenient to specify a few fixed basis functions, whose coefficients, $\bm{\beta}$, are to be inferred from the data
-\item Consider 
-$$
-  g(\xv) = b(\xv)^\top \bm{\beta} + \fx, \text{   where } \fx \sim \mathcal{GP} \left(0, k(\xv, \tilde \xv)\right)
-$$
-\item This formulation expresses that the data is close to a global linear model with the residuals being modelled by a GP. 
-\item For the estimation of $g(\xv)$ please refer to \emph{Rasmussen, Gaussian Processes for Machine Learning, 2006}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+\begin{framei}[sep=M]{non-zero-mean functions}
+\item GPs with \textbf{trend}
+\vfill
+\splitVCC{
+$$m(\xv) = 1.5 \xv$$
+\imageC[1]{figure/gp_sample/linmean_prior_50n.pdf}
+}{
+\imageC[1]{figure/gp_sample/linmean_prior_updates_1.pdf}
+}
+\vfill
+\splitVTT{
+\imageC[1]{figure/gp_sample/linmean_prior_updates_3.pdf}
+}{
+\imageC[1]{figure/gp_sample/linmean_prior_updates_4.pdf}
+}
+\end{framei}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{framei}[sep=L]{semi-parametric gp}
+\item (Deterministic) mean functions $m(\cdot)$ often hard to specify
+\item Solution: \textbf{semi-parametric} GPs combining global (often linear) model + zero-mean GP for residuals
+$$g(\xv) = m_{\bm{\beta}}(\xv) + \fx, \quad f  \sim \GPzk$$
+%\item E.g., via basis functions (GAMs) $\Rightarrow$ infer coeffs from data
+%$$m_{\bm{\beta}}(\xv) = b(\xv)^T\bm{\beta}$$
+%\item Alternative: parameterize $m_{\bm{\beta}}(\cdot)$ with neural networks
+
+\item In principle: \textbf{any model} $m(\cdot)$ can be used
+\begin{itemize}
+  \item Fixed parametric: $m_{\bm{\beta}}(\xv)=\beta_0+\xv^\top\bm{\beta}$
+  \item Basis expansions: $m_{\bm{\beta}}(\xv)=b(\xv)^\top\bm{\beta}$
+  \item Flexible ML models: GLMs, boosting, neural nets, \dots
 \end{itemize}
 
+\item Semi-parametric GPs combine global model + GP residual:
+$$g(\xv) = m_{\bm{\beta}}(\xv) + f(\xv), \quad f\sim\GPzk$$
 
-\end{vbframe}
+\end{framei}
+
+% \begin{framei}[sep=L]{non-zero-mean functions}
+% \item Previously: common assumption of zero-mean prior $$m(\xv) \equiv 0$$
+% \item Not necessarily drastic limitation: \textbf{posterior} mean can be $\neq 0$
+% $$\E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv$$
+% % $$\fs | \Xs, \Xmat, \fv \sim \normal(\Ks^{T}\Kmat^{-1}\fv, \Ksstar - \Ks^T \Kmat ^{-1}\Ks)$$
+% \item Still: can make sense to explicitly model mean fun \\$\Rightarrow$ interpretability, prior knowledge, \dots
+% \item Assuming $\GPmk$, the posterior mean becomes
+% $$m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
+% (posterior variance unchanged)
+% \end{framei}
+
+% \begin{framei}[sep=L]{example: non-zero-mean prior}
+% \item GPs with non-zero-mean priors: aka GPs with \textbf{trend}
+% \vfill
+% \splitVTT{
+% \imageC[1]{figure/gp_sample/1_1.pdf}
+% }{
+% \imageC[1]{figure/gp_sample/2_1.pdf}
+% }
+% \vfill
+% \splitVTT{
+% \imageC[1]{figure/gp_sample/2_3.pdf}
+% }{
+% \imageC[1]{figure/gp_sample/2_4.pdf}
+% }
+% \end{framei}
+
+% \begin{framei}[sep=L]{basis function approach}
+% \item Often difficult to come up with fixed mean function
+% \item Possible solution: specify basis functions + infer coeffs from data
+% \item Aka semiparametric GP
+% \item E.g., consider $$g(\xv) = b(\xv)^T\bm{\beta} + \fx, \quad f  \sim \GPzk$$
+% $\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
+% \item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
+% \end{framei}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{framei}[sep=L]{estimation Approaches \furtherreading{RASMUSSENWILLIAMS2006GPML}}
+\item Log marginal likelihood:
+$$\ell(\bm{\beta},\thetav,\sigma^2) = -\tfrac{1}{2}\bm{r}^\top \Ky^{-1}\bm{r}
+-\tfrac{1}{2}\log|\Ky| - \tfrac{n}{2}\log(2\pi),$$
+with $\bm{r}=\yv - m_{\bm{\beta}}(\Xmat)$
+\item \textbf{Joint estimation:} maximize $\ell$ over all parameters 
+\item \textbf{Sequential:} fit $m(\cdot)$ first, GP on residuals \\
+\hspace*{1em}$\Rightarrow$ ignores uncertainty from first stage, variance underestimated
+\item \textbf{Fully Bayesian:} priors on $(\bm{\beta},\thetav,\sigma^2)$, posterior inference via MCMC or VI
+$$p(\bm{\beta},\thetav,\sigma^2 \mid \yv,\Xmat)\ \propto\ 
+p(\yv \mid \bm{\beta},\thetav,\sigma^2,\Xmat)\;
+p(\bm{\beta})\,p(\thetav)\,p(\sigma^2)$$
+\item For complex $m(\cdot)$, estimation by full Bayesian inference or joint likelihood becomes computationally difficult
+\end{framei}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{framei}[sep=L]{separability of gradients}
+\item Gradients of $\ell$ decompose neatly into:
+\begin{align*}
+\nabla_{\bm{\beta}} \ell &= 
+\Big(\tfrac{\partial m_{\bm{\beta}}(\Xmat)}{\partial \bm{\beta}}\Big)^\top \Ky^{-1}\bm{r}, \\
+\nabla_{\thetav} \ell &= 
+\tfrac{1}{2}\bm{r}^\top \Ky^{-1}\tfrac{\partial \Ky}{\partial\thetav}\Ky^{-1}\bm{r}
+- \tfrac{1}{2}\mathrm{tr}\!\Big(\Ky^{-1}\tfrac{\partial \Ky}{\partial \thetav}\Big)
+\end{align*}
+\item Trend parameters $\bm{\beta}$ enter only via $\bm{r}$ and the design/basis functions
+\item Kernel hyperparameters $\thetav$ and noise $\sigma^2$ enter only via $\Ky$ and its derivatives
+\item Consequence: updates are \textbf{decoupled in form}, \\though they interact through $\bm{r}$ and $\Ky^{-1}$
+\end{framei}
+
 
 
 \endlecture
