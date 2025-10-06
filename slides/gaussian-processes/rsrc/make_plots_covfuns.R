@@ -107,7 +107,7 @@ p_squaredexp = lapply(
     }
 )
 save_topdf(
-  Reduce("+", p_exponential) +
+  Reduce("+", p_squaredexp) +
     plot_cov(get_kmat(x, x, "squaredexp", lengthscale = 1)) +
     ggtitle("length scale 1.0") +
     plot_layout(widths = rep(0.25, 4)), 

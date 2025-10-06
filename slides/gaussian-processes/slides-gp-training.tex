@@ -26,7 +26,7 @@
 \item Nice GP property: numerical hyperparams of given cov function can be learned during training
 \end{framei}
 
-\begin{framei}[sep=L]{Training via maximum likelihood}
+\begin{framei}[sep=L]{Training via marginal likelihood}
 \item Let $$y = \fx + \epsilon, \quad \epsilon \sim \normal(0, \sigma^2)$$
 with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam config $\thetav$
 \item This yields $\yv \sim \normal(\zero, \Ky )$ with  $\Ky = \Kmat + \sigma^2 \id$
@@ -36,6 +36,7 @@ with $f \sim \mathcal{GP}(\zero, k(\cdot, \cdot | \thetav))$ for hyperparam conf
 &= \textcolor{blue}{\tfrac{1}{2} \yv^T \Ky^{-1} \yv} \textcolor{orange}{+ \tfrac{1}{2} \log | \Ky |}  + \tfrac{n}{2} \log 2 \pi
 \end{eqnarray*}
 \item $-\log p(\yv | \bm{X}, \thetav)$ depends on $\thetav$ via $\Ky$ $\Rightarrow$ optimize for $\thetav$
+\item GP training optimizes kernel hyperparams by minimizing the neg. marginal likelihood, balancing data fit ($\tfrac{1}{2}\yv^\top \Ky^{-1}\yv$) and model complexity ($\tfrac{1}{2}\log|\Ky|$)
 \end{framei}
 
 \begin{framei}[sep=L]{negative log-likelihood components}

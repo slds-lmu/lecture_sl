@@ -17,107 +17,113 @@ Covariance functions for GPs
 figure_man/covariance2D-2.png
 }{
 \item Covariance functions encode key assumptions about the GP
-\item Know common covariance functions like squared exponential and Matérn
+\item Common covariance functions like squared exponential and Matérn
 }
 
 \begin{framei}[sep=L]{valid covariance functions}
 \item Recall marginalization property of GPs: for any $\Xsubset = \xdat \subset \Xspace$,
 $$\fv = \fX \sim \Nmk$$
 with $\mv = \mX$, $\Kmat = \kXX$
+\item Cov. function (or kernel) determines cov / kernel / Gram matrix: $\Kmat = \kXX$
 \item For $\Kmat$ to be a valid cov matrix it needs to be positive semi-definite (PSD) for any choice of inputs $\bm{X}$
-\item Cov function (or kernel) determines cov matrix: $\Kmat = \kXX$
-\item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions \furtherreading{DUVENAUDKERNEL}
+\item Implication: only \textbf{PSD functions} (i.e., those that induce PSD $\Kmat$) are valid cov functions 
+
+\item Also look at SVM chapter for background info on kernels, 
+many further details in e.g. \furtherreading{DUVENAUDKERNEL}
+
 \end{framei}
 
 \begin{framei}[sep=L]{stationary covariance functions}
 \item Recall concept of spatial correlation
-$$\xv, \xtil \text{ close in } \Xspace \Rightarrow \fx, f(\xtil) \text{ close in } \Yspace$$
-\item Measure ``closeness'' via $\bm{d} = \xv - \xtil$
+$$\xv, \xtil \text{ close in } \Xspace \Rightarrow \fx, f(\xtil) \text{ close / more correlated in } \Yspace$$
+\item Measure ``closeness'' via $\bm{d} = \xv - \xtil$ 
 \item $\kcc$ called \textbf{stationary} $\Leftrightarrow$ function of $\bm{d}$ 
 $$\kxxt = k(\bm{d})$$
-\item Intuition: stationary $\kcc$ implies functions that vary smoothly regardless of where we are in input space
+\item Intuition: stationary $\kcc$ implies functions that do not depend on where the points lie in input space but only their difference 
+
 \end{framei}
 
-\begin{framei}{example: stationary covariance}
-\item Let $f \sim \GPmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$
-\item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$
-\item If you want to know about the correlation between $f(\xi[1])$ and $f(\xi[2])$, compute $\bm{d}(\xi[1], \xi[2])$
-\vfill
-\splitV{
-\imageC[.9]{figure/cov_funs/example_covariance_1.pdf}
-}{
-\imageC[1]{figure/cov_funs/example_function_1_1.pdf}
-}
-\end{framei}
+\begin{framei}{example: stationary covariance} 
+\item Let $f \sim \GPmk$ with $\kxxt = \exp(-\tfrac{1}{2}\|\bm{d}\|^2)$ 
+\item Consider two points $\xi[1] = 3$ and $\xi[2] = 2.5$ 
+\item To get corr. between $f(\xi[1])$ and $f(\xi[2])$ look at $\bm{d}(\xi[1], \xi[2])$ 
+\vfill 
+\splitV{ \imageC[.9]{figure/cov_funs/example_covariance_1.pdf} }{ \imageC[.9]{figure/cov_funs/example_function_1_1.pdf} } 
+\end{framei} 
 
-\begin{framei}{example: stationary covariance}
-\item Suppose we observe $\yi[1] = -0.8$
-\item $\xi[1], \xi[2]$ are close in $\Xspace$ space
+\begin{framei}{example: stationary covariance} 
+\item Suppose we observe $\yi[1] = -0.8$ 
+\item $\xi[1], \xi[2]$ are close in $\Xspace$ space 
 \item Under the above GP assumption, $\yi[2]$ should be close to $\yi[1]$ 
-\vfill
-\splitV{
-\imageC[.9]{figure/cov_funs/example_covariance_1.pdf}
-}{
-\imageC[1]{figure/cov_funs/example_function_1_2.pdf}
-}
+\vfill 
+\splitV{ \imageC[.9]{figure/cov_funs/example_covariance_1.pdf} }{ \imageC[.9]{figure/cov_funs/example_function_1_2.pdf} } 
+\end{framei} 
+
+\begin{framei}{example: stationary covariance} 
+\item Consider now $\xi[3] = 5$ 
+\item This is now further from $\xi[1]$
+\item $\Rightarrow$ expect lower correlation between $\yi[3]$, $\yi[1]$ 
+\vfill 
+\splitV{ \imageC[.9]{figure/cov_funs/example_covariance_2.pdf} }{ \imageC[.9]{figure/cov_funs/example_function_2_1.pdf} } 
 \end{framei}
 
-\begin{framei}{example: stationary covariance}
-\item Consider now $\xi[3] = 5$
-\item Further from $\xi[1]$ $\Rightarrow$ expect lower correlation between $\yi[3]$, $\yi[1]$ 
-\vfill
-\splitV{
-\imageC[.9]{figure/cov_funs/example_covariance_2.pdf}
-}{
-\imageC[1]{figure/cov_funs/example_function_2_1.pdf}
-}
-\end{framei}
 
-\begin{framei}[sep=L]{properties of covariance functions}
-\item Most cov functions belong to 3 common types
+\begin{framei}[sep=L]{properties of covariance functions I}
+%\item Most cov. functions have 3 common properties
 \item \textbf{Stationary}: $k = k(\bm{d})$ with $\bm{d} = \xv - \xtil$ \\
-$\Rightarrow$ invariant to translations in $\Xspace$: $k(\xv, \xv + \bm{d}) = k(\zero, \bm{d})$
+$\Rightarrow$ invariant to translations in $\Xspace$: $k(\xv, \xv + \bm{d}) = k(\zero, \bm{d})$\\
+(so we sometimes abuse notation and write $k(\bm{d})$)
+\item Consider $\xv, \xtil \in \mathbb{R}$ and plot contours of $k(\xv,\xtil)$: 
+\imageC[0.9]{figure/stationary_vs_nonstationary.pdf}
+\item Contour set of $\xv \to k(\xv,\xtil_1)$ must be same as for $\xv \to k(\xv, \xtil_2)$ translated by $\xtil_1-\xtil_2$
+\end{framei}
+
+\begin{framei}[sep=L]{properties of covariance functions II}
+%\item Most cov. functions have 3 common properties
 \item \textbf{Isotropic}: $k = k(\bm{r})$ with $r = \xxtnorm$ \\
-$\Rightarrow$ invariant to rotations of $\Xspace$
-\item Isotropy implies stationarity
+$\Rightarrow$ invariant to rotations, implies stationarity\\
+(again slight notational abuse)
+\item Consider $\xv, \xtil \in \mathbb{R}^2$
+\imageC[0.9]{figure/isotropic_vs_anisotropic.pdf}
+\item Isotropic = circular/concentric contours, anisotropic = elliptic
 \item \textbf{Dot product}: $k = k(\xv^T \xtil)$
 \end{framei}
 
 \begin{framei}{constant kernel}
 \item $\kxxt = \theta_0 \quad > 0$
 \item Constant function priors
-\item Global correlation irresp of concrete inputs $\xv, \xtil$
-\item Use for: global-effect models
+\item Global correlation irresp. of concrete inputs $\xv, \xtil$
+\item Practically pretty useless
 \vfill
-\imageC[.9]{figure/cov_funs/cov_constant.pdf}
+\imageC[1]{figure/cov_funs/cov_constant.pdf}
 \end{framei}
 
 \begin{framei}{linear kernel}
 \item $\kxxt = \theta_0 + \xv^T \xtil$
 \item Linear function priors
 \item Measures directional similarity: higher if vectors point in similar dirs
-\item In general, non-stationary $\Rightarrow$ depends on absolute location of $\xv, \xtil$
-\item Use for: linear models
+\item In general, non-stationary $\Rightarrow$ depends on locations of $\xv, \xtil$
+\item See Bayesian linear model part
 \vfill
-\imageC[.9]{figure/cov_funs/cov_linear.pdf}
+\imageC[1]{figure/cov_funs/cov_linear.pdf}
 \end{framei}
 
 \begin{framei}{polynomial kernel}
 \item $\kxxt = (\theta_0 + \xv^T \xtil )^p, \quad p \in \N$
 \item Polynomial function priors
 \item Allows for non-linearity through higher-order monomials \& interaction terms
-\item Use for: polynomial trends
 \vfill
-\imageC[.9]{figure/cov_funs/cov_polynomial.pdf}
+\imageC[1]{figure/cov_funs/cov_polynomial.pdf}
 \end{framei}
 
 \begin{framei}{periodic kernel}
-\item E.g., $\kxxt = \exp \left(\frac{-2\sin^2 (\pi \xxtnorm / m)}{\ls^2} \right)$
+\item E.g., radial periodic kernel: $\kxxt = \exp \left(\frac{-2\sin^2 (\pi \xxtnorm / m)}{\ls^2} \right)$
 \item $m$: period, $\ls$: length-scale
-\item Implements idea that $\xv$ should be similar to $\xv + m$, similarity decaying quadratically in $\ls$
-\item Use for: periodic trends
+\item $f(\xv)$ should be periodically similar to points with a distance which is a multiple of $m$;\\
+for distances in between, this is modulated by $\ls$
+\item Alternative: Product of 1D periodic kernels, with $m_j$ period in dimension $j$: $\kxxt =  \exp \left(\sum_j\frac{-2\sin^2 (\pi |x_j - \tilde{x}_j| / m_j)}{\ls^2} \right)$
 \vfill
-\imageC[.9]{figure/cov_funs/cov_periodic.pdf}
+\imageC[1]{figure/cov_funs/cov_periodic.pdf}
 \end{framei}
 
 \begin{framei}{matérn kernel}
@@ -126,19 +132,18 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item Stationary \& isotropic
 \item Allows for controlled degree of smoothness via choice of $\nu$
 \item $\nu$ also determines differentiability
-\item Use for: non-linear trend with desired degree of smoothness
+\item Use for: non-linear functions with desired degree of smoothness
 \vfill
-\imageC[.9]{figure/cov_funs/cov_matern.pdf}
+\imageC[1]{figure/cov_funs/cov_matern.pdf}
 \end{framei}
 
 \begin{framei}{exponential kernel}
 \item Aka Ornstein-Uhlenbeck kernel
 \item $\kxxt = \exp \left(-\frac{\xxtnorm}{\ls} \right)$
 \item Special case of Matérn kernel with $\nu = 0.5$
-\item Non-smooth: continuous but not differentiable
-\item Cov decays exponentially with distance (dep on $\ls$)
-\item Use for: non-linear trend with abrupt variations
-\imageC[.9]{figure/cov_funs/cov_exponential.pdf}
+\item Non-smooth: continuous but not differentiable, can model functions with abrupt variations
+\item Cov decays exponentially with distance (modulated by $\ls$)
+\imageC[1]{figure/cov_funs/cov_exponential.pdf}
 \end{framei}
 
 \begin{framei}{squared exponential kernel}
@@ -146,56 +151,79 @@ $\Rightarrow$ invariant to rotations of $\Xspace$
 \item $\kxxt = \exp \left(-\frac{\xxtnorm^2}{2\ls^2} \right)$
 \item Special case of Matérn kernel with $\nu = \infty$
 \item Very smooth: continuous, $\infty$ differentiable (not always realistic)
-\item Cov decays quickly $\Rightarrow$ quadratic in $\ls$
-\item Use for: smooth, non-linear trend
-\imageC[.9]{figure/cov_funs/cov_squaredexp.pdf}
+\item Cov decays quickly $\Rightarrow$ quadratic in distance
+\imageC[1]{figure/cov_funs/cov_squaredexp.pdf}
 \end{framei}
 
-\begin{framei}[sep=S]{non-standard kernels}
-\item Example: 2D Brownian motion
+\begin{framei}[sep=S]{Example: Brownian motion}
+\item $ \kxxt = \prod_j \min (x_j, \tilde{x}_j)$
 \item Physics application: random fluctuations of particles
-\item $f \sim \GPzk$ with $ \kxxt = \min (\xv, \xtil)$
+\item With non-1D inputs aka Brownian sheet
+\item Correlation in each dimension is 1D-like Brownian motion
 \vfill
-\imageC[.8]{figure/cov_funs/brownian2d.png}
+\imageC[.7]{figure/cov_funs/brownian2d.png}
 \end{framei}
 
-\begin{framei}[sep=L]{characteristic length-scale}
-\item Key hyperparameter of many (isotropic) kernels
+\begin{framei}[sep=M]{characteristic LS : isotropic case}
+\item Every (isotropic) kernel can be written as $k(r)$ where %Key (hyper)parameter of many (isotropic) kernels $k(r)$ 
+\item $r=||\xv-\xtil||$
+\item E.g. $\kxxt = \exp \left(-\frac{\xxtnorm^2}{2\ls^2} \right)$ or $k(r) = \exp \left(-\frac{1}{2}(\frac{r}{\ls})^2\right)$ 
 \item Controls how quickly function values become uncorrelated
 \item High (low) $\ls$: smooth (wiggly) functions
 \vfill
 \imageC[1]{figure/gp_sample/zeromean_prior_10n_varying_ls.pdf}
-\item Akin to SVM bandwidth but more general: length-scales may vary across input dims
+\item In SVM kernels we sometimes called this bandwith
 \end{framei}
 
-\begin{framei}[sep=L]{choices for characteristic ls}
-\item Reparameterize squared exponential kernel (for $p \geq 2$ dims) as
+\begin{framei}[sep=M]{characteristic LS : stationary case}
+\item For stationary kernels $k(\bm{d})$ 
+\item We modulate every distance component $d_j$ by an individual $\ls_j$
+\item We can turn the isotropic examples from above into 
+stationary ones -- with individual length scales
+\item Write $||\bm{d}||^2 = \sum d_j^2$ and put an $1/\ls_j$ before each $d_j$
+%\item Write $(\frac{r}{\ls})^2 = \frac{1}{\ls^2}\sum d_j^2 = \sum \frac{d_j^2}{\ls^2} $ and use dim-specific $\ls_j$
+\item E.g. for squared exp:
+$$
+  k(\bm{d}) = \exp \left(- \tfrac{1}{2} \sumjp \frac{d_j^2}{\ell_j^2} \right)
+$$
+\item Also note: this is a product of 1D kernels, one for each input dim. The correlation in each dim is described by the 1D kernel and its distance component is modulated by $\ls_j$
+\end{framei}
+
+
+\begin{framei}[sep=L]{benefits of dim-wise length-scales}
+\item $\ls_1,\dots, \ls_p$: characteristic length-scales
+\item Intuition for $\ls_i$: how far to move along $i$-th axis for fun. values to become uncorrelated?
+\item Implements \textbf{automatic relevance determination} (ARD): inverse of $\ls_i$ determines importance of $i$-th feature
+\item Very large $\ls_i$ $\Rightarrow$ cov effectively independent of $i$-th feature
+\item For features on different scales: rescale automatically by estimating $\ls_1,\dots, \ls_p$ 
+\end{framei}
+
+
+
+\begin{framei}[sep=M]{characteristic LS : Weighted Euclid dist}
+
+\item Can even generalize the above principle
+\item Move to weighted (squared) Euclidean distance
+\item E.g. for squared exp again: 
 $$
 \kxxt = \exp \left(- \tfrac{1}{2}(\xv - \xtil)^T\bm{M} (\xv - \xtil )\right)
 $$
+\item This covers the case before
 \item Possible choices for $\bm{M}$:
 $$
 \bm{M}_1 = \ls^{-2}\id_p \qquad \bm{M}_2 = \diag(\bm{\ls})^{-2} \qquad \bm{M}_3 = \Gamma \Gamma^T + \diag(\bm{\ls})^{-2}
 $$
 where $\bm{\ls} \in \R^p_+$, $\Gamma \in \R^{p \times k}$ 
-\item (Most important) case $\bm{M}_2$ can also be written as
-$$
-  k(\bm{d}) = \exp \left(- \tfrac{1}{2} \sumjp \frac{d_j^2}{\ell_j^2} \right)
-$$
 \end{framei}
 
-\begin{framei}[sep=L]{benefits of dim-wise length-scales}
-\item $\ls_1,\dots, \ls_p$: characteristic length-scales
-\item Intuition for $\ls_i$: how far to move along $i$-th axis for fun values to become uncorrelated?
-\item Implements \textbf{automatic relevance determination} (ARD): inverse of $\ls_i$ determines importance of $i$-th feature
-\item Very large $\ls_i$ $\Rightarrow$ cov effectively independent of $i$-th feature
-\item For features are on different scales: rescale automatically by estimating $\ls_1,\dots, \ls_p$ 
-\end{framei}
 
 \begin{framei}{examples: characteristic ls}
+
+
+
 \item Left: $\bm{M} = \id$ $\Rightarrow$ same variation in all directions
 \item Middle: $\bm{M} = \diag(\bm{\ls})^{-2}$ $\Rightarrow$ less variation in $x_2$ direction ($\ls_2 > \ls_1$)
-\item Right: $\bm{M} = \Gamma \Gamma^T + \diag(\bm{\ls})^{-2}$ with $\Gamma = (1, -1)^T$ and $\bm{\ls} = (6, 6)^T$ $\Rightarrow$ $\Gamma$ determines dir of most rapid variation
+\item Right: $\bm{M} = \Gamma \Gamma^T + \diag(\bm{\ls})^{-2}$ with $\Gamma = (1, -1)^T$ and $\bm{\ls} = (6, 6)^T$ $\Rightarrow$ $\Gamma$ determines dir. of most rapid variation
 \vfill
 \imageC[1]{figure_man/covariance2D.png}
 

@@ -21,6 +21,9 @@ figure/loss_absolute_1.png
 
 \begin{frame2}[footnotesize]{L1-Loss: Risk Minimizer}
 
+Optimal constant model under L1 loss is
+$$f_{c}^{\ast} = \argmin_c \E_y[|y-c|] =  \text{med} [y]$$
+
 \textbf{Proof:} Let $p(y)$ be the density function of $y$. Then: 
 \begin{align*}
 &\argmin_c \E\left[|y - c|\right] = \argmin_c \int_{-\infty}^\infty |y - c| ~ p(y) \text{d}y \\
@@ -31,11 +34,11 @@ We now compute the derivative of the above term and set it to $0$
 
 \begin{align*}
 0 &= \frac{\partial}{\partial c} (\int_{-\infty}^c -(y - c)~p(y)~\text{d}y + \int_c^\infty (y - c)~p(y)~\text{d}y) \\ &\overset{^\ast\text{Leibniz}}{=} \int_{-\infty}^c  ~p(y)~\text{d}y - \int_c^\infty ~p(y)~\text{d}y =   \P_y (y \le c) - (1 - \P_y (y \le c)) \\
-&= 2 \cdot \P_y (y \le c) - 1 \\
-\Leftrightarrow 0.5 &= \P_y (y \le c)
+&= 2 \cdot \P_y (y \le c) - 1 \Leftrightarrow 0.5 = \P_y (y \le c) \,\Rightarrow c = \text{med}[y]
 \end{align*}
 
-which yields $c = \text{med}_y(y)$. 
+\textbf{NB}: replacing $p(y)$ by $p(y|\xv)$, we obtain the point-wise conditional risk minimizer
+$f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}\left[y ~|~ \xv = \xtil \right]$
 
 \end{frame2}
 
@@ -59,30 +62,35 @@ We get
 \end{frame2}
 
 
-\begin{frame}{L1-Loss: Optimal constant model}
+\begin{frame2}[small]{L1-Loss: Optimal constant model}
 
 % Take proof from this page? 
 % https://math.stackexchange.com/questions/113270/the-median-minimizes-the-sum-of-absolute-deviations-the-l-1-norm/1024462#1024462
 
+Optimal constant model for empirical risk under L1 loss is:
+
+$$\hat{f}_c = \argmin_{c} \frac{1}{n} \sumin |\yi -c| =\thetah = \text{med}(y^{(1)}, \ldots, y^{(n)}) $$  
+
 \textbf{Proof}: 
 
-\begin{itemizeL}
+\begin{itemizeS}
 \item Firstly note that for $n = 1$ the median $\thetah = \text{med}(\yi) = y^{(1)}$ obviously minimizes the emp. risk $\riske$ using the $L1$ loss 
 
 \item Hence let $n > 1$ in the following For $a,b \in \mathbb{R}$, define 
 $$S_{a,b}:\mathbb{R} \rightarrow \mathbb{R}^+_0, \theta \mapsto |a- \theta| + |b-\theta|$$
-\vspace*{-0.3cm}
+
 Any $\thetah \in [a,b]$ minimizes $S_{a,b}(\theta)$, because it holds that
-\vspace*{-0.0cm}
+{\scriptsize
 \begin{align*}
 S_{a,b}(\theta) = \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 2\cdot\min\{|a-\theta|,|b-\theta|\}
 ,& \text{ otherwise}\end{cases}
 \end{align*}
-\end{itemizeL}
+}
+\end{itemizeS}
+\vspace*{-0.4cm}
+\imageC[0.3]{figure/S_function.png}
 
-\imageC[0.37]{figure/S_function.png}
-
-\end{frame}
+\end{frame2}
 
 
 \begin{frame}{L1-Loss: Optimal constant model}

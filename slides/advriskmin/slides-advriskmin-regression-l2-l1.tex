@@ -82,13 +82,18 @@ $$
 
 $$\fbayes(\xtil) = \argmin_{c \in \R} \E_{y|x}\left[L(y, c)~|~ \xv = \xtil \right]$$ 
 
-\item Again from the previous, \\
-we know the minimizer for $L2$ is the conditional expectation 
+\item We know from previously that $L2$ RM is the cond. exp. 
 
 $$f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]. $$
 
 
 \imageC[0.7]{figure/optimal_pointwise.png}
+
+\item For $L2$ loss, the pointwise loss is the (conditional) variance
+$$
+\E_{y|x}[(L(y, \fbayes(\xv)) | \xv = \xtil ] =  \E_{y|x}[(y-\fbayes(\xv))^2 | \xv = \xtil ] =  \var(y | \xv = \xtil) 
+$$
+This is trivially true, as we know $f^{\ast}(\xtil) = \E_{y|x} \left[y ~|~ \xv = \xtil \right]$.
 
 \end{framei}
 
@@ -142,7 +147,7 @@ $f_{c}^{\ast} = \text{med} [y]$
 \item Derivations slightly harder and in deep-dive
 
 \item Risk minimizer / optimal conditional prediction:
-$$f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}_{y|x} \left[y ~|~ \xv = \xtil \right]
+$$f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c| ~|~ \xv = \xtil\right]= \text{med} \left[y ~|~ \xv = \xtil \right]
 $$
 
 \end{framei}

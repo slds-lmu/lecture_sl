@@ -132,7 +132,7 @@ induces (Gaussian) predictive distribution
 $$
 y_* ~|~ \Xmat, \yv, \xs \sim \normal(\sigma^{-2}\yv^T \Xmat \Kinv\xs, \xs^T\Kinv\xs)
 $$
-\item Intuitively: expectation over all $\thetav$-parameterized LMs, weighted acc to posterior prob $\leftrightarrow$ classical LM: only max-prob $\thetav^{\text{MAP}}$
+\item Intuitively: expectation over all $\thetav$-parameterized LMs, weighted according to posterior prob $\leftrightarrow$ classical LM: only max-prob $\thetav^{\text{MAP}}$
 \item Entire distribution with built-in uncertainty quantification!
 \end{framei}
 
@@ -147,7 +147,7 @@ $$
 \begin{framei}[sep=L]{summary: bayesian lm}
 \item Bayesian perspective: entire distributions, rather than just point estimates, for $\thetav$
 \item From posterior distribution of $\thetav$ we can derive a predictive distribution for $y_* = \thetav^T \xs$
-\item Online updates: after observing new data points, recompute posterior $\Rightarrow$ decreasing uncertainty
+\item Online updates: after observing new data points, update posterior $\Rightarrow$ decreasing uncertainty
 \end{framei}
 
 \endlecture

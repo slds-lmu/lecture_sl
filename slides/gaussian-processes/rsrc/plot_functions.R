@@ -92,7 +92,7 @@ plot_cov = function(cov_mat, mu = NULL) {
     )
     probs = cbind(grid, density = dmvnorm(grid, mean = mu, sigma = cov_mat))
     p = ggplot() +
-      labs(x = expression(h[1]), y = expression(h[2])) +
+      labs(x = expression(f[1]), y = expression(f[2])) +
       geom_raster(data = probs, aes(x = h1, y = h2, fill = density)) +
       geom_contour(
         data = probs,

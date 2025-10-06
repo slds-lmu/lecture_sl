@@ -7,7 +7,7 @@ library(gridExtra)
 library(reshape2)
 library(kernlab)
 library(mvtnorm)
-library(gptk)
+#library(gptk)
 library(smoof)
 library(viridis)
 
@@ -148,6 +148,54 @@ p <- p + geom_ribbon(data = pred, aes(x = x, ymin = response - 2 * se, ymax = re
 p <- p + theme_bw() + ylab(expression(hat(f)(x))) +
   labs(caption = "After observing the training points (red), the posterior process (black) interpolates the training points.\n (k(x,x') is Matèrn with nu = 2.5, the default for DiceKriging::km)")
 ggsave(filename = "../figure/gp_pred/gp_interpolator.pdf", plot = p, width = 6, height = 3)
+
+#########################################################
+
+set.seed(124415)
+x <- seq(-5, 5, by = 0.01)
+y <- cos(x)
+df <- data.frame(x = x, y = y)
+train <- sample(1:length(x), 7)
+istrain <- 1:length(x) %in% train
+
+configureMlr(show.info = FALSE, show.learner.output = FALSE)
+tsk <- makeRegrTask(id = "GP as interpolator", data = df, target = "y")
+lrn <- makeLearner("regr.km", predict.type = "se", par.vals = list(nugget.estim = FALSE))
+mod <- train(lrn, tsk, subset = train)
+pred <- predict(mod, tsk)
+pred <- cbind(pred$data, x = df$x, type = istrain)
+
+# Extract predictive mean and sd at x = -1
+idx <- which.min(abs(pred$x - (-1)))
+mu <- pred$response[idx]
+sigma <- pred$se[idx]
+
+# Build vertical density
+ys <- seq(mu - 3*sigma, mu + 3*sigma, length.out = 200)
+dens <- dnorm(ys, mean = mu, sd = sigma)
+
+# Scale density horizontally around x = -1
+scale_factor <- 0.3
+xs <- -1 + dens / max(dens) * scale_factor
+dens_df <- data.frame(x = xs, y = ys)
+
+# Plot
+p <- ggplot() + 
+  geom_point(data = pred[train, ], aes(x = x, y = truth), size = 1, colour = "red") +
+  geom_line(data = pred, aes(x = x, y = response)) +
+  geom_ribbon(data = pred, aes(x = x, ymin = response - 2 * se, ymax = response + 2 * se),
+              fill = "grey70", alpha = 0.3) +
+  geom_path(data = dens_df, aes(x = x, y = y), colour = "blue", linewidth = 1.1) +
+  geom_point(aes(x = -1, y = mu), colour = "black", shape = 15, size = 2.5) +         
+  geom_segment(aes(x = -1, xend = -1, y = min(ys), yend = max(ys)), 
+               colour = "black", linewidth = 1.1) +                                 
+  theme_bw() + 
+  ylab(expression(hat(f)(x))) +
+  labs(caption = "At each x, posterior defines a full distributional approach instead of only point-wise predictions.\n (k(x,x') is Matèrn with nu = 2.5, the default for DiceKriging::km)")
+
+ggsave(filename = "../figure/gp_pred/gp_interpolator_distrib.pdf", plot = p, width = 6, height = 3)
+p
+
 
 #########################################################
 

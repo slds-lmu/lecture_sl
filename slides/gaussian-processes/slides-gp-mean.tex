@@ -36,14 +36,49 @@ $$\mv_{\text{post}} = \E(\fs | \Xs, \Xmat, \ys) = \Ks \Ky^{-1} \yv, \quad \Kmat_
 % (posterior variance unchanged)
 \end{framei}
 
-\begin{framei}[sep=L]{non-zero-mean functions}
-\item Still: can make sense to model $m(\cdot)$ explicitly
-\item Opportunity to incorporate prior knowledge (without confines of $\kcc$, which must be PSD)
-\item Enforce interpretability $\Rightarrow$ standard GP: pretty black-box
-\item Assuming $\GPmk$, the posterior mean becomes
-$$\mv_{\text{post}} = m(\Xs) + \Ks \Ky^{-1} (\yv - m(\Xmat))$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{framei}[sep=S]{trend via covariance structure}
+\item For zero-mean GPs with stationary kernels, posterior mean reverts to the prior further outside the training domain (no extrapolation)
+\item But trend-like behaviour could be directly encoded in $\kcc$:
+\begin{itemize}
+  \item Linear kernel: $k(\xv,\xv')=\sigma^2 \xv^\top \xv'$
+  \item Polynomial kernels for global polynomial trends
+  \item Composite kernels: $k = k_{\text{long}} + k_{\text{short}}$
+\end{itemize}
+\item Produces non-reverting priors even with $m(\xv)=0$, but lower interpretability and kernel-dependent extrapolation
+\item Consider GP for DGP with linear trend:
+
+\vfill
+
+\splitV{
+\imageC[1.0]{figure/plot_extrapol_matern.png}
+}{
+\imageC[1.0]{figure/plot_extrapol_linear.png}
+}
 
 \end{framei}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{framei}[sep=L]{why model a trend explicitly?}
+\item Still: can make sense to model $m(\cdot)$ explicitly as potentially nonzero
+\begin{itemize}
+  \item \textbf{Efficiency:} kernel $\kcc$ need not mimic global structure via very long lengthscales
+  \item \textbf{Extrapolation:} outside data range, $\GPzk$ reverts to flat mean \\ $\Rightarrow$ often unrealistic
+  \item \textbf{Interpretability:} clear separation between systematic trend and stochastic fluctuations
+  \item \textbf{Prior knowledge:} encode known effects (linear, seasonal, additive)
+\end{itemize}
+\item Assuming $\GPmk$, posterior mean with $m(\cdot)$ becomes
+$$\mv_{\text{post}}(\Xs) = m(\Xs) + \Ks \Ky^{-1}(\yv - m(\Xmat))$$
+\item Trend $m(\Xs)$ = interpretable global component; Correction = GP adjustment around this trend; Variance stays = $\Kss - \Ks^\top \Ky^{-1}\Ks$
+\end{framei}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \begin{framei}[sep=M]{non-zero-mean functions}
 \item GPs with \textbf{trend}
@@ -61,15 +96,26 @@ $$m(\xv) = 1.5 \xv$$
 \imageC[1]{figure/gp_sample/linmean_prior_updates_4.pdf}
 }
 \end{framei}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{framei}[sep=L]{semi-parametric gp}
 \item (Deterministic) mean functions $m(\cdot)$ often hard to specify
-\item Solution: \textbf{semi-parametric} GPs combining global (linear) model + zero-mean GP for residuals
+\item Solution: \textbf{semi-parametric} GPs combining global (often linear) model + zero-mean GP for residuals
 $$g(\xv) = m_{\bm{\beta}}(\xv) + \fx, \quad f  \sim \GPzk$$
-\item E.g., via basis functions $\Rightarrow$ infer coeffs from data
-$$m_{\bm{\beta}}(\xv) = b(\xv)^T\bm{\beta}$$
-\item Alternative: parameterize $m_{\bm{\beta}}(\cdot)$ with neural networks
-\item Estimation of $g(\xv)$: jointly optimizing over $\bm{\beta}$ and kernel hyperparams or via plug-in estimators \furtherreading{RASMUSSENWILLIAMS2006GPML}
+%\item E.g., via basis functions (GAMs) $\Rightarrow$ infer coeffs from data
+%$$m_{\bm{\beta}}(\xv) = b(\xv)^T\bm{\beta}$$
+%\item Alternative: parameterize $m_{\bm{\beta}}(\cdot)$ with neural networks
+
+\item In principle: \textbf{any model} $m(\cdot)$ can be used
+\begin{itemize}
+  \item Fixed parametric: $m_{\bm{\beta}}(\xv)=\beta_0+\xv^\top\bm{\beta}$
+  \item Basis expansions: $m_{\bm{\beta}}(\xv)=b(\xv)^\top\bm{\beta}$
+  \item Flexible ML models: GLMs, boosting, neural nets, \dots
+\end{itemize}
+
+% \item Semi-parametric GPs combine global model + GP residual:
+% $$g(\xv) = m_{\bm{\beta}}(\xv) + f(\xv), \quad f\sim\GPzk$$
+
 \end{framei}
 
 % \begin{framei}[sep=L]{non-zero-mean functions}
@@ -107,6 +153,43 @@ $$m_{\bm{\beta}}(\xv) = b(\xv)^T\bm{\beta}$$
 % $\Rightarrow$ intuition: data close to global LM with residuals modeled by GP
 % \item Estimation of $g(\xv)$: \furtherreading{RASMUSSENWILLIAMS2006GPML}
 % \end{framei}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{framei}[sep=L]{estimation Approaches \furtherreading{RASMUSSENWILLIAMS2006GPML}}
+\item Log marginal likelihood:
+$$\ell(\bm{\beta},\thetav,\sigma^2) = -\tfrac{1}{2}\bm{r}^\top \Ky^{-1}\bm{r}
+-\tfrac{1}{2}\log|\Ky| - \tfrac{n}{2}\log(2\pi),$$
+with $\bm{r}=\yv - m_{\bm{\beta}}(\Xmat)$
+\item \textbf{Joint estimation:} maximize $\ell$ over all parameters 
+\item \textbf{Sequential:} fit $m(\cdot)$ first, GP on residuals \\
+\hspace*{1em}$\Rightarrow$ ignores uncertainty from first stage, variance underestimated
+\item \textbf{Fully Bayesian:} priors on $(\bm{\beta},\thetav,\sigma^2)$, posterior inference via MCMC or VI
+$$p(\bm{\beta},\thetav,\sigma^2 \mid \yv,\Xmat)\ \propto\ 
+p(\yv \mid \bm{\beta},\thetav,\sigma^2,\Xmat)\;
+p(\bm{\beta})\,p(\thetav)\,p(\sigma^2)$$
+\item For complex $m(\cdot)$, estimation by full Bayesian inference or joint likelihood becomes computationally difficult
+\end{framei}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{framei}[sep=L]{separability of gradients}
+\item Gradients of $\ell$ decompose neatly into:
+\begin{align*}
+\nabla_{\bm{\beta}} \ell &= 
+\Big(\tfrac{\partial m_{\bm{\beta}}(\Xmat)}{\partial \bm{\beta}}\Big)^\top \Ky^{-1}\bm{r}, \\
+\nabla_{\thetav} \ell &= 
+\tfrac{1}{2}\bm{r}^\top \Ky^{-1}\tfrac{\partial \Ky}{\partial\thetav}\Ky^{-1}\bm{r}
+- \tfrac{1}{2}\mathrm{tr}\!\Big(\Ky^{-1}\tfrac{\partial \Ky}{\partial \thetav}\Big)
+\end{align*}
+\item Trend parameters $\bm{\beta}$ enter only via $\bm{r}$ and the design/basis functions
+\item Kernel hyperparameters $\thetav$ and noise $\sigma^2$ enter only via $\Ky$ and its derivatives
+\item Consequence: updates are \textbf{decoupled in form}, \\though they interact through $\bm{r}$ and $\Ky^{-1}$
+\end{framei}
+
+
 
 \endlecture
 \end{document}
