@@ -1,10 +1,10 @@
 ---
-title: "Exercise 1.b, 1.c -- Information Theory 1"
+title: "Exercise 1 -- Information Theory I"
 subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
 notebook-view:  false
-  # - notebook: sol_advriskmin_3_R.ipynb
+  # - notebook: sol_information_theory_1_R.ipynb
   #   title: "Exercise sheet for R"
-  #   url: "https://github.com/slds-lmu/lecture_i2ml/blob/master/exercises/supervised-classification/ex_classification_2_R.ipynb"
+  #   url: "https://github.com/slds-lmu/lecture_sl/blob/main/exercises/information-theory-quarto/sol_information_theory_1_R.ipynb"
 ---
 
 ::: {.content-hidden when-format="pdf"}
@@ -19,6 +19,8 @@ You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Pytho
 
 INSERT_exercise_1_b
 
+::: {.content-visible when-profile="solution"}
+
 INSERT_heading_sampling_binomial
 
 ::: {.panel-tabset}
@@ -30,59 +32,40 @@ INSERT_heading_sampling_binomial
 
 INSERT_heading_various_gaussian_distributions
 
-::: {.content-visible when-profile="solution"}
-INSERT_solution_header
-INSERT_model_equation
+::: {.panel-tabset}
+### R
+{{< embed sol_information_theory_1_R.ipynb#defining_densities echo=true >}}
+### Python
+{{< embed sol_information_theory_1_py.ipynb#defining_densities echo=true >}}
+:::
+
+INSERT_plotting
 
 ::: {.panel-tabset}
 ### R
-{{< embed sol_advriskmin_3_R.ipynb#model_equation echo=true >}}
+{{< embed sol_information_theory_1_R.ipynb#plotting echo=true >}}
 ### Python
-{{< embed sol_advriskmin_3_py.ipynb#model_equation echo=true >}}
+{{< embed sol_information_theory_1_py.ipynb#plotting echo=true >}}
 :::
 
-INSERT_optimal_coefficients
+INSERT_kl_divergence
 
 ::: {.panel-tabset}
 ### R
-{{< embed sol_advriskmin_3_R.ipynb#optim_coeff echo=true >}}
+{{< embed sol_information_theory_1_R.ipynb#kld_value echo=true >}}
 ### Python
-{{< embed sol_advriskmin_3_py.ipynb#optim_coeff echo=true >}}
+{{< embed sol_information_theory_1_py.ipynb#kld_value echo=true >}}
 :::
 
-INSERT_checking_forbes
+INSERT_conclusion_1_b
 
-INSERT_visually_header
-::: {.panel-tabset}
-### R
-{{< embed sol_advriskmin_3_R.ipynb#forbes_visually echo=true >}}
-### Python
-{{< embed sol_advriskmin_3_py.ipynb#forbes_visually echo=true >}}
-:::
-
-INSERT_mape_header
-::: {.panel-tabset}
-### R
-{{< embed sol_advriskmin_3_R.ipynb#forbes_mape echo=true >}}
-### Python
-{{< embed sol_advriskmin_3_py.ipynb#forbes_mape echo=true >}}
-:::
-
-INSERT_alternative_solution
-
-:::: {.panel-tabset}
-### R
-{{< embed sol_advriskmin_3_R.ipynb#analytical_solution echo=true >}}
-### Python
-{{< embed sol_advriskmin_3_py.ipynb#analytical_solution echo=true >}}
-::::
-
-INSERT_full_code_header
+INSERT_exercise_1_c
 
 ::: {.panel-tabset}
 ### R
-{{< embed sol_advriskmin_3_R.ipynb#full_code echo=true >}}
+{{< embed sol_information_theory_1_R.ipynb#kld_value_varied_p_n echo=true >}}
 ### Python
-{{< embed sol_advriskmin_3_py.ipynb#full_code echo=true >}}
+{{< embed sol_information_theory_1_py.ipynb#kld_value_varied_p_n echo=true >}}
 :::
+
 :::
