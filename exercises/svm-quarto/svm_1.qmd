@@ -1,0 +1,142 @@
+---
+title: "Exercise 1 -- SVM"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view: false
+  # - notebook: sol_svm_1_R.ipynb
+  #   title: "Exercise sheet for R"
+  #   url: "https://github.com/slds-lmu/lecture_sl/blob/main/exercises/svm-quarto/sol_svm_1_R.ipynb"
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: {.content-visible when-profile="solution"}
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
+:::
+
+INSERT_exercise
+
+
+::: {.content-visible when-profile="solution"}
+INSERT_import_and_globals
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#import_and_globals echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#import_and_globals echo=true >}}
+:::
+
+INSERT_algorithm_explanation
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#pegasos_implementation echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#pegasos_implementation echo=true >}}
+:::
+
+INSERT_data_setup
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#data_generation echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#data_generation echo=true >}}
+:::
+
+INSERT_visual_inspection
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#plot_data echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#plot_data echo=true >}}
+:::
+
+INSERT_train_pegasos
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#train_pegasos echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#train_pegasos echo=true >}}
+:::
+
+INSERT_decision_boundaries
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#plot_boundaries echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#plot_boundaries echo=true >}}
+:::
+
+INSERT_eval_logistic_regression
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#eval_log_reg echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#eval_log_reg echo=true >}}
+:::
+
+INSERT_evaluation
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#evaluate_pegasos echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#evaluate_pegasos echo=true >}}
+:::
+
+INSERT_kernellab_or_sklearn
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#train_kernlab_or_sklearn echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#train_kernlab_or_sklearn echo=true >}}
+:::
+
+INSERT_comparison_coefs
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#compare_models echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#compare_models echo=true >}}
+:::
+
+INSERT_emp_risk_comparions
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#calculate_risk echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#calculate_risk echo=true >}}
+:::
+
+INSERT_plotting_everything
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#plot_margins_prep echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#plot_margins_prep echo=true >}}
+:::
+
+INSERT_complete_visualization
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#complete_visualization echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#complete_visualization echo=true >}}
+:::
+:::
