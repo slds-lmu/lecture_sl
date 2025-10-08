@@ -1,0 +1,87 @@
+---
+title: "Exercise 2 -- Gaussian Processes"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view:  false
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: {.content-visible when-profile="solution"}
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](INSERT_colab_R_link), [Python](INSERT_colab_python_link).
+:::
+:::
+
+INSERT_exercise
+
+
+::: {.content-visible when-profile="solution"}
+INSERT_math_solution
+
+INSERT_setup
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#setup echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#setup echo=true >}}
+:::
+
+INSERT_kernel_setup
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#kernel_functions echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#kernel_functions echo=true >}}
+:::
+
+INSERT_data_gen
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#data_gen echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#data_gen echo=true >}}
+:::
+
+INSERT_hyperparameter_optimization_explanation
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#optimize_hyperparameters echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#optimize_hyperparameters echo=true >}}
+:::
+
+INSERT_optim_visualization
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#plot_optimization echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#plot_optimization echo=true >}}
+:::
+
+INSERT_posterior_predictive
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#posterior_predictive_function echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#posterior_predictive_function echo=true >}}
+:::
+
+INSERT_sampling_visualization
+
+::: {.panel-tabset}
+### R
+{{< embed sol_gp_2_R.ipynb#sample_and_plot echo=true >}}
+### Python
+{{< embed sol_gp_2_py.ipynb#sample_and_plot echo=true >}}
+:::
+:::
