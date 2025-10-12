@@ -12,7 +12,7 @@ notebook-view:  false
 
 ::: {.content-visible when-profile="solution"}
 ::: callout-tip
-You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_quarto_1_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_1_py.ipynb).
+You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_1_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/regularization-quarto/inserted/sol_regularization_1_py.ipynb).
 :::
 :::
 
