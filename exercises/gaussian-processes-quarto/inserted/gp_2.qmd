@@ -18,32 +18,32 @@ You can run the notebooks in Google Colab here: [R](https://colab.research.googl
 
 # Exercise 1 (d)
 
-Implement the GP with squared exponential kernel, zero mean function and $\ell = 1$ from scratch for $n=2$ observations $(\bm{y},\bm{x})$. 
+Implement the GP with squared exponential kernel, zero mean function and $\ell = 1$ from scratch for $n=2$ observations $(\boldsymbol{y},\boldsymbol{x})$. 
 Do this as efficiently as possible by explicitly calculating all expensive computations by hand. Do the same for the posterior predictive distribution of $y_*$. Test your implementation using simulated data.
 
 
 ::: {.content-visible when-profile="solution"}
 # Solution: Explicit Calculations
 
-To implement a GP with squared exponential kernel and $\ell = 1$, we need the inverse of $\bm{K}$. $\bm{x}$ being a vector implies that we have only one feature and thus the entries of our matrix $\bm{K}$ are 
+To implement a GP with squared exponential kernel and $\ell = 1$, we need the inverse of $\boldsymbol{K}$. $\boldsymbol{x}$ being a vector implies that we have only one feature and thus the entries of our matrix $\boldsymbol{K}$ are 
 $$
-\bm{K} = \begin{pmatrix} 1 & \exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ \exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1 \end{pmatrix}.
+\boldsymbol{K} = \begin{pmatrix} 1 & \exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ \exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1 \end{pmatrix}.
 $$
 
-The inverse of $\bm{K}$ is then given by:
+The inverse of $\boldsymbol{K}$ is then given by:
 $$
 \frac{1}{1-\exp(-(x^{(1)} - x^{(2)})^2)} \begin{pmatrix} 1 & -\exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ -\exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1 \end{pmatrix}.
 $$
 
-If we have a noisy GP, we would have to add $\sigma^2 \bm{I}_2$ to $\bm{K}$ with resulting inverse:
+If we have a noisy GP, we would have to add $\sigma^2 \boldsymbol{I}_2$ to $\boldsymbol{K}$ with resulting inverse:
 
 $$
-\bm{K}_y^{-1} = \frac{1}{(1+\sigma^2)^2-\exp(-(x^{(1)} - x^{(2)})^2)} \begin{pmatrix} 1+\sigma^2 & -\exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ -\exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1+\sigma^2 \end{pmatrix}.
+\boldsymbol{K}_y^{-1} = \frac{1}{(1+\sigma^2)^2-\exp(-(x^{(1)} - x^{(2)})^2)} \begin{pmatrix} 1+\sigma^2 & -\exp(-0.5 (x^{(1)} - x^{(2)})^2) \\ -\exp(-0.5 (x^{(2)} - x^{(1)})^2) & 1+\sigma^2 \end{pmatrix}.
 $$
 
 
-Assuming a zero mean GP, we can derive $\frac{\partial \bm{K}_y}{\partial \theta}$ with $\theta = \sigma^2$, which gives us the identity matrix. We can thus maximize the marginal likelihood (slide on [*Gaussian Process Training*](https://slds-lmu.github.io/i2ml/chapters/19_gaussian_processes/19-05-training/)), by finding $\sigma^2$ that yields:
-$$\text{tr}\left( \bm{K}_y^{-1} \bm{y} \bm{y}^\top \bm{K}_y^{-1} - \bm{K}_y^{-1} \right) = 0.$$
+Assuming a zero mean GP, we can derive $\frac{\partial \boldsymbol{K}_y}{\partial \theta}$ with $\theta = \sigma^2$, which gives us the identity matrix. We can thus maximize the marginal likelihood (slide on [*Gaussian Process Training*](https://slds-lmu.github.io/i2ml/chapters/19_gaussian_processes/19-05-training/)), by finding $\sigma^2$ that yields:
+$$\text{tr}\left( \boldsymbol{K}_y^{-1} \boldsymbol{y} \boldsymbol{y}^\top \boldsymbol{K}_y^{-1} - \boldsymbol{K}_y^{-1} \right) = 0.$$
 
 This can be solved analytically (though quite tedious). We will use a root-finding function for this. For the posterior predictive distribution we can make use of the results from the previous exercise.
 
