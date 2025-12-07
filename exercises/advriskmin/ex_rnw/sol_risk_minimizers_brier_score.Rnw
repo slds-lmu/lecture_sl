@@ -6,13 +6,13 @@
 		&= \argmin_{c} \E_{y}\left[\left(y - c\right)^{2}\right]\\
 		&= \argmin_{c} \E_{y}\left[y^{2} - 2yc + c^{2}\right]\\
 		&= \argmin_{c} \var_{y}(y) + \pi^{2} - 2c\pi + c^{2}\\
-		&= \argmin_{c} \pi (1-\pi^{2}) + \pi^{2} - 2c\pi + c^{2}\\
+		&= \argmin_{c} \pi (1-\pi) + \pi^{2} - 2c\pi + c^{2}\\
 		&= \argmin_{c} \pi - \pi^{2} + \pi^{2} - 2c\pi + c^{2}\\
 		&= \argmin_{c} \pi - 2c\pi + c^{2}\\
 		&= \argmin_{c} -2c\pi + c^{2}
 	\end{align*}
   Where we used $\var(y) = \E(y^2) - \left[\E(y)\right]^2$.\\
-	Taking the deriviative with respect to $c$ and setting it to $0$:
+	Taking the derivative with respect to $c$ and setting it to $0$:
   \begin{align*}
     &\Rightarrow 
 		\pd{}{c} \left[-2c\pi + c^{2}\right] \overset{!}{=} 0\\
