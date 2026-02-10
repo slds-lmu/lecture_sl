@@ -1,4 +1,4 @@
-.PHONY: help update-service update-latex-math texclean clean slides audit install-lese
+.PHONY: help update-service update-latex-math texclean clean slides audit install-lese init-makefiles deps install-deps
 
 help:
 	@echo "Available targets:"
@@ -13,9 +13,10 @@ help:
 	@echo "  clean             : Clean LaTeX auxiliary files and PDFs"
 	@echo "  audit             : Render chapter audit report (requires lese R package)"
 	@echo "                      Optional: run=true to execute scripts (default: false)"
+	@echo "  init-makefiles    : Create Makefiles in chapter and rsrc dirs if missing"
 	@echo "  help              : Show this help message"
 
-install-service:
+install-lese:
 	@Rscript --quiet -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak"); pak::pkg_install("slds-lmu/lecture_service@$(or $(ref),main)")'
 
 update-service:
@@ -37,6 +38,12 @@ slides:
 audit:
 	Rscript --quiet -e 'lese::render_chapter_audit(run = $(if $(filter true TRUE 1,$(run)),TRUE,FALSE), method = "$(or $(method),auto)")'
 
+deps:
+	@Rscript --quiet -e 'lese::check_lecture_deps(install = FALSE)'
+
+install-deps:
+	@Rscript --quiet -e 'lese::check_lecture_deps(install = TRUE)'
+
 texclean:
 	@echo "Cleaning LaTeX auxiliary files (keeping PDFs)..."
 	@for dir in slides/*/; do \
@@ -56,3 +63,18 @@ clean:
 		fi \
 	done
 	@echo "Cleanup complete"
+
+# Create Makefiles in slides/<chapter>/ and slides/<chapter>/rsrc/ if missing.
+# Chapter Makefiles include ../tex.mk, rsrc Makefiles include ../../R.mk.
+init-makefiles:
+	@for dir in slides/*/; do \
+		dir=$${dir%/}; \
+		if [ ! -f "$$dir/Makefile" ]; then \
+			echo "Creating $$dir/Makefile"; \
+			echo "include ../tex.mk" > "$$dir/Makefile"; \
+		fi; \
+		if [ -d "$$dir/rsrc" ] && [ ! -f "$$dir/rsrc/Makefile" ]; then \
+			echo "Creating $$dir/rsrc/Makefile"; \
+			echo "include ../../R.mk" > "$$dir/rsrc/Makefile"; \
+		fi; \
+	done
