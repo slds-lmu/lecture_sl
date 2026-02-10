@@ -26,7 +26,14 @@ help:
 	@echo "literature         : Generates chapter-literature-CHAPTERNAME.pdf from references.bib"
 	@echo ""
 	@echo "╔═════════════════════════════════════╗"
-	@echo "║       File Checking                 ║"
+	@echo "║       Auditing                      ║"
+	@echo "╚═════════════════════════════════════╝"
+	@echo "audit              : Run chapter audit (identify orphaned/missing figures, missing packages)"
+	@echo "                     Optional: run=true to also execute rsrc/ scripts (default: false)"
+	@echo "                     Uses .fls files if available (run 'make slides' first for best results)"
+	@echo ""
+	@echo "╔═════════════════════════════════════╗"
+	@echo "║       File Checking (legacy)        ║"
 	@echo "╚═════════════════════════════════════╝"
 	@echo "check-files-used   : List files (figures, .tex) that are included is slide .tex files"
 	@echo "check-files-unused : List files that are NOT included in .tex files"
@@ -92,7 +99,7 @@ SLIDE_FLS_FILES = $(SLIDE_TEX_FILES:%.tex=%.fls)
 CHAPTER_NAME := $(notdir $(CURDIR))
 LITERATURE_PDF := chapter-literature-$(CHAPTER_NAME).pdf
 
-.PHONY: slides slides-nomargin release copy texclean clean help pax literature check-files-used check-files-unused check-files-missing
+.PHONY: slides slides-nomargin release copy texclean clean help pax literature audit check-files-used check-files-unused check-files-missing
 
 # ============================================================================
 # HELPER FUNCTIONS
@@ -261,7 +268,17 @@ $(LITERATURE_PDF): references.bib
 	@$(LATEXMK) -c -jobname=chapter-literature-$(CHAPTER_NAME) ../../style/chapter-literature-template.tex > /dev/null 2>&1
 
 # ============================================================================
-# FILE CHECKING TARGETS
+# AUDITING
+# ============================================================================
+
+# Chapter-level audit: identify orphaned/missing figures, missing packages, optionally run scripts.
+# Uses .fls files (from 'make slides') for robust figure detection when available,
+# falls back to regex parsing of .tex source otherwise.
+audit:
+	@Rscript --quiet -e 'lese::audit_chapter("$(CWD)", lecture_dir = "$(LECTURE)", run = $(if $(filter true TRUE 1,$(run)),TRUE,FALSE), method = "$(or $(method),auto)")'
+
+# ============================================================================
+# FILE CHECKING TARGETS (legacy, superseded by 'audit')
 # ============================================================================
 
 # Default folder to check (can be overridden with folder=<path>)
