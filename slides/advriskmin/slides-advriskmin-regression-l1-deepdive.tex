@@ -19,7 +19,7 @@ figure/loss_absolute_1.png
 \item Derive the optimal constant model for the L1-loss
 }
 
-\begin{frame2}[footnotesize]{L1-Loss: Risk Minimizer}
+\begin{framev}[footnotesize]{L1-Loss: Risk Minimizer}
 
 Optimal constant model under L1 loss is
 $$f_{c}^{\ast} = \argmin_c \E_y[|y-c|] =  \text{med} [y]$$
@@ -40,9 +40,9 @@ We now compute the derivative of the above term and set it to $0$
 \textbf{NB}: replacing $p(y)$ by $p(y|\xv)$, we obtain the point-wise conditional risk minimizer
 $f^{\ast}(\xtil) = \argmin_c \E_{y|x}\left[|y - c|\right]= \text{med}\left[y ~|~ \xv = \xtil \right]$
 
-\end{frame2}
+\end{framev}
 
-\begin{frame2}[footnotesize]{L1-Loss: Risk Minimizer}
+\begin{framev}[footnotesize]{L1-Loss: Risk Minimizer}
 
 $^\ast$ \textbf{Note} that since we are computing the derivative w.r.t. the integration boundaries we need to use Leibniz integration rule 
 
@@ -59,10 +59,10 @@ We get
 =& \int_{-\infty}^c  ~p(y)~\text{d}y + \int_c^\infty -~p(y)~\text{d}y
 \end{align*}
 
-\end{frame2}
+\end{framev}
 
 
-\begin{frame2}[small]{L1-Loss: Optimal constant model}
+\begin{framev}[small]{L1-Loss: Optimal constant model}
 
 % Take proof from this page? 
 % https://math.stackexchange.com/questions/113270/the-median-minimizes-the-sum-of-absolute-deviations-the-l-1-norm/1024462#1024462
@@ -90,7 +90,7 @@ S_{a,b}(\theta) = \begin{cases}|a-b| ,& \text{ for } \theta \in [a,b]\\ |a-b| + 
 \vspace*{-0.4cm}
 \imageC[0.3]{figure/S_function.png}
 
-\end{frame2}
+\end{framev}
 
 
 \begin{frame}{L1-Loss: Optimal constant model}

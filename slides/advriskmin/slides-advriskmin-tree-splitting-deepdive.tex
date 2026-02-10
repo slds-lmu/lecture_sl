@@ -80,7 +80,7 @@ where $n_{\Np,k}$ is the number of class $k$ observations in node $\Np$ \\
 \end{frame}
 
 
-\begin{frame2}[small]{Risk minimization and impurity}
+\begin{framev}[small]{Risk minimization and impurity}
 
 \begin{align*}
 \riskeb(\Np) =& \frac{1}{n_{\Np}} \sum_{\xy \in \Np} (- \sum_{k = 1}^g \I [y=k] \log \pi_k(\xv) ) \\
@@ -92,7 +92,7 @@ where $n_{\Np,k}$ is the number of class $k$ observations in node $\Np$ \\
 
 Avg. Bernoulli-risk of node $\Np$ is equal to $\text{Imp}^{\text{ent}}(\Np)$
 
-\end{frame2}
+\end{framev}
 
 
 \begin{frame}{Brier score minimization = Gini splitting}
@@ -120,7 +120,7 @@ $$\pikN = \frac{1}{n_{\Np}} \sum\limits_{(\xv,y) \in \Np} \I [y=k] = \frac{n_{\N
 
 
 \end{frame}
-\begin{frame2}[small]{Brier score minimization = Gini splitting}
+\begin{framev}[small]{Brier score minimization = Gini splitting}
 Inserting the optimal constant, the risk simplifies to
 \begin{align*}
 \riskeb(\Np) =& \frac{1}{n_\Np} \sum_{\xy \in \Np}  \sum_{k = 1}^g (\I [y=k] - \pikN)^2 
@@ -138,9 +138,9 @@ Inserting the optimal constant, the risk simplifies to
 
 since for $n_{\Np,k}$ observations the condition $y = k$ is met, and for the remaining $(n_\Np - n_{\Np,k})$ observations it is not. 
 
-\end{frame2}
+\end{framev}
 
-\begin{frame2}[small]{Brier score minimization = Gini splitting}
+\begin{framev}[small]{Brier score minimization = Gini splitting}
 
 We further simplify the expression to
 
@@ -152,7 +152,7 @@ We further simplify the expression to
 
 Avg. Brier-risk $\riskeb(\Np)$ of the node is equal to its gini-impurity $\text{Imp}^{\text{Gini}}(\Np)$
 
-\end{frame2}
+\end{framev}
 
 \begin{framei}[sep=M]{Weighting for Risk and Impurity}
 

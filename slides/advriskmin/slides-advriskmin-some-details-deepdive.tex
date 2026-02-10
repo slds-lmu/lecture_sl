@@ -23,7 +23,7 @@ figure/bernoulli_prob.png
 \item Optimal constant model for the empirical multiclass log loss risk
 }
 
-\begin{frame2}[small]{Equivalence of loss formulations}
+\begin{framev}[small]{Equivalence of loss formulations}
 
 \begin{itemizeS}
 \item Starting point Bernoulli loss on probs: 
@@ -45,9 +45,9 @@ $$
 $$\Lxy = - \yf + \log(1 + \exp(\fx)) \quad \text{for } y \in \setzo$$
 \end{itemizeS}
 
-\end{frame2}
+\end{framev}
 
-\begin{frame2}[small]{Equivalence of loss formulations}
+\begin{framev}[small]{Equivalence of loss formulations}
 
 \begin{itemizeM}
 \item For $y \in \setmp$ convert labels using $y'=(y+1)/2$ %or $y=2y'-1$ for $y' \in \setzo$
@@ -70,7 +70,7 @@ L(1,\fx)=&-1 \cdot \fx+\log(1+\exp(\fx))\\
 \end{align*}
 \end{itemizeM}
 
-\end{frame2}
+\end{framev}
 
 \begin{vbframe}{Naming Conventions}
 
@@ -84,7 +84,7 @@ They are equally referred to as Bernoulli-, Binomial-, logistic-, log-, or cross
 
 \end{vbframe}
 
-\begin{frame2}[small]{Proof Risk Minimizer on Scores}
+\begin{framev}[small]{Proof Risk Minimizer on Scores}
 
 For $y \in \setzo$ the pointwise RM on scores is 
 $$\fxbayes =  \log \big(\eta(\xv)/(1-\eta(\xv) )\big)$$
@@ -110,10 +110,10 @@ c &= \log\left(\frac{\eta(\xv)}{1 - \eta(\xv)}\right)
 \end{align*}
 \end{footnotesize}
 
-\end{frame2}
+\end{framev}
 
 
-\begin{frame2}[small]{Binary log loss: Emp. Risk Minimizer}
+\begin{framev}[small]{Binary log loss: Emp. Risk Minimizer}
 
 Given $n \in \mathbb{N}$ observations $y^{(1)}, \cdots, y^{(n)} \in \Yspace = \{0, 1\}$ we want to determine the optimal constant model for the empirical log loss risk.
 
@@ -136,7 +136,7 @@ The minimizer can be found by setting the derivative to zero, i.e.,
 \Rightarrow \hat{\theta}& = \frac{1}{n}\sum^n_{i=1} y^{(i)}\quad \quad\in (0,1)\;\checkmark \text{(assuming both labels occur)}
 \end{align*}
 
-\end{frame2}
+\end{framev}
 
 \begin{frame}{Multiclass log loss: Emp. Risk Minimizer}
 
