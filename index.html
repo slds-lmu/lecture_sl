@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="runner" />
+
+
+<title>Lecture Slide Status Overview</title>
+
+<script src="slide_status_files/header-attrs-2.30/header-attrs.js"></script>
+<script src="slide_status_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="slide_status_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="slide_status_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="slide_status_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="slide_status_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="slide_status_files/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="slide_status_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="slide_status_files/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="slide_status_files/navigation-1.1/tabsets.js"></script>
+<link href="slide_status_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="slide_status_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="slide_status_files/kePrint-0.0.1/kePrint.js"></script>
+<link href="slide_status_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lecture Slide Status Overview</h1>
+<h4 class="author">runner</h4>
+<h4 class="date">2026-02-17 20:42:32 CET</h4>
+
+</div>
+
+
+<style type="text/css">
+/*
+Apply some custom CSS to add breathing room between sub-tables
+and we don't bother creating a separate .css file for just this bit
+*/
+h3 {
+  /*text-align: center;*/
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+</style>
+<p>This document tabulates the state of the slides in
+<code>lecture_*/slides/&lt;chapter&gt;/</code> based on</p>
+<ol style="list-style-type: lower-alpha">
+<li>compilation checks (does it compile,and if not, is there a salient
+error message?) and</li>
+<li>(optionally and rarely) comparison with presumably “known good”
+versions of the slides located in
+<code>lecture_*/slides-pdf/</code></li>
+</ol>
+<div id="latest-commits" class="section level1">
+<h1>Latest Commits</h1>
+<p>Displaying the latest commits of the lecture service repository and
+each of the currently included lectures (for debugging and race
+condition mitigation (kind of)).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Status of the lecture_service repo (time in UTC)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Branch
+</th>
+<th style="text-align:left;">
+Last Commit
+</th>
+<th style="text-align:left;">
+By
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://github.com/slds-lmu/lecture_service/tree/main">main</a>
+</td>
+<td style="text-align:left;">
+2026-02-17 19:24:37
+</td>
+<td style="text-align:left;">
+Lukas Burk
+</td>
+<td style="text-align:left;">
+Add LLM agent docs
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Latest commits per lecture (times in UTC)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Lecture
+</th>
+<th style="text-align:left;">
+Branch
+</th>
+<th style="text-align:left;">
+Last Commit
+</th>
+<th style="text-align:left;">
+By
+</th>
+<th style="text-align:left;">
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<a href="https://slds-lmu.github.io/lecture_sl">lecture_sl</a>
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/slds-lmu/lecture_sl/tree/main">main</a>
+</td>
+<td style="text-align:left;">
+2026-02-17 19:25:21
+</td>
+<td style="text-align:left;">
+GitHub
+</td>
+<td style="text-align:left;width: 40%; ">
+Update service components (#299)
+</td>
+</tr>
+</tbody>
+</table>
+<p>If you’re missing a lecture here after rendering this site
+interactively, you might have to add them to the
+<code>included_lectures</code> files or ensure they are downloaded
+correctly.</p>
+</div>
+<div id="slide-status" class="section level1">
+<h1>Slide status</h1>
+<p><img src="slide_status_files/figure-html/slide-status-plot-1.png" alt="" width="100%" /></p>
+<details>
+<summary>
+Click to expand explanation of table columns
+</summary>
+<pre><code>lecture_advml/slides/gaussian-processes/slides-gp-bayes-lm.tex
+\___________/        \________________/ \________________/
+   lecture                 chapter            &lt;slide-name&gt;
+
+lecture_advml/slides-pdf/slides-gp-bayes-lm.pdf
+                        \___________________/
+                       pdf_static / &quot;Reference PDF&quot;</code></pre>
+<p>Tables are organized by lecture (first level) and lecture chapters
+corresponding to folders in <code>slides/&lt;chapter&gt;</code> (second
+level), with a table per chapter. chapters ignore certain folders like
+<code>attic</code> and <code>all</code>.</p>
+<ul>
+<li><strong>Slide</strong>: The <code>&lt;slide-name&gt;</code> with a
+link to the compiled .tex file (if it compiles).</li>
+<li><strong>Compiles?</strong>: Whether the .tex file compiles without
+error using <code>latexmk -pdf</code>. This can depend on the
+availability of specific LaTeX dependencies, but assuming they are not
+the issue, this usually indicates syntax issues or things like
+<code>\includegraphics</code> calls using relative paths that work on
+Overleaf but not locally.</li>
+<li><strong>Comparison</strong>: Checking the compiled
+<code>&lt;slide-name&gt;.tex</code> against
+<code>slides-pdf/&lt;slide-name&gt;.pdf</code> using
+<code>diff-pdf-visually</code>:
+<ul>
+<li>❌: The check failed surely, either due to differing page counts or
+because there is no reference PDF.</li>
+<li>❓: The check indicates differences on at least one slide, but they
+may be minor and need manual checking.</li>
+<li>✅: The check seems to be fine, the PDF files match.</li>
+</ul></li>
+<li><strong>Note</strong>: A comment on the previous column listing the
+specific reason for a failing check. Also enumerates the slide pages
+where differences are found, and links to a PDF containing a diff of the
+two files generated with <code>diff-pdf</code> (at a lower resolution
+than the originals).</li>
+</ul>
+</details>
+<div id="lecture_sl" class="section level2">
+<h2>lecture_sl</h2>
+<p>12 chapters with a total of 94 slides</p>
+<div id="advriskmin" class="section level3">
+<h3>advriskmin</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-bias-variance-decomposition-1.pdf">slides-advriskmin-bias-variance-decomposition-1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-bias-variance-decomposition-2.pdf">slides-advriskmin-bias-variance-decomposition-2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-bias-variance-decomposition-deepdive.pdf">slides-advriskmin-bias-variance-decomposition-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-01.pdf">slides-advriskmin-classification-01</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-bernoulli.pdf">slides-advriskmin-classification-bernoulli</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-brier-l1.pdf">slides-advriskmin-classification-brier-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-classification-furtherlosses.pdf">slides-advriskmin-classification-furtherlosses</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-logreg-deepdive.pdf">slides-advriskmin-logreg-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-losses-properties.pdf">slides-advriskmin-losses-properties</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-max-likelihood.pdf">slides-advriskmin-max-likelihood</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+slides-advriskmin-proper-scoring-rules
+</td>
+<td style="text-align:center;width: 10%; ">
+❌
+</td>
+<td style="text-align:left;width: 40%; ">
+1354: ! Undefined control sequence. 1354: ‌BODY …y binary prob. loss
+&amp;dollar;L&amp;dollar;: &amp;dollar;&amp;dollar;‌E _{y}[‌Lpiy 1354:
+]=‌eta ‌cdot L(1, ‌pi ) + …
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-pseudo-residuals.pdf">slides-advriskmin-pseudo-residuals</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-regression-further-losses.pdf">slides-advriskmin-regression-further-losses</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-regression-l1-deepdive.pdf">slides-advriskmin-regression-l1-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-regression-l2-l1.pdf">slides-advriskmin-regression-l2-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-risk-minimization-basics.pdf">slides-advriskmin-risk-minimization-basics</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-some-details-deepdive.pdf">slides-advriskmin-some-details-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/advriskmin/slides-advriskmin-tree-splitting-deepdive.pdf">slides-advriskmin-tree-splitting-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="boosting" class="section level3">
+<h3>boosting</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-advanced.pdf">slides-boosting-cwb-advanced</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-basics.pdf">slides-boosting-cwb-basics</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-basics2.pdf">slides-boosting-cwb-basics2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-cwb-glm.pdf">slides-boosting-cwb-glm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gbm-classification.pdf">slides-boosting-gbm-classification</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gbm-regularization.pdf">slides-boosting-gbm-regularization</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gbm-with-trees-1.pdf">slides-boosting-gbm-with-trees-1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gbm-with-trees-2.pdf">slides-boosting-gbm-with-trees-2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-gradient-boosting-concept.pdf">slides-boosting-gradient-boosting-concept</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-intro-adaboost.pdf">slides-boosting-intro-adaboost</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-lgm-ctbm.pdf">slides-boosting-lgm-ctbm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-regression-illustrations.pdf">slides-boosting-regression-illustrations</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-xgboost-deepdive.pdf">slides-boosting-xgboost-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/boosting/slides-boosting-xgboost.pdf">slides-boosting-xgboost</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cod" class="section level3">
+<h3>cod</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/cod/slides-cod-examples.pdf">slides-cod-examples</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/cod/slides-cod.pdf">slides-cod</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="feature-selection" class="section level3">
+<h3>feature-selection</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-filters1.pdf">slides-fs-filters1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-filters2.pdf">slides-fs-filters2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-introduction.pdf">slides-fs-introduction</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-motivating-examples.pdf">slides-fs-motivating-examples</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/feature-selection/slides-fs-wrapper.pdf">slides-fs-wrapper</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gaussian-processes" class="section level3">
+<h3>gaussian-processes</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-basic.pdf">slides-gp-basic</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-bayes-lm.pdf">slides-gp-bayes-lm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-covariance.pdf">slides-gp-covariance</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-mean.pdf">slides-gp-mean</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-prediction.pdf">slides-gp-prediction</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/gaussian-processes/slides-gp-training.pdf">slides-gp-training</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="information-theory" class="section level3">
+<h3>information-theory</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-cross-entropy-kld.pdf">slides-info-cross-entropy-kld</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-diffent.pdf">slides-info-diffent</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-entropy.pdf">slides-info-entropy</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-entropy2.pdf">slides-info-entropy2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-kl-ment.pdf">slides-info-kl-ment</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-kl-ml.pdf">slides-info-kl-ml</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-kl.pdf">slides-info-kl</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-mi-deepdive.pdf">slides-info-mi-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-ml.pdf">slides-info-ml</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-mutual-info.pdf">slides-info-mutual-info</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-mutual-info2.pdf">slides-info-mutual-info2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-sourcecoding.pdf">slides-info-sourcecoding</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/information-theory/slides-info-sourcecoding2.pdf">slides-info-sourcecoding2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="linear-svm" class="section level3">
+<h3>linear-svm</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-erm.pdf">slides-linsvm-erm</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-hard-margin-dual.pdf">slides-linsvm-hard-margin-dual</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-hard-margin.pdf">slides-linsvm-hard-margin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-optimization.pdf">slides-linsvm-optimization</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/linear-svm/slides-linsvm-soft-margin.pdf">slides-linsvm-soft-margin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="lookup-slides" class="section level3">
+<h3>lookup-slides</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/lookup-slides/riskmin_optconst.pdf">riskmin_optconst</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="mathrefresher" class="section level3">
+<h3>mathrefresher</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/mathrefresher/slides-probability-theory.pdf">slides-probability-theory</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="multiclass" class="section level3">
+<h3>multiclass</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-binary-reduction.pdf">slides-mc-binary-reduction</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-codebooks.pdf">slides-mc-codebooks</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-losses.pdf">slides-mc-losses</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/multiclass/slides-mc-softmax-regression.pdf">slides-mc-softmax-regression</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="nonlinear-svm" class="section level3">
+<h3>nonlinear-svm</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-featuregen.pdf">slides-nonlinsvm-featuregen</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-kernel-poly.pdf">slides-nonlinsvm-kernel-poly</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-kernel-rbf.pdf">slides-nonlinsvm-kernel-rbf</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-kernel-trick.pdf">slides-nonlinsvm-kernel-trick</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-modelsel.pdf">slides-nonlinsvm-modelsel</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-rkhs-repr.pdf">slides-nonlinsvm-rkhs-repr</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/nonlinear-svm/slides-nonlinsvm-uniapprox.pdf">slides-nonlinsvm-uniapprox</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="regularization" class="section level3">
+<h3>regularization</h3>
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Slide
+</th>
+<th style="text-align:center;position: sticky; top:0; background-color: #FFFFFF;">
+Compiles?
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Note
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-bias-var-ridge-deepdive.pdf">slides-bias-var-ridge-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-bagging-deepdive.pdf">slides-regu-bagging-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-bayes.pdf">slides-regu-bayes</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-bias-variance.pdf">slides-regu-bias-variance</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-early-stopping.pdf">slides-regu-early-stopping</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-enetlogreg.pdf">slides-regu-enetlogreg</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-geom-l1.pdf">slides-regu-geom-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-geom-l2.pdf">slides-regu-geom-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-intro.pdf">slides-regu-intro</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l1.pdf">slides-regu-l1</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l1vsl2.pdf">slides-regu-l1vsl2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l2-nonlin.pdf">slides-regu-l2-nonlin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-l2.pdf">slides-regu-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-lasso-deepdive.pdf">slides-regu-lasso-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-nonlin.pdf">slides-regu-nonlin</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-others.pdf">slides-regu-others</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-ridge-deepdive.pdf">slides-regu-ridge-deepdive</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 40%; ">
+<a href="lecture_sl/slides/regularization/slides-regu-wd-vs-l2.pdf">slides-regu-wd-vs-l2</a>
+</td>
+<td style="text-align:center;width: 10%; ">
+✅
+</td>
+<td style="text-align:left;width: 40%; ">
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="figure-audit" class="section level1">
+<h1>Figure Audit</h1>
+<p>After compilation, <code>.fls</code> recorder files capture every
+file the TeX engine opened. This allows robust detection of which
+figures each slide actually uses, including dynamically constructed
+paths (e.g. <code>\foreach</code> loops) that regex-based parsing
+misses.</p>
+<p>Figures in <code>figure/</code> or <code>figure_man/</code> that are
+not referenced by any slide are <strong>orphaned</strong>. Figures
+referenced by slides but missing from disk are
+<strong>missing</strong>.</p>
+<p>Each lecture chapter may have two figure directories:</p>
+<ul>
+<li><strong><code>figure/</code></strong> — generated figures, typically
+produced by R scripts in <code>rsrc/</code></li>
+<li><strong><code>figure_man/</code></strong> — manually created or
+externally sourced figures, not generated by scripts</li>
+</ul>
+<p>Figures are counted separately per <code>figure/</code> and
+<code>figure_man/</code> folders:</p>
+<ul>
+<li><strong>Total</strong> means all figures in the respective
+folder</li>
+<li><strong>Orphaned</strong> figures are in the folder but not used by
+any .tex file in the chapter</li>
+<li><strong>Missing</strong> figures are referenced in .tex files but
+not in folder (will cause LaTeX compilation error anyway)</li>
+<li><strong>Attic</strong> counts figures in an <code>attic</code>
+subfolder which might need to be cleaned out</li>
+</ul>
+<table class="table table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+Figure audit summary
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="2">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+figure/
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+figure_man/
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Lecture
+</th>
+<th style="text-align:left;">
+Chapter
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:right;">
+Orphaned
+</th>
+<th style="text-align:right;">
+Missing
+</th>
+<th style="text-align:right;">
+Attic
+</th>
+<th style="text-align:right;">
+Total
+</th>
+<th style="text-align:right;">
+Orphaned
+</th>
+<th style="text-align:right;">
+Missing
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+advriskmin
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+boosting
+</td>
+<td style="text-align:right;">
+139
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+cod
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+feature-selection
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+gaussian-processes
+</td>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+information-theory
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+linear-svm
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+lookup-slides
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+mathrefresher
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+multiclass
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+nonlinear-svm
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lecture_sl
+</td>
+<td style="text-align:left;">
+regularization
+</td>
+<td style="text-align:right;">
+81
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<div id="chapters-with-issues" class="section level2">
+<h2>Chapters with issues</h2>
+<div id="lecture_sl-boosting" class="section level3">
+<h3>lecture_sl / boosting</h3>
+<p><strong>14 orphaned figure(s)</strong> in <code>figure/</code>:</p>
+<ul>
+<li><code>boosting-cwb-bl-add1.pdf.png</code></li>
+<li><code>boosting-cwb-bl-add2.pdf.png</code></li>
+<li><code>boosting-cwb-bl-add3.pdf.png</code></li>
+<li><code>boosting-cwb-bl1.png</code></li>
+<li><code>boosting-cwb-bl2.png</code></li>
+<li><code>boosting-cwb-bl3.png</code></li>
+<li><code>boosting-cwb-bl4.png</code></li>
+<li><code>compboost-illustration-1.png</code></li>
+<li><code>compboost-illustration-3.png</code></li>
+<li><code>compboost-intercept-handling.png</code></li>
+<li><code>compboost-to-glm-iter1000.png</code></li>
+<li><code>compboost-to-glm-iter250.png</code></li>
+<li><code>compboost-to-glm-iter500.png</code></li>
+<li><code>compboost-to-glm-iter5000.png</code></li>
+</ul>
+<p><strong>1 orphaned figure(s)</strong> in
+<code>figure_man/</code>:</p>
+<ul>
+<li><code>df_to_lambda.pdf</code></li>
+</ul>
+</div>
+<div id="lecture_sl-feature-selection" class="section level3">
+<h3>lecture_sl / feature-selection</h3>
+<p><strong>7 orphaned figure(s)</strong> in <code>figure/</code>:</p>
+<ul>
+<li><code>fs-wrappers-powerset-all-1.png</code></li>
+<li><code>fs-wrappers-powerset-all-2.png</code></li>
+<li><code>fs-wrappers-powerset-all-3.png</code></li>
+<li><code>fs-wrappers-powerset-all-4.png</code></li>
+<li><code>gene-data-points.pdf</code></li>
+<li><code>greedy-forwards-search.png</code></li>
+<li><code>guyon_example_presumably_redundant_rotated.png</code></li>
+</ul>
+<p><strong>20 orphaned figure(s)</strong> in
+<code>figure_man/</code>:</p>
+<ul>
+<li><code>chunk2_filter_correlation.png</code></li>
+<li><code>distance-corre.png</code></li>
+<li><code>feat_extraction.png</code></li>
+<li><code>feat_sel_vs_feat_extraction.png</code></li>
+<li><code>feat_sel.png</code></li>
+<li><code>feature_selection_vs_extraction.pptx</code></li>
+<li><code>tibshirani_fig_18_1.png</code></li>
+<li><code>tibshirani_fig_18_4.png</code></li>
+<li><code>varsel_ex0.png</code></li>
+<li><code>varsel_ex1.png</code></li>
+<li><code>varsel_ex2.png</code></li>
+<li><code>varsel_overview.png</code></li>
+<li><code>varsel_overview.pptx</code></li>
+<li><code>wrapperanim.R</code></li>
+<li><code>wrapperanim1.png</code></li>
+<li><code>wrapperanim2.png</code></li>
+<li><code>wrapperanim3.png</code></li>
+<li><code>wrapperanim4.png</code></li>
+<li><code>wrapperanim5.png</code></li>
+<li><code>wrapperanim6.png</code></li>
+</ul>
+</div>
+<div id="lecture_sl-gaussian-processes" class="section level3">
+<h3>lecture_sl / gaussian-processes</h3>
+<p><strong>6 orphaned figure(s)</strong> in <code>figure/</code>:</p>
+<ul>
+<li><code>discrete/discr_10_identity_1n.pdf</code></li>
+<li><code>discrete/discr_2_identity_1n.pdf</code></li>
+<li><code>discrete/discr_5_identity_1n.pdf</code></li>
+<li><code>gp_pred/1.pdf</code></li>
+<li><code>gp_pred/3.pdf</code></li>
+<li><code>gp_sample/linmean_prior_updates_2.pdf</code></li>
+</ul>
+<p><strong>6 orphaned figure(s)</strong> in
+<code>figure_man/</code>:</p>
+<ul>
+<li><code>discrete/marginalization-5.png</code></li>
+<li><code>discrete/marginalization-53.png</code></li>
+<li><code>discrete/marginalization-more.png</code></li>
+<li><code>indexed_family/indexed_family_5.png</code></li>
+<li><code>indexed_family/indexed_family_6.png</code></li>
+<li><code>question.png</code></li>
+</ul>
+</div>
+<div id="lecture_sl-information-theory" class="section level3">
+<h3>lecture_sl / information-theory</h3>
+<p><strong>5 orphaned figure(s)</strong> in <code>figure/</code>:</p>
+<ul>
+<li><code>max_entropy_1.pdf</code></li>
+<li><code>max_entropy_2.pdf</code></li>
+<li><code>max_entropy_3.pdf</code></li>
+<li><code>max_entropy_4.pdf</code></li>
+<li><code>max_entropy_5.pdf</code></li>
+</ul>
+<p><strong>8 orphaned figure(s)</strong> in
+<code>figure_man/</code>:</p>
+<ul>
+<li><code>binom1.png</code></li>
+<li><code>binom2.png</code></li>
+<li><code>coin-entropy.png</code></li>
+<li><code>kl_ml_dist_sim.png</code></li>
+<li><code>kl_ml_fkl_rkl.png</code></li>
+<li><code>kl_ml_mi.png</code></li>
+<li><code>kl_ml_prob_fit.png</code></li>
+<li><code>kl_ml_vi.png</code></li>
+</ul>
+</div>
+<div id="lecture_sl-regularization" class="section level3">
+<h3>lecture_sl / regularization</h3>
+<p><strong>8 orphaned figure(s)</strong> in <code>figure/</code>:</p>
+<ul>
+<li><code>classifi_nn_w_size_5.png</code></li>
+<li><code>classifi_nn_w_size_6.png</code></li>
+<li><code>l2_reg_hess_02.png</code></li>
+<li><code>model_eval_03.png</code></li>
+<li><code>shrinkage_01.png</code></li>
+<li><code>underconstrained_problem.png</code></li>
+<li><code>underdetermined_problem_01.png</code></li>
+<li><code>underdetermined_problem_02.png</code></li>
+</ul>
+<p><strong>11 orphaned figure(s)</strong> in
+<code>figure_man/</code>:</p>
+<ul>
+<li><code>biasvariance_scheme.png</code></li>
+<li><code>data-augmentation-cat.png</code></li>
+<li><code>l1_l2_regupaths_mse.pdf</code></li>
+<li><code>lasso_hat.png</code></li>
+<li><code>lq-penalty-plots.png</code></li>
+<li><code>rf_majvot_averaging.png</code></li>
+<li><code>to_replace_estimation_bias.png</code></li>
+<li><code>to_replace_estimation_variance_res.png</code></li>
+<li><code>to_replace_estimation_variance.png</code></li>
+<li><code>to_replace_model_bias.png</code></li>
+<li><code>to_replace_sampling.png</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3,h4,h5",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+
+</body>
+</html>
