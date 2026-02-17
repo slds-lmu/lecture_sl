@@ -12,7 +12,6 @@ help:
 	@echo "  texclean          : Clean LaTeX auxiliary files but keep PDFs"
 	@echo "  clean             : Clean LaTeX auxiliary files and PDFs"
 	@echo "  audit             : Render chapter audit report (requires lese R package)"
-	@echo "                      Optional: run=true to execute scripts (default: false)"
 	@echo "  init-makefiles    : Create Makefiles in chapter and rsrc dirs if missing"
 	@echo "  help              : Show this help message"
 
@@ -36,7 +35,7 @@ slides:
 	@echo "Done"
 
 audit:
-	Rscript --quiet -e 'lese::render_chapter_audit(run = $(if $(filter true TRUE 1,$(run)),TRUE,FALSE), method = "$(or $(method),auto)")'
+	Rscript --quiet -e 'lese::render_chapter_audit(run = FALSE, method = "$(or $(method),auto)")'
 
 deps:
 	@Rscript --quiet -e 'lese::check_lecture_deps(install = FALSE)'

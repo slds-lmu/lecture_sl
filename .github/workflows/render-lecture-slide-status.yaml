@@ -194,7 +194,7 @@ jobs:
       #   run: make install-tools-ubuntu
 
       - name: Install the service package
-        run: make install-service
+        run: make install-lese
 
       # Get a tmux ssh session for interactive debugging
       # Controlled via inputs from GitHub webinterface
