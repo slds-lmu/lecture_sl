@@ -18,7 +18,7 @@
   \item Understand the connection between entropy, cross-entropy, and KL divergence
 }
 
-\begin{vbframe} {Cross-Entropy - Discrete Case}
+\begin{frame}[allowframebreaks]{Cross-Entropy - Discrete Case}
 
 \textbf{Cross-entropy} measures the average amount of information required to represent an event from one distribution $p$ using a predictive scheme based on another distribution $q$ (assume they have the same domain $\Xspace$ as in KL).
   $$ H(p \| q) = \sum_{x \in \Xspace} p(x) \log\left(\frac{1}{q(x)}\right) = - \sum_{x \in \Xspace} p(x) \log\left(q(x)\right) = - \mathbb{E}_{X\sim p}[\log(q(X))]$$
@@ -28,7 +28,7 @@ For now, we accept the formula as-is. More on the underlying intuition follows i
 \setlength{\itemsep}{0.9em}
 \item Entropy = Avg. amount of information if we optimally encode $p$
 \item Cross-Entropy = Avg. amount of information if we suboptimally encode $p$ with $q$
-\item $DL_ {KL}(p \| q)$: Difference between the two
+\item $D_{KL}(p \| q)$: Difference between the two
 \item $H(p \| q)$ sometimes also denoted as $H_{q}(p)$ to set it apart from KL
 \end{itemize}
 
@@ -47,9 +47,9 @@ H(p) + D_{KL}(p \| q) &=& - \sum_{x \in \Xspace} p(x) \log p(x) + \sum_{x \in \X
 \end{eqnarray*}
    
 \framebreak
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe} {Cross-Entropy - Continuous Case}
+\begin{frame}{Cross-Entropy - Continuous Case}
 
 For continuous density functions $p(x)$ and $q(x)$: 
 
@@ -60,9 +60,9 @@ $$ H(p \| q) = \int p(x) \log\left(\frac{1}{q(x)}\right) dx = - \int p(x) \log\l
 \item As for the discrete case, $H(p \| q) = h(p) + D_{KL}(p \| q)$ holds.
 \item Can now become negative, as the $h(p)$ can be negative! 
 \end{itemize}
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe} {Cross-Entropy Example}
+\begin{frame}{Cross-Entropy Example}
 
 Let $p(x)=N(0,1)$ and $q(x)=LP(0, 3)$. We can visualize 
 $$
@@ -72,9 +72,9 @@ $$
     \includegraphics[width = 0.8\textwidth]{figure/cross_entropy_plot_1.png}
 \end{center}
 
-\end{vbframe}
+\end{frame}
 
-\begin{vbframe} {Cross-Entropy Example}
+\begin{frame} {Cross-Entropy Example}
 
 Let $p(x)=LP(0, 3)$ and $q(x)=N(0,1)$. We can visualize 
 $$
@@ -85,9 +85,9 @@ $$
 	\includegraphics[width = 0.8\textwidth]{figure/cross_entropy_plot_2.png}
 \end{center}
 
-\end{vbframe}
+\end{frame}
  
-\begin{vbframe}{Proof: Maximum of Differential Entropy}
+\begin{frame}[allowframebreaks]{Proof: Maximum of Differential Entropy}
   \textbf{Claim}: For a given variance, the continuous distribution that maximizes differential entropy is the Gaussian.
 
   \lz
@@ -120,10 +120,10 @@ The second term in (1) is,
 where the last equality follows from the normal distribution example of the entropy chapter. Combining (1) and (2) results in
 $$h(g) - h(f) \geq 0$$
 with equality when $f(x) = g(x)$ (following from the properties of Kullback-Leibler divergence).
-\end{vbframe}
+\end{frame}
 
 
-% \begin{vbframe} {Cross-Entropy - Summary}
+% \begin{frame} {Cross-Entropy - Summary}
 %   \begin{itemize}
 %     \item For discrete probability distributions $p(x)$ and $q(x)$, the cross-entropy is: 
 %      $$ H_p(q) = \sum_{x \in \Xspace} q(x) \log_2\left(\frac{1}{p(x)}\right) = - \sum_{x \in \Xspace} q(x) log_2(p(x))$$
@@ -139,6 +139,6 @@ with equality when $f(x) = g(x)$ (following from the properties of Kullback-Leib
 %     % \item Often used as a loss function for classification tasks. 
 %   \end{itemize}
 
-% \end{vbframe}
+% \end{frame}
 \endlecture
 \end{document}
