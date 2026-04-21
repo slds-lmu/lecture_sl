@@ -1,0 +1,175 @@
+---
+title: "Exercise 1 -- SVM"
+subtitle: "[Supervised Learning](https://slds-lmu.github.io/i2ml/)"
+notebook-view: false
+  # - notebook: sol_svm_1_R.ipynb
+  #   title: "Exercise sheet for R"
+  #   url: "https://github.com/slds-lmu/lecture_sl/blob/main/exercises/svm-quarto/sol_svm_1_R.ipynb"
+---
+
+::: {.content-hidden when-format="pdf"}
+::: {.hidden}
+{{< include ../_quarto/latex-math.qmd >}}
+:::
+:::
+
+::: {.content-visible when-profile="solution"}
+::: callout-tip
+You can run the notebooks in Google Colab here: [R](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/svm-quarto/inserted/sol_svm_1_R.ipynb), [Python](https://colab.research.google.com/github/slds-lmu/lecture_sl/blob/main/exercises/svm-quarto/inserted/sol_svm_1_py.ipynb).
+:::
+:::
+
+# Exercise
+Write your own stochastic subgradient descent routine to solve the soft-margin SVM in the primal formulation.
+
+Hints:
+
+- Use the regularized-empirical-risk-minimization formulation, i.e., an optimization criterion without constraints.
+- No kernels, just a linear SVM.
+- Compare your implementation with an existing implementation (e.g., `kernlab` in R or `sklearn.svm.SVC` in Python). Are your results similar? Note that you might have to switch off the automatic data scaling in the already existing implementation.
+
+
+::: {.content-visible when-profile="solution"}
+## Imports and global variables
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#import_and_globals echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#import_and_globals echo=true >}}
+:::
+
+# PEGASOS Algorithm Explanation
+
+The PEGASOS algorithm is a stochastic gradient descent method for training linear SVMs. It works by:
+
+1. **Random Sampling**: At each iteration, randomly select one training example
+2. **Weight Decay**: Apply regularization by shrinking the weight vector: `θ ← (1 - λα)θ`
+3. **Margin Check**: If the selected example is within the margin (i.e., `y_i * f(x_i) < 1`), update the weights: `θ ← θ + α * y_i * x_i`
+4. **Repeat**: Continue until convergence or maximum iterations
+
+More details can be found in the [i2ml chapter on linear SVMs](https://slds-lmu.github.io/i2ml/chapters/16_linear_svm/16-05-optimization)
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#pegasos_implementation echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#pegasos_implementation echo=true >}}
+:::
+
+## Data Generation and Setup
+
+For R we'll use the `mlbench.twonorm` dataset, which generates a two-class problem with two features. This is a classic benchmark dataset for binary classification.
+
+For Python, we can use `sklearn.datasets.make_classification` to generate a similar dataset.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#data_generation echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#data_generation echo=true >}}
+:::
+
+# Visual Inspection of the Data
+
+We can see that the data is mostly linearly separable, but there are some points that are close to the decision boundary.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#plot_data echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#plot_data echo=true >}}
+:::
+
+# Training the PEGASOS Algorithm
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#train_pegasos echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#train_pegasos echo=true >}}
+:::
+
+# Decision Boundaries Visualization
+
+Now we'll use the trained model to visualize the decision boundaries. Additionally, for comparison we will also fit a Logistic Regression model and visualize its decision boundary as well.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#plot_boundaries echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#plot_boundaries echo=true >}}
+:::
+
+We can see that the decision boundaries are quite similar, let's also check the predictive performances of the logistic regression and Pegasos.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#eval_log_reg echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#eval_log_reg echo=true >}}
+:::
+
+# Evaluating the PEGASOS Model
+
+We'll compute the accuracy and the confusion matrix. In practice, other metrics should be also considered, e.g. precision, recall, F1-score (threshold dependent); ROC AUC, PR AUC (threshold independent).
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#evaluate_pegasos echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#evaluate_pegasos echo=true >}}
+:::
+
+# Using `kernlab` (R) or `sklearn.svm.SVC` (Python) for Comparison
+
+Accuracy is identical
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#train_kernlab_or_sklearn echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#train_kernlab_or_sklearn echo=true >}}
+:::
+
+## Comparison of Model Coefficients
+
+We can see that both the predictions and coefficients are almost identical.
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#compare_models echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#compare_models echo=true >}}
+:::
+
+## Comparison of empirical risks
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#calculate_risk echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#calculate_risk echo=true >}}
+:::
+
+# Plotting
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#plot_margins_prep echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#plot_margins_prep echo=true >}}
+:::
+
+## Complete visualization
+
+- We can see that all the models produce almost identical decision boundary
+- The margins are plotted for the `kernlab`'s (R) / `sklearn.svm.SVC` (Python) model
+
+::: {.panel-tabset}
+### R
+{{< embed sol_svm_1_R.ipynb#complete_visualization echo=true >}}
+### Python
+{{< embed sol_svm_1_py.ipynb#complete_visualization echo=true >}}
+:::
+:::
