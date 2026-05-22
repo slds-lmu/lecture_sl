@@ -1,0 +1,238 @@
+[lecture]
+title = 'Supervised Learning'
+toc_title = 'Supervised Learning'
+logo = 'local/logo.pdf'
+paperwidth = '170.6666666667mm'
+paperheight = '96mm'
+
+[chapters]
+'00-mathrefresher' = 'Math Refresher'
+'01-advriskmin' = 'Advanced Risk Minimization'
+'02-multiclass' = 'Multiclass Classification'
+'03-information-theory' = 'Information Theory'
+'04-cod' = 'Curse of Dimensionality'
+'05-regularization' = 'Regularization'
+'06-linear-svm' = 'Linear Support Vector Machine'
+'07-nonlinear-svm' = 'Nonlinear Support Vector Machine'
+'08-boosting' = 'Boosting'
+'09-feature-selection' = 'Feature Selection'
+'10-gaussian-processes' = 'Gaussian Processes'
+
+[slides]
+'00-mathrefresher/01-probability-theory.tex' = 'Probability Theory'
+'01-advriskmin/01-risk-minimization-basics.tex' = 'Risk Minimization Basics'
+'01-advriskmin/02-losses-properties.tex' = 'Loss Properties'
+'01-advriskmin/03-pseudo-residuals.tex' = 'Pseudo-Residuals'
+'01-advriskmin/04-regression-l2-l1.tex' = 'L2- and L1-loss'
+'01-advriskmin/05-regression-l1-deepdive.tex' = 'L1 Risk Minimizer (Deep-Dive)'
+'01-advriskmin/06-regression-further-losses.tex' = 'Advanced Regression Losses'
+'01-advriskmin/07-classification-01.tex' = '0-1-loss'
+'01-advriskmin/08-classification-bernoulli.tex' = 'Bernoulli Loss'
+'01-advriskmin/09-some-details-deepdive.tex' = 'Some details on classification losses (Deep Dive)'
+'01-advriskmin/10-logreg-deepdive.tex' = 'Logistic Regression (Deep-Dive)'
+'01-advriskmin/11-classification-brier-l1.tex' = 'Brier Score'
+'01-advriskmin/12-classification-furtherlosses.tex' = 'Advanced Classification Losses'
+'01-advriskmin/13-proper-scoring-rules.tex' = 'Proper Scoring Rules'
+'01-advriskmin/14-tree-splitting-deepdive.tex' = 'Tree Splitting and Loss Functions (Deep-Dive)'
+'01-advriskmin/15-max-likelihood.tex' = 'Maximum Likelihood Estimation vs. Empirical Risk Minimization'
+'01-advriskmin/16-bias-variance-decomposition-1.tex' = 'Bias Variance Decomposition I'
+'01-advriskmin/17-bias-variance-decomposition-2.tex' = 'Bias Variance Decomposition II'
+'01-advriskmin/18-bias-variance-decomposition-deepdive.tex' = 'Bias Variance Decomposition (Deep-Dive)'
+'02-multiclass/01-losses.tex' = 'Multiclass Classification and Losses'
+'02-multiclass/02-softmax-regression.tex' = 'Softmax Regression'
+'02-multiclass/03-binary-reduction.tex' = 'One-vs-Rest and One-vs-One'
+'02-multiclass/04-codebooks.tex' = 'Designing Codebooks and ECOC'
+'03-information-theory/01-entropy.tex' = 'Entropy I'
+'03-information-theory/02-entropy2.tex' = 'Entropy II'
+'03-information-theory/03-diffent.tex' = 'Differential Entropy'
+'03-information-theory/04-kl.tex' = 'Kullback-Leibler Divergence'
+'03-information-theory/05-cross-entropy-kld.tex' = 'Cross-Entropy and KL'
+'03-information-theory/06-ml.tex' = 'Information Theory for Machine Learning'
+'03-information-theory/07-mutual-info.tex' = 'Joint Entropy and Mutual Information I'
+'03-information-theory/08-mutual-info2.tex' = 'Joint Entropy and Mutual Information II'
+'03-information-theory/09-sourcecoding.tex' = 'Entropy and Optimal Code Length'
+'03-information-theory/10-sourcecoding2.tex' = 'Entropy and Optimal Code Length II'
+'03-information-theory/11-mi-deepdive.tex' = 'Mutual Information under Reparametrization (Deep-Dive)'
+'03-information-theory/12-kl-ment.tex' = 'Kl Ment'
+'03-information-theory/13-kl-ml.tex' = 'Kl Ml'
+'04-cod/01-cod.tex' = 'Curse of Dimensionality'
+'04-cod/02-examples.tex' = 'Curse of Dimensionality - Examples'
+'05-regularization/01-intro.tex' = 'Regularization: Introduction'
+'05-regularization/02-l2.tex' = 'Regularization: Ridge Regression'
+'05-regularization/03-l1.tex' = 'Regularization: Lasso Regression'
+'05-regularization/04-l1vsl2.tex' = 'Regularization: Lasso vs. Ridge'
+'05-regularization/05-enetlogreg.tex' = 'Regularization: Elastic Net and GLMs'
+'05-regularization/06-others.tex' = 'Regularization: Other Types'
+'05-regularization/07-nonlin.tex' = 'Regularization: Non-Linear Models and Structural Risk Minimization'
+'05-regularization/08-bayes.tex' = 'Regularization: Bayesian Priors'
+'05-regularization/09-wd-vs-l2.tex' = 'Regularization: Weight Decay and L2'
+'05-regularization/10-geom-l2.tex' = 'Regularization: Geometric Analysis of L2'
+'05-regularization/11-geom-l1.tex' = 'Regularization: Geometric Analysis of L1'
+'05-regularization/12-early-stopping.tex' = 'Regularization: Early Stopping'
+'05-regularization/13-ridge-deepdive.tex' = 'Regularization: Perspectives on Ridge Regression (Deep-Dive)'
+'05-regularization/14-lasso-deepdive.tex' = 'Regularization: Soft-thresholding and L1 regularization (Deep-Dive)'
+'05-regularization/15-bias-var-ridge-deepdive.tex' = 'Bias Var Ridge Deepdive'
+'05-regularization/16-bagging-deepdive.tex' = 'Bagging Deepdive'
+'05-regularization/17-bias-variance.tex' = 'Bias Variance'
+'05-regularization/18-l2-nonlin.tex' = 'L2 Nonlin'
+'06-linear-svm/01-hard-margin.tex' = 'Linear Hard Margin SVM'
+'06-linear-svm/02-hard-margin-dual.tex' = 'Hard-Margin SVM Dual'
+'06-linear-svm/03-soft-margin.tex' = 'Soft-Margin SVM'
+'06-linear-svm/04-erm.tex' = 'SVMs and Empirical Risk Minimization'
+'06-linear-svm/05-optimization.tex' = 'Support Vector Machine Training'
+'07-nonlinear-svm/01-featuregen.tex' = 'Feature Generation for Nonlinear Separation'
+'07-nonlinear-svm/02-kernel-trick.tex' = 'The Kernel Trick'
+'07-nonlinear-svm/03-kernel-poly.tex' = 'The Polynomial Kernel'
+'07-nonlinear-svm/04-rkhs-repr.tex' = 'Reproducing Kernel Hilbert Space and Representer Theorem'
+'07-nonlinear-svm/05-kernel-rbf.tex' = 'The Gaussian RBF Kernel'
+'07-nonlinear-svm/06-modelsel.tex' = 'SVM Model Selection'
+'07-nonlinear-svm/07-uniapprox.tex' = 'Details on Support Vector Machines'
+'08-boosting/01-intro-adaboost.tex' = 'Introduction to Boosting / AdaBoost'
+'08-boosting/02-gradient-boosting-concept.tex' = 'Gradient Boosting Concept'
+'08-boosting/03-regression-illustrations.tex' = 'Gradient Boosting - Illustration'
+'08-boosting/04-gbm-regularization.tex' = 'Gradient Boosting: Regularization'
+'08-boosting/05-gbm-classification.tex' = 'Gradient Boosting for Classification'
+'08-boosting/06-gbm-with-trees-1.tex' = 'Gradient Boosting with Trees 1'
+'08-boosting/07-gbm-with-trees-2.tex' = 'Gradient Boosting with Trees 2'
+'08-boosting/08-xgboost.tex' = 'XGBoost'
+'08-boosting/09-cwb-basics.tex' = 'Componentwise Boosting Basics 1'
+'08-boosting/10-cwb-basics2.tex' = 'Componentwise Boosting Basics 2'
+'08-boosting/11-cwb-glm.tex' = 'CWB and GLMs'
+'08-boosting/12-cwb-advanced.tex' = 'Advanced CWB'
+'08-boosting/13-lgm-ctbm.tex' = 'Lgm Ctbm'
+'08-boosting/14-xgboost-deepdive.tex' = 'Xgboost Deepdive'
+'09-feature-selection/01-introduction.tex' = 'Introduction'
+'09-feature-selection/02-motivating-examples.tex' = 'Motivating examples'
+'09-feature-selection/03-filters1.tex' = 'Filter Methods'
+'09-feature-selection/04-filters2.tex' = 'Filter Examples and Caveats'
+'09-feature-selection/05-wrapper.tex' = 'Wrapper'
+'10-gaussian-processes/01-basic.tex' = 'Gaussian Processes - Basics'
+'10-gaussian-processes/02-covariance.tex' = 'Gaussian Processes - Covariance'
+'10-gaussian-processes/03-bayes-lm.tex' = 'Bayes LM'
+'10-gaussian-processes/04-prediction.tex' = 'Gaussian Processes - Prediction'
+'10-gaussian-processes/05-training.tex' = 'Gaussian Processes - Training'
+'10-gaussian-processes/06-mean.tex' = 'Gaussian Processes - Mean'
+
+[chapter_slides]
+'00-mathrefresher' = [
+  '01-probability-theory.tex',
+]
+'01-advriskmin' = [
+  '01-risk-minimization-basics.tex',
+  '02-losses-properties.tex',
+  '03-pseudo-residuals.tex',
+  '04-regression-l2-l1.tex',
+  '05-regression-l1-deepdive.tex',
+  '06-regression-further-losses.tex',
+  '07-classification-01.tex',
+  '08-classification-bernoulli.tex',
+  '09-some-details-deepdive.tex',
+  '10-logreg-deepdive.tex',
+  '11-classification-brier-l1.tex',
+  '12-classification-furtherlosses.tex',
+  '13-proper-scoring-rules.tex',
+  '14-tree-splitting-deepdive.tex',
+  '15-max-likelihood.tex',
+  '16-bias-variance-decomposition-1.tex',
+  '17-bias-variance-decomposition-2.tex',
+  '18-bias-variance-decomposition-deepdive.tex',
+]
+'02-multiclass' = [
+  '01-losses.tex',
+  '02-softmax-regression.tex',
+  '03-binary-reduction.tex',
+  '04-codebooks.tex',
+]
+'03-information-theory' = [
+  '01-entropy.tex',
+  '02-entropy2.tex',
+  '03-diffent.tex',
+  '04-kl.tex',
+  '05-cross-entropy-kld.tex',
+  '06-ml.tex',
+  '07-mutual-info.tex',
+  '08-mutual-info2.tex',
+  '09-sourcecoding.tex',
+  '10-sourcecoding2.tex',
+  '11-mi-deepdive.tex',
+]
+'04-cod' = [
+  '01-cod.tex',
+  '02-examples.tex',
+]
+'05-regularization' = [
+  '01-intro.tex',
+  '02-l2.tex',
+  '03-l1.tex',
+  '04-l1vsl2.tex',
+  '05-enetlogreg.tex',
+  '06-others.tex',
+  '07-nonlin.tex',
+  '08-bayes.tex',
+  '09-wd-vs-l2.tex',
+  '10-geom-l2.tex',
+  '11-geom-l1.tex',
+  '12-early-stopping.tex',
+  '13-ridge-deepdive.tex',
+  '14-lasso-deepdive.tex',
+]
+'06-linear-svm' = [
+  '01-hard-margin.tex',
+  '02-hard-margin-dual.tex',
+  '03-soft-margin.tex',
+  '04-erm.tex',
+  '05-optimization.tex',
+]
+'07-nonlinear-svm' = [
+  '01-featuregen.tex',
+  '02-kernel-trick.tex',
+  '03-kernel-poly.tex',
+  '04-rkhs-repr.tex',
+  '05-kernel-rbf.tex',
+  '06-modelsel.tex',
+  '07-uniapprox.tex',
+]
+'08-boosting' = [
+  '01-intro-adaboost.tex',
+  '02-gradient-boosting-concept.tex',
+  '03-regression-illustrations.tex',
+  '04-gbm-regularization.tex',
+  '05-gbm-classification.tex',
+  '06-gbm-with-trees-1.tex',
+  '07-gbm-with-trees-2.tex',
+  '08-xgboost.tex',
+  '09-cwb-basics.tex',
+  '10-cwb-basics2.tex',
+  '11-cwb-glm.tex',
+  '12-cwb-advanced.tex',
+]
+'09-feature-selection' = [
+  '01-introduction.tex',
+  '02-motivating-examples.tex',
+  '03-filters1.tex',
+  '04-filters2.tex',
+  '05-wrapper.tex',
+]
+'10-gaussian-processes' = [
+  '01-basic.tex',
+  '02-covariance.tex',
+  '03-bayes-lm.tex',
+  '04-prediction.tex',
+  '05-training.tex',
+  '06-mean.tex',
+]
+
+[bundles.all]
+title = 'Supervised Learning'
+subtitle = 'All slides'
+chapters = [
+  '01-advriskmin',
+  '02-multiclass',
+  '03-information-theory',
+  '04-cod',
+  '05-regularization',
+  '06-linear-svm',
+  '07-nonlinear-svm',
+  '08-boosting',
+  '10-gaussian-processes',
+]
