@@ -8,6 +8,8 @@
 #  Things that need to exist but not in git  #
 #--------------------------------------------#
 
+build/
+
 nospeakermargin.tex
 speakermargin.tex
 
