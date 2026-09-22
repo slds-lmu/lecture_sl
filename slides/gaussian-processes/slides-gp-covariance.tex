@@ -68,24 +68,27 @@ $$\kxxt = k(\bm{d})$$
 \end{framei}
 
 
-\begin{framei}[sep=L]{properties of covariance functions I}
+\begin{framei}[sep=M]{properties of covariance functions I}
 %\item Most cov. functions have 3 common properties
 \item \textbf{Stationary}: $k = k(\bm{d})$ with $\bm{d} = \xv - \xtil$ \\
 $\Rightarrow$ invariant to translations in $\Xspace$: $k(\xv, \xv + \bm{d}) = k(\zero, \bm{d})$\\
 (so we sometimes abuse notation and write $k(\bm{d})$)
 \item Consider $\xv, \xtil \in \mathbb{R}$ and plot contours of $k(\xv,\xtil)$: 
 \imageC[0.9]{figure/stationary_vs_nonstationary.pdf}
-\item Contour set of $\xv \to k(\xv,\xtil_1)$ must be same as for $\xv \to k(\xv, \xtil_2)$ translated by $\xtil_1-\xtil_2$
+\item Stationarity implies: contour set of $\xv \to k(\xv,\xtil_1)$ must be same as for $\xv \to k(\xv, \xtil_2)$ translated by $\xtil_1-\xtil_2$ 
+\item Left: contours are parallel lines to diagonal $\checkmark$\\ 
+Right: non-lin. contours, not translation-invariant $\Rightarrow$ non-stationary
 \end{framei}
 
 \begin{framei}[sep=L]{properties of covariance functions II}
 %\item Most cov. functions have 3 common properties
-\item \textbf{Isotropic}: $k = k(\bm{r})$ with $r = \xxtnorm$ \\
+\item \textbf{Isotropic}: $k = k(r)$ with $r = \xxtnorm$ \\
 $\Rightarrow$ invariant to rotations, implies stationarity\\
 (again slight notational abuse)
-\item Consider $\xv, \xtil \in \mathbb{R}^2$
+\item Since $k$ is stationary can write $k(\bm{d})$ and plot contours for $\xv, \xtil \in \mathbb{R}^2$
 \imageC[0.9]{figure/isotropic_vs_anisotropic.pdf}
-\item Isotropic = circular/concentric contours, anisotropic = elliptic
+\item Isotropic = circle/hypersphere contours\\
+Anisotropic = non-spherical ellipsoid contours
 \item \textbf{Dot product}: $k = k(\xv^T \xtil)$
 \end{framei}
 
@@ -104,6 +107,7 @@ $\Rightarrow$ invariant to rotations, implies stationarity\\
 \item Measures directional similarity: higher if vectors point in similar dirs
 \item In general, non-stationary $\Rightarrow$ depends on locations of $\xv, \xtil$
 \item See Bayesian linear model part
+\item LHS: Random draws. RHS: covariance matrix of 25 sampled points (black = high pos cor, white = high neg cor)
 \vfill
 \imageC[1]{figure/cov_funs/cov_linear.pdf}
 \end{framei}
@@ -116,14 +120,24 @@ $\Rightarrow$ invariant to rotations, implies stationarity\\
 \imageC[1]{figure/cov_funs/cov_polynomial.pdf}
 \end{framei}
 
-\begin{framei}{periodic kernel}
-\item E.g., radial periodic kernel: $\kxxt = \exp \left(\frac{-2\sin^2 (\pi \xxtnorm / m)}{\ls^2} \right)$
-\item $m$: period, $\ls$: length-scale
-\item $f(\xv)$ should be periodically similar to points with a distance which is a multiple of $m$;\\
-for distances in between, this is modulated by $\ls$
-\item Alternative: Product of 1D periodic kernels, with $m_j$ period in dimension $j$: $\kxxt =  \exp \left(\sum_j\frac{-2\sin^2 (\pi |x_j - \tilde{x}_j| / m_j)}{\ls^2} \right)$
-\vfill
-\imageC[1]{figure/cov_funs/cov_periodic.pdf}
+
+
+\begin{framei}{squared exponential kernel}
+\item Aka Gaussian kernel, RBF kernel
+\item $\kxxt = \exp \left(-\frac{\xxtnorm^2}{2\ls^2} \right)$
+% \item Special case of Matérn kernel with $\nu = \infty$
+\item Very smooth: continuous, $\infty$ differentiable (not always realistic)
+\item Cov decays quickly $\Rightarrow$ quadratic in distance
+\imageC[1]{figure/cov_funs/cov_squaredexp.pdf}
+\end{framei}
+
+\begin{framei}{exponential kernel}
+\item Aka Ornstein-Uhlenbeck kernel
+\item $\kxxt = \exp \left(-\frac{\xxtnorm}{\ls} \right)$
+% \item Special case of Matérn kernel with $\nu = 0.5$
+\item Non-smooth: continuous but not differentiable, can model functions with abrupt variations
+\item Cov decays exponentially with distance (modulated by $\ls$)
+\imageC[1]{figure/cov_funs/cov_exponential.pdf}
 \end{framei}
 
 \begin{framei}{matérn kernel}
@@ -132,27 +146,20 @@ for distances in between, this is modulated by $\ls$
 \item Stationary \& isotropic
 \item Allows for controlled degree of smoothness via choice of $\nu$
 \item $\nu$ also determines differentiability
-\item Use for: non-linear functions with desired degree of smoothness
+%\item Use for: non-linear functions with desired degree of smoothness
+\item Squared exponential kernel ($\nu = \infty$) and exponential kernel ($\nu = 0.5$) are special cases
 \vfill
 \imageC[1]{figure/cov_funs/cov_matern.pdf}
 \end{framei}
 
-\begin{framei}{exponential kernel}
-\item Aka Ornstein-Uhlenbeck kernel
-\item $\kxxt = \exp \left(-\frac{\xxtnorm}{\ls} \right)$
-\item Special case of Matérn kernel with $\nu = 0.5$
-\item Non-smooth: continuous but not differentiable, can model functions with abrupt variations
-\item Cov decays exponentially with distance (modulated by $\ls$)
-\imageC[1]{figure/cov_funs/cov_exponential.pdf}
-\end{framei}
-
-\begin{framei}{squared exponential kernel}
-\item Aka Gaussian kernel, RBF kernel
-\item $\kxxt = \exp \left(-\frac{\xxtnorm^2}{2\ls^2} \right)$
-\item Special case of Matérn kernel with $\nu = \infty$
-\item Very smooth: continuous, $\infty$ differentiable (not always realistic)
-\item Cov decays quickly $\Rightarrow$ quadratic in distance
-\imageC[1]{figure/cov_funs/cov_squaredexp.pdf}
+\begin{framei}{periodic kernel}
+\item E.g., radial periodic kernel: $\kxxt = \exp \left(\frac{-2\sin^2 (\pi \xxtnorm / m)}{\ls^2} \right)$
+\item $m$: period, $\ls$: length-scale
+\item $f(\xv)$ should be periodically similar to points with a distance which is a multiple of $m$;\\
+for distances in between, this is modulated by $\ls$
+\item Alternative: Product of 1D periodic kernels, with $m_j$ period in dimension $j$: $\kxxt =  \exp \left(\sum_j\frac{-2\sin^2 (\pi |x_j - \tilde{x}_j| / m_j)}{\ls^2} \right)$
+\vfill
+\imageC[1]{figure/cov_funs/cov_periodic.pdf}
 \end{framei}
 
 \begin{framei}[sep=S]{Example: Brownian motion}
@@ -172,7 +179,7 @@ for distances in between, this is modulated by $\ls$
 \item High (low) $\ls$: smooth (wiggly) functions
 \vfill
 \imageC[1]{figure/gp_sample/zeromean_prior_10n_varying_ls.pdf}
-\item In SVM kernels we sometimes called this bandwith
+\item In SVMs we called this bandwith or (inverse) kernel width
 \end{framei}
 
 \begin{framei}[sep=M]{characteristic LS : stationary case}
