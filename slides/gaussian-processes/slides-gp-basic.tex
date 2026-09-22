@@ -63,7 +63,7 @@ $$
 \item Intuitively: distributions over functions have ``mean'' \& ``variance''
 \end{framei}
 
-\begin{frame2}{Weight-space vs. Function-space View}
+\begin{framev}{Weight-space vs. Function-space View}
 \splitVTT{
 \textbf{Weight-Space View}
 \spacer
@@ -81,7 +81,7 @@ $$
 \item Inference in fun space $\Hspace$
 \end{itemizeL}
 }
-\end{frame2}
+\end{framev}
 
 \begin{framei}{discrete functions}
 \item Let $\Xspace = \xdat$, $\Hspace = \{f ~|~ f: \Xspace \rightarrow \R\}$
@@ -105,7 +105,7 @@ $$\fv = \fvec^T$$
 \item Specify density on vectors / functions with finite domain $f \in \Hspace$ 
 \item Natural way: vector representation as $n$-dim RV, e.g.,
 $$\fv = \fvec^T \sim \Nmk$$
-\item For now: set $\mv = \zero$, assume $\Kmat$ to be given
+\item For now: assume $\mv, \Kmat$ to be given
 \end{framei}
 
 \foreach \i [count=\idx from 1] in {2, 5, 10} {
@@ -284,7 +284,8 @@ m(\xv) &=& \E[f(\xv)] \\
 \end{eqnarray*}
 \item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
 
-$\Rightarrow$ common, not necessarily drastic assumption 
+$\Rightarrow$ common, not necessarily drastic assumption,\\
+will talk more about this in session on GPs with trend
 \item Denote by $\GPzk$ $\Rightarrow$ properties mainly governed by $\kcc$
 \item By virtue of existence thm: sampling from GP priors gives us random functions with our properties of choice
 \end{framei}
