@@ -36,7 +36,7 @@ $$\begin{bmatrix}
 with $\ks = [k(\xs, \xi[1]), \dots, k(\xs, \xi[n])]^T$,  $ \kss\ = k(\xs, \xs)$
 \item General rule for conditioning of Gaussian RVs
 \begin{itemize}
-\item $\bm{z} \sim \normal(\muv, \Sigma)$, partition $\bm{z} = (\bm{z}_1, \bm{z}_2)$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\muv = (\muv_1, \muv_2), \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
+\item $\bm{z} \sim \normal(\muv, \Sigma)$, partition $\bm{z} = (\bm{z}_1^T, \bm{z}_2^T)^T$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\muv = (\muv_1^T, \muv_2^T)^T, \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
 \item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is also Gaussian 
 $$\normal(\muv_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \muv_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
 \end{itemize}
