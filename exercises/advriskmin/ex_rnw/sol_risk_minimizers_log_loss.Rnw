@@ -26,7 +26,7 @@
   \end{align*}
 
 \item
-	$\thetah$, the optimal constant model in terms of the \textit{empirical} risk, is given by $\thetah = \argmin_{\theta \in \Theta} \risk_{emp}(\theta)$.
+	$\thetah$, the optimal constant \textit{score} model in terms of the \textit{empirical} risk, is given by $\thetah = \argmin_{\theta \in \Theta} \risk_{emp}(\theta)$.
   \begin{align*}
     \risk_{emp}(\theta) &= \sumin L\left(\yi, \fxi\right)\\
     &= \sumin \log \left(1 + \exp(-\yi \theta) \right)
