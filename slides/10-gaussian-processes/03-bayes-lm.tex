@@ -1,0 +1,151 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+\input{ml-gp}
+\input{ml-svm}
+
+
+\begin{document}
+
+\titlemeta{
+Bayesian Linear Model
+}{
+figure/bayes_lm/posterior_5_3.pdf
+}{
+\item Know the Bayesian linear model
+\item The Bayesian LM returns a (posterior) distribution instead of a point estimate
+\item Know how to derive the posterior distribution for a Bayesian LM 
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{framei}{data situation}
+\item $\D = \Dset$: i.i.d. training set from some unknown distribution
+\imageC[.6]{figure/bayes_lm/example.pdf}
+\item $\Xmat \in \R^{n \times p}$: design matrix, where $i$-th row contains vector $\xi$
+\item $\yv = \yvec$
+\end{framei}
+
+\begin{framei}[sep=L]{bayesian linear model revisited}
+\item Standard linear regression model for $i$-th observation, with $\thetav \in \R^p$ fixed but unknown
+$$\yi = \fxi + \epsi = \thetav^T \xi + \epsi \quad \forall i$$
+\item Assumption: function outputs $\fxi$ differ from observed values $\yi$ by additive, i.i.d. Gaussian noise (ind of $\xv, \thetav$)
+$$\epsi \sim \normal(0, \sigma^2) \quad \forall i$$ 
+\item Bayesian perspective: $\thetav$ also RV with associated (prior) distribution, e.g., $\thetav \sim \normal(\zero, \tau^2 \id_p)$
+\end{framei}
+
+\begin{framei}{gp perspective}
+\item Weight-space view: prior over $\thetav$, function-space view: prior over linear functions
+\item Example: random lines with intercept 0, slope $\thetav \sim \normal(0, 1)$
+\imageL[.5]{figure/bayes_lm/random_slopes.pdf}
+\vfill
+\item Random lines = draws from GP with linear kernel
+\item Collection of RVs $\{ \fx = \thetav \xv: \xv \in \R\}$\item $f(\Xmat)$ is mv Gaussian for any finite input with design matrix $\Xmat$
+\end{framei}
+
+\begin{framei}[sep=L]{from prior to posterior}
+\item Bayes' rule: update prior to posterior belief after observing data
+$$
+p(\thetav | \Xmat, \yv) 
+= \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
+= \frac{p(\yv | \Xmat, \thetav) \cdot q(\thetav)}{p(\yv|\Xmat)}
+$$
+\item Gaussian family is ``self-conjugate'': Gaussian prior \& Gaussian likelihood $\Rightarrow$ Gaussian posterior 
+$$
+\thetav ~|~ \Xmat, \yv \sim \normal(\sigma^{-2} \Kinv\Xmat^T\yv, \Kinv)
+$$
+with $\Kmat:= \sigma^{-2}\Xmat^T\Xmat + \tau^{-2} \id_p$
+\item Intuitively: quantifies posterior (i.e., after seeing data) probability of $\thetav$ having generated the observed data
+\end{framei}
+
+\begin{frame}{posterior contraction}
+\vfill
+\splitVTT{
+\imageL{figure/bayes_lm/prior_1.pdf}
+}{
+\imageR{figure/bayes_lm/prior_2.pdf}
+}
+\end{frame}
+
+\foreach \i in{5, 10, 20}{
+\begin{frame}{posterior contraction}
+\vfill
+\splitVTT{
+\imageL{figure/bayes_lm/posterior_\i_1.pdf}
+}{
+\imageR{figure/bayes_lm/posterior_\i_2.pdf}
+}
+\end{frame}
+}
+
+\begin{framei}[fs=small]{proof: gaussianity of posterior}
+\item We want to show that for
+\begin{itemize} \small
+  \item Gaussian prior $\thetav \sim \normal(\zero, \tau^2 \id_p)$ and 
+  \item Gaussian likelihood $\yv ~|~ \Xmat, \thetav \sim \normal(\Xmat^T \thetav, \sigma^2 \id_n)$ 
+\end{itemize}
+the resulting posterior is Gaussian: $\thetav ~|~ \Xmat, \yv \sim \normal(\sigma^{-2}\Kinv\Xmat^T\yv, \Kinv)$ 
+\vfill
+\item Plug in Bayes' rule and keep only terms depending on $\thetav$
+\begin{eqnarray*}
+p(\thetav | \Xmat, \yv) &\propto& p(\yv | \Xmat, \thetav) q(\thetav) \quad \propto \quad \exp [-\tfrac{1}{2\sigma^2}(\yv - \Xmat\thetav)^T(\yv - \Xmat\thetav)-\tfrac{1}{2\tau^2}\thetav^T\thetav ] \\
+&=& \exp \left[ -\tfrac{1}{2} (\textcolor{black!50}{\sigma^{-2}\yv^T\yv} - 2 \sigma^{-2} \yv^T \Xmat \thetav + \sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav ) \right] \\
+&\propto& \exp \left[ -\tfrac{1}{2} (\sigma^{-2}\thetav^T \Xmat^T \Xmat \thetav  + \tau^{-2} \thetav^T\thetav  - 2 \sigma^{-2} \yv^T \Xmat \thetav ) \right] \\
+&=& \exp \biggl[ -\tfrac{1}{2}\thetav^T\underbrace{(\sigma^{-2} \Xmat^T \Xmat + \tau^{-2} \id_p )}_{:= \Kmat} \thetav  +\textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} \biggr] 
+\end{eqnarray*}
+\item Note how this resembles a normal density, except for term in \textcolor{orange}{orange}
+\item (No need to worry about normalizing constant $\Rightarrow$ sole purpose: ensure density integrates to total prob of 1)
+\end{framei}
+
+\begin{framei}[fs=small]{proof: gaussianity of posterior}
+\item Trick: introduce \textcolor{blue}{constant $c$}, compensating for added quantities  (``creative 0''), s.t. additions will conveniently cancel out with nuisance term
+\begin{eqnarray*}
+	p(\thetav | \Xmat, \yv) &\propto&  \exp[-\tfrac{1}{2}(\thetav \textcolor{blue}{- c})^T\Kmat  (\thetav \textcolor{blue}{- c}) \textcolor{blue}{- c^T \Kmat \thetav} + \underbrace{\textcolor{blue}{\tfrac{1}{2}c^T\Kmat c}}_{\text{doesn't depend on } \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} ] \\
+	&\propto& \exp [-\tfrac{1}{2}(\thetav \textcolor{blue}{- c})^T\Kmat  (\thetav \textcolor{blue}{- c}) \textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} ]
+\end{eqnarray*}
+\item Choosing $c$  s.t. 
+$\textcolor{blue}{- c^T \Kmat \thetav} + \textcolor{orange}{\sigma^{-2} \yv^T \Xmat \thetav} = 0$ 
+leads to 
+% $p(\thetav | \Xmat, \yv) \propto \exp [-\tfrac{1}{2}(\thetav - c)^T\Kmat  (\thetav -c) ]$
+$\thetav ~|~ \Xmat, \yv \sim \normal(c, \Kinv)$
+\item Using that $\Kmat$ is symmetric, this implies 
+\begin{eqnarray*}
+&& \sigma^{-2} \yv^T \Xmat = c^T\Kmat \\
+&\Leftrightarrow & \sigma^{-2} \yv^T \Xmat \Kinv = c^T \\
+&\Leftrightarrow& c = \sigma^{-2} \Kinv \Xmat^T \yv
+\end{eqnarray*}
+\item Finally: $\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kinv\Xmat^T\yv, \Kinv) \qed$
+\end{framei}
+
+\begin{framei}[sep=L]{posterior predictive distribution}
+\item How does prediction change w.r.t. classical (non-Bayesian) LM?
+\item Gaussian posterior   
+$$
+\thetav ~|~ \Xmat, \yv \sim  \normal(\sigma^{-2}\Kinv\Xmat^T\yv, \Kinv)
+$$
+induces (Gaussian) predictive distribution
+\item For a new observation $\xs$ we get
+$$
+y_* ~|~ \Xmat, \yv, \xs \sim \normal(\sigma^{-2}\yv^T \Xmat \Kinv\xs, \xs^T\Kinv\xs)
+$$
+\item Intuitively: expectation over all $\thetav$-parameterized LMs, weighted according to posterior prob $\leftrightarrow$ classical LM: only max-prob $\thetav^{\text{MAP}}$
+\item Entire distribution with built-in uncertainty quantification!
+\end{framei}
+
+\foreach \i in{5, 10, 20} {
+\begin{framei}{posterior mean and variance}
+\item For every test input $\xs$, we get a posterior mean (orange) \& variance (grey region; $\pm 2\times$ standard deviation)
+\vfill
+\imageC[.5]{figure/bayes_lm/posterior_\i_3.pdf}
+\end{framei}
+}
+
+\begin{framei}[sep=L]{summary: bayesian lm}
+\item Bayesian perspective: entire distributions, rather than just point estimates, for $\thetav$
+\item From posterior distribution of $\thetav$ we can derive a predictive distribution for $y_* = \thetav^T \xs$
+\item Online updates: after observing new data points, update posterior $\Rightarrow$ decreasing uncertainty
+\end{framei}
+
+\endlecture
+\end{document}

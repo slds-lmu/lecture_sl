@@ -1,0 +1,214 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+\input{ml-gp}
+\input{ml-svm}
+
+
+\begin{document}
+
+\titlemeta{
+    Gaussian Posterior Process and Prediction
+  }{
+  figure/gp_pred/post_variance.pdf
+  }{
+  \item Know how to derive the posterior process
+  \item GPs are interpolating and spatial models
+  \item Model noise via a nugget term
+}
+
+\begin{framei}[sep=L]{gp prediction}
+\item More interesting than drawing random samples from GP priors: predict at unseen test point $\xs$ with $f_\ast = f(\xs)$
+\item Given: training data with design matrix $\Xmat$, observed values $\fv = f(\Xmat) = \fvec^T$
+\item Goal: infer distribution of $f_\ast | \xs, \Xmat, \fv$ \\$\Rightarrow$ update prior to posterior process
+\end{framei}
+
+\begin{framei}[sep=M]{posterior process}
+\item Again assuming $f \sim \GPzk$, we get
+$$\begin{bmatrix}
+\fv \\ f_\ast
+\end{bmatrix} \sim  
+\normal \left(\zero, \begin{bmatrix} \Kmat & \ks \\ \ks^T & \kss\end{bmatrix}\right)$$
+with $\ks = [k(\xs, \xi[1]), \dots, k(\xs, \xi[n])]^T$,  $ \kss\ = k(\xs, \xs)$
+\item General rule for conditioning of Gaussian RVs
+\begin{itemize}
+\item $\bm{z} \sim \normal(\muv, \Sigma)$, partition $\bm{z} = (\bm{z}_1^T, \bm{z}_2^T)^T$ s.t. $\bm{z}_1 \in \R^{m_1}, \bm{z}_2 \in \R^{m_2}$, $$\muv = (\muv_1^T, \muv_2^T)^T, \quad \Sigma = \begin{bmatrix} \Sigma_{11} & \Sigma_{12} \\ \Sigma_{21} & \Sigma_{22} \end{bmatrix} $$
+\item Conditional distribution $\bm{z}_2 ~|~ \bm{z}_1 = \bm{a}$ is also Gaussian 
+$$\normal(\muv_2 + \Sigma_{21} \Sigma_{11}^{-1} (\bm{a} - \muv_1), \Sigma_{22} - \Sigma_{21}\Sigma_{11}^{-1} \Sigma_{12})$$
+\end{itemize}
+\item Apply to posterior process given $\fv$ observed $$f_* ~|~ \xs, \Xmat, \fv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post}) := \normal(\ks^{T}\Kinv\fv, \kss - \ks^T \Kmat ^{-1}\ks)$$
+\item \textbf{Maximum-a-posteriori (MAP)} estimate: $\ks^{T}\Kinv\fv$
+\end{framei}
+
+\begin{framei}[sep=L]{example: 2 points}
+\item Single training point $(\xv, f(\xv)) = (-0.5,1)$, test point $\xs = 0.5$
+\item 0-mean GP with $k(\xv, \tilde{\xv}) = \exp(-\tfrac{1}{2} \| \xv - \tilde{\xv} \|^2)$ leads to 
+$$\begin{bmatrix} \fv \\ f_* \end{bmatrix} \sim \normal\left(\zero, \begin{bmatrix} 1 & 0.61 \\ 0.61 & 1\end{bmatrix}\right)$$
+\item Assuming we observe $\fx = 1$, compute posterior distribution
+\begin{eqnarray*}
+    f_* ~|~ \xs, \xv, \fv &\sim& \normal(\ks^{T}\Kinv \fv, \kss - \ks^T \Kinv\ks) \\
+    &\sim& \normal(0.61 \cdot 1 \cdot 1, 1 - 0.61 \cdot 1 \cdot 0.61) \\
+    &\sim& \normal\left(0.61, 0.63\right) 
+  \end{eqnarray*}
+\item MAP-estimate: $f(\xs) = 0.61$, uncertainty estimate: $0.63$
+\end{framei}
+
+\foreach \i in {2, 4, 5, 6} {
+\begin{framei}{example: 2 points}
+\ifnum \i=2
+\item Bivariate normal density + marginals for joint distribution of $f, f_*$
+\fi \ifnum \i=4
+\item Update posterior distribution, conditioning on observed value
+\fi \ifnum \i>4
+\item Posterior mean: MAP estimate
+\ifnum \i=6
+\item Posterior uncertainty: $\pm2$ posterior SD (grey)
+\fi \fi
+\vfill
+\imageC[.8]{figure/gp_pred/\i.pdf}
+\end{framei}
+}
+\begin{framei}[sep=L]{GP is distributional regression}
+\item We have $\fv$ observed $$f_* ~|~ \xs, \Xmat, \fv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post}) := \normal(\ks^{T}\Kinv\fv, \kss - \ks^T \Kmat ^{-1}\ks)$$
+\item Defines full \textbf{distributional regression} approach
+\item At each $\xv_*$ get predictive distrib. instead of only point-wise preds
+\vfill
+\imageC[.8]{figure/gp_pred/gp_interpolator_distrib.pdf}
+\end{framei}
+
+\begin{framei}[sep=L]{multiple test points}
+\item Now consider multiple test points
+$$\fv_* = [f(\xi[1]_*), ..., f(\xi[m]_*)]$$
+\item Joint distribution (under zero-mean GP) becomes
+$$
+    \begin{bmatrix} \fv \\ \fv_* \end{bmatrix} \sim  
+    \normal\left(\zero, \begin{bmatrix} \Kmat & \Ks \\ \Ks^T & \Kss \end{bmatrix}\right)
+  $$
+with $\Ks = (k(\xi, \xs^{(j)}))_{i,j}$, $\Kss = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
+\item Again, employ rule of conditioning for Gaussians to get \textbf{posterior}
+$$\fv_* ~|~ \Xmat_*, \Xmat, \fv \sim \normal(\Ks^{T}\Kinv\fv, \Kss - \Ks^T \Kmat ^{-1}\Ks)$$
+\item Allows to compute correlations between test points + draw samples from posterior process
+\end{framei}
+
+\begin{framei}[sep=L]{GP as interpolator}
+\item MAP ``prediction'' for training point is exact function value
+\begin{eqnarray*}
+\fv ~|~ \Xmat, \fv &\sim& \normal(\Kmat\Kinv\fv, \Kmat - \Kmat^T \Kinv \Kmat) \\ &\sim& \normal(\fv, \zero)
+\end{eqnarray*}
+\item Implication: GP is function \textbf{interpolator} (if unique points in $\Xmat$)
+\vfill
+\imageC[.8]{figure/gp_pred/gp_interpolator.pdf}
+\end{framei}
+
+\begin{framei}[sep=L]{gp as spatial model}
+\item Spatial property: output correlation depends on input distance
+\item E.g., squared exponential kernel $k(\xv, \tilde{\xv}) = \exp \left(-\frac{\| \xv - \tilde{\xv} \|^2}{2\ls^2} \right)$
+\item Strongly correlated predictions for points with spatial proximity
+\item High posterior uncertainty for far-away points (0 at training locs)
+\vfill
+\splitV{
+\imageC[1]{figure/gp_pred/post_mean.pdf}
+}{
+\imageC[1]{figure/gp_pred/post_variance.pdf}
+}
+\end{framei}
+
+\begin{framei}[sep=M]{noisy GP}
+\item GP as interpolator: implicitly assumed access to true function value $\fx$ $\Rightarrow$ 0 uncertainty at training points
+\item Reality: noisy version
+$y = \fx + \eps, \eps \sim\normal(0, \sigma^2)$
+\item Covariance becomes 
+\begin{eqnarray*} 
+&&\cov(y^{(i)}, y^{(j)}) \\ &=&  \cov (f(\xi) + \epsilon^{(i)}, f(\xi[j]) + \epsilon^{(j)}) \\
+&=& \cov(f(\xi), f(\xi[j])) + 2 \cdot \cov(f(\xi), \epsilon^{(j)}) + \cov(\epsilon^{(i)}, \epsilon^{(j)}) 
+\\ &=& \kxij + \sigma^2 \delta_{ij}
+\end{eqnarray*}
+\item $\delta_{ij}$ = Kronecker delta
+\item $\sigma^2$ often called \textbf{nugget} $\Rightarrow$ estimate during training
+\end{framei}
+
+\begin{framei}[sep=L]{predictive distribution for noisy GP}
+\item Let $f \sim \GPzk$, $\Xmat = \xdat$
+\item Prior predictive distribution for $\yv$
+$$
+\yv = (\yi[1], \dots, \yi[n])^T
+% \begin{pmatrix} \yi[1] \\ \yi[2] \\ \vdots \\ \yi[n] \end{pmatrix} 
+\sim \normal\left(\bm{0}, \Kmat + \sigma^2 \id_n \right),
+$$
+with $\mv = \bm{0}, \Kmat = k(\Xmat, \Xmat)$
+\item Consider joint distribution of training $(\Xmat, \yv$) and test points $(\Xmat_*, \fv_*)$
+$$
+\begin{bmatrix} \yv \\ \fv_* \end{bmatrix} \sim  
+\normal\left(\zero, \begin{bmatrix} \Kmat + \sigma^2 \id_n & \Ks \\ \Ks^T & \Kss \end{bmatrix}\right)
+$$
+with (as before) $\Ks = (k(\xi, \xs^{(j)}))_{i,j}$, $\Kss = (k(\xi[i]_*, \xi[j]_*))_{i,j}$
+\item \textbf{NB}: Since we work with $\fv_*$ and not $\yv_*$ there is no $\sigma$ in $\Kss$
+\end{framei}
+
+\begin{framei}[sep=M]{predictive distribution for noisy GP}
+\item Again, employ rule of conditioning for Gaussians 
+\begin{eqnarray*}
+\fv_* ~|~ \Xmat_*, \Xmat, \yv \sim \normal(\mv_{\text{post}}, \Kmat_\text{post})
+\end{eqnarray*}
+with 
+$\mv_{\text{post}} = \Ks^{T} (\Kmat+ \sigma^2 \cdot \id)^{-1}\yv$, 
+$\Kmat_\text{post} = \Kss - \Ks^T (\Kmat  + \sigma^2 \cdot \id)^{-1}\Ks$
+\item Recovers noise-free case for $\sigma^2 = 0$
+\item Noisy GP: no longer an interpolator 
+\item Posterior uncertainty increases with nugget (wider ``band'')
+\vfill
+\imageC[.7]{figure/gp_pred/gp_regression.pdf}
+\end{framei}
+
+\begin{framei}[sep=M]{risk minimization for GP}
+\item Recall: theoretical risk for unseen obs based on loss function $L$
+$$\riskf := \E_{xy} [\Lxy] = \int \Lxy \text{d}\Pxy$$ 
+\item No access to $\Pxy$ $\Rightarrow$ compute empirical risk over training data $$\riske(f) := \sumin \Lxyi$$ 
+\item For GPs, make use of posterior predictive distribution over $y$
+$$
+    \mathcal{R}(y_* ~|~ \xs) \approx \int L(\tilde y_*, y_*) p(\tilde y_*~|~\xs, \D)d\tilde y_*
+  $$
+\item Intuition: expected loss weighted by posterior probability of each $\tilde y_*$ given observed data
+\item Optimal prediction wrt loss function
+$$
+    \yh_* | \xs = \argmin_{y_*} \mathcal{R}(y_*~|~ \xs)
+  $$
+\end{framei}
+
+% In practical applications, we are often forced to make predictions. We need a point-like prediction that is \enquote{optimal} in some sense. 
+
+% \lz
+
+% We define \enquote{optimality} with respect to some loss function
+
+% $$
+% L(y_\text{true}, y_\text{guess}). 
+% $$
+
+% \vfill
+
+% \begin{footnotesize}
+% Notice that we computed the predictive distribution without reference to the loss function. In non-Bayesian paradigms, the model is typically trained by minimizing the empirical risk (or loss). In contrast, in the Bayesian setting there is a clear separation between the likelihood function (used for training in addition to the prior) and the loss function.
+% \end{footnotesize}
+
+% \framebreak 
+
+% As we do not know the true value $y_\text{true}$ for our test input $\bm{x}_*$, we minimize w.r.t. to the expected loss called \textbf{risk} w.r.t. our model's opinion as to what the truth might be
+
+% $$
+% \mathcal{R}(y_\text{guess} | \bm{x}_*) = \int L(y_*, y_\text{guess}) p(y_*|\bm{x}_*, \D)dy_*. 
+% $$
+
+% Our best guess w.r.t. $L$ is then
+
+% $$
+% $$
+
+% For quadratic loss $L(y, y^\prime) = (y - y^\prime)^2$ this corresponds to the posterior mean. 
+
+% \end{vbframe}
+
+
+\endlecture
+\end{document}

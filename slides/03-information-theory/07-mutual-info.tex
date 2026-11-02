@@ -1,0 +1,288 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+
+
+\begin{document}
+    
+\titlemeta{% Lecture title  
+    Joint Entropy and Mutual Information I
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/entropy_plot.png
+  }{
+  \item Know the joint entropy
+  \item Know conditional entropy as remaining uncertainty 
+  \item Know mutual information as the amount of information of an RV obtained by another
+}
+
+\begin{vbframe}{Joint entropy}
+\begin{itemize}
+  \item Recap: The \textbf{joint entropy} of two discrete RVs $X$ and $Y$ with joint pmf $p(x, y)$ is:
+  $$ H(X,Y) = -\sum_{x \in \Xspace} \sum_{y \in \Yspace}  p(x,y) \log(p(x,y)),$$ 
+  which can also be expressed as $$ H(X,Y) = -\E \left[ \log(p(X,Y)) \right].$$
+  % where $I(x,y)$ is the self-information of $(x,y)$.
+  % \item Intuitively, the joint entropy is a measure of the total uncertainty in the two variables $X$ and $Y$. In other words, it is simply the entropy of the joint distribution p(x,y).
+  % \item $H(X,Y)$ is always non-negative.
+  %\item $H(X,Y) \leq H(X) + H(Y)$, with equality if $X$ and $Y$ are independent.
+  % \framebreak
+  % \item More generally,
+  % \begin{footnotesize}
+  % $$ H(X_1, X_2, \ldots, X_n) = - \sum_{x_1 \in \Xspace_1} \ldots \sum_{x_n \in \Xspace_n} p(x_1,x_2, \ldots, x_n) \log_2(p(x_1,x_2, \ldots, x_n)) $$ 
+  % \end{footnotesize}
+  \item For continuous RVs $X$ and $Y$ with joint density $p(x,y)$, the differential joint entropy is:\\
+  $$ h(X,Y) = - \int_{\Xspace \times \Yspace} p(x,y) \log p(x,y) dx dy$$
+\end{itemize}
+
+\begin{footnotesize}
+For the rest of the section we will stick to the discrete case. Pretty much everything we show and discuss works in a completely analogous manner for the continuous case - if you change sums to integrals.
+\end{footnotesize}
+
+\end{vbframe}
+
+\begin{vbframe}{Conditional entropy}
+\begin{itemize}
+
+\item The \textbf{conditional entropy} $H(Y|X)$ quantifies the uncertainty of $Y$ that remains if the outcome of $X$ is given.
+
+\item $H(Y|X)$ is defined as the expected value of the entropies of the conditional distributions, averaged over the conditioning RV.
+\item If $(X, Y) \sim p(x, y)$, the conditional entropy $H (Y|X)$ is defined as
+
+% $$
+% H(Y|X) = \sum_{x \in \Xspace} p_x(x) H(Y|X=x) \overset{(*)}{=} H(Y, X) - H(X).
+% $$
+
+\vspace{-0.2cm}
+\footnotesize
+\begin{equation*}\begin{aligned}
+H(Y | X) &= \E_X[H(Y|X=x)] = \sum_{x \in \Xspace} p(x) H(Y | X=x) \\
+&=-\sum_{x \in \Xspace} p(x) \sum_{y \in \Yspace} p(y | x) \log p(y | x) \\
+&=-\sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log p(y | x) \\
+&=-\E \left[\log p(Y | X) \right]. 
+\end{aligned}\end{equation*}
+\normalsize
+
+\item For the continuous case with density $f$ we have $$h(Y|X) = - \int f(x,y) \log f(x|y) dx dy.$$
+\end{itemize}
+
+\end{vbframe}
+
+
+
+\begin{vbframe} {Chain rule for entropy}
+The \textbf{chain rule for entropy} is analogous to the chain rule for probability and derives directly from it.
+$$H(X, Y)=H(X)+H(Y | X)$$
+\footnotesize
+\textbf{Proof:}
+%\begin{equation*}
+$\begin{aligned}[t]
+H(X, Y) &=-\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log p(x, y) \\
+&=-\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log p(x) p(y | x) \\
+&=-\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log p(x)-\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log p(y | x) \\
+&=-\sum_{x \in \mathcal{X}} p(x) \log p(x)-\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log p(y | x) \\
+&=H(X)+H(Y | X)
+\end{aligned}
+$
+\normalsize
+%\end{equation*}
+
+\lz
+
+n-variable version:
+$$H\left(X_{1}, X_{2}, \ldots, X_{n}\right)=\sumin H\left(X_{i} | X_{i-1}, \ldots, X_{1}\right).$$
+
+
+%\log p(X, Y)=\log p(X)+\log p(Y | X)
+
+% \textbf{Remarks:}
+% \begin{itemize}
+% \item From the proof follows that: $H(X, Y | Z)=H(X | Z)+H(Y | X, Z)$
+% \item Note that $H(Y | X) \neq H(X | Y) ,$ although $H(X)-H(X | Y)=$
+% $H(Y)-H(Y | X).$
+% \end{itemize}
+% \normalsize
+
+  % \begin{itemize}
+  %   \item The \textbf{chain rule for entropy} is analogous to the chain rule for probability and, in fact, derives directly from it.
+  %   \item Using $p(x,y) = p(x|y)p(y) = p(y|x)p(x)$, the \enquote{self-information chain rule} is:
+  % \end{itemize}
+  %   \begin{equation*}
+  %     \begin{array}{c}{-\log _{2} p(x, y)=-\log _{2} p(x | y)-\log _{2} p(y)=-\log _{2} p(y | x)-\log _{2} p(x)} \\ {I(x, y)=I(x | y)+I(y)=I(y | x)+I(x)}
+  %     \end{array}
+  % \end{equation*}
+  % \begin{itemize}
+  %   \item Taking the expectation, we arrive at the chain rule:
+  % 
+  %  \begin{equation*}
+  %    \begin{aligned} 
+  %      \mathbb{E}_{X, Y}[I(X, Y)] &=\mathbb{E}_{X, Y}[I(X | Y)]+\mathbb{E}_{X, Y}[I(Y)] \\ &=\mathbb{E}_{X, Y}[I(Y | X)]+\mathbb{E}_{X, Y}[I(X)] \Longleftrightarrow \\ H(X, Y) &=H(X | Y)+H(Y) \\ &=H(Y | X)+H(X)
+  %    \end{aligned}
+  %  \end{equation*}
+  %  where $H(X | Y)$ and $H(Y | X)$ are the \textbf{conditional entropies.}
+  % \end{itemize}
+\end{vbframe}
+
+% \begin{vbframe} {Chain rule for entropy (n variables)}
+
+
+% For the case of n variables, let $X_{1}, X_{2}, \ldots, X_{n}$ be drawn according to $p\left(x_{1}, x_{2}, \ldots, x_{n}\right).$ Then
+
+% $$H\left(X_{1}, X_{2}, \ldots, X_{n}\right)=\sumin H\left(X_{i} | X_{i-1}, \ldots, X_{1}\right).$$
+
+% \textbf{Proof:$\quad$} By repeated application of the two-variable expansion rule for entropies, we have
+
+% \footnotesize
+% \begin{equation*}
+% \begin{aligned}
+% H\left(X_{1}, X_{2}\right) &=H\left(X_{1}\right)+H\left(X_{2} | X_{1}\right) \\
+% H\left(X_{1}, X_{2}, X_{3}\right) &=H\left(X_{1}\right)+H\left(X_{2}, X_{3} | X_{1}\right)
+% \\
+% \vdots \\
+% &=H\left(X_{1}\right)+H\left(X_{2} | X_{1}\right)+H\left(X_{3} | X_{2}, X_{1}\right)\\
+% H\left(X_{1}, X_{2}, \ldots, X_{n}\right) &=H\left(X_{1}\right)+H\left(X_{2} | X_{1}\right)+\cdots+H\left(X_{n} | X_{n-1}, \ldots, X_{1}\right) \\
+% &=\sumin H\left(X_{i} | X_{i-1}, \ldots, X_{1}\right).
+% \end{aligned}
+% \end{equation*}
+% \normalsize
+% \end{vbframe}
+
+\begin{vbframe} {Joint and Conditional entropy}
+
+The following relations hold:
+
+\begin{equation*}
+\begin{aligned}
+H(X, X)       &= H(X)  \\
+H(X | X)      &= 0  \\
+H( (X, Y) | Z)   &=H(X | Z)+H(Y | (X, Z))\\
+\end{aligned}
+\end{equation*}
+
+Which can all be trivially derived from the previous considerations.
+
+\lz
+
+Furthermore, if $H(X|Y) = 0$ and $X,Y$ are discrete RV, then $X$ is a function of $Y$, so for all $y$ with $p(y)>0$, there is only one $x$ with $p(x,y)>0$. 
+Proof is not hard, but also not completely trivial.
+\end{vbframe}
+
+\begin{vbframe} {Mutual information}
+
+%The \textbf{relative entropy} $D(p||q)$ (or Kullback-Leibler Divergence) is a measure of the inefficiency of assuming that the distribution is $q$ when the true distribution is $p$: 
+% 
+% \footnotesize
+% \begin{equation*}\begin{aligned}
+% D(p \| q) &=\sum_{x \in \Xspace} p(x) \log \frac{p(x)}{q(x)} 
+% =\E_{p} \log \frac{p(X)}{q(X)}
+% \end{aligned}\end{equation*}
+% \normalsize
+
+\begin{itemize}
+\item The MI describes the amount of info about one RV obtained through another RV or how different their joint distribution is from pure independence.
+\item Consider two RVs $X$ and $Y$ with a joint pmf $p(x, y)$ and marginal pmfs $p(x)$ and $p(y)$. The MI $I (X;Y)$ is the Kullback-Leibler Divergence between the joint distribution and the product distribution $p(x)p(y)$:
+\footnotesize
+\begin{equation*}\begin{aligned}
+I(X ; Y) &=\sum_{x \in \Xspace} \sum_{y \in \Yspace} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
+&=D_{KL}(p(x, y) \| p(x) p(y)) \\
+&=\E_{p(x, y)} \left[ \log \frac{p(X, Y)}{p(X) p(Y)} \right].
+\end{aligned}\end{equation*}
+\normalsize
+
+\item For two continuous random variables with joint density $f(x,y)$:
+
+\footnotesize
+\begin{equation*}\begin{aligned}
+I(X ; Y) &= \int f(x,y) \log \frac{f(x,y)}{f(x)f(y)} dx dy.
+\end{aligned}
+\end{equation*}
+\normalsize
+
+\end{itemize}
+
+\end{vbframe}
+
+\begin{vbframe} {Mutual information}
+
+We can rewrite the definition of mutual information $I(X;Y)$ as
+
+\begin{equation*}\begin{aligned}
+I(X ; Y) &=\sum_{x, y} p(x, y) \log \frac{p(x, y)}{p(x) p(y)} \\
+&=\sum_{x, y} p(x, y) \log \frac{p(x | y)}{p(x)} \\
+&=-\sum_{x, y} p(x, y) \log p(x)+\sum_{x, y} p(x, y) \log p(x | y) \\
+&=-\sum_{x} p(x) \log p(x)-\left(-\sum_{x, y} p(x, y) \log p(x | y)\right) \\
+&=H(X)-H(X | Y).
+\end{aligned}\end{equation*}
+
+So, $I(X;Y)$ is reduction in uncertainty of $X$ due to knowledge of $Y$.
+
+\end{vbframe}
+
+\begin{vbframe} {Mutual information}
+
+The following relations hold:
+
+\begin{equation*}
+\begin{aligned}
+I(X ; Y) &= H(X) - H(X | Y) \\
+I(X ; Y) &= H(Y) - H(Y | X) \\
+I(X ; Y) &\leq \min\{H(X),H(Y)\} \text { if $X,Y$ are discrete RVs}\\
+I(X ; Y) &= H(X) + H(Y) - H(X, Y) \\
+I(X ; Y) &= I(Y ; X) \\
+I(X ; X) &= H(X)\\
+\end{aligned}
+\end{equation*}
+
+All of the above are trivial to prove.
+
+% The mutual information of $X$ and $Y$, $I(X;Y)$, corresponds to the intersection of the
+% information in $X$ with the information in $Y$.
+
+\end{vbframe}
+
+\begin{vbframe} {Mutual information - example}
+
+Let $X, Y$ have the following joint distribution:
+
+\begin{table}[]
+  \begin{tabular}{c|c|c|c|c|}
+    & $X_1$ & $X_2$ & $X_3$ & $X_4$ \\ 
+    \hline
+    $Y_1$ & $\frac{1}{8}$ & $\frac{1}{16}$ & $\frac{1}{32}$ & $\frac{1}{32}$ \\
+    \hline
+    $Y_2$ & $\frac{1}{16}$ & $\frac{1}{8}$ & $\frac{1}{32}$ & $\frac{1}{32}$ \\
+    \hline
+    $Y_3$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ & $\frac{1}{16}$ \\
+    \hline
+    $Y_4$ & $\frac{1}{4}$ & 0 & 0 & 0 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\lz
+
+Marginal distribution of $X$ is $(\frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8})$ and marginal distribution of $Y$ is $(\frac{1}{4}, \frac{1}{4}, \frac{1}{4}, \frac{1}{4})$, and hence $H(X) = \frac{7}{4}$ bits and $H(Y) = 2$ bits.
+
+\framebreak
+
+The conditional entropy $H(X|Y)$ is given by:
+
+\begin{equation*}
+  \begin{aligned}
+    H(X|Y) &= \sum_{i = 1}^4 p(Y = i) H(X | Y = i) \\
+    &= \frac{1}{4} H \left( \frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{8} \right) +     \frac{1}{4} H \left( \frac{1}{4}, \frac{1}{2}, \frac{1}{8}, \frac{1}{8} \right) \\
+    &+ \frac{1}{4} H \left( \frac{1}{4}, \frac{1}{4}, \frac{1}{4}, \frac{1}{4} \right) +     \frac{1}{4} H \left(1,0,0,0 \right) \\
+    &=  \frac{1}{4} \cdot \frac{7}{4} + \frac{1}{4} \cdot \frac{7}{4} + \frac{1}{4} \cdot     2 + \frac{1}{4} \cdot 0 \\
+    &= \frac{11}{8} \text{ bits}.
+  \end{aligned}
+\end{equation*}
+
+Similarly, $H(Y|X) = \frac{13}{8}$ bits and $H(X,Y) = \frac{27}{8}$ bits.
+
+\end{vbframe}
+
+
+\endlecture
+\end{document}
+
+
+

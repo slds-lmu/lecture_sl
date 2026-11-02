@@ -1,0 +1,289 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+
+
+\begin{document}
+
+\titlemeta{% Lecture title  
+    Bayesian Priors
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/bayes_prior.png
+  }{
+  \item RRM is same as MAP in Bayes
+  \item Gaussian/Laplace prior corresponds to $L2/L1$ penalty
+}
+
+
+%-------------------------------------------------------------------------------
+
+% \section{Regularization from a Bayesian Perspective}
+
+\begin{vbframe} {RRM vs. Bayes}
+
+We already created a link between max. likelihood estimation and ERM.
+
+\lz 
+
+Now we will generalize this for RRM.
+
+\lz
+
+Assume we have a parameterized distribution $p(y | \thetav, \xv)$ for our data and 
+a prior $q(\thetav)$ over our param space, all in Bayesian framework.
+
+\lz \lz
+
+From Bayes theorem:
+
+$$
+p(\thetav | \xv, y) = \frac{p(y | \thetav, \xv) q(\thetav) }{p(y | \xv)} \propto 
+p(y | \thetav, \xv) q(\thetav)
+$$
+
+\framebreak
+
+The maximum a posteriori (MAP) estimator of $\thetav$ is now the minimizer of
+
+$$
+- \log p\left(y ~|~ \thetav, \xv\right) - \log q(\thetav).
+$$
+
+\begin{itemize}
+  \item Again, we identify the loss $\Lxyt$ with $-\log(p(y | \thetav, \xv))$.
+  \item If $q(\thetav)$ is constant (i.e., we used a uniform, non-informative 
+  prior), the second term is irrelevant and we arrive at ERM.
+  \item If not, we can identify $J(\thetav) \propto -\log(q(\thetav))$, i.e., 
+  the log-prior corresponds to the regularizer, and the additional $\lambda$, which controls the strength of our
+  penalty, usually influences the peakedness / inverse variance / strength of our prior.
+\end{itemize}
+
+\framebreak
+
+\begin{figure}
+  \centering
+  \scalebox{1}{\includegraphics[width=\textwidth]{figure/bayes_prior.png}}
+\end{figure}
+
+{\footnotesize
+\begin{itemize}
+  \item $L2$ regularization corresponds to a zero-mean Gaussian prior with 
+  constant variance on our parameters:
+  $\theta_j \sim \mathcal{N}(0, \tau^2)$ 
+  % ~ \forall j \in \{1, \dots , d\}$, $\tau > 0$.
+  \item $L1$ corresponds to a zero-mean Laplace prior: 
+  $\theta_j \sim \mathit{Laplace}(0,b)$.
+  $\mathit{Laplace}(\mu, b)$ has density $\frac{1}{2b}\exp(-\frac{|\mu-x|}{b})$, 
+  with scale parameter $b$, mean $\mu$ and variance $2b^2$.
+  \item In both cases, regularization strength increases as  
+  variance of prior decreases: more prior mass concentrated around 0 encourages shrinkage.
+  \item Elastic-net regularization corresponds to a compromise between Gaussian and Laplacian priors \furtherreading {ZOUHASTIE}
+  \furtherreading {HANS2011}
+\end{itemize}
+ }
+ 
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Example: Bayesian L2 regularization}
+
+\small We can easily see the equivalence of $L2$ regularization and a Gaussian 
+prior:
+
+\begin{itemize}
+  \small
+  \item Gaussian prior $\mathcal{N}_d(\bm{0}, \mathit{diag}(\tau^2))$ with uncorrelated components for $\thetav$:
+  \begin{footnotesize}
+    $$q(\thetav) = \prod_{j = 1}^d  \phi_{0,\tau^2}(\theta_j) 
+    = (2\pi\tau^2)^{-\frac{d}{2}} \exp \left( - \frac{1}{2\tau^2} \sum_{j = 1}^d 
+    \theta_j^2 \right)$$
+  \end{footnotesize} 
+  \item MAP:
+  \begin{footnotesize}
+  \begin{eqnarray*}
+    \thetah^{\text{MAP}} &=& \argmin_{\thetav} \left(
+    - \log p\left(y ~|~ \thetav, \xv \right) - \log q(\thetav)
+    \right) \\
+    &=& \argmin_{\thetav} \left(
+    - \log p\left(y ~|~ \thetav, \xv \right) + \tfrac{d}{2} \log(2\pi \tau^2) +
+    \frac{1}{2\tau^2} \sum_{j = 1}^d \theta_j^2
+    \right) \\
+    % &=& \argmin_{\thetav} \left(
+    % - \log p\left(\xv ~|~ \thetav\right) + \frac{1}{2\tau^2} {\thetav}^T\thetav 
+    % \right) \\
+    &=& \argmin_{\thetav} \left(
+    - \log p\left(y ~|~ \thetav, \xv \right) + \frac{1}{2\tau^2} \| \thetav \|_2^2
+    \right)
+  \end{eqnarray*}
+  \end{footnotesize} 
+  % \item $\frac{1}{\tau^2}$ controls prior precision, i.e., inverse variance, 
+  % and thus the amount of shrinkage.
+  \item We see how the inverse variance (precision) $1/\tau^2$ controls shrinkage
+  % (e.g., for linear Ridge regression with 
+  % $\epsilon \sim \mathcal{N}(0, \sigma^2)$ we set 
+  % $\lambda = \frac{\sigma^2}{\tau^2}$).
+\end{itemize}
+
+\framebreak
+
+\begin{itemize}
+    \item DGP $y = \theta + \varepsilon$ where $\varepsilon \sim \mathcal{N}(0,1)$ and $\theta=1$;\\
+    with Gaussian prior on $\theta$, so $\mathcal{N}(0, \tau^2)$ for $\tau \in \{0.25, 0.5, 2\}$
+    \item For $n=20$, posterior of $\theta$ and MAP can be calculated analytically
+    \item Plotting the $L2$ regularized empirical risk $\riskr(\theta) = \sum_{i=1}^{n} (y_i-\theta)^2+\lambda \theta^2$ with $\lambda = 1/\tau^2$ shows that ridge solution is identical with MAP
+    \item In our simulation, the empirical mean is $\Bar{y}=0.94$, with shrinkage toward $0$ induced in the MAP
+\end{itemize}
+
+\begin{figure}
+  \centering
+  \scalebox{1}{\includegraphics[width=0.95\textwidth]{figure/bayes-plot-posterior.png}}
+\end{figure}
+  
+  % \item The conditional distribution of $\ydat$ in linear regression with 
+  % Gaussian errors $\epsilon^{(i)} \sim \mathcal{N}(0, \sigma^2) ~ \forall i \in 
+  % \setn$, $\sigma > 0$, is also Gaussian: 
+  % \begin{footnotesize}
+  % $$- \log p\left(\ydat ~|~ \xv, \thetav\right) = \frac{n}{2} \log (2\pi 
+  % \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi - \fxit \right)^2.$$
+  % \end{footnotesize}
+
+% &=& \argmin_{\thetav} \left(
+% \tfrac{n}{2} \log (2\pi \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi -
+% \fxit \right)^2 + \tfrac{p}{2} \log(2\pi \tau^2) +
+% \frac{1}{2\tau^2} \sumjp \theta_j^2
+% \right) \\
+% &=& \argmin_{\thetav} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
+% \fxit \right)^2 + \frac{1}{\tau^2} \sumjp \theta_j^2 \right) \\
+% &=& \argmin_{\thetav} \left(
+% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetav\right)^\top \left(\ydat - \Xmat
+% \thetav\right) + \frac{1}{\tau^2} {\thetav}^T\thetav
+% \right)
+
+% \begin{eqnarray*}
+% \thetah^{\text{MAP}} &=& argmin_{\thetav} \left(
+% - \log p\left(\ydat ~|~ \xv, \thetav\right) - \log q(\thetav)
+% \right) \\
+% 
+% &=& \argmin_{\thetav} \left(
+% \tfrac{n}{2} \log (2\pi \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi -
+% \fxit \right)^2 + \tfrac{p}{2} \log(2\pi \tau^2) +
+% \frac{1}{2\tau^2} \sumjp \theta_j^2
+% \right) \\
+% &=& \argmin_{\thetav} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
+% \fxit \right)^2 + \frac{1}{\tau^2} \sumjp \theta_j^2 \right) \\
+% &=& \argmin_{\thetav} \left(
+% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetav\right)^\top \left(\ydat - \Xmat
+% \thetav\right) + \frac{1}{\tau^2} {\thetav}^T\thetav
+% \right)
+% 
+% &=& \argmin_{\thetav} \left(
+% \tfrac{n}{2} \log (2\pi \sigma^2) + \frac{1}{2\sigma^2} \sumin \left(\yi -
+% \fxit \right)^2 + \tfrac{p}{2} \log(2\pi \tau^2) +
+% \frac{1}{2\tau^2} \sumjp \theta_j^2
+% \right) \\
+% &=& \argmin_{\thetav} \left( \frac{1}{\sigma^2} \sumin \left(\yi -
+% \fxit \right)^2 + \frac{1}{\tau^2} \sumjp \theta_j^2 \right) \\
+% &=& \argmin_{\thetav} \left(
+% \frac{1}{\sigma^2} \left(\ydat - \Xmat \thetav\right)^\top \left(\ydat - \Xmat
+% \thetav\right) + \frac{1}{\tau^2} {\thetav}^T\thetav
+% \right)
+% \end{eqnarray*}
+
+% \footnotesize
+% Now, define $\lambda := \frac{\sigma^2}{\tau^2}$ -- note how higher prior 
+% precision (i.e., lower variance) increases shrinkage! -- and set the derivative 
+% to 0:
+% 
+% \begin{scriptsize}
+% \begin{eqnarray*}
+% 0 &=& \frac{1}{\lambda \tau^2} \left( - {\Xmat}^T \ydat + \thetav {\Xmat}^T \Xmat
+% \right) + \frac{\lambda}{\sigma^2} \thetav
+% \quad \Leftrightarrow \quad 0 = \frac{\sigma^2}{\tau^2} \left( - {\Xmat}^T \ydat 
+% + \thetav {\Xmat}^T \Xmat \right) + \lambda^2 \thetav \\
+% 0 &=&  - {\Xmat}^T \ydat + \thetav {\Xmat}^T \Xmat + \lambda \thetav 
+% \quad \Leftrightarrow \quad 
+% \thetav(\Xmat^T \Xmat  + \lambda \id) = {\Xmat}^T \ydat
+% \end{eqnarray*}
+% \end{scriptsize}
+% 
+% $\Rightarrow \thetah^{\text{MAP}} = 
+% (\Xmat^T \Xmat  + \lambda \id)^{-1} \Xmat^T\ydat  = \thetah^{\text{Ridge}}.$
+
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+% \begin{vbframe} {Minimum Description Length}
+
+% MDL principle
+
+% \begin{itemize}
+%   \item (Compress data using using fewer symbols than literal)
+%   \item (In the MDL framework, learning is seen as data compression)
+%   \item (More we compress, more we learn. Therefore, pick the hypothesis which results in the shortest code.)
+%   \item (Occam's razor, principle of parsimony)
+%   \item (All else being equal, a simpler explanation is better than a complex one.)
+% \end{itemize}
+
+% % \begin{equation}
+% %     \begin{aligned}
+% %     H_{\mathrm{mdl}} & :=\underset{H \in \mathcal{H}}{\arg \min }\left(L(H)+L_{H}(D)\right) \\
+% %     L_{\mathrm{mdl}}(D) & :=\min _{H \in \mathcal{H}}\left(L(H)+L_{H}(D)\right)
+% %   \end{aligned}
+% % \end{equation}
+
+% \framebreak
+
+% \begin{itemize}
+%   \item There is a correspondence between the length of a message L(x) and the distribution P(x)
+%   $$P(x)=2^{-L(x)}, \quad L(x)=-\log _{2} P(x)$$
+%   \item Two-part code : parameter block and data block
+%   \item $L(H)$ is the length of a specific hypothesis in the set.
+%   \item $L(D|H)$ is the length of the data encoded under H.
+%   \item $L(D,H) = L(H) + L(D|H)$
+%   \item (Represents a tradeoff between goodness-of-fit and complexity)
+% \end{itemize}
+
+% \framebreak
+
+% Regression example : $Y_{i}=f\left(X_{i}\right)+\epsilon_{i} \text { for } i=1, \ldots, n \text { where } \epsilon_{i} \stackrel{i i d}{\sim} \mathcal{N}\left(0, \sigma^{2}\right)$
+
+% For a given dataset, the length of the encoding is :
+
+% $$\log 1 / p_{Y | X}\left(y^{n} | x^{n}\right) = \log \left(\sqrt{2 \pi \sigma^{2}} e^{\frac{1}{2 \sigma^{2}} \sum_{i=1}^{n}\left(y_{i}-f\left(x_{i}\right)\right)^{2}}\right) \propto \sum_{i=1}^{n}\left(y_{i}-f\left(x_{i}\right)\right)^{2}$$
+
+% \lz
+
+% The two-stage MDL procedure to pick the best hypothesis is :
+
+% $$f_{\gamma}=\arg \min _{f \in F_{\gamma}}\left[L(f)+\frac{1}{n} \sum_{i=1}^{n}\left(Y_{i}-f\left(X_{i}\right)\right)^{2}\right]$$
+
+% This is equivalent to regularized least squares.
+% \end{vbframe}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%          REFERENCES          %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{vbframe}
+% \frametitle{References}
+% \footnotesize{
+% \begin{thebibliography}{99}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \bibitem[Ian Goodfellow et al., 2016]{5} Ian Goodfellow, Yoshua Bengio and Aaron Courville (2016)
+% \newblock Deep Learning
+% \newblock \emph{\url{http://www.deeplearningbook.org/}}
+
+% \end{thebibliography}
+% }
+% \end{vbframe}
+
+
+\endlecture
+\end{document}
+

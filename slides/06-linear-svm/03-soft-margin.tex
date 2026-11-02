@@ -1,0 +1,221 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+\input{ml-svm}
+
+
+\begin{document}
+
+\titlemeta{% Lecture title  
+    Soft-Margin SVM
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/soft_margin_svs.png
+  }{
+  \item Understand that the hard-margin SVM problem is only solvable for linearly separable data
+  \item Know that the soft-margin SVM problem therefore allows margin violations 
+  \item The degree to which margin violations are tolerated is controlled by a hyperparameter
+}
+
+\begin{vbframe}{Non-Separable Data}
+
+\vspace{0.1cm}
+\begin{center}
+\includegraphics[width = 9cm ]{figure/non_separable_data.png} \\
+\end{center}
+
+
+\begin{itemize}
+    \item Assume that dataset $\D$ is not linearly separable.
+    \item Margin maximization becomes meaningless because the
+    hard-margin SVM optimization problem has contradictory
+    constraints and thus an empty \textbf{feasible region}.
+\end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Margin violations}
+
+  \begin{itemize}
+    \item We still want a large margin for most of the examples.
+    \item We allow violations of the margin constraints via slack vars $\sli \geq 0$
+    $$
+    \yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli
+    $$
+    \item Even for separable data, a decision boundary with a few violations and a large average margin may be preferable to one without any violations and a small average margin.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\begin{minipage}{0.5\textwidth}
+\begin{center}
+ \includegraphics[width = 0.95\textwidth]{figure/boundary_with_violations.png} 
+\end{center}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.35\textwidth}
+ We assume $\gamma=1$ to not further complicate presentation.
+	\end{minipage}
+\end{figure}
+
+%\begin{center}
+%\includegraphics[width = 0.35\textwidth]{figure/boundary_with_violations.png} 
+%\end{center}
+
+\end{vbframe}
+
+\begin{vbframe}{Margin violations}
+
+  \begin{itemize}
+    \item Now we have two distinct and contradictory goals:
+    \begin{enumerate}
+      \item Maximize the margin.
+      \item Minimize margin violations.
+    \end{enumerate}
+    \item Let's minimize a weighted sum of them: 
+    $
+    \frac{1}{2} \|\thetav\|^2 + C   \sum_{i=1}^n \sli
+    $
+    \item Constant $C > 0$ controls the relative importance of the two parts.
+    % \item It represents the relative weight assigned to either having a large
+    % margin or a small sum of margin violations.
+  \end{itemize}
+
+
+\begin{center}
+\includegraphics[width = 0.8\textwidth ]{figure/margin_violations.png} \\
+\end{center}
+
+\end{vbframe}
+
+\begin{vbframe}{Soft-margin SVM}
+
+The linear \textbf{soft-margin} SVM is the convex quadratic program:
+
+  \begin{eqnarray*}
+    & \min\limits_{\thetav, \thetav_0,\sli} & \frac{1}{2} \|\thetav\|^2 + C   \sum_{i=1}^n \sli \\
+    & \text{s.t.} & \,\, \yi  \left( \scp{\thetav}{\xi} + \thetav_0 \right) \geq 1 - \sli \quad \forall\, i \in \nset,\\
+    & \text{and} & \,\, \sli \geq 0 \quad \forall\, i \in \nset.\\
+  \end{eqnarray*}
+
+  This is called \enquote{soft-margin} SVM because the
+  \enquote{hard} margin constraint is replaced with a \enquote{softened}
+  constraint that can be violated by an amount $\sli$.\\
+
+  % \vspace*{2mm}
+
+  % The term \textbf{large-margin classifier} is often used
+  % for soft-margin SVMs, in contrast to \textbf{maximal-margin
+  % classifier}.
+\end{vbframe}
+
+
+\begin{vbframe}{Lagrange function and KKT}
+
+\small
+The Lagrange function of the soft-margin SVM is given by:
+\begin{align*}
+    \mathcal{L}(\thetav, \theta_0, \bm{\sl}, \bm{\alpha}, \bm{\mu}) &= \frac{1}{2}\left\Vert\thetav\right\Vert^2_2 + C\sumin\sli - \sumin \alpha_i\left(\yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) -1 + \sli\right) \\
+    & \quad - \sumin \mu_i\sli \quad\text{ with Lagrange multipliers $\bm{\alpha}$ and $\bm{\mu}.$}
+\end{align*}
+The KKT conditions for $i=1,\dots, n$ are:
+\begin{eqnarray*}
+    \alpha_i \geq 0, &\quad\quad&\mu_i \geq 0, \\
+    \yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) -1 + \sli \geq 0, && \sli \geq 0, \\
+    \alpha_i\left(\yi \left( \scp{\thetav}{\xi} + \thetav_0 \right) -1 + \sli\right)  = 0, && \sli\mu_i = 0.
+\end{eqnarray*} 
+With these, we derive (see our optimization course) that \\
+$\thetav = \sumin \alpha_i\yi\xi, \quad 0 = \sumin\alpha_i\yi, \quad \alpha_i = C - \mu_i\quad \forall i=1,\dots, n.$
+\end{vbframe}
+
+\begin{vbframe}{Soft-margin SVM dual form}
+Can be derived exactly as for the hard margin case.
+\begin{eqnarray*}
+    & \max\limits_{\alphav \in \R^n} & \sum_{i=1}^n \alpha_i - \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^n\alpha_i\alpha_j\yi y^{(j)} \scp{\xi}{\xv^{(j)}} \\
+    & \text{s.t. } & 0 \le \alpha_i \le C, \\
+    & \quad & \sum_{i=1}^n \alpha_i \yi = 0,
+\end{eqnarray*}
+or, in matrix notation:
+\begin{eqnarray*}
+  & \max\limits_{\alphav \in \R^n} &  \one^T \alphav - \frac{1}{2} \alphav^T \diag(\yv) \bm{K} \diag(\yv) \alphav \\
+  & \text{s.t.} & \alpha^T \yv = 0, \\
+  &  & 0 \leq \alphav \leq C,
+\end{eqnarray*}
+with $\bm{K}:=\Xmat \Xmat^T$.
+\end{vbframe}
+
+\begin{vbframe}{Cost parameter C}
+
+  \begin{itemize}
+    \item The parameter $C$ controls the trade-off between the two conflicting
+    objectives of maximizing the size of the margin and minimizing the frequency and size of margin
+    violations.
+    \item It is known under different names, such as \enquote{trade-off parameter}, \enquote{regularization parameter},
+    and \enquote{complexity control parameter}.
+    \item   For sufficiently large $C$ margin violations become extremely costly,
+  and the optimal solution does not violate any margins if the
+  data is separable. The hard-margin SVM is obtained as a special case.
+  \end{itemize}
+\end{vbframe}
+
+\begin{vbframe}{Support Vectors}
+
+\begin{small}
+  There are three types of training examples:
+
+
+\begin{itemize}
+    \item Non-SVs have $\alpha_i = 0\; (\Rightarrow \mu_i = C \Rightarrow \sli = 0)$ and can be
+    removed from the problem without changing the solution. Their margin $y\fx \geq ~ 1.$ 
+    They are always classified correctly and are never inside of the margin. 
+    
+    \item SVs with $0 < \alpha_i < C\; (\Rightarrow \mu_i > 0 \Rightarrow \sli = 0)$ are located exactly on the
+    margin and have $y\fx=1$. 
+    \item SVs with $\alpha_i = C$ have an associated
+     slack $\sli \geq 0.$ They can be on the margin or can be margin violators with $y\fx < 1$ (they can even be misclassified if $\sli \geq 1$).
+\end{itemize}
+As for hard-margin case: on the margin we can have SVs and non-SVs.
+\vspace{-0.6cm}
+\begin{center}
+\includegraphics[width = 0.28\textwidth ]{figure/soft_margin_svs.png} \\
+\end{center}
+\end{small}
+\end{vbframe}
+
+\begin{vbframe}{Uniqueness of the solution}
+
+The primal and the dual form of the SVM are convex problems, so each local minimum is a global minimum.
+ \vspace{0.1cm}
+
+
+\end{vbframe}
+
+% \begin{vbframe}{Support Vectors}
+
+% \begin{small}
+%   There are three types of training examples:
+
+
+% \begin{itemize}
+%     \item Non-SVs have a margin $> ~ 1$ and can be
+%     removed from the problem without changing the solution.
+%     \item Some SVs are located exactly on the
+%     margin and have $y\fx=1$.
+%     \item Other SVs are margin violators, with $y\fx < 1$, 
+%      and have an associated positive slack $\sli > 0$. 
+%      They are misclassified if $\sli \geq 1$.
+% \end{itemize}
+% \end{small}
+
+% \vspace{0.1cm}
+% \begin{center}
+% \includegraphics[width = 0.35\textwidth ]{figure/soft_margin_svs.png} \\
+% \end{center}
+
+
+% \end{vbframe}
+
+
+\endlecture
+\end{document}
+
+
+

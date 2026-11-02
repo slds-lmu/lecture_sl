@@ -1,0 +1,259 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+\input{ml-ensembles}
+\input{ml-trees}
+
+\usepackage{dsfont}
+\usepackage{transparent}
+
+
+\begin{document}
+
+\titlemeta{% Lecture title  
+    Gradient Boosting: CWB Basics 2
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/compboost-illustration-2.png
+  }{
+  \item Handling of categorical features
+  \item Intercept handling
+  \item Practical example
+  %\item Built-in feature selection process
+  %\item Fair base learner selection
+}
+
+\begin{framev}{Handling of categorical features}
+
+Feature $x_j$ with $G$ categories. Two options for encoding:
+
+\begin{itemize}
+    \item 
+        One base learner to simultaneously estimate all categories: 
+        $$b_j(x_j | \thetav_j) = \sum_{g=1}^G \theta_{j,g}\mathds{1}_{\{g = x_j\}} = (\mathds{1}_{\{x_j = 1\}}, ..., \mathds{1}_{\{x_j = G\}}) \thetav_j$$
+        Hence, $b_j$ incorporates a one-hot encoded feature with group means $\thetav\in\R^G$ as estimators. 
+    
+    \item 
+        One binary base learner per category:
+        $$b_{j,g}(x_j | \theta_{j,g}) = \theta_{j,g}\mathds{1}_{\{g = x_j\}}$$  
+        Including all categories of the feature means adding $G$ base learners $b_{j,1}, \dots, b_{j,G}$ %with each accounting for one specific class.
+  \end{itemize}
+  %\item The \texttt{compboost} package currently implements the first variant.
+
+% ------------------------------------------------------------------------------
+\end{framev}
+\begin{framev}{Handling of categorical features}
+
+Advantages of simultaneously handling all categories in CWB: 
+\begin{itemize}
+    \item 
+        Much faster estimation compared to using individual binary BLs
+
+    \item 
+        Explicit solution of $\thetavh = \argmin_{\thetav\in\R^G}\sumin (\yi - b_j(x^{(i)}_j | \thetav))^2$:
+        $$
+        %\thetavh = (\thetah_1, \dots, \thetah_G)^T,\
+        \thetah_g = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}
+        $$
+
+    \item 
+        For features with many categories we usually add a ridge penalty
+\end{itemize}
+
+%Disadvantage of simultaneously handling all categories in CWB: 
+%\begin{itemize}
+ %   \item 
+  %      If category $g^\ast\in\{1, \dots, G\}$ is uninformative, the respective parameter estimate $\thetah_{g^\ast}$ is (almost surely) not $0$.
+%\end{itemize}
+
+% ------------------------------------------------------------------------------
+\end{framev}
+\begin{framev}{Handling of categorical features}
+
+Advantages of including categories individually in CWB: 
+\begin{itemize}
+    \item 
+        Enables finer selection since non-informative categories are simply not included in the model. %and hence have an effect of $0$.
+
+    \item 
+        Explicit solution of $\thetah_{j,g} = \argmin_{\theta\in\R}\sumin (\yi - b_g(x^{(i)}_j|\theta))^2$ with:
+        $$\thetah_{j,g} = n_g^{-1}\sumin \yi \mathds{1}_{\{x^{(i)}_j = g\}}$$
+\end{itemize}
+
+Disadvantage of individually handling all categories in CWB:
+\begin{itemize}
+    \item 
+        Fitting CWB is slower 
+        %due to overhead in each iteration %(updating the model, pseudo residuals, and doing the base learner selection) 
+        %caused by conducting single steps in direction of 1-dim parameter $\thetah_{j,g}$.
+
+    \item 
+        Penalization and selection become difficult since base learner has exactly one degree of freedom.
+\end{itemize}
+
+\end{framev}
+
+% ------------------------------------------------------------------------------
+
+\begin{framev}{intercept handling}
+%\vspace{0.2cm}
+There are two options to handle the intercept in CWB. In both, the loss-optimal constant $\fm[0](\xv)$ is an initial model intercept. \\
+%\vspace{0.3cm}
+\begin{enumerate}
+\setlength{\itemsep}{0.8em}
+\item {\small Include an intercept BL}:
+  \begin{itemize}
+    \setlength{\itemsep}{0.8em}
+    \item {\footnotesize Add BL $b_{\text{int}} = \theta$ as potential candidate considered in each iteration and remove intercept from all linear BLs, i.e., $b_j(\xv) = \theta_j x_j$.}
+    \item {\footnotesize Final intercept is given as $\fm[0](\xv) + \hat{\theta}$. Linear BLs without intercept only make sense if covariates are centered (see \furtherreading{HOFNER2014MODEL} tutorial, p.~7)}
+  \end{itemize}
+  
+%\framebreak
+  
+  \item {\small Include intercept in each linear BL and aggregate into global intercept post-hoc}:
+  \begin{itemize} \setlength{\itemsep}{0.8em}
+  \item  {\footnotesize Assume linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$. %with 
+  %one intercept $\theta_{j1}$ %per base learner
+  %and slope $\theta_{j2}$.
+  If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j2}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.}
+    \item {\footnotesize During training, intercept is adjusted $M$ times to yield $\fm[0](\xv) + \sum\limits_{m=1}^M %\hat{\theta}^{[m]}_{j^{[m]}1}
+    \hat{\theta}^{[m]}_{j1}$}
+    \end{itemize}
+\end{enumerate}
+%{\footnotesize $\Rightarrow$ All intercepts in the BLs are collected and aggregated post-hoc in the model intercept.}
+
+%-----------------------------------
+
+    
+% \begin{itemize}
+  %\item The loss-optimal constant $\fm[0](\xv)$ is an initial model intercept.
+  %\item An intercept is often referred to as part of a model which contains information independent of the features.
+%   \item Suppose linear base learners $b_j(\xv) = \theta_{j1} + \theta_{j2} x_j$ with one intercept $\theta_{j1}$ %per base learner
+%   and slope $\theta_{j2}$.
+%   \item If base learner $\hat{b}_j$ with parameter $\thetamh[1] = (\hat{\theta}_{j1}^{[1]}, \hat{\theta}_{j1}^{[1]})$ is selected in first iteration, model intercept is updated to $\fm[0](\xv) + \hat{\theta}_{j1}^{[1]}$.
+%   \item Over the fitting process, the intercept is adjusted $M$ times to its final form:
+%     $$
+%     \fm[0](\xv) + \sum\limits_{m=1}^M \hat{\theta}^{[m]}_{j^{[m]}1}
+%     $$
+% \end{itemize}
+% $\Rightarrow$ All intercepts in the base learners are collected and aggregated in the model intercept.
+
+% % ------------------------------------------------------------------------------
+% % \framebreak
+
+% ------------------------------------------------------------------------------
+
+
+% The following figure shows a comparison of the parameter updates with different intercept handlings:
+% \vspace{0.2cm}
+% \begin{center}
+% % Recreate figure: rsrc/fig-cwb-intercept-handling.R
+% \includegraphics[width = \textwidth]{figure/compboost-intercept-handling.png}
+% \end{center}
+% The parameter estimates converge to the same value. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
+
+
+\end{framev}
+
+%\input{tex/cwb-bl-sel}
+
+% ------------------------------------------------------------------------------
+
+\begin{framev}{Example: Life expectancy}
+
+Consider the \texttt{life expectancy} data set (WHO, available on \sourceref{KUMAR2019KAGGLE})\,: regression task to predict life expectancy. \\
+\vspace{0.1cm}
+We fit a CWB model with linear BLs (with intercept) 
+
+\begin{table}
+\scriptsize
+\begin{tabular}{l|l}
+    \textbf{variable} & \textbf{description} \\
+    \hline
+    \texttt{Life.expectancy} & Life expectancy in years \\	
+    \hline
+    \texttt{Country}         & The country (just a selection GER, USE, SWE, ZAF, and ETH)\\
+    \texttt{Year}            & The recorded year\\
+    \texttt{BMI}             & Average $\text{BMI} = \frac{\text{body weight in kg}}{(\text{Height in m})^2}$ in a year and country\\
+    \texttt{Adult.Mortality} & Adult mortality rates %of both sexes %(probability of death between age 15 \\
+                             %& and 60), 
+                             per 1000 population
+\end{tabular}
+\end{table}
+\vspace{0.4cm}
+Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL was selected when and how the estimated feature effects evolve over time.
+\end{framev}
+
+% tex file and figures are created automatically by: rsrc/fig-cwb-anim.R
+\input{tex/fig-cwb-anim}
+
+%%%%% BLIND OUT, include with removing `\if1` and  \fi
+\if1
+
+\begin{framev}{example: boston housing}
+
+\begin{minipage}[c]{0.4\textwidth}
+  \small
+  \raggedright
+  Consider the \texttt{Boston housing} regression task, for which we fit a
+  CWB model with linear base learners (with intercept) to predict median home
+  value.
+  Using \texttt{compboost} with $M = 100$ iterations, we can
+  visualize which base learner was selected when:
+\end{minipage}%
+\begin{minipage}[c]{0.05\textwidth}
+  \phantom{foo}
+\end{minipage}%
+\begin{minipage}[c]{0.55\textwidth}
+  \tiny
+  \begin{tabular}{l|l}
+    \textbf{variable} & \textbf{description} \\
+    \hline
+    medv &	median value of owner-occupied homes in k USD \\
+    \hline
+    crim & per capita crime rate by town \\
+    zn &	proportion of residential land zoned for lots $>$ 25k sq.ft \\
+    indus &	proportion of non-retail business acres per town \\
+    chas &	Charles River dummy (1 if tract bounds river, 0 otherwise) \\
+    nox &	nitric oxides concentration (parts per 10m) \\
+    rm &	average number of rooms per dwelling \\
+    age &	proportion of owner-occupied units built prior to 1940 \\
+    dis &	weighted distances to five Boston employment centres \\
+    rad &	index of accessibility to radial highways \\
+    tax &	full-value property-tax rate per USD 10k \\
+    ptratio &	pupil-teacher ratio by town \\
+    b &	$1000(B - 0.63)^2$,  $B$ as proportion of blacks by town \\
+    lstat &	percentage of lower status of the population \\
+  \end{tabular}
+\end{minipage}%
+
+\end{framev}
+\begin{framev}{example: boston housing}
+
+\begin{center}
+\includegraphics[width = \textwidth]{figure/compboost-illustration-1.png}
+\end{center}
+
+\end{framev}
+\begin{framev}{example: boston housing}
+
+% ------------------------------------------------------------------------------
+
+The number of features effectively included in the final model depends on the
+number of total iterations $M$.
+
+\vfill
+
+$\rightarrow$ A sparse linear regression is fitted.
+
+\vfill
+
+\includegraphics[width = \textwidth]{figure/compboost-illustration-2.png}
+
+\end{framev}
+
+
+\fi
+
+\endlecture
+\end{document}

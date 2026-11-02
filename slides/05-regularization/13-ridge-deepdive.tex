@@ -1,0 +1,90 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+
+
+
+\begin{document}
+
+\titlemeta{% Lecture title  
+    Perspectives on Ridge Regression (Deep-Dive)
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/bias_var_decomp.png
+  }{
+  \item Interpretation of $L2$ regularization as row-augmentation
+  \item Interpretation of $L2$ regularization as minimizing risk under feature noise
+  %\item Bias-Variance trade-off for ridge regression
+}
+
+
+
+
+\begin{vbframe}{Perspectives on $L2$ regularization}
+We already saw two interpretations of $L2$ regularization. 
+{\small
+\begin{itemize}\setlength\itemsep{0.8em}
+\item We know that it is equivalent to a constrained optimization problem:
+  \begin{eqnarray*}  
+  \thetah_{\text{ridge}} &=& \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi \right)^2 + \lambda \|\thetav\|_2^2 = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv\\
+ \end{eqnarray*}
+  For some $t$ depending on $\lambda$ this is equivalent to:
+  \begin{eqnarray*}
+  %&=& \argmin_{\thetav} \left(\yv - \Xmat \thetav\right)^\top \left(\yv - \Xmat \thetav\right) + \lambda \thetav^\top \thetav \\
+  \thetah_{\text{ridge}}&=& \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi\right)^2 \,
+  \text{s.t. } \|\thetav\|_2^2  \leq t
+  \end{eqnarray*}
+  \item Bayesian interpretation of ridge regression: For additive Gaussian errors $\mathcal{N}(0,\sigma^2)$ and i.i.d. normal priors $\theta_j \sim \mathcal{N}(0,\tau^{2})$, the resulting MAP estimate is $\thetah_{\text{ridge}}$ with $\lambda=\frac{\sigma^2}{\tau^2}$:
+  $$\thetah_{\text{MAP}}=\argmax_{\theta} \log[p(\yv|\Xmat,\thetav)p(\thetav)] = \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi \right)^2 + \frac{\sigma^2}{\tau^2} \|\thetav\|_2^2$$
+\end{itemize}
+}
+\end{vbframe}
+
+\begin{vbframe}{$L2$ and row-augmentation}
+We can also recover the ridge estimator by performing least-squares on a \textbf{row-augmented} data set: Let $\tilde{\Xmat}:= \begin{pmatrix} \Xmat \\ \sqrt{\lambda} \id_{p} \end{pmatrix}$ and $\tilde{\yv} := \begin{pmatrix}
+    \yv \\ \bm{0}_{p}
+\end{pmatrix}$. \\
+With the augmented data, the unreg. least-squares solution $\tilde{\thetav}$ is:
+{\small
+\begin{eqnarray*}
+\tilde{\thetav} &=& \argmin_{\thetav} 
+\sum_{i=1}^{n+p} \left(\tilde{\yi} - \thetav^T \tilde{\xi} \right)^2 \\ &=& \argmin_{\thetav} 
+\sum_{i=1}^{n} \left(\yi - \thetav^T \xi \right)^2 + \sum_{j=1}^{p} \left(0 - \sqrt{\lambda} \theta_j \right)^2 \\ %= \thetah_{\text{ridge}}
+&=& \argmin_{\thetav} \sumin \left(\yi - \thetav^T \xi \right)^2 + \lambda \|\thetav\|_2^2
+\end{eqnarray*}
+}
+$\Longrightarrow$ $\thetah_{\text{ridge}}$ is the least-squares solution $\tilde{\thetav}$ but using $\tilde{\Xmat},\tilde{\yv}$ instead of $\Xmat, \yv$!\\
+
+\lz
+
+%$$\thetah_{\text{ridge}} = ({\Xmat}^T \Xmat  + \lambda \id)^{-1} \Xmat^T\yv$$
+This is a sometimes useful ``recasting'' or ``rewriting'' for ridge.
+\end{vbframe}
+
+\begin{vbframe}{$L2$ and noisy features}
+\begin{footnotesize}
+Now consider perturbed features $ \tilde{x}^{(i)}:= \xi + \bm{\delta}^{(i)}$ where $\bm{\delta}^{(i)} \overset{iid}{\sim} (\bm{0},\lambda \id_p)$. \\
+We assume no specific distribution. Now minimize risk with L2 loss, we define it slightly different than usual, as here our data $\xi$, $\yi$ are fixed, but we integrate over the random permutations $\bm{\delta}$:
+
+
+$$\riskt:= \mathbb{E}_{\bm{\delta}}\Big[{\textstyle \sumin}(\yi-\thetav^{\top}\tilde{\xv}^{(i)})^2\Big] = \mathbb{E}_{\bm{\delta}}\Big[{\textstyle \sumin}(\yi-\thetav^{\top}(\xi+\bm{\delta}^{(i)}))^2\Big]\,\,\Big|\, \text{expand}$$
+\vspace{-0.2cm}
+%Expanding, we obtain
+$$\riskt = \mathbb{E}_{\bm{\delta}}\Big[{\textstyle \sumin}\big((\yi-\thetav^{\top}\xi)^2 - 2 \thetav^{\top}\bm{\delta}^{(i)}(\yi-\thetav^{\top}\xi) + \thetav^{\top}\bm{\delta}^{(i)}\bm{{\delta}}^{(i) \top}\thetav\big)\Big]$$
+
+By linearity of expectation, $\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}]=\bm{0}_p$ and $\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}\bm{\delta}^{(i)\top}]=\lambda \id_p$, this is
+\vspace{-0.2cm}
+%
+\begin{align*}\riskt&={\textstyle \sumin}\big((\yi-\thetav^{\top}\xi)^2 - 2 \thetav^{\top}\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}](\yi-\thetav^{\top}\xi) + \thetav^{\top}\mathbb{E}_{\bm{\delta}}[\bm{\delta}^{(i)}\bm{\delta}^{(i)\top}]\thetav \big) \\
+&= {\textstyle \sumin}(\yi-\thetav^{\top}\xi)^2+\lambda \Vert \thetav \Vert_2^2
+\end{align*}
+$\Longrightarrow$ Ridge regression on unperturbed features {\small $\xi$} turns out to be the same as minimizing squared loss averaged over feature noise distribution!
+
+\end{footnotesize}
+
+\end{vbframe}
+
+
+
+\endlecture
+\end{document}

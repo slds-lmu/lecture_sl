@@ -1,0 +1,310 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+\input{ml-ensembles}
+\input{ml-trees}
+
+\usepackage{dsfont}
+\usepackage{transparent}
+
+
+\begin{document}
+
+\titlemeta{% Lecture title  
+    Gradient Boosting: CWB Basics 1
+  }{% Relative path to title page image: Can be empty but must not start with slides/
+  figure/compboost-illustration-2.png
+  }{
+  \item Concept of CWB
+  \item Which base learners do we use
+  \item Built-in feature selection
+}
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise gradient boosting}
+
+GB (with trees), has strong predictive
+performance but is difficult to interpret unless the base learners are stumps.
+
+\lz
+
+The aim of CWB is to find a model that exhibits:
+
+\begin{itemize}
+  \item
+    strong predictive performance,
+
+  \item
+    interpretable components,
+
+  \item
+    automatic selection of components,
+
+  \item
+    is sparser than a model fitted with maximum-likelihood estimation.
+\end{itemize}
+
+\lz
+
+This is achieved by using \enquote{nice} base learners which yield familiar
+statistical models
+in the end.
+
+\lz
+
+Because of this, CWB is also often referred to as \textbf{model-based boosting}.
+
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Base learners}
+
+In GB only one kind of base learner $\mathcal{B}$ is used, e.g., regression trees.
+
+\lz
+
+For CWB we generalize this to multiple base learner sets $\{ \mathcal{B}_1, ... \mathcal{B}_J \}$ with associated parameter spaces
+$\{ \bm{\Theta}_1, ... \bm{\Theta}_J \}$,
+% $$
+%   % b_j^{[m]}(\xv,\pmb\theta^{[m]}) \quad j = 1,\dots, J\,,
+%   \{ \bmm_j(\xv, \thetam): j = 1, 2, \dots, J \},
+% $$
+%
+ where $j \in \{ 1, 2, \dots, J \}$ indexes the type of base learner.
+
+\vspace*{0.2cm}
+%%% Figures created by: rsrc/fig-compboost-blpools.R
+\[
+\left\{
+\begin{array}{c}
+\includegraphics[width=2cm]{figure/boosting-cwb-blpool1.png},
+\includegraphics[width=2cm]{figure/boosting-cwb-blpool2.png},
+\cdots, 
+\includegraphics[width=2cm]{figure/boosting-cwb-blpool3.png},
+\includegraphics[width=2cm]{figure/boosting-cwb-blpool4.png}
+\end{array}
+\right\}
+\]
+\vspace*{0.2cm}
+
+%Different from GB, in each iteration multiple base learners 
+%$b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fit to the 
+%pseudo residuals $\rmm$ and only best-fitting one
+% $\bmm_{\hat{j}}(\xv, \thetam)$
+%is selected and updated.
+In each iteration, base learners are fitted to the \textbf{pseudo residuals} $\rmm$.
+
+
+\framebreak
+
+%Common examples of base learners are
+We restrict the base learners to additive model components, i.e.,
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=\linewidth]{figure/compboost-base-learner-linear.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+  linear effect
+\end{minipage}
+
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=\linewidth]{figure/compboost-base-learner-spline.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+  non-linear (spline) effect
+\end{minipage}
+
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=\linewidth]{figure/compboost-base-learner-ridge.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+  dummy encoded linear model of a cat. feature
+\end{minipage}
+
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=\linewidth]{figure/compboost-base-learner-tensor.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+  tensor product spline for interaction modelling (e.g. spatial effects)
+\end{minipage}
+
+\vspace{\baselineskip}
+
+More advanced base learners could also be  Markov random fields, random effects, or trees.
+
+\framebreak
+
+%We restrict these base learners to additive models, i.e., 
+Two BLs of the same type can simply be added by adding up their parameter vectors:
+
+$$
+ b_j(\xv, \thetav^{[1]}) + b_j(\xv, \thetav^{[2]}) =
+ b_j(\xv, \thetav^{[1]} + \thetav^{[2]}).
+$$
+%% Figure: rsrc/fig-compboost-add.R
+\begin{center}
+\begin{minipage}{.25\linewidth}
+\includegraphics{figure/boosting-cwb-bl-add1.pdf}
+\end{minipage}
+\begin{minipage}{.05\linewidth}
+\vspace*{-0.3cm}
+$\bm{+}$
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+\includegraphics{figure/boosting-cwb-bl-add2.pdf} 
+\end{minipage}
+\begin{minipage}{.05\linewidth}
+\vspace*{-0.3cm}
+$\bm{=}$
+\end{minipage}
+\begin{minipage}{.25\linewidth}
+\includegraphics{figure/boosting-cwb-bl-add3.pdf}
+\end{minipage}
+\end{center}
+\vspace*{0.1cm}
+
+Thus, if $\{ b_j(\xv, \thetav^{[1]}), b_j(\xv, \thetav^{[2]}) \} \in \mathcal{B}_j$, then $b_j(\xv, \thetav^{[1]} + \thetav^{[2]}) \in \mathcal{B}_j$.
+
+\end{vbframe}
+
+
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\footnotesize{Different from GB, multiple base learners 
+$b_j\in\mathcal{B}_j$, $j = 1, \dots, J$, are fitted %to the pseudo residuals $\rmm$ 
+and only best-fitting one
+% $\bmm_{\hat{j}}(\xv, \thetam)$
+is selected and updated.}
+\vspace{-0.3cm}
+\definecolor{algocol}{rgb}{0, 0.125, 0.376}
+\input{algorithms/componentwise_gradient_boosting.tex}
+\vspace{-0.3cm}
+\scriptsize{({\color{lightgray} Same as for GB, \color{algocol} New inner loop for CWB})}
+
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$, $j = 1$, $\sum  \limits_{i=1}^n (\rmi - \hat{b}_1(x^{(i)}_1, \thetamh_1))^2 = 24.4$: \phantom{$\Rightarrow$ $j^{[m]} = 1$}}
+%% Figures: rsrc/fig-compboost-blpools.R
+\begin{center}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png}}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}}
+\end{center}
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$, $j = 2$, $\sum  \limits_{i=1}^n (\rmi - \hat{b}_2(x^{(i)}_2, \thetamh_2))^2 = 43.2$: \phantom{$\Rightarrow$ $j^{[m]} = 1$}}
+\begin{center}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}}
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}}
+\end{center}
+\addtocounter{framenumber}{-1}
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$, $j = 3$, $\sum  \limits_{i=1}^n (\rmi - \hat{b}_3(x^{(i)}_3, \thetamh_3))^2 = 35.2$: \phantom{$\Rightarrow$ $j^{[m]} = 1$}}
+\begin{center}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}}
+\hspace*{0.5cm}
+{\transparent{0.3}\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png}} 
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}
+\end{center}
+\addtocounter{framenumber}{-1}
+\end{vbframe}
+
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Componentwise boosting algorithm}
+
+\input{tex/cwb-algo-short.tex}
+
+{\footnotesize Iteration $m$: $\Rightarrow$ $j^{[m]} = 1$}
+\begin{center}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl1-points.png}
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl2-points.png} 
+\hspace*{0.5cm}
+\includegraphics[width=0.25\textwidth]{figure/boosting-cwb-bl3-points.png}
+\end{center}
+\addtocounter{framenumber}{-1}
+\end{vbframe}
+% ------------------------------------------------------------------------------
+
+\begin{vbframe}{Feature selection in CWB}
+In CWB, we often define BLs on a single feature
+
+$$
+  b_j(x_j, \theta) \quad \text{for } j = 1, 2, \dots, p.
+$$
+Allows natural form of feature selection:
+\begin{itemize}
+    \item When we select the best BL in one iter of CWB, we thereby also only select one (associated) feature
+    \item Note that a feature (or rather a BL associated with it) can be selected in multiple iters, so $\leq M$ features are selected
+    %\item Due to the iterative nature of CWB, this is repeated $M$ times to obtain a selection of $M$ base learners by $j^{[1]}, \dots, j^{[m]}$ with $j^{[M]}\in\{1, \dots, p\}$
+    %\item The number $\sum_{m=1}^M \mathds{1}_{[j = j^{[m]}]}$ tells us how often the feature $x_j$ in $b_j$ was selected
+\end{itemize}
+\vspace{0.5cm}
+\begin{center}
+%\begin{minipage}{0.3\textwidth}
+%    \includegraphics[width=\textwidth]{figure/compboost-base-learner-linear.png}
+%\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figure/compboost-base-learner-spline.png}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+    \includegraphics[width=\textwidth]{figure/compboost-base-learner-ridge.png}
+\end{minipage}
+\end{center}
+
+
+%\begin{minipage}{0.4\textwidth}
+%    \includegraphics[width=\linewidth]{figure/compboost-base-learner-linear.png}
+%\end{minipage}%\hfill
+%\begin{minipage}{0.5\textwidth}
+%  linear effect
+%\end{minipage}
+
+%\begin{minipage}{0.4\textwidth}
+%    \includegraphics[width=\linewidth]{figure/compboost-base-learner-spline.png}
+%\end{minipage}%\hfill
+%\begin{minipage}{0.5\textwidth}
+%  non-linear (spline) effect
+%\end{minipage}
+
+%The iterative nature of CWB and the additivity of the base learners 
+%directly incorporates a variable selection mechanism into the fitting
+%process, since in each iteration only the best base learner is selected in
+%combination with the associated feature, and each base learner can be
+%(substantially) more complex than a stump (e.g., univariate linear effects or 
+%splines).
+\end{vbframe}
+
+
+\endlecture
+\end{document}

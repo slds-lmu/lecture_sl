@@ -1,20 +1,24 @@
 ## Slides PDFs
 
-This directory contains all PDFs that are generated locally. 
+This directory contains the released slide PDFs, published by `slidemk --release`.
 
-Changes in these directories will be reflected on the corresponding course websites,
-which also means that **changes to file names** will need to be adjusted in
-the website repository.
+Changes in this directory are reflected on the course website, so **changes to
+file names** need to be adjusted in the website repository.
 
-The expected structure for this folder using `lecture_i2ml` as an example:
+The layout mirrors `slides/`:
 
 ```
 slides-pdf
-├── slides-basics-data.pdf
-├── slides-basics-learner.pdf
-├── slides-basics-learnercomponents-hro.pdf
-├── slides-basics-models-parameters.pdf
+├── 00-mathrefresher
+│   └── 01-probability-theory.pdf
+├── 01-advriskmin
+│   ├── 01-risk-minimization-basics.pdf
+│   ├── 02-losses-properties.pdf
+│   ...
+│   └── 99-literature.pdf
 ...
 ```
 
-Here, `slides-pdf/<slide-name>.pdf` matches the source at `slides/<chapter>/<slide-name>.pdf`.
+Here, `slides-pdf/<chapter>/<NN>-<topic>.pdf` is built from
+`slides/<chapter>/<NN>-<topic>.tex`, and `<chapter>/99-literature.pdf` from
+`slides/<chapter>/references.bib`.

@@ -1,0 +1,318 @@
+\documentclass[11pt,compress,t,notes=noshow, xcolor=table]{beamer}
+\input{preamble-slides}
+\input{basic-math}
+\input{basic-ml}
+\input{ml-gp}
+\input{ml-svm}
+
+
+\begin{document}
+
+\titlemeta{
+Stochastic Processes and Distributions on Functions
+}{
+figure_man/discrete/marginalization-more3.png
+}{
+\item GPs = distributions over functions 
+\item Marginalization property 
+\item Mean and covariance function 
+}
+
+\begin{framei}[sep=L]{Weight-Space View}
+\item Until now: hypothesis space $\Hspace$ of parameterized functions $\fxt$ % (in particular, the space of linear functions)
+\item ERM: find risk-minimal parameters (weights) $\thetav$
+\item Bayesian paradigm: distribution over $\thetav$ $\Rightarrow$ update prior to posterior belief after observing data according to Bayes' rule
+$$
+p(\thetav | \Xmat, \yv) 
+= \frac{\text{likelihood} \cdot \text{prior}}{\text{marginal likelihood}} 
+= \frac{p(\yv | \Xmat, \thetav) \cdot q(\thetav)}{p(\yv|\Xmat)}
+$$
+\end{framei}
+
+\begin{framei}[sep=L]{Function-Space View}
+\item New POV: rather than finding $\thetav$ which parameterizes $\fxt$,  search in space of admissible functions directly
+\item Sticking to Bayesian inference, specify prior distribution \textbf{over functions} and update according to observed data points
+\end{framei}
+
+\begin{framei}{drawing from function priors}
+\item Imagine we could draw functions from some prior distribution
+
+\vfill
+
+\imageC[1]{figure/gp_sample/zeromean_prior_50n.pdf}
+\end{framei}
+
+\begin{framei}{drawing from function priors}
+\item Restrict sampling to functions consistent with observed data
+\vfill
+\splitVTT{
+\imageC[.9]{figure/gp_sample/zeromean_prior_updates_1.pdf}
+}{
+\imageC[.9]{figure/gp_sample/zeromean_prior_updates_2.pdf}
+}
+\vfill
+\splitVTT{
+\imageC[.9]{figure/gp_sample/zeromean_prior_updates_3.pdf}
+}{
+\imageC[.9]{figure/gp_sample/zeromean_prior_updates_4.pdf}
+}
+\item Variety of admissible functions shrinks with seeing more data
+\item Intuitively: distributions over functions have ``mean'' \& ``variance''
+\end{framei}
+
+\begin{framev}{Weight-space vs. Function-space View}
+\splitVTT{
+\textbf{Weight-Space View}
+\spacer
+\begin{itemizeL}
+\item Parameterize functions \\ (e.g., $\fxt = \thx$)
+\item Define distributions on $\thetav$
+\item Inference in param space $\Theta$
+\end{itemizeL}
+}{
+\textbf{Function-Space View}
+\spacer
+\begin{itemizeL}
+\item Work on functions directly \phantom{(e.g., $\fxt = \thx$)}
+\item Define distributions on $f$
+\item Inference in fun space $\Hspace$
+\end{itemizeL}
+}
+\end{framev}
+
+\begin{framei}{discrete functions}
+\item Let $\Xspace = \xdat$, $\Hspace = \{f ~|~ f: \Xspace \rightarrow \R\}$
+\item Any $f \in \Hspace$ has finite domain with $n < \infty$ elements \\$\Rightarrow$ neat representation with $n$-dim vector 
+$$\fv = \fvec^T$$
+\item Example functions living in this space for $|\Xspace| \in \{2, 5, 10\}$
+\vfill
+\splitVThree{
+\imageC{figure/discrete/discr_2_expdecay_1n.pdf}
+}{
+\imageC{figure/discrete/discr_5_expdecay_1n.pdf}
+}{
+\imageC{figure/discrete/discr_10_expdecay_1n.pdf}
+}
+
+\item \footnotesize{NB: The $\xi$ in the above are not really training points, we don't even consider training here. They are the points where we measure our (here: 1D) discrete functions. However, to avoid inventing too many symbols, and since the whole notation leads nicely into what follows next, we accept this ``abuse'' here.}  
+
+\end{framei}
+
+\begin{framei}[sep=L]{Distributions on Discrete Functions}
+\item Specify density on vectors / functions with finite domain $f \in \Hspace$ 
+\item Natural way: vector representation as $n$-dim RV, e.g.,
+$$\fv = \fvec^T \sim \Nmk$$
+\item For now: assume $\mv, \Kmat$ to be given
+\end{framei}
+
+\foreach \i [count=\idx from 1] in {2, 5, 10} {
+\begin{framei}{example: random discrete functions}
+\item Example ctd: $\fv$ on $\i$ points
+\item Sample representatives by sampling from a $\i$-dim Gaussian
+\ifnum \i=2
+$$\fv = [f(\xi[1]), f(\xi[2])]^T \sim \Nzk$$
+\else 
+$$\fv = [f(\xi[1]), \dots, f(\xi[\i])]^T \sim \Nzk$$
+\fi
+\item Where points are not (top) or strongly (bottom) correlated
+\ifnum \i=2
+\item RHS shows 2D density 
+\else 
+ \item RHS shows correlation matrix / structure
+\fi
+
+\vfill
+\splitVCompact{.33}{.33}{
+\imageL[0.9]{figure/discrete/discr_\i_identity_10n.pdf}
+}{
+\imageL[.7]{figure/discrete/discr_\i_identity_cov.pdf}
+}
+\vfill
+\splitVCompact{.33}{.33}{
+\imageL[0.9]{figure/discrete/discr_\i_expdecay_10n.pdf}
+}{
+\imageL[.7]{figure/discrete/discr_\i_expdecay_cov.pdf}
+}
+\end{framei}
+}
+
+\begin{framei}{spatial correlation}
+\item ``Meaningful'' functions (on numeric $\Xspace$) often have spatial property:
+$$\xi, \xi[j] \text{ close in } \Xspace \Rightarrow f(\xi), f(\xi[j]) \text{ close / strongly correlated in } \Yspace$$
+\item In other words: fun. values of nearby points should be correlated
+\item Enforce this by choosing dist.-based covariance function
+$$ \xi[i], \xi[j] \text{ close in } \Xspace \Leftrightarrow \Kmat_{ij} \text{ high }$$
+\item E.g., $\Kmat_{ij} = \kxij = \exp \left(- \tfrac{1}{2} \| \xi - \xi[j] \|^2 \right)$ vs identity cov.
+\vfill
+\splitVCompact{.35}{.35}{
+\imageC{figure/discrete/discr_50_squaredexp_1n.pdf}
+}{
+\imageC{figure/discrete/discr_50_identity_1n.pdf}
+}
+\item More on covariance function, or \textbf{kernel}, $\kcc$ later on
+\end{framei} 
+
+\begin{framei}[sep=L]{From Discrete to Continuous Functions}
+\item So far: Multivar Gaussians to model outputs of discrete functions
+$$\fv = \fvec^T \sim \Nmk$$
+%\item No matter how large $n$ is: still functions over discrete domains
+\item Can we simply extend our distribution def to \textbf{continuous}-domain functions by taking $n \rightarrow \infty$?
+\item Unclear how to obtain ``infinitely'' long (Gaussian) random vectors
+\item Observation: random vectors $\fv$ are collections of RVs enumerated by $\nset$ $\Rightarrow$ \textbf{indexed family} 
+\item Can we use more general, infinite index sets?
+\end{framei}
+
+\begin{framei}{definition: indexed family}
+\item Index $T$ allows us to identify objects in arbitrary sets $\mathcal{S}$
+$$s: T \rightarrow \mathcal{S}, \quad t \mapsto s_t = s(t) $$
+\item This mapping is the formal definition of notation $\{s_t: t \in T\}$
+\item Example: real-valued $\mathcal{S}$ 
+\splitV[0.55]{
+\begin{itemizeM}
+\item $\mathcal{S} = \R$, $t \mapsto s_t$
+\item Finite index set, e.g., $T = \nset$ $\Rightarrow$ vector
+\item Countable, infinite index set, e.g., $T = \N$ $\Rightarrow$ sequence 
+\item Uncountable index set, e.g., $T = \R$ $\Rightarrow$  function %\\example: $\{\sin(t): t \in \R\}$
+\end{itemizeM}
+}{
+\imageR[.8]{figure_man/indexed_family/indexed_family_1.png}
+\imageR[.8]{figure_man/indexed_family/indexed_family_2.png}
+}
+\end{framei}
+
+\begin{framei}[sep=M]{definition: stochastic process}
+\item Collection (potentially infinite) of RVs as indexed family $\{Y_t: t \in T\}$; further distributional assumptions give rise to important subclasses
+% \item $\{Y_t: t \in T\}$ $\Rightarrow$ often temporal interpretation of $T$
+\item Intuition: probability distributions describe random vectors, SP describe random functions
+\item Examples
+\splitV[0.55]{
+\begin{itemizeM}
+\item $\mathcal{S}$: space of RVs, $t \mapsto Y_t$
+\item Finite index set, e.g., $T = \{1, \dots, m\}$ \\$\Rightarrow$ random vector
+\item Countable, infinite index set, e.g., $T = \N$ $\Rightarrow$ discrete-time SP
+\item Uncountable index set, e.g., $T = \R$ $\Rightarrow$ continuous-time SP
+\end{itemizeM}
+}{
+\imageR[.8]{figure_man/indexed_family/indexed_family_4.png}
+\imageR[.8]{figure_man/indexed_family/indexed_family_3.png}
+}
+\end{framei}
+
+% \begin{frame}{example: stochastic processes}
+
+\begin{framei}[sep=M]{Def.: Gaussian Process \furtherreading{RASMUSSENWILLIAMS2006GPML}~~ \furtherreading{SNELSON2001THESIS}
+}
+\item Special kind of SP with index set $\Xspace$; often $\Xspace = \R^p$, but as in SVMs, feature vectors only enter the model via the kernel, so we can work on arbitrary spaces
+\item We write formally $f \sim \GPmk$ %~~ \item
+% \item Defining  : any finite random vector drawn from a GP is multivariate Gaussian $\Rightarrow$ \textbf{marginalization property}
+
+\item Defining marginalization property: we have a GP 
+iff for any finite set of inputs $\bm{X} \subset \Xspace$, 
+$$
+f(\bm{X}) \sim \normal(\mX, \kXX)
+$$
+\item With \textbf{mean function} $m: \Xspace \rightarrow \R$ and \\
+\textbf{cov function} $k: \Xspace \times \Xspace \rightarrow \R^+_0$
+\item With slight abuse of notation, we allow matrix args and write:
+\vfill
+\begin{itemizeM}
+\item $\mv = m(\bm{X}) = [m(\xi[1]), \dots, m(\xi[n])]^T$
+\item $\Kmat = k(\bm{X}, \bm{X}) = \left(\kxxt \right)_{\xv, \xtil \in \bm{X}}$
+\end{itemizeM}
+%\item The output is random with $\fv \sim \normal(\mv, \Kmat)$
+
+\end{framei}
+
+% \foreach \i in {10, 50}{
+\begin{framei}[sep=M]{marginalization property}
+\item For \textbf{any} finite set of inputs $\bm{X} = \xdat \subset \Xspace:$
+    $$
+      \fv = f(\bm{X}) = \fvec^T \sim \Nmk
+    $$ 
+%\item $\mv$ and $\Kmat$ are calculated by a mean and cov function, resp
+
+\splitV{
+\imageC[.8]{figure/discrete/discr_50_squaredexp_1n.pdf}
+}{
+% \ifnum \i=5
+% \imageC[.9]{figure_man/discrete/marginalization-5.png}
+% \else
+\imageC[.8]{figure_man/discrete/marginalization-more3.png}
+% \fi
+}
+
+\item Example with 1D (left) and 2D (right) index set $\Xspace$: Dimension of $\fv$ depends on $n$, not on dimension of $\Xspace$:
+\splitV{
+\imageC{figure_man/indexed_family/indexed_family_53.png}
+}{
+\imageC[.8]{figure_man/indexed_family/indexed_family_63.png}
+}
+\vfill
+
+\end{framei}
+% }
+
+% \begin{framei}[sep=L]{definition: gaussian process}
+% \end{framei}
+
+\begin{framei}[sep=L]{GP existence theorem}
+% \item Idea: for any particular finite-dim distributions, the corresponding GP exists
+\item For \textbf{any} 
+\begin{itemize}
+\item state space $\Xspace$,
+\item mean function $m: \Xspace \rightarrow \R$,
+\item covariance function $k: \Xspace \times \Xspace \rightarrow \R^+_0$, 
+\end{itemize}
+\vfill
+there \textbf{exists} $f \sim \GPmk$ s.t. $\forall \xv, \xtil \in \Xspace$
+\begin{eqnarray*}
+\E(\fx) &=& m(\xv) \\
+\cov(\fx, f(\xtil)) &=& \kxxt
+\end{eqnarray*}
+and $f(\bm{X}) \sim \normal(m(\bm{X}), k(\bm{X}, \bm{X}))$ for any $\bm{X} \subset \Xspace$
+\item Version of Kolmogorov consistency theorem \\$\Rightarrow$ proof \furtherreading{GRIMMETT2001PROC} (Thm. 8.6.3)
+\end{framei}
+
+\begin{framei}[sep=L]{implications of existence theorem}
+\item GPs completely specified by their mean \& cov function
+\begin{eqnarray*}
+m(\xv) &=& \E[f(\xv)] \\
+\kxxt &=& \cov(\fx, f(\xtil)) = \E [( f(\xv) - \E[f(\xv)]) ( f(\xtil) - \E[f(\xtil)] )]
+\end{eqnarray*}
+\item For now, we consider zero-mean GPs with $m(\xv) \equiv \zero$ 
+
+$\Rightarrow$ common, not necessarily drastic assumption,\\
+will talk more about this in session on GPs with trend
+\item Denote by $\GPzk$ $\Rightarrow$ properties mainly governed by $\kcc$
+\item By virtue of existence thm: sampling from GP priors gives us random functions with our properties of choice
+\end{framei}
+
+\begin{framei}[sep=L]{sampling from gaussian process priors}
+\item Example: $f \sim \GPzk$ with cov function
+$$ \kxxt = \exp\left(-\tfrac{1}{2}\xxtnorm^2\right)$$
+\item To visualize sample functions, 
+\begin{itemize}
+\item choose high number $n$ of points $\bm{X} = \xdat$
+  \item compute $\Kmat = k(\bm{X}, \bm{X})$ from all pairs $\xi, \xi[j] \in \bm{X}$ 
+  \item draw $\fv \sim \Nzk$ 
+\end{itemize}
+\item 10 randomly drawn functions (note 0 mean)
+\vfill
+\imageC[.8]{figure/gp_sample/zeromean_prior_10n.pdf}
+\end{framei}
+
+\begin{framei}[sep=L]{Further reading}
+
+\item Will go through many details now, but some general refs already
+
+\item The standard book: \furtherreading{RASMUSSENWILLIAMS2006GPML}
+
+\item Good videos can be found here:
+\furtherreading{MATHEMATICALMONK2011}
+\furtherreading{FREITAS2020}
+
+
+
+\end{framei}
+\endlecture
+\end{document}

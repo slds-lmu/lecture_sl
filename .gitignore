@@ -105,3 +105,6 @@ code-demos/code_demo_limo.R
 #  OS-specific temp/preview files   #
 #-----------------------------------#
 *.DS_Store
+
+# slidemk build output
+build/
