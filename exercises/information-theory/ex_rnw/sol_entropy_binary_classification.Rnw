@@ -4,8 +4,8 @@
     By definition, the entropy of a \textit{Bernoulli} random variable is :
   
     \begin{align*}
-      H(\epsilon) &= - \sum_{e \in \{0,1\}}  \P (\epsilon = e) \log (\P(\epsilon = e)) \\
-      &= - \theta_\epsilon \log(\theta_\epsilon) - (1-\theta_\epsilon) \log(1-\theta_\epsilon)
+      H(\epsilon) &= - \sum_{e \in \{0,1\}}  \P (\epsilon = e) \log_2 (\P(\epsilon = e)) \\
+      &= - \theta_\epsilon \log_2(\theta_\epsilon) - (1-\theta_\epsilon) \log_2(1-\theta_\epsilon)
     \end{align*}
   \lz
   
@@ -38,7 +38,7 @@
   
   \begin{align*}
     H(Y,X) &= H(X) + H(Y|X) \\
-    &=  - \theta_X \log(\theta_X) - (1-\theta_X) ( \log(1-\theta_X) - H(\epsilon))
+    &=  - \theta_X \log_2(\theta_X) - (1-\theta_X) ( \log_2(1-\theta_X) - H(\epsilon))
   \end{align*}
   
   
