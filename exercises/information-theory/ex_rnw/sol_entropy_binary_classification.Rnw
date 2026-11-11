@@ -1,78 +1,75 @@
 \begin{enumerate}
 
   \item
-    By definition, the entropy of a \textit{Bernoulli} random variable is :
-  
-    \begin{align*}
-      H(\epsilon) &= - \sum_{\epsilon \in \Omega_\epsilon}  \P (\epsilon) \log (\P(\epsilon)) \\
-      &= - \theta_\epsilon \log(\theta_\epsilon) - (1-\theta_\epsilon) \log(1-\theta_\epsilon)
-    \end{align*}
-  \lz
-  
-  \item 
-    The conditional entropy quantifies the uncertainty of $y$ if the outcome of $x$ is given. It is defined as the expected value of the entropies of the conditional distributions, averaged over the conditioning random variable.
-    
-    \begin{align*}
-      H(y|x) &= \E_x [H(y|x=x)] = \sum_{x \in \Omega_x } \P(x=x) H(y|x=x) \\
-      &= \theta_x H(y|x=1) + (1-\theta_x) H(y|x=0)
-    \end{align*}
-  
+    By definition, the entropy of a Bernoulli random variable is:
 
-  Let's think about what happens with $y$ when the values of $x$ are given.
-  
-  \begin{itemize}
-    \item
-      If $x=1$, the maximum between $\epsilon$ and $x$ will always be 1 and $y$ will always be 1. As there is no uncertainty, the conditional entropy is 0.
-    \item
-      If $x=0$, the maximum between $\epsilon$ and $x$ has uncertainty, as it can be 0 or 1. The uncertainty is given only by $\epsilon$, because $x$ is not random in the conditional entropy.
-  \end{itemize}
-  
-  \begin{align*}
-      H(y|x) &= \theta_x \underbrace{H(y|x=1)}_{=0} + (1-\theta_x) \underbrace{H(y|x=0)}_{= H(\epsilon)} \\
-      &= (1-\theta_x) H(\epsilon)
-  \end{align*}
-  
-  \item
-  
-  Using the chain rule for entropy:
-  
-  \begin{align*}
-    H(y,x) &= H(x) + H(y|x) \\
-    &=  - \theta_x \log(\theta_x) - (1-\theta_x) ( \log(1-\theta_x) - H(\epsilon))
-  \end{align*}
-  
-  
-  
-  \item
-  
-  Now $\epsilon$ has a deterministic relation with $x$. Let's see how our results change with this modification.
-  
-  \begin{itemize}
-    \item
-      As $\epsilon = \psi(x)$ is a deterministic function of $x$, $\psi$ introduces no additional uncertainty.
-      Hence, the entropy of $\epsilon$ cannot exceed the entropy of $x$:
-      $$ H(\epsilon) = H(\psi(x)) \leq H(x) $$
-      Since $\psi:\{0,1\} \to \{0,1\}$, there are only two cases:
-      if $\psi$ is bijective ($\psi(x) = x$ or $\psi(x) = 1 - x$), then $H(\epsilon) = H(x)$;
-      if $\psi$ is constant, then $\epsilon$ is not random and $H(\epsilon) = 0$.
-      
-    \item
-      $y$ is a function of $x$ and $\epsilon$, and now $\epsilon$ has a deterministic relation with $x$. Accordingly, we can conclude that $y$ is now a function of $x$.
-      $$ y = 2 \max \{ x, \psi(x) \} - 1 $$
-      If the value of $x$ is given, there is no uncertainty associated.
-      $$ H(y|x) = 0 $$
-      
-    \item
-    
-    Using the chain rule for the entropy:
-    
     \begin{align*}
-      H(y,x) &= H(x) + \underbrace{H(y|x)}_{=0}  \\
-      &= H(x)
+      H(\epsilon) &= - \sum_{e \in \{0,1\}}  \P (\epsilon = e) \log_2 (\P(\epsilon = e)) \\
+      &= - \theta_\epsilon \log_2(\theta_\epsilon) - (1-\theta_\epsilon) \log_2(1-\theta_\epsilon)
     \end{align*}
-    
-    This result is expected. As $x$ and $y$ have a deterministic relation, the uncertainty is only given by $x$.
-  
-  \end{itemize}
+    \lz
+
+  \item
+    The conditional entropy quantifies the uncertainty of $Y$ if the outcome of $X$ is given. It is defined as the expected value of the entropies of the conditional distributions, averaged over the conditioning random variable.
+
+    \begin{align*}
+      H(Y|X) &= \E_X [H(Y|X=x)] = \sum_{x \in \Xspace} \P(X=x) H(Y|X=x) \\
+      &= \theta_X H(Y|X=1) + (1-\theta_X) H(Y|X=0)
+    \end{align*}
+
+    Let's think about what happens with $Y$ when the values of $X$ are given.
+
+    \begin{itemize}
+      \item
+        If $X=1$, the maximum between $\epsilon$ and $X$ will always be 1 and $Y$ will always be 1. As there is no uncertainty, the conditional entropy is 0.
+      \item
+        If $X=0$, then $Y = 2\epsilon - 1$, which can be $-1$ or 1.
+        Since $X$ and $\epsilon$ are independent, $\epsilon$ given $X=0$ has the same distribution as $\epsilon$.
+        As $\epsilon \mapsto 2\epsilon - 1$ is bijective, it does not change the entropy, so $H(Y|X=0) = H(\epsilon)$.
+    \end{itemize}
+
+    \begin{align*}
+      H(Y|X) &= \theta_X \underbrace{H(Y|X=1)}_{=0} + (1-\theta_X) \underbrace{H(Y|X=0)}_{= H(\epsilon)} \\
+      &= (1-\theta_X) H(\epsilon)
+    \end{align*}
+
+  \item
+    Using the chain rule for entropy:
+
+    \begin{align*}
+      H(Y,X) &= H(X) + H(Y|X) \\
+      &=  - \theta_X \log_2(\theta_X) - (1-\theta_X) ( \log_2(1-\theta_X) - H(\epsilon))
+    \end{align*}
+
+  \item
+    Now $\epsilon$ has a deterministic relation with $X$,
+    so $X$ and $\epsilon$ are no longer independent (unless $\psi$ is constant).
+    Let's see how our results change with this modification.
+
+    \begin{itemize}
+      \item
+        As $\epsilon = \psi(X)$ is a deterministic function of $X$, $\psi$ introduces no additional uncertainty.
+        Hence, the entropy of $\epsilon$ cannot exceed the entropy of $X$:
+        $$ H(\epsilon) = H(\psi(X)) \leq H(X) $$
+        Since $\psi:\{0,1\} \to \{0,1\}$, there are only two cases:
+        if $\psi$ is bijective ($\psi(x) = x$ or $\psi(x) = 1 - x$), then $H(\epsilon) = H(X)$;
+        if $\psi$ is constant, then $\epsilon$ is not random and $H(\epsilon) = 0$.
+
+      \item
+        $Y$ is a function of $X$ and $\epsilon$, and now $\epsilon$ has a deterministic relation with $X$. Accordingly, we can conclude that $Y$ is now a function of $X$.
+        $$ Y = 2 \max \{ X, \psi(X) \} - 1 $$
+        If the value of $X$ is given, there is no uncertainty associated.
+        $$ H(Y|X) = 0 $$
+
+      \item
+        Using the chain rule for entropy:
+
+        \begin{align*}
+          H(Y,X) &= H(X) + \underbrace{H(Y|X)}_{=0}  \\
+          &= H(X)
+        \end{align*}
+
+        This result is expected. As $X$ and $Y$ have a deterministic relation, the uncertainty is only given by $X$.
+    \end{itemize}
 
 \end{enumerate}
