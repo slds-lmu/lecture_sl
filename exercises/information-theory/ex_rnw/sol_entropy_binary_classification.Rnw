@@ -24,7 +24,9 @@
     \item
       If $X=1$, the maximum between $\epsilon$ and $X$ will always be 1 and $Y$ will always be 1. As there is no uncertainty, the conditional entropy is 0.
     \item
-      If $X=0$, the maximum between $\epsilon$ and $X$ has uncertainty, as it can be 0 or 1. The uncertainty is given only by $\epsilon$, because $X$ is not random in the conditional entropy.
+      If $X=0$, then $Y = 2\epsilon - 1$, which can be $-1$ or 1.
+      Since $X$ and $\epsilon$ are independent, $\epsilon$ given $X=0$ has the same distribution as $\epsilon$.
+      As $\epsilon \mapsto 2\epsilon - 1$ is bijective, it does not change the entropy, so $H(Y|X=0) = H(\epsilon)$.
   \end{itemize}
   
   \begin{align*}
@@ -45,7 +47,9 @@
   
   \item
   
-  Now $\epsilon$ has a deterministic relation with $X$. Let's see how our results change with this modification.
+  Now $\epsilon$ has a deterministic relation with $X$,
+  so $X$ and $\epsilon$ are no longer independent (unless $\psi$ is constant).
+  Let's see how our results change with this modification.
   
   \begin{itemize}
     \item

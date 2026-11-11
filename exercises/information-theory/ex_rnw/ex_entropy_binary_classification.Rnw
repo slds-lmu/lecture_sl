@@ -20,6 +20,8 @@ where $\P_X = \mathrm{Ber}(\theta_X),$ $\P_\epsilon = \mathrm{Ber}(\theta_\epsil
     What is $H(Y,X)?$ 
 
   \item
-    Now if $\epsilon = \psi(X)$ for some deterministic function $\psi:\{0,1\} \to \{0,1\}.$ What are the answers to the previous questions in this case? 
+    Now assume instead that $\epsilon = \psi(X)$ for some deterministic function $\psi: \{0,1\} \to \{0,1\}$,
+    so $X$ and $\epsilon$ are in general no longer independent.
+    What are the answers to the previous questions in this case? 
 
 \end{enumerate}
