@@ -8,7 +8,7 @@ $$ q(x|\thetav) = \frac{1}{\sigma \sqrt{2\pi}} \exp \left(-\frac{1}{2} \left( \f
 
 %\begin{enumerate}
 %  \item
-    Calculate the set of parameters $\thetav$ that minimizes the Kullback-Leibler Divergence $D_{KL}(p \| q_\thetav)$.
+    Calculate the set of parameters $\thetav$ that minimizes the Kullback-Leibler Divergence $D_{KL}(p \| q_{\thetav})$.
     
     
     \emph{Hint}: Use the fact that for  $X \sim \text{LP}(\mu_0,\sigma_0)$, the following properties apply: $\E(X  )=\mu_0$ and $\var(X)=2 \sigma_0^2$.

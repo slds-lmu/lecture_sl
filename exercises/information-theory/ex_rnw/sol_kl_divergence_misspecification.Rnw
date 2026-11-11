@@ -1,14 +1,14 @@
 The Kullback-Leibler Divergence is defined as:
 \begin{align*}
-  D_{KL}(p \| q_\thetav) &= \E_{X \sim p}\left[ \log \left( \frac{p(X)}{q(X|\thetav)} \right)  \right] \\
+  D_{KL}(p \| q_{\thetav}) &= \E_{X \sim p}\left[ \log \left( \frac{p(X)}{q(X|\thetav)} \right)  \right] \\
   &= \underbrace{\E_{X \sim p} \left[ \log(p(X)) \right]}_{(a)} - \underbrace{\E_{X \sim p} \left[ \log(q(X|\thetav)) \right] }_{(b)}
 \end{align*}
 
-As we are looking for the set of parameters $\thetav$ that minimizes $D_{KL}(p \| q_\thetav)$,  we know the following:
+As we are looking for the set of parameters $\thetav$ that minimizes $D_{KL}(p \| q_{\thetav})$,  we know the following:
 
 \begin{itemize}
   \item (a) does not depend on $\thetav$, and can be considered as a constant.
-  \item To minimize $D_{KL}(p \| q_\thetav)$ is equivalent to maximize (b)
+  \item To minimize $D_{KL}(p \| q_{\thetav})$ is equivalent to maximize (b)
 \end{itemize}
 
 Using the definition of the normal distribution:
