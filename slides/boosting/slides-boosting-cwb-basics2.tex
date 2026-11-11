@@ -26,7 +26,7 @@
   %\item Fair base learner selection
 }
 
-\begin{frame2}{Handling of categorical features}
+\begin{framev}{Handling of categorical features}
 
 Feature $x_j$ with $G$ categories. Two options for encoding:
 
@@ -44,8 +44,8 @@ Feature $x_j$ with $G$ categories. Two options for encoding:
   %\item The \texttt{compboost} package currently implements the first variant.
 
 % ------------------------------------------------------------------------------
-\end{frame2}
-\begin{frame2}{Handling of categorical features}
+\end{framev}
+\begin{framev}{Handling of categorical features}
 
 Advantages of simultaneously handling all categories in CWB: 
 \begin{itemize}
@@ -70,8 +70,8 @@ Advantages of simultaneously handling all categories in CWB:
 %\end{itemize}
 
 % ------------------------------------------------------------------------------
-\end{frame2}
-\begin{frame2}{Handling of categorical features}
+\end{framev}
+\begin{framev}{Handling of categorical features}
 
 Advantages of including categories individually in CWB: 
 \begin{itemize}
@@ -94,11 +94,11 @@ Disadvantage of individually handling all categories in CWB:
         Penalization and selection become difficult since base learner has exactly one degree of freedom.
 \end{itemize}
 
-\end{frame2}
+\end{framev}
 
 % ------------------------------------------------------------------------------
 
-\begin{frame2}{intercept handling}
+\begin{framev}{intercept handling}
 %\vspace{0.2cm}
 There are two options to handle the intercept in CWB. In both, the loss-optimal constant $\fm[0](\xv)$ is an initial model intercept. \\
 %\vspace{0.3cm}
@@ -156,13 +156,13 @@ There are two options to handle the intercept in CWB. In both, the loss-optimal 
 % The parameter estimates converge to the same value. The used data set is \href{https://github.com/topepo/AmesHousing}{Ames Housing}.
 
 
-\end{frame2}
+\end{framev}
 
 %\input{tex/cwb-bl-sel}
 
 % ------------------------------------------------------------------------------
 
-\begin{frame2}{Example: Life expectancy}
+\begin{framev}{Example: Life expectancy}
 
 Consider the \texttt{life expectancy} data set (WHO, available on \sourceref{KUMAR2019KAGGLE})\,: regression task to predict life expectancy. \\
 \vspace{0.1cm}
@@ -185,7 +185,7 @@ We fit a CWB model with linear BLs (with intercept)
 \end{table}
 \vspace{0.4cm}
 Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL was selected when and how the estimated feature effects evolve over time.
-\end{frame2}
+\end{framev}
 
 % tex file and figures are created automatically by: rsrc/fig-cwb-anim.R
 \input{tex/fig-cwb-anim}
@@ -193,7 +193,7 @@ Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL wa
 %%%%% BLIND OUT, include with removing `\if1` and  \fi
 \if1
 
-\begin{frame2}{example: boston housing}
+\begin{framev}{example: boston housing}
 
 \begin{minipage}[c]{0.4\textwidth}
   \small
@@ -230,15 +230,15 @@ Using \texttt{compboost} with $M = 150$ iterations, we can visualize which BL wa
   \end{tabular}
 \end{minipage}%
 
-\end{frame2}
-\begin{frame2}{example: boston housing}
+\end{framev}
+\begin{framev}{example: boston housing}
 
 \begin{center}
 \includegraphics[width = \textwidth]{figure/compboost-illustration-1.png}
 \end{center}
 
-\end{frame2}
-\begin{frame2}{example: boston housing}
+\end{framev}
+\begin{framev}{example: boston housing}
 
 % ------------------------------------------------------------------------------
 
@@ -253,7 +253,7 @@ $\rightarrow$ A sparse linear regression is fitted.
 
 \includegraphics[width = \textwidth]{figure/compboost-illustration-2.png}
 
-\end{frame2}
+\end{framev}
 
 
 \fi

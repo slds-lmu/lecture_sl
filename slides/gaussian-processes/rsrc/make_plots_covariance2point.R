@@ -14,7 +14,8 @@ x <- c(3, 2.5, 5)
 df <- data.frame(x = x)
 
 m <- c(0, 0, 0)
-K <- kernel_sqexp(x, x, lengthscale = 1)  # sqexp.vec(x)
+K <- kernel_sqexp(x, x, lengthscale = 1)  # sqexp.vec(x) # produces 6x6 matrix for me
+K <- K[1:3,1:3]
 
 # sample 
 set.seed(1234)
@@ -106,14 +107,14 @@ ggsave(
 
 p1 <- p1 + 
     geom_point(
-        data = data.frame(x = -2.5, y = kernel_sqexp_distance(-2.5)),
+        data = data.frame(x = -2, y = kernel_sqexp_distance(-2)),
         aes(x = x, y = y), 
         color = "blue", 
         size = 2
     ) + 
     geom_segment(
         data = data.frame(
-            x = -2.5, xend = -2.5, y = 0, yend = kernel_sqexp_distance(2.5)
+            x = -2, xend = -2, y = 0, yend = kernel_sqexp_distance(2)
         ),
         aes(x = x, xend = xend, y = y, yend = yend), 
         color = "blue", 
@@ -122,7 +123,7 @@ p1 <- p1 +
     geom_text(
         data = data.frame(
             x = - 3, 
-            y = kernel_sqexp_distance(- 2.5) + 0.2, 
+            y = kernel_sqexp_distance(- 2) + 0.2, 
             label = "low \n correlation \n of y values"
         ),
         aes(x = x, y = y, label = label), 
@@ -136,6 +137,7 @@ ggsave(
     height = 3, 
     width = 3
 )
+
 
 p2 <- p2 + 
     geom_segment(
