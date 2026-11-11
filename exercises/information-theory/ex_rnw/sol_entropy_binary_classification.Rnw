@@ -4,8 +4,8 @@
     By definition, the entropy of a \textit{Bernoulli} random variable is :
   
     \begin{align*}
-      H(\epsilon) &= - \sum_{\epsilon \in \Omega_\epsilon}  \P (\epsilon) log (\P(\epsilon)) \\
-      &= - \theta_\epsilon log(\theta_\epsilon) - (1-\theta_\epsilon) log(1-\theta_\epsilon)
+      H(\epsilon) &= - \sum_{\epsilon \in \Omega_\epsilon}  \P (\epsilon) \log (\P(\epsilon)) \\
+      &= - \theta_\epsilon \log(\theta_\epsilon) - (1-\theta_\epsilon) \log(1-\theta_\epsilon)
     \end{align*}
   \lz
   
@@ -38,7 +38,7 @@
   
   \begin{align*}
     H(y,x) &= H(x) + H(y|x) \\
-    &=  - \theta_x log(\theta_x) - (1-\theta_x) ( log(1-\theta_x) - H(\epsilon))
+    &=  - \theta_x \log(\theta_x) - (1-\theta_x) ( \log(1-\theta_x) - H(\epsilon))
   \end{align*}
   
   
@@ -49,14 +49,16 @@
   
   \begin{itemize}
     \item
-      As $\epsilon$ and $x$ have a deterministic relation, the uncertainty introduced by the $\psi$ function is 0. The entropy of $\epsilon$ is given only by the entropy of $x$
-      \begin{align*}
-        H(\epsilon) = H(x)
-      \end{align*}
+      As $\epsilon = \psi(x)$ is a deterministic function of $x$, $\psi$ introduces no additional uncertainty.
+      Hence, the entropy of $\epsilon$ cannot exceed the entropy of $x$:
+      $$ H(\epsilon) = H(\psi(x)) \leq H(x) $$
+      Since $\psi:\{0,1\} \to \{0,1\}$, there are only two cases:
+      if $\psi$ is bijective ($\psi(x) = x$ or $\psi(x) = 1 - x$), then $H(\epsilon) = H(x)$;
+      if $\psi$ is constant, then $\epsilon$ is not random and $H(\epsilon) = 0$.
       
     \item
       $y$ is a function of $x$ and $\epsilon$, and now $\epsilon$ has a deterministic relation with $x$. Accordingly, we can conclude that $y$ is now a function of $x$.
-      $$ y = 2  \ max  \{ x, \psi(x) \} -1 $$
+      $$ y = 2 \max \{ x, \psi(x) \} - 1 $$
       If the value of $x$ is given, there is no uncertainty associated.
       $$ H(y|x) = 0 $$
       
