@@ -44,7 +44,7 @@ with zero-mean homoskedastic error $\epsilon \sim (0, \sigma^2)$ independent of 
 
 \end{frame}
 
-\begin{frame2}[small]{Bias-Variance decomposition}
+\begin{framev}[fs=small]{Bias-Variance decomposition}
 
 By plugging in the $L2$ loss $L(y, f(\xv)) = (y - f(\xv))^2$ we get
 
@@ -62,9 +62,9 @@ Let us consider the error $(*)$ conditioned on one fixed test observation $(\xv,
 
 by using the linearity of the expectation %and $\var(y) = \E(y^2) - \E^2(y)$. 
 
-\end{frame2}
+\end{framev}
 
-\begin{frame2}[footnotesize]{Bias-Variance decomposition}
+\begin{framev}[fs=footnotesize]{Bias-Variance decomposition}
 
 $$
 (*) = \E_{\D_n}((y - \fh_{\D_n}(\xv))^2) = 
@@ -94,9 +94,9 @@ $$
 +2 \epsilon (\ftrue(\xv) - \E_{\D_n}(\fh_{\D_n}(\xv)))
 $$
 
-\end{frame2}
+\end{framev}
 
-\begin{frame2}[footnotesize]{Bias-Variance decomposition}
+\begin{framev}[fs=footnotesize]{Bias-Variance decomposition}
 
 $$
 (*) = \epsilon^2 + \text{Var}_{\D_n}(\fh_{\D_n}(\xv)) + 
@@ -117,7 +117,7 @@ GE_n(\ind)
 +& \E_{xy}\underbrace{\left[((\ftrue(\xv)-\E_{\D_n}(\fh_{\D_n}(\xv)))^2~|~\xv, y)\right]}_{\text{Squared bias of learner at } (\xv, y)} + \underbrace{0}_{\text{As $\epsilon$ is zero-mean and independent}}
 \end{align*}
 
-\end{frame2}
+\end{framev}
 
 
 
