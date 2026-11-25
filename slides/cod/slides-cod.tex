@@ -57,7 +57,7 @@ For each email, we extract the following features:
 \includegraphics[width = 11cm ]{figure/exclamation_marks_plot.png}
 \end{center}
 
-Based on the frequency of exclamation marks, we train a very simple classifier (a decision stump with split point $\xv = 0.25$):
+Based on the frequency of exclamation marks, we train a very simple classifier (a decision stump with split point $x = 0.25$):
 
 \begin{itemize}
 \item We divide the input space into $2$ equally sized regions.
@@ -136,9 +136,9 @@ Let us further increase the dimensionality to 3 by using the frequency of the wo
 \medskip 
 
   \begin{footnotesize}
-  \begin{eqnarray*}
-    a^p &=& \frac{1}{10} \Leftrightarrow a = \frac{1}{\sqrt[p]{10}}
-  \end{eqnarray*}
+  $$
+    a^p = \frac{1}{10} \Leftrightarrow a = \frac{1}{\sqrt[p]{10}}
+  $$
   \end{footnotesize}
   \vspace*{-0.5cm}
   \item  So: covering $10\%$ of total volume in a cell requires cells with almost $50\%$ of the entire range in $3$ dimensions, $80\%$ in $10$ dimensions. 
@@ -186,7 +186,7 @@ Consider a $20$-dimensional sphere. Nearly all of the volume lies in its outer s
 
 \end{vbframe}
 
-\begin{vbframe}{Hyphersphere within hypercube}
+\begin{vbframe}{Hypersphere within hypercube}
 Consider a p-dimensional hypersphere of radius $r$ and volume $S_p(r)$ inscribed in a p-dimensional hypercube with sides of length $2r$ and volume $C_p(r)$. Then it holds that 
 \begin{footnotesize}
 $$\lim_{p\rightarrow \infty} \frac{S_p(r)}{C_p(r)} = \lim_{p\rightarrow \infty}
@@ -234,11 +234,11 @@ The consequences of the previous results for uniformly distributed data in the h
 
 \begin{vbframe}{Gaussians in high dimensions}
 
-A further manifestation of the \textbf{curse of dimensionality} appears if we consider a standard Gaussian $N_p(\bm{0}, \id_p)$ in $p$ dimensions.
+A further manifestation of the \textbf{curse of dimensionality} appears if we consider a standard Gaussian $\normal(\zero, \id_p)$ in $p$ dimensions.
 
 \begin{itemize}
     \item After transforming from Cartesian to polar coordinates and integrating out the directional variables, we obtain an expression for the density $p(r)$ as a function of the radius $r$ (i.e., the point's distance from the origin), s.t.
-    $$ p(r) = \frac{S_p r^{p-1}}{(2 \pi \sigma^2)^{p/2}} \exp \left( -\frac{r^2}{2\sigma^2}\right),$$
+    $$ p(r) = \frac{S_p r^{p-1}}{(2 \pi)^{p/2}} \exp(-\frac{r^2}{2})$$
     where $S_p$ is the surface area of the $p$-dimensional unit hypersphere.
     \item Thus $p(r) \delta r$ is the approximate probability mass inside a thin shell of thickness $\delta r$ located at radius $r$. 
     
@@ -256,7 +256,7 @@ This may seem counterintuitive, but:
 \framebreak
 
   \item For the probability mass of a hyperspherical shell it follows that
-    $$\int^{r + \frac{\delta r}{2}}_{r - \frac{\delta r}{2}}p(\tilde{r})d\tilde{r} = \int_{r - \frac{\delta r}{2} \; \leq \; ||\xv||_2 \; \leq \; r + \frac{\delta r}{2}} f_p(\tilde{\xv}) d\tilde{\xv},$$
+    $$\int^{r + \frac{\delta r}{2}}_{r - \frac{\delta r}{2}}p(\tilde{r})d\tilde{r} = \int_{r - \frac{\delta r}{2} \; \leq \; ||\xv||_2 \; \leq \; r + \frac{\delta r}{2}} f_p(\xtil) d\xtil,$$
     where $f_p(\xv)$ is the density of the $p$-dimensional standard normal distribution and $p(r)$ the associated radial density.
 
 \begin{center}

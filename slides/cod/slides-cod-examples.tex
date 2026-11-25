@@ -54,7 +54,7 @@ The consequences for the k-nearest neighbors approach can be summarized as follo
  \item At constant sample size $n$ and growing $p$, the distance between the observations increases\\
  $\rightarrow$ the coverage of the $p$-dimensional space decreases,\\
  $\rightarrow$ every point becomes isolated / far way from all other points.
- \item The size of the neighborhood $N_k(x)$ also \enquote{increases}\\
+ \item The size of the neighborhood $N_k(\xv)$ also \enquote{increases}\\
        (at constant $k$) \\
        $\rightarrow$ it is no longer a \enquote{local} method.
  \item Reducing $k$ dramatically does not help much either,
@@ -67,8 +67,8 @@ since the fewer observations we average, the higher the variance of our fit.
 To demonstrate this, we generate an artificial data set of dimension $p$ as follows: We define $a = \frac{2}{\sqrt{p}}$ and 
 
 \begin{itemize}
-\item with probability $\frac{1}{2}$ we generate a sample from class $1$ by sampling from a Gaussian with mean $\pmb\mu = (a, a, ..., a)$ and unit covariance matrix
-\item with probability $\frac{1}{2}$ we generate a sample from class $2$ by sampling from a  Gaussian with mean $- \pmb\mu = (-a, -a, ..., -a)$ and unit covariance matrix
+\item with probability $\frac{1}{2}$ we generate a sample from class $1$ by sampling from a Gaussian with mean $\muv = (a, a, \ldots, a)^T$ and unit covariance matrix
+\item with probability $\frac{1}{2}$ we generate a sample from class $2$ by sampling from a  Gaussian with mean $-\muv = (-a, -a, \ldots, -a)^T$ and unit covariance matrix
 \end{itemize}
 
 
@@ -83,13 +83,13 @@ This example is constructed such that the Bayes error is always constant and doe
 
 \lz 
 
-The Bayes optimal classifiers predicts $\hat y = 1$ iff
+The Bayes optimal classifier predicts $\hat y = 1$ iff
 
 \begin{footnotesize}
-  \begin{eqnarray*}
-  \P\left(y = 1 ~|~ \xv\right) &=& \frac{p(\xv ~|~y = 1)\P(y = 1)}{p(\xv)} = \frac{1}{2} \cdot \frac{p(\xv ~|~y = 1)}{p(\xv)}\\
-  &\ge& \frac{1}{2} \cdot \frac{p(\xv ~|~y = 2)}{p(\xv)} \\ &=& \frac{p(\xv ~|~y = 2)\P(y = 2)}{p(\xv)} = \P\left(y = 2 ~|~ \xv\right). 
-  \end{eqnarray*}
+  \begin{align*}
+  \P(y = 1 | \xv) &= \frac{p(\xv | y = 1)\P(y = 1)}{p(\xv)} = \frac{1}{2} \cdot \frac{p(\xv | y = 1)}{p(\xv)} \\
+  &\ge \frac{1}{2} \cdot \frac{p(\xv | y = 2)}{p(\xv)} = \frac{p(\xv | y = 2)\P(y = 2)}{p(\xv)} = \P(y = 2 | \xv)
+  \end{align*}
 \end{footnotesize}
 
 This is equivalent to 
@@ -97,10 +97,10 @@ This is equivalent to
 \vspace*{-0.5cm}
 
 \begin{footnotesize}
-  \begin{eqnarray*}
-  \hat y = 1 &\Leftrightarrow& \exp\left(-\frac{1}{2} \left(\xv - \pmb\mu\right)^\top \left(\xv - \pmb\mu\right)\right) \ge \exp\left(-\frac{1}{2} \left(\xv + \pmb\mu\right)^\top \left(\xv + \pmb\mu\right)\right) \\
-  &\Leftrightarrow& \xv^\top \mu \ge 0. 
-  \end{eqnarray*}
+  \begin{align*}
+  \hat y = 1 &\Leftrightarrow \exp(-\frac{1}{2} (\xv - \muv)^T (\xv - \muv)) \ge \exp(-\frac{1}{2} (\xv + \muv)^T (\xv + \muv)) \\
+  &\Leftrightarrow \xv^T \muv \ge 0
+  \end{align*}
 \end{footnotesize}
 
 \framebreak
@@ -117,23 +117,23 @@ Optimal Bayes classifier and Bayes error (shaded area):
 We can calculate the corresponding expected misclassification error (Bayes error)
 
 \begin{footnotesize}
-\begin{eqnarray*}
-&&  p(\hat y = 1 ~|~y = 2)\P(y = 2) + p(\hat y = 2 ~|~y = 1)\P(y = 1)\\
-&=& \frac{1}{2} \cdot p(\xv^\top \pmb\mu \ge 0 ~|~ y = 2) + \frac{1}{2} \cdot p(\xv^\top \pmb\mu \le 0 ~|~ y = 1) \\
-&\overset{\text{symm.}}{=}& p(\xv^\top \pmb\mu \le 0 ~|~ y = 1) = p\left(\sum_{i = 1}^p a \xv_i \le 0 ~|~ y = 1\right)\\
-  &=& p\left(\sum_{i = 1}^p \xv_i \le 0 ~|~ y = 1\right). 
-\end{eqnarray*}
+\begin{align*}
+& \P(\hat y = 1 | y = 2)\P(y = 2) + \P(\hat y = 2 | y = 1)\P(y = 1) \\
+={}& \frac{1}{2} \cdot \P(\xv^T \muv \ge 0 | y = 2) + \frac{1}{2} \cdot \P(\xv^T \muv \le 0 | y = 1) \\
+\overset{\text{symm.}}{=}{}& \P(\xv^T \muv \le 0 | y = 1) = \P(\sumjp a x_j \le 0 | y = 1) = \P(\sumjp x_j \le 0 | y = 1)
+\end{align*}
 \end{footnotesize}
 
-$\sum_{i = 1}^p \xv_i ~|~ y = 1\sim \mathcal{N}(p \cdot a,~ p)$\,, because it is the sum of independent normal random variables $\xv_i ~|~ y = 1 \sim \mathcal{N}\left(a, 1\right)$ (the vector $\xv ~|~ y = 1$ follows a $\mathcal{N}\left(\pmb\mu, \id\right)$ distribution with $\pmb\mu = \left(a, ..., a\right)$). 
+$\sum_{j=1}^p x_j | y = 1 \sim \normal(p \cdot a, p)$, because it is the sum of independent normal random variables $x_j | y = 1 \sim \normal(a, 1)$ (the vector $\xv | y = 1$ follows a $\normal(\muv, \id)$ distribution with $\muv = (a, \ldots, a)^T$).
 
 \framebreak 
 
-We get for the Bayes error: 
+We get for the Bayes error:
 
-\begin{eqnarray*}
- &=& p\left(\frac{\sum_{i = 1}^p \xv_i - p \cdot a}{\sqrt{p}} \le \frac{- p\cdot a}{\sqrt{p}} ~|~ y = 1\right) \\ &=& \Phi(- \sqrt{p} a) \overset{a = \frac{2}{\sqrt{p}}}{=} \Phi(- 2) \approx 0.0228,
-\end{eqnarray*}
+\begin{align*}
+\P(\sumjp x_j \le 0 | y = 1) &= \P(\frac{\sumjp x_j - p \cdot a}{\sqrt{p}} \le \frac{-p \cdot a}{\sqrt{p}} | y = 1) \\
+&= \Phi(-\sqrt{p} a) \overset{a = \frac{2}{\sqrt{p}}}{=} \Phi(-2) \approx 0.0228
+\end{align*}
 
 where $\Phi$ is the distribution function of a standard normal random variable. 
 
