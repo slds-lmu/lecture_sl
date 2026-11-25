@@ -6,19 +6,18 @@
 \title{Introduction to Machine Learning}
 
 \begin{document}
-    
+
 \titlemeta{% Chunk title (example: CART, Forests, Boosting, ...), can be empty
     Curse of Dimensionality
-  }{% Lecture title  
+  }{% Lecture title
     Curse of Dimensionality - Examples Learning Algorithms
   }{% Relative path to title page image: Can be empty but must not start with slides/
   figure/knn_density_plot.png
   }{
-  \item See how the performance of k-NN and the linear model deteriorates in high-dimensional spaces 
+  \item See how the performance of k-NN and the linear model deteriorates in high-dimensional spaces
 }
 
-\begin{vbframe}{Example: k-NN}
-
+\begin{framev}{Example: k-NN}
 Let us look at the performance of algorithms for increasing dimensionality. First, we consider the k-NN algorithm:
 
 \begin{itemize}
@@ -26,28 +25,29 @@ Let us look at the performance of algorithms for increasing dimensionality. Firs
 \item The distance to the \textbf{next neighbor} $d_{NN1}(\xv)$ becomes extremely large.
 \item The distance might even get so large that all points are \textbf{equally far} away - we cannot really determine the nearest neighbor anymore.
 \end{itemize}
+\end{framev}
 
-\framebreak 
-
+\begin{framev}{Example: k-NN}
 Minimal, mean and maximal (NN)-distances of $10^{4}$ points uniformly distributed in the hypercube $[0,1]^p$:
 
-\begin{center}
-\includegraphics[width = 11cm ]{figure/knn_table.png}
-\end{center}
+\vfill
 
-\framebreak
+\imageC[1]{figure/knn_table.png}
 
-We see a decrease of relative contrast\footnote{[\href{https://bib.dbvis.de/uploadedFiles/155.pdf}{Aggarwal et al., 2001}]} $c := \frac{\max(d(\xv,\tilde{\xv})) - \min(d(\xv,\tilde{\xv}))}{\max(d(\xv,\tilde{\xv}))}$ and \enquote{locality}\footnote{our non-standard definition} $l := \frac{\overline{d(\xv,\tilde{\xv})} -  \overline{d_{NN1}(\xv)}}{\overline{d(\xv,\tilde{\xv})}}$ with increasing number of dimensions $p$:
+\vfill
+\end{framev}
 
+\begin{framev}{Example: k-NN}
+We see a decrease of relative contrast $c := \frac{\max(d(\xv,\xtil)) - \min(d(\xv,\xtil))}{\max(d(\xv,\xtil))}$
+\sourceref{https://bib.dbvis.de/uploadedFiles/155.pdf}
+and \enquote{locality}\footnote{our non-standard definition} $l := \frac{\overline{d(\xv,\xtil)} -  \overline{d_{NN1}(\xv)}}{\overline{d(\xv,\xtil)}}$ with increasing number of dimensions $p$:
 
-\begin{center}
-\includegraphics[width = 11cm ]{figure/knn_contrast_locality_plot.png}
-\end{center}
+\vfill
 
-\end{vbframe}
-\begin{vbframe}{Example: k-NN}
+\imageC[1]{figure/knn_contrast_locality_plot.png}
+\end{framev}
 
-
+\begin{framev}{Example: k-NN}
 The consequences for the k-nearest neighbors approach can be summarized as follows:
 
 \begin{itemize}
@@ -61,27 +61,25 @@ The consequences for the k-nearest neighbors approach can be summarized as follo
 since the fewer observations we average, the higher the variance of our fit.
  \item[$\rightarrow$] k-NN estimates get more inaccurate with increasing dimensionality of the data.
 \end{itemize}
+\end{framev}
 
-\framebreak
-
-To demonstrate this, we generate an artificial data set of dimension $p$ as follows: We define $a = \frac{2}{\sqrt{p}}$ and 
+\begin{framev}{Example: k-NN}
+To demonstrate this, we generate an artificial data set of dimension $p$ as follows: We define $a = \frac{2}{\sqrt{p}}$ and
 
 \begin{itemize}
 \item with probability $\frac{1}{2}$ we generate a sample from class $1$ by sampling from a Gaussian with mean $\muv = (a, a, \ldots, a)^T$ and unit covariance matrix
 \item with probability $\frac{1}{2}$ we generate a sample from class $2$ by sampling from a  Gaussian with mean $-\muv = (-a, -a, \ldots, -a)^T$ and unit covariance matrix
 \end{itemize}
+\end{framev}
 
+\begin{framev}{Example: k-NN}
+\imageC[1]{figure/knn_density_plot.png}
+\end{framev}
 
-\framebreak 
+\begin{framev}{Example: k-NN}
+This example is constructed such that the Bayes error is always constant and does not depend on the dimension $p$.
 
-\begin{center}
-\includegraphics[width = 11cm]{figure/knn_density_plot.png}
-\end{center}
-
-\framebreak 
-This example is constructed such that the Bayes error is always constant and does not depend on the dimension $p$. 
-
-\lz 
+\vfill
 
 The Bayes optimal classifier predicts $\hat y = 1$ iff
 
@@ -92,9 +90,7 @@ The Bayes optimal classifier predicts $\hat y = 1$ iff
   \end{align*}
 \end{footnotesize}
 
-This is equivalent to 
-
-\vspace*{-0.5cm}
+This is equivalent to
 
 \begin{footnotesize}
   \begin{align*}
@@ -102,18 +98,20 @@ This is equivalent to
   &\Leftrightarrow \xv^T \muv \ge 0
   \end{align*}
 \end{footnotesize}
+\vfill
+\end{framev}
 
-\framebreak
-
+\begin{framev}{Example: k-NN}
 Optimal Bayes classifier and Bayes error (shaded area):
 
-\begin{center}
-\includegraphics[width = 8cm]{figure/knn_error_plot.png}
-\end{center}
+\vfill
 
+\imageC[0.75]{figure/knn_error_plot.png}
 
-\framebreak 
+\vfill
+\end{framev}
 
+\begin{framev}{Example: k-NN}
 We can calculate the corresponding expected misclassification error (Bayes error)
 
 \begin{footnotesize}
@@ -125,9 +123,10 @@ We can calculate the corresponding expected misclassification error (Bayes error
 \end{footnotesize}
 
 $\sum_{j=1}^p x_j | y = 1 \sim \normal(p \cdot a, p)$, because it is the sum of independent normal random variables $x_j | y = 1 \sim \normal(a, 1)$ (the vector $\xv | y = 1$ follows a $\normal(\muv, \id)$ distribution with $\muv = (a, \ldots, a)^T$).
+\vfill
+\end{framev}
 
-\framebreak 
-
+\begin{framev}{Example: k-NN}
 We get for the Bayes error:
 
 \begin{align*}
@@ -135,78 +134,63 @@ We get for the Bayes error:
 &= \Phi(-\sqrt{p} a) \overset{a = \frac{2}{\sqrt{p}}}{=} \Phi(-2) \approx 0.0228
 \end{align*}
 
-where $\Phi$ is the distribution function of a standard normal random variable. 
+where $\Phi$ is the distribution function of a standard normal random variable.
 
-\lz 
+\vfill
 
-We see that the Bayes error is independent of $p$. 
+We see that the Bayes error is independent of $p$.
+\vfill
+\end{framev}
 
-
-\framebreak
-
+\begin{framev}{Example: k-NN}
 We also train a k-NN classifier for $k = 3, 7, 15$ for increasing dimensions and monitor its performance (evaluated by $10$ times repeated $10$-fold CV).
-\medskip
 
-\begin{center}
-\includegraphics[width = 11cm ]{figure/knn_misclassification_plot.png}
-\end{center}
+\vfill
+
+\imageC[1]{figure/knn_misclassification_plot.png}
 
 $\to$ k-NN deteriorates quickly with increasing dimension
+\end{framev}
 
-
-\end{vbframe}
-
-
-\begin{vbframe}{Example: Linear Model}
-We also investigate how the linear model behaves in high dimensional spaces.
-
-\begin{itemize}
-\item We take the Boston Housing data set, where the value of houses in the area around Boston is predicted based on $13$ features describing the region (e.g., crime rate, status of the population, etc. ).
-\item We train a linear model on the data consisting of 506 observations. 
+\begin{framei}{Example: linear model}
+\item We also investigate how the linear model behaves in high dimensional spaces.
+\item We take the Boston Housing data set, where the value of houses in the area around Boston is predicted based on $13$ features describing the region (e.g., crime rate, status of the population, etc.).
+\item We train a linear model on the data consisting of 506 observations.
 \item We artificially create a high-dimensional dataset by adding $100, 200, 300, ...$ noise variables (containing no information at all) and look at the performance of a linear model trained on this modified data ($10$ times repeated $10$-fold CV).
-\end{itemize}
-\framebreak
+\end{framei}
 
+\begin{framev}{Example: linear model}
 We compare the performance of an LM to that of a regression tree.
 
-\vspace*{0.1cm}
-\begin{center}
-\includegraphics[width = 11cm ]{figure/lm_mse_plot.png}
-\end{center}
-
+\imageC[1]{figure/lm_mse_plot.png}
 
 $\rightarrow$ The unregularized LM struggles with the added noise features, while our tree seems to nicely filter them out.
 
 \vfill
 
 \begin{footnotesize}
-\textbf{Note}: Trees automatically perform feature selection as only one feature at a time is considered for splitting (the smaller the depth of the tree, the less features are selected). Thus, they often perform well in high-dimensional settings. 
+\textbf{Note}: Trees automatically perform feature selection as only one feature at a time is considered for splitting (the smaller the depth of the tree, the less features are selected). Thus, they often perform well in high-dimensional settings.
 \end{footnotesize}
+\end{framev}
 
-\framebreak
-\begin{itemize}
-\item The regression coefficients of the noise features can not be estimated precisely as zero in the unregularized LM due to small random correlations. 
+\begin{framei}{Example: linear model}
+\item The regression coefficients of the noise features can not be estimated precisely as zero in the unregularized LM due to small random correlations.
 \item With an increasing number of these noise features, the prediction error rises.
-\item To see this, we can quantify the influence of the noise features on the prediction of each observation. \\ 
+\item To see this, we can quantify the influence of the noise features on the prediction of each observation. \\
 Therefore we decompose the response $\hat y^{(i)}$ of each iterations' test set into $\hat y^{(i)}_{\text{true}}$ (predicted with noise features set to 0) and $\hat y^{(i)}_{\text{noise}}$ (predicted with true features set to 0), s.t. $\hat y^{(i)} =  \hat y^{(i)}_{\text{true}} + \hat y^{(i)}_{\text{noise}} + \text{intercept}$. \\
-With this, we can define the \enquote{average proportional influence of the noise features} $\kappa := \overline{\left( \frac{|\hat y^{(i)}_{\text{noise}}|}{|\hat y^{(i)}_{\text{true}}| + |\hat y^{(i)}_{\text{noise}}|} \right)}$.
+With this, we can define the \enquote{average proportional influence of the noise features} $\kappa := \overline{( \frac{|\hat y^{(i)}_{\text{noise}}|}{|\hat y^{(i)}_{\text{true}}| + |\hat y^{(i)}_{\text{noise}}|} )}$.
+\end{framei}
 
-\end{itemize}
-\framebreak
-
-\begin{center}
-\includegraphics[width = 11cm ]{figure/lm_noise_plot.png}
-\end{center}
+\begin{framev}{Example: linear model}
+\imageC[1]{figure/lm_noise_plot.png}
 
 When we add 400 noise features to the model, most of the time, on average, over $50\%$ of the flexible part of the prediction $(\hat y^{(i)} - \text{intercept})$ is determined by the noise features.
+\end{framev}
 
-\end{vbframe} 
-
-\begin{vbframe}{COD: Ways out}
-
+\begin{framev}{COD: ways out}
 Many methods besides k-NN struggle with the curse of dimensionality. A large part of ML is concerned with dealing with this problem and finding ways around it.
 
-\medskip
+\vfill
 
 Possible approaches are:
 \begin{itemize}
@@ -214,10 +198,8 @@ Possible approaches are:
 \item Reducing the number of dimensions before training (e.g. by using domain knowledge, PCA or feature selection)
 \item Regularization
 \end{itemize}
-
-
-\end{vbframe}
-
+\vfill
+\end{framev}
 
 \endlecture
 \end{document}
