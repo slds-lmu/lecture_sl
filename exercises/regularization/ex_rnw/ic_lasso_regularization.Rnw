@@ -1,128 +1,118 @@
 
-Consider the regression learning setting, i.e., $\mathcal{Y} = \R,$ and feature space $\Xspace = \R^p.$
+Consider the regression setting with $\Yspace = \R$ and feature space $\Xspace = \R^p$.
 Let the hypothesis space be the linear models:
 
 $$
-  \Hspace = \{ \fx = \thetav^\top \xv ~|~  \thetav \in \R^p  \}. 
+    \Hspace = \{ \fx = \thetav^T \xv \mid \thetav \in \R^p \}
 $$
-Suppose your loss function of interest is the L2 loss $\Lxy= \frac12 \big(y-\fx\big)^2.$ Consider the $L_1$-regularized empirical risk of a model $\fx$ (i.e., Lasso regression):
+Suppose your loss function of interest is the L2 loss $\Lxy = \frac{1}{2} (y - \fx)^2$.
+Consider the $L_1$-regularized empirical risk of a model $\fx$ (i.e., lasso regression) with $\lambda > 0$:
 $$
-	\riskrt = \risket + \lambda \|\thetav\|_1 =  \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \xi \right)^2 + \lambda \sum_{i=1}^p  |\theta_i|.
+    \riskrt = \risket + \lambda ||\thetav||_1 = \frac{1}{2} \sumin (\yi - \thetav^T \xi)^2 + \lambda \sumjp |\theta_j|
 $$
-Assume that ${\Xmat}^T \Xmat = \id,$ which holds if $\Xmat$ has orthonormal columns. Show that the minimizer $\thetah_{\text{Lasso}} = (\thetah_{\text{Lasso},1},\ldots,\thetah_{\text{Lasso},p})^\top$ is given by
+Assume that $\Xmat^T \Xmat = \id$, which holds if $\Xmat$ has orthonormal columns.
+Show that the minimizer $\thetavh_{\text{lasso}} = (\thetah_{\text{lasso},1}, \ldots, \thetah_{\text{lasso},p})^T$ is given by
 
-$$	
-	\thetah_{\text{Lasso},i} = sgn(\thetah_{i}) \max\{|\thetah_{i}| - \lambda,0 \}, \quad i=1,\ldots,p,	
+$$
+    \thetah_{\text{lasso},j} = \sign(\thetah_j) \max\{|\thetah_j| - \lambda, 0\} \quad j = 1, \ldots, p
 $$
 
-where $\thetavh = (\thetah_{1},\ldots,\thetah_{p})^\top = ({\Xmat}^T \Xmat)^{-1} \Xmat^T\yv$ is the minimizer of the unregularized empirical risk (w.r.t.\ the L2 loss). For this purpose, use the following steps:
-\begin{enumerate}	
-	\item
-		Derive that 
-	
-		$$	
-			\argmin_{\thetav} \riskrt  = 	\argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
-		$$
-	
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-	
-	
-	
-	\item 
-	
-		Note that the minimization problem on the right-hand side of (a) can be written as $\sum_{i=1}^p g_i(\theta_i),$ where 
-		$$ 
-			g_i(\theta_i) =  - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda |\theta_i|. 
-		$$ 
+where $\thetavh = (\thetah_1, \ldots, \thetah_p)^T = (\Xmat^T \Xmat)^{-1} \Xmat^T \yv$ is the minimizer of the unregularized empirical risk (w.r.t.\ the L2 loss).
+For this purpose, use the following steps:
+\begin{enumerate}
+    \item
+        Derive that
 
-		What is the advantage of this representation if we seek to find the $\thetav$ with entries $\theta_1,\ldots,\theta_p$ minimizing $\riskrt?$
-		
-		\lz
-		\lz
-		\lz
-	
-	
-	\item 
-	
-		Consider first the case that $\thetah_i>0$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i\geq 0.$ 
-	
-		\emph{Hint:} Compare $g_i(\theta_i)$ and $g_i(-\theta_i)$ for $\theta_i\geq0.$
-	
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-	
-	\item 
-		Derive that $\theta^*_i = \max\{\thetah_{i} - \lambda,0 \},$   by using (c) (and also still considering the case $\thetah_i > 0.$)
-		
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-	
-	\item 
-	
-		Consider the complementary case of (c) and (d), i.e., $\thetah_i \leq 0,$ and infer that for the minimizer $\theta^*_i$ of $g_i$ it must hold that $\theta^*_i \leq 0.$
-		
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-	
-	
-	
-	\item 
-	
-		Derive that $\theta^*_i = \min\{ \thetah_{i} + \lambda,0 \},$   by using (e) (and also still considering the case $\thetah_i \leq 0.$)
-	
-		
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-	
-	\item 
-	
-		Make sure that both minimizers in the two cases can indeed be written as $sgn(\thetah_{i}) \max\{|\thetah_{i}| - \lambda,0 \}.$
-	
-	
-		
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
-		\lz
+        $$
+            \argmin_{\thetav} \riskrt = \argmin_{\thetav} \sumjp (-\thetah_j \theta_j + \frac{\theta_j^2}{2} + \lambda |\theta_j|)
+        $$
+
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+
+    \item
+        Note that the objective on the right-hand side of (a) can be written as $\sum_{j=1}^p g_j(\theta_j)$, where
+        $$
+            g_j(\theta_j) = -\thetah_j \theta_j + \frac{\theta_j^2}{2} + \lambda |\theta_j|
+        $$
+
+        What is the advantage of this representation if we seek the $\thetav$ with entries $\theta_1, \ldots, \theta_p$ minimizing $\riskrt$?
+
+        \lz
+        \lz
+        \lz
+
+    \item
+        Consider first the case $\thetah_j > 0$ and infer that the minimizer $\theta_j^*$ of $g_j$ satisfies $\theta_j^* \geq 0$.
+
+        Hint: Compare $g_j(\theta_j)$ and $g_j(-\theta_j)$ for $\theta_j \geq 0$.
+
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+
+    \item
+        Derive that $\theta_j^* = \max\{\thetah_j - \lambda, 0\}$, using (c) and still assuming $\thetah_j > 0$.
+
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+
+    \item
+        Consider the complementary case $\thetah_j \leq 0$ and infer that the minimizer $\theta_j^*$ of $g_j$ satisfies $\theta_j^* \leq 0$.
+
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+
+    \item
+        Derive that $\theta_j^* = \min\{\thetah_j + \lambda, 0\}$, using (e) and still assuming $\thetah_j \leq 0$.
+
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+
+    \item
+        Show that the minimizers of both cases can be written as $\sign(\thetah_j) \max\{|\thetah_j| - \lambda, 0\}$.
+
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
 \end{enumerate}
