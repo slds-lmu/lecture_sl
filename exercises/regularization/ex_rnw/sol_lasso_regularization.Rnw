@@ -1,129 +1,90 @@
 \begin{enumerate}
-        
-    \item 
-
-        First of all, we will use the  fact that $\Xmat$ has orthonormal columns to show that:
-
-        \begin{equation}\label{eq:solve_b}
-            \begin{aligned}
-                \thetavh &= \left(\underbrace{{\Xmat}^T \Xmat}_{\id}\right)^{-1} \Xmat^T\yv \\
-                \thetavh &= \Xmat^T \yv  
-            \end{aligned}
-        \end{equation}
-
-        We will now use the result of eq. \ref{eq:solve_b} to show that:
-        \begin{equation}
-            \begin{aligned}
-                \argmin_{\thetav}  \riskrt &= \argmin_{\thetav} \frac12 \sum_{i=1}^n \left( \yi - \thetav^\top \Xmat^{(i)} \right)^2 + \lambda \sum_{i=1}^p  |\theta_i| \\
-                &= \argmin_{\thetav}  \frac12  \| \yv - \Xmat \thetav  \|_2^2 + \lambda \|\thetav\|_1 \\
-                &= \argmin_{\thetav} \frac12 ( \yv - \Xmat \thetav)^T ( \yv - \Xmat \thetav) + \lambda \|\thetav\|_1 \\ 
-                &= \argmin_{\thetav}  \frac12 \left(\underbrace{\yv^T \yv}_{indep. \  of \  \thetav} - 2 \underbrace{\yv^T \Xmat}_{\thetavh^T} \thetav + \thetav^T \underbrace{\Xmat^T \Xmat}_{\id} \thetav \right) + \lambda \|\thetav\|_1 \\
-                &= \argmin_{\thetav} - \thetavh^T \thetav  + \frac{\thetav^T \thetav}{2} + \lambda \|\thetav\|_1 \\
-                &= \argmin_{\thetav} \sum_{i=1}^p	- \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i|.
-            \end{aligned}
-        \end{equation}
 
     \item
+        Since $\Xmat^T \Xmat = \id$, the unregularized minimizer simplifies to
+        $$
+            \thetavh = (\underbrace{\Xmat^T \Xmat}_{= \id})^{-1} \Xmat^T \yv = \Xmat^T \yv
+        $$
+        We write the sum of squares in matrix form and use $\yv^T \Xmat = \thetavh^T$:
+        \begin{align*}
+            \argmin_{\thetav} \riskrt &= \argmin_{\thetav} \frac{1}{2} \sumin (\yi - \thetav^T \xi)^2 + \lambda ||\thetav||_1 \\
+            &= \argmin_{\thetav} \frac{1}{2} (\yv - \Xmat \thetav)^T (\yv - \Xmat \thetav) + \lambda ||\thetav||_1 \\
+            &= \argmin_{\thetav} \frac{1}{2} (\underbrace{\yv^T \yv}_{\text{indep.\ of } \thetav} - 2 \underbrace{\yv^T \Xmat}_{= \thetavh^T} \thetav + \thetav^T \underbrace{\Xmat^T \Xmat}_{= \id} \thetav) + \lambda ||\thetav||_1 \\
+            &= \argmin_{\thetav} -\thetavh^T \thetav + \frac{1}{2} \thetav^T \thetav + \lambda ||\thetav||_1 \\
+            &= \argmin_{\thetav} \sumjp (-\thetah_j \theta_j + \frac{\theta_j^2}{2} + \lambda |\theta_j|)
+        \end{align*}
+        In the fourth line, we drop the constant $\frac{1}{2} \yv^T \yv$, which does not change the minimizer.
 
-        The advantage of this representation if we are interested in finding $\thetav$ is that we can optimize each $g_i(\theta_i)$ separately to get optimal entries for $\theta_1,\dots,\theta_p$.
+    \item
+        Each $\theta_j$ appears in exactly one summand $g_j(\theta_j)$.
+        Hence, we can minimize each $g_j$ separately, which is a one-dimensional problem,
+        and stack the minimizers $\theta_1^*, \ldots, \theta_p^*$ to get the minimizer of $\riskrt$.
 
-    \item 
+    \item
+        Let $\thetah_j > 0$.
+        The quadratic term and the penalty of $g_j$ are symmetric in $\theta_j$, so only the linear term differs between $\theta_j$ and $-\theta_j$.
+        For $\theta_j > 0$:
+        $$
+            g_j(\theta_j) - g_j(-\theta_j) = -\thetah_j \theta_j - \thetah_j \theta_j = -2 \thetah_j \theta_j < 0
+        $$
+        So every negative value $-\theta_j$ has a strictly larger objective than its mirror image $\theta_j > 0$.
+        Hence, no negative value can minimize $g_j$, and $\theta_j^* \geq 0$.
 
-        Let's use the hint and compare $g_i(\theta_i)$ with $g_i(-\theta_i)$, for the case where $\theta_i > 0$ :
+    \item
+        Let $\thetah_j > 0$.
+        By (c), we only need to minimize $g_j$ on $[0, \infty)$.
+        For $\theta_j > 0$, we have $|\theta_j| = \theta_j$, so $g_j$ is differentiable with
+        $$
+            g_j'(\theta_j) = -\thetah_j + \theta_j + \lambda = \theta_j - (\thetah_j - \lambda)
+        $$
+        This derivative is increasing in $\theta_j$, and $g_j$ is continuous at 0. We distinguish two cases:
+        \begin{itemize}
+            \item $\thetah_j > \lambda$: $g_j'$ is negative on $(0, \thetah_j - \lambda)$ and positive on $(\thetah_j - \lambda, \infty)$.
+                Hence, $\theta_j^* = \thetah_j - \lambda > 0$.
+            \item $\thetah_j \leq \lambda$: $g_j'(\theta_j) > 0$ for all $\theta_j > 0$, so $g_j$ is strictly increasing on $[0, \infty)$.
+                Hence, $\theta_j^* = 0$.
+        \end{itemize}
+        Both cases together give $\theta_j^* = \max\{\thetah_j - \lambda, 0\}$.
 
-        \begin{equation} \label{eq:compare_gi}
-            \begin{aligned}
-                g_i(\theta_i) &= - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i| \\
-                g_i(-\theta_i) &= + \thetah_{i}\theta_i + \frac{(-\theta_i)^2}{2} + \lambda|\theta_i| \\
-            \end{aligned}
-        \end{equation}
+    \item
+        Let $\thetah_j \leq 0$. As in (c), for $\theta_j > 0$:
+        $$
+            g_j(\theta_j) - g_j(-\theta_j) = -2 \thetah_j \theta_j \geq 0
+        $$
+        \begin{itemize}
+            \item $\thetah_j < 0$: The inequality is strict, so every positive value $\theta_j$ has a strictly larger objective than its mirror image $-\theta_j < 0$.
+                Hence, no positive value can minimize $g_j$, and $\theta_j^* \leq 0$.
+            \item $\thetah_j = 0$: $g_j(\theta_j) = \frac{\theta_j^2}{2} + \lambda |\theta_j|$ is minimized only by $\theta_j^* = 0 \leq 0$.
+        \end{itemize}
 
-        We also know that non-positive $\theta_i$ have always a greater or equal value for $g_i(\theta_i)$ than than their positive counterpart:
-        \begin{equation} \label{eq:compare_gi_2}
-            \begin{aligned}
-                \theta_i > 0 \longrightarrow g_i(\theta_i) \leq g_i(-\theta_i)
-            \end{aligned}
-        \end{equation}
+    \item
+        Let $\thetah_j \leq 0$.
+        By (e), we only need to minimize $g_j$ on $(-\infty, 0]$.
+        For $\theta_j < 0$, we have $|\theta_j| = -\theta_j$, so $g_j$ is differentiable with
+        $$
+            g_j'(\theta_j) = -\thetah_j + \theta_j - \lambda = \theta_j - (\thetah_j + \lambda)
+        $$
+        Again, this derivative is increasing in $\theta_j$, and $g_j$ is continuous at 0. We distinguish two cases:
+        \begin{itemize}
+            \item $\thetah_j < -\lambda$: $g_j'$ is negative on $(-\infty, \thetah_j + \lambda)$ and positive on $(\thetah_j + \lambda, 0)$.
+                Hence, $\theta_j^* = \thetah_j + \lambda < 0$.
+            \item $\thetah_j \geq -\lambda$: $g_j'(\theta_j) < 0$ for all $\theta_j < 0$, so $g_j$ is strictly decreasing on $(-\infty, 0]$.
+                Hence, $\theta_j^* = 0$.
+        \end{itemize}
+        Both cases together give $\theta_j^* = \min\{\thetah_j + \lambda, 0\}$.
 
-        The second and third term of both equations in eq. \ref{eq:compare_gi} are equivalent, so we can ignore them. 
-        Accordingly, to comply with the condition from  eq. \ref{eq:compare_gi_2}, the minimizer $\theta_i^*$   must be non-negative.
-
-        \begin{equation}
-            \begin{aligned}
-                - \thetah_{i}\theta_i \leq \thetah_{i}\theta_i \longrightarrow \theta_i^* \geq 0
-            \end{aligned}
-        \end{equation}
-    
-    \item 
-
-        To calculate the minimizer $\theta_i^*$, we will derive with respect to the parameter and set the derivative to zero:
-
-        \begin{equation}
-            \begin{aligned}
-                \frac{\partial g_i(\theta_i)}{\partial \theta_i} &= - \thetah_{i} + \theta_i + \underbrace{\lambda}_{\theta_i > 0} \\
-                &= - \thetah_{i} + \theta_i + \lambda  \stackrel{!}{=} 0  \longrightarrow \theta_i = \underbrace{\thetah_{i} -\lambda}_{ \geq 0} \\
-                \theta_i^* &=  \underbrace{\thetah_i - \lambda}_{ \geq 0} \\
-                &= max(0,  \thetah_i  - \lambda) \\
-            \end{aligned}
-        \end{equation}
-    
-    \item 
-
-        Let's use the hint again and compare $g_i(\theta_i)$ with $g_i(-\theta_i)$, for the case where $\theta_i < 0$ :
-
-        \begin{equation} \label{eq:compare_gi_negative}
-            \begin{aligned}
-                g_i(\theta_i) &= - \thetah_{i}\theta_i + \frac{\theta_i^2}{2} + \lambda|\theta_i| \\
-                g_i(-\theta_i) &= + \thetah_{i}\theta_i + \frac{(-\theta_i)^2}{2} + \lambda|\theta_i| \\
-            \end{aligned}
-        \end{equation}
-
-        \begin{equation} \label{eq:compare_gi_negative_2}
-            \begin{aligned}
-                \theta_i < 0 \longrightarrow g_i(\theta_i) \geq g_i(-\theta_i)
-            \end{aligned}
-        \end{equation}
-
-        The second and third term in both equations of \ref{eq:compare_gi_negative} are equivalent. Using the condition from eq. \ref{eq:compare_gi_negative_2}, we can conclude that the minimizer $\theta_i^*$ must be non-positive.
-
-        \begin{equation}
-            \begin{aligned}
-                - \thetah_{i}\theta_i \geq \thetah_{i}\theta_i \longrightarrow \theta_i^* \leq 0
-            \end{aligned}
-        \end{equation}
-
-    \item 
-
-        Calculating the derivative again and setting it to zero, we get:
-
-        \begin{equation} \label{eq:minimizer_theta_less_0}
-            \begin{aligned}
-                \frac{\partial g_i(\theta_i)}{\partial \theta_i } &= - \thetah_{i} + \theta_i \underbrace{- \lambda}_{\theta_i < 0}  \stackrel{!}{=} 0  \longrightarrow \theta_i = \underbrace{\thetah_{i} +\lambda}_{ \leq 0} \\
-                \theta_i^* &=  \underbrace{\thetah_i + \lambda}_{\leq0} \\
-                &= min(0, \thetah_i  + \lambda) \\
-            \end{aligned}
-        \end{equation}
-
-    \item 
-
-        \begin{equation}
-            \begin{aligned}
-                \begin{cases}
-                    \thetah_i > 0 \longrightarrow \theta_i^* = \overbrace{1}^{\sign (\thetah_i)} \cdot \  max(0, \overbrace{\thetah_i}^{= |\thetah_i|} - \lambda) \\
-                    \thetah_i \leq 0 \longrightarrow \theta_i^* = min(0, \thetah_i + \lambda) 
-                        = \underbrace{-1}_{\sign (\thetah_i)} \cdot \  max(0, \overbrace{-\thetah_i}^{ = |\thetah_i|}-\lambda)
-                \end{cases}
-            \end{aligned}
-        \end{equation}
-
-        By transforming the min function from \ref{eq:minimizer_theta_less_0} to a max function, we can combine the two cases in only one expression:
-
-        \begin{equation}
-        \begin{aligned}
-            \theta_i^* = \sign(\thetah_i) max (|\thetah_i| - \lambda, 0)
-        \end{aligned}
-        \end{equation}
+    \item
+        We check the three possible signs of $\thetah_j$, using $\sign(0) = 0$:
+        \begin{itemize}
+            \item $\thetah_j > 0$: $\sign(\thetah_j) = 1$ and $|\thetah_j| = \thetah_j$, so
+                $\sign(\thetah_j) \max\{|\thetah_j| - \lambda, 0\} = \max\{\thetah_j - \lambda, 0\}$, which is $\theta_j^*$ from (d).
+            \item $\thetah_j < 0$: $\sign(\thetah_j) = -1$ and $|\thetah_j| = -\thetah_j$.
+                With $-\max\{a, b\} = \min\{-a, -b\}$, we get
+                $\sign(\thetah_j) \max\{|\thetah_j| - \lambda, 0\} = -\max\{-\thetah_j - \lambda, 0\} = \min\{\thetah_j + \lambda, 0\}$, which is $\theta_j^*$ from (f).
+            \item $\thetah_j = 0$: The formula gives 0, and (f) gives $\theta_j^* = \min\{\lambda, 0\} = 0$.
+        \end{itemize}
+        Hence, $\thetah_{\text{lasso},j} = \theta_j^* = \sign(\thetah_j) \max\{|\thetah_j| - \lambda, 0\}$ for all $j = 1, \ldots, p$.
+        This is the soft-thresholding operator from the lecture:
+        coefficients with $|\thetah_j| \leq \lambda$ are set to exactly 0, all others are shrunk toward 0 by $\lambda$.
 
 \end{enumerate}
-
-
