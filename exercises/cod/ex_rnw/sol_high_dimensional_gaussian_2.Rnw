@@ -49,6 +49,52 @@
         distances between random points concentrate around their mean,
         which is one reason why nearest neighbors become less meaningful in high dimensions.
 
+        The figure shows 200 simulated distances $||\bm{X} - \bm{X}'||_1$ per $p$ (points)
+        and the mean $\pm$ 2 standard deviations from (c) and (d) (line and band).
+        Left: centered at the mean, the spread grows like $\sqrt{p}$.
+        Right: relative to the mean, it shrinks like $1 / \sqrt{p}$.
+
+<<cod-l1-distances, echo=FALSE, message=FALSE, fig.height=3, fig.width=7, fig.align="center", out.width="0.9\\textwidth">>=
+library(ggplot2)
+library(data.table)
+
+set.seed(1L)
+p_grid = c(1L, 2L, 5L, 10L, 20L, 50L, 100L, 200L, 500L, 1000L)
+n = 200L
+
+# simulate n L1 distances between independent standard normal vectors per p
+sim = rbindlist(lapply(p_grid, function(p) {
+  x = matrix(rnorm(n * p), n, p)
+  x_prime = matrix(rnorm(n * p), n, p)
+  data.table(p = p, dist = rowSums(abs(x - x_prime)))
+}))
+
+# theoretical mean and sd from (c) and (d)
+theory = data.table(p = p_grid)
+theory[, `:=`(mean = 2 * p / sqrt(pi), sd = sqrt(2 * (1 - 2 / pi) * p))]
+sim[theory, `:=`(centered = dist - i.mean, rel = dist / i.mean), on = "p"]
+
+panels = c("Distance - mean", "Distance / mean")
+points = rbind(
+  sim[, .(p, value = centered, panel = panels[1L])],
+  sim[, .(p, value = rel, panel = panels[2L])]
+)
+bands = rbind(
+  theory[, .(p, center = 0, lower = -2 * sd, upper = 2 * sd, panel = panels[1L])],
+  theory[, .(p, center = 1, lower = pmax(1 - 2 * sd / mean, 0), upper = 1 + 2 * sd / mean, panel = panels[2L])]
+)
+
+ggplot(points, aes(x = p)) +
+  geom_ribbon(data = bands, aes(ymin = lower, ymax = upper), fill = "steelblue", alpha = 0.25) +
+  geom_point(aes(y = value), position = position_jitter(width = 0.04, height = 0), alpha = 0.2, size = 0.6) +
+  geom_line(data = bands, aes(y = center), color = "steelblue4", linewidth = 0.8) +
+  facet_wrap(~panel, scales = "free_y") +
+  scale_x_log10(breaks = c(1L, 10L, 100L, 1000L)) +
+  labs(x = "p", y = NULL) +
+  theme_bw(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+@
+
     \item
         By linearity of the expectation and since $\xv$ is deterministic:
         \begin{align*}
