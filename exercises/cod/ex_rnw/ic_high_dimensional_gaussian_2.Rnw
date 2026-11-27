@@ -57,4 +57,18 @@ $$
         \lz
         \lz
         \lz
+
+    \item
+        The angle between $\bm{X}$ and $\xv \neq \zero$ is given by
+        $$
+            \cos \angle(\bm{X}, \xv) = \frac{\scp{\bm{X}}{\xv}}{||\bm{X}||_2 ||\xv||_2}
+        $$
+        Use (e) to argue what happens to this angle for $p \to \infty$. (Hint: $||\bm{X}||_2 \approx \sqrt{p}$ for large $p$)
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
+        \lz
 \end{enumerate}
