@@ -108,4 +108,14 @@ ggplot(points, aes(x = p)) +
             &= \sumjp x_j^2 \underbrace{\var(X_j)}_{= 1} \\
             &= ||\xv||_2^2
         \end{align*}
+        Note: As a linear combination of independent normal variables, $\scp{\bm{X}}{\xv} / ||\xv||_2 \sim \normal(0, 1)$ for every $p$.
+        In contrast, $\E(||\bm{X}||_2^2) = \sum_{j=1}^p \E(X_j^2) = p$, and $||\bm{X}||_2 \approx \sqrt{p}$ for large $p$
+        (the relative spread of $||\bm{X}||_2^2$ is $\sqrt{2 / p} \to 0$).
+        Hence, for the angle between $\bm{X}$ and $\xv$:
+        $$
+            \cos \angle(\bm{X}, \xv) = \frac{\scp{\bm{X}}{\xv}}{||\bm{X}||_2 ||\xv||_2} \approx \frac{Z}{\sqrt{p}} \quad Z \sim \normal(0, 1)
+        $$
+        This goes to 0 for $p \to \infty$:
+        a random direction is almost orthogonal to any fixed vector in high dimensions.
+        E.g., for $p = 100$, the angle lies roughly between $78^\circ$ and $102^\circ$ ($\pm 2$ standard deviations of the cosine).
 \end{enumerate}
