@@ -120,4 +120,45 @@ ggplot(points, aes(x = p)) +
         This goes to 0 for $p \to \infty$:
         a random direction is almost orthogonal to any fixed vector in high dimensions.
         E.g., for $p = 100$, the angle lies roughly between $78^\circ$ and $102^\circ$ ($\pm 2$ standard deviations of the cosine).
+
+        As for the distances in (d), the variability concentrates with growing $p$:
+        the angle is $90^\circ$ on average for every $p$ (by symmetry), but its spread shrinks like $1 / \sqrt{p}$.
+        The figure shows the cosine (left) and the angle (right) for 200 simulated $\bm{X}$ per $p$ and a fixed $\xv$ (points),
+        and the range of $\pm 2$ standard deviations $\pm 2 / \sqrt{p}$ of the cosine (band).
+
+<<cod-angles, echo=FALSE, message=FALSE, fig.height=3, fig.width=7, fig.align="center", out.width="0.9\\textwidth">>=
+set.seed(1L)
+
+# simulate n angles between X ~ N(0, I) and a fixed x per p (distribution does not depend on x)
+sim_angle = rbindlist(lapply(p_grid, function(p) {
+  x = matrix(rnorm(n * p), n, p)
+  x_fixed = rep(1, p)
+  data.table(p = p, cos = drop(x %*% x_fixed) / (sqrt(rowSums(x^2)) * sqrt(sum(x_fixed^2))))
+}))
+sim_angle[, angle := acos(pmin(pmax(cos, -1), 1)) * 180 / pi]
+
+# band: +- 2 sd of the cosine, sd approx 1 / sqrt(p)
+panels_angle = c("Cosine of angle", "Angle (degrees)")
+band_cos = data.table(p = p_grid)[, `:=`(lower = pmax(-2 / sqrt(p), -1), upper = pmin(2 / sqrt(p), 1))]
+points_angle = rbind(
+  sim_angle[, .(p, value = cos, panel = panels_angle[1L])],
+  sim_angle[, .(p, value = angle, panel = panels_angle[2L])]
+)
+bands_angle = rbind(
+  band_cos[, .(p, center = 0, lower, upper, panel = panels_angle[1L])],
+  band_cos[, .(p, center = 90, lower = acos(upper) * 180 / pi, upper = acos(lower) * 180 / pi, panel = panels_angle[2L])]
+)
+points_angle[, panel := factor(panel, levels = panels_angle)]
+bands_angle[, panel := factor(panel, levels = panels_angle)]
+
+ggplot(points_angle, aes(x = p)) +
+  geom_ribbon(data = bands_angle, aes(ymin = lower, ymax = upper), fill = "steelblue", alpha = 0.25) +
+  geom_point(aes(y = value), position = position_jitter(width = 0.04, height = 0), alpha = 0.2, size = 0.6) +
+  geom_line(data = bands_angle, aes(y = center), color = "steelblue4", linewidth = 0.8) +
+  facet_wrap(~panel, scales = "free_y") +
+  scale_x_log10(breaks = c(1L, 10L, 100L, 1000L)) +
+  labs(x = "p", y = NULL) +
+  theme_bw(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+@
 \end{enumerate}
