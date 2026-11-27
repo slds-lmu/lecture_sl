@@ -108,10 +108,12 @@ ggplot(points, aes(x = p)) +
             &= \sumjp x_j^2 \underbrace{\var(X_j)}_{= 1} \\
             &= ||\xv||_2^2
         \end{align*}
-        Note: As a linear combination of independent normal variables, $\scp{\bm{X}}{\xv} / ||\xv||_2 \sim \normal(0, 1)$ for every $p$.
-        In contrast, $\E(||\bm{X}||_2^2) = \sum_{j=1}^p \E(X_j^2) = p$, and $||\bm{X}||_2 \approx \sqrt{p}$ for large $p$
-        (the relative spread of $||\bm{X}||_2^2$ is $\sqrt{2 / p} \to 0$).
-        Hence, for the angle between $\bm{X}$ and $\xv$:
+
+    \item
+        As a linear combination of independent normal variables, $\scp{\bm{X}}{\xv}$ is normal, so by (e) $\scp{\bm{X}}{\xv} / ||\xv||_2 \sim \normal(0, 1)$ for every $p$.
+        In contrast, $||\bm{X}||_2 \approx \sqrt{p}$ grows with $p$
+        (since $\E(||\bm{X}||_2^2) = \sum_{j=1}^p \E(X_j^2) = p$, and the relative spread of $||\bm{X}||_2^2$ is $\sqrt{2 / p} \to 0$).
+        Hence:
         $$
             \cos \angle(\bm{X}, \xv) = \frac{\scp{\bm{X}}{\xv}}{||\bm{X}||_2 ||\xv||_2} \approx \frac{Z}{\sqrt{p}} \quad Z \sim \normal(0, 1)
         $$
